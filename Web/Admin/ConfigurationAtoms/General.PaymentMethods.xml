@@ -1,0 +1,11 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[]]>
+  </HtmlHeader>
+  <Title>Configure Payment Methods</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="AcceptedPaymentMethods">
+    <Name>PaymentMethods</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

@@ -1,0 +1,27 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payfuse&type=info" target="_blank">Learn more about PayFuse</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payfuse&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure PayFuse]]></Title>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Alias"><Name>PayFuse.Alias</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="User ID"><Name>PayFuse.UserID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Password"><Name>PayFuse.Password</Name></AppConfig>
+
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live_Server"><Name>PayFuse.Live_Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test_Server"><Name>PayFuse.Test_Server</Name></AppConfig>
+</ConfigurationAtom>

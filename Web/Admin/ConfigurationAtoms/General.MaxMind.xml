@@ -1,0 +1,36 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/maxmind.gif" border="0"/>
+      </td>
+      
+      <td class="globalAdminHeading">Reduce Credit Card Fraud with minFraud</td>
+      
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=maxmind&type=signup" target="_blank">Sign up for MaxMind minFraud</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=maxmind&type=info" target="_blank">Learn More</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=maxmind&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title>
+    <![CDATA[Configure MaxMind]]>
+  </Title>
+  <AppConfig Required="false" Advanced="false" FriendlyName="MaxMind Enabled"><Name>MaxMind.Enabled</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="License Key"><Name>MaxMind.LicenseKey</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Fail Score Threshold"><Name>MaxMind.FailScoreThreshold</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Delay Download Threshold"><Name>MaxMind.DelayDownloadThreshold</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Delay Drop-Ship Threshold"><Name>MaxMind.DelayDropShipThreshold</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="MaxMind SOAP URL"><Name>MaxMind.SOAPURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="MaxMind Service Type"><Name>MaxMind.ServiceType</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="MaxMind Explanation Link"><Name>MaxMind.ExplanationLink</Name></AppConfig>
+</ConfigurationAtom>

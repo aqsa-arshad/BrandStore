@@ -1,0 +1,31 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/skipjack.jpg" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skipjack&type=info" target="_blank">Learn more about SkipJack</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skipjack&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Skipjack]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Serial Number"><Name>Skipjack.LiveSerialNumber</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Test Serial Number"><Name>Skipjack.TestSerialNumber</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Developer Serial Number"><Name>Skipjack.DeveloperSerialNumber</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Force Settlement"><Name>Skipjack.ForceSettlement</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live Change URL"><Name>Skipjack.LiveChangeURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test Change URL"><Name>Skipjack.TestChangeURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live Server"><Name>Skipjack.LiveServer</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test Server"><Name>Skipjack.TestServer</Name></AppConfig>
+</ConfigurationAtom>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://gateway.securenet.com/API/Contracts" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://gateway.securenet.com/API/Contracts" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gateway.securenet.com/API/Contracts/Imports">
+      <xsd:import schemaLocation="http://certify.securenet.com/API/Gateway.svc?xsd=xsd0" namespace="http://gateway.securenet.com/API/Contracts" />
+      <xsd:import schemaLocation="http://certify.securenet.com/API/Gateway.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IGateway_ProcessTransaction_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessTransaction" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessTransaction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessVaultTransaction_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessVaultTransaction" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessVaultTransaction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessVaultTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_UpdateTransaction_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransaction" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_UpdateTransaction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessAccount" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessCustomer" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessCustomerAndAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessCustomerAndAccount" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_ProcessCustomerAndAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessCustomerAndAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_CopyVaultAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CopyVaultAccount" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_CopyVaultAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CopyVaultAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_AddABAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddABAccount" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_AddABAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddABAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_UpdateABAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateABAccount" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_UpdateABAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateABAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_UpdateABSchedule_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateABSchedule" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_UpdateABSchedule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateABScheduleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_CloseBatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseBatch" />
+  </wsdl:message>
+  <wsdl:message name="IGateway_CloseBatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseBatchResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IGateway">
+    <wsdl:operation name="ProcessTransaction">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessTransaction" message="tns:IGateway_ProcessTransaction_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessTransactionResponse" message="tns:IGateway_ProcessTransaction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessVaultTransaction">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessVaultTransaction" message="tns:IGateway_ProcessVaultTransaction_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessVaultTransactionResponse" message="tns:IGateway_ProcessVaultTransaction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransaction">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/UpdateTransaction" message="tns:IGateway_UpdateTransaction_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/UpdateTransactionResponse" message="tns:IGateway_UpdateTransaction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessAccount" message="tns:IGateway_ProcessAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessAccountResponse" message="tns:IGateway_ProcessAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomer">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomer" message="tns:IGateway_ProcessCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomerResponse" message="tns:IGateway_ProcessCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomerAndAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomerAndAccount" message="tns:IGateway_ProcessCustomerAndAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomerAndAccountResponse" message="tns:IGateway_ProcessCustomerAndAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CopyVaultAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/CopyVaultAccount" message="tns:IGateway_CopyVaultAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/CopyVaultAccountResponse" message="tns:IGateway_CopyVaultAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddABAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/AddABAccount" message="tns:IGateway_AddABAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/AddABAccountResponse" message="tns:IGateway_AddABAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABAccount" message="tns:IGateway_UpdateABAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABAccountResponse" message="tns:IGateway_UpdateABAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABSchedule">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABSchedule" message="tns:IGateway_UpdateABSchedule_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABScheduleResponse" message="tns:IGateway_UpdateABSchedule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseBatch">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/CloseBatch" message="tns:IGateway_CloseBatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/Contracts/IGateway/CloseBatchResponse" message="tns:IGateway_CloseBatch_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

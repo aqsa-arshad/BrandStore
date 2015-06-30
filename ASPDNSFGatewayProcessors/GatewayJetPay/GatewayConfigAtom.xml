@@ -1,0 +1,25 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=jetpay&type=info" target="_blank">Learn more about JetPay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=jetpay&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure JetPay]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName=""><Name>JETPAY_MERCHANTID</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>JETPAY_LIVE_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>JETPAY_TEST_SERVER</Name></AppConfig>
+</ConfigurationAtom>

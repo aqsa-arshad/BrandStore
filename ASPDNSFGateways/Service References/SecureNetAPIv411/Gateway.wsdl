@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://gateway.securenet.com/API/Contracts" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Gateway" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="wsBinding_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsoma:OptimizedMimeSerialization xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:import namespace="http://gateway.securenet.com/API/Contracts" location="http://certify.securenet.com/API/Gateway.svc?wsdl=wsdl0" />
+  <wsdl:types />
+  <wsdl:binding name="BasicHttpBinding_IGateway" type="i0:IGateway">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ProcessTransaction">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessVaultTransaction">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessVaultTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransaction">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/UpdateTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomer">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomerAndAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomerAndAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyVaultAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/CopyVaultAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddABAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/AddABAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABSchedule">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABSchedule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseBatch">
+      <soap:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/CloseBatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsBinding" type="i0:IGateway">
+    <wsp:PolicyReference URI="#wsBinding_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ProcessTransaction">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessVaultTransaction">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessVaultTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransaction">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/UpdateTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomer">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomerAndAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/ProcessCustomerAndAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyVaultAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/CopyVaultAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddABAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/AddABAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABSchedule">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/UpdateABSchedule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseBatch">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/Contracts/IGateway/CloseBatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="webBinding" type="i0:IGateway">
+    <wsdl:operation name="ProcessTransaction">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessVaultTransaction">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransaction">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomer">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessCustomerAndAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="CopyVaultAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="AddABAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateABSchedule">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="CloseBatch">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Gateway">
+    <wsdl:port name="BasicHttpBinding_IGateway" binding="tns:BasicHttpBinding_IGateway">
+      <soap:address location="http://certify.securenet.com/API/Gateway.svc/soap" />
+    </wsdl:port>
+    <wsdl:port name="wsBinding" binding="tns:wsBinding">
+      <soap12:address location="http://certify.securenet.com/API/Gateway.svc/wsHttp" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://certify.securenet.com/API/Gateway.svc/wsHttp</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="webBinding" binding="tns:webBinding" />
+  </wsdl:service>
+</wsdl:definitions>

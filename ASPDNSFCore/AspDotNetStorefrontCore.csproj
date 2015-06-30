@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{06ED156E-CA02-4A2B-80C4-EEED5A84E9F9}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>AspDotNetStorefrontCore</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AspDotNetStorefrontCore</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <SignAssembly>false</SignAssembly>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ASPDNSFApplication">
+      <HintPath>..\AssemblyReferences\ASPDNSFApplication.dll</HintPath>
+    </Reference>
+    <Reference Include="ASPDNSFEncrypt">
+      <HintPath>..\AssemblyReferences\ASPDNSFEncrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="Avalara.AvaTax.Adapter">
+      <HintPath>..\AssemblyReferences\Avalara.AvaTax.Adapter.dll</HintPath>
+    </Reference>
+    <Reference Include="CMPCDotNet">
+      <HintPath>..\AssemblyReferences\CMPCDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="eWorld.UI">
+      <HintPath>..\AssemblyReferences\eWorld.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelWrapper">
+      <HintPath>..\AssemblyReferences\ExcelWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.AddIn">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\ActionConfigurationSection.cs" />
+    <Compile Include="Actions\ActionHandlerFactory.cs" />
+    <Compile Include="Actions\ActionHttpHandler.cs" />
+    <Compile Include="Actions\IActionHandler.cs" />
+    <Compile Include="Address.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Affiliate.cs" />
+    <Compile Include="Appconfig.cs" />
+    <Compile Include="AppLogic.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssetServer.cs" />
+    <Compile Include="AsyncDataStore.cs" />
+    <Compile Include="AvaTax.cs" />
+    <Compile Include="Captcha2.cs" />
+    <Compile Include="CardType.cs" />
+    <Compile Include="CardTypeDataSource.cs" />
+    <Compile Include="CartItem.cs" />
+    <Compile Include="CartSummaryInfo.cs" />
+    <Compile Include="ConfigurationAtom.cs" />
+    <Compile Include="DownloadItem.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EMail.cs" />
+    <Compile Include="ErrorMessage.cs" />
+    <Compile Include="FedEx.cs" />
+    <Compile Include="fts.cs" />
+    <Compile Include="Skin.cs" />
+    <Compile Include="SkinProvider.cs" />
+    <Compile Include="Validation\AddressValidator.cs" />
+    <Compile Include="MultiShipOrder_Shipment.cs" />
+    <Compile Include="OrderShipment.cs" />
+    <Compile Include="OrderShipmentCollection.cs" />
+    <Compile Include="PageTypeAttribute.cs" />
+    <Compile Include="Paging.cs" />
+    <Compile Include="PayPalAd.cs" />
+    <Compile Include="ProductVariant.cs" />
+    <Compile Include="CheckOutPageController.cs" />
+    <Compile Include="Promotions\PromotionManager.cs" />
+    <Compile Include="Validation\EmailAddressValidator.cs" />
+    <Compile Include="Web References\RateServiceWebReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\VATCheck\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="WebConfigManager.cs" />
+    <Compile Include="Country.cs" />
+    <Compile Include="Coupons.cs" />
+    <Compile Include="CreditCardValidator.cs" />
+    <Compile Include="DhlShipITv30.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EntityObjects.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="GlobalConfigs.cs" />
+    <Compile Include="MultiStoreSiteMap.cs" />
+    <Compile Include="ObjectMap.cs" />
+    <Compile Include="PagedSearchTemplate.cs" />
+    <Compile Include="Prices.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="QuantityDiscount.cs" />
+    <Compile Include="RequestData.cs" />
+    <Compile Include="RouteConfiguration.cs" />
+    <Compile Include="SelfSerializingClass.cs" />
+    <Compile Include="ProductMappingLinkItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AustraliaPost.cs" />
+    <Compile Include="BadWord.cs" />
+    <Compile Include="ShippingCalculation\AllOrdersHaveFreeShippingShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\CalculateShippingByTotalAndZoneShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\CalculateShippingByTotalByPercentShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\CalculateShippingByTotalShippingCalculation.cs" />
+    <Compile Include="CanadaPostv3.cs" />
+    <Compile Include="CaptchaImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cardinal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommonLogic.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Breadcrumb.cs" />
+    <Compile Include="CountryTaxRate.cs" />
+    <Compile Include="CsvParser.cs" />
+    <Compile Include="EventHandlers.cs" />
+    <Compile Include="ShippingCalculation\CalculateShippingByWeightAndZoneShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\CalculateShippingByWeightShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\IShippingCalculation.cs" />
+    <Compile Include="KitComposition.cs" />
+    <Compile Include="KitProduct.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Security.cs" />
+    <Compile Include="ShippingCalculation\ShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\ShippingMethod.cs" />
+    <Compile Include="ShippingCalculation\ShippingMethodCollection.cs" />
+    <Compile Include="ShippingCalculation\UseFixedPercentageOfTotalShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\UseFixedPriceShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\UseIndividualItemShippingCostsShippingCalculation.cs" />
+    <Compile Include="ShippingCalculation\UseRealTimeRatesShippingCalculation.cs" />
+    <Compile Include="Shipwire.cs" />
+    <Compile Include="SiteMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SiteMap1PhoneOrder.cs" />
+    <Compile Include="SiteMapPhoneOrder.cs" />
+    <Compile Include="ExtensionObjects.cs" />
+    <Compile Include="GiftCard.cs" />
+    <Compile Include="Currency.cs" />
+    <Compile Include="Customer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CustomerSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DB.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DescriptionFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EntityHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Feed.cs" />
+    <Compile Include="HierarchicalTableMgr.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Import.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ListItemClass.cs" />
+    <Compile Include="Localization.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Order.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Parser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Poll.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductDescriptionFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductImageGallery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductSpecFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ratings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RTShipping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SE.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shipping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShoppingCart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SiteMapComponentArt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SMS.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StateTaxRate.cs" />
+    <Compile Include="StoreObject.cs" />
+    <Compile Include="StringResource.cs" />
+    <Compile Include="SysLog.cs" />
+    <Compile Include="TaxClass.cs" />
+    <Compile Include="TemplateImageHandler.cs" />
+    <Compile Include="TextFileTools.cs" />
+    <Compile Include="Tokens.cs" />
+    <Compile Include="Topic.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UPS2.cs" />
+    <Compile Include="WatermarkHandler.cs" />
+    <Compile Include="XmlCommon.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="XmlPackage2.cs" />
+    <Compile Include="XSLTExtensions.cs" />
+    <Compile Include="XSLTExtensionBase.cs" />
+    <Compile Include="ZipTaxRate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="C:\DNE\RateService_v9.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RateServiceWebReference\</RelPath>
+      <UpdateFromURL>C:\DNE\RateService_v9.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>AspDotNetStorefrontCore_RateServiceWebReference_RateService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://ec.europa.eu/taxation_customs/vies/services/checkVatService%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\VATCheck\</RelPath>
+      <UpdateFromURL>http://ec.europa.eu/taxation_customs/vies/services/checkVatService%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>AspDotNetStorefrontCommon_VATCheck_checkVatService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RateServiceWebReference\RateReply.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RateServiceWebReference\RateServiceDefinitions.wsdl" />
+    <None Include="Web References\RateServiceWebReference\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\VATCheck\checkVatService.wsdl" />
+    <None Include="Web References\VATCheck\matchCode.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\VATCheck\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASPDNSFCommon\AspDotNetStorefrontCommon.csproj">
+      <Project>{65E8266F-BD0A-4C2A-B7DE-13AEE9DF0FAE}</Project>
+      <Name>AspDotNetStorefrontCommon</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontPromotions\AspDotNetStorefrontPromotions.csproj">
+      <Project>{0D9EB42C-B770-4F86-961F-9D1DE341BFCE}</Project>
+      <Name>AspDotNetStorefrontPromotions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XsltObjects\XsltObjects.csproj">
+      <Project>{5487D70A-C4DC-4062-82CD-3F2EF1DB1A1B}</Project>
+      <Name>XsltObjects</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

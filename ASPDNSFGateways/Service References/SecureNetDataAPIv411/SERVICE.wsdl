@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://gateway.securenet.com/API/DATA/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://gateway.securenet.com/API/DATA/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gateway.securenet.com/API/DATA/Imports">
+      <xsd:import schemaLocation="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd0" namespace="http://gateway.securenet.com/API/DATA/" />
+      <xsd:import schemaLocation="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd2" namespace="http://gateway.securenet.com/API/Contracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISERVICE_GetABAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetABAccount" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetABAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetABAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetABAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetABAccounts" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetABAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetABAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultCustomers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultCustomers" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultCustomers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultCustomersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultAccountByCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultAccountByCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultAccountByCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultAccountByCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultAccount" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultRecordByCardNo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultRecordByCardNo" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetVaultRecordByCardNo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVaultRecordByCardNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetP2PKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetP2PKey" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_GetP2PKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetP2PKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_ConfirmP2PKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmP2PKey" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_ConfirmP2PKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmP2PKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_CreateP2PKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateP2PKey" />
+  </wsdl:message>
+  <wsdl:message name="ISERVICE_CreateP2PKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateP2PKeyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISERVICE">
+    <wsdl:operation name="GetABAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccount" message="tns:ISERVICE_GetABAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccountResponse" message="tns:ISERVICE_GetABAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetABAccounts">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccounts" message="tns:ISERVICE_GetABAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccountsResponse" message="tns:ISERVICE_GetABAccounts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultCustomers">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultCustomers" message="tns:ISERVICE_GetVaultCustomers_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultCustomersResponse" message="tns:ISERVICE_GetVaultCustomers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccountByCustomer">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccountByCustomer" message="tns:ISERVICE_GetVaultAccountByCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccountByCustomerResponse" message="tns:ISERVICE_GetVaultAccountByCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccount">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccount" message="tns:ISERVICE_GetVaultAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccountResponse" message="tns:ISERVICE_GetVaultAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultRecordByCardNo">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultRecordByCardNo" message="tns:ISERVICE_GetVaultRecordByCardNo_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultRecordByCardNoResponse" message="tns:ISERVICE_GetVaultRecordByCardNo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetP2PKey">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetP2PKey" message="tns:ISERVICE_GetP2PKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/GetP2PKeyResponse" message="tns:ISERVICE_GetP2PKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmP2PKey">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/ConfirmP2PKey" message="tns:ISERVICE_ConfirmP2PKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/ConfirmP2PKeyResponse" message="tns:ISERVICE_ConfirmP2PKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateP2PKey">
+      <wsdl:input wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/CreateP2PKey" message="tns:ISERVICE_CreateP2PKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://gateway.securenet.com/API/DATA/ISERVICE/CreateP2PKeyResponse" message="tns:ISERVICE_CreateP2PKey_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

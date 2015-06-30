@@ -1,0 +1,98 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" %>
+
+<%@ Register TagPrefix="aspdnsfc" Namespace="AspDotNetStorefrontControls" Assembly="AspDotNetStorefrontControls" %>
+<%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
+<%@ Register TagPrefix="custom" TagName="Search" Src="~/Controls/Search.ascx" %>
+<%@ Import Namespace="AspDotNetStorefrontCore" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%-- Leave the title empty, it will get populated at runtime --%>
+    <title></title>
+    <%-- Leave the description and keyword content empty, it will get populated at runtime --%>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <%-- The skin ref will base on the current theme applied so we don't need to declare here which css file to use --%>
+    <%--<link runat="server" rel="stylesheet" href="~/skins/skin_1/style.css" type="text/css">--%>
+
+
+    <%-- jQuery is required in versions 9.4 and higher --%>
+    <script src="jscripts/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        adnsf$ = jQuery; <%-- to avoid conflicts with existing jQuery versions and other javascript frameworks, change this line to adnsf$ = jQuery.noConflict(); --%>
+    </script>
+
+    <%--This xmlpackage can be used to add dynamic data to javascripts such as tracking scripts that should run before the closing head tag--%>
+    <aspdnsf:XmlPackage runat="server" PackageName="script.headclose" />
+</head>
+<body>
+    <asp:Literal ID="ltrPageInfo" runat="server" Text='<%$ Tokens:PageInfo %>' />
+    <form id="form1" runat="server">
+        <%  if (RequireScriptManager)
+            { %>
+        <%-- Only render for pages that require ajax --%>
+        <asp:ScriptManager ID="scrptMgr" runat="server">
+        </asp:ScriptManager>
+        <% } %>
+        <div class="wrapper">
+            <div class="header">
+                <aspdnsf:Topic runat="server" TopicName="Template.Header" />
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="top-nav-wrapper">
+            <div class="wrapper">
+                <div class="top-nav">
+                    <aspdnsf:Topic runat="server" TopicName="Template.TopNavigation" />
+                    <div class="search-wrap">
+                        <custom:Search ID="Search1" runat="server" />
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div id="breadcrumb" class="breadcrumb">
+            <div class="wrapper">
+                <%-- The ID SectionTitle is required --%>
+                <a id="homeLink" class="home-link" runat="server" href="~/default.aspx">
+                    <asp:Literal runat="server" Text='<%$ Tokens:StringResource, menu.home %>' />
+                </a>
+                <asp:Literal runat="server" Text='<%$ Tokens:AppConfig, BreadcrumbSeparator %>' />
+                <asp:Literal ID="SectionTitle" runat="server" Text='' />
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="body-wrapper">
+                <div id="contentWrapper" class="content-wrapper">
+                    <div id="content" class="content">
+                        <!-- CONTENTS START -->
+                        <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                        </asp:ContentPlaceHolder>
+                        <!-- CONTENTS END -->
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+                <div id="verticalNavWrapper" class="vertical-nav-wrapper">
+                    <aspdnsf:Topic runat="server" TopicName="Template.VerticalNavigation" />
+
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="footer" class="footer bar">
+                <aspdnsf:Topic ID="TopicFooter" runat="server" TopicName="Template.Footer" />
+            </div>
+            <div class="sub-footer">
+                <aspdnsf:Topic ID="TopicSubFooter" runat="server" TopicName="Template.SubFooter" />
+            </div>
+        </div>
+    </form>
+    <asp:Literal ID="litBuySafeSeal" runat="server" Text='<%$ Tokens:BuySafeSeal %>' />
+    <asp:Literal ID="litBongoExtend" runat="server" Text='<%$ Tokens:BongoExtend %>' />
+    <asp:Literal ID="litTrustedStores" runat="server" Text='<%$ Tokens: XmlPackage, skin.trustedstores.xml.config %>' />
+    <%--This xmlpackage can be used to add dynamic data to javascripts such as tracking scripts that should run before the closing body tag--%>
+    <aspdnsf:XmlPackage runat="server" PackageName="script.bodyclose" />
+</body>
+</html>

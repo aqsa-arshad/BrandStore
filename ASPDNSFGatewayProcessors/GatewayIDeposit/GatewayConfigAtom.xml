@@ -1,0 +1,30 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/iDeposit.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=ideposit&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure iDeposit]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Username"><Name>IDEPOSIT_LIVE_USERNAME</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Password"><Name>IDEPOSIT_LIVE_PASSWORD</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Test Username"><Name>IDEPOSIT_TEST_USERNAME</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Test Password"><Name>IDEPOSIT_TEST_PASSWORD</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="LIVE_CLERKID"><Name>IDEPOSIT_LIVE_CLERKID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LIVE_URL"><Name>IDEPOSIT_LIVE_URL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TEST_CLERKID"><Name>IDEPOSIT_TEST_CLERKID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TEST_URL"><Name>IDEPOSIT_TEST_URL</Name></AppConfig>
+</ConfigurationAtom>

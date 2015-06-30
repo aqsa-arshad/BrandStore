@@ -1,0 +1,24 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=2checkout&type=signup" target="_blank">Sign up for 2Checkout</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=2checkout&type=info" target="_blank">Learn more about 2Checkout</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=2checkout&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure 2Checkout]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Vendor ID"><Name>2CHECKOUT_VendorID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LIVE_SERVER"><Name>2CHECKOUT_LIVE_SERVER</Name></AppConfig>
+</ConfigurationAtom>

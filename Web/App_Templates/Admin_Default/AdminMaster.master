@@ -1,0 +1,171 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminMaster.master.cs" Inherits="AspDotNetStorefrontAdmin.NewAdmin_App_Templates_AdminMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<meta http-equiv="x-ua-compatible" content="IE=7" />
+
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server" defaultbutton="imgSearch">
+    <asp:ScriptManager ID="scrptMgr" runat="server" />
+    <table width="100%" cellpadding="0" cellspacing="0" id="wrapperTable">
+        <!-- HEADER -->
+        <tr id="topHeaderRow">
+            <td align="left" valign="top" class="Top">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td id="Top_Left" valign="middle">
+                            <table style="width: 550px" border="0">
+                                <tr>
+                                    <td style="width: 310px">
+                                        
+                                    </td>
+                                    <td class="adminUserIcon" >
+                                        <a runat="server" id="AdminIconLink" title="Edit Account">
+                                            <img runat="server" id="imgUserIcon" src="~/App_Themes/Admin_Default/images/usericon.gif" border="0" alt="Edit Account" />
+                                        </a>
+                                    </td>
+                                    <td class="adminUserName">
+                                        <asp:Literal runat="server" Text="<%$ Tokens:user_menu_name %>" ID="litUserName" />
+                                        <asp:Panel runat="server" id="spanImpersonationWarning" visible="false">
+                                            <b>You are currently impersonating another user.</b> 
+                                            <asp:LinkButton ID="btnStopImpersonation" runat="server" Text="Stop Impersonation" OnClick="btnStopImpersonation_Click" />
+                                        </asp:Panel>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="Top_Center">
+                            &nbsp;
+                        </td>
+                        <td class="Top_Right" align="right">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td valign="bottom">
+                                        <table width="0" border="0" cellspacing="0" cellpadding="0" id="toplink">
+                                            <tr>
+                                                <td align="center" valign="middle">
+                                                    <a runat="server" href="~/" target="_blank" title="Store Site">
+                                                        <img runat="server" id="imgShoppingCart" src="~/App_Themes/Admin_Default/images/shoppingcart.png" onmouseover="javascript:this.src='../App_Themes/Admin_Default/images/shoppingcart_hover.png'" onmouseout="javascript:this.src='../App_Themes/Admin_Default/images/shoppingcart.png'"
+                                                            border="0" /></a>
+                                                </td>
+                                                <td align="center" valign="middle">
+                                                    <a href="default.aspx?clearcache=true" target="_top" title="Reset Cache">
+                                                        <img runat="server" id="imgResetCache" src="~/App_Themes/Admin_Default/images/reset.png" onmouseover="javascript:this.src='../App_Themes/Admin_Default/images/reset_hover.png'" onmouseout="javascript:this.src='../App_Themes/Admin_Default/images/reset.png'"
+                                                            border="0" /></a>
+                                                </td>
+                                                <td align="center" valign="middle">
+                                                    <a href="signout.aspx" target="_top" title="Logout">
+                                                        <img  runat="server" id="imgLogout" src="~/App_Themes/Admin_Default/images/logout.png" hover="../App_Themes/Admin_Default/images/logout_hover.png" border="0" /></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" valign="middle">
+                                                    <a runat="server" href="~/" target="_blank"><asp:literal runat="server" Text="<%$ Tokens:AppConfig, StoreName %>" /></a>
+                                                </td>
+                                                <td align="center" valign="middle">
+                                                    <a href="default.aspx?clearcache=true" target="_top"><asp:Literal runat="server" Text="<%$ Tokens:stringresource, admin.common.ResetCache %>" /></a>
+                                                </td>
+                                                <td align="center" valign="middle">
+                                                    <a href="signout.aspx" target="_top"><asp:Literal runat="server" Text="<%$ Tokens:signinout_text %>" /></a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="bottom" align="right" style="padding-top: 2px;">
+                                        <table width="0" border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td width="35" align="right" valign="top">
+                                                    <img id="Img1" runat="server" src="~/App_Themes/Admin_Default/images/searchbutton2.png"
+                                                        width="35" height="22" />
+                                                </td>
+                                                <td valign="top">
+                                                    <asp:TextBox runat="server" id="txtSearch" class="Search_textbox" size="22" name="SearchTerm"
+                                                        value="Search here" onclick="javascript:this.value=''" />
+                                                </td>
+                                                <td width="42" align="left" valign="top">
+                                                    <asp:ImageButton runat="server" id="imgSearch" 
+                                                        ImageUrl="~/App_Themes/Admin_Default/images/searchbutton.png" 
+                                                        OnClick="search_OnClick"
+                                                        hover="~/App_Themes/Admin_Default/images/searchbutton_hover.png" 
+                                                        border="0" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width="10px" class="Top_Right_Margin">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- END HEADER -->
+        <!-- MENU -->
+        <tr id="topMenuRow">
+            <td id="menu" >
+                <asp:Panel ID="pnlMenu" runat="server" Style="z-index: 9999;" />
+            </td>
+        </tr>
+        <!-- END MENU -->
+        <!-- BREADCRUMBS -->
+        <tr runat="server" id="trBreadCrumbRow" visible="false">
+            <td>
+                <table width="100%" class="breadCrumb1">
+                    <tbody>
+                        <tr>
+                            <td align="left">
+                                <asp:Literal runat="server" ID="ltBreadCrumb" />
+                            </td>
+                            <td align="right">
+                                <asp:HyperLink runat="server" NavigateUrl="<%$ Tokens:AdminLink, default.aspx %>" 
+                                    Text="<%$ Tokens:StringResource, admin.common.home %>" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <!-- END BREADCRUMBS -->
+        <!-- BODY -->
+        <tr>            
+            <td id="mainContentBody">
+               <asp:Panel runat="server" style="z-index: -1;">
+                <asp:ContentPlaceHolder ID="bodyContentPlaceholder" runat="server" />
+               </asp:Panel> 
+            </td>
+        </tr>
+        </table>
+        <!-- END BODY -->
+        <!-- FOOTER -->
+        <br clear="all" />
+        <div class="footer" align="center" style="z-index: 9998;">
+                Copyright &copy; AspDotNetStorefront
+        </div>
+        <!-- END FOOTER -->
+    </form>
+   
+    <!-- pre-attach the hover image -->
+    <!--
+    <script type="text/javascript" language="javascript">
+        observeWindowLoad(function() {
+            attachHoverImage('imgShoppingCart');
+            attachHoverImage('imgLogout');
+            attachHoverImage('imgResetCache');
+            attachHoverImage('imgSearch');
+
+            __domLoaded = true;
+        });
+    </script>
+    -->
+</body>
+</html>

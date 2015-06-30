@@ -1,0 +1,40 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=sagepay&type=signup" target="_blank">Sign up for Sage Pay (formerly Protx)</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=sagepay&type=info" target="_blank">Learn more about Sage Pay (formerly Protx)</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=sagepay&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Sage Pay (formerly Protx)]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Vendor Name"><Name>SagePayUK.Vendor</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Use Simulator"><Name>SagePayUK.UseSimulator</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Live.Abort</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Live.Callback</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Live.Purchase</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Live.Refund</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Live.Release</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Simulator.Abort</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Simulator.Callback</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Simulator.Purchase</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Simulator.Refund</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Simulator.Release</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Test.Abort</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Test.Callback</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Test.Purchase</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Test.Refund</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayUKURL.Test.Release</Name></AppConfig>
+</ConfigurationAtom>

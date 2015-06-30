@@ -1,0 +1,10 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\GatewayCheckoutByAmazon.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\GatewayCheckoutByAmazon.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCommon.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCore.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\CBASDK.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\MarketplaceWebService.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCommon.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.pdb

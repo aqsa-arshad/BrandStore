@@ -1,0 +1,27 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/payleap.jpg" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payleap&type=info" target="_blank">Learn more about PayLeap</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payleap&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure PayLeap]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Username"><Name>PayLeap.UserName</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Password"><Name>PayLeap.Password</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="LIVE_URL"><Name>PayLeap.LIVE_URL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TEST_URL"><Name>PayLeap.TEST_URL</Name></AppConfig>
+</ConfigurationAtom>

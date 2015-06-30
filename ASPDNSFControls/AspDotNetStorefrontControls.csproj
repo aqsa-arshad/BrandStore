@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0249CF6E-1CD6-4F6F-953F-5EF1A3BC71F9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AspDotNetStorefrontControls</RootNamespace>
+    <AssemblyName>AspDotNetStorefrontControls</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\AssemblyReferences\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AddressControl.cs" />
+    <Compile Include="AlphaPaging.cs" />
+    <Compile Include="BaseControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaseKitGroupControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaseSelectList.cs" />
+    <Compile Include="BaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CartSummary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EmailValidator.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="GroupRadioButton.cs" />
+    <Compile Include="CreditCardPanel.cs" />
+    <Compile Include="CurrencySelectList.cs" />
+    <Compile Include="DataCheckBox.cs" />
+    <Compile Include="Echeck.cs" />
+    <Compile Include="EntityControl.cs" />
+    <Compile Include="Extenders\TextStateChangePostbackBehavior.cs" />
+    <Compile Include="ISplashHost.cs" />
+    <Compile Include="LanguageSelectList.cs" />
+    <Compile Include="MobileShoppingCartControl.cs" />
+    <Compile Include="NewsletterControl.cs" />
+    <Compile Include="NumericRangePaging.cs" />
+    <Compile Include="NumericSequencePaging.cs" />
+    <Compile Include="PaymentMethod.cs" />
+    <Compile Include="PollControl.cs" />
+    <Compile Include="ScriptControls.Designer.cs" />
+    <Compile Include="Search.cs" />
+    <Compile Include="SearcheableTemplate.cs" />
+    <Compile Include="ShippingAndTaxEstimateTableControl.cs" />
+    <Compile Include="ShippingAndTaxEstimatorAddressControl.cs" />
+    <Compile Include="ShippingAndTaxEstimatorControl.cs" />
+    <Compile Include="ShippingMethodControl.cs" />
+    <Compile Include="ShippingMethodControlActionList.cs" />
+    <Compile Include="ShippingMethodControlDesigner.cs" />
+    <Compile Include="ShoppingCartControl.cs" />
+    <Compile Include="ShoppingCartLineItemDescriptionControl.cs" />
+    <Compile Include="NewsletterControlService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TableBuilder.cs" />
+    <Compile Include="Validators\AddressValidator.cs" />
+    <Compile Include="Validators\Over13Validator.cs" />
+    <Compile Include="Validators\PasswordValidator.cs" />
+    <Compile Include="Validators\SecurityCodeValidator.cs" />
+    <Compile Include="Validators\ZipCodeValidator.cs" />
+    <Compile Include="VatSelectList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASPDNSFCommon\AspDotNetStorefrontCommon.csproj">
+      <Project>{65E8266F-BD0A-4C2A-B7DE-13AEE9DF0FAE}</Project>
+      <Name>AspDotNetStorefrontCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFCore\AspDotNetStorefrontCore.csproj">
+      <Project>{06ED156E-CA02-4A2B-80C4-EEED5A84E9F9}</Project>
+      <Name>AspDotNetStorefrontCore</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontAdmin\AspDotNetStorefrontAdmin.csproj">
+      <Project>{95BAAED0-49ED-4190-8D4F-783694A8F3CB}</Project>
+      <Name>AspDotNetStorefrontAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontPromotions\AspDotNetStorefrontPromotions.csproj">
+      <Project>{0D9EB42C-B770-4F86-961F-9D1DE341BFCE}</Project>
+      <Name>AspDotNetStorefrontPromotions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Extenders\TextStateChangePostbackBehavior.js" />
+    <Content Include="NewsletterControl.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ScriptControls.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MultiStore\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,2955 @@
+﻿/********************************************************/
+/*  Filename:   StyleSheet.css
+    
+    Author:     AspDotNetStorefront.com
+    
+    Theme:      Admin_Default
+    
+    Synopsis:   Contains ONLY theme-wide CSS classes.
+                This file is automatically loaded by a
+                child-page when the theme is set to
+                Admin_Default.
+                                                        */
+/********************************************************/
+
+
+
+/********************************************************/
+/* DEFAULT ELEMENT STYLES                               */
+/********************************************************/
+
+TD, SPAN, LI, BODY, P
+{
+    font-size: 11px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+HTML, BODY, FORM
+{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+FORM.AdminForm
+{
+    padding-bottom: 25px;
+}
+
+OPTION, SELECT, INPUT, TEXT, TEXTAREA, SUBMIT
+{
+    color: #444444;
+    font-size: 11px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+A
+{
+    color: #068FE0;
+    text-decoration: none;
+}
+
+A:visited
+{
+    color: #068FE0;
+    text-decoration: none;
+}
+
+A:link
+{
+    color: #068FE0;
+    text-decoration: none;
+}
+
+A:visited
+{
+    color: #068FE0;
+    text-decoration: none;
+}
+
+A:hover
+{
+    color: #068FE0;
+    text-decoration: underline;
+}
+
+ul
+{
+    list-style-type: none;
+    list-style-position: outside;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+li
+{
+    margin-left: 0px;
+    margin-top: 5px;
+}
+
+P
+{
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+SUP
+{
+    font-size: 10px;
+}
+
+.page-wrap{
+	padding: 16px;
+}
+
+/* grid system */
+
+.page-row {
+	width: 100%;
+	margin: 10px 0px 10px 0px;
+}
+
+	.page-row:before,
+	.page-row:after {
+		content: " ";
+		display: table;
+	}
+
+	.page-row:after {
+		clear: both;
+	}
+
+.one-half {
+	width: 57%;
+}
+
+.one-third {
+	width: 31%;
+}
+
+.two-thirds {
+	width: 62%;
+}
+
+.one-fourth {
+	width: 23%;
+}
+
+.three-fourths {
+	width: 73%;
+}
+
+.one-fifth {
+	width: 17%;
+}
+
+.two-fifths {
+	width: 38%;
+}
+
+.three-fifths {
+	width: 58%;
+}
+
+.four-fifths {
+	width: 78%;
+}
+
+.one-sixth {
+	width: 14%;
+}
+
+.one-half, .one-third, .two-thirds, .one-fourth, .three-fourths, .one-fifth, .two-fifths, .three-fifths, .one-sixth, .four-fifths {
+	display: inline; /*ie6*/
+	float: left;
+	margin-left: 2%;
+}
+.one-half:first-child, .one-third:first-child, .two-thirds:first-child, .one-fourth:first-child, .three-fourths:first-child, .one-fifth:first-child, .two-fifths:first-child, .three-fifths:first-child, .one-sixth:first-child, .four-fifths {
+	margin-left: 0;
+}
+
+/* clear fix */
+.clearfix:after, .colwrap:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+/********************************************************/
+/* Default resets for Telerik controls                  */
+/********************************************************/
+
+.RadWindow .rwControlButtons li
+{
+	margin-top: 0px;
+}
+
+
+/********************************************************/
+/* BUTTON STYLES                                        */
+/********************************************************/
+
+.normalButtons
+{
+    border: 1px solid #BBBDCC;
+    height: 18px;
+    padding-left: 3px;
+    color: #ffffff;
+    font-size: 8pt;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    font-weight: normal;
+    background: url(./images/button.jpg);
+    cursor: pointer;
+    border-right: #00326F 1px solid;
+    border-top: #00326F 1px solid;
+    border-left: #00326F 1px solid;
+    border-bottom: #00326F 1px solid;
+}
+
+.normalButtons a
+{
+    border: 1px solid #BBBDCC;
+    height: 18px;
+    padding-left: 3px;
+    color: #ffffff;
+    font-size: 8pt;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    font-weight: normal;
+    background: url(./images/button.jpg);
+    cursor: pointer;
+}
+
+:hover.normalButtons
+{
+    border: 1px solid #BBBDCC;
+    height: 18px;
+    padding-left: 3px;
+    color: #ffffff;
+    font-size: 8pt;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+    font-weight: normal;
+    background: url(./images/button2.jpg);
+}
+
+
+/********************************************************/
+/* OTHER STYLES                                         */
+/********************************************************/
+
+.default
+{
+    color: #444444;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+
+.pageTitle
+{
+    margin: 5px 5px 5px 8px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #19437D;
+}
+
+.title
+{
+    color: #99CC33;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.SectionTitleText
+{
+    color: #000000;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+}
+
+A.SectionTitleText
+{
+    color: #000000;
+    text-decoration: underline;
+}
+
+A.SectionTitleText:link
+{
+    color: #000000;
+    text-decoration: underline;
+}
+
+A.SectionTitleText:visited
+{
+    color: #000000;
+    text-decoration: underline;
+}
+
+A.SectionTitleText:active
+{
+    color: #000000;
+    text-decoration: underline;
+}
+
+A.SectionTitleText:hover
+{
+    color: #000000;
+    text-decoration: underline;
+}
+
+.divBox
+{
+    border-right: #19437D 1px solid;
+    border-top: #19437D 1px solid;
+    border-left: #19437D 1px solid;
+    border-bottom: #19437D 1px solid;
+}
+
+.divBox2
+{
+    border-right: #19437D 1px solid;
+    border-top: #19437D 1px solid;
+    border-left: #19437D 1px solid;
+    border-bottom: #19437D 1px solid;
+    left: 0px;
+    right: 0px;
+    margin: 10px 15px 10px 15px;
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+}
+
+.ordercustomer
+{
+    background: #DFECFF;
+    border-left: #294167 1px solid;
+    border-right: #294167 1px solid;
+}
+
+
+.commandStyle
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+#container .titleTable
+{
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+    background-color: #19437D;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#container .titleTablemenu
+{
+    background-color: #19437D;
+    height: 25px;
+    color: #ffffff;
+    width: 100%;
+    font-weight: bold;
+}
+
+#container .titleTable a
+{
+    color: #19437D;
+    text-decoration: underline;
+}
+
+#container .titleTable a:hover
+{
+    color: #19437D;
+    text-decoration: none;
+}
+
+
+/********************************************************/
+/* TOOLTIP STYLES                                       */
+/********************************************************/
+
+.AdminSiteTooltip
+{
+    border: 0;
+    cursor: pointer;
+    vertical-align: text-bottom;
+}
+
+#dhtmltooltip
+{
+    position: absolute;
+    left: -300px;
+    width: 150px;
+    padding: 2px;
+    background-color: #b7ccfb;
+    visibility: hidden;
+    z-index: 100; /*Remove below line to remove shadow. Below line should always appear last within this CSS*/
+    filter: progid:DXImageTransform.Microsoft.Shadow(color=gray,direction=135);
+}
+
+#dhtmlpointer
+{
+    position: absolute;
+    left: -300px;
+    z-index: 101;
+    visibility: hidden;
+}
+
+#fixedtipdiv
+{
+    position: absolute;
+    padding: 3px 5px 3px 5px;
+    border: 1px dashed #666666;
+    font: normal 10px Verdana;
+}
+
+
+
+/********************************************************/
+/* TABLE STYLES                                         */
+/********************************************************/
+
+.DarkCellText
+{
+    color: #FFFFFF;
+    font-family: Verdana, Geneva, arial,helvetica;
+    font-size: 11px;
+    font-weight: normal;
+}
+A.DarkCellText
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+A.DarkCellText:link
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+A.DarkCellText:visited
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+A.DarkCellText:active
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+A.DarkCellText:hover
+{
+    color: #BB9500;
+    text-decoration: none;
+}
+
+/*Products  table*/
+.table-header
+{
+    background-color: #294167;
+    height: 31px;
+    height: 31px;
+    color: #ffffff;
+    font-size: 8pt;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+.table-row
+{
+    height: 25px;
+    color: #00537E;
+}
+
+.table-row2
+{
+    border: 0px;
+    height: 35px;
+    background-color: #DFECFF;
+    color: #00537E;
+}
+
+.table-row a
+{
+    color: #00537E;
+}
+
+.table-row2 a
+{
+    color: #00537E;
+}
+
+.table-alternatingrow
+{
+    background-color: #C2DAFC;
+    color: #595959;
+    height: 25px;
+}
+
+.table-alternatingrow2
+{
+    background-color: #C2DAFC;
+    height: 35px;
+    color: #00537E;
+}
+
+.table-alternatingrow a
+{
+    color: #00537E;
+}
+
+.table-alternatingrow2 a
+{
+    color: #00537E;
+}
+
+
+.table-alternaterow a
+{
+    color: #00537E;
+}
+
+.table-footer
+{
+    background-color: #294167;
+    height: 12px;
+}
+
+.tablenormal
+{
+    font-size: 8pt;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    height: 28px;
+    background-color: #19437D;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.tabletdnormal
+{
+    border: 0px;
+    height: 19px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #005784;
+    font-size: 8pt;
+    font-weight: normal;
+}
+
+.tabletdalternormal
+{
+    border: 0px;
+    height: 19px;
+    background-color: #C2DAFC;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #005784;
+    font-size: 8pt;
+}
+
+.tabletdnormal a, link, active, visited
+{
+    text-decoration: none;
+    color: #005784;
+    font-size: 8pt;
+}
+
+.tabletdnormal a:hover
+{
+    text-decoration: underline;
+}
+.tabletdalternormal a, link, active, hover, visited
+{
+    text-decoration: none;
+    color: #005784;
+    font-size: 8pt;
+}
+
+.tabletdalternormal a:hover
+{
+    text-decoration: underline;
+}
+
+.tableleft-td
+{
+    width: 3px;
+    height: 3px;
+    background-image: url(./images/top2_26.jpg);
+}
+
+.tableleft-td2
+{
+    height: 3px;
+    background-image: url(./images/top2_28.jpg);
+    width: 100%;
+}
+
+.tableoverallGrid
+{
+    border: 0;
+    font-size: 11px;
+    padding: 0px;
+    margin: 0px;
+    color: #005784;
+    font-weight: normal;
+}
+
+.tableheaderGrid
+{
+    font-size: 8pt;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    height: 28px;
+    background-image: url(./images/top2_38.jpg);
+}
+
+.tableheaderGrid a
+{
+    color: #fff;
+    font-weight: normal;
+    font-size: 8pt;
+    text-decoration: underline;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+.tableDataCellGrid
+{
+    border: 0px;
+    height: 19px;
+    background-color: #DFECFF;
+    color: #005784;
+}
+
+.tableDataCellGridAlt
+{
+    background-color: #C2DAFC;
+    height: 19px;
+    color: #005784;
+}
+
+.tableDataCellGridEdit
+{
+    height: 19px;
+    color: #005784;
+    background-color: #4A86DC;
+    padding-left: 5px;
+}
+
+.tableselectData
+{
+    white-space: normal;
+}
+
+.tablenormalData
+{
+    white-space: normal;
+}
+
+.tablelightData
+{
+    color: #005784;
+    white-space: normal;
+}
+
+.tablelighterData
+{
+    color: #005784;
+    white-space: normal;
+    font-family: Tahoma,Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 8pt;
+}
+
+.tablelightestData
+{
+    color: #005784;
+    white-space: normal;
+    font-family: Tahoma,Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 8pt;
+}
+
+.tablefooterGrid
+{
+    background-color: #EBEBEB;
+    font-size: 11px;
+    text-align: center;
+    color: #005784;
+    padding: 2px 15px 2px 15px;
+}
+
+.tablepagerGrid
+{
+    background-image: url(./images/td-bckground_28.jpg);
+    height: 19px;
+}
+
+.tablepagerGrid a
+{
+    color: #005784;
+    text-decoration: none;
+}
+.tablepagerGrid a:link
+{
+    color: #005784;
+    text-decoration: none;
+}
+.tablepagerGrid a:visited
+{
+    color: #005784;
+    text-decoration: none;
+}
+.tablepagerGrid a:active
+{
+    color: #005784;
+    text-decoration: none;
+}
+.tablepagerGrid a:hover
+{
+    color: #005784;
+    text-decoration: underline;
+}
+
+
+/********************************************************/
+/* GRID STYLES                                          */
+/********************************************************/
+
+.gridHeader
+{
+    background-color: #294167;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    font-size: 10pt;
+    height: 21px;
+}
+
+.gridHeader a
+{
+    color: #ffffff;
+}
+
+.gridHeaderSmall
+{
+    background-color: #294167;
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 8pt;
+    height: auto;
+}
+
+.gridHeaderSmall a
+{
+    color: #ffffff;
+}
+
+.gridRow
+{
+    background-color: #DFECFF;
+    color: #444444;
+}
+
+.gridRowPlain
+{
+    background-color: #DFECFF;
+    text-align: justify;
+    font-weight: normal;
+    color: #595959;
+    height: 22px;
+}
+
+
+.gridAlternatingRow
+{
+    background-color: #C2DAFC;
+    color: #595959;
+    text-align: left;
+    font-weight: normal;
+    height: 22px;
+}
+
+
+.gridAlternatingRowPlain
+{
+    background-color: #C2DAFC;
+    color: #595959;
+    text-align: justify;
+    font-weight: normal;
+    height: 22px;
+}
+
+
+
+.gridFooter
+{
+    background-color: #294167;
+    height: 5px;
+}
+
+
+.headers
+{
+    background-color: #477EC6;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.gridEdit
+{
+    background-color: #4A86DC;
+}
+
+.gridEdit2
+{
+    background-color: #4A86DC;
+    color: #ffffff;
+}
+
+.gridEdit2 a
+{
+    color: #ffffff;
+}
+
+
+.gridPager a
+{
+    color: #708090;
+    text-decoration: none;
+}
+
+.gridPager a:link
+{
+    color: #708090;
+    text-decoration: none;
+}
+
+.gridPager a:visited
+{
+    color: #a9a9a9;
+    text-decoration: none;
+}
+
+.gridPager a:active
+{
+    color: #ff0033;
+    text-decoration: none;
+}
+
+.gridPager a:hover
+{
+    color: #708090;
+    text-decoration: underline;
+}
+
+
+.SmallGridText
+{
+    font-family: Verdana, Geneva, arial,helvetica;
+    font-size: 9px;
+    font-weight: normal;
+}
+
+
+
+/********************************************************/
+/* BREADCRUMB STYLES                                    */
+/********************************************************/
+
+.toppage
+{
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #b7ccfb;
+    height: 25px;
+}
+
+.breadCrumb1
+{
+    color: #2F577A;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.breadCrumb1 a
+{
+    color: #068FE0;
+    font-weight: normal;
+}
+
+.breadCrumb2
+{
+    color: #2F577A;
+    font-weight: normal;
+    padding-left: 5px;
+}
+
+.breadCrumb3
+{
+    color: #2F577A;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+}
+
+.breadCrumb3 a
+{
+    color: #068FE0;
+    font-weight: normal;
+}
+
+
+.breadCrumbTitleText
+{
+    color: #2F577A;
+    font-weight: normal;
+}
+
+
+
+/********************************************************/
+/* TEXTBOX STYLES                                       */
+/********************************************************/
+
+.textbox
+{
+    font-size: 8pt;
+    padding-left: 4px;
+    border: #708090 1px solid;
+    width: 200px;
+    background-color: #ffffff;
+}
+
+.textbox2
+{
+    font-size: 8pt;
+    padding-left: 4px;
+    border: #708090 1px solid;
+    width: 150px;
+    background-color: #ffffff;
+}
+
+.textBox3
+{
+    font-size: 8pt;
+    padding-left: 4px;
+    border: #708090 1px solid;
+    width: 50px;
+    background-color: #ffffff;
+}
+
+.textBox4
+{
+    font-size: 8pt;
+    color: #444444;
+    background-color: Transparent;
+    border: 0px;
+    width: 40px;
+}
+
+.textBox20
+{
+    font-size: 8pt;
+    padding-left: 4px;
+    border: #708090 1px solid;
+    width: 25px;
+    background-color: #ffffff;
+}
+
+.textBox30
+{
+    font-size: 8pt;
+    padding-left: 4px;
+    border: #708090 1px solid;
+    width: 30px;
+    background-color: #ffffff;
+}
+
+
+/********************************************************/
+/* INFO MESSAGE STYLES                                  */
+/********************************************************/
+
+.errorMsg
+{
+    font-weight: bold;
+    color: #ff0000;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.noticeMsg
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.blueNoticeMsg
+{
+    font-weight: bold;
+    color: #0000FF;
+}
+
+
+/********************************************************/
+/* MASTER PAGE STYLES                                   */
+/********************************************************/
+
+#wrapperTable
+{
+    height: 100%;
+}
+
+#mainContentBody
+{
+    padding-bottom: 22px;
+    margin-top: 123px;
+    height: 100%;
+    vertical-align: top;
+}
+
+#trBreadCrumbRow
+{
+    width: 100%;
+    height: 10px;
+}
+
+.Top
+{
+    height: 83px;
+}
+
+#Top_Left
+{
+    background: url(images/top_left.jpg) no-repeat;
+    width: 561px;
+    height: 83px;
+    color: #ffffff;
+    font-weight: normal;
+}
+#Top_Left2
+{
+    background: url(images/top_left.jpg) no-repeat;
+    width: 561px;
+    height: 83px;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.adminUserIcon
+{
+    vertical-align:middle;
+    width: 20px;
+    padding-top: 0px;
+    height: 28px;
+}
+
+.adminUserName
+{
+    vertical-align:middle;
+    color: #ffffff;
+}
+
+.adminUserName a:hover
+{
+    color: #ffffff;
+    width: 300px;
+}
+
+.adminUserName a, .adminUserName a:active, .adminUserName a:visited, .adminUserName a:link
+{
+    color: #ffffff;
+}
+
+
+.admin_SiteName
+{
+    color: #ffffff;
+}
+
+.admin_SiteName a
+{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+#topHeaderRow
+{
+    height: 83px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#topMenuRow
+{
+    height: 30px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.Top_Right
+{
+    background: url(images/top_right.jpg) repeat-x top right;
+    width: 600px;
+    height: 83px;
+}
+
+.Top_Right_Margin
+{
+    background: url(images/top_center.jpg) repeat-x top;
+    height: 83px;
+    width: 10px;
+}
+
+.Top_Center
+{
+    background: url(images/top_center.jpg) repeat-x top;
+    height: 83px;
+}
+
+#menu
+{
+    background: url(images/menu.jpg) repeat;
+    height: 30px;
+}
+
+.footer
+{
+    color: #FFFFFF;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 8.5pt;
+    font-weight: normal;
+    background: url(images/BG_footer.jpg) repeat;
+    height: 22px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+
+body
+{
+	padding: 0px;
+	margin: 0px; /*overflow:  auto;*/
+}
+
+
+
+.right_banner
+{
+    background: url(images/banner_right.jpg) no-repeat;
+    width: 785px;
+    height: 120px;
+}
+
+
+.Search_textbox
+{
+    background: url(images/textboxBG.jpg);
+    width: 142px;
+    height: 17px;
+    line-height: 12pt;
+    padding-top: 4px;
+    margin-bottom: 1px;
+    border: 0px;
+    padding-left: 3px;
+    margin-top: 0px;
+    vertical-align: top;
+    background-color: transparent !important;
+}
+
+
+#toplink
+{
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 8.5pt;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#toplink a, #toplink a:active, #toplink a:visited, #toplink a:link
+{
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 8.5pt;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#toplink a:hover
+{
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 8.5pt;
+    color: #FFFFFF;
+    text-decoration: underline;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+
+.DisplayOutOfStockGroup
+{
+    border: dashed 1px #ddd;
+    width: 500px;
+    margin: 0px 10px 10px 10px;
+    padding: 5px 0px 10px 30px;
+}
+
+.DisplayOutOfStockGroup table
+{
+    width: 100%;
+}
+
+.logintext
+{
+    background: transparent url(images/signtext2.png) no-repeat left center;
+    padding-left: 5px;
+    padding-top: 5px;
+    text-align: left;
+}
+
+.verificationtext
+{
+    background: transparent url(images/verificationtxt.png) no-repeat right center;
+    padding-left: 5px;
+    padding-top: 5px;
+    text-align: right;
+    width: 160px;
+}
+
+.chgpwdtext
+{
+    background: transparent url(images/signtext2.png) no-repeat left center;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+}
+
+.securitycodetext
+{
+    background: transparent url(images/securitycode.png) no-repeat left center;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 15px;
+    text-align: left;
+}
+
+
+.logintextbg
+{
+    border: none;
+    background-color: Transparent;
+}
+
+.loginbody
+{
+    margin: 0px;
+    overflow: auto;
+    background: url(images/bgblue.jpg) repeat;
+}
+
+.loginbgmid
+{
+    background: url(images/bgmid.png) repeat-y left;
+}
+
+.loginfooter
+{
+    background: url(images/bottomblue.png) no-repeat;
+}
+
+/********************************************************/
+/* SEARCHABLETEMPLATE AND MODAL POPUP STYLES            */
+/********************************************************/
+
+
+.modal_popup
+{
+    background-color: White;
+    width:620px;
+}
+.modal_popup_background
+{
+    opacity: 0.7;
+    background-color: Gray;
+    filter: alpha(opacity = 70);
+}
+.modal_popup_Header
+{
+    background: url(images/modal_popup_headerbg.jpg) repeat;
+    height: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: White;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.modal_popup_Content
+{
+    padding: 10px;
+    padding-right:0;
+	max-height:450px;
+	overflow:auto;
+}
+.modal_popup_Content table
+{
+    border-style: none;
+}
+.modal_popup_Content table td
+{
+    border-style: none;
+}
+.modal_popup_Footer
+{
+    border-top: solid 1px #ccc;
+    margin-left: 25px;
+    margin-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+.modal_popup_Header_Close
+{
+    float: right;
+    padding-right: 7px;
+}
+.config_alternating_item
+{
+    background-color: #eee;
+}
+.alpha_filters_column
+{
+    background-color: #2F577A;
+    width: 30px;
+    text-align: center;
+    vertical-align: top;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+.alpha_filters
+{
+    min-height: 500px;
+    height: auto !important;
+    min-height: 500px;
+}
+.alpha_filters_column a, .alpha_filters_column span
+{
+    color: #fff;
+}
+.pnlMain
+{
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+}
+.config_error
+{
+    color: red;
+}
+
+/********************************************************/
+/* STRINGRESOURCE PAGE STYLES                           */
+/********************************************************/
+
+.duplicated_string
+{
+    font-weight: bold;
+}
+
+
+/********************************************************/
+/* ENTITY EDIT PAGE STYLES                              */
+/********************************************************/
+
+.rsplbMenuContentSplitter
+{
+    /*     width: 2px;     */
+}
+
+.rspltMain
+{
+    width: 100%;
+    padding-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.rpnContent
+{
+}
+
+
+/********************************************************/
+/* STORE MAINTENANCE STYLES                             */
+/********************************************************/
+
+.store_normal td, .store_unpublished td, .store_deleted td
+{
+    padding-left: 4px;
+    padding-right: 4px;
+    border: 1px #d0d7e5;
+    border-style: none none solid solid;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.store_normal > td:first-child, .store_unpublished > td:first-child, .store_deleted > td:first-child
+{
+    border-left-color: #fff;
+}
+
+.store_unpublished td
+{
+    background-color: #CBCDB5;
+}
+
+.store_deleted td
+{
+    background-color: #ABABA6;
+}
+
+
+.alpha_filters_column
+{
+    font-family: Courier New;
+    background-color: #2F577A;
+    width: 50px;
+    text-align: center;
+    vertical-align: top;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+
+/*
+    .alpha_filters
+    {
+	    min-height:220px;
+        height:auto !important; 
+        min-height:220px;
+    }
+    */
+
+.alpha_filters_column a, .alpha_filters_column span
+{
+    color: #fff;
+}
+
+.pnlMain
+{
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+}
+
+.config_error
+{
+    color: red;
+}
+
+.map_header a:link
+{
+    color: #068FE0;
+    text-decoration: none;
+}
+
+.content_area
+{
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.modalBackground
+{
+    background-color: Gray;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+.modalBox
+{
+    background-color: #f5f5f5;
+    border-width: 2px;
+    border-style: outset;
+    border-color: Black;
+    padding: 3px;
+}
+
+.url_area table, .url_area tr, .url_area td
+{
+    border-style: none;
+}
+
+.tdUrlCaption
+{
+    width: 10%;
+}
+
+.tdUrl
+{
+    width: 80%;
+}
+
+.tdUrlOptions
+{
+    width: 10%;
+}
+
+
+
+/********************************************************/
+/* KIT EDIT PAGE STYLES                                 */
+/********************************************************/
+
+.admin_kit_container
+{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.admin_kit_group
+{
+    border: solid 1px #ccc;
+    width: 800px;
+    padding-left: 15px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.admin_kit_group .admin_kit_group_id
+{
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.admin_kit_group .admin_kit_group_leftCommand
+{
+    background-color: #eee;
+    border: solid 1px #ccc;
+    width: 30px;
+}
+
+.admin_kit_group .admin_kit_group_content
+{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+.admin_kit_group_validationErrors
+{
+    color: Red;
+}
+
+.admin_kit_group_inputError
+{
+    background-color: #FFEEEE;
+}
+
+.admin_kit_group_newItem
+{
+    color: #71C144;
+}
+
+.modal_popup
+{
+    background-color: White;
+    border: solid 1px #523555;
+}
+
+.modal_popup_background
+{
+    opacity: 0.7;
+    background-color: Gray;
+    filter: alpha(opacity = 70);
+}
+
+.admin_variantList_Header
+{
+    background: url(images/kit/variantListHeader_background.jpg) repeat;
+    height: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: White;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.admin_variantList_Footer
+{
+    background-image: url(images/kit/selectorCell_bg.gif);
+    background-repeat: repeat-y;
+}
+
+.admin_variantList_Header_Close
+{
+    float: right;
+    padding-right: 7px;
+}
+
+.admin_kit_updating_animation
+{
+    float: right;
+    visibility: hidden;
+}
+
+
+
+/********************************************************/
+/* FROM STYLES.CSS                                      */
+/********************************************************/
+
+
+#content .outerTable
+{
+    background-color: #EBEBEB;
+    padding-bottom: 0px; /*5*/
+}
+#content .innerTable
+{
+    background-color: #f9f9f9;
+    width: 100%;
+    height: 100%;
+}
+#content .contentTable
+{
+    padding-left: 5px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+#content .contentTableAP
+{
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+#content .contentTableAPL
+{
+    padding-top: 3px;
+    padding-left: 0px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+
+#content .contentTableNPLR
+{
+    padding-top: 3px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+#content .contentTablePRB
+{
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+#content .contentTableNP
+{
+    padding-bottom: 3px;
+    padding-right: 0px;
+    text-align: left;
+}
+#content .titleTable
+{
+    background-color: #EBEBEB;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+
+.wrapper
+{
+    padding: 5px 5px 5px 5px;
+    background-color: #f9f9f9;
+    margin-left: auto;
+    margin-right: auto;
+}
+.wrapperNR
+{
+    padding: 5px 0px 5px 5px;
+    background-color: #f9f9f9;
+}
+.wrapperExtraTop
+{
+    padding: 10px 5px 5px 5px;
+    background-color: #f9f9f9;
+}
+
+.wrapperLeft
+{
+    padding: 5px 5px 5px 0px;
+    background-color: #f9f9f9;
+}
+.wrapperTopBottom
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #f9f9f9;
+}
+.wrapperBottom
+{
+    padding-bottom: 5px;
+    background-color: #f9f9f9;
+}
+.wrapperTop
+{
+    padding-top: 5px;
+    background-color: #f9f9f9;
+}
+.wrapperRight
+{
+    margin-right: 5px;
+    background-color: #f9f9f9;
+}
+
+/*#help{margin: 5px 5px 5px 5px;}*/
+#help .outerTable
+{
+    background-color: #EBEBEB;
+    margin-left: auto;
+    margin-right: auto;
+}
+#help .innerTable
+{
+    background-color: #f9f9f9;
+}
+#help .contentTable
+{
+    padding-left: 5px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+#help .titleTable
+{
+    background-color: #EBEBEB;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+
+#reportTable
+{
+    text-align: left;
+    font-size: 11px;
+}
+#reportTable .reportOuter
+{
+    background-color: #a2a2a2;
+}
+#reportTable .reportTitle
+{
+    text-align: left;
+    font-size: 11px;
+    background-color: #404040;
+    color: White;
+    font-weight: bold;
+}
+#reportTable .reportHeader
+{
+    text-align: left;
+    font-size: 10px;
+    background-color: #d2d2d2;
+    color: Black;
+    font-weight: bold;
+}
+#reportTable .reportRow
+{
+    text-align: left;
+    font-size: 10px;
+    background-color: #e2e2e2;
+    color: #202020;
+    font-weight: normal;
+}
+
+/* TEXT */
+.title
+{
+    font-weight: bold; /*font-size: 15px;*/
+    font-size: 11px;
+}
+.titleMessage
+{
+    font-style: italic;
+    font-size: 11px;
+}
+
+.subTitle
+{
+    font-weight: bold;
+    font-size: 11px;
+}
+.subTitleSmall
+{
+    font-weight: normal;
+    font-size: 10px;
+    margin-right: 3px;
+    white-space: nowrap;
+}
+
+.exampleText
+{
+    font-size: 10px;
+    font-weight: normal;
+}
+
+/* STANDARD BUTTONS */
+.normalButton
+{
+    color: #000080;
+    font-size: 100%;
+    font-weight: normal;
+    background-color: #fed;
+    border-top-color: #696;
+    border-left-color: #696;
+    border-right-color: #363;
+    border-bottom-color: #363;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+}
+
+.fileUpload
+{
+    color: #000080;
+    font-size: 100%;
+    font-weight: normal;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+}
+
+.stringResourceButton
+{
+    color: #000080;
+    font-family: 'trebuchet ms' ,helvetica,sans-serif;
+    font-size: 100%;
+    font-weight: normal;
+    background-color: #fed;
+    border: 1px solid;
+    border-top-color: #696;
+    border-left-color: #696;
+    border-right-color: #363;
+    border-bottom-color: #363;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+}
+
+
+/* TEXT BOXES */
+.default
+{
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+
+.singleTax
+{
+    width: 55px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+
+.singleShortest
+{
+    width: 45px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.single3chars
+{
+    width: 25px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.single4chars
+{
+    width: 35px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.singleShorter
+{
+    width: 100px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.singleNormal
+{
+    width: 200px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.singleLonger
+{
+    width: 300px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.singleLongest
+{
+    width: 450px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.singleAuto
+{
+    width: 95%;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+
+.singleAutoFull
+{
+    width: 100%;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+
+.multiNormal
+{
+    width: 246px;
+    height: 45px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.multiShorter
+{
+    width: 175px;
+    height: 45px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+
+.multiLong
+{
+    width: 350px;
+    height: 45px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+.multiAuto
+{
+    width: 98%;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+    overflow: visible;
+    border: solid 1px #a2a2a2;
+    margin: 0px 0px 0px 0px;
+}
+
+.multiAutoNormal
+{
+    width: 95%;
+    height: 45px;
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+}
+
+.multiExtension
+{
+    color: #000080;
+    font-family: Verdana, Arial;
+    background-color: #f9f9f9;
+    font-size: 11px;
+    overflow: auto;
+}
+
+
+/* GRID */
+.overallGrid
+{
+    border: solid 1px #a2a2a2;
+    padding: 0px 0px 0px 0px;
+    font-size: 11px;
+}
+
+.headerGrid
+{
+    background-color: #EBEBEB;
+    font-size: 8px;
+    color: #000000;
+    text-align: left;
+    padding-left: 3px;
+    padding-bottom: 2px;
+    padding-right: 3px;
+    padding-top: 2px;
+    font-weight: normal;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.DataCellGrid
+{
+    background-color: #f2f2f2;
+    padding: 1px 2px 1px 2px;
+}
+.DataCellGridAlt
+{
+    background-color: #FFFFE0;
+    padding: 1px 2px 1px 2px;
+}
+.DataCellGridEdit
+{
+    background-color: yellow;
+    padding: 1px 2px 1px 2px;
+}
+.selectData
+{
+    white-space: normal;
+}
+.normalData
+{
+    white-space: normal;
+}
+.lightData
+{
+    color: #404040;
+    white-space: normal;
+}
+.lighterData
+{
+    color: #606060;
+    white-space: normal;
+}
+.lightestData
+{
+    color: #909090;
+    white-space: normal;
+}
+.footerGrid
+{
+    background-color: #EBEBEB;
+    font-size: 11px;
+    text-align: center;
+    color: #303030;
+    padding: 2px 15px 2px 15px;
+}
+
+.pagerGrid
+{
+    background-color: #EBEBEB;
+}
+
+/* CONTRACTABLE HEADERS */
+.switchcontent
+{
+    display: none;
+}
+
+/* SIGNIN STYLES */
+.signin_TableHeader
+{
+    background: url(./images/logoblue.png) no-repeat;
+}
+
+.divMain
+{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 30px;
+}
+
+.divError
+{
+    color: red;
+    font-weight: bold;
+}
+
+.divUpload
+{
+    border: solid 1px #ccc;
+    width: 500px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+}
+
+/* MODAL ATOM STYLES */
+.atomFixedButtons
+{
+	background: #015195;
+	padding: 8px;
+	border-radius: 0px 0px 4px 4px;
+}
+
+.atom_modal_popup
+{
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.6);
+	border-radius: 4px;
+}
+
+.atomFixedHeader
+{
+	line-height: 44px;
+	background: #015195;
+	padding: 10px;
+	color: White;
+	font-weight: bold;
+	font-size: 12px;
+	border-radius: 4px 4px 0px 0px;
+}
+.atomAdvanced
+{
+	float: right;
+}
+.atomInfoCell
+{
+	vertical-align: top;
+}
+.atomDescriptionWrap
+{
+	padding: 10px;
+}
+
+.atomModalContent .atomDescriptionWrap
+{
+	background: #F8F7E2;
+	border: solid 1px #ddd;
+	padding: 10px;
+	color: #7a7903;
+	margin-left: 10px;
+	border-radius: 4px;
+}
+
+.atomModalClose
+{
+	background:url(images/close.png) no-repeat scroll left top;
+	width: 37px;
+	height: 37px;
+	float: right;
+}
+.atomModalClose:hover
+{
+	background:url(images/close.png) no-repeat scroll left bottom;
+}
+
+.pnlOverAtomFixedButtons
+{
+    max-height:500px;
+    overflow:auto;
+}
+.configTitle
+{
+    height:25px;
+    line-height:25px;
+	color: #015093;
+}
+.configTitle b, .configTitle b span
+{
+    padding-left:4px;
+    white-space:nowrap;
+	font-size: 14px;
+}
+
+.expandingLabel .generalInfoImg
+{
+    float:left;
+}
+
+td.textBoxLabel, td.textBox
+{
+    vertical-align:top;
+    line-height:25px;
+}
+.expandingLabel
+{
+    vertical-align:top;
+    text-align:right;
+    padding-top:4px;
+}
+
+h1.modalAtomHeader
+{
+    text-align:center;
+    margin:10px;
+    padding:0px;
+    font-size:18px;
+    font-weight:bold;
+    color:#19437D;
+}
+.storeAppConfigTable
+{
+    padding:2px;
+}
+.storeToggleRowExpanded
+{
+    padding:0px;
+    border:solid 2px #ededed;
+}
+.storeExpandingLabel
+{
+    vertical-align:top;
+    padding-top:6px;
+    white-space:nowrap;
+}
+
+.atomAppConfigEditCell
+{
+	vertical-align: top;
+	width: 400px;
+}
+
+a.atomEditAppConfig
+{
+	width: 148px;
+	height: 27px;
+	display: inline-block;
+	line-height: 27px;
+	text-indent: 8px;
+	font-size: 10px;
+	background: url(images/editAll.png) no-repeat scroll left top;
+	color: #015094;
+	text-decoration: none;
+	text-align: left;
+}
+	.atomEditAppConfig:hover
+	{
+		color: #0165bb;
+	}
+	.atomEditAppConfig.active
+	{
+		background: url(images/editAll.png) no-repeat scroll left bottom;
+	}
+.appconfigTextBox
+{
+	box-shadow: inset 1px 1px 3px rgba(0,0,0,0.4);
+	border: 0px none;
+	border-radius: 6px;
+	padding: 6px;
+	border: solid 2px #fff;
+}
+.appconfigTextBox:focus
+{
+	border: solid 2px #cbe2f5;
+}
+.atomModalContent .atomAppConfigEditWrap
+{
+	background: #efefef;
+	border-radius: 4px;
+	border: solid 1px #ddd;
+	padding: 8px;
+	margin-bottom: 4px;
+}
+.atomLabelCell
+{
+	text-align: right;
+}
+.configWizard .atomAppConfigEditCell
+{
+	background: #f1f1f1;
+	padding: 10px;
+	border: solid 1px #ddd;
+}
+.atomLabel
+{
+	color: navy;
+}
+.atomAppConfigInputCell
+{
+	width: 260px;
+}
+.alternaterows
+{
+	border: solid 1px #ddd;
+	margin: 4px 0px;
+}
+
+.alternaterows tr:nth-child(even)
+{
+    background-color:#f1f1f1;   
+}
+
+.alternaterows th, .alternaterows th a
+{
+    background-color:#7391A7;   
+    font-weight:bold;
+    color:White;
+}
+
+.globalAdmin a {
+	font-size: 11px;
+	color:#0099FF;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height:18px;
+}
+.atomHeaderNotice
+{
+	padding: 8px;
+	background: #EFEFEF;
+	border-radius: 6px;
+	color: #555;
+	text-align: center;
+	font-style: italic;
+	margin-bottom: 8px;
+}
+
+
+.globalAdmin
+{
+	color:#666;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.globalAdminHeading
+{
+	font-size:14px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#666;
+}
+
+.modalTable
+{
+	border-bottom: solid 1px #eee;
+	margin-bottom: 10px;
+	box-shadow: 0px 5px 8px -8px #000;
+}
+.atomModalContent
+{
+	padding: 5px 10px;
+	background: #fff;
+	zoom: 1;
+}
+.atomHeaderButtonPrompt
+{
+	font-size: 12px;
+	font-weight: bold;
+	color: #014e90;
+	line-height: 22px;
+}
+.modalHeader
+{
+	color: #444444;
+}
+
+
+.emphasisButton, a.emphasisButton
+{
+	-moz-box-shadow: inset 0px 1px 0px 0px #ffd6a3;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #ffd6a3;
+	-ms-box-shadow: inset 0px 1px 0px 0px #ffd6a3;
+	box-shadow: inset 0px 1px 0px 0px #ffd6a3;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ff9233), color-stop(1, #cc5f00));
+	background: -moz-linear-gradient(top, #ff9233 5%, #cc5f00 100%);
+	background: -webkit-linear-gradient(top, #ff9233 5%, #cc5f00 100%);
+	background: -ms-linear-gradient(top, #ff9233 5%, #cc5f00 100%);
+	background: linear-gradient(to bottom, #ff9233 5%, #cc5f00 100%);
+	background-color: #ff9233;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid #f77300;
+	display: inline-block;
+	color: #ffffff;
+	font-family: Verdana;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 9px 20px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #e66b00;
+	cursor: pointer;
+}
+
+	.emphasisButton:hover, a.emphasisButton:hover
+	{
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cc5f00), color-stop(1, #ff9233));
+		background: -moz-linear-gradient(top, #cc5f00 5%, #ff9233 100%);
+		background: -webkit-linear-gradient(top, #cc5f00 5%, #ff9233 100%);
+		background: -ms-linear-gradient(top, #cc5f00 5%, #ff9233 100%);
+		background: linear-gradient(to bottom, #cc5f00 5%, #ff9233 100%);
+		background-color: #cc5f00;
+	}
+
+	.emphasisButton:active, a.emphasisButton:active
+	{
+		position: relative;
+		top: 1px;
+	}
+
+
+
+.defaultButton, a.defaultButton
+{
+	-moz-box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	-ms-box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0077BA), color-stop(1, #074D85));
+	background: -moz-linear-gradient(top, #0077BA 5%, #074D85 100%);
+	background: -webkit-linear-gradient(top, #0077BA 5%, #074D85 100%);
+	background: -ms-linear-gradient(top, #0077BA 5%, #074D85 100%);
+	background: linear-gradient(to bottom, #0077BA 5%, #074D85 100%);
+	background-color: #0077BA;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid #0a62a9;
+	display: inline-block;
+	color: #ffffff;
+	font-family: Verdana;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 9px 20px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #0077BA;
+	cursor: pointer;
+}
+
+	.defaultButton:hover, a.defaultButton:hover
+	{
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #074D85), color-stop(1, #0077BA));
+		background: -moz-linear-gradient(top, #074D85 5%, #0077BA 100%);
+		background: -webkit-linear-gradient(top, #074D85 5%, #0077BA 100%);
+		background: -ms-linear-gradient(top, #074D85 5%, #0077BA 100%);
+		background: linear-gradient(to bottom, #074D85 5%, #0077BA 100%);
+		background-color: #074D85;
+	}
+
+	.defaultButton:active, a.defaultButton:active
+	{
+		position: relative;
+		top: 1px;
+	}
+
+
+.defaultButton:disabled, .emphasisButton:disabled {
+	background: #eee;
+	border: 1px solid #ddd;
+	color: #bbb;
+	text-shadow: none;
+	box-shadow: none;
+	cursor: default;
+}
+
+.previewLinkDisabled {
+    -moz-box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	-ms-box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	box-shadow: inset 0px 1px 0px 0px #64c8ff;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0077BA), color-stop(1, #074D85));
+	background: -moz-linear-gradient(top, #0077BA 5%, #074D85 100%);
+	background: -webkit-linear-gradient(top, #0077BA 5%, #074D85 100%);
+	background: -ms-linear-gradient(top, #0077BA 5%, #074D85 100%);
+	background: linear-gradient(to bottom, #0077BA 5%, #074D85 100%);
+	background-color: #0077BA;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid #0a62a9;
+	display: inline-block;
+	color: #ffffff;
+	font-family: Verdana;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 9px 20px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #0077BA;
+	cursor: pointer;
+	background: #eee;
+	border: 1px solid #ddd;
+	color: #bbb;
+	text-shadow: none;
+	box-shadow: none;
+	cursor: default;
+}
+
+.paypalAtomNoticeWrap .atomHeaderNotice
+{
+	float: right;
+	width: 538px;
+	line-height: 20px;
+
+}
+
+
+.paypalAPIButtonWrap
+{
+	float: left;
+	width: 232px;
+}
+	
+/* Config Wizard */
+.configWizard
+{
+	width: 980px;
+}
+
+.wizardButtonWrap
+{
+	padding: 4px;
+	text-align: right;
+	background: #f1f1f1;
+	border: solid 1px #ddd;
+	margin-bottom: 4px;
+}
+
+
+.paymentOptionsTable td
+{
+    vertical-align:middle;   
+    padding:2px 5px;
+}
+
+.paymentRightCell
+{
+    text-align:right;
+}
+
+.paymentCheckBox, .paymentCheckBox input, .paymentCheckBox label
+{
+    vertical-align:middle;
+}
+
+.paymentIcon
+{
+    vertical-align:middle;
+}
+
+.paypalGenericOptions, .paypalCheckoutBtn
+{
+    width:110px;
+}
+
+.lineHeightFix
+{
+	line-height: normal;
+}
+
+.trConfigAtomAdvanced
+{
+	display: none;
+}
+
+.configWizard .textBox
+{
+	padding-left: 10px;
+}
+
+.configSelect
+{
+	width: 264px;
+}
+.configImage
+{
+	width: 148px;
+}
+
+/******* END STYLES FROM STYLESHEET.CSS *******/
+
+.actionelement
+{
+    cursor: pointer;
+}
+
+/* PayPal Setting Page*/
+
+
+
+.bml-panel
+{
+    width:975px;
+}
+
+.configurationWrapper .bannerWrapper
+{
+	margin: 10px 0 10px 0;
+	padding: 10px;
+	border-bottom: solid 1px #eee;
+	margin-bottom: 10px;
+	box-shadow: 0px 5px 8px -8px #000;
+}
+
+.configurationWrapper .sub
+{
+	margin: 10px 0 10px 23px;
+}
+
+.publisherIdWrap
+{
+	margin:10px 0px 0px 0px;
+}
+
+.bannerHeader
+{
+	font-size: 18px;
+	padding: 0 0 10px 0;
+}
+
+.bannerTable
+{
+	margin: 0 0 5px 0;
+}
+
+.scriptWrap
+{
+	border-top: dotted 2px #ccc;
+}
+
+	.scriptWrap div
+	{
+		margin: 3px 0 3px 0;
+	}
+
+.termsWrap
+{
+
+}
+.autoCompleteResults
+{
+	margin-top: 0px;
+	border: solid 1px #ccc;
+	padding: 2px;
+	background: #fff;
+}
+
+.orderFramePromoTable
+{
+	border: solid 1px #777777;
+	font-family: Verdana;
+	font-size: 10px;
+	border-collapse: collapse;
+}
+.orderFramePromoTable th
+{
+	background-color: #003366;
+	color: #fff;
+	padding: 1px 5px;
+	border: solid 1px #777777; 
+	width: 125px;
+}
+.orderFramePromoTable td 
+{
+    padding: 6px;
+}
+.orderFramePromoTableRow
+{
+	color: #000;
+	height: 25px;
+	background-color: #DFECFF;
+}
+.orderFramePromoTableAlternatingRow
+{
+	color: #000;
+	height: 25px;
+	background-color: #C2DAFC;
+}
+
+/********************************************************/
+/* AJAX CONTROL TOOLKIT TAB STYLES                      */
+/********************************************************/
+
+.aspdnsf_Tab .ajax__tab_header
+{
+    font-family: verdana,tahoma,helvetica;
+    font-size: 11px;
+}
+
+/* Default Tab Look */
+.aspdnsf_Tab .ajax__tab_outer
+{
+    color: #000000;
+    font-weight: normal;
+    margin: 0;
+    padding: 0px;
+    font-size: 13px;
+    cursor: hand;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    width: 91px;
+    background-image: url(images/tab2.gif);
+    height: 23px;
+}
+
+.aspdnsf_Tab .ajax__tab_inner
+{
+    height: 23px;
+    text-align: center;
+	width: 100%;
+}
+
+.aspdnsf_Tab .ajax__tab_tab
+{
+    height: 23px;
+    line-height: 20px;
+    text-align: center;
+	width: 100%;
+}
+
+/* On Tab Mouseover */
+.aspdnsf_Tab .ajax__tab_hover .ajax__tab_outer
+{
+    background-image: url(images/tabHover.gif);
+    color: #696969;
+    margin: 0;
+    padding: 0px;
+    width: 91px;
+    height: 23px;
+    font-weight: normal;
+    font-size: 13px;
+    cursor: hand;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.aspdnsf_Tab .ajax__tab_hover .ajax__tab_inner
+{
+    height: 23px;
+}
+
+.aspdnsf_Tab .ajax__tab_hover .ajax__tab_tab
+{
+    height: 23px;
+}
+
+/* Active Tab */
+.aspdnsf_Tab .ajax__tab_active .ajax__tab_outer
+{
+    background-image: url(images/tabSelect.gif);
+    color: #000000;
+    margin: 0;
+    padding: 0px;
+    width: 91px;
+    height: 23px;
+    font-weight: normal;
+    font-size: 13px;
+    cursor: hand;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.aspdnsf_Tab .ajax__tab_active .ajax__tab_inner
+{
+    height: 23px;
+}
+
+.aspdnsf_Tab .ajax__tab_active .ajax__tab_tab
+{
+    height: 23px;
+}
+
+/* Tab Content */
+
+.aspdnsf_Tab .ajax__tab_body .ajax__tab_panel[ID='tabContainer_pnlBasic']
+{
+    margin-top: -1px;
+    padding-bottom: 0px;
+    border-right: #b7ccfb 1px solid;
+    border-left: #b7ccfb 1px solid;
+    border-bottom: #b7ccfb 1px solid;
+    background-color: #F9F9F9;
+    color: #696969;
+    width: 450px;
+}
+
+.aspdnsf_Tab .ajax__tab_body .ajax__tab_panel[ID='tabContainer_pnlEmailSimple'], .aspdnsf_Tab .ajax__tab_body .ajax__tab_panel[ID='tabContainer_pnlEmailAdvanced']
+{
+    margin-top: -1px;
+    padding-bottom: 0px;
+    border-right: #b7ccfb 1px solid;
+    border-left: #b7ccfb 1px solid;
+    border-bottom: #b7ccfb 1px solid;
+    background-color: #F9F9F9;
+    color: #696969;
+    width: 700px;
+}
+
+
+.aspdnsf_Tab .ajax__tab_body .ajax__tab_panel {
+	margin-top: -1px;
+	padding-bottom: 0px;
+	border-right: #b7ccfb 1px solid;
+	border-left: #b7ccfb 1px solid;
+	border-bottom: #b7ccfb 1px solid;
+	background-color: #F9F9F9;
+	color: #696969;
+	width: 1000px;
+}
+
+/* Skin Management Page */
+.skin-navigation{
+	padding-left: 8px;
+	background: #eee;
+	border: solid 1px #ddd;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+a.skin-item-link {
+	padding: 4px 8px 4px 4px;
+	margin: 8px 0;
+	display: block;
+	text-decoration: none;
+	border: solid 1px #eee;
+	position: relative;
+}
+a.skin-item-link:hover{
+	background: #ddd;
+	text-decoration: none;
+	border: solid 1px #ddd;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.skin-item-link.selected, .skin-item-link.selected:hover {
+	background: #fff;
+	text-decoration: none;
+	border: solid 1px #ddd;
+	border-right: solid 1px #fff;
+	margin-right: -1px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	cursor: default;
+}
+
+.skin-image-icon-wrap{
+	height: 50px;
+	width: 82px;
+	vertical-align: middle;
+	text-align: center;
+	display: table-cell;
+	float: left;
+	margin-right: 4px;
+}
+.skin-image-icon{
+	max-height: 100%;
+	max-width: 80px;
+	border: solid 1px #ddd;
+}
+.skin-link-name{
+	font-size: 18px;
+	color: #333;
+	display: table-cell;
+	height: 50px;
+	vertical-align: middle;
+}
+.skin-name{
+	font-size: 18px;
+	color: #333;
+}
+.skin-image{
+	max-width: 100%;
+	box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+.no-image-preview{
+	box-shadow: 0 0 8px rgba(0,0,0,0.4);
+	padding: 16px;
+	font-size: 16px;
+}
+.skin-image-wrap{
+	margin-bottom: 16px;
+}
+.skin-description-wrap{
+	background: #eee;
+	padding: 8px;
+	margin-bottom: 16px;
+}
+.skin-description{
+	font-size: 14px;
+}
+.store-select-wrap{
+	font-size: 16px;
+}
+select.store-select-list{
+	border: solid 1px #ddd;
+	padding: 4px;
+}
+.info-message{
+	padding: 8px;
+	border-radius: 4px;
+	color: #1D7C3A;
+	background: #AAE2BB;
+	border: solid 1px #1D7C3A;
+	font-size: 14px;
+}
+.skin-indicator{
+	position: absolute;
+	z-index: 1;
+	left: -6px;
+	top: -6px;
+	width: 16px;
+	height: 16px;
+	background: #fff url(images/accept.png) no-repeat scroll center center;
+	border: solid 1px #95A57B;
+	border-radius: 50%;
+	padding: 4px;
+}
+.skin-info-item .action-bar {
+	margin-bottom: 15px;
+}

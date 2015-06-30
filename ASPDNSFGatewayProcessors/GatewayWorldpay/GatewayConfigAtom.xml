@@ -1,0 +1,33 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=worldpay&type=signup" target="_blank">Sign up for WorldPay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=worldpay&type=info" target="_blank">Learn more about WorldPay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=worldpay&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure WorldPay]]></Title>  
+  <AppConfig Required="true" Advanced="false" FriendlyName="Installation ID"><Name>WorldPay_InstallationID</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Return URL"><Name>WorldPay_ReturnURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Require AVS Match"><Name>WorldPay_RequireAVSMatch</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Language Locale"><Name>WorldPay_LanguageLocale</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Fix Contact"><Name>WorldPay_FixContact</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Hide Contact"><Name>WorldPay_HideContact</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="On Cancel Auto-Redirect To Cart"><Name>WorldPay_OnCancelAutoRedirectToCart</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live_Server"><Name>WorldPay_Live_Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestMode"><Name>WorldPay_TestMode</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestModeCode"><Name>WorldPay_TestModeCode</Name></AppConfig>
+</ConfigurationAtom>

@@ -1,0 +1,124 @@
+.bodywrapper
+{
+    margin: 10px;
+}
+        
+fieldset
+{
+    border: solid 1px #c3c3c3;
+    margin-bottom: 10px;
+}
+        
+legend, legend span
+{
+    color: #29598D;
+    font-weight: bold;
+    font-size: 10pt;
+}
+        
+.tooltip
+{
+    font-size: 10px;
+    font-weight: normal;
+    border: solid 1px #29598D;
+    background-color: #D6E3F3;
+    padding: 5px;
+}
+        
+.error
+{
+    color: #E80000;
+    font-weight: bold;
+}
+.tdLabel
+{
+    text-align:right;
+}
+.tdButtonRow
+{
+    text-align:center;
+}
+.checkTarget
+{
+    margin:-30px 5px 5px 0px;
+    padding:5px;
+    padding-top:30px;    
+    border: solid 1px #c3c3c3;
+}
+.checkHeader
+{
+    margin:2px 5px;
+    padding:5px;
+}
+span.icon
+{
+    display:inline-block;
+}
+span.icon .ui-button-text
+{
+    padding:0px !important;
+}
+label
+{
+    text-align:right;
+    white-space:nowrap;
+}
+.textfield
+{
+    width:165px;
+}
+
+.pnlRulesDiscounts .emptyCell
+{
+    width:35px;
+}
+
+.checkHeader .icon
+{
+    margin-right:5px;
+}
+
+.multiLineLabel
+{
+    vertical-align:top;
+    padding-top:5px;
+    text-align:right;
+}
+.generalInfoImg
+, .checkToggler
+, .checkLabel
+, .checkHeader input
+, span.icon
+{
+    vertical-align:middle;
+    margin-top:0px;
+    margin-bottom:0px;
+    font-size:12px;
+    display:inline-block;
+}
+
+.tdValue td
+, .tdValue input
+, .tdValue label
+, .tdValue span
+{
+    vertical-align:middle;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+h3.checkHeader
+{
+    font-weight:normal;
+}
+
+.promoFieldTable td
+{
+    padding-top:4px;
+    padding-bottom:4px;
+}
+
+.promoGridTable
+{
+    border:1px solid #000 !important;
+}

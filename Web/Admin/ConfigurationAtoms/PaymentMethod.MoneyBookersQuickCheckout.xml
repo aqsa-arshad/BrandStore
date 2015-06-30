@@ -1,0 +1,51 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/skrill.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skrillquickcheckout&type=signup" target="_blank">Sign Up</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skrillquickcheckout&type=info" target="_blank">More info about Skrill</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skrillquickcheckout&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    
+      <b style="display:block;text-align:center;padding-bottom:10px;">Note that some Skrill credentials are shared across Skrill services.</b>
+    ]]>
+  </HtmlHeader>
+  <Title>Configure Skrill (Moneybookers) Quick Checkout</Title>
+
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="User Login">
+    <Name>Moneybookers.UserLogin</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="User Password">
+    <Name>Moneybookers.UserPassword</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Sender ID">
+    <Name>Moneybookers.SenderID</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Channel ID">
+    <Name>Moneybookers.ChannelID</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Quick Checkout Payment Icon">
+    <Name>Moneybookers.QuickCheckout.PaymentIcon</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Hide Login for Quick Checkout">
+    <Name>Moneybookers.QuickCheckout.HideLogin</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

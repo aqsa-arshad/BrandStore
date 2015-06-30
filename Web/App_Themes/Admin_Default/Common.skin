@@ -1,0 +1,41 @@
+<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%> 
+
+<asp:Textbox runat="server" ForeColor="#000080" BackColor="#f9f9f9" />
+
+<%-- <asp:Button runat="server" BorderStyle="solid" BorderWidth="1" BorderColor="#404040" BackColor="#d2d2d2" ForeColor="#000080" /> --%>
+
+<asp:RadioButtonList Font-Size="10px" CellPadding="0" CellSpacing="0" RepeatDirection="Horizontal" RepeatLayout="Flow" runat="server" />
+
+<asp:DropDownList runat="server" ForeColor="#000080" BackColor="#f9f9f9" Font-Size="12px" />
+
+<asp:TreeView CssClass="treeStyle" runat="server" style="margin-left: -5px;" ShowExpandCollapse="false">
+    <HoverNodeStyle CssClass="hoverNode" />
+    <NodeStyle CssClass="normalNode" NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <ParentNodeStyle NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <LeafNodeStyle NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <RootNodeStyle NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <SelectedNodeStyle CssClass="selectedNode" NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+</asp:TreeView>
+
+<asp:TreeView CssClass="treeStyle" runat="server" style="margin-left: -5px;"  ShowLines="true" NodeWrap="true" ShowExpandCollapse="true" SkinID="PhoneOrder" >
+    <HoverNodeStyle CssClass="hoverNode" />
+    <NodeStyle CssClass="normalNode" NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <ParentNodeStyle NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <LeafNodeStyle NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+    <RootNodeStyle NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" Font-Bold="true" />
+    <SelectedNodeStyle CssClass="selectedNode" NodeSpacing="0" VerticalPadding="0" HorizontalPadding="0" ChildNodesPadding="0" />
+</asp:TreeView>

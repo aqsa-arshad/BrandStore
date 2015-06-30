@@ -1,0 +1,29 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payjunction&type=signup" target="_blank">Sign up for PayJunction</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payjunction&type=info" target="_blank">Learn more about PayJunction</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=payjunction&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure PayJunction]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Logon"><Name>PAYJUNCTION_LOGON</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Password"><Name>PAYJUNCTION_PASSWORD</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="LIVE_SERVER"><Name>PAYJUNCTION_LIVE_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TEST_SERVER"><Name>PAYJUNCTION_TEST_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="HTTP_VERSION"><Name>PAYJUNCTION_HTTP_VERSION</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="SECURITY_DESCRIPTOR"><Name>PAYJUNCTION_SECURITY_DESCRIPTOR</Name></AppConfig>
+</ConfigurationAtom>

@@ -1,0 +1,87 @@
+
+#imageViewer {
+	margin-bottom: 8px;
+}
+
+#imageViewerTop {
+	margin-bottom: 8px;
+}
+
+#productImageWrap {
+	background: #fff;
+	text-align: center;
+	border: solid 1px #ccc;
+}
+
+#viewLarger {
+	float: left;
+	height: 50px;
+	width: 50px;
+}
+
+#viewControlsWrap .linkWrap, #showLarger .linkWrap {
+	float: left;
+	border: solid 1px #ccc;
+	display: inline;
+	margin: 4px 4px 0px 0px;
+}
+
+#viewControlsWrap img, #showLarger .showLargerLink {
+	width: 50px;
+	height: 50px;
+}
+
+.showLargerLink {
+	display: block;
+	background: url(CustomImages/zoomButton.gif) no-repeat left top;
+}
+/* end image viewer */
+
+#productRightCol {
+	width: 423px;
+	float: right;
+}
+
+#colorControls {
+	margin: 10px 0px;
+}
+
+	#colorControls .linkWrap {
+		float: left;
+		border: solid 1px #ccc;
+		margin: 0px 4px 4px 0px;
+		display: inline;
+	}
+
+		#colorControls .linkWrap img {
+			width: 50px;
+			height: 50px;
+		}
+
+#colorOptionsLabel, #viewOptionsLabel {
+	margin: 0px 0px 5px 0px;
+	font-weight: bold;
+}
+
+.ProductHeader {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#productPriceWrap {
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+#productOptionsWrap {
+	margin-bottom: 5px;
+}
+
+.productImage, .productImageLink {
+	max-width: 100%;
+}
+
+.j-zoom {
+	display: inline-block;
+	position: relative;
+}

@@ -1,0 +1,35 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[]]>
+  </HtmlHeader>
+  <Title>Configure Credit Card Processing</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Transaction Mode">
+    <Name>TransactionMode</Name>
+    <ContextualDescription>
+      <![CDATA[]]>
+    </ContextualDescription>
+  </AppConfig>
+  
+  <AppConfig Required="false" Advanced="false" FriendlyName="Store Credit Cards">
+    <Name>StoreCCInDB</Name>
+    <ContextualDescription>
+      <![CDATA[]]>
+    </ContextualDescription>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Validate Card Numbers">
+    <Name>ValidateCreditCardNumbers</Name>
+    <ContextualDescription>
+      <![CDATA[]]>
+    </ContextualDescription>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="3DSecure Card Types">
+    <Name>3DSecure.CreditCardTypeIDs</Name>
+    <ContextualDescription>
+      <![CDATA[]]>
+    </ContextualDescription>
+  </AppConfig>
+  
+</ConfigurationAtom>

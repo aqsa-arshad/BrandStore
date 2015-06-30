@@ -1,0 +1,33 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=ogone&type=info" target="_blank">Learn more about Ogone</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=ogone&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Ogone]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="PSP ID"><Name>Ogone.PSPID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="User ID"><Name>Ogone.USERID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="PSWD"><Name>Ogone.PSWD</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="SHA Signature"><Name>Ogone.SHASignature</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Use 3-Tier Mode"><Name>Ogone.Use3TierMode</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="LivePostURL"><Name>Ogone.LivePostURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveServer"><Name>Ogone.LiveServer</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveServerOrder"><Name>Ogone.LiveServerOrder</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestPostURL"><Name>Ogone.TestPostURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestServer"><Name>Ogone.TestServer</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestServerOrder"><Name>Ogone.TestServerOrder</Name></AppConfig>
+</ConfigurationAtom>

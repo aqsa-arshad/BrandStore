@@ -1,0 +1,41 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <div class="modalTable">
+        <table width="100%" cellpadding="4" cellspacing="0">
+          <tr>
+            <td>
+              <img src="images/PayPal_PaymentsAccepted.gif" border="0"/>
+            </td>
+            <td class="globalAdmin" align="right">
+              <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentsadvanced&type=signup" target="_blank">Sign Up for PayPal Payments Advanced</a><br />
+              <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentsadvanced&type=info" target="_blank">More info about PayPal Payments Advanced</a><br />
+              <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentsadvanced&type=manual" target="_blank">Configuration Help</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="atomHeaderNotice">*Note that many PayPal credentials are shared across PayPal services.</div>
+    ]]>
+
+  </HtmlHeader>
+  <Title>Configure PayPal Payments Advanced</Title>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Partner">
+    <Name>PayFlowPro.PARTNER</Name>
+  </AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Merchant Login">
+    <Name>PayFlowPro.VENDOR</Name>
+  </AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="User">
+    <Name>PayFlowPro.USER</Name>
+  </AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Password">
+    <Name>PayFlowPro.PWD</Name>
+  </AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveURL">
+    <Name>PayFlowPro.LiveURL</Name>
+  </AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestURL">
+    <Name>PayFlowPro.TestURL</Name>
+  </AppConfig>
+</ConfigurationAtom>

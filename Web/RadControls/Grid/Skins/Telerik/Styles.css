@@ -1,0 +1,294 @@
+/* Telerik RadGrid Telerik / embedded skin */
+
+.RadGrid_Telerik
+{
+	background: #f9f9f9;
+	border: solid 1px #b1b1b1;
+	scrollbar-face-color: #E9E9E9;
+	scrollbar-highlight-color: white;
+	scrollbar-shadow-color: #E9E9E9;
+	scrollbar-3dlight-color: #DBDBDB;
+	scrollbar-arrow-color: #787878;
+	scrollbar-track-color: #F5F5F5;
+	scrollbar-darkshadow-color: #AEAEAE;
+}
+
+.RadGrid_Telerik,
+.RadGrid_Telerik table,
+.GridFilterMenu_Telerik table
+{
+	font: normal 11px Arial, Verdana, Sans-serif;
+}
+
+.MasterTable_Telerik
+{
+	border: 0px !important;
+	border-collapse: separate !important;
+	color: #000;
+	/*-moz-user-select: none;*/ /*disables text selecting in Firefox to combat unpleasant visual appearance*/
+}
+
+.MasterTable_Telerik th,
+.MasterTable_Telerik td
+{
+	padding-left:3px;
+	padding-right:3px;
+}
+
+.MasterTable_Telerik th
+{
+	text-align: left;
+}
+
+.RadGrid_Telerik td,
+.RadGrid_Telerik td a
+{ 
+	color: #000;
+}
+
+th.GridHeader_Telerik,
+th.ResizeHeader_Telerik
+{
+	background:url('Img/headerBg.gif') repeat-x 0 100% #f8f8f8;
+	border-bottom: solid 1px #e9f8ae;
+	height: 28px;
+}
+
+th.GridHeader_Telerik,
+th.ResizeHeader_Telerik
+{
+	padding-left:4px;
+}
+
+.GridHeader_Telerik a
+{
+	color: black;
+	text-decoration: none;
+}
+
+td.GridHeader_Telerik input
+{
+	width: auto;
+	float: left;
+	border: solid 1px #666;
+	background: #fafafa;
+	font: bold 10px Verdana, Arial, Sans-serif;
+	color: #989cb0;
+	height: 14px;
+	vertical-align:middle;
+}
+
+.GridFilterRow_Telerik td
+{
+	border-left:1px solid #f9f9f9;
+}
+
+.GridRow_Telerik td,
+.GridAltRow_Telerik td,
+.SelectedRow_Telerik td,
+.ActiveRow_Telerik td,
+.GridEditRow_Telerik td
+{
+	padding-top:4px;
+	padding-bottom:4px;
+}
+.GridRow_Telerik td
+{
+	border-top: solid 1px #ececec;
+	border-bottom: solid 1px #fff;
+	border-left: solid 1px #f1f1f1;
+}
+
+.GridAltRow_Telerik
+{
+	background: #f1f1f1;
+}
+.GridAltRow_Telerik td
+{
+	border-top: solid 1px #eaeaea;
+	border-left: solid 1px #f1f1f1;
+	border-bottom: solid 1px #fefefe;
+}
+
+.SelectedRow_Telerik
+{
+	background: #d9ff43 url('Img/selectedRow.gif') repeat-x bottom !important;
+}
+.SelectedRow_Telerik td
+{
+	border-top: solid 1px #eaeaea;
+	border-left: none !important;
+	border-bottom: solid 1px #83c60b;
+	padding-left:4px;
+}
+
+.GridEditRow_Telerik
+{
+	background-color: #ffffe1;
+}
+.GridEditRow_Telerik input
+{
+	font-size: 11px;
+}
+
+.ActiveRow_Telerik
+{
+	background: #edf2d9;
+}
+.ActiveRow_Telerik td,
+.GridEditRow_Telerik td
+{
+	border-top: solid 1px #eaeaea;
+	border-left: solid 1px #eaeaea;
+	border-bottom: solid 1px #fefefe;
+}
+
+.GridPager_Telerik
+{
+	background: #fff;
+	color: #999;
+}
+.GridPager_Telerik td
+{
+	border: solid 1px #fff;
+	border-top: 1px solid #c7c7c7;
+	border-right:0;
+	color: #999;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+.GridPager_Telerik td div /*slider mode*/
+{
+	color: #000;
+}
+
+.GridPager_Telerik td a
+{
+	color: #999;
+}
+
+.GridPager_Telerik td a:hover,
+.GridFooter_Telerik td a:hover
+{
+	color: #333;
+}
+
+.GridFooter_Telerik
+{
+	background: #fbfbfb;
+	height: 16px;
+	color: #666;
+}
+.GridFooter_Telerik td
+{
+	border: solid 1px #fbfbfb;
+	border-top: 1px solid #e8e6e6;
+	border-right:0;
+}
+.GridFooter_Telerik td a
+{
+	color: #666;
+}
+
+tr.GroupHeader_Telerik
+{
+	background: white;
+	height: 22px;
+}
+tr.GroupHeader_Telerik td
+{
+	border-left:1px solid #fff;
+	border-right:0;
+	border-bottom: solid 1px #c2c2c2;
+}
+
+.GroupHeader_Telerik td div div{top:-0.5em;}
+* html .GroupHeader_Telerik td div div{top:0.4em;}
+*+html .GroupHeader_Telerik td div div{top:0.4em;}
+.GroupHeader_Telerik td div div div{top:0;}
+
+
+
+.GroupPanel_Telerik
+{
+	background-color: #e8e8e8;
+	width: 100%;
+	border-collapse: collapse;
+	border-bottom: 1px solid #b1b1b1;
+}
+
+.GroupPanel_Telerik td
+{
+	padding: 2px 4px;
+}
+
+.GroupPanelItems_Telerik
+{
+	background: #efefef;
+	color: #999999;
+	border: solid 1px white;
+	border-right: solid 1px #c6c6c6;
+	border-bottom: solid 1px #c6c6c6;
+	white-space:  nowrap;
+	font-size: 11px;
+}
+
+.TopReorderIndicator_Telerik
+{
+	background: url('MoveDown.gif') no-repeat;
+}
+
+.BottomReorderIndicator_Telerik
+{
+	background: url('MoveUp.gif') no-repeat;
+}
+
+.GridFilterMenu_Telerik
+{
+    cursor:default;
+}
+
+.GridFilterMenu_Telerik .GridFilterMenuSelectColumn_Telerik,
+.GridFilterMenu_Telerik .GridFilterMenuTextColumn_Telerik
+{
+	padding:3px 4px;
+}
+
+.GridFilterMenu_Telerik .GridFilterMenuSelectColumn_Telerik
+{
+    background:#f9f9f9;
+    text-align:center;
+}
+
+.GridFilterMenu_Telerik .GridFilterMenuTextColumn_Telerik
+{
+    background:#fff;
+    color:#333;
+}
+
+.GridFilterMenu_Telerik .GridFilterMenuHover_Telerik
+{
+    background:#c1f320;
+}
+
+/*AJAX Loading*/
+
+.GridLoadingTemplate_Telerik
+{
+	background:#fff !important;
+	font:normal 24px/54px arial,sans-serif;
+	color:#b5ea0e;
+}
+
+/* rtl support */
+
+.RadGridRTL_Telerik th,
+.RadGridRTL_Telerik td
+{
+    text-align:right;
+}
+
+.RadGridRTL_Telerik .GridPager_Telerik span
+{
+    float:none !important;
+}

@@ -1,0 +1,15 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[]]>
+  </HtmlHeader>
+  <Title>Configure MicroPay</Title>
+  
+  <AppConfig Required="false" Advanced="false" FriendlyName="Hide on Cart Page">
+    <Name>Micropay.HideOnCartPage</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Show Total on Cart Page">
+    <Name>Micropay.ShowTotalOnTopOfCartPage</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

@@ -1,0 +1,3825 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" targetNamespace="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING">
+      <s:import namespace="http://www.w3.org/2001/XMLSchema" />
+      <s:element name="BANKCARD_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_CUSTOMER_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_CREDIT_OR_REFUND">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_CUSTOMER_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_CREDIT_OR_REFUNDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_CREDIT_OR_REFUNDResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_AUTHONLY">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_CUSTOMER_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_AUTHONLYResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_AUTHONLYResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_CREDIT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_REFERENCE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_CREDITResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_CREDITResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_FORCE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_CUSTOMER_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AUTH" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_FORCEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_FORCEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_VOID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_REFERENCE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_VOIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_VOIDResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_PRIOR_AUTH_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AUTH" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_REFERENCE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_PRIOR_AUTH_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_PRIOR_AUTH_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_PPD_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_PPD_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_PPD_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_PPD_CREDIT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_PPD_CREDITResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_PPD_CREDITResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_CCD_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EIN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_CCD_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_CCD_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_REFERENCE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_CREDIT_BY_REFERENCEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_CREDIT_BY_REFERENCEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_CCD_CREDIT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EIN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_CCD_CREDITResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_CCD_CREDITResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_WEB_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SSN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_DL_STATE_CODE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_DL_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_DOB" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_WEB_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_WEB_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_VOID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_REFERENCE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_VOIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_VOIDResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_RCK_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_RCK_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_RCK_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_ARC_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CHECK_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_ARC_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_ARC_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_TEL_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_TEL_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_TEL_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_SWIPED_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TRACKDATA" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_SWIPED_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_SWIPED_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TRACKDATA" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_SWIPED_AUTHONLYResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_SWIPED_AUTHONLYResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_SWIPED_CREDIT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TRACKDATA" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_SWIPED_CREDITResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_SWIPED_CREDITResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_KEYED_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_AUTHONLYResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_KEYED_AUTHONLYResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_FORCE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AUTH" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_FORCEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_KEYED_FORCEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_CREDIT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RETAIL_KEYED_CREDITResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RETAIL_KEYED_CREDITResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RECURRING_SALE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_CUSTOMER_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RECURRING_SALEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RECURRING_SALEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RECURRING_AUTHONLY">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CARDNUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EXP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_CUSTOMER_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BANKCARD_RECURRING_AUTHONLYResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BANKCARD_RECURRING_AUTHONLYResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VERIFY_BANKCARD_SERVICE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VERIFY_BANKCARD_SERVICEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VERIFY_BANKCARD_SERVICEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VERIFY_EFT_SERVICE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VERIFY_EFT_SERVICEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VERIFY_EFT_SERVICEResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="M_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="M_KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ORIGINATOR_ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FIRST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_MIDDLE_INITIAL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_LAST_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SUFFIX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_RTE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_ACCT_TYPE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_AMT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_SHIPPING" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_TAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="T_ORDERNUM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_TELEPHONE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_FAX" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_NAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ADDRESS" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_CITY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_STATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_ZIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SHIP_COUNTRY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_SSN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_DL_STATE_CODE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_DL_NUMBER" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="C_DOB" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DataSet" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="s:schema" />
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BANKCARD_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_SALE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDIT_OR_REFUNDSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_CREDIT_OR_REFUND" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDIT_OR_REFUNDSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_CREDIT_OR_REFUNDResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_AUTHONLYSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_AUTHONLY" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_AUTHONLYSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_AUTHONLYResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDITSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_CREDIT" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDITSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_CREDITResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_FORCESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_FORCE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_FORCESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_FORCEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_VOIDSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_VOID" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_VOIDSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_VOIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_PRIOR_AUTH_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_PRIOR_AUTH_SALE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_PRIOR_AUTH_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_PRIOR_AUTH_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_PPD_SALE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_PPD_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_CREDITSoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_PPD_CREDIT" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_CREDITSoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_PPD_CREDITResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_CCD_SALE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_CCD_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CREDIT_BY_REFERENCESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CREDIT_BY_REFERENCESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_CREDITSoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_CCD_CREDIT" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_CREDITSoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_CCD_CREDITResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_WEB_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_WEB_SALE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_WEB_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_WEB_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_VOIDSoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_VOID" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_VOIDSoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_VOIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_RCK_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_RCK_SALE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_RCK_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_RCK_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_ARC_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_ARC_SALE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_ARC_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_ARC_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_TEL_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_TEL_SALE" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_TEL_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_TEL_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_SWIPED_SALE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_SWIPED_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_AUTHONLYSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_SWIPED_AUTHONLY" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_AUTHONLYSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_CREDITSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_SWIPED_CREDIT" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_CREDITSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_SWIPED_CREDITResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_SALE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVS" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLYSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_AUTHONLY" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLYSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_AUTHONLYResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_FORCESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_FORCE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_FORCESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_FORCEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_CREDITSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_CREDIT" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_CREDITSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RETAIL_KEYED_CREDITResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_SALESoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RECURRING_SALE" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_SALESoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RECURRING_SALEResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_AUTHONLYSoapIn">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RECURRING_AUTHONLY" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_AUTHONLYSoapOut">
+    <wsdl:part name="parameters" element="tns:BANKCARD_RECURRING_AUTHONLYResponse" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_BANKCARD_SERVICESoapIn">
+    <wsdl:part name="parameters" element="tns:VERIFY_BANKCARD_SERVICE" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_BANKCARD_SERVICESoapOut">
+    <wsdl:part name="parameters" element="tns:VERIFY_BANKCARD_SERVICEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_EFT_SERVICESoapIn">
+    <wsdl:part name="parameters" element="tns:VERIFY_EFT_SERVICE" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_EFT_SERVICESoapOut">
+    <wsdl:part name="parameters" element="tns:VERIFY_EFT_SERVICEResponse" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONSoapIn">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONSoapOut">
+    <wsdl:part name="parameters" element="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONResponse" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDIT_OR_REFUNDHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDIT_OR_REFUNDHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_AUTHONLYHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_AUTHONLYHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDITHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDITHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_FORCEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_AUTH" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_FORCEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_VOIDHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_VOIDHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_PRIOR_AUTH_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_AUTH" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_PRIOR_AUTH_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_CREDITHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_CREDITHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_EIN" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_CREDITHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_EIN" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_CREDITHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_WEB_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+    <wsdl:part name="C_SSN" type="s:string" />
+    <wsdl:part name="C_DL_STATE_CODE" type="s:string" />
+    <wsdl:part name="C_DL_NUMBER" type="s:string" />
+    <wsdl:part name="C_DOB" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_WEB_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_VOIDHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_VOIDHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_RCK_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_RCK_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_ARC_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="C_CHECK_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_ARC_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_TEL_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_TEL_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_TRACKDATA" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_AUTHONLYHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_TRACKDATA" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_AUTHONLYHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_CREDITHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_TRACKDATA" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_CREDITHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLYHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLYHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_FORCEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="T_AUTH" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_FORCEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_CREDITHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_CREDITHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_SALEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_SALEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_AUTHONLYHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_AUTHONLYHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_BANKCARD_SERVICEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_BANKCARD_SERVICEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_EFT_SERVICEHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_EFT_SERVICEHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpGetIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+    <wsdl:part name="C_SSN" type="s:string" />
+    <wsdl:part name="C_DL_STATE_CODE" type="s:string" />
+    <wsdl:part name="C_DL_NUMBER" type="s:string" />
+    <wsdl:part name="C_DOB" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDIT_OR_REFUNDHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDIT_OR_REFUNDHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_AUTHONLYHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_AUTHONLYHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDITHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_CREDITHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_FORCEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_AUTH" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_FORCEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_VOIDHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_VOIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_PRIOR_AUTH_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_AUTH" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_PRIOR_AUTH_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_CREDITHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_CREDITHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_EIN" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_CREDITHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_EIN" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_CCD_CREDITHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_WEB_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+    <wsdl:part name="C_SSN" type="s:string" />
+    <wsdl:part name="C_DL_STATE_CODE" type="s:string" />
+    <wsdl:part name="C_DL_NUMBER" type="s:string" />
+    <wsdl:part name="C_DOB" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_WEB_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_VOIDHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_REFERENCE" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_VOIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_RCK_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_RCK_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_ARC_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="C_CHECK_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_ARC_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_TEL_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_TEL_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_TRACKDATA" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_AUTHONLYHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_TRACKDATA" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_AUTHONLYHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_CREDITHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_TRACKDATA" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_SWIPED_CREDITHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLYHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_AUTHONLYHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_FORCEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="T_AUTH" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_FORCEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_CREDITHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RETAIL_KEYED_CREDITHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_SALEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_SALEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_AUTHONLYHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_NAME" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_CARDNUMBER" type="s:string" />
+    <wsdl:part name="C_EXP" type="s:string" />
+    <wsdl:part name="C_CVV" type="s:string" />
+    <wsdl:part name="T_CUSTOMER_NUMBER" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BANKCARD_RECURRING_AUTHONLYHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_BANKCARD_SERVICEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_BANKCARD_SERVICEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_EFT_SERVICEHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VERIFY_EFT_SERVICEHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpPostIn">
+    <wsdl:part name="M_ID" type="s:string" />
+    <wsdl:part name="M_KEY" type="s:string" />
+    <wsdl:part name="C_ORIGINATOR_ID" type="s:string" />
+    <wsdl:part name="C_FIRST_NAME" type="s:string" />
+    <wsdl:part name="C_MIDDLE_INITIAL" type="s:string" />
+    <wsdl:part name="C_LAST_NAME" type="s:string" />
+    <wsdl:part name="C_SUFFIX" type="s:string" />
+    <wsdl:part name="C_ADDRESS" type="s:string" />
+    <wsdl:part name="C_CITY" type="s:string" />
+    <wsdl:part name="C_STATE" type="s:string" />
+    <wsdl:part name="C_ZIP" type="s:string" />
+    <wsdl:part name="C_COUNTRY" type="s:string" />
+    <wsdl:part name="C_EMAIL" type="s:string" />
+    <wsdl:part name="C_RTE" type="s:string" />
+    <wsdl:part name="C_ACCT" type="s:string" />
+    <wsdl:part name="C_ACCT_TYPE" type="s:string" />
+    <wsdl:part name="T_AMT" type="s:string" />
+    <wsdl:part name="T_SHIPPING" type="s:string" />
+    <wsdl:part name="T_TAX" type="s:string" />
+    <wsdl:part name="T_ORDERNUM" type="s:string" />
+    <wsdl:part name="C_TELEPHONE" type="s:string" />
+    <wsdl:part name="C_FAX" type="s:string" />
+    <wsdl:part name="C_SHIP_NAME" type="s:string" />
+    <wsdl:part name="C_SHIP_ADDRESS" type="s:string" />
+    <wsdl:part name="C_SHIP_CITY" type="s:string" />
+    <wsdl:part name="C_SHIP_STATE" type="s:string" />
+    <wsdl:part name="C_SHIP_ZIP" type="s:string" />
+    <wsdl:part name="C_SHIP_COUNTRY" type="s:string" />
+    <wsdl:part name="C_SSN" type="s:string" />
+    <wsdl:part name="C_DL_STATE_CODE" type="s:string" />
+    <wsdl:part name="C_DL_NUMBER" type="s:string" />
+    <wsdl:part name="C_DOB" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:portType name="TRANSACTION_PROCESSINGSoap">
+    <wsdl:operation name="BANKCARD_SALE">
+      <wsdl:input message="tns:BANKCARD_SALESoapIn" />
+      <wsdl:output message="tns:BANKCARD_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT_OR_REFUND">
+      <wsdl:input message="tns:BANKCARD_CREDIT_OR_REFUNDSoapIn" />
+      <wsdl:output message="tns:BANKCARD_CREDIT_OR_REFUNDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_AUTHONLYSoapIn" />
+      <wsdl:output message="tns:BANKCARD_AUTHONLYSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT">
+      <wsdl:input message="tns:BANKCARD_CREDITSoapIn" />
+      <wsdl:output message="tns:BANKCARD_CREDITSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_FORCE">
+      <wsdl:input message="tns:BANKCARD_FORCESoapIn" />
+      <wsdl:output message="tns:BANKCARD_FORCESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_VOID">
+      <wsdl:input message="tns:BANKCARD_VOIDSoapIn" />
+      <wsdl:output message="tns:BANKCARD_VOIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_PRIOR_AUTH_SALE">
+      <wsdl:input message="tns:BANKCARD_PRIOR_AUTH_SALESoapIn" />
+      <wsdl:output message="tns:BANKCARD_PRIOR_AUTH_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_SALESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_CREDIT">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_CREDITSoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_CREDITSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CCD_SALESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CCD_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_CREDIT">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CCD_CREDITSoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CCD_CREDITSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_WEB_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_WEB_SALESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_WEB_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_VOID">
+      <wsdl:input message="tns:VIRTUAL_CHECK_VOIDSoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_VOIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_RCK_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_RCK_SALESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_RCK_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_ARC_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_ARC_SALESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_ARC_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_TEL_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_TEL_SALESoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_TEL_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_SALE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_SALESoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_CREDIT">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_CREDITSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_CREDITSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_SALESoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_AUTHONLYSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_AUTHONLYSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_FORCE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_FORCESoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_FORCESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_CREDIT">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_CREDITSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_CREDITSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_SALE">
+      <wsdl:input message="tns:BANKCARD_RECURRING_SALESoapIn" />
+      <wsdl:output message="tns:BANKCARD_RECURRING_SALESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RECURRING_AUTHONLYSoapIn" />
+      <wsdl:output message="tns:BANKCARD_RECURRING_AUTHONLYSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_BANKCARD_SERVICE">
+      <wsdl:input message="tns:VERIFY_BANKCARD_SERVICESoapIn" />
+      <wsdl:output message="tns:VERIFY_BANKCARD_SERVICESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_EFT_SERVICE">
+      <wsdl:input message="tns:VERIFY_EFT_SERVICESoapIn" />
+      <wsdl:output message="tns:VERIFY_EFT_SERVICESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONSoapIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TRANSACTION_PROCESSINGHttpGet">
+    <wsdl:operation name="BANKCARD_SALE">
+      <wsdl:input message="tns:BANKCARD_SALEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT_OR_REFUND">
+      <wsdl:input message="tns:BANKCARD_CREDIT_OR_REFUNDHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_CREDIT_OR_REFUNDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_AUTHONLYHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_AUTHONLYHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT">
+      <wsdl:input message="tns:BANKCARD_CREDITHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_CREDITHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_FORCE">
+      <wsdl:input message="tns:BANKCARD_FORCEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_FORCEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_VOID">
+      <wsdl:input message="tns:BANKCARD_VOIDHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_VOIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_PRIOR_AUTH_SALE">
+      <wsdl:input message="tns:BANKCARD_PRIOR_AUTH_SALEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_PRIOR_AUTH_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_SALEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_CREDIT">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_CREDITHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_CREDITHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CCD_SALEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CCD_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_CREDIT">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CCD_CREDITHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CCD_CREDITHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_WEB_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_WEB_SALEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_WEB_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_VOID">
+      <wsdl:input message="tns:VIRTUAL_CHECK_VOIDHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_VOIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_RCK_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_RCK_SALEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_RCK_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_ARC_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_ARC_SALEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_ARC_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_TEL_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_TEL_SALEHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_TEL_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_SALE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_SALEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_CREDIT">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_CREDITHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_CREDITHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_SALEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_AUTHONLYHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_AUTHONLYHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_FORCE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_FORCEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_FORCEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_CREDIT">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_CREDITHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_CREDITHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_SALE">
+      <wsdl:input message="tns:BANKCARD_RECURRING_SALEHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RECURRING_SALEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RECURRING_AUTHONLYHttpGetIn" />
+      <wsdl:output message="tns:BANKCARD_RECURRING_AUTHONLYHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_BANKCARD_SERVICE">
+      <wsdl:input message="tns:VERIFY_BANKCARD_SERVICEHttpGetIn" />
+      <wsdl:output message="tns:VERIFY_BANKCARD_SERVICEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_EFT_SERVICE">
+      <wsdl:input message="tns:VERIFY_EFT_SERVICEHttpGetIn" />
+      <wsdl:output message="tns:VERIFY_EFT_SERVICEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpGetIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TRANSACTION_PROCESSINGHttpPost">
+    <wsdl:operation name="BANKCARD_SALE">
+      <wsdl:input message="tns:BANKCARD_SALEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT_OR_REFUND">
+      <wsdl:input message="tns:BANKCARD_CREDIT_OR_REFUNDHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_CREDIT_OR_REFUNDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_AUTHONLYHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_AUTHONLYHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT">
+      <wsdl:input message="tns:BANKCARD_CREDITHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_CREDITHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_FORCE">
+      <wsdl:input message="tns:BANKCARD_FORCEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_FORCEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_VOID">
+      <wsdl:input message="tns:BANKCARD_VOIDHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_VOIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_PRIOR_AUTH_SALE">
+      <wsdl:input message="tns:BANKCARD_PRIOR_AUTH_SALEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_PRIOR_AUTH_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_SALEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_CREDIT">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_CREDITHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_CREDITHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CCD_SALEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CCD_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CREDIT_BY_REFERENCEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_CREDIT">
+      <wsdl:input message="tns:VIRTUAL_CHECK_CCD_CREDITHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_CCD_CREDITHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_WEB_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_WEB_SALEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_WEB_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_VOID">
+      <wsdl:input message="tns:VIRTUAL_CHECK_VOIDHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_VOIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_RCK_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_RCK_SALEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_RCK_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_ARC_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_ARC_SALEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_ARC_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_TEL_SALE">
+      <wsdl:input message="tns:VIRTUAL_CHECK_TEL_SALEHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_TEL_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_SALE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_SALEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_AUTHONLYHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_CREDIT">
+      <wsdl:input message="tns:BANKCARD_RETAIL_SWIPED_CREDITHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_SWIPED_CREDITHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_SALEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_SALE_WITH_AVSHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVSHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_AUTHONLYHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_AUTHONLYHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_FORCE">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_FORCEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_FORCEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_CREDIT">
+      <wsdl:input message="tns:BANKCARD_RETAIL_KEYED_CREDITHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RETAIL_KEYED_CREDITHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_SALE">
+      <wsdl:input message="tns:BANKCARD_RECURRING_SALEHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RECURRING_SALEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_AUTHONLY">
+      <wsdl:input message="tns:BANKCARD_RECURRING_AUTHONLYHttpPostIn" />
+      <wsdl:output message="tns:BANKCARD_RECURRING_AUTHONLYHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_BANKCARD_SERVICE">
+      <wsdl:input message="tns:VERIFY_BANKCARD_SERVICEHttpPostIn" />
+      <wsdl:output message="tns:VERIFY_BANKCARD_SERVICEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_EFT_SERVICE">
+      <wsdl:input message="tns:VERIFY_EFT_SERVICEHttpPostIn" />
+      <wsdl:output message="tns:VERIFY_EFT_SERVICEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+      <wsdl:input message="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpPostIn" />
+      <wsdl:output message="tns:VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATIONHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TRANSACTION_PROCESSINGSoap" type="tns:TRANSACTION_PROCESSINGSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BANKCARD_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT_OR_REFUND">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_CREDIT_OR_REFUND" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_AUTHONLY">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_AUTHONLY" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_CREDIT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_FORCE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_FORCE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_VOID">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_VOID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_PRIOR_AUTH_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_PRIOR_AUTH_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_PPD_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_CREDIT">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_PPD_CREDIT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_CCD_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_CREDIT_BY_REFERENCE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_CREDIT">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_CCD_CREDIT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_WEB_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_WEB_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_VOID">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_VOID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_RCK_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_RCK_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_ARC_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_ARC_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_TEL_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_TEL_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_SWIPED_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_SWIPED_AUTHONLY" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_CREDIT">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_SWIPED_CREDIT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_KEYED_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_KEYED_SALE_WITH_AVS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_KEYED_AUTHONLY" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_FORCE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_KEYED_FORCE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_CREDIT">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RETAIL_KEYED_CREDIT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_SALE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RECURRING_SALE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_AUTHONLY">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/BANKCARD_RECURRING_AUTHONLY" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_BANKCARD_SERVICE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VERIFY_BANKCARD_SERVICE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_EFT_SERVICE">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VERIFY_EFT_SERVICE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+      <soap:operation soapAction="https://www.sagepayments.net/web_services/vterm_extensions/TRANSACTION_PROCESSING/VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TRANSACTION_PROCESSINGHttpGet" type="tns:TRANSACTION_PROCESSINGHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="BANKCARD_SALE">
+      <http:operation location="/BANKCARD_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT_OR_REFUND">
+      <http:operation location="/BANKCARD_CREDIT_OR_REFUND" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_AUTHONLY">
+      <http:operation location="/BANKCARD_AUTHONLY" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT">
+      <http:operation location="/BANKCARD_CREDIT" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_FORCE">
+      <http:operation location="/BANKCARD_FORCE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_VOID">
+      <http:operation location="/BANKCARD_VOID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_PRIOR_AUTH_SALE">
+      <http:operation location="/BANKCARD_PRIOR_AUTH_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE">
+      <http:operation location="/VIRTUAL_CHECK_PPD_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_CREDIT">
+      <http:operation location="/VIRTUAL_CHECK_PPD_CREDIT" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_SALE">
+      <http:operation location="/VIRTUAL_CHECK_CCD_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+      <http:operation location="/VIRTUAL_CHECK_CREDIT_BY_REFERENCE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_CREDIT">
+      <http:operation location="/VIRTUAL_CHECK_CCD_CREDIT" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_WEB_SALE">
+      <http:operation location="/VIRTUAL_CHECK_WEB_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_VOID">
+      <http:operation location="/VIRTUAL_CHECK_VOID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_RCK_SALE">
+      <http:operation location="/VIRTUAL_CHECK_RCK_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_ARC_SALE">
+      <http:operation location="/VIRTUAL_CHECK_ARC_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_TEL_SALE">
+      <http:operation location="/VIRTUAL_CHECK_TEL_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_SALE">
+      <http:operation location="/BANKCARD_RETAIL_SWIPED_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+      <http:operation location="/BANKCARD_RETAIL_SWIPED_AUTHONLY" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_CREDIT">
+      <http:operation location="/BANKCARD_RETAIL_SWIPED_CREDIT" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_SALE_WITH_AVS" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_AUTHONLY" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_FORCE">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_FORCE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_CREDIT">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_CREDIT" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_SALE">
+      <http:operation location="/BANKCARD_RECURRING_SALE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_AUTHONLY">
+      <http:operation location="/BANKCARD_RECURRING_AUTHONLY" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_BANKCARD_SERVICE">
+      <http:operation location="/VERIFY_BANKCARD_SERVICE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_EFT_SERVICE">
+      <http:operation location="/VERIFY_EFT_SERVICE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+      <http:operation location="/VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TRANSACTION_PROCESSINGHttpPost" type="tns:TRANSACTION_PROCESSINGHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="BANKCARD_SALE">
+      <http:operation location="/BANKCARD_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT_OR_REFUND">
+      <http:operation location="/BANKCARD_CREDIT_OR_REFUND" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_AUTHONLY">
+      <http:operation location="/BANKCARD_AUTHONLY" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_CREDIT">
+      <http:operation location="/BANKCARD_CREDIT" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_FORCE">
+      <http:operation location="/BANKCARD_FORCE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_VOID">
+      <http:operation location="/BANKCARD_VOID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_PRIOR_AUTH_SALE">
+      <http:operation location="/BANKCARD_PRIOR_AUTH_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE">
+      <http:operation location="/VIRTUAL_CHECK_PPD_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_CREDIT">
+      <http:operation location="/VIRTUAL_CHECK_PPD_CREDIT" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_SALE">
+      <http:operation location="/VIRTUAL_CHECK_CCD_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CREDIT_BY_REFERENCE">
+      <http:operation location="/VIRTUAL_CHECK_CREDIT_BY_REFERENCE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_CCD_CREDIT">
+      <http:operation location="/VIRTUAL_CHECK_CCD_CREDIT" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_WEB_SALE">
+      <http:operation location="/VIRTUAL_CHECK_WEB_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_VOID">
+      <http:operation location="/VIRTUAL_CHECK_VOID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_RCK_SALE">
+      <http:operation location="/VIRTUAL_CHECK_RCK_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_ARC_SALE">
+      <http:operation location="/VIRTUAL_CHECK_ARC_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_TEL_SALE">
+      <http:operation location="/VIRTUAL_CHECK_TEL_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_SALE">
+      <http:operation location="/BANKCARD_RETAIL_SWIPED_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_AUTHONLY">
+      <http:operation location="/BANKCARD_RETAIL_SWIPED_AUTHONLY" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_SWIPED_CREDIT">
+      <http:operation location="/BANKCARD_RETAIL_SWIPED_CREDIT" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_SALE_WITH_AVS">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_SALE_WITH_AVS" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_AUTHONLY_WITH_AVS" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_AUTHONLY">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_AUTHONLY" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_FORCE">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_FORCE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RETAIL_KEYED_CREDIT">
+      <http:operation location="/BANKCARD_RETAIL_KEYED_CREDIT" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_SALE">
+      <http:operation location="/BANKCARD_RECURRING_SALE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BANKCARD_RECURRING_AUTHONLY">
+      <http:operation location="/BANKCARD_RECURRING_AUTHONLY" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_BANKCARD_SERVICE">
+      <http:operation location="/VERIFY_BANKCARD_SERVICE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VERIFY_EFT_SERVICE">
+      <http:operation location="/VERIFY_EFT_SERVICE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION">
+      <http:operation location="/VIRTUAL_CHECK_PPD_SALE_WITH_AUTHENTICATION" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TRANSACTION_PROCESSING">
+    <wsdl:port name="TRANSACTION_PROCESSINGSoap" binding="tns:TRANSACTION_PROCESSINGSoap">
+      <soap:address location="https://www.sagepayments.net/web_services/vterm_extensions/transaction_processing.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TRANSACTION_PROCESSINGHttpGet" binding="tns:TRANSACTION_PROCESSINGHttpGet">
+      <http:address location="https://www.sagepayments.net/web_services/vterm_extensions/transaction_processing.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TRANSACTION_PROCESSINGHttpPost" binding="tns:TRANSACTION_PROCESSINGHttpPost">
+      <http:address location="https://www.sagepayments.net/web_services/vterm_extensions/transaction_processing.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

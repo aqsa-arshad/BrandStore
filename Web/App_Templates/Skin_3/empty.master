@@ -1,0 +1,54 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" %>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <%-- Leave the title empty, it will get populated at runtime --%>
+    <title></title>    
+    
+    <asp:Literal ID="ltrCurrencyLocaleRobotsTag" runat="server" Text='<%$ Tokens:Currency_Locale_Robots_Tag %>' />
+    
+    <%-- Leave the description and keyword content empty, it will get populated at runtime --%>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    
+    <%-- The skin ref will base on the current theme applied so we don't need to declare here which css file to use --%>
+    <%--<link runat="server" rel="stylesheet" href="~/skins/skin_1/style.css" type="text/css">--%>
+
+    <script type="text/javascript" src="jscripts/formvalidate.js"></script>
+
+    <script type="text/javascript" src="jscripts/core.js"></script>
+
+</head>
+<body rightmargin="0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#ffffff">
+<!-- PAGE INVOCATION: '(!INVOCATION!)' -->
+<!-- PAGE REFERRER: '(!REFERRER!)' -->
+<!-- STORE LOCALE: '(!STORELOCALE!)' -->
+<!-- CUSTOMER ID: '(!CUSTOMERID!)' -->
+<!-- CUSTOMER LOCALE: '(!CUSTOMERLOCALE!)' -->
+<!-- CACHE MENUS: '(!AppConfig name="CacheMenus"!)' -->
+<!-- CONTENTS START -->
+<form id="Form" runat="server">
+<asp:Panel ID="miniCartPanel" runat="server"></asp:Panel>
+  <%  if (RequireScriptManager) { %>
+        <%-- Only render for pages that require ajax --%>
+         <asp:ScriptManager ID="scrptMgr" runat="server" >
+        </asp:ScriptManager>
+    <% } %>
+    <div align="center" style="width:100%;"><p style="background-color:#FFFF00; padding: 4px;"><span style="font-size: 12px;"><font color="red"><b>
+        **** You Are Acting For Customer: <asp:Literal ID="Literal2" runat="server" Text='<%$ Tokens:User_Menu_Name %>' />, 
+        ID=<asp:Literal ID="Literal3" runat="server" Text='<%$ Tokens:CustomerID %>' /> ****</b>&nbsp;&nbsp;<b><a href="default.aspx?IGD=">End 
+        Session</a></b></font></span></p></div>
+          <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                    </asp:ContentPlaceHolder>         
+    <!-- CONTENTS END -->   
+    
+    <%--temporary solution for rendering the form validation--%>
+    <asp:Button ID="Button1" runat="server" Text="Button" 
+        UseSubmitBehavior="False" style="visibility:hidden" />
+            
+</form>
+</body>
+</html>

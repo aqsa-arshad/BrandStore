@@ -1,0 +1,7 @@
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\bin\Release\AspDotNetStorefrontCommon.dll
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\bin\Release\ASPDNSFApplication.dll
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\bin\Release\ASPDNSFEncrypt.dll
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\bin\Release\ExcelWrapper.dll
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\bin\Release\GemBox.Spreadsheet.dll
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\obj\Release\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
+D:\Projects\942package\9.4.2-dev\ASPDNSFCommon\obj\Release\AspDotNetStorefrontCommon.dll

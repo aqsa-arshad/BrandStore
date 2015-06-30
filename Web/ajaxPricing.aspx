@@ -1,0 +1,1 @@
+<%@ Page language="c#" Inherits="AspDotNetStorefront.ajaxPricing" CodeFile="ajaxPricing.aspx.cs" EnableTheming="false" StylesheetTheme="" %>

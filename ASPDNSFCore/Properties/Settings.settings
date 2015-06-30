@@ -1,0 +1,16 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AspDotNetStorefrontCore.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AspDotNetStorefrontCore_VATCheck_checkVatService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ec.europa.eu/taxation_customs/vies/api/checkVatPort</Value>
+    </Setting>
+    
+    <Setting Name="AspDotNetStorefrontCommon_VATCheck_checkVatService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ec.europa.eu/taxation_customs/vies/services/checkVatService</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontCore_RateServiceWebReference_RateService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://wsbeta.fedex.com:443/web-services/rate</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

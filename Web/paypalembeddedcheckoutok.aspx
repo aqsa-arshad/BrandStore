@@ -1,0 +1,1 @@
+<%@ Page language="c#" Inherits="AspDotNetStorefront.paypalembeddedcheckoutok" CodeFile="paypalembeddedcheckoutok.aspx.cs" EnableTheming="false" MasterPageFile="~/App_Templates/Skin_1/template.master" %>

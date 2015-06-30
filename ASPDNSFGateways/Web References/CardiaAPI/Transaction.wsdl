@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx">
+      <s:element name="PrepareTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="applicationIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="store" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderDescription" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="currencyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="successfulTransactionUrl" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="unsuccessfulTransactionUrl" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="authorizedNotAuthenticatedUrl" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="skipFirstPage" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="skipLastPage" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="isOnHold" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="useThirdPartySecurity" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentMethod" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrepareTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PrepareTransactionResult" type="tns:PreparationDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PreparationDetail">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:unsignedByte" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReferenceGuid" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RegisterCardTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="userToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="store" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderDescription" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="expiryDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cvc2Code" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="currencyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="instanceId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="purchaseDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="isOnHold" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="isPreRegistered" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterCardTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegisterCardTransactionResult" type="tns:ReturnDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReturnDetail">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="StatusCode" type="s:unsignedByte" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReturnTransactionStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnTransactionStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnTransactionStatusResult" type="tns:TransactionDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionDetail">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="StatusCode" type="s:unsignedByte" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:short" />
+          <s:element minOccurs="0" maxOccurs="1" name="CurrencyCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RecurringCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreditTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreditTransactionResult" type="tns:ReturnDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RevertOnHoldTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RevertOnHoldTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RevertOnHoldTransactionResult" type="tns:ReturnDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeAmount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeAmountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangeAmountResult" type="tns:ReturnDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VoidTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="merchantToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="userToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="merchantReference" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VoidTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VoidTransactionResult" type="tns:ReturnDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreparationDetail" nillable="true" type="tns:PreparationDetail" />
+      <s:element name="ReturnDetail" nillable="true" type="tns:ReturnDetail" />
+      <s:element name="TransactionDetail" nillable="true" type="tns:TransactionDetail" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PrepareTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:PrepareTransaction" />
+  </wsdl:message>
+  <wsdl:message name="PrepareTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:PrepareTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterCardTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterCardTransaction" />
+  </wsdl:message>
+  <wsdl:message name="RegisterCardTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterCardTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnTransactionStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnTransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="ReturnTransactionStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnTransactionStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreditTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:CreditTransaction" />
+  </wsdl:message>
+  <wsdl:message name="CreditTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:CreditTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="RevertOnHoldTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:RevertOnHoldTransaction" />
+  </wsdl:message>
+  <wsdl:message name="RevertOnHoldTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:RevertOnHoldTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAmountSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeAmount" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAmountSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="VoidTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:VoidTransaction" />
+  </wsdl:message>
+  <wsdl:message name="VoidTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:VoidTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="PrepareTransactionHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="applicationIdentifier" type="s:string" />
+    <wsdl:part name="store" type="s:string" />
+    <wsdl:part name="orderDescription" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="currencyCode" type="s:string" />
+    <wsdl:part name="successfulTransactionUrl" type="s:string" />
+    <wsdl:part name="unsuccessfulTransactionUrl" type="s:string" />
+    <wsdl:part name="authorizedNotAuthenticatedUrl" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+    <wsdl:part name="skipFirstPage" type="s:string" />
+    <wsdl:part name="skipLastPage" type="s:string" />
+    <wsdl:part name="isOnHold" type="s:string" />
+    <wsdl:part name="useThirdPartySecurity" type="s:string" />
+    <wsdl:part name="paymentMethod" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PrepareTransactionHttpGetOut">
+    <wsdl:part name="Body" element="tns:PreparationDetail" />
+  </wsdl:message>
+  <wsdl:message name="RegisterCardTransactionHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="userToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="store" type="s:string" />
+    <wsdl:part name="orderDescription" type="s:string" />
+    <wsdl:part name="cardNumber" type="s:string" />
+    <wsdl:part name="expiryDate" type="s:string" />
+    <wsdl:part name="cvc2Code" type="s:string" />
+    <wsdl:part name="currencyCode" type="s:string" />
+    <wsdl:part name="instanceId" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+    <wsdl:part name="purchaseDate" type="s:string" />
+    <wsdl:part name="isOnHold" type="s:string" />
+    <wsdl:part name="isPreRegistered" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RegisterCardTransactionHttpGetOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="ReturnTransactionStatusHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReturnTransactionStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:TransactionDetail" />
+  </wsdl:message>
+  <wsdl:message name="CreditTransactionHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreditTransactionHttpGetOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="RevertOnHoldTransactionHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RevertOnHoldTransactionHttpGetOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAmountHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAmountHttpGetOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="VoidTransactionHttpGetIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="userToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VoidTransactionHttpGetOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="PrepareTransactionHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="applicationIdentifier" type="s:string" />
+    <wsdl:part name="store" type="s:string" />
+    <wsdl:part name="orderDescription" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="currencyCode" type="s:string" />
+    <wsdl:part name="successfulTransactionUrl" type="s:string" />
+    <wsdl:part name="unsuccessfulTransactionUrl" type="s:string" />
+    <wsdl:part name="authorizedNotAuthenticatedUrl" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+    <wsdl:part name="skipFirstPage" type="s:string" />
+    <wsdl:part name="skipLastPage" type="s:string" />
+    <wsdl:part name="isOnHold" type="s:string" />
+    <wsdl:part name="useThirdPartySecurity" type="s:string" />
+    <wsdl:part name="paymentMethod" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PrepareTransactionHttpPostOut">
+    <wsdl:part name="Body" element="tns:PreparationDetail" />
+  </wsdl:message>
+  <wsdl:message name="RegisterCardTransactionHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="userToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="store" type="s:string" />
+    <wsdl:part name="orderDescription" type="s:string" />
+    <wsdl:part name="cardNumber" type="s:string" />
+    <wsdl:part name="expiryDate" type="s:string" />
+    <wsdl:part name="cvc2Code" type="s:string" />
+    <wsdl:part name="currencyCode" type="s:string" />
+    <wsdl:part name="instanceId" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+    <wsdl:part name="purchaseDate" type="s:string" />
+    <wsdl:part name="isOnHold" type="s:string" />
+    <wsdl:part name="isPreRegistered" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RegisterCardTransactionHttpPostOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="ReturnTransactionStatusHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReturnTransactionStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:TransactionDetail" />
+  </wsdl:message>
+  <wsdl:message name="CreditTransactionHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreditTransactionHttpPostOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="RevertOnHoldTransactionHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RevertOnHoldTransactionHttpPostOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAmountHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+    <wsdl:part name="amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAmountHttpPostOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:message name="VoidTransactionHttpPostIn">
+    <wsdl:part name="merchantToken" type="s:string" />
+    <wsdl:part name="userToken" type="s:string" />
+    <wsdl:part name="merchantReference" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VoidTransactionHttpPostOut">
+    <wsdl:part name="Body" element="tns:ReturnDetail" />
+  </wsdl:message>
+  <wsdl:portType name="TransactionSoap">
+    <wsdl:operation name="PrepareTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method prepares and stores transaction related data submitted by a merchant.</documentation>
+      <wsdl:input message="tns:PrepareTransactionSoapIn" />
+      <wsdl:output message="tns:PrepareTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterCardTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method prepare, store and authorize a card transaction submitted by a prequalified merchant.</documentation>
+      <wsdl:input message="tns:RegisterCardTransactionSoapIn" />
+      <wsdl:output message="tns:RegisterCardTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnTransactionStatus">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method returns the status of a specified transaction.</documentation>
+      <wsdl:input message="tns:ReturnTransactionStatusSoapIn" />
+      <wsdl:output message="tns:ReturnTransactionStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreditTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method issues a credit transaction statement to the database.</documentation>
+      <wsdl:input message="tns:CreditTransactionSoapIn" />
+      <wsdl:output message="tns:CreditTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertOnHoldTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method reverts an existing onHold transaction.</documentation>
+      <wsdl:input message="tns:RevertOnHoldTransactionSoapIn" />
+      <wsdl:output message="tns:RevertOnHoldTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAmount">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method modifies the amount of a registered transaction.</documentation>
+      <wsdl:input message="tns:ChangeAmountSoapIn" />
+      <wsdl:output message="tns:ChangeAmountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VoidTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method voids (cancels) a transaction in both Cardias systems and in the POS system.</documentation>
+      <wsdl:input message="tns:VoidTransactionSoapIn" />
+      <wsdl:output message="tns:VoidTransactionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TransactionHttpGet">
+    <wsdl:operation name="PrepareTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method prepares and stores transaction related data submitted by a merchant.</documentation>
+      <wsdl:input message="tns:PrepareTransactionHttpGetIn" />
+      <wsdl:output message="tns:PrepareTransactionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterCardTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method prepare, store and authorize a card transaction submitted by a prequalified merchant.</documentation>
+      <wsdl:input message="tns:RegisterCardTransactionHttpGetIn" />
+      <wsdl:output message="tns:RegisterCardTransactionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnTransactionStatus">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method returns the status of a specified transaction.</documentation>
+      <wsdl:input message="tns:ReturnTransactionStatusHttpGetIn" />
+      <wsdl:output message="tns:ReturnTransactionStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreditTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method issues a credit transaction statement to the database.</documentation>
+      <wsdl:input message="tns:CreditTransactionHttpGetIn" />
+      <wsdl:output message="tns:CreditTransactionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertOnHoldTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method reverts an existing onHold transaction.</documentation>
+      <wsdl:input message="tns:RevertOnHoldTransactionHttpGetIn" />
+      <wsdl:output message="tns:RevertOnHoldTransactionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAmount">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method modifies the amount of a registered transaction.</documentation>
+      <wsdl:input message="tns:ChangeAmountHttpGetIn" />
+      <wsdl:output message="tns:ChangeAmountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VoidTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method voids (cancels) a transaction in both Cardias systems and in the POS system.</documentation>
+      <wsdl:input message="tns:VoidTransactionHttpGetIn" />
+      <wsdl:output message="tns:VoidTransactionHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TransactionHttpPost">
+    <wsdl:operation name="PrepareTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method prepares and stores transaction related data submitted by a merchant.</documentation>
+      <wsdl:input message="tns:PrepareTransactionHttpPostIn" />
+      <wsdl:output message="tns:PrepareTransactionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterCardTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method prepare, store and authorize a card transaction submitted by a prequalified merchant.</documentation>
+      <wsdl:input message="tns:RegisterCardTransactionHttpPostIn" />
+      <wsdl:output message="tns:RegisterCardTransactionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnTransactionStatus">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method returns the status of a specified transaction.</documentation>
+      <wsdl:input message="tns:ReturnTransactionStatusHttpPostIn" />
+      <wsdl:output message="tns:ReturnTransactionStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreditTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method issues a credit transaction statement to the database.</documentation>
+      <wsdl:input message="tns:CreditTransactionHttpPostIn" />
+      <wsdl:output message="tns:CreditTransactionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertOnHoldTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method reverts an existing onHold transaction.</documentation>
+      <wsdl:input message="tns:RevertOnHoldTransactionHttpPostIn" />
+      <wsdl:output message="tns:RevertOnHoldTransactionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAmount">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The method modifies the amount of a registered transaction.</documentation>
+      <wsdl:input message="tns:ChangeAmountHttpPostIn" />
+      <wsdl:output message="tns:ChangeAmountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VoidTransaction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method voids (cancels) a transaction in both Cardias systems and in the POS system.</documentation>
+      <wsdl:input message="tns:VoidTransactionHttpPostIn" />
+      <wsdl:output message="tns:VoidTransactionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TransactionSoap" type="tns:TransactionSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PrepareTransaction">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/PrepareTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterCardTransaction">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/RegisterCardTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnTransactionStatus">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/ReturnTransactionStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditTransaction">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/CreditTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RevertOnHoldTransaction">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/RevertOnHoldTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAmount">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/ChangeAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoidTransaction">
+      <soap:operation soapAction="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx/VoidTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TransactionHttpGet" type="tns:TransactionHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="PrepareTransaction">
+      <http:operation location="/PrepareTransaction" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterCardTransaction">
+      <http:operation location="/RegisterCardTransaction" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnTransactionStatus">
+      <http:operation location="/ReturnTransactionStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditTransaction">
+      <http:operation location="/CreditTransaction" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RevertOnHoldTransaction">
+      <http:operation location="/RevertOnHoldTransaction" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAmount">
+      <http:operation location="/ChangeAmount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoidTransaction">
+      <http:operation location="/VoidTransaction" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TransactionHttpPost" type="tns:TransactionHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="PrepareTransaction">
+      <http:operation location="/PrepareTransaction" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterCardTransaction">
+      <http:operation location="/RegisterCardTransaction" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnTransactionStatus">
+      <http:operation location="/ReturnTransactionStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditTransaction">
+      <http:operation location="/CreditTransaction" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RevertOnHoldTransaction">
+      <http:operation location="/RevertOnHoldTransaction" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAmount">
+      <http:operation location="/ChangeAmount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoidTransaction">
+      <http:operation location="/VoidTransaction" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Transaction">
+    <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">&lt;strong&gt;Welcome to Cardia Services v1.2&lt;/strong&gt; &lt;br /&gt; &lt;br /&gt;Description: This WebService contain several web methods which will ease implementation of creditcard payment in your shopping application. &lt;br /&gt; &lt;br /&gt;Developed and maintained by Ronny Dahl. &lt;br /&gt;Last update: 2004-08-09 &lt;br /&gt; &lt;hr /&gt;</documentation>
+    <wsdl:port name="TransactionSoap" binding="tns:TransactionSoap">
+      <soap:address location="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TransactionHttpGet" binding="tns:TransactionHttpGet">
+      <http:address location="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TransactionHttpPost" binding="tns:TransactionHttpPost">
+      <http:address location="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

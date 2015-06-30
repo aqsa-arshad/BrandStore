@@ -1,0 +1,38 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/skrill.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skrill&type=signup" target="_blank">Sign up for Skrill</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skrill&type=info" target="_blank">More info about Skrill</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=skrill&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>    
+  </HtmlHeader>
+  <Title><![CDATA[Configure Skrill (Moneybookers)]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="User Login"><Name>Moneybookers.UserLogin</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="User Password"><Name>Moneybookers.UserPassword</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Sender ID"><Name>Moneybookers.SenderID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Channel ID"><Name>Moneybookers.ChannelID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Acquirer"><Name>Moneybookers.Acquirer</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="AIB.AcceptedCardTypes"><Name>Moneybookers.Acquirer.AIB.AcceptedCardTypes</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="EMS.AcceptedCardTypes"><Name>Moneybookers.Acquirer.EMS.AcceptedCardTypes</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="EPX.AcceptedCardTypes"><Name>Moneybookers.Acquirer.EPX.AcceptedCardTypes</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveServer"><Name>Moneybookers.LiveServer</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveServer.3DSecure"><Name>Moneybookers.LiveServer.3DSecure</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="QuickCheckout.HideLogin"><Name>Moneybookers.QuickCheckout.HideLogin</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="QuickCheckout.PaymentIcon"><Name>Moneybookers.QuickCheckout.PaymentIcon</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestServer"><Name>Moneybookers.TestServer</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestServer.3DSecure"><Name>Moneybookers.TestServer.3DSecure</Name></AppConfig>
+</ConfigurationAtom>

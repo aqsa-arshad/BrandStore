@@ -1,0 +1,1 @@
+<%@ Page language="c#" Inherits="AspDotNetStorefront.firstpayembeddedcheckoutok" CodeFile="firstpayembeddedcheckoutok.aspx.cs" EnableTheming="false" MasterPageFile="~/App_Templates/Skin_1/template.master" %>

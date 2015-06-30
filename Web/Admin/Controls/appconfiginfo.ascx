@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="appconfiginfo.ascx.cs" Inherits="AspDotNetStorefrontAdmin.Controls.AppConfigInfo" %>
+<asp:Image runat="server" ID="imgAppConfigInfo"  ImageUrl="~/App_Themes/Admin_Default/images/info.gif" />

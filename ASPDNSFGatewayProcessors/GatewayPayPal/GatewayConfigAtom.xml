@@ -1,0 +1,81 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <div class="modalTable modalHeader">
+        <table width="100%" cellpadding="4" cellspacing="0">
+          <tr>
+            <td>
+              <img src="images/PayPal_PaymentsAccepted.gif" border="0" />
+            </td>
+            <td>
+				<p>To use PayPal Payments Pro, you need a PayPal Business Account. Once you&apos;re signed up, enter the required information below to start accepting payments. <br/>
+					<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentspro&type=info" target="_blank">More info</a>
+					&bull;
+					<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentspro&type=manual" target="_blank">Configuration Help</a>
+				</p>
+            </td>
+			 <td width="200" align="center">
+				<div>
+					<span class="atomHeaderButtonPrompt">Don&#39;t have a PayPal Account?</span>
+				</div>
+				<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentspro&type=signup" target="_blank" class="defaultButton">Sign Up Now</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="paypalAtomNoticeWrap">
+			<div class="paypalAPIButtonWrap">
+				<a data-width="366" data-height="518" href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_get-api-signature&generic-flow=true" class="emphasisButton popThis" onclick="return popThis(this);" target="_blank">Get Your API Credentials</a>
+			</div>
+			<div class="atomHeaderNotice">To process transactions, please provide your PayPal API credentials.</div>
+			<div style="clear: both;"></div>
+	  </div>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure PayPal Payments Pro]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="PayPal API Username">
+	  <Name>PayPal.API.Username</Name>
+	  <ContextualDescription><![CDATA[Click 'Get Your API Credentials' to retrieve your PayPal API username.]]></ContextualDescription>
+  </AppConfig>
+	<AppConfig Required="true" Advanced="false" FriendlyName="PayPal API Password">
+		<Name>PayPal.API.Password</Name>
+		<ContextualDescription><![CDATA[Click 'Get Your API Credentials' to retrieve your PayPal API password.]]></ContextualDescription>
+	</AppConfig>
+	<AppConfig Required="true" Advanced="false" FriendlyName="PayPal API Signature">
+		<Name>PayPal.API.Signature</Name>
+		<ContextualDescription><![CDATA[Click 'Get Your API Credentials' to retrieve your PayPal API signature.]]></ContextualDescription>
+	</AppConfig>
+
+  <AppConfig Required="false" Advanced="true" FriendlyName="Default Locale Code"><Name>PayPal.DefaultLocaleCode</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="API.MerchantEMailAddress"><Name>PayPal.API.MerchantEMailAddress</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Force Capture"><Name>PayPal.ForceCapture</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Require Confirmed Address"><Name>PayPal.RequireConfirmedAddress</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Use Instant Notification"><Name>PayPal.UseInstantNotification</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.ShowOnCartPage"><Name>PayPal.Express.ShowOnCartPage</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.AllowAnonCheckout"><Name>PayPal.Express.AllowAnonCheckout</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.ButtonImageURL"><Name>PayPal.Express.ButtonImageURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.CancelURL"><Name>PayPal.Express.CancelURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.HeaderBackColor"><Name>PayPal.Express.HeaderBackColor</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.HeaderBorderColor"><Name>PayPal.Express.HeaderBorderColor</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.HeaderImage"><Name>PayPal.Express.HeaderImage</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.LiveURL"><Name>PayPal.Express.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.PageStyle"><Name>PayPal.Express.PageStyle</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.PayFlowColor"><Name>PayPal.Express.PayFlowColor</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.ReturnURL"><Name>PayPal.Express.ReturnURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Express.SandboxURL"><Name>PayPal.Express.SandboxURL</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="API.LiveURL"><Name>PayPal.API.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="API.TestURL"><Name>PayPal.API.TestURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="API.Version"><Name>PayPal.API.Version</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="API.AcceleratedBoardingEmailAddress"><Name>PayPal.API.AcceleratedBoardingEmailAddress</Name></AppConfig>
+
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveServer"><Name>PayPal.LiveServer</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="NotificationURL"><Name>PayPal.NotificationURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="PaymentIcon"><Name>PayPal.PaymentIcon</Name></AppConfig>
+
+  <AppConfig Required="false" Advanced="true" FriendlyName="ReturnCancelURL"><Name>PayPal.ReturnCancelURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="ReturnOKURL"><Name>PayPal.ReturnOKURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestServer"><Name>PayPal.TestServer</Name></AppConfig>
+</ConfigurationAtom>

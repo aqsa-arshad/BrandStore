@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ###################################################################################################### -->
+<!-- UPS Real Time Shipping Provider Specification File for AspDotNetStorefront                             -->
+<!-- ###################################################################################################### -->
+<RTShippingProvider Name="DHL" Description="DHL">
+  <RequiredElements>
+    <RequestXmlPackage AllowUserEdit="false" Type="String" Default="rtshipping.dhl.request.xml.config" />
+    <ResponseXmlPackage AllowUserEdit="false" Type="String" Default="rtshipping.dhl.response.xml.config" />
+    <TestUsername Prompt="Test Mode Username"  AllowUserEdit="true" Type="String" Default="" />
+    <TestPassword Prompt="Test Mode Password"  AllowUserEdit="true" Type="String" Default="" />
+    <TestUrl Prompt="Test Mode Server Url"  AllowUserEdit="true" Type="String" Default="HTTPS://eCommerce.airborne.com/ApiLandingTest.asp" />
+    <LiveUsername Prompt="Live Mode Username"  AllowUserEdit="true" Type="String" Default="" />
+    <LivePassword Prompt="Live Mode Password"  AllowUserEdit="true" Type="String" Default="" />
+    <LiveUrl Prompt="Live Mode Server Url"  AllowUserEdit="true" Type="String" Default="HTTPS://eCommerce.airborne.com/ApiLanding.asp" />
+    <AllowsPOBoxes Prompt="Allow's PO Boxes"  AllowUserEdit="true" Type="Boolean" Default="true" />
+    <InsuredThreshold Prompt="Insurance Threshold"  AllowUserEdit="true" Type="Decimal" Default="100.00" />
+    <ShippingMethodsToPrevent Prompt="Shipping Method To Pervent"  AllowUserEdit="true" Type="String" Default="" />
+    <PackageDefaultWeight Prompt="Package Default Weight"  AllowUserEdit="true" Type="Decimal" Default="0.50" />
+    <PackageExtraWeight Prompt="Package Extra Weight"  AllowUserEdit="true" Type="Decimal" Default="0.00" />
+    <MinShipmentWeight Prompt="Min Shipment Weight"  AllowUserEdit="true" Type="Decimal" Default="0.00" />
+    <MaxShipmentWeight Prompt="Max Shipment Weight"  AllowUserEdit="true" Type="Decimal" Default="150.00" />
+    <MarkupPercent Prompt="Markup Percent"  AllowUserEdit="true" Type="Decimal" Default="0.00" />
+  </RequiredElements>
+  <CarrierSpecificElements>
+    <Carrier Name="AccountNumber" Prompt="AccountNumber" AllowUserEdit="true" Type="String" Default="" />
+    <Carrier Name="ShippingKey" Prompt="ShippingKey" AllowUserEdit="true" Type="String" Default="" />
+  </CarrierSpecificElements>
+  <UpgradeMigration>
+    <!-- these are ONLY used the first time the carrier record is added to the database -->
+    <!-- it is so that the new RTShipping provider knows how to migrate old user entered AppConfig values into the new provider format -->
+    <!-- After adding the new carrier record, and migrating the appconfigs, the appconfigs are removed from your database automatically -->
+    <AppConfig Name="RTShipping.DHL.APISystemID" MoveTo="TestUsername"/>
+    <AppConfig Name="RTShipping.DHL.APISystemID" MoveTo="LiveUsername"/>
+    <AppConfig Name="RTShipping.DHL.APISystemPassword" MoveTo="TestPassword"/>
+    <AppConfig Name="RTShipping.DHL.APISystemPassword" MoveTo="LivePassword"/> 
+    <AppConfig Name="RTShipping.DHL.Server" MoveTo="LiveUrl"/>
+    <AppConfig Name="RTShipping.DHL.TestServer" MoveTo="TestUrl"/>
+    <AppConfig Name="RTShipping.DHL.MaxWeight" MoveTo="MaxShipmentWeight"/>
+    <AppConfig Name="RTShipping.MarkupPercent" MoveTo="MarkupPercent"/>
+    <AppConfig Name="RTShipping.DefaultItemWeight" MoveTo="PackageDefaultWeight"/>
+    <AppConfig Name="RTShipping.PackageExtraWeight" MoveTo="PackageExtraWeight"/>
+    <AppConfig Name="RTShipping.UPS.UPSPickupType" MoveTo="PickupType"/>
+  </UpgradeMigration>
+</RTShippingProvider>

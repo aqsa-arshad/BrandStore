@@ -1,0 +1,23 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[]]>
+  </HtmlHeader>
+  <Title>Configure SEO Parameters</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Default and SEO Title">
+    <Name>SE_MetaTitle</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Default and SEO Description">
+    <Name>SE_MetaDescription</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Default and SEO Keywords">
+    <Name>SE_MetaKeywords</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Default and SEO NoScript">
+    <Name>SE_MetaNoScript</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

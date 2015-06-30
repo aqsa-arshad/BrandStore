@@ -1,0 +1,32 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/chase-paymentech.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paymentech&type=signup" target="_blank">Sign up for Paymentech</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paymentech&type=info" target="_blank">Learn more about Paymentech</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paymentech&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Paymentech]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Merchant Bin Number"><Name>PAYMENTECH_BIN</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Merchant ID"><Name>PAYMENTECH_MERCHANT_ID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Terminal ID"><Name>PAYMENTECH_MERCHANT_TERMINAL_ID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Time Zone Code"><Name>PAYMENTECH_MERCHANT_TZCODE</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="LIVE_SERVER"><Name>PAYMENTECH_LIVE_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TEST_SERVER"><Name>PAYMENTECH_TEST_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="UseVerifiedByVisa"><Name>Paymentech.UseVerifiedByVisa</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Verify_Addresses"><Name>PAYMENTECH_Verify_Addresses</Name></AppConfig>
+</ConfigurationAtom>

@@ -1,0 +1,33 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=usaepay&type=info" target="_blank">Learn more about USAePay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=usaepay&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure USAePay]]></Title>  
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Pin"><Name>USAePay.Live.Pin</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Source Key"><Name>USAePay.Live.SourceKey</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Use SandBox"><Name>USAePay.UseSandBox</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live Endpoint"><Name>USAePay.EndpointLive</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="SandBox Endpoint"><Name>USAePay.EndpointSandbox</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test Pin"><Name>USAePay.Test.Pin</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test Source KEy"><Name>USAePay.Test.SourceKey</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Declined"><Name>USAePay.Declined</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Description"><Name>USAePay.Description</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Transaction Error"><Name>USAePay.TransactionError</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Connection Error"><Name>USAePay.ConnectionError</Name></AppConfig>
+</ConfigurationAtom>

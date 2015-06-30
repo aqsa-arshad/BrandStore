@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://gateway.securenet.com/API/DATA/" elementFormDefault="qualified" targetNamespace="http://gateway.securenet.com/API/DATA/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd2" namespace="http://gateway.securenet.com/API/Contracts" />
+  <xs:element name="GetABAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="oPlan" nillable="true" type="q1:PLAN_AB" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetABAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetABAccountResult" nillable="true" type="q2:PLAN_AB" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetABAccounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="MerchantKey" nillable="true" type="q3:MERCHANT_KEY" />
+        <xs:element minOccurs="0" name="CustomerID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetABAccountsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetABAccountsResult" nillable="true" type="q4:ArrayOfPLAN_AB" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultCustomers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="MerchantKey" nillable="true" type="q5:MERCHANT_KEY" />
+        <xs:element minOccurs="0" name="CustomerID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultCustomersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetVaultCustomersResult" nillable="true" type="q6:CUSTOMER_VAULT" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultAccountByCustomer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="MerchantKey" nillable="true" type="q7:MERCHANT_KEY" />
+        <xs:element minOccurs="0" name="CustomerID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultAccountByCustomerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetVaultAccountByCustomerResult" nillable="true" type="q8:ArrayOfACCOUNT_VAULT" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="MerchantKey" nillable="true" type="q9:MERCHANT_KEY" />
+        <xs:element minOccurs="0" name="CustomerID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PaymentID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetVaultAccountResult" nillable="true" type="q10:ACCOUNT_VAULT" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultRecordByCardNo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="MerchantKey" nillable="true" type="q11:MERCHANT_KEY" />
+        <xs:element minOccurs="0" name="CardNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVaultRecordByCardNoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetVaultRecordByCardNoResult" nillable="true" type="q12:ArrayOfACCOUNT_VAULT" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetP2PKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="P2PRequest" nillable="true" type="q13:P2PREQUEST" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetP2PKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="GetP2PKeyResult" nillable="true" type="q14:P2PRESPONSE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmP2PKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="request" nillable="true" type="q15:P2PCONFIRMREQUEST" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmP2PKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="ConfirmP2PKeyResult" nillable="true" type="q16:P2PRESPONSE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateP2PKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="request" nillable="true" type="q17:P2PREQUEST" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateP2PKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://gateway.securenet.com/API/Contracts" minOccurs="0" name="CreateP2PKeyResult" nillable="true" type="q18:P2PRESPONSE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

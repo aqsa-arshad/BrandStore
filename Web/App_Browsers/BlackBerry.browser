@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<browsers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <browser id="BlackBerry" parentID="Default">
+    <identification>
+      <userAgent match="BlackBerry((?'model'\d+\w?)/(?'version'((?'major'\d+).(?'minor'\d+).(?'extra'\d+))))" />
+    </identification>
+    <capabilities>
+      <capability name="browser" value="BlackBerry" />
+      <capability name="isMobileDevice" value="true" />
+      <capability name="javascript" value="true" />
+      <capability name="ecmascriptversion" value="1.4" />
+      <capability name="version" value="${version}" />
+      <capability name="majorVersion" value="${major}" />
+      <capability name="minorVersion" value="${minor}" />
+      <capability name="supportsCss" value="true" />
+      <capability name="frames" value="false" />
+      <capability name="cookies" value="true" />
+      <capability name="w3cdomversion" value="1.0" />
+      <capability name="css1" value="true" />
+      <capability name="css2" value="true" />
+      <capability name="xml" value="true" />
+    </capabilities>
+  </browser>
+</browsers>

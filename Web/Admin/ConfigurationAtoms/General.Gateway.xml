@@ -1,0 +1,23 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[]]>
+  </HtmlHeader>
+  <Title>Configure Your Payment Gateway</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Payment Gateway">
+    <Name>PaymentGateway</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Backup Payment Gateway">
+    <Name>PaymentGatewayBackup</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Primary Gateway Retries">
+    <Name>PaymentGateway.PrimaryRetries</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Backup Gateway Retries">
+    <Name>PaymentGateway.BackupRetries</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

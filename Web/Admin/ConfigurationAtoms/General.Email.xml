@@ -1,0 +1,71 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=emailwizard&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title>Configure Email</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email Server">
+    <Name>MailMe_Server</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email Server Username">
+    <Name>MailMe_User</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email Server Password">
+    <Name>MailMe_Pwd</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email Server Port">
+    <Name>MailMe_Port</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email From Address">
+    <Name>MailMe_FromAddress</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email From Name">
+    <Name>MailMe_FromName</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email To Address">
+    <Name>MailMe_ToAddress</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Email To Name">
+    <Name>MailMe_ToName</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Receipt Email From Address">
+    <Name>MailMe_ToAddress</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Receipt Email From Name">
+    <Name>ReceiptEMailFromName</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Order Notification From Address">
+    <Name>GotOrderEMailFrom</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Order Notification From Name">
+    <Name>GotOrderEMailFromName</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Order Notification To Address">
+    <Name>GotOrderEMailTo</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

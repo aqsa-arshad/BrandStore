@@ -1,0 +1,31 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=1stpay&type=info" target="_blank">Learn more about 1stPay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=1stpay&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure 1stPay]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Transaction Center Id"><Name>1stPay.TransactionCenterId</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Gateway Id"><Name>1stPay.GatewayId</Name></AppConfig>  
+  <AppConfig Required="true" Advanced="false" FriendlyName="Processor Id"><Name>1stPay.ProcessorId</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Enable Level 2"><Name>1stPay.Level2.Enable</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Enable Admin Email"><Name>1stPay.AdminTransactionEmail.Enable</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Enable Customer Email"><Name>1stPay.CustomerTransactionEmail.Enable</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Enable Cim"><Name>1stPay.Cim.Enable</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Email Header"><Name>1stPay.EmailHeader</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Email Footer"><Name>1stPay.EmailFooter</Name></AppConfig>
+</ConfigurationAtom>

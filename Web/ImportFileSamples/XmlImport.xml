@@ -1,0 +1,832 @@
+<AspDotNetStorefrontImportFile>
+<!-- 
+
+AspDotNetStorefront v6.3 IMPORT FILE STRUCTURE AND NOTES
+
+
+The format of the file is XML. Note that XML tags are CaSE SEnsiTiVe!!!!!!!! 
+
+Only manufacturers, distributors, categories, sections, products, and productvariants can be imported. All other items (e.g. news, topics, pictures, etc) must be created or uploaded via the admin site after the import 
+
+1.  It is assumed that you have already created and initialized your database before doing any import.
+2.  Note that you may need to HTML Encode various fields to properly embed them as XML field values (e.g. complex product descriptions that contain HTML elements) 
+3.  An import should only be run after site is installed, and configured, and all appconfig values have been specified properly for your store, and you can open BOTH the store and admin sites successfully on your server 
+4.  If a manufacturer, category or section already exists that line will be ignored
+5.  If a product with matching SKU already exists, that existing product will be updated with the information from this import
+6.  If a variant with matching Prdouct, Variant Name, and SKUSuffix already exists, that existing variant will be updated with the information from this import
+7.  You will have to set product display orders manually after importing via the admin site 
+8.  No case conversions are done on import, but existing item checking is not case sensitive (e.g. category ABCD and category Abcd are the same) 
+9.  Import/upload of images is not handled here. either use the admin site, or FTP images to the proper directory. All images have the format {id}.jpg or {id}.gif (e.g. images/category/1.jpg, images/product/icon/1.jpg, images/product/medium/1.jpg, etc). 
+10. All ids (manufacturer, distributor, category, section, product, and productvariant) are AUTO ASSIGNED by the database. You cannot specify them in the import.  You can tag the Misc Text field with your own identifier if you want 
+11. NOTE that xml tokens ARE case sensitive <Name> is NOT the same as <name> 
+12. ALMOST ALL ERRORS are caused by errors/typo's/missing fields in the import file. Please do NOT call us to fix these. Just follow the format given for each line type 
+13. Remember, the import cannot guess what you intended, it can only do what is exactly specified in this file! 
+
+-->
+<!-- -->
+<!-- MANUFACTURERS: ###################################################################################### -->
+<!-- -->
+<Manufacturer>
+	<Name>MadeByUs, Inc.</Name>
+	<Address1>123 Main St</Address1>
+	<Address2></Address2>
+	<Suite></Suite>
+	<City>YourTown</City>
+	<State>AZ</State>
+	<ZipCode>85015</ZipCode>
+	<Country>US</Country>
+	<Phone>480-555-1212</Phone>
+	<FAX>480-555-1213</FAX>
+	<URL>http://www.mycoolwebsitedomaingoeshere.com</URL>
+	<EMail>sales@mycoolwebsitedomaingoeshere.com</EMail>
+	<Summary>This is the summary</Summary>
+	<Description>This is the description</Description>
+	<Notes>This is the notes</Notes>
+	<DisplayOrder>1</DisplayOrder> <!-- integer -->
+	<XmlPackage></XmlPackage> <!-- defaults to entity.grid.xml.config -->
+	<ColWidth>4</ColWidth>  <!-- some XmlPackages use this value to determine layout width, e.g. # of cols in the grid rows -->
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Manufacturer>
+<Manufacturer>
+	<Name>MadeByUs, Inc. 2</Name>
+	<Address1>123 Main St</Address1>
+	<Address2></Address2>
+	<Suite></Suite>
+	<City>YourTown</City>
+	<State>AZ</State>
+	<ZipCode>85015</ZipCode>
+	<Country>US</Country>
+	<Phone>480-555-1212</Phone>
+	<FAX>480-555-1213</FAX>
+	<URL>http://www.mycoolwebsitedomaingoeshere.com</URL>
+	<EMail>sales@mycoolwebsitedomaingoeshere.com</EMail>
+	<Summary>This is the summary</Summary>
+	<Description>This is the description</Description>
+	<Notes>This is the notes</Notes>
+	<DisplayOrder>1</DisplayOrder>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Manufacturer>
+<Manufacturer>
+	<Name>MadeByUs, Inc. 3</Name>
+	<Address1>123 Main St</Address1>
+	<Address2></Address2>
+	<Suite></Suite>
+	<City>YourTown</City>
+	<State>AZ</State>
+	<ZipCode>85015</ZipCode>
+	<Country>US</Country>
+	<Phone>480-555-1212</Phone>
+	<FAX>480-555-1213</FAX>
+	<URL>http://www.mycoolwebsitedomaingoeshere.com</URL>
+	<EMail>sales@mycoolwebsitedomaingoeshere.com</EMail>
+	<Summary>This is the summary</Summary>
+	<Description>This is the description</Description>
+	<Notes>This is the notes</Notes>
+	<DisplayOrder>1</DisplayOrder>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Manufacturer>
+<!-- -->
+<!-- DISTRIBUTORS: (ML FEATURE ONLY!) ###################################################################################### -->
+<!-- -->
+<Distributor>
+	<Name>MadeByUs, Inc.</Name>
+	<Address1>123 Main St</Address1>
+	<Address2></Address2>
+	<Suite></Suite>
+	<City>YourTown</City>
+	<State>AZ</State>
+	<ZipCode>85015</ZipCode>
+	<Country>US</Country>
+	<Phone>480-555-1212</Phone>
+	<FAX>480-555-1213</FAX>
+	<URL>http://www.mycoolwebsitedomaingoeshere.com</URL>
+	<EMail>sales@mycoolwebsitedomaingoeshere.com</EMail>
+	<Summary>This is the summary</Summary>
+	<Description>This is the description</Description>
+	<Notes>This is the notes</Notes>
+	<DisplayOrder>1</DisplayOrder>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Distributor>
+<Distributor>
+	<Name>MadeByUs, Inc. 2</Name>
+	<Address1>123 Main St</Address1>
+	<Address2></Address2>
+	<Suite></Suite>
+	<City>YourTown</City>
+	<State>AZ</State>
+	<ZipCode>85015</ZipCode>
+	<Country>US</Country>
+	<Phone>480-555-1212</Phone>
+	<FAX>480-555-1213</FAX>
+	<URL>http://www.mycoolwebsitedomaingoeshere.com</URL>
+	<EMail>sales@mycoolwebsitedomaingoeshere.com</EMail>
+	<Summary>This is the summary</Summary>
+	<Description>This is the description</Description>
+	<Notes>This is the notes</Notes>
+	<DisplayOrder>1</DisplayOrder>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Distributor>
+<Distributor>
+	<Name>MadeByUs, Inc. 3</Name>
+	<Address1>123 Main St</Address1>
+	<Address2></Address2>
+	<Suite></Suite>
+	<City>YourTown</City>
+	<State>AZ</State>
+	<ZipCode>85015</ZipCode>
+	<Country>US</Country>
+	<Phone>480-555-1212</Phone>
+	<FAX>480-555-1213</FAX>
+	<URL>http://www.mycoolwebsitedomaingoeshere.com</URL>
+	<EMail>sales@mycoolwebsitedomaingoeshere.com</EMail>
+	<Summary>This is the summary</Summary>
+	<Description>This is the description</Description>
+	<Notes>This is the notes</Notes>
+	<DisplayOrder>1</DisplayOrder>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Distributor>
+<!-- -->
+<!-- PRODUCT TYPES: ###################################################################################### -->
+<!-- -->
+<ProductType>
+	<Name>Type 1</Name>
+</ProductType>
+<!-- -->
+<!-- CATEGORIES: ###################################################################################### -->
+<!-- -->
+<Category>
+	<Name>Category 1</Name>
+	<ParentCategory></ParentCategory>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Category>
+<Category>
+	<Name>Category 2</Name>
+	<ParentCategory>Category 1</ParentCategory>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Category>
+<Category>
+	<Name>Category 3</Name>
+	<ParentCategory></ParentCategory>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Category>
+<!-- you can also load category trees as in. Use this syntax if you have category name clashes, or if you want to create nested category trees  -->
+<CategoryTree>/cat1/cat1-1/cat-1-1-1</CategoryTree>
+<CategoryTree>/cat1/cat1-1/cat-1-1-2</CategoryTree>
+<CategoryTree>/cat1/cat1-1/cat-1-1-3</CategoryTree>
+<CategoryTree>/cat1/cat1-2/cat-1-2-1</CategoryTree>
+<CategoryTree>/cat1/cat1-2/cat-1-2-2</CategoryTree>
+<CategoryTree>/cat1/cat1-2/cat-1-2-3</CategoryTree>
+<CategoryTree>/cat2/cat2-1/cat-2-1-1</CategoryTree>
+<CategoryTree>/cat2/cat2-1/cat-2-1-2</CategoryTree>
+<CategoryTree>/cat3</CategoryTree>
+
+<!-- -->
+<!-- SECTIONS: ###################################################################################### -->
+<!-- -->
+<Section>
+	<Name>Section 1</Name>
+	<ParentSection></ParentSection>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<ColWidth>4</ColWidth>
+	<XmlPackage></XmlPackage>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Section>
+<Section>
+	<Name>Section 2</Name>
+	<ParentSection>Section 1</ParentSection>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<ColWidth>4</ColWidth>
+	<XmlPackage></XmlPackage>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Section>
+<Section>
+	<Name>Section 3</Name>
+	<ParentSection></ParentSection>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<ColWidth>4</ColWidth>
+	<XmlPackage></XmlPackage>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Section>
+<Section>
+	<Name>Section 4</Name>
+	<ParentSection>xxxx</ParentSection>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<ColWidth>4</ColWidth>
+	<XmlPackage></XmlPackage>
+	<DisplayOrder>1</DisplayOrder>
+	<Published>1</Published>
+	<ImageFilenameOverride></ImageFilenameOverride>
+</Section>
+<!-- you can also load Section trees as in. Use this syntax if you have Section name clashes, or if you want to create nested Section trees  -->
+<SectionTree>/sec1/sec1-1/sec-1-1-1</SectionTree>
+<SectionTree>/sec1/sec1-1/sec-1-1-2</SectionTree>
+<SectionTree>/sec1/sec1-1/sec-1-1-3</SectionTree>
+<SectionTree>/sec1/sec1-2/sec-1-2-1</SectionTree>
+<SectionTree>/sec1/sec1-2/sec-1-2-2</SectionTree>
+<SectionTree>/sec1/sec1-2/sec-1-2-3</SectionTree>
+<SectionTree>/sec2/sec2-1/sec-2-1-1</SectionTree>
+<SectionTree>/sec2/sec2-1/sec-2-1-2</SectionTree>
+<SectionTree>/sec3</SectionTree>
+<!-- -->
+<!-- PRODUCTS: ###################################################################################### -->
+<!-- -->
+<!-- Please read the online manual to familiarize yourself with product structures first. -->
+<!-- use paths to sub categories or sub-sections if you need the product mapped there. -->
+<!-- -->
+<Product>
+	<Name>Product 1</Name>
+	<ProductTypeRef>Type 1</ProductTypeRef>
+	<ManufacturerRef>MadeByUs, Inc.</ManufacturerRef> <!-- must be exact name of manufacturer -->
+	<DistributorRef>DistByUs, Inc.</DistributorRef> <!-- ML ONLY FEATURE, must be exact name of distributor --> 
+	<CategoryRef>Category 1</CategoryRef> <!-- must be name of category, or an xpath category path, e.g. /cat1/subcat2/subsubcat3. All subcats will be created properly -->
+	<CategoryRef>Category 2</CategoryRef>
+	<CategoryRef>/cat1/cat1-1/cat-1-1-1</CategoryRef>
+	<SectionRef>Section 1</SectionRef> <!-- must be name of section, or an xpath section path, e.g. /sec1/subsec2/subsubsec3. All sub sections will be created properly -->
+	<SectionRef>Section 2</SectionRef>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<SKU>SKU1</SKU>
+	<ManufacturerPartNumber></ManufacturerPartNumber>
+	<XmlPackage></XmlPackage> <!-- defaults to product.variantsinrightbar.xml.config if not provided -->
+	<ColWidth>4</ColWidth> <!-- used by some XmlPackage formats, e.g. grid layout formats -->
+	<SalesPromptID>1</SalesPromptID> <!-- the sales prompt id, must already exist in your db -->
+	<Published>1</Published> <!-- must be 1 or 0 -->
+	<RequiresRegistration>0</RequiresRegistration> <!-- must be 1 or 0 -->
+	<RelatedProducts>Product 1</RelatedProducts> <!-- exact name of related product -->
+	<RelatedProducts>Product 2</RelatedProducts>
+	<MiscText></MiscText>
+	<TrackInventoryBySizeAndColor>1</TrackInventoryBySizeAndColor> <!-- must be 1 or 0 -->
+	<ImageFilenameOverride></ImageFilenameOverride>
+	<ExtensionData></ExtensionData>
+	<IsAKit></IsAKit> <!-- must be 1 or 0, defaults to 0 -->
+	<IsAPack></IsAPack> <!-- must be 1 or 0, defaults to 0 -->
+	<PackSize></PackSize> <!-- integer, only used for pack products. defaults to 0 (unlimited pack size) -->
+	<ProductVariant>
+		<Name>v1</Name>
+		<IsDefault>1</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<GTIN></GTIN>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>149.95</Price> <!-- xx.xx format -->
+		<SalePrice></SalePrice> <!-- xx.xx format -->
+		<MSRP>199.95</MSRP> <!-- xx.xx format -->
+		<Cost>14.95</Cost> <!-- xx.xx format -->
+		<Weight></Weight> <!-- xx.xx format -->
+		<Dimensions></Dimensions> <!-- optional, in format: N.NN x N.NN x N.NN, Height x Width x Depth -->
+		<Inventory></Inventory> <!-- integer value, not used if tracking inventory by size and color! -->
+		<InventoryBySizeAndColor>
+			<Inventory><Size>S</Size><Color>Red</Color><Quantity>15</Quantity><GTIN>112134567890</GTIN></Inventory>
+			<Inventory><Size>S</Size><Color>Green</Color><Quantity>4</Quantity><GTIN>222134567890</GTIN></Inventory>
+			<Inventory><Size>S</Size><Color>Blue</Color><Quantity>19</Quantity><GTIN>332134567890</GTIN></Inventory>
+			<Inventory><Size>M</Size><Color>Red</Color><Quantity>23</Quantity><GTIN>442134567890</GTIN></Inventory>
+			<Inventory><Size>M</Size><Color>Green</Color><Quantity>44</Quantity><GTIN>552134567890</GTIN></Inventory>
+			<Inventory><Size>M</Size><Color>Blue</Color><Quantity>1</Quantity><GTIN>662134567890</GTIN></Inventory>
+			<Inventory><Size>L</Size><Color>Red</Color><Quantity>34</Quantity><GTIN>772134567890</GTIN></Inventory>
+			<Inventory><Size>L</Size><Color>Green</Color><Quantity>15</Quantity><GTIN>882134567890</GTIN></Inventory>
+			<Inventory><Size>L</Size><Color>Blue</Color><Quantity>29</Quantity><GTIN>992134567890</GTIN></Inventory>
+		</InventoryBySizeAndColor>
+		<DisplayOrder>1</DisplayOrder> <!-- integer -->
+		<Colors>Red,Green,Blue</Colors> <!-- comma separated list of colors -->
+		<ColorSKUModifiers>-r,-g,-b</ColorSKUModifiers> <!-- comma separated list of color sku modifiers -->
+		<Sizes>S,M,L</Sizes> <!-- comma separated list of sizes -->
+		<SizeSKUModifiers>-s,-m,-l</SizeSKUModifiers> <!-- comma separated list of size sku modifiers -->
+		<IsTaxable>0</IsTaxable> <!-- must be 1 or 0 -->
+		<IsShipSeparately>0</IsShipSeparately> <!-- must be 1 or 0 -->
+		<IsDownload>1</IsDownload> <!-- must be 1 or 0 -->
+		<DownloadLocation></DownloadLocation> <!-- must be relative path to the download file, if IfDownload=1, then it should be like /download/pdz.zip (or whatever) -->
+		<Published>1</Published> <!-- must be 1 or 0 -->
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+</Product>
+<Product>
+	<Name>Product 2</Name>
+	<ProductTypeRef>Type 1</ProductTypeRef>
+	<ManufacturerRef>MadeByUs, Inc.</ManufacturerRef>
+	<DistributorRef>DistByUs, Inc.</DistributorRef> <!-- ML ONLY FEATURE -->
+	<CategoryRef>Category 1</CategoryRef>
+	<CategoryRef>Category 2</CategoryRef>
+	<SectionRef>Section 1</SectionRef>
+	<SectionRef>Section 2</SectionRef>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<SKU>SKU2</SKU>
+	<ManufacturerPartNumber></ManufacturerPartNumber>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<SalesPromptID>1</SalesPromptID>
+	<Published>1</Published>
+	<RequiresRegistration>0</RequiresRegistration>
+	<RelatedProducts>Product 1</RelatedProducts>
+	<RelatedProducts>Product 4</RelatedProducts>
+	<MiscText></MiscText>
+	<TrackInventoryBySizeAndColor>0</TrackInventoryBySizeAndColor>
+	<ImageFilenameOverride></ImageFilenameOverride>
+	<ExtensionData></ExtensionData>
+	<IsAKit></IsAKit>
+	<IsAPack></IsAPack>
+	<PackSize></PackSize>
+	<ProductVariant>
+		<Name>v2</Name>
+		<IsDefault>1</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>149.95</Price>
+		<SalePrice></SalePrice>
+		<MSRP>199.95</MSRP>
+		<Cost>14.95</Cost>
+		<Weight></Weight>
+		<Dimensions></Dimensions>
+		<Inventory>1000000</Inventory>
+		<DisplayOrder>1</DisplayOrder>
+		<Colors></Colors>
+		<ColorSKUModifiers></ColorSKUModifiers>
+		<Sizes></Sizes>
+		<SizeSKUModifiers></SizeSKUModifiers>
+		<IsTaxable>0</IsTaxable>
+		<IsShipSeparately>0</IsShipSeparately>
+		<IsDownload>1</IsDownload>
+		<DownloadLocation>1</DownloadLocation>
+		<Published>1</Published>
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+</Product>
+<Product>
+	<Name>Product 3</Name>
+	<ProductTypeRef>Type 1</ProductTypeRef>
+	<ManufacturerRef>MadeByUs, Inc.</ManufacturerRef>
+	<DistributorRef>DistByUs, Inc.</DistributorRef> <!-- ML ONLY FEATURE -->
+	<CategoryRef>Category 1</CategoryRef>
+	<CategoryRef>Category 2</CategoryRef>
+	<SectionRef>Section 1</SectionRef>
+	<SectionRef>Section 2</SectionRef>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<SKU>SKU3</SKU>
+	<ManufacturerPartNumber></ManufacturerPartNumber>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<SalesPromptID>1</SalesPromptID>
+	<Published>1</Published>
+	<RequiresRegistration>0</RequiresRegistration>
+	<MiscText></MiscText>
+	<TrackInventoryBySizeAndColor>0</TrackInventoryBySizeAndColor>
+	<ImageFilenameOverride></ImageFilenameOverride>
+	<ExtensionData></ExtensionData>
+	<IsAKit></IsAKit>
+	<IsAPack></IsAPack>
+	<PackSize></PackSize>
+	<ProductVariant>
+		<Name>V3a</Name>
+		<IsDefault>1</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>149.95</Price>
+		<SalePrice></SalePrice>
+		<MSRP>199.95</MSRP>
+		<Cost>14.95</Cost>
+		<Weight></Weight>
+		<Dimensions></Dimensions>
+		<Inventory>1000000</Inventory>
+		<DisplayOrder>1</DisplayOrder>
+		<Colors></Colors>
+		<ColorSKUModifiers></ColorSKUModifiers>
+		<Sizes></Sizes>
+		<SizeSKUModifiers></SizeSKUModifiers>
+		<IsTaxable>0</IsTaxable>
+		<IsShipSeparately>0</IsShipSeparately>
+		<IsDownload>1</IsDownload>
+		<DownloadLocation>1</DownloadLocation>
+		<Published>1</Published>
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+	<ProductVariant>
+		<Name>V3b</Name>
+		<IsDefault>0</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>149.95</Price>
+		<SalePrice></SalePrice>
+		<MSRP>199.95</MSRP>
+		<Cost>14.95</Cost>
+		<Weight></Weight>
+		<Dimensions></Dimensions>
+		<Inventory>1000000</Inventory>
+		<DisplayOrder>1</DisplayOrder>
+		<Colors></Colors>
+		<ColorSKUModifiers></ColorSKUModifiers>
+		<Sizes></Sizes>
+		<SizeSKUModifiers></SizeSKUModifiers>
+		<IsTaxable>0</IsTaxable>
+		<IsShipSeparately>0</IsShipSeparately>
+		<IsDownload>1</IsDownload>
+		<DownloadLocation>1</DownloadLocation>
+		<Published>1</Published>
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+	<ProductVariant>
+		<Name>V3c</Name>
+		<IsDefault>0</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>149.95</Price>
+		<SalePrice></SalePrice>
+		<MSRP>199.95</MSRP>
+		<Cost>14.95</Cost>
+		<Weight></Weight>
+		<Dimensions></Dimensions>
+		<Inventory>1000000</Inventory>
+		<DisplayOrder>1</DisplayOrder>
+		<Colors></Colors>
+		<ColorSKUModifiers></ColorSKUModifiers>
+		<Sizes></Sizes>
+		<SizeSKUModifiers></SizeSKUModifiers>
+		<IsTaxable>0</IsTaxable>
+		<IsShipSeparately>0</IsShipSeparately>
+		<IsDownload>1</IsDownload>
+		<DownloadLocation>1</DownloadLocation>
+		<Published>1</Published>
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+</Product>
+<Product>
+	<Name>Product 4</Name>
+	<ProductTypeRef>Type 1</ProductTypeRef>
+	<ManufacturerRef>MadeByUs, Inc.</ManufacturerRef>
+	<DistributorRef>DistByUs, Inc.</DistributorRef> <!-- ML ONLY FEATURE -->
+	<CategoryRef>Category 1</CategoryRef>
+	<CategoryRef>Category 2</CategoryRef>
+	<SectionRef>Section 1</SectionRef>
+	<SectionRef>Section 2</SectionRef>
+	<Summary></Summary>
+	<Description></Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<SKU>SKU4</SKU>
+	<ManufacturerPartNumber></ManufacturerPartNumber>
+	<XmlPackage></XmlPackage>
+	<ColWidth>4</ColWidth>
+	<SalesPromptID>1</SalesPromptID>
+	<Published>1</Published>
+	<RequiresRegistration>0</RequiresRegistration>
+	<RelatedProducts>Product 1</RelatedProducts>
+	<MiscText></MiscText>
+	<TrackInventoryBySizeAndColor>0</TrackInventoryBySizeAndColor>
+	<ImageFilenameOverride></ImageFilenameOverride>
+	<ExtensionData></ExtensionData>
+	<IsAKit></IsAKit>
+	<IsAPack></IsAPack>
+	<PackSize></PackSize>
+	<ProductVariant>
+		<Name>V4</Name>
+		<IsDefault>1</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>149.95</Price>
+		<SalePrice></SalePrice>
+		<MSRP>199.95</MSRP>
+		<Cost>14.95</Cost>
+		<Weight></Weight>
+		<Dimensions></Dimensions>
+		<Inventory>1000000</Inventory>
+		<DisplayOrder>1</DisplayOrder>
+		<Colors></Colors>
+		<ColorSKUModifiers></ColorSKUModifiers>
+		<Sizes></Sizes>
+		<SizeSKUModifiers></SizeSKUModifiers>
+		<IsTaxable>0</IsTaxable>
+		<IsShipSeparately>0</IsShipSeparately>
+		<IsDownload>1</IsDownload>
+		<DownloadLocation>1</DownloadLocation>
+		<Published>1</Published>
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+</Product>
+<Product>
+	<Name>Kit Product Imported</Name>
+	<ProductTypeRef>Kit Product</ProductTypeRef>
+	<ManufacturerRef>MadeByUs, Inc.</ManufacturerRef>
+	<DistributorRef>DistByUs, Inc.</DistributorRef> <!-- ML ONLY FEATURE -->
+	<CategoryRef>Category 1</CategoryRef>
+	<CategoryRef>Category 2</CategoryRef>
+	<SectionRef>Section 1</SectionRef>
+	<SectionRef>Section 2</SectionRef>
+	<Summary></Summary>
+	<Description>This is how a Kit Product import looks like. We've set it up to be a simple build to order PC for this example.</Description>
+	<SEKeywords></SEKeywords>
+	<SEDescription></SEDescription>
+	<SETitle></SETitle>
+	<SKU>kit-1x</SKU>
+	<ManufacturerPartNumber></ManufacturerPartNumber>
+	<ProductDisplayFormatID>1</ProductDisplayFormatID>
+	<ColWidth>4</ColWidth>
+	<SalesPromptID>1</SalesPromptID>
+	<Published>1</Published>
+	<RequiresRegistration>0</RequiresRegistration>
+	<RelatedProducts></RelatedProducts>
+	<MiscText></MiscText>
+	<TrackInventoryBySizeAndColor>0</TrackInventoryBySizeAndColor>
+	<ImageFilenameOverride></ImageFilenameOverride>
+	<ExtensionData></ExtensionData>
+	<IsAKit>1</IsAKit>
+	<IsAPack>0</IsAPack>
+	<PackSize>0</PackSize>
+	<ProductVariant>
+		<Name></Name>
+		<IsDefault>1</IsDefault>
+		<SKUSuffix></SKUSuffix>
+		<ManufacturerPartNumber></ManufacturerPartNumber>
+		<Description></Description>
+		<SEKeywords></SEKeywords>
+		<SEDescription></SEDescription>
+		<SETitle></SETitle>
+		<Price>500.00</Price>
+		<SalePrice></SalePrice>
+		<MSRP></MSRP>
+		<Cost></Cost>
+		<Weight></Weight>
+		<Dimensions></Dimensions>
+		<Inventory>1000000</Inventory>
+		<DisplayOrder>1</DisplayOrder>
+		<Colors></Colors>
+		<ColorSKUModifiers></ColorSKUModifiers>
+		<Sizes></Sizes>
+		<SizeSKUModifiers></SizeSKUModifiers>
+		<IsTaxable>1</IsTaxable>
+		<IsShipSeparately>0</IsShipSeparately>
+		<IsDownload>0</IsDownload>
+		<DownloadLocation></DownloadLocation>
+		<Published>1</Published>
+		<ImageFilenameOverride></ImageFilenameOverride>
+		<ExtensionData></ExtensionData>
+	</ProductVariant>
+	<KitGroup>
+		<Name>Motherboard</Name>
+		<Description>Select the type of motherboard you want in your computer</Description>
+		<DisplayOrder>1</DisplayOrder>
+		<KitGroupTypeID>1</KitGroupTypeID>
+		<IsRequired>1</IsRequired>
+		<KitItem>
+			<Name>AMD 64x</Name>
+			<Description></Description>
+			<PriceDelta>0.00</PriceDelta>
+			<IsDefault>1</IsDefault>
+			<DisplayOrder>1</DisplayOrder>
+			<TextOptionMaxLength></TextOptionMaxLength>
+			<TextOptionWidth></TextOptionWidth>
+			<TextOptionHeight></TextOptionHeight>
+		</KitItem>
+		<KitItem>
+			<Name>AMD 64x-2</Name>
+			<Description></Description>
+			<PriceDelta>100.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>2</DisplayOrder>
+			<TextOptionMaxLength></TextOptionMaxLength>
+			<TextOptionWidth></TextOptionWidth>
+			<TextOptionHeight></TextOptionHeight>
+		</KitItem>
+		<KitItem>
+			<Name>Intel Quad 48C</Name>
+			<Description></Description>
+			<PriceDelta>250.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>3</DisplayOrder>
+			<TextOptionMaxLength></TextOptionMaxLength>
+			<TextOptionWidth></TextOptionWidth>
+			<TextOptionHeight></TextOptionHeight>
+		</KitItem>
+	</KitGroup>
+	<KitGroup>
+		<Name>Memory</Name>
+		<Description>Select the memory size you want</Description>
+		<DisplayOrder>2</DisplayOrder>
+		<KitGroupTypeID>1</KitGroupTypeID>
+		<IsRequired>1</IsRequired>
+		<KitItem>
+			<Name>1GB</Name>
+			<Description></Description>
+			<PriceDelta>0.00</PriceDelta>
+			<IsDefault>1</IsDefault>
+			<DisplayOrder>1</DisplayOrder>
+			<TextOptionMaxLength></TextOptionMaxLength>
+			<TextOptionWidth></TextOptionWidth>
+			<TextOptionHeight></TextOptionHeight>
+		</KitItem>
+		<KitItem>
+			<Name>2GB</Name>
+			<Description></Description>
+			<PriceDelta>100.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>2</DisplayOrder>
+			<TextOptionMaxLength></TextOptionMaxLength>
+			<TextOptionWidth></TextOptionWidth>
+			<TextOptionHeight></TextOptionHeight>
+		</KitItem>
+		<KitItem>
+			<Name>3GB</Name>
+			<Description></Description>
+			<PriceDelta>550.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>3</DisplayOrder>
+			<TextOptionMaxLength></TextOptionMaxLength>
+			<TextOptionWidth></TextOptionWidth>
+			<TextOptionHeight></TextOptionHeight>
+		</KitItem>
+	</KitGroup>
+	<KitGroup>
+		<Name>Software Options</Name>
+		<Description>Select the bundled software you want</Description>
+		<DisplayOrder>3</DisplayOrder>
+		<KitGroupTypeID>3</KitGroupTypeID>
+		<IsRequired>0</IsRequired>
+		<KitItem>
+			<Name>Microsoft Office</Name>
+			<Description></Description>
+			<PriceDelta>450.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>1</DisplayOrder>
+		</KitItem>
+		<KitItem>
+			<Name>Visual Studio</Name>
+			<Description></Description>
+			<PriceDelta>250.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>1</DisplayOrder>
+		</KitItem>
+		<KitItem>
+			<Name>Symantec AntiVirus</Name>
+			<Description></Description>
+			<PriceDelta>100.00</PriceDelta>
+			<IsDefault>0</IsDefault>
+			<DisplayOrder>1</DisplayOrder>
+		</KitItem>
+	</KitGroup>
+</Product>
+<!-- -->
+<!-- CUSTOMERS: ###################################################################################### -->
+<!-- -->
+<!-- Please read the online manual to familiarize yourself with product structures first. -->
+<!-- You cannot import admin users via this import -->
+<!-- Some fields are auto-set by the importer based on supplied data, e.g.: IsRegistered, ShippingAddressID, BillingAddressID, etc -->
+<!-- Password is a required field, and the Password will be hashed + salted immediately on import -->
+<!-- The following fields are required: Password, EMail  -->
+<!-- All date fields must be entered in the format YYYYMMDD -->
+<!-- All true/false fields must be entered as 1/0 -->
+<!-- Address records are optional. Note that if the store is set to force shipping address = billing address, the shipping address will be ignored!! -->
+<!-- -->
+<Customer>
+	<EMail>test@test.com</EMail>
+	<Password></Password>
+	<DateOfBirth></DateOfBirth> <!-- must be in the format yyyymmdd!! -->
+	<Gender></Gender> <!-- must be either M or F -->
+	<FirstName>Big</FirstName>
+	<LastName>Shot</LastName>
+	<Notes></Notes>
+	<Phone>800-555-1212</Phone>
+	<AffiliateID></AffiliateID>
+	<OkToEmail></OkToEmail>  <!-- must be either 1 or 0 -->
+	<CustomerLevelID></CustomerLevelID>
+	<SubscriptionExpiresOn></SubscriptionExpiresOn> <!-- must be in the format yyyymmdd!! -->
+	<MicroPayBalance></MicroPayBalance> <!-- must be in the format of xx.xx -->
+	<CODCompanyCheckAllowed></CODCompanyCheckAllowed>  <!-- must be either 1 or 0 -->
+	<CODNet30Allowed></CODNet30Allowed>  <!-- must be either 1 or 0 -->
+	<ExtensionData></ExtensionData>
+	<Over13Checked></Over13Checked>  <!-- must be either 1 or 0 -->
+    <VATSetting></VATSetting>
+    <VATRegistrationID></VATRegistrationID>
+    <StoreCCInDB></StoreCCInDB> <!-- must be either 1 or 0 -->
+	<BillingAddress>
+		<FirstName>Big</FirstName>
+		<LastName>Shot</LastName>
+		<Company></Company>
+		<Address1>Address 1</Address1>
+		<Address2></Address2>
+		<Suite></Suite>
+		<City>Scottsdale</City>
+		<StateOrProvince>AZ</StateOrProvince> <!-- Full Name or Abbreviation of the State/Province, Must match one in our State table! -->
+		<Zip>85259</Zip>
+		<Country>United States</Country> <!-- full name or abbreviation of country. MUST match one in our Country Table! -->
+		<ResidenceType>Residential</ResidenceType> <!-- must be either Residential or Commercial -->
+		<Phone>800-555-1212</Phone>
+		<EMail>test@test.com</EMail>
+		<ExtensionData></ExtensionData>
+		<AddressNickName></AddressNickName>
+	</BillingAddress>
+	<ShippingAddress>
+		<FirstName>Big</FirstName>
+		<LastName>Shot</LastName>
+		<Company></Company>
+		<Address1>Address 1</Address1>
+		<Address2></Address2>
+		<Suite></Suite>
+		<City>Scottsdale</City>
+		<StateOrProvince>AZ</StateOrProvince> <!-- Full Name or Abbreviation of the State/Province, Must match one in our State table! -->
+		<Zip>85259</Zip>
+		<Country>United States</Country> <!-- full name or abbreviation of country. MUST match one in our Country Table! -->
+		<ResidenceType>Residential</ResidenceType> <!-- must be either Residential or Commercial -->
+		<Phone>800-555-1212</Phone>
+		<EMail>test@test.com</EMail>
+		<ExtensionData></ExtensionData>
+		<AddressNickName></AddressNickName>
+	</ShippingAddress>
+</Customer>
+</AspDotNetStorefrontImportFile>

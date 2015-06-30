@@ -1,0 +1,112 @@
+<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" %>
+<%@ Register TagPrefix="aspdnsfc" Namespace="AspDotNetStorefrontControls" Assembly="AspDotNetStorefrontControls" %>
+<%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
+<%@ Import Namespace="AspDotNetStorefrontCore" %>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head id="Head1" runat="server">
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />   
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+
+    <link href="App_Templates/Skin_<asp:Literal runat="server" Text="<%$ Tokens:SKINID%>" />/mobilestyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="App_Templates/Skin_<asp:Literal runat="server" Text="<%$ Tokens:SKINID%>" />/retina.css" media="only screen and (-webkit-min-device-pixel-ratio: 2)" />
+    <link href="App_Templates/Skin_<asp:Literal runat="server" Text="<%$ Tokens:SKINID%>" />/jQueryMobile/jquery.mobile-1.0.1.min.css" rel="stylesheet" type="text/css" />
+    
+    <script src="App_Templates/Skin_<asp:Literal ID="Literal2" runat="server" Text="<%$ Tokens:SKINID%>" />/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).bind("mobileinit", function () {
+            $.mobile.ajaxEnabled = false;
+        });
+        $('#MobilePage').live('pagebeforecreate', function (event) {
+            $(".cart_items a").each(function () {
+                if ($(this).html() == "Delete") {
+                    $(this).addClass("deleteButton");
+                    $(this).attr("data-icon", "delete");
+                    $(this).attr("data-iconpos", "notext");
+                    $(this).attr("data-role", "button");
+                }
+            });
+            $("#MobileContent > ul:first-child, #MobileContent > div:first-child > ul:first-child").addClass("firstListView");
+            $("#MobileContent > ul:last-child, #MobileContent > div:last-child > ul:last-child").addClass("lastListView");
+            $(".call-to-action, .action").attr("data-theme", '<asp:Literal runat="server" Text="<%$ Tokens:AppConfig, Mobile.Action.ThemeId %>" />');
+        });
+        $('#MobilePage').live('pageinit', function (event) {
+            FixAddToCartInputs();
+        });
+        function FixAddToCartInputs() {
+            $("#MobilePage").trigger('create');
+            $(".MobileGroupTemplate .ui-radio").each(function () { $(this).children().unwrap(); });
+        }
+    </script>
+    <script src="App_Templates/Skin_<asp:Literal runat="server" Text="<%$ Tokens:SKINID%>" />/jQueryMobile/jquery.mobile-1.0.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="App_Templates/Skin_<asp:Literal runat="server" Text="<%$ Tokens:SKINID%>" />/MPTools.js"></script>
+    <script type="text/javascript" src="jscripts/core.js"></script>
+
+    <%--This xmlpackage can be used to add dynamic data to javascripts such as tracking scripts that should run before the closing head tag--%>
+	<aspdnsf:XmlPackage runat="server" PackageName="script.headclose" />
+</head>
+<body  onload="onLoadFunction()" style="min-width:320px;">
+    <form id="form1" runat="server">
+    <%  if (RequireScriptManager)
+        { %>
+    <%-- Only render for pages that require ajax --%>
+    <asp:ScriptManager ID="scrptMgr" runat="server" ScriptMode="Release">
+    </asp:ScriptManager>
+    <% } %>
+    
+     <div id="MobilePage" data-role="page" data-theme='<asp:Literal runat="server" Text="<%$ Tokens:AppConfig, Mobile.ThemeId %>" />'>
+            <div id="FixedHeader" data-role="header" data-theme='<asp:Literal runat="server" Text="<%$ Tokens:AppConfig, Mobile.Header.ThemeId %>" />' data-position="fixed" data-fullscreen="true">
+                <div class="widthholder" style="height:41px;overflow:hidden;">
+                    <a class="headerLink" id="HeaderSearchLink" onclick="$('#SearchBar').show();$('#SearchBox').focus();"></a>
+                    <a class="headerLink" id="FixedHeaderLogo" href="default.aspx">MSx</a>
+                    <a class="headerLink" id="HeaderAccountLink" href="mobileaccount.aspx"></a>
+                    <a class="headerLink" id="HeaderWishlistLink" href="mobilewishlist.aspx"></a>
+                    <a class="headerLink" id="FixedHeaderCart"  href="mobileshoppingcart.aspx">
+                        <span><aspdnsf:Token ID="tknNumCartItems" runat="server" Type="NUM_CART_ITEMS" /></span>
+                    </a>
+                </div>
+                <div id="SearchBar" style="display:none;">
+                    <div class="widthholder">
+                        <input type="text" onkeypress="return onEnter(event, this.value);" name="searchterm" id="SearchBox" />
+                        <a id="SearchGo" data-role="button" data-icon="arrow-r" data-iconpos="notext" onclick="mobileSearch(document.getElementById('SearchBox').value); return false;"></a>
+                        <script type="text/javascript">
+                            function mobileSearch(searchTerm) {
+                                document.location.href = "mobilesearch.aspx?searchterm=" + searchTerm;
+                            }
+                            function onEnter(evt, term) {
+                                var keyCode = null;
+                                if (evt.which) { keyCode = evt.which; }
+                                else if (evt.keyCode) { keyCode = evt.keyCode; }
+                                if (13 == keyCode) { mobileSearch(term); return false; }
+                                return true;
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="GlobalMobleHeader">
+                <asp:Literal ID="litMobileGlobalHeader" runat="server" Text='<%$ Tokens:Topic, MobileGlobalHeader %>' />
+            </div>
+            <div id="MobileLocaleDropdown">
+            <asp:Literal ID="Literal1" runat="server" Text='<%$ Tokens:XmlPackage,Mobile.LocaleDropdown.xml.config %>' />
+            </div>
+            
+            <!-- CONTENTS START -->
+            <div id="MobileContent"  data-role="content" data-theme='<asp:Literal runat="server" Text="<%$ Tokens:AppConfig, Mobile.ThemeId %>" />'>
+                <asp:ContentPlaceHolder ID="PageContent" runat="server" />
+            </div>
+            <!-- CONTENTS END -->
+            <div id="MobileFooter">
+                <asp:Literal ID="litMobileGlobalFooter" runat="server" Text='<%$ Tokens:XmlPackage,mobile.footer.xml.config %>' />
+            </div>
+        </div>
+        <asp:Menu ID="HackToEnforceScripting" runat="server" ></asp:Menu>
+        <%--This xmlpackage can be used to add dynamic data to javascripts such as tracking scripts that should run before the closing body tag--%>
+		<aspdnsf:XmlPackage runat="server" PackageName="script.bodyclose" />
+     </form>
+</body>
+</html>

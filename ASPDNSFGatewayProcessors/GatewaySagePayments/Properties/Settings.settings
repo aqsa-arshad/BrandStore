@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GatewaySagePayments.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AspDotNetStorefrontGateways_CentralPaymentsSvc_Payment" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://pay.centralpayments.net/soap/v6/payment.asmx</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontGateways_PayPalSvc_PayPalAPIInterfaceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://api-3t.sandbox.paypal.com/2.0/</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontGateways_MaxMindAPI_minfraudWebService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.maxmind.com/app/minfraud_soap</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontGateways_CardiaAPI_Transaction" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontGateways_sagepaymentsAPI_TRANSACTION_PROCESSING" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.sagepayments.net/web_services/vterm_extensions/transaction_processing.asmx</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontGateways_SagePayments_TRANSACTION_PROCESSING" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.sagepayments.net/web_services/vterm_extensions/transaction_processing.asmx</Value>
+    </Setting>
+    <Setting Name="AspDotNetStorefrontGateways_PPSCommerce_SmartPayments" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.ppscommerce.net/SmartPayments/transact.asmx</Value>
+    </Setting>
+    <Setting Name="GatewaySagePayments_SagePaymentsAPI_TRANSACTION_PROCESSING" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.sagepayments.net/web_services/vterm_extensions/transaction_processing.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

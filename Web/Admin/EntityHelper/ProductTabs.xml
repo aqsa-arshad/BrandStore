@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<SiteMap>
+  <item Text="Main"  />
+  <item Text="Images"  />
+  <item Text="Summary"  />
+  <item Text="Description"  />
+  <item Text="Search Engine"  />
+  <item Text="Product Feeds"  />
+  <item Text="Mappings"  />
+  <item Text="Options"  />
+  <item Text="Extension Data"  />
+  <item Text="Variant"  />
+</SiteMap>

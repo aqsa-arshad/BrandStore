@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BE725EBC-0882-4F04-B56C-BB1B2BE740B7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GatewayAuthorizeNet</RootNamespace>
+    <AssemblyName>GatewayAuthorizeNet</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthorizeNet.cs" />
+    <Compile Include="CIMResponse.cs" />
+    <Compile Include="AddressPaymentProfileMap.cs" />
+    <Compile Include="DataUtility.cs" />
+    <Compile Include="DisplayTools.cs" />
+    <Compile Include="PaymentProcessor.cs" />
+    <Compile Include="PaymentProfileWrapper.cs" />
+    <Compile Include="ProcessTools.cs" />
+    <Compile Include="ProfileManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\AuthorizeNetApi\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceProcessContext.cs" />
+    <Compile Include="ServiceTools.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ASPDNSFCommon\AspDotNetStorefrontCommon.csproj">
+      <Project>{65E8266F-BD0A-4C2A-B7DE-13AEE9DF0FAE}</Project>
+      <Name>AspDotNetStorefrontCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ASPDNSFCore\AspDotNetStorefrontCore.csproj">
+      <Project>{06ED156E-CA02-4A2B-80C4-EEED5A84E9F9}</Project>
+      <Name>AspDotNetStorefrontCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ASPDNSFGateways\AspDotNetStorefrontGateways.csproj">
+      <Project>{63E62D25-0D49-4414-836E-85481A039C06}</Project>
+      <Name>AspDotNetStorefrontGateways</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.ANetApiResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.ARBCancelSubscriptionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.ARBCreateSubscriptionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.ARBGetSubscriptionStatusResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.ARBUpdateSubscriptionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.CreateCustomerPaymentProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.CreateCustomerProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.CreateCustomerProfileTransactionResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.CreateCustomerShippingAddressResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.DeleteCustomerPaymentProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.DeleteCustomerProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.DeleteCustomerShippingAddressResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetBatchStatisticsResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetCustomerPaymentProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetCustomerProfileIdsResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetCustomerProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetCustomerShippingAddressResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetHostedProfilePageResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetSettledBatchListResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetTransactionDetailsResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetTransactionListResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.GetUnsettledTransactionListResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.UpdateCustomerPaymentProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.UpdateCustomerProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.UpdateCustomerShippingAddressResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.UpdateSplitTenderGroupResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\GatewayAuthorizeNet.AuthorizeNetApi.ValidateCustomerPaymentProfileResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AuthorizeNetApi\Service.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AuthorizeNetApi\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AuthorizeNetApi\Service.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AuthorizeNetApi\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AuthorizeNetApi\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AuthorizeNetApi\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GatewayConfigAtom.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

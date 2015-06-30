@@ -1,0 +1,29 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=qbms&type=signup" target="_blank">Sign up for QuickBooks Merchant Services</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=qbms&type=info" target="_blank">Learn more about QuickBooks Merchant Services</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=qbms&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure QuickBooks Merchant Services]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Application ID"><Name>QBMERCHANTSERVICES_ApplicationID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Application Login"><Name>QBMERCHANTSERVICES_ApplicationLogin</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Connection Ticket"><Name>QBMERCHANTSERVICES_ConnectionTicket</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Language"><Name>QBMERCHANTSERVICES_Language</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Application Version"><Name>QBMERCHANTSERVICES_ApplicationVersion</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Install ID"><Name>QBMERCHANTSERVICES_InstallID</Name></AppConfig>
+</ConfigurationAtom>

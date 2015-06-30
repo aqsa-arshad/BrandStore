@@ -1,0 +1,166 @@
+.body-container{
+	padding:10px 0 0;
+}
+.form-control{
+	background-color:#f1f0f0;
+}
+.header-cart .search-go{
+	background:transparent url("images/search_icon.png") center center no-repeat;
+	position:relative;
+	margin-left:0;
+	border:none;
+	background-color:transparent;
+	text-indent:-9999px;
+	width:30px;
+	top:1px;
+	left:-31px;
+}
+
+#FaderContainer div img{
+	width:100%;
+}
+.footernav{
+	text-align:center;
+}
+.footer-lists{
+	width:auto;
+}
+.footer-lists ul.nav.navbar-nav{
+	float:none;
+	width:auto;
+	display:inline-block;
+	text-align:left;
+}
+.footer-lists ul.nav.navbar-nav:first-child{
+	margin-right:90px;
+}
+.footer-lists ul.nav.navbar-nav:after{
+	clear:none !important;
+}
+.footernav h2{
+	padding:0 2%;
+}
+.subfooter-container{
+	width:100%;
+	padding:0 2%;
+}
+
+@media (max-width: 1080px)
+{
+.header-cart{
+	margin-top:15px;
+	width:57%;
+}
+}
+
+@media (max-width: 900px) and (min-width: 768px)
+{
+}
+
+@media (max-width: 768px)
+{
+.logo-wrap{
+	padding:0;
+	margin:35px 0 0;
+	width:100%;
+}
+.logo-wrap img{
+	display:block;
+	margin:0 auto;
+	width:100%;
+	max-width:438px;
+}
+.breadcrumb-container{
+}
+.header-cart{
+	margin-top:15px;
+	width:100%;
+}
+#home-clearance-nav .clearance-buttons{
+	float:none;
+	margin:0 auto;
+	width:592px;
+}
+.navbar-collapse{
+	max-height:none;
+	overflow:hidden;
+	width:100%;
+	padding:0 2%;
+}
+.footer-lists{
+	/*width:100%;
+	max-width:350px;*/
+}
+  #mainPageDesktop
+  {
+  	display:none;
+  }
+  
+  #mainPageTabletMobile
+  {
+  	display: block !important;
+  }
+  
+  #SliderContainerTablet
+  {
+  	display: block !important;
+  }
+  
+  .slick-prev,
+  .slick-next
+  {
+  	display: none !important;
+  }
+  
+  .home-clearance-nav
+  {
+    width: 100%;
+  }
+  
+  .home-clearance-nav .clearance-buttons
+  {
+  	float: none;
+    text-align: center;
+  }
+  
+  #staticCategoryList,
+  #categoryContent
+  {
+  	float: none;
+    width: 100%;
+  }
+  
+  .SiteMap tr td[valign="top"] 
+    {
+      display: block;
+      width: 100% !important;
+    }
+  
+  select
+  {
+  	padding: 5px;
+  }
+  
+  .quantity-field
+  {
+  	width: 10% !important;
+  }
+  
+  .header-cmd-message
+  {
+  	text-align:center;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 620px)
+{
+.home-clearance-nav .clearance-buttons{
+}
+.home-clearance-nav .clearance-buttons img{
+	margin-bottom:5px;
+}
+.logo-wrap img{
+	max-width:300px;
+}
+}

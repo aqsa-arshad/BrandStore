@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:simpleType name="YesNo">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(yes)|(no)" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="TrueFalse">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="true|false" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SqlDataType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="bigint" />
+            <xsd:enumeration value="bit" />
+            <xsd:enumeration value="char" />
+            <xsd:enumeration value="datetime" />
+            <xsd:enumeration value="decimal" />
+            <xsd:enumeration value="float" />
+            <xsd:enumeration value="int" />
+            <xsd:enumeration value="money" />
+            <xsd:enumeration value="nchar" />
+            <xsd:enumeration value="ntext" />
+            <xsd:enumeration value="nvarchar" />
+            <xsd:enumeration value="real" />
+            <xsd:enumeration value="smalldatetime" />
+            <xsd:enumeration value="smallint" />
+            <xsd:enumeration value="smallmoney" />
+            <xsd:enumeration value="text" />
+            <xsd:enumeration value="tinyint" />
+            <xsd:enumeration value="uniqueidentifier" />
+            <xsd:enumeration value="varchar" />
+        </xsd:restriction >
+    </xsd:simpleType>
+
+    <xsd:simpleType name="QueryParamType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="request" />
+            <xsd:enumeration value="appconfig" />
+            <xsd:enumeration value="runtime" />
+            <xsd:enumeration value="webconfig" />
+            <xsd:enumeration value="xpath" />
+        </xsd:restriction >
+    </xsd:simpleType>
+
+    <xsd:complexType name="TextOnly">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:element name="sql">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                    <xsd:attribute name="name" type="xsd:string" />
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="queryparam">
+        <xsd:annotation>
+            <xsd:documentation>
+                Query params are only defined when the query has a parameter of the same name in it. The parameters are used in the where clause of a SQL statement or as input parameters of a stored procedure
+                All attributes are required
+                The paramname attribute is the name of the param as it is in the query (the format of a parameter in a parmeterized query is @parametername
+                The paramtype attribute indicates where the value for the query parameter will come from (acceptable values defined in the QueryParamType above), the xpath param type is used only in "after" queries
+                The requestparam attribute is the page Request.Form, Request.Querystring, or Request.Cookie value that will be assigned to this query parameter.  If the paramtype is xpath then the requestparam must be an xpath statement that returns a single element from the XML Data Document
+                The sqlDataType attribute is the .NET Sql data type used for this parameter
+                The defvalue  attribute is default value in case the page is called the supplied parameter being available
+                The validationpattern attribute is a regular expression that defines the the allowable pattern of the data used for this parameter it may be set to an empty string if no validation pattern is needed
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="paramname" type="xsd:string" use="required" />
+            <xsd:attribute name="paramtype" type="QueryParamType" use="required" />
+            <xsd:attribute name="requestparamname" type="xsd:string" use="required" />
+            <xsd:attribute name="sqlDataType" type="SqlDataType" use="required" />
+            <xsd:attribute name="defvalue" type="xsd:string" use="required" />
+            <xsd:attribute name="validationpattern" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="querystringreplace">
+        <xsd:annotation>
+            <xsd:documentation>
+                Query replace elements are used to create a dynamic SQL statement where the table names and field names can be replaced with a value you define
+                Not intended to be used as WHERE clause criteria
+                All attributes are required (although some may be set to an empty string)
+                The replaceTag attribute is the string in the sql statement that will be replace
+                The replacetype attribute indicates where the value for replacing the tag will come from (acceptable values defined in the QueryParamType above)
+                The replaceparamname attribute is the name of the replacement item (either a querystring, form, cookie, runtime, or appconfig named parameter) or if the replacetype is xpath it is an xpath statement that returns a single node from the XML Data Document
+                The defvalue attribute is the the default value if none is retrieved from the specified parameter location
+                The validationpattern attribute is a regular expression that defines the the allowable pattern of the data used for this replacement it may be set to an empty string if no validation pattern is needed
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="replaceTag" type="xsd:string" use="required" />
+            <xsd:attribute name="replacetype" type="QueryParamType" use="required" />
+            <xsd:attribute name="replaceparamname" type="xsd:string" use="required" />
+            <xsd:attribute name="defvalue" type="xsd:string" use="required" />
+            <xsd:attribute name="validationpattern" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="postdata">
+        <xsd:annotation>
+            <xsd:documentation>
+                postdata elements are used to to specify bulk data (e.g. xml data) to be posted to a web service using the webquery element
+
+                All attributes are required (although some may be set to an empty string)
+                The paramtype attribute indicates where the value for replacing the tag will come from (acceptable values defined in the QueryParamType above)
+                The paramname attribute is the name of the param item (either a querystring, form, cookie, runtime, or appconfig named parameter) or if the replacetype is xpath it is an xpath statement that returns a single node from the XML Data Document
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="paramtype" type="QueryParamType" use="required" />
+            <xsd:attribute name="paramname" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="querytransform">
+        <xsd:annotation>
+            <xsd:documentation>
+                Defines an XSL transform that is applied to the query results.
+                This transform can create any type of output however if it does not result in an XML document or
+                document fragment that can be combined with other queries then there should be no PackageTransform.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="query">
+        <xsd:annotation>
+            <xsd:documentation>
+                Defines the query to be executed.  Parameters in the query should be in the form of tbl.field = @param.
+                The name attribute is used as the root element of the resulting XML document fragment and therefore must comply with xml element naming conventions.
+                The rowElementName is used to name the row elements if not specified the default row element name is the name attribute concatenated with the word "row", e.g. if the name attribute is Category then the row element name would be Categoryrow.
+                The runif attribute can be used to prevent the query from being executed.  The value should be either a querystring/form/cookie param or an appconfig param.  If the attribute doesn't exist or is an empty string or if the request param or appconfig param is not found the query will not be executed
+                By using the optional querytransform element, a query node can have a tranform applied to it before it is added to the XML Data Document.  The xml returned from the query is combined with the system data to create a document with the following structure:
+                root
+                system data elements
+                this webquery's result
+                root
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="sql" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="querystringreplace" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="queryparam" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="querytransform" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+            <xsd:attribute name="rowElementName" type="xsd:string" use="required" />
+            <xsd:attribute name="runif" type="xsd:string" use="optional" />
+            <xsd:attribute name="retType" use="optional" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="xml"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="webquery">
+        <xsd:annotation>
+            <xsd:documentation>
+                Web query is used to request data from a web service.  The return can either be an xml document, xml document fragment or text.
+                A node is created in the XML Data Document using the name attribute specified in the webquery node, the return value of the web query is inserted into that node.
+                If the return type is xml then the document is evaluated for well-formedness and if not and exception is thrown
+                If the return type is text the the text is put in the document as CDATA.
+                The url element is the url of the web service to query.  The url should be enclosed in a CDATA tag.
+                The postdata element may be used when there is bulk data to be posted to the end point.  Only 1 postdata element is allowed and it will only be used when the method attribute is set to "post".
+                The querystringreplace element can be used to modify parameters used in the web query's URL (or any other part of the url)
+                By using the optional querytransform element, a web query node can have a tranform applied to it before it is added to the XML Data Document, querytransforms will only be used when the RetType is "xml". The xml returned from the web request is combined with the system data to create a document with the following structure:
+                root
+                system data elements
+                this webquery's result
+                root
+                The runif attribute can be used to prevent the web query from being executed.  The value should be either a querystring/form/cookie param or an appconfig param.  If the attribute doesn't exist or is an empty string or if the request param or appconfig param is not found the query will not be executed
+                The timeout attribute is used to set the timeout period for the web request. The default timeout is 30 seconds.
+                The method attribute can be either "post" or "get", if the attribute is not specified the method defaults to "get".  Use post when the end point requires bulk data posted such as an XML document.  If the date to be sent is an XML Document then only one queryparam is allowed and it's contents will be sent as the body of the post.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="url" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="postdata" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="querystringreplace" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="querytransform" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+            <xsd:attribute name="RetType" use="required" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(xml)|(text)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="runif" type="xsd:string" use="optional" />
+            <xsd:attribute name="timeout" type="xsd:integer" use="optional" />
+            <xsd:attribute name="method" use="optional" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(post)|(get)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="PackageTransform">
+        <xsd:annotation>
+            <xsd:documentation>
+                Defines the XSL transform that is executed on XML Data Document which is the XML that results from combining the results of all queries (after applying it's query transform if it has one defined).
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="SearchEngineSettings">
+        <xsd:annotation>
+            <xsd:documentation>
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="SectionTitle" minOccurs="0"  maxOccurs="1" >
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                        <xsd:attribute name="actionType" use="required" >
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:pattern value="(xpath)|(transform)|(text)"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="SETitle" minOccurs="0"  maxOccurs="1" >
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                        <xsd:attribute name="actionType" use="required" >
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:pattern value="(xpath)|(transform)|(text)"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="SEKeywords" minOccurs="0"  maxOccurs="1" >
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                        <xsd:attribute name="actionType" use="required" >
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:pattern value="(xpath)|(transform)|(text)"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="SEDescription" minOccurs="0"  maxOccurs="1" >
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                        <xsd:attribute name="actionType" use="required" >
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:pattern value="(xpath)|(transform)|(text)"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="SENoScript" minOccurs="0"  maxOccurs="1" >
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                        <xsd:attribute name="actionType" use="required" >
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:pattern value="(xpath)|(transform)|(text)"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="queryafter">
+        <xsd:annotation>
+            <xsd:documentation>
+                Defines the query to be executed after the XML data document has been created.  Unlike the queries used to build the XML Data Document these queries are used to perform updates or inserts after the data document has been created
+                The sql element has CDATA content that defines the sql query to be executed
+                Parameters in the sql query should be in the form of tbl.field = @param.
+                The runif element can be used to prevent the query from being executed.  It's param type attribute defines where to get the data and the paramsource defines the field, variable or element to test.  If the value or element retrieved exists and is not an empty string, the query will be executed
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="sql" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="querystringreplace" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="queryparam" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element name="runif" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:attribute name="paramtype" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="request" />
+                                    <xsd:enumeration value="appconfig" />
+                                    <xsd:enumeration value="xpath" />
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="paramsource" type="xsd:string" use="required" />
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="webqueryafter">
+        <xsd:annotation>
+            <xsd:documentation>
+                Defines the query to be executed after the XML data document has been created.  Unlike the queries used to build the XML Data Document these queries are used to perform updates or inserts after the data document has been created
+                The url element has CDATA content that defines the url to post data to
+                The querystringreplace element can be used to dynamically alter the url
+                The runif element can be used to prevent the query from being executed.  It's param type attribute defines where to get the data and the paramsource defines the field, variable or element to test.  If the value or element retrieved exists and is not an empty string, the query will be executed
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="url" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="querystringreplace" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element name="runif" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:attribute name="paramtype" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="request" />
+                                    <xsd:enumeration value="appconfig" />
+                                    <xsd:enumeration value="xpath" />
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="paramsource" type="xsd:string" use="required" />
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="setcookie">
+        <xsd:annotation>
+            <xsd:documentation>
+                Allows you to set a cookie based on data in the request params, or data in the XML Data Document.
+                The cookiename attribute defines the name of the cookie to set
+                The valuetype attribute defines where to get the value to set, if set to xpath the statement must point to a single element
+                The cookiesource defines a request param (querystring, form cookie or server variable) name, appconfig value, or an xpath statement
+                The expires attribute allows you to specify how long, in minutes, until the expires, no value menas that it will expire at the end of the user's browser session
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="cookiename" type="xsd:string" use="required" />
+            <xsd:attribute name="valuetype" use="required" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="request" />
+                        <xsd:enumeration value="appconfig" />
+                        <xsd:enumeration value="xpath" />
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="cookiesource" type="xsd:string" use="required" />
+            <xsd:attribute name="expires" type="xsd:integer" use="optional" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="PostProcessing">
+        <xsd:annotation>
+            <xsd:documentation>
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="queryafter" minOccurs="0"  maxOccurs="unbounded" />
+                <xsd:element ref="webqueryafter" minOccurs="0"  maxOccurs="unbounded" />
+                <xsd:element ref="setcookie" minOccurs="0"  maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+
+    </xsd:element>
+
+    <xsd:element name="runtime">
+        <xsd:annotation>
+            <xsd:documentation>
+                runtime nodes are for adding data items to the Runtime section of the XML Data Document, this node is mainly here for backward compatibility with previous versions of the package architecture
+                All attributes are required
+                The paramname attribute will be used and the element name so it must conform to XML namming standards
+                The paramtype attribute indicates where the value for the query parameter will come from (acceptable values are defined in the QueryParamType above although xpath and runtime are ignored)
+                The requestparam attribute is the page's Request.Form, Request.Querystring, or Request.Cookie value that will be assigned to this runtime element.  It may also be an AppConfig parameter is paramtype is appconfig
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="paramname" type="xsd:string" use="required" />
+            <xsd:attribute name="paramtype" type="QueryParamType" use="required" />
+            <xsd:attribute name="requestparamname" type="xsd:string" use="required" />
+        </xsd:complexType>
+
+    </xsd:element>
+
+    <xsd:element name="package">
+        <xsd:annotation>
+            <xsd:documentation>
+                This is the package root element
+                The package contains one or more query elements, one packeage xsl traansform and an optional SearchEngine settings element
+                The SearchEngineSettings are elements used to modify page elements in the page template (i.e. template ascx).  Mainly used when executing a package in the engine.aspx page
+                The results of all queries are combined with system data elements to create the package XML Data Document.  This data document is ultimately transformed by the stylesheet in the PackageTransform element.
+                The debug attribute when set to "true" will cause the output of the raw XML data document and transform result to be displayed on the page that is using it, it will a also write that same information to files in the /images folder
+                The RequiresParser attribute indicates legacy support for parser tokens.
+                The includeentityhelper attribute is used to include the hierarchical tree of each entity (category, section, manufacturer, library) to be included in the XML data document, use this instead of a SQL query to retrieve entity data
+                The version and displayname attributes are used internally by the application version should be set to 2.1
+                The contenttype attribute is used to set the content type property of the XmlPackage 2 class, you can use the attribute to set teh Resposne.ContentType in any page that you create and use the package in.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="runtime" minOccurs="0"  maxOccurs="unbounded" />
+                <xsd:element ref="query" minOccurs="0"  maxOccurs="unbounded" />
+                <xsd:element ref="webquery" minOccurs="0"  maxOccurs="unbounded" />
+                <xsd:element ref="PackageTransform" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="SearchEngineSettings" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="PostProcessing" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+            <xsd:attribute name="debug" use="optional" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(true)|(false)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="RequiresParser" use="optional" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(true)|(false)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="includeentityhelper" use="optional" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(true)|(false)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="version" use="required" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(2.0)|(2.1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="displayname" use="optional" />
+            <xsd:attribute name="contenttype" use="optional" />
+            <xsd:attribute name="allowengine" use="optional" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="(true)|(false)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

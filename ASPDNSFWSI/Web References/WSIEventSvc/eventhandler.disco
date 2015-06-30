@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://localhost/wsieventsvc/eventhandler.asmx?wsdl" docRef="http://localhost/wsieventsvc/eventhandler.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://localhost/wsieventsvc/eventhandler.asmx" xmlns:q1="http://www.aspdotnetstorefront.com/" binding="q1:AspDotNetStorefront_x005F_x0020_WebService_x005F_x0020_Event_x005F_x0020_HandlerSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://localhost/wsieventsvc/eventhandler.asmx" xmlns:q2="http://www.aspdotnetstorefront.com/" binding="q2:AspDotNetStorefront_x005F_x0020_WebService_x005F_x0020_Event_x005F_x0020_HandlerSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

@@ -1,0 +1,24 @@
+<Skin version="1.0">
+	<DisplayName>Default Mobile</DisplayName>
+	<Description>This is the default mobile skin that comes with AspDotNetStorefront. It is a great starting point for your own custom mobile skin.</Description>
+	<Author>
+		<Name>AspDotNetStorefront</Name>
+		<Email>sales@aspdotnetstorefront.com</Email>
+		<Url>http://www.aspdotnetstorefront.com</Url>
+	</Author>
+	<MobileOnly>true</MobileOnly>
+	<Colors>
+		<Color>
+			<Name>Primary Color</Name>
+			<Value>#5E87B0</Value>
+		</Color>
+		<Color>
+			<Name>Background Color</Name>
+			<Value>#DDDDDD</Value>
+		</Color>
+		<Color>
+			<Name>Text Color</Name>
+			<Value>#2F3E46</Value>
+		</Color>
+	</Colors>
+</Skin>

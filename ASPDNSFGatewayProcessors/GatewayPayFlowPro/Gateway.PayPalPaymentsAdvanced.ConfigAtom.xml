@@ -1,0 +1,53 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <div class="modalTable modalHeader">
+        <table width="100%" cellpadding="4" cellspacing="0">
+          <tr>
+            <td>
+              <img src="images/PayPal_PaymentsAccepted.gif" border="0" />
+            </td>
+            <td>
+              <p>To use PayPal Payments Advanced, you need a PayPal Business Account. Once you&#39;re signed up, enter your PayPal email address below to start accepting payments.
+				  <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentsadvanced&type=info" target="_blank">More info</a>
+				  &bull;
+				  <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentsadvanced&type=manual" target="_blank">Configuration Help</a>
+			  </p>
+            </td>
+			<td width="200" align="center">
+				<div>
+					<span class="atomHeaderButtonPrompt">Don&#39;t have a PayPal Account?</span>
+				</div>
+				<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalpaymentsadvanced&type=signup" target="_blank" class="defaultButton">Sign Up Now</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="atomHeaderNotice">You created this information when you signed up for PayPal Payments Advanced. Enter it here to connect your account and allow payments. (Note: This the same login you use for PayPal Manager.)</div>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure PayPal Payments Advanced]]></Title>
+	<AppConfig Required="false" Advanced="false" FriendlyName="Partner">
+		<Name>PayFlowPro.PARTNER</Name>
+		<ContextualDescription><![CDATA[Your Partner Name is &apos;PayPal&apos;.]]></ContextualDescription>
+	</AppConfig>
+	<AppConfig Required="false" Advanced="false" FriendlyName="Merchant Login">
+		<Name>PayFlowPro.VENDOR</Name>
+		<ContextualDescription><![CDATA[This is the login name you created when signing up for PayPal Payments Advanced.]]></ContextualDescription>
+	</AppConfig>
+	<AppConfig Required="true" Advanced="false" FriendlyName="User">
+		<Name>PayFlowPro.USER</Name>
+		<ContextualDescription><![CDATA[Instead of entering a Merchant Login, you can enter a User Login. A User Login is what PayPal recommends because it provides enhanced security and prevents service interruption if you change your Merchant Login password. You can set up a User Login and profile in PayPal Manager.]]></ContextualDescription>
+	</AppConfig>
+	<AppConfig Required="true" Advanced="false" FriendlyName="Password">
+		<Name>PayFlowPro.PWD</Name>
+		<ContextualDescription><![CDATA[This is the password you created when signing up for PayPal Payments Advanced or the password you created for API calls.]]></ContextualDescription>
+	</AppConfig>
+
+	<AppConfig Required="false" Advanced="true" FriendlyName="LiveURL"><Name>PayFlowPro.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestURL"><Name>PayFlowPro.TestURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="RecurringMaxFailPayments"><Name>PayflowPro.RecurringMaxFailPayments</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Reporting.LiveURL"><Name>PayflowPro.Reporting.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Reporting.ReportName"><Name>PayflowPro.Reporting.ReportName</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Reporting.TestURL"><Name>PayflowPro.Reporting.TestURL</Name></AppConfig>
+</ConfigurationAtom>

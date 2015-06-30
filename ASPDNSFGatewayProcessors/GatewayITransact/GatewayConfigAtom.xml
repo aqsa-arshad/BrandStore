@@ -1,0 +1,30 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/ITransact.png" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=itransact&type=signup" target="_blank">Sign up for iTransact</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=itransact&type=info" target="_blank">Learn more about iTransact</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=itransact&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure ITransact]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Vendor ID"><Name>ITransact.Vendor_ID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Password"><Name>ITransact.Password</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Test First Name"><Name>ITransact.Test_FirstName</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Sale_Server"><Name>ITransact.Sale_Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Verify_Addresses"><Name>ITransact.Verify_Addresses</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="VoidRefund_Server"><Name>ITransact.VoidRefund_Server</Name></AppConfig>
+</ConfigurationAtom>

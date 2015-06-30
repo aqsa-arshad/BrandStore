@@ -1,0 +1,652 @@
+<AspDotNetStorefrontImport Version="7.1" SetImportFlag="true|false" AutoLazyAdd="true|false" AutoCleanup="true|false" Verbose="true|false" TransactionsEnabled="true|false">
+		<Transaction Name="whatever">
+				... any valid processing nodes here from below ...
+				... allows you to create transaction groups for sets of commands if you want them to rollback on ANY error ...
+		</Transaction>
+		<ProductType Action="Add|Update|Delete|Nuke|Lookup" GUID="uniqueidentifier" ID="integer">
+				<Name>string</Name>
+		</ProductType>
+		<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Action="Add|Update|Delete|Nuke|Lookup" ID="integer" GUID="uniqueidentifier" XPathLookup="/x/y/z" RemoveMappings="boolean">
+				<Name>string</Name>
+				<XPath></XPath>
+				<!-- XPath only allowed on Add Actions -->
+				<SE>
+						<SEName></SEName>
+						<SETitle></SETitle>
+						<SEKeywords></SEKeywords>
+						<SEDescription></SEDescription>
+						<SENoScript></SENoScript>
+						<SEAltText></SEAltText>
+				</SE>
+				<Address1></Address1>
+				<Address2></Address2>
+				<Suite></Suite>
+				<City></City>
+				<State></State>
+				<ZipCode></ZipCode>
+				<Country></Country>
+				<Phone></Phone>
+				<FAX></FAX>
+				<URL></URL>
+				<EMail></EMail>
+				<Summary></Summary>
+				<Description></Description>
+				<Display>
+						<XmlPackage></XmlPackage>
+						<ColWidth></ColWidth>
+						<PageSize></PageSize>
+						<SkinID></SkinID>
+						<TemplateName></TemplateName>
+				</Display>
+				<Images>
+						<Icon Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Icon>
+						<Medium Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Medium>
+						<Large Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Large>
+						<ImageFilenameOverride></ImageFilenameOverride>
+				</Images>
+				<QuantityDiscount Name="string" ID="integer" GUID="uniqueidentifier"/>
+				<DisplayOrder></DisplayOrder>
+				<Published></Published>
+				<Wholesale></Wholesale>
+				<ExtensionData></ExtensionData>
+				<StoreMappings AutoCleanup="boolean" PreserveExistingRecords="boolean">
+						<Store StoreId="int" StoreName="string" />
+						<Store StoreId="int" StoreName="string" />
+				</StoreMappings>
+				<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Action="Add|Update|Delete|Nuke|Lookup" ID="integer" GUID="uniqueidentifier">
+						<Name>string</Name>
+						<XPath></XPath>
+						<SE>
+								<SEName></SEName>
+								<SETitle></SETitle>
+								<SEKeywords></SEKeywords>
+								<SEDescription></SEDescription>
+								<SENoScript></SENoScript>
+								<SEAltText></SEAltText>
+						</SE>
+						<Address1></Address1>
+						<Address2></Address2>
+						<Suite></Suite>
+						<City></City>
+						<State></State>
+						<ZipCode></ZipCode>
+						<Country></Country>
+						<Phone></Phone>
+						<FAX></FAX>
+						<URL></URL>
+						<EMail></EMail>
+						<Summary></Summary>
+						<Description></Description>
+						<Display>
+								<XmlPackage></XmlPackage>
+								<ColWidth></ColWidth>
+								<PageSize></PageSize>
+								<SkinID></SkinID>
+								<TemplateName></TemplateName>
+						</Display>
+						<Images>
+								<Icon Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Icon>
+								<Medium Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Medium>
+								<Large Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Large>
+								<ImageFilenameOverride></ImageFilenameOverride>
+						</Images>
+						<QuantityDiscount Name="string" ID="integer" GUID="uniqueidentifier"/>
+						<DisplayOrder></DisplayOrder>
+						<Published></Published>
+						<Wholesale></Wholesale>
+						<ExtensionData></ExtensionData>
+				</Entity>
+		</Entity>
+		<Product Action="Add|Update|Delete|Nuke|Lookup" EnsureDefaultVariant="boolean" GUID="uniqueidentifier" ID="integer">
+				<Name>string</Name>
+				<Summary></Summary>
+				<Description></Description>
+				<SpecTitle></SpecTitle>
+				<MiscText></MiscText>
+				<Notes></Notes>
+				<IsFeaturedTeaser></IsFeaturedTeaser>
+				<FroogleDescription></FroogleDescription>
+				<SKU></SKU>
+				<ManufacturerPartNumber></ManufacturerPartNumber>
+				<SwatchImageMap></SwatchImageMap>
+				<SE>
+						<SEName></SEName>
+						<SETitle></SETitle>
+						<SEKeywords></SEKeywords>
+						<SEDescription></SEDescription>
+						<SENoScript></SENoScript>
+						<SEAltText></SEAltText>
+				</SE>
+				<SizeOptionPrompt></SizeOptionPrompt>
+				<ColorOptionPrompt></ColorOptionPrompt>
+				<ProductType Name="string" ID="integer" GUID="uniqueidentifier"/>
+				<TaxClass Name="string" ID="integer" GUID="uniqueidentifier"/>
+				<SalesPrompt Name="string" ID="integer" GUID="uniqueidentifier"/>
+				<SpecCall></SpecCall>
+				<SpecsInline></SpecsInline>
+				<Display>
+						<XmlPackage></XmlPackage>
+						<ColWidth></ColWidth>
+						<PageSize></PageSize>
+						<SkinID></SkinID>
+						<TemplateName></TemplateName>
+				</Display>
+				<Images UseAppConfigs="boolean">
+						<Icon Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Icon>
+						<Medium Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Medium>
+						<Large Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Large>
+						<ImageFilenameOverride></ImageFilenameOverride>
+						<MultiImage>
+								<!-- use index can be 1 to 10, and use blank color for "no color" image -->
+								<Icon>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="3" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+								</Icon>
+								<Medium>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="3" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+								</Medium>
+								<Large>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="1" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="2" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+										<Img Index="3" Color="" Extension="gif|jpg|png|jpeg" Delete="boolean">base64 encoded image data here</Img>
+								</Large>
+						</MultiImage>
+				</Images>
+				<QuantityDiscount Name="string" ID="integer" GUID="uniqueidentifier"/>
+				<RelatedProducts>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+				</RelatedProducts>
+				<UpsellProducts DiscountPercentage="decimal">
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+				</UpsellProducts>
+				<RequiresProducts>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+						<CX ID="integer" GUID="uniqueidentifier"/>
+				</RequiresProducts>
+				<InventoryType>
+						<TrackInventoryBySizeAndColor></TrackInventoryBySizeAndColor>
+						<WarehouseLocation></WarehouseLocation>
+				</InventoryType>
+				<IsFeatured></IsFeatured>
+				<IsAKit>1</IsAKit>
+				<IsSystem></IsSystem>
+				<ShowBuyButton></ShowBuyButton>
+				<Published></Published>
+				<Wholesale></Wholesale>
+				<RequiresRegistration></RequiresRegistration>
+				<HidePriceUntilCart></HidePriceUntilCart>
+				<IsCallToOrder></IsCallToOrder>
+				<ExcludeFromPriceFeeds></ExcludeFromPriceFeeds>
+				<RequiresTextOption></RequiresTextOption>
+				<TextOptionMaxLength></TextOptionMaxLength>
+				<TextOptionPrompt></TextOptionPrompt>
+				<AvailableStartDate></AvailableStartDate>
+				<AvailableStopDate></AvailableStopDate>
+				<StoreMappings AutoCleanup="boolean" PreserveExistingRecords="boolean">
+						<Store StoreId="int" StoreName="string" />
+						<Store StoreId="int" StoreName="string" />
+				</StoreMappings>
+				<!-- NOTE, if you are mapping to an entity by it's NAME, it must already exist. If you are trying to create mappings on the fly, it must use XPath sequence for the Name, e.g. /cat1/cat1-1/ etc -->
+				<Mappings AutoCleanup="boolean" PreserveExistingRecords="boolean">
+						<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Name="" XPath="" ID="integer" GUID="uniqueidentifier" DisplayOrder=""/>
+						<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Name="" XPath="" ID="integer" GUID="uniqueidentifier" DisplayOrder=""/>
+						<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Name="" XPath="" ID="integer" GUID="uniqueidentifier" DisplayOrder=""/>
+						<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Name="" XPath="" ID="integer" GUID="uniqueidentifier" DisplayOrder=""/>
+						<Entity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" Name="" XPath="" ID="integer" GUID="uniqueidentifier" DisplayOrder=""/>
+				</Mappings>
+				<ExtensionData></ExtensionData>
+				<ExtensionData2></ExtensionData2>
+				<ExtensionData3></ExtensionData3>
+				<ExtensionData4></ExtensionData4>
+				<ExtensionData5></ExtensionData5>
+				<Kit AutoCleanup="boolean">
+						<!-- only used if IsAKit is 1 -->
+						<KitGroup>
+								<Name>Motherboard</Name>
+								<Description>Select the type of motherboard you want in your computer</Description>
+								<DisplayOrder>1</DisplayOrder>
+								<KitGroupTypeID>1</KitGroupTypeID>
+								<IsRequired>1</IsRequired>
+								<IsReadOnly>1</IsReadOnly>
+								<KitItem>
+										<Name>AMD 64x</Name>
+										<Description></Description>
+										<PriceDelta>0.00</PriceDelta>
+										<IsDefault>1</IsDefault>
+										<DisplayOrder>1</DisplayOrder>
+										<TextOptionMaxLength></TextOptionMaxLength>
+										<TextOptionWidth></TextOptionWidth>
+										<TextOptionHeight></TextOptionHeight>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>1</InventoryQuantityDelta>
+								</KitItem>
+								<KitItem>
+										<Name>AMD 64x-2</Name>
+										<Description></Description>
+										<PriceDelta>100.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>2</DisplayOrder>
+										<TextOptionMaxLength></TextOptionMaxLength>
+										<TextOptionWidth></TextOptionWidth>
+										<TextOptionHeight></TextOptionHeight>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>2</InventoryQuantityDelta>
+								</KitItem>
+								<KitItem>
+										<Name>Intel Quad 48C</Name>
+										<Description></Description>
+										<PriceDelta>250.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>3</DisplayOrder>
+										<TextOptionMaxLength></TextOptionMaxLength>
+										<TextOptionWidth></TextOptionWidth>
+										<TextOptionHeight></TextOptionHeight>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>3</InventoryQuantityDelta>
+								</KitItem>
+						</KitGroup>
+						<KitGroup>
+								<Name>Memory</Name>
+								<Description>Select the memory size you want</Description>
+								<DisplayOrder>2</DisplayOrder>
+								<KitGroupTypeID>1</KitGroupTypeID>
+								<IsRequired>1</IsRequired>
+								<IsReadOnly>1</IsReadOnly>
+								<KitItem>
+										<Name>1GB</Name>
+										<Description></Description>
+										<PriceDelta>0.00</PriceDelta>
+										<IsDefault>1</IsDefault>
+										<DisplayOrder>1</DisplayOrder>
+										<TextOptionMaxLength></TextOptionMaxLength>
+										<TextOptionWidth></TextOptionWidth>
+										<TextOptionHeight></TextOptionHeight>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>1</InventoryQuantityDelta>
+								</KitItem>
+								<KitItem>
+										<Name>2GB</Name>
+										<Description></Description>
+										<PriceDelta>100.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>2</DisplayOrder>
+										<TextOptionMaxLength></TextOptionMaxLength>
+										<TextOptionWidth></TextOptionWidth>
+										<TextOptionHeight></TextOptionHeight>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>2</InventoryQuantityDelta>
+								</KitItem>
+								<KitItem>
+										<Name>3GB</Name>
+										<Description></Description>
+										<PriceDelta>550.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>3</DisplayOrder>
+										<TextOptionMaxLength></TextOptionMaxLength>
+										<TextOptionWidth></TextOptionWidth>
+										<TextOptionHeight></TextOptionHeight>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>3</InventoryQuantityDelta>
+								</KitItem>
+						</KitGroup>
+						<KitGroup>
+								<Name>Software Options</Name>
+								<Description>Select the bundled software you want</Description>
+								<DisplayOrder>3</DisplayOrder>
+								<KitGroupTypeID>3</KitGroupTypeID>
+								<IsRequired>0</IsRequired>
+								<IsReadOnly>1</IsReadOnly>
+								<KitItem>
+										<Name>Microsoft Office</Name>
+										<Description></Description>
+										<PriceDelta>450.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>1</DisplayOrder>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>1</InventoryQuantityDelta>
+								</KitItem>
+								<KitItem>
+										<Name>Visual Studio</Name>
+										<Description></Description>
+										<PriceDelta>250.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>1</DisplayOrder>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>1</InventoryQuantityDelta>
+								</KitItem>
+								<KitItem>
+										<Name>Symantec AntiVirus</Name>
+										<Description></Description>
+										<PriceDelta>100.00</PriceDelta>
+										<IsDefault>0</IsDefault>
+										<DisplayOrder>1</DisplayOrder>
+										<WeightDelta></WeightDelta>
+										<InventoryQuantityDelta>1</InventoryQuantityDelta>
+								</KitItem>
+						</KitGroup>
+				</Kit>
+				<Variants AutoCleanup="boolean">
+						<Variant Action="Add|Update|Delete|Nuke|Lookup" Name="string" SKUSuffix="" GUID="uniqueidentifier" ID="integer">
+								<IsDefault></IsDefault>
+								<Name>string</Name>
+								<Description></Description>
+								<SE>
+										<SEName></SEName>
+										<SEKeywords></SEKeywords>
+										<SEDescription></SEDescription>
+										<SENoScript></SENoScript>
+										<SEAltText></SEAltText>
+								</SE>
+								<FroogleDescription></FroogleDescription>
+								<ProductID></ProductID>
+								<SKUSuffix></SKUSuffix>
+								<ManufacturerPartNumber></ManufacturerPartNumber>
+								<GTIN></GTIN>
+								<Price></Price>
+								<ExtendedPrices AutoCleanup="boolean" PullFromVariantID="integer" PullFromVariantGUID="uniqueidentifier">
+										<CustomerLevel ID="integer" GUID="uniqueidentifier" Price="decimal" />
+										<CustomerLevel ID="integer" GUID="uniqueidentifier" Price="decimal" />
+										<CustomerLevel ID="integer" GUID="uniqueidentifier" Price="decimal" />
+										<CustomerLevel ID="integer" GUID="uniqueidentifier" Price="decimal" />
+								</ExtendedPrices>
+								<SalePrice></SalePrice>
+								<Weight></Weight>
+								<MSRP></MSRP>
+								<Cost></Cost>
+								<Points></Points>
+								<Dimensions>
+										<UOM>IN</UOM>
+										<Length>4</Length>
+										<Width>2</Width>
+										<Height>1</Height>
+								</Dimensions>
+								<Inventory></Inventory>
+								<InventoryBySizeAndColor MatchKey="SizeColor (the default) | VendorFullSKU | VendorID">
+										<Inv Size="string" Color="string" Quantity="integer" GTIN="string" WarehouseLocation="string" VendorID="string" VendorFullSKU="string" WeightDelta="decimal" ExtensionData=""/>
+										<Inv Size="string" Color="string" Quantity="integer" GTIN="string" WarehouseLocation="string" VendorID="string" VendorFullSKU="string" WeightDelta="decimal" ExtensionData=""/>
+										<Inv Size="string" Color="string" Quantity="integer" GTIN="string" WarehouseLocation="string" VendorID="string" VendorFullSKU="string" WeightDelta="decimal" ExtensionData=""/>
+										<Inv Size="string" Color="string" Quantity="integer" GTIN="string" WarehouseLocation="string" VendorID="string" VendorFullSKU="string" WeightDelta="decimal" ExtensionData=""/>
+								</InventoryBySizeAndColor>
+								<DisplayOrder></DisplayOrder>
+								<Notes></Notes>
+								<IsTaxable></IsTaxable>
+								<IsShipSeparately></IsShipSeparately>
+								<IsDownload></IsDownload>
+								<DownloadLocation></DownloadLocation>
+								<FreeShipping></FreeShipping>
+								<Published></Published>
+								<Wholesale></Wholesale>
+								<IsRecurring></IsRecurring>
+								<RecurringInterval></RecurringInterval>
+								<RecurringIntervalType></RecurringIntervalType>
+								<SubscriptionInterval></SubscriptionInterval>
+								<SubscriptionIntervalType></SubscriptionIntervalType>
+								<RestrictedQuantities></RestrictedQuantities>
+								<MinimumQuantity></MinimumQuantity>
+								<Images ClearBeforeImport="boolean">
+										<Icon Extension="gif|jpg|png|jpeg">base64 encoded image data here</Icon>
+										<Medium Extension="gif|jpg|png|jpeg">base64 encoded image data here</Medium>
+										<Large Extension="gif|jpg|png|jpeg">base64 encoded image data here</Large>
+										<ImageFilenameOverride></ImageFilenameOverride>
+								</Images>
+								<CustomerEntersPrice></CustomerEntersPrice>
+								<CustomerEntersPricePrompt></CustomerEntersPricePrompt>
+								<ExtensionData></ExtensionData>
+								<ExtensionData2></ExtensionData2>
+								<ExtensionData3></ExtensionData3>
+								<ExtensionData4></ExtensionData4>
+								<ExtensionData5></ExtensionData5>
+								<Sizes>
+										<Size SKUModifier="string" PriceDelta="decimal">s</Size>
+										<Size SKUModifier="string" PriceDelta="decimal">m</Size>
+										<Size SKUModifier="string" PriceDelta="decimal">l</Size>
+								</Sizes>
+								<Colors>
+										<Color SKUModifier="string" PriceDelta="decimal">red</Color>
+										<Color SKUModifier="string" PriceDelta="decimal">green</Color>
+										<Color SKUModifier="string" PriceDelta="decimal">blue</Color>
+								</Colors>
+								<ShippingCosts AutoCleanup="boolean" PullFromVariantID="integer" PullFromVariantGUID="uniqueidentifier">
+										<ShippingMethod ID="integer" GUID="uniqueidentifier" Cost="decimal" />
+										<ShippingMethod ID="integer" GUID="uniqueidentifier" Cost="decimal" />
+										<ShippingMethod ID="integer" GUID="uniqueidentifier" Cost="decimal" />
+										<ShippingMethod ID="integer" GUID="uniqueidentifier" Cost="decimal" />
+								</ShippingCosts>
+						</Variant>
+				</Variants>
+		</Product>
+		<!-- inventory update -->
+		<!-- matchkey determines how lookups occur to find matching inventory records -->
+		<!-- MatchKey is only used if the product is tracking inventory by size and color -->
+		<!-- if product has simple inventory (no size or color tracking), then one of VariantID or VariantSKU MUST be supplied -->
+		<InventoryUpdate MatchKey="VendorFullSKU|VendorID|VariantID|VariantSKU">
+				<Inv VariantID="integer" VariantSKU="string" VendorID="string" VendorFullSKU="string" Size="string" Color="string" Quantity="integer" GTIN="string"  WarehouseLocation="string" WeightDelta="decimal" ExtensionData=""/>
+				<Inv VariantID="integer" VariantSKU="string" VendorID="string" VendorFullSKU="string" Size="string" Color="string" Quantity="integer" GTIN="string"  WarehouseLocation="string" WeightDelta="decimal" ExtensionData=""/>
+				<Inv VariantID="integer" VariantSKU="string" VendorID="string" VendorFullSKU="string" Size="string" Color="string" Quantity="integer" GTIN="string"  WarehouseLocation="string" WeightDelta="decimal" ExtensionData=""/>
+				<Inv VariantID="integer" VariantSKU="string" VendorID="string" VendorFullSKU="string" Size="string" Color="string" Quantity="integer" GTIN="string"  WarehouseLocation="string" WeightDelta="decimal" ExtensionData=""/>
+		</InventoryUpdate>
+		<Mapping Action="Add|Delete" EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" EntityID="integer" EntityGUID="uniqueidentifier" ObjectType="Product" ObjectID="integer" ObjectGUID="uniqueidentifier" DisplayOrder=""/>
+		<ClearMappings EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" EntityID="integer" EntityGUID="uniqueidentifier"/>
+		<GetGUID Count="N"/>
+		<GetEntityHelper EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector"/>
+		<GetEntity EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" EntityID="integer" EntityGUID="uniqueidentifier" XPathLookup="/x/y/z" Recursive="boolean" IncludeImages="boolean" GetAllLocale="boolean"/>
+		<!-- if ID and GUID are empty, gets all of the specified entities from root on down -->
+		<GetProduct ID="integer" GUID="uniqueidentifier" ForEntityType="Manufacturer|Distributor|Category|Section|Genre|Vector|Affiliate|CustomerLevel" ForEntityID="integer" ForEntityGUID="uniqueidentifier" IncludeVariants="boolean" IncludeImages="boolean" GetAllLocale="boolean" GetAll="boolean"/>
+		<GetCustomer ID="integer" GUID="uniqueidentifier" EMail="string" GetAll="boolean"/>
+		<GetOrder OrderNumber="integer" GetAll="boolean"/>
+		<GetMappings EntityType="Manufacturer|Distributor|Category|Section|Genre|Vector" EntityID="integer" EntityGUID="uniqueidentifier"/>
+		<Customer Action="Add|Update|Delete|Nuke|Lookup" Name="string" GUID="uniqueidentifier" ID="integer" EMail="string">
+				<CustomerLevelID>integer, make sure you know what you are doing if you explicitly set this</CustomerLevelID>
+				<RegisterDate>datetime, make sure you know what you are doing if you explicitly set this</RegisterDate>
+				<EMail>string</EMail>
+				<FirstName>string</FirstName>
+				<LastName>string</LastName>
+				<Phone>string</Phone>
+				<OkToEMail>boolean</OkToEMail>
+				<IsAdmin>integer, 0=normal user, 1=admin user, 3=superadmin user</IsAdmin>
+				<LocaleSetting>string, must be a valid storefront locale!</LocaleSetting>
+				<MicroPayBalance>decimal</MicroPayBalance>
+				<RecurringShippingMethodID>integer</RecurringShippingMethodID>
+				<BillingAddress ID="integer" GUID="uniqueidentifier"/>
+				<ShippingAddress ID="integer" GUID="uniqueidentifier"/>
+				<GiftRegistryGUID>uniqueidentifier, make sure you know what you are doing if you explicitly set this</GiftRegistryGUID>
+				<GiftRegistryIsAnonymous>boolean</GiftRegistryIsAnonymous>
+				<GiftRegistryAllowSearchByOthers>boolean</GiftRegistryAllowSearchByOthers>
+				<GiftRegistryHideShippingAddresses>boolean</GiftRegistryHideShippingAddresses>
+				<CODCompanyCheckAllowed>boolean</CODCompanyCheckAllowed>
+				<CODNet30Allowed>boolean</CODNet30Allowed>
+				<Over13Checked>boolean</Over13Checked>
+				<StoreCCInDB>boolean</StoreCCInDB>
+				<AdminCanViewCC>boolean, make sure you know what you are doing if you explicitly set this</AdminCanViewCC>
+				<IsRegistered>boolean, make sure you know what you are doing if you explicitly set this</IsRegistered>
+				<LockedUntil>datetime or "null", set this only with extreme care</LockedUntil>
+				<BadLoginCount>integer, set this only with extreme care</BadLoginCount>
+				<PwdChangeRequired>boolean, set this only with extreme care</PwdChangeRequired>
+				<Active>boolean, make sure you know what you are doing if you explicitly set this</Active>
+				<VATSetting>integer, make sure you know what you are doing if you explicitly set this</VATSetting>
+				<VATRegistrationID>string</VATRegistrationID>
+				<Notes>string</Notes>
+				<ExtensionData>string</ExtensionData>
+				<StoreID>integer</StoreID>
+				<Addresses AutoCleanup="true|false, make sure you know what you are doing if you explicitly set this flag, as recurring orders could be adversly affected!!!!">
+						<Address Action="Add|Update|Delete|Nuke|Lookup" GUID="uniqueidentifier" ID="integer">
+								<NickName>string</NickName>
+								<FirstName>string</FirstName>
+								<LastName>string</LastName>
+								<Company>string</Company>
+								<Address1>string</Address1>
+								<Address2>string</Address2>
+								<Suite>string</Suite>
+								<City>string</City>
+								<State>string</State>
+								<Zip>string</Zip>
+								<Country>string</Country>
+								<ResidenceType>integer</ResidenceType>
+								<Phone>string</Phone>
+								<Email>string</Email>
+								<ExtensionData>string</ExtensionData>
+						</Address>
+						<Address Action="Add|Update|Delete|Nuke|Lookup" GUID="uniqueidentifier" ID="integer">
+								<NickName>string</NickName>
+								<FirstName>string</FirstName>
+								<LastName>string</LastName>
+								<Company>string</Company>
+								<Address1>string</Address1>
+								<Address2>string</Address2>
+								<Suite>string</Suite>
+								<City>string</City>
+								<State>string</State>
+								<Zip>string</Zip>
+								<Country>string</Country>
+								<ResidenceType>integer</ResidenceType>
+								<Phone>string</Phone>
+								<Email>string</Email>
+								<ExtensionData>string</ExtensionData>
+						</Address>
+						<Address Action="Add|Update|Delete|Nuke|Lookup" GUID="uniqueidentifier" ID="integer">
+								<NickName>string</NickName>
+								<FirstName>string</FirstName>
+								<LastName>string</LastName>
+								<Company>string</Company>
+								<Address1>string</Address1>
+								<Address2>string</Address2>
+								<Suite>string</Suite>
+								<City>string</City>
+								<State>string</State>
+								<Zip>string</Zip>
+								<Country>string</Country>
+								<ResidenceType>integer</ResidenceType>
+								<Phone>string</Phone>
+								<Email>string</Email>
+								<ExtensionData>string</ExtensionData>
+						</Address>
+				</Addresses>
+		</Customer>
+
+		<!-- this node cannot be used inside a transaction -->
+		<ResetPassword PasswordType="ClearText|Random" CustomerID="integer" CustomerGUID="uniqueidentifier" CustomerEMail="string" SendEMailToCustomer="boolean">new password here in clear text</ResetPassword>
+
+		<!-- programmatically adding kits and packs not supported yet -->
+		<!-- use Action="Get" by itself -->
+		<!-- use Action="Clear" by itself -->
+		<!-- use Action="Update" with <Add>, <Delete>, and <SetQuantity> nodes -->
+		<!-- <Delete> action is same as SetQuantity with Quantity=0 action -->
+		<ShoppingCart Action="Get|Update|Clear" CartType="ShoppingCart|WishCart|RecurringCart|GiftRegistryCart" CustomerID="integer" CustomerGUID="uniqueidentifier" CustomerEMail="string">
+				<Add	ProductID="integer" ProductGUID="uniqueidentifier"
+						VariantID="integer" VariantGUID="uniqueidentifier"
+						ChosenSize="string" ChosenSizeSKUMOdifier="string"
+						ChosenColor="string" ChosenColorSKUModifier="string"
+						TextOption="string"
+						CustomerEnteredPrice="decimal"
+						ShippingAddressID="integer" ShippingAddressGUID="uniqueidentifier"
+						FullSKU="string"
+						Quantity="integer"
+						Notes="string"
+						ExtensionData="string"
+				/>
+				<Delete	ShoppingCartRecID="integer" ShoppingCartRecGUID="uniqueidentifier"/>
+				<SetQuantity ShoppingCartRecID="integer" ShoppingCartRecGUID="uniqueidentifier" Quantity="integer"/>
+		</ShoppingCart>
+		<Get Table="string" Name="string">
+				<IDColumn>string</IDColumn>
+				<XmlPackage RuntimeParams="querystring type string list here of params, e.g.: x=1&amp;y=2"></XmlPackage>
+				<DefaultWhereClause>string of where clause constraints, e.g.: IsNew=1</DefaultWhereClause>
+				<OrderBy>string</OrderBy>
+				<Criteria>
+						<TableFieldNameHere>criteria match value</TableFieldNameHere>
+						<TableFieldNameHere>criteria match value</TableFieldNameHere>
+						<TableFieldNameHere>criteria match value</TableFieldNameHere>
+						<TableFieldNameHere>criteria match value</TableFieldNameHere>
+						<TableFieldNameHere>criteria match value</TableFieldNameHere>
+				</Criteria>
+		</Get>
+		<Set Table="string" Name="string" ID="integer" GUID="uniqueidentifier" IDColumn="string" GUIDColumn="string">
+				<TableFieldNameHere>value here</TableFieldNameHere>
+				<TableFieldNameHere>value here</TableFieldNameHere>
+				<TableFieldNameHere>value here</TableFieldNameHere>
+				<TableFieldNameHere>value here</TableFieldNameHere>
+				<TableFieldNameHere>value here</TableFieldNameHere>
+		</Set>
+		<Query Name="string" RowName="string">
+				<SQL>
+						<![CDATA[
+			valid SQL query here
+            ]]>
+				</SQL>
+		</Query>
+		<ExecuteSQL Name="string">
+				<SQL>
+						<![CDATA[
+			valid SQL command here
+            ]]>
+				</SQL>
+		</ExecuteSQL>
+		<AppConfig Action="Add|Update|Delete|Lookup" Name="name of appconfig to add, update, delete, or get" Description="description of appconfig on Add" ConfigValue="value of appconfig on add or update" SuperOnly="boolean" GUID="uniqueidentifier" ID="integer"/>
+		<XmlPackage Name="" RuntimeParams="" OutputType="INLINE|CDATA"/>
+		<UndoLastImport Confirm="true"/>
+		<ResetCache Confirm="true"/>
+
+		<!-- these CANNOT be inside a transaction, as there is no way to undo order transaction states where we've called out to a payment gateway -->
+		<!-- Shipping Attributes only used for MarkAsShipped action -->
+		<!-- GetReceipt and GetDistributorNotifications return actual html receipts in CDATA blocks as output for the call -->
+		<OrderManagement OrderNumber="integer" Action="Void|Capture|FullRefund|ForceFullRefund|MarkAsFraud|ClearFraud|BlockIP|AllowIP|SetTracking|GetReceipt|GetDistributorNotifications|SendDownloadNotification|SimulateDownloadNotification|SendDistributorNotification|ChangeOrderEMail|MarkAsReadyToShip|ClearReadyToShip|MarkAsShipped|SetPrivateNotes|SetCustomerServiceNotes|SendToShipRush|SendToFedexShippingMgr|MarkAsPrinted|SendReceipt|ClearNewStatus|Delete" RefundReason="text" TrackingNumber="text" ShippingCarrier="text" Notes="text" NewEMail="text"/>
+
+		<!-- these CANNOT be inside a transaction, as there is no way to undo order transaction states where we've called out to a payment gateway -->
+		<!-- at least one of OriginalRecurringOrderNumber or RecurringSubscriptionID must be provided on input -->
+		<!-- for UpdateBilling, supply child nodes with new billing information to update, this will also update the customer's primary billing address id with this information -->
+		<RecurringAutoBillOrderManagement OriginalRecurringOrderNumber="integer" RecurringSubscriptionID="text" Action="Approved|Declined|Cancel|FullRefund|UpdateBilling" DeclinedReason="text">
+				<FirstName>string</FirstName>
+				<LastName>string</LastName>
+				<NameOnCard>string</NameOnCard>
+				<CardType>VISA|MASTERCARD|DISCOVER|AMEX</CardType>
+				<CardNumber>string</CardNumber>
+				<!-- numbers, no spaces, e.g. 4111111111111111 -->
+				<CardExpirationMonth>integer</CardExpirationMonth>
+				<!-- e.g, 12 -->
+				<CardExpirationYear>integer</CardExpirationYear>
+				<!-- e.g. 2009 -->
+				<Address1>string</Address1>
+				<Address2>string</Address2>
+				<Suite>string</Suite>
+				<City>string</City>
+				<StateOrProvince>string</StateOrProvince>
+				<ZipCode>string</ZipCode>
+				<Country>string</Country>
+		</RecurringAutoBillOrderManagement>
+		<ScanForXmlPackages SkinID="N" PackageTypePrefix="entity|product|notification|feed|page|skin"/>
+		<!-- uses DefaultSkinID if not provided. returns all package types if PackageTypePrefix is empty -->
+		<StoreMapping StoreId="integer" StoreName="string" Action="Add|Delete" ObjectType="Product|Entity" EntityType="Category|Department|Manufacturer|Distributor|Genre|Vector" ObjectID="integer" />
+
+</AspDotNetStorefrontImport>

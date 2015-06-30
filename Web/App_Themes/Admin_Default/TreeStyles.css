@@ -1,0 +1,213 @@
+﻿/********************************************************/
+/*  Filename:   TreeStyles.css
+    
+    Author:     AspDotNetStorefront.com
+    
+    Theme:      Admin_Default
+    
+    Synopsis:   Contains styles for TreeView controls
+                used on the admin site
+                                                        */
+/********************************************************/
+
+.treeStyle
+{
+    padding-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.hoverNode
+{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: yellow;
+}
+
+.normalNode
+{
+    padding-top: -5px;
+    padding-bottom: -5px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    color: #000080;
+}
+
+.selectedNode
+{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: Red;
+}
+
+.TreeView
+{
+    background-color: transparent;
+    border: #919191 0px solid;
+    padding-top: 5px;
+    cursor: default;
+    color: #000080;
+    cursor: hand;
+}
+
+.TreeNode
+{
+    font-size: 11px;
+    color: #000080;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 3px;
+    cursor: hand;
+    cursor: pointer;
+    height: 13px;
+    margin: 0px 0px 0px 0px;
+}
+
+.HoverTreeNode
+{
+    color: red;
+    font-size: 11px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 3px;
+    text-decoration: none;
+    cursor: hand;
+    cursor: pointer;
+    background-color: #FFCC00;
+    height: 13px;
+    margin: 0px 0px 0px 0px;
+}
+
+.SelectedTreeNode
+{
+    font-size: 11px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 3px;
+    background-color: #FFCC00;
+    cursor: hand;
+    cursor: pointer;
+    color: #404040;
+    height: 13px;
+    margin: 0px 0px 0px 0px;
+}
+
+.NodeEdit
+{
+    border: 1px silver solid;
+    font-size: 11px;
+}
+
+.TreeRow
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 15px;
+}
+
+.TreeMargin
+{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.TreeView2
+{
+    background-color: transparent;
+    border: #919191 0px solid;
+    padding-top: 5px;
+    cursor: default;
+    color: #000080;
+    cursor: hand;
+}
+
+.TreeNode2
+{
+    font-size: 11px;
+    color: #000080;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 3px;
+    cursor: hand;
+    cursor: pointer;
+    height: 13px;
+    margin: 0px 0px 0px 0px;
+}
+
+.HoverTreeNode2
+{
+    color: red;
+    font-size: 11px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 3px;
+    text-decoration: none;
+    cursor: hand;
+    cursor: pointer;
+    background-color: #FFCC00;
+    height: 13px;
+    margin: 0px 0px 0px 0px;
+}
+
+.SelectedTreeNode2
+{
+    font-size: 11px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 3px;
+    background-color: #FFCC00;
+    cursor: hand;
+    cursor: pointer;
+    color: #404040;
+    height: 13px;
+    margin: 0px 0px 0px 0px;
+}
+
+.NodeEdit2
+{
+    border: 1px silver solid;
+    font-size: 11px;
+}
+
+.TreeRow2
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 15px;
+}
+
+.TreeMargin2
+{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.treeViewDiv
+{
+    color: #ffff66;
+}
+
+.treeViewDiv a
+{
+    color: #068FE0;
+    text-decoration: normal;
+}

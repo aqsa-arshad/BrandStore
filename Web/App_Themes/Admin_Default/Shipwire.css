@@ -1,0 +1,150 @@
+.sw_ext_pg a:link, a:visited {
+	text-decoration: none;
+	color: #7c8f3f;
+}
+.sw_ext_pgcont {
+	width: 809px;
+	margin: 0 auto;
+	position: relative;
+}
+#sw_main {
+	background: url('images/shipwire_bd_bg.gif') repeat-y left top;
+	float: left;
+	width: 809px;
+	padding-bottom: 20px;
+	padding-left:20px;
+}
+h1#sw_logo a {
+	background: url('images/shipwire_logo.gif') no-repeat left top;
+	height: 79px;
+	width: 277px;
+	display: block;
+	clear: both;
+}
+h1#sw_logo em {
+	display: none;
+}
+#sw_home {
+	color: #363942;
+}
+#sw_home h2.focus {
+	background: url('images/shipwire_tagline.gif') no-repeat left top;
+	margin-left: 20px;
+	margin-bottom: 5px;
+	height: 48px;
+	width: 445px;
+}
+#sw_home h2.focus em {
+	display: none;
+}
+#sw_home .salesrow {
+	background: url('images/shipwire_mainbg.gif') repeat-y left top;
+	float: left;
+	width: 809px;
+}
+#sw_home .salesrow .salesrowhd {
+	background: url('images/shipwire_wht_crns_top.gif') no-repeat left top;
+	padding-top: 5px;
+	float: left;
+	width: 809px;
+	margin-bottom: -5px;
+}
+#sw_home .salesrow .salesrowbd {
+	background: url('imagaes/shipwire_wht_crns_btm.gif') no-repeat left bottom;
+	padding-bottom: 2px;
+	float: left;
+	width: 809px;
+}
+#sw_home .salesrow .steps {
+	padding-left: 62px;
+	float: left;
+	background: url('images/shipwire_hp_cont_left2.gif') no-repeat left bottom;
+	padding-bottom: 10px;
+}
+#sw_home .salesrow li {
+	text-align: center;
+	color: #96ab54;
+	font-size: 108%;
+	line-height: 1em;
+	font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+	font-weight: bold;
+}
+#sw_home .salesrow .steps .sendstep {
+	padding: 15px 27px 100px 0;
+	width: 112px;
+	height: 4.35em; 
+	height: 4.25em;
+	float: left;
+	position: relative;
+	background: url('images/shipwire_hp_cont_1.gif') no-repeat left bottom;
+}
+#sw_home .salesrow .steps .orderstep {
+	padding: 15px 13px 100px 4px;
+	background-image: url('images/shipwire_hp_cont_2.gif');
+	width: 136px;
+	height: 4.35em; 
+	height: 4.25em;
+	float: left;
+	position: relative;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+#sw_home .salesrow .steps .shipstep {
+	padding: 15px 47px 100px 10px;
+	background-image: url('images/shipwire_hp_cont_3.gif');
+	width: 127px;
+	height: 4.35em; 
+	height: 4.25em;
+	float: left;
+	position: relative;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+}
+#sw_home .tryitnow h3 {
+	color: #6a5a0e;
+	font: 138.5% "Trebuchet MS",Arial,Helvetica,sans-serif;
+	text-align: center;
+	mnrgin-right: 30px;
+	padding: 0;
+}
+#sw_home .tryitnow {
+	background: url('images/shipwire_hp_cont_4.gif') no-repeat left top;
+    width: 236px;
+	height: 161px;
+	float: left;
+	padding: 10px 15px 8px 2px;
+	text-align: center;
+}
+#sw_home .tryitnow p {
+	color: #363942;
+	font-family: "Trebuchet MS",Arial,Helvetica,Sans-Serif;
+}
+#sw_home .tryitnow .free {
+	color: #407584;
+	font-size: 93%;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+#sw_home .tryitnow .store {
+	font: 85% Arial, Helvetica, "Sans Serif";
+}
+#sw_home .startbtn {
+	border-style: none;
+	border-color: inherit;
+	border-width: 0;
+	background: url('images/shipwire_start_trial_button_top.gif') no-repeat left top;
+	width: 156px;
+		xheight: 3.39em;
+		margin: 20px 41px 5px 41px;
+		font: bold 108% "Trebuchet MS",Arial,Helvetica,Sans-serif;
+		color: #fff;
+		text-align: center;
+		cursor: pointer;
+		text-transform: uppercase;
+		display: block;
+}
+#sw_home .tryitnow .startbtn em {
+	padding: 1.11em 10px;
+	background: url('images/shipwire_start_trial_button_btm.gif') no-repeat left bottom;
+	display: block;
+}

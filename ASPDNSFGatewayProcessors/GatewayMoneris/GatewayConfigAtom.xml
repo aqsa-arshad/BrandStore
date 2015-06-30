@@ -1,0 +1,44 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=moneris&type=signup" target="_blank">Sign up for Moneris</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=moneris&type=info" target="_blank">Learn more about Moneris</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=moneris&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Moneris (eSELECT Plus)]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live API Token"><Name>eSelectPlus.api_token.Live</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Store ID"><Name>eSelectPlus.store_id.Live</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Test API Token"><Name>eSelectPlus.api_token.Test</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Test Store ID"><Name>eSelectPlus.store_id.Test</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Country"><Name>eSelectPlus.country</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="api_token"><Name>eSelectPlus.api_token</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="commcard_invoice"><Name>eSelectPlus.commcard_invoice</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="commcard_tax_OrderTotal"><Name>eSelectPlus.commcard_tax_OrderTotal</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="crypt"><Name>eSelectPlus.crypt</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="host"><Name>eSelectPlus.host</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="includeAVS"><Name>eSelectPlus.includeAVS</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="store_id"><Name>eSelectPlus.store_id</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="CA.Live"><Name>eSelectPlus.URL.CA.Live</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="CA.LiveMPI"><Name>eSelectPlus.URL.CA.LiveMPI</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="CA.Test"><Name>eSelectPlus.URL.CA.Test</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="CA.TestMPI"><Name>eSelectPlus.URL.CA.TestMPI</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="US.Live"><Name>eSelectPlus.URL.US.Live</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="US.LiveMPI"><Name>eSelectPlus.URL.US.LiveMPI</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="US.Test"><Name>eSelectPlus.URL.US.Test</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="US.TestMPI"><Name>eSelectPlus.URL.US.TestMPI</Name></AppConfig>
+  
+</ConfigurationAtom>

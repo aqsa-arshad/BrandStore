@@ -1,0 +1,81 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=securenetv4&type=signup" target="_blank">Sign up for Securenet (API Version 4)</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=securenetv4&type=info" target="_blank">Learn more about Securenet (API Version 4)</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=securenetv4&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title>
+    <![CDATA[Configure Securenet (API Version 4)]]>
+  </Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="SecureNet ID"><Name>SecureNet.ID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="SecureNet Key"><Name>SecureNet.Key</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Vault Enabled"><Name>SecureNetV4.VaultEnabled</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="DataAPI.LiveURL"><Name>SecureNetV4.DataAPI.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="DataAPI.TestURL"><Name>SecureNetV4.DataAPI.TestURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="LiveURL"><Name>SecureNetV4.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="TestURL"><Name>SecureNetV4.TestURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="UseTestMode"><Name>SecureNetV4.UseTestMode</Name></AppConfig>
+  <!--<AppConfig Required="true" Advanced="false" FriendlyName="SecureNet ID">
+    <Name>SecureNet.ID</Name>
+    <CreateValues>
+      <Description>Your SecurenetID supplied by SecureNet.</Description>
+      <DefaultValue></DefaultValue>
+      <GroupName>GATEWAY</GroupName>
+      <SuperOnly>true</SuperOnly>
+      <ValueType>string</ValueType>
+      <AllowableValues></AllowableValues>
+    </CreateValues>
+    <ContextualDescription/>
+  </AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Securenet Key">
+    <Name>SecureNet.Key</Name>
+    <CreateValues>
+      <Description>Your SecureKey supplied by SecureNet.</Description>
+      <DefaultValue></DefaultValue>
+      <GroupName>GATEWAY</GroupName>
+      <SuperOnly>true</SuperOnly>
+      <ValueType>string</ValueType>
+      <AllowableValues></AllowableValues>
+    </CreateValues>
+    <ContextualDescription/>
+  </AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Use Test Mode">
+    <Name>SecureNetV4.UseTestMode</Name>
+    <CreateValues>
+      <Description>If enabled the SecureNetV4 gateway will use soft test mode. Note that this is different than hitting the test endpoing; almost no validation will be performed.</Description>
+      <DefaultValue>false</DefaultValue>
+      <GroupName>GATEWAY</GroupName>
+      <SuperOnly>true</SuperOnly>
+      <ValueType>boolean</ValueType>
+      <AllowableValues></AllowableValues>
+    </CreateValues>
+    <ContextualDescription/>
+  </AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Enable Vault">
+    <Name>SecureNetV4.VaultEnabled</Name>
+    <CreateValues>
+      <Description>If enabled users will be able to store credit cards via the SecureNet Vault service.</Description>
+      <DefaultValue>false</DefaultValue>
+      <GroupName>GATEWAY</GroupName>
+      <SuperOnly>true</SuperOnly>
+      <ValueType>boolean</ValueType>
+      <AllowableValues></AllowableValues>
+    </CreateValues>
+    <ContextualDescription/>
+  </AppConfig>-->
+</ConfigurationAtom>

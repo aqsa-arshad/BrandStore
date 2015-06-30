@@ -1,0 +1,27 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=sagepayments&type=signup" target="_blank">Sign up for Sage Payments</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=sagepayments&type=info" target="_blank">Learn more about Sage Payments</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=sagepayments&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Sage Payments]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName=""><Name>SagePayments.MERCHANT_ID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName=""><Name>SagePayments.MERCHANT_KEY</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayments.ServiceURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>SagePayments.ServiceURLTEST</Name></AppConfig>
+</ConfigurationAtom>

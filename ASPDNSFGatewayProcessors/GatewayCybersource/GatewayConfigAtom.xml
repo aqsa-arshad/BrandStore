@@ -1,0 +1,33 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/CyberSource.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=cybersource&type=info" target="_blank">Learn more about Cybersource</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=cybersource&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>  
+  </HtmlHeader>
+  <Title><![CDATA[Configure CyberSource]]></Title>  
+  <AppConfig Required="true" Advanced="false" FriendlyName="Merchant ID"><Name>CYBERSOURCE.merchantID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Key Filename"><Name>CYBERSOURCE.keyFilename</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Keys Directory"><Name>CYBERSOURCE.keysDirectory</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Use PIT"><Name>CYBERSOURCE.UsePIT</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live URL"><Name>CYBERSOURCE.LiveURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test URL"><Name>CYBERSOURCE.TestURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="PIT URL"><Name>CYBERSOURCE.PITURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Country Code"><Name>CYBERSOURCE.paCountryCode</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Merchant Name"><Name>CYBERSOURCE.paMerchantName</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Merchant URL"><Name>CYBERSOURCE.paMerchantURL</Name></AppConfig>
+</ConfigurationAtom>

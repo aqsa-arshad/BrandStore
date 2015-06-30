@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx?disco" filename="Transaction.disco" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="https://secure.cardia.no/Service/Card/Transaction/1.2/Transaction.asmx?wsdl" filename="Transaction.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

@@ -1,0 +1,97 @@
+.TopMenuGroup
+{
+    border: solid 0px #003167;
+    background-color: transparent;
+}
+
+.MenuGroup
+{
+    background-color: #0C2342;
+}
+
+.TopMenuItem
+{
+    height: 30px;
+    color: white;
+    font-family: tahoma;
+    font-weight: normal;
+    cursor: pointer;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width:90px;
+}
+
+a.TopMenuItem:link {color: White !important; text-decoration: none !important;}
+a.TopMenuItem:visited {color: White !important; text-decoration: none !important;}
+a.TopMenuItem:hover {color: White !important; text-decoration: none !important;}
+
+.TopMenuItemHover
+{
+    height: 30px;
+    color: white;
+    font-family: tahoma;
+    font-size: 11pt;
+    font-weight: normal;
+    cursor: pointer;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #1053AD;
+    width: 90px;
+}
+
+.MenuItem
+{
+    background-color: #0C2342;
+    color: #ffffff;
+    font-family: verdana;
+    border: solid 1px #061B38;
+    cursor: pointer;
+    width: 100%;
+}
+
+a.MenuItem { display: block; }
+a.MenuItem:link {color: White !important; text-decoration: none !important;}
+a.MenuItem:visited {color: White !important; text-decoration: none !important;}
+a.MenuItem:hover {color: White !important; text-decoration: none !important;}
+
+.MenuItemHover
+{
+    background-color: #1053AD;
+    color: #ffffff;
+    font-family: verdana;
+    border: solid 1px #061B38;
+    cursor: pointer;
+}
+
+/*
+.ScrollItem
+{
+    background-color: #012352;
+    font-family: verdana;
+    font-size: 11px;
+    cursor: default;
+    text-align: center;
+}
+
+.ScrollItemH
+{
+    background-color: #FFC000;
+    color: black;
+    font-family: verdana;
+    font-size: 11px;
+    cursor: default;
+    text-align: center;
+}
+
+.ScrollItemA
+{
+    background-color: darkgray;
+    color: black;
+    font-family: verdana;
+    font-size: 11px;
+    cursor: default;
+    text-align: center;
+}
+*/

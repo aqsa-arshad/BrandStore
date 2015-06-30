@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.aspdotnetstorefront.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.aspdotnetstorefront.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">AspDotNetStorefront Web Service Event Handler.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.aspdotnetstorefront.com/">
+      <s:element name="WSIAcceptEventReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EventType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReportingDomain" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EventXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="WSIAcceptEventReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSIAcceptEventReportResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="WSIAcceptEventReportSoapIn">
+    <wsdl:part name="parameters" element="tns:WSIAcceptEventReport" />
+  </wsdl:message>
+  <wsdl:message name="WSIAcceptEventReportSoapOut">
+    <wsdl:part name="parameters" element="tns:WSIAcceptEventReportResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap">
+    <wsdl:operation name="WSIAcceptEventReport">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This routine can be used to accept event reports from the AspDotNetStorefront WSI platform. Events will be sent in real-time from any site which subscribes to this webservice url</wsdl:documentation>
+      <wsdl:input message="tns:WSIAcceptEventReportSoapIn" />
+      <wsdl:output message="tns:WSIAcceptEventReportSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap" type="tns:AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="WSIAcceptEventReport">
+      <soap:operation soapAction="http://www.aspdotnetstorefront.com/WSIAcceptEventReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap12" type="tns:AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="WSIAcceptEventReport">
+      <soap12:operation soapAction="http://www.aspdotnetstorefront.com/WSIAcceptEventReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_Handler">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">AspDotNetStorefront Web Service Event Handler.</wsdl:documentation>
+    <wsdl:port name="AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap" binding="tns:AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap">
+      <soap:address location="http://localhost/wsieventsvc/eventhandler.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap12" binding="tns:AspDotNetStorefront_x0020_WebService_x0020_Event_x0020_HandlerSoap12">
+      <soap12:address location="http://localhost/wsieventsvc/eventhandler.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

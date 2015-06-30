@@ -1,0 +1,271 @@
+/* SOPC Styles */
+.opc-page-header {
+    font-size: 24px;
+    text-align: center;
+    margin: 15px;
+    clear: both;
+}
+
+    .opc-page-header img {
+        vertical-align: middle;
+    }
+
+.opc-page-left-column {
+    float: left;
+    width: 486px;
+}
+
+.opc-page-right-column {
+    float: right;
+    width: 250px;
+    font-size: 13px;
+}
+
+.opc-wrap .checkout-header {
+    padding-bottom: 5px;
+    font-size: 16px;
+    display: block;
+}
+
+.opc-wrap .checkout-block {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.opc-page-left-column .active {
+    background: #fff;
+    border: solid 2px #2f2e2e;
+    padding: 10px;
+}
+
+    .opc-page-left-column .active a {
+        text-decoration: underline;
+    }
+
+.opc-page-right-column .checkout-block {
+    background: #fff;
+    border: solid 1px #dBdBdB;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.opc-page-left-column .opc-checkout-header {
+    font-size: 16px;
+}
+
+.opc-container-header {
+    font-size: 16px;
+    font-weight: bold;
+    background: #eee;
+    margin: 0px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.opc-container-body {
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.opc-container-inner {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.opc-wrap .next-step-wrap {
+    text-align: right;
+}
+
+.update-progress-bg {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    top: 1px;
+    left: 1px;
+    position: fixed;
+    opacity: 0.3;
+    filter: Alpha(opacity:30);
+    background-color: #ddd;
+    z-index: 900;
+}
+
+.update-progress {
+    background: #FFFFFF url(images/ajax-loader2.gif) no-repeat 50%;
+    background-color: #FFFFFF;
+    border: solid 1px #c3c3c3;
+    padding: 0px;
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    top: 35%;
+    margin-left: -50px;
+    width: 50px;
+    height: 50px;
+}
+
+.opc-container-inner .form-group {
+    width: 100%;
+}
+
+    .opc-container-inner .form-group .form-control {
+        width: 60%;
+        display: inline;
+    }
+
+.opc-wrap .form-group {
+    width: 90%;
+    margin-bottom: 8px;
+}
+
+.opc-wrap .zip-code {
+    width: 125px;
+}
+
+.opc-wrap .cart-item-image-wrap {
+    float: left;
+    padding: 5px 0px;
+    text-align: left;
+    background: #fff;
+    margin: 0px 5px 5px 10px;
+    display: inline; /* ie6 */
+}
+
+    .opc-wrap .cart-item-image-wrap img {
+        width: 50px;
+    }
+
+.opc-wrap .mini-cart-item-row {
+    padding: 3px;
+    border-bottom: solid 1px #DBDBDB;
+}
+
+.opc-wrap .order-options-image {
+    display: none;
+}
+
+.opc-remove-button, .opc-update-button, .btn-add-gift-card, .add-promotion {
+    padding: 5px 10px 5px 10px;
+}
+
+.disabled input[type=text], .disabled input[type=password], .disabled textarea, .disabled select, input[type=text].disabled, input[type=password].disabled {
+    background: #ececec;
+}
+
+.opc-wrap .shipping-methods-wrap div {
+    padding: 1px 3px;
+}
+
+.opacity25 {
+    opacity: 0.25;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=25)";
+    filter: alpha(opacity=25);
+    zoom: 1;
+}
+
+.opacity100 {
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=100)";
+    filter: alpha(opacity=100);
+    zoom: 1;
+}
+
+.address-book-item {
+    background-color: #F7F6F3;
+    color: #333333;
+    padding: 20px;
+}
+
+.opc-wrap .address-book-item-alt {
+    background-color: White;
+    color: #333333;
+    padding: 20px;
+}
+
+.opc-wrap .address-book {
+    display: none;
+    position: absolute;
+    top: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: #EDEDED;
+    z-index: 2;
+}
+
+.opc-wrap .modal-address-background {
+    filter: alpha(opacity=75);
+    -moz-opacity: .75;
+    opacity: .75;
+    background-color: #c0c0c0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 175%;
+    z-index: 1;
+}
+
+.opc-wrap .shipping-methods-wrap {
+    width: 460px;
+}
+
+.opc-wrap .login-form .form-group {
+    width: 100%;
+}
+
+    .opc-wrap .login-form .form-group label {
+        display: block;
+    }
+
+    .opc-wrap .login-form .form-group .form-control {
+        width: 60%;
+        display: inline;
+    }
+
+.opc-wrap .no-account {
+    margin-left: 10px;
+    font-size: 9pt;
+    font-weight: lighter;
+    text-align: left;
+}
+
+.opc-wrap .order-total .label, .order-total .value {
+    font-weight: bold;
+    font-size: 125%;
+}
+
+.opc-wrap .month-year .form-control, .security-code .form-control {
+    width: 100px;
+    margin: 0 10px 0 0;
+    display: inline;
+}
+
+.opc-wrap .month-year label, .security-code label {
+    display: block;
+}
+
+.customer-service-links a
+{
+	display:block;
+}
+
+.opc-subtotals-wrap .label {
+	font-size: 13px;
+	font-weight: normal;
+}
+
+.why-required-label{
+	cursor: pointer;
+}
+.why-phone-info{
+	display: none; /* hidden until we toggle it to visible */
+}
+/* End SOPC Styles*/

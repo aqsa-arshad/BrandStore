@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ws.buysafe.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.buysafe.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://ws.buysafe.com">
+      <s:element name="MerchantServiceProviderCredentials" type="tns:MerchantServiceProviderCredentials" />
+      <s:complexType name="MerchantServiceProviderCredentials">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TransactionStatus" type="tns:TransactionStatus" />
+      <s:simpleType name="ErrorCategory">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="SystemError" />
+          <s:enumeration value="RequestError" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="AdvisoryInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="isFatal" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCause" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorSolution" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAdvisoryInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AdvisoryInfo" nillable="true" type="tns:AdvisoryInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransactionStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="isSuccessful" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="AdvisoryList" type="tns:ArrayOfAdvisoryInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BuySafeWSHeader" type="tns:BuySafeWSHeader" />
+      <s:complexType name="BuySafeWSHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="AccountResponseStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="Active" />
+          <s:enumeration value="Pending" />
+          <s:enumeration value="Cancelled" />
+          <s:enumeration value="Suspended" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="AccountResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:AccountResponseStatus" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Hash" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="MarketplaceResponseStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="Active" />
+          <s:enumeration value="Pending" />
+          <s:enumeration value="Cancelled" />
+          <s:enumeration value="Suspended" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="CustomDateTime">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="DateTimeValue" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasDateTime" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SubscriptionInformation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Term" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FlatFee" type="s:single" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionFeePercent" type="s:single" />
+          <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="tns:CustomDateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="StoreResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:MarketplaceResponseStatus" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserToken" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubscriptionInformation" type="tns:SubscriptionInformation" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfStoreResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="StoreResponse" nillable="true" type="tns:StoreResponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="AddUpdateSellerApplicationErrorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="DupeEmail" />
+          <s:enumeration value="DupeUserId" />
+          <s:enumeration value="DupeSSN" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="AddAccountRS">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AccountResponse" type="tns:AccountResponse" />
+          <s:element minOccurs="0" maxOccurs="1" name="StoreResponseList" type="tns:ArrayOfStoreResponse" />
+          <s:element name="ErrorInformation" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorType" type="tns:AddUpdateSellerApplicationErrorType" />
+          <s:element minOccurs="1" maxOccurs="1" name="Successful" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddAccountRS" type="tns:AddAccountRS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="AddressType">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="Home" />
+          <s:enumeration value="PreviousHome" />
+          <s:enumeration value="Business" />
+          <s:enumeration value="DriversLicense" />
+          <s:enumeration value="CreditCard" />
+          <s:enumeration value="Truste" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="CountryCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="US" />
+          <s:enumeration value="AX" />
+          <s:enumeration value="CA" />
+          <s:enumeration value="DZ" />
+          <s:enumeration value="AS" />
+          <s:enumeration value="AD" />
+          <s:enumeration value="AO" />
+          <s:enumeration value="AI" />
+          <s:enumeration value="AQ" />
+          <s:enumeration value="AG" />
+          <s:enumeration value="AR" />
+          <s:enumeration value="AM" />
+          <s:enumeration value="AW" />
+          <s:enumeration value="AU" />
+          <s:enumeration value="AT" />
+          <s:enumeration value="AZ" />
+          <s:enumeration value="BS" />
+          <s:enumeration value="BH" />
+          <s:enumeration value="BD" />
+          <s:enumeration value="BB" />
+          <s:enumeration value="BY" />
+          <s:enumeration value="BE" />
+          <s:enumeration value="BZ" />
+          <s:enumeration value="BJ" />
+          <s:enumeration value="BM" />
+          <s:enumeration value="BT" />
+          <s:enumeration value="BO" />
+          <s:enumeration value="BA" />
+          <s:enumeration value="BW" />
+          <s:enumeration value="BV" />
+          <s:enumeration value="BR" />
+          <s:enumeration value="IO" />
+          <s:enumeration value="BN" />
+          <s:enumeration value="BG" />
+          <s:enumeration value="BF" />
+          <s:enumeration value="BI" />
+          <s:enumeration value="KH" />
+          <s:enumeration value="CM" />
+          <s:enumeration value="AL" />
+          <s:enumeration value="CV" />
+          <s:enumeration value="KY" />
+          <s:enumeration value="CF" />
+          <s:enumeration value="TD" />
+          <s:enumeration value="CL" />
+          <s:enumeration value="CN" />
+          <s:enumeration value="CX" />
+          <s:enumeration value="CC" />
+          <s:enumeration value="CO" />
+          <s:enumeration value="KM" />
+          <s:enumeration value="CG" />
+          <s:enumeration value="CD" />
+          <s:enumeration value="CK" />
+          <s:enumeration value="CR" />
+          <s:enumeration value="CI" />
+          <s:enumeration value="HR" />
+          <s:enumeration value="CU" />
+          <s:enumeration value="CY" />
+          <s:enumeration value="CZ" />
+          <s:enumeration value="DK" />
+          <s:enumeration value="DJ" />
+          <s:enumeration value="DM" />
+          <s:enumeration value="DO" />
+          <s:enumeration value="EC" />
+          <s:enumeration value="EG" />
+          <s:enumeration value="SV" />
+          <s:enumeration value="GQ" />
+          <s:enumeration value="ER" />
+          <s:enumeration value="EE" />
+          <s:enumeration value="ET" />
+          <s:enumeration value="FK" />
+          <s:enumeration value="FO" />
+          <s:enumeration value="FJ" />
+          <s:enumeration value="FI" />
+          <s:enumeration value="FR" />
+          <s:enumeration value="GF" />
+          <s:enumeration value="PF" />
+          <s:enumeration value="TF" />
+          <s:enumeration value="GA" />
+          <s:enumeration value="GM" />
+          <s:enumeration value="GE" />
+          <s:enumeration value="DE" />
+          <s:enumeration value="GH" />
+          <s:enumeration value="GI" />
+          <s:enumeration value="GR" />
+          <s:enumeration value="GL" />
+          <s:enumeration value="GD" />
+          <s:enumeration value="GP" />
+          <s:enumeration value="GT" />
+          <s:enumeration value="GG" />
+          <s:enumeration value="GN" />
+          <s:enumeration value="GW" />
+          <s:enumeration value="GY" />
+          <s:enumeration value="HT" />
+          <s:enumeration value="HM" />
+          <s:enumeration value="VA" />
+          <s:enumeration value="HN" />
+          <s:enumeration value="HK" />
+          <s:enumeration value="HU" />
+          <s:enumeration value="IS" />
+          <s:enumeration value="IN" />
+          <s:enumeration value="ID" />
+          <s:enumeration value="IR" />
+          <s:enumeration value="IQ" />
+          <s:enumeration value="IE" />
+          <s:enumeration value="IL" />
+          <s:enumeration value="IT" />
+          <s:enumeration value="JM" />
+          <s:enumeration value="JP" />
+          <s:enumeration value="JO" />
+          <s:enumeration value="KZ" />
+          <s:enumeration value="KE" />
+          <s:enumeration value="KI" />
+          <s:enumeration value="KP" />
+          <s:enumeration value="KR" />
+          <s:enumeration value="KW" />
+          <s:enumeration value="KG" />
+          <s:enumeration value="LA" />
+          <s:enumeration value="LV" />
+          <s:enumeration value="LB" />
+          <s:enumeration value="LS" />
+          <s:enumeration value="LR" />
+          <s:enumeration value="LY" />
+          <s:enumeration value="LI" />
+          <s:enumeration value="LT" />
+          <s:enumeration value="LU" />
+          <s:enumeration value="MO" />
+          <s:enumeration value="MK" />
+          <s:enumeration value="MG" />
+          <s:enumeration value="MW" />
+          <s:enumeration value="MY" />
+          <s:enumeration value="MV" />
+          <s:enumeration value="ML" />
+          <s:enumeration value="MT" />
+          <s:enumeration value="MH" />
+          <s:enumeration value="MQ" />
+          <s:enumeration value="MR" />
+          <s:enumeration value="MU" />
+          <s:enumeration value="YT" />
+          <s:enumeration value="MX" />
+          <s:enumeration value="FM" />
+          <s:enumeration value="MD" />
+          <s:enumeration value="MC" />
+          <s:enumeration value="MN" />
+          <s:enumeration value="MS" />
+          <s:enumeration value="MA" />
+          <s:enumeration value="MZ" />
+          <s:enumeration value="MM" />
+          <s:enumeration value="NA" />
+          <s:enumeration value="NR" />
+          <s:enumeration value="NP" />
+          <s:enumeration value="NL" />
+          <s:enumeration value="AN" />
+          <s:enumeration value="NC" />
+          <s:enumeration value="NZ" />
+          <s:enumeration value="NI" />
+          <s:enumeration value="NE" />
+          <s:enumeration value="NG" />
+          <s:enumeration value="NU" />
+          <s:enumeration value="NF" />
+          <s:enumeration value="MP" />
+          <s:enumeration value="NO" />
+          <s:enumeration value="OM" />
+          <s:enumeration value="PK" />
+          <s:enumeration value="PW" />
+          <s:enumeration value="PS" />
+          <s:enumeration value="PA" />
+          <s:enumeration value="PG" />
+          <s:enumeration value="PY" />
+          <s:enumeration value="PE" />
+          <s:enumeration value="PH" />
+          <s:enumeration value="PN" />
+          <s:enumeration value="PL" />
+          <s:enumeration value="PT" />
+          <s:enumeration value="PR" />
+          <s:enumeration value="QA" />
+          <s:enumeration value="RE" />
+          <s:enumeration value="RO" />
+          <s:enumeration value="RU" />
+          <s:enumeration value="RW" />
+          <s:enumeration value="SH" />
+          <s:enumeration value="KN" />
+          <s:enumeration value="LC" />
+          <s:enumeration value="PM" />
+          <s:enumeration value="VC" />
+          <s:enumeration value="WS" />
+          <s:enumeration value="SM" />
+          <s:enumeration value="ST" />
+          <s:enumeration value="SA" />
+          <s:enumeration value="SN" />
+          <s:enumeration value="RS" />
+          <s:enumeration value="SC" />
+          <s:enumeration value="SL" />
+          <s:enumeration value="SG" />
+          <s:enumeration value="SK" />
+          <s:enumeration value="SI" />
+          <s:enumeration value="SB" />
+          <s:enumeration value="SO" />
+          <s:enumeration value="ZA" />
+          <s:enumeration value="GS" />
+          <s:enumeration value="ES" />
+          <s:enumeration value="LK" />
+          <s:enumeration value="SD" />
+          <s:enumeration value="SR" />
+          <s:enumeration value="SJ" />
+          <s:enumeration value="SZ" />
+          <s:enumeration value="SE" />
+          <s:enumeration value="CH" />
+          <s:enumeration value="SY" />
+          <s:enumeration value="TW" />
+          <s:enumeration value="TJ" />
+          <s:enumeration value="TZ" />
+          <s:enumeration value="TH" />
+          <s:enumeration value="TL" />
+          <s:enumeration value="TG" />
+          <s:enumeration value="TK" />
+          <s:enumeration value="TO" />
+          <s:enumeration value="TT" />
+          <s:enumeration value="TN" />
+          <s:enumeration value="TR" />
+          <s:enumeration value="TM" />
+          <s:enumeration value="TC" />
+          <s:enumeration value="TV" />
+          <s:enumeration value="UG" />
+          <s:enumeration value="UA" />
+          <s:enumeration value="AE" />
+          <s:enumeration value="GB" />
+          <s:enumeration value="AF" />
+          <s:enumeration value="UM" />
+          <s:enumeration value="UY" />
+          <s:enumeration value="UZ" />
+          <s:enumeration value="VU" />
+          <s:enumeration value="VE" />
+          <s:enumeration value="VN" />
+          <s:enumeration value="VG" />
+          <s:enumeration value="VI" />
+          <s:enumeration value="WF" />
+          <s:enumeration value="EH" />
+          <s:enumeration value="YE" />
+          <s:enumeration value="ZM" />
+          <s:enumeration value="OT" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Address">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StreetLine1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StreetLine2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CityName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateProvince" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:AddressType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CountryCode" type="tns:CountryCode" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="PhoneType">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="Home" />
+          <s:enumeration value="Business" />
+          <s:enumeration value="Cell" />
+          <s:enumeration value="Fax" />
+          <s:enumeration value="Truste" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Phone">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Extension" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:PhoneType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BusinessInformation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="isPrimaryOwner" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Suffix" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleInitial" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AverageMonthlyGrossSales" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="PromoCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address" />
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="tns:Phone" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateBeganSelling" type="tns:CustomDateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="AllowPartnerContact" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LoginInformation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AutoGenerateOnCollision" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="StoreInformation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CheckOutUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TermsOfSale" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StoreMonthlyGMS" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfStoreInformation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="StoreInformation" nillable="true" type="tns:StoreInformation" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="CreditCardType">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="Visa" />
+          <s:enumeration value="Mastercard" />
+          <s:enumeration value="AmericanExpress" />
+          <s:enumeration value="Discover" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="CreditCard">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentProfileID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="AddressID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:CreditCardType" />
+          <s:element minOccurs="0" maxOccurs="1" name="NameOnCard" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpirationDate" type="tns:CustomDateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentInformation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CreditCard" type="tns:CreditCard" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AddAccountRQ">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BusinessInformation" type="tns:BusinessInformation" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginInformation" type="tns:LoginInformation" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddStoreList" type="tns:ArrayOfStoreInformation" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentInformation" type="tns:PaymentInformation" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddAccountRQ" type="tns:AddAccountRQ" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AddStoreRS">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StoreResponseList" type="tns:ArrayOfStoreResponse" />
+          <s:element name="ErrorInformation" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorType" type="tns:AddUpdateSellerApplicationErrorType" />
+          <s:element minOccurs="1" maxOccurs="1" name="Successful" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddStoreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddStoreRS" type="tns:AddStoreRS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AddStoreRQ">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AccountHash" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddStoreList" type="tns:ArrayOfStoreInformation" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddStore">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddStoreRQ" type="tns:AddStoreRQ" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEmailOptionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckEmailOptionsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEmailOptions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BuySafeUser_Id" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetAccountRS">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AccountResponse" type="tns:AccountResponse" />
+          <s:element minOccurs="0" maxOccurs="1" name="StoreResponseList" type="tns:ArrayOfStoreResponse" />
+          <s:element name="ErrorInformation" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorType" type="tns:AddUpdateSellerApplicationErrorType" />
+          <s:element minOccurs="1" maxOccurs="1" name="Successful" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAccountRS" type="tns:GetAccountRS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AccountSearch">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GetAccountRQ">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AccountHash" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountSearch" type="tns:AccountSearch" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAccountRQ" type="tns:GetAccountRQ" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PartnerRegistrationRS">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PartnerRegistrationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PartnerRegistrationRS" type="tns:PartnerRegistrationRS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="State">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="AL" />
+          <s:enumeration value="AK" />
+          <s:enumeration value="AZ" />
+          <s:enumeration value="AR" />
+          <s:enumeration value="CA" />
+          <s:enumeration value="CO" />
+          <s:enumeration value="CT" />
+          <s:enumeration value="DE" />
+          <s:enumeration value="DC" />
+          <s:enumeration value="FL" />
+          <s:enumeration value="GA" />
+          <s:enumeration value="HI" />
+          <s:enumeration value="ID" />
+          <s:enumeration value="IL" />
+          <s:enumeration value="IN" />
+          <s:enumeration value="IA" />
+          <s:enumeration value="KS" />
+          <s:enumeration value="KY" />
+          <s:enumeration value="LA" />
+          <s:enumeration value="ME" />
+          <s:enumeration value="MD" />
+          <s:enumeration value="MA" />
+          <s:enumeration value="MI" />
+          <s:enumeration value="MN" />
+          <s:enumeration value="MS" />
+          <s:enumeration value="MO" />
+          <s:enumeration value="MT" />
+          <s:enumeration value="NE" />
+          <s:enumeration value="NV" />
+          <s:enumeration value="NH" />
+          <s:enumeration value="NJ" />
+          <s:enumeration value="NM" />
+          <s:enumeration value="NY" />
+          <s:enumeration value="NC" />
+          <s:enumeration value="ND" />
+          <s:enumeration value="OH" />
+          <s:enumeration value="OK" />
+          <s:enumeration value="OR" />
+          <s:enumeration value="PA" />
+          <s:enumeration value="PR" />
+          <s:enumeration value="RI" />
+          <s:enumeration value="SC" />
+          <s:enumeration value="SD" />
+          <s:enumeration value="TN" />
+          <s:enumeration value="TX" />
+          <s:enumeration value="UT" />
+          <s:enumeration value="VA" />
+          <s:enumeration value="VT" />
+          <s:enumeration value="WA" />
+          <s:enumeration value="WV" />
+          <s:enumeration value="WI" />
+          <s:enumeration value="WY" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="Suffix">
+        <s:restriction base="s:string">
+          <s:enumeration value="DoesNotApply" />
+          <s:enumeration value="Jr" />
+          <s:enumeration value="Sr" />
+          <s:enumeration value="I" />
+          <s:enumeration value="II" />
+          <s:enumeration value="III" />
+          <s:enumeration value="IV" />
+          <s:enumeration value="V" />
+          <s:enumeration value="VI" />
+          <s:enumeration value="VII" />
+          <s:enumeration value="VIII" />
+          <s:enumeration value="IX" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="PartnerRegistrationRQ">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ReturnPassCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HandlerUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PartnerField" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MspId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="InvitationCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="WorkCountry" type="tns:CountryCode" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkZip" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkStateFull" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="WorkState" type="tns:State" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkCity" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkAddress2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkAddress1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HomePhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StoreUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StoreName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Suffix" type="tns:Suffix" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleInitial" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AverageMonthlySales" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateBeganSelling" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PartnerRegistration">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PartnerRegistrationRQ" type="tns:PartnerRegistrationRQ" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendEmailToReferrerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendEmailToReferrerResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendEmailToReferrer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RefCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="installerid" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="InitialRewardsResultRS">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="InitialResultFlag" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PayPalEmailAddress" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateCharityListOptionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InitialRewardsResultRS" type="tns:InitialRewardsResultRS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCharityListOption">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuySafeUser_Id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CharityOption" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PayPalEmailAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateEmailOptionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateEmailOptionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateEmailOption">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuySafeUser_Id" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sendemail" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:AddAccount" />
+  </wsdl:message>
+  <wsdl:message name="AddAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:AddAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddAccountMerchantServiceProviderCredentials">
+    <wsdl:part name="MerchantServiceProviderCredentials" element="tns:MerchantServiceProviderCredentials" />
+  </wsdl:message>
+  <wsdl:message name="AddAccountTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="AddAccountBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddStoreSoapIn">
+    <wsdl:part name="parameters" element="tns:AddStore" />
+  </wsdl:message>
+  <wsdl:message name="AddStoreSoapOut">
+    <wsdl:part name="parameters" element="tns:AddStoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddStoreMerchantServiceProviderCredentials">
+    <wsdl:part name="MerchantServiceProviderCredentials" element="tns:MerchantServiceProviderCredentials" />
+  </wsdl:message>
+  <wsdl:message name="AddStoreBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddStoreTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailOptionsSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckEmailOptions" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailOptionsSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckEmailOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailOptionsBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailOptionsTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountMerchantServiceProviderCredentials">
+    <wsdl:part name="MerchantServiceProviderCredentials" element="tns:MerchantServiceProviderCredentials" />
+  </wsdl:message>
+  <wsdl:message name="PartnerRegistrationSoapIn">
+    <wsdl:part name="parameters" element="tns:PartnerRegistration" />
+  </wsdl:message>
+  <wsdl:message name="PartnerRegistrationSoapOut">
+    <wsdl:part name="parameters" element="tns:PartnerRegistrationResponse" />
+  </wsdl:message>
+  <wsdl:message name="PartnerRegistrationTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="PartnerRegistrationBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailToReferrerSoapIn">
+    <wsdl:part name="parameters" element="tns:SendEmailToReferrer" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailToReferrerSoapOut">
+    <wsdl:part name="parameters" element="tns:SendEmailToReferrerResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailToReferrerBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailToReferrerTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCharityListOptionSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCharityListOption" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCharityListOptionSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCharityListOptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCharityListOptionTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCharityListOptionBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEmailOptionSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateEmailOption" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEmailOptionSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateEmailOptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEmailOptionTransactionStatus">
+    <wsdl:part name="TransactionStatus" element="tns:TransactionStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEmailOptionBuySafeWSHeader">
+    <wsdl:part name="BuySafeWSHeader" element="tns:BuySafeWSHeader" />
+  </wsdl:message>
+  <wsdl:portType name="BuySafeAPISoap">
+    <wsdl:operation name="AddAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">AddAccount</wsdl:documentation>
+      <wsdl:input message="tns:AddAccountSoapIn" />
+      <wsdl:output message="tns:AddAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">AddStore</wsdl:documentation>
+      <wsdl:input message="tns:AddStoreSoapIn" />
+      <wsdl:output message="tns:AddStoreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmailOptions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">sends email to referrer</wsdl:documentation>
+      <wsdl:input message="tns:CheckEmailOptionsSoapIn" />
+      <wsdl:output message="tns:CheckEmailOptionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GetAccount</wsdl:documentation>
+      <wsdl:input message="tns:GetAccountSoapIn" />
+      <wsdl:output message="tns:GetAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PartnerRegistration">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Registers users</wsdl:documentation>
+      <wsdl:input message="tns:PartnerRegistrationSoapIn" />
+      <wsdl:output message="tns:PartnerRegistrationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendEmailToReferrer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">sends email to referrer</wsdl:documentation>
+      <wsdl:input message="tns:SendEmailToReferrerSoapIn" />
+      <wsdl:output message="tns:SendEmailToReferrerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCharityListOption">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Registers users</wsdl:documentation>
+      <wsdl:input message="tns:UpdateCharityListOptionSoapIn" />
+      <wsdl:output message="tns:UpdateCharityListOptionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEmailOption">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates Recieve email options</wsdl:documentation>
+      <wsdl:input message="tns:UpdateEmailOptionSoapIn" />
+      <wsdl:output message="tns:UpdateEmailOptionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BuySafeAPISoap" type="tns:BuySafeAPISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddAccount">
+      <soap:operation soapAction="http://ws.buysafe.com/AddAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddAccountMerchantServiceProviderCredentials" part="MerchantServiceProviderCredentials" use="literal" />
+        <soap:header message="tns:AddAccountBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:AddAccountTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddStore">
+      <soap:operation soapAction="http://ws.buysafe.com/AddStore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddStoreMerchantServiceProviderCredentials" part="MerchantServiceProviderCredentials" use="literal" />
+        <soap:header message="tns:AddStoreBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:AddStoreTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmailOptions">
+      <soap:operation soapAction="http://ws.buysafe.com/CheckEmailOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CheckEmailOptionsBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:CheckEmailOptionsTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccount">
+      <soap:operation soapAction="http://ws.buysafe.com/GetAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetAccountBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+        <soap:header message="tns:GetAccountMerchantServiceProviderCredentials" part="MerchantServiceProviderCredentials" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:GetAccountTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PartnerRegistration">
+      <soap:operation soapAction="http://ws.buysafe.com/PartnerRegistration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:PartnerRegistrationBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:PartnerRegistrationTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmailToReferrer">
+      <soap:operation soapAction="http://ws.buysafe.com/SendEmailToReferrer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SendEmailToReferrerBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:SendEmailToReferrerTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCharityListOption">
+      <soap:operation soapAction="http://ws.buysafe.com/UpdateCharityListOption" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateCharityListOptionBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:UpdateCharityListOptionTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEmailOption">
+      <soap:operation soapAction="http://ws.buysafe.com/UpdateEmailOption" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateEmailOptionBuySafeWSHeader" part="BuySafeWSHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:UpdateEmailOptionTransactionStatus" part="TransactionStatus" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BuySafeAPI">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">BuySafe API</wsdl:documentation>
+    <wsdl:port name="BuySafeAPISoap" binding="tns:BuySafeAPISoap">
+      <soap:address location="https://sbws.buysafe.com/BuySafeWS/RegistrationAPI.dll" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

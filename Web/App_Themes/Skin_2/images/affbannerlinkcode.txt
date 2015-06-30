@@ -1,0 +1,7 @@
+Affiliate banner code with image.  Download the image you would like to us with you link.  Be sure that you replace the tag at 
+the end:
+
+VLVWAGS&Category_Code=home&Affiliate=<b><font color="#FF0000">yourlogin</font></b>' with your 
+actual login name without spaces or this link won't track
+
+<a href="http://www.vivalasvegasweddings.com/store.html"><IMG SRC="http://www.vivalasvegasweddings.com/miva/graphics/00000020/Animcontestlg.gif" ALT="Viva Las Vegas Weddings - Click Here!!" BORDER="0"></A>

@@ -1,0 +1,44 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/authorizenet.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://reseller.authorize.net/application/?id=5555636" target="_blank">Sign up for Authorize.net</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=authorizenet&type=info" target="_blank">Learn more about Authorize.net</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=authorizenet&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Authorize.Net]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Login"><Name>AUTHORIZENET_X_Login</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Transaction Key"><Name>AUTHORIZENET_X_Tran_Key</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="CIM Enabled"><Name>AUTHORIZENET_Cim_Enabled</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Use CIM Sandbox"><Name>AUTHORIZENET_Cim_UseSandbox</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="WellsFargo Secure Source Email"><Name>AUTHORIZENET_X_EMAIL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Verify Addresses"><Name>AUTHORIZENET_Verify_Addresses</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live Server"><Name>AUTHORIZENET_LIVE_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test Server"><Name>AUTHORIZENET_TEST_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="CIM Live Server"><Name>AUTHORIZENET_Cim_LiveServiceURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="CIM Test Server"><Name>AUTHORIZENET_Cim_SandboxServiceURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="AutoBill Live Server"><Name>Recurring.AUTHORIZENET_AUTOBILL_LIVE_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="AutoBill Test Server"><Name>Recurring.AUTHORIZENET_AUTOBILL_TEST_SERVER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_VERSION"><Name>AUTHORIZENET_X_VERSION</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_RELAY_RESPONSE"><Name>AUTHORIZENET_X_RELAY_RESPONSE</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_RECURRING_BILLING"><Name>AUTHORIZENET_X_RECURRING_BILLING</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_METHOD"><Name>AUTHORIZENET_X_METHOD</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_ENCAP_CHAR"><Name>AUTHORIZENET_X_ENCAP_CHAR</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_EMAIL_CUSTOMER"><Name>AUTHORIZENET_X_EMAIL_CUSTOMER</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_DELIM_CHAR"><Name>AUTHORIZENET_X_DELIM_CHAR</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="X_DELIM_DATA"><Name>AUTHORIZENET_X_DELIM_DATA</Name></AppConfig>
+</ConfigurationAtom>

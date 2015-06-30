@@ -1,0 +1,26 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=eway&type=signup" target="_blank">Sign up for eWay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=eway&type=info" target="_blank">Learn more about eWay</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=eway&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure eWay]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Live Customer ID"><Name>eWay.Live.CustomerID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test Customer ID"><Name>eWay.Test.CustomerID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live URL"><Name>eWay.Live.URL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test URL"><Name>eWay.Test.URL</Name></AppConfig>
+</ConfigurationAtom>

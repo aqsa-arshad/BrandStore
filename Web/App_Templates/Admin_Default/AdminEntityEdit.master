@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/App_Templates/Admin_Default/AdminMaster.master"
+    AutoEventWireup="true" CodeFile="AdminEntityEdit.master.cs" Inherits="AspDotNetStorefrontAdmin.AdminEntityEdit" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="TControls" %>
+<%@ Register Assembly="AspDotNetStorefrontControls" Namespace="AspDotNetStorefrontControls"
+    TagPrefix="aspdnsf" %>
+<asp:Content runat="server" ContentPlaceHolderID="head">
+    <style type="text/css">
+        .radwindow.radwindow_Default.normalwindow.transparentwindow
+        {
+            z-index: 200000 !important;
+        }
+    </style>
+    <asp:ContentPlaceHolder runat="server" ID="head">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="bodyContentPlaceholder" runat="Server">
+    <!-- ENTITY MENU -->
+    <div id="menu">
+        <asp:Panel ID="pnlEntityMenu" runat="server" />
+    </div>
+    <!-- END ENTITY MENU -->
+    <!-- MAIN ENTITY WINDOW -->
+    <asp:ContentPlaceHolder ID="entityMain" runat="server" />
+    <!-- END MAIN ENTITY WINDOW -->
+</asp:Content>

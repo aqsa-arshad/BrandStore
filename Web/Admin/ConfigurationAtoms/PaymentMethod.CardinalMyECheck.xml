@@ -1,0 +1,27 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[<b style="display:block;text-align:center;padding-bottom:10px;">Credit cards must be stored in the database for Cardinal eChecks to work properly.<br />(StoreCCInDB must be set to yes.)</b>]]>
+  </HtmlHeader>
+  <Title>Configure Cardinal Centinel eChecks</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Store Credit Cards in Database">
+    <Name>StoreCCInDB</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Merchant ID">
+    <Name>CardinalCommerce.Centinel.MerchantID</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Processor ID">
+    <Name>CardinalCommerce.Centinel.ProcessorID</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Transaction Password">
+    <Name>CardinalCommerce.Centinel.TransactionPwd</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Mark EChecks as Captured">
+    <Name>CardinalCommerce.Centinel.MyECheckMarkAsCaptured</Name>
+  </AppConfig>
+
+</ConfigurationAtom>

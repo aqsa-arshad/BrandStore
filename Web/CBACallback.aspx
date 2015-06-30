@@ -1,0 +1,1 @@
+<%@ Page language="c#" AutoEventWireup="true" Inherits="AspDotNetStorefront.CBACallback" CodeFile="CBACallback.aspx.cs" EnableViewState="false" ValidateRequest="false" EnableEventValidation="false" %>

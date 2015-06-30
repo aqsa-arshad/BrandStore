@@ -1,0 +1,56 @@
+<ConfigurationAtom>
+	<HtmlHeader>
+		<![CDATA[      
+      <div class="modalTable modalHeader">
+        <table width="100%" cellpadding="4" cellspacing="0">
+          <tr>
+            <td>
+              <img src="images/PayPal_PaymentsAccepted.gif" border="0" />
+            </td>
+			<td>
+				<p>To use PayPal Payments Standard, you need a PayPal Business Account. Once you&apos;re signed up, enter your PayPal email address below to start accepting payments.
+					<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalstandard&type=info" target="_blank">More info</a>
+					&bull;
+					<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalstandard&type=manual" target="_blank">Configuration Help</a>
+				</p>
+			</td>
+            <td width="200" align="center">
+				<div>
+					<span class="atomHeaderButtonPrompt">Don&#39;t have a PayPal Account?</span>
+				</div>
+				<a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=paypalstandard&type=signup" target="_blank" class="defaultButton">Sign Up Now</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="atomHeaderNotice">To start accepting payments, enter your PayPal email address.</div>
+    ]]>
+	</HtmlHeader>
+	<Title>Configure PayPal Payments Standard</Title>
+
+	<AppConfig Required="false" Advanced="false" FriendlyName="PayPal Account Email Address">
+		<Name>PayPal.BusinessID</Name>
+		<ContextualDescription><![CDATA[In order for you to receive payments, this email address must be the same one you use when signing into your PayPal account.]]></ContextualDescription>
+	</AppConfig>
+
+	<AppConfig Required="false" Advanced="false" FriendlyName="PayPal Default Locale Code">
+		<Name>PayPal.DefaultLocaleCode</Name>
+	</AppConfig>
+
+	<AppConfig Required="false" Advanced="false" FriendlyName="Force Capture">
+		<Name>PayPal.ForceCapture</Name>
+	</AppConfig>
+
+	<AppConfig Required="false" Advanced="false" FriendlyName="Require Confirmed Address">
+		<Name>PayPal.RequireConfirmedAddress</Name>
+	</AppConfig>
+
+	<AppConfig Required="false" Advanced="false" FriendlyName="Use Instant Notification">
+		<Name>PayPal.UseInstantNotification</Name>
+	</AppConfig>
+
+	<AppConfig Required="false" Advanced="false" FriendlyName="API Email Address (usually blank)">
+		<Name>PayPal.API.MerchantEMailAddress</Name>
+	</AppConfig>
+
+</ConfigurationAtom>

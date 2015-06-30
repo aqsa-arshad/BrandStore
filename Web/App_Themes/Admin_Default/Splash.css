@@ -1,0 +1,404 @@
+﻿/********************************************************/
+/*  Filename:   Splash.css
+    
+    Author:     AspDotNetStorefront.com
+    
+    Theme:      Admin_Default
+    
+    Synopsis:   Contains styles used exclusively by the
+                default.aspx page (Default.aspx) on the 
+                admin site.  
+                                                        */
+/********************************************************/
+
+
+/******* MENU/MAIN TABLE STRUCT *******/
+.splash_LeftPaneBgColor
+{
+    background-color: #0B2F61;
+    width: 350px;
+    height: 600px;
+}
+
+.splash_RightPaneBgColor
+{
+    background: url(images/rightPaneBG.jpg);
+    background-repeat: repeat-y;
+}
+
+.splash_GroupHeader
+{
+    background: url(images/groupsHeader.jpg);
+    text-align: left;
+    vertical-align: baseline;
+    width: 330px;
+    height: 45px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.splash_LeftMenuSpacer
+{
+    height: 30px;
+    width: 330px;
+}
+/******* END MENU/MAIN TABLE STRUCT *******/
+
+
+/******* RIGHT PANE *******/
+.splash_groupsTitleHead
+{
+    background: url(images/shadowTitleHead.jpg) bottom no-repeat;
+    font-size: 12pt;
+    font-style: italic;
+    font-weight: bold;
+    color: #696969;
+    vertical-align: baseline;
+    height: 32px;
+    padding-top: 3px;
+}
+/******* END RIGHT PANE *******/
+
+
+/******** System Information *******/
+.splash_sysInfoBody
+{
+    background: url(images/leftNavgradient.jpg) bottom repeat-x;
+    text-align: left;
+    vertical-align: baseline;
+    width: 330px;
+    color: #ffffff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+/******** End System Information *******/
+
+
+/******** Security Alert *******/
+
+.splash_securityFeedsTitle
+{
+    color: #5AD3FF;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: left;
+    font-style: italic;
+    margin-right: 10px;
+    padding-top: 20px;
+}
+
+.splash_securityFeedsTitle a
+{
+    color: #5AD3FF;
+    text-decoration: underline;
+}
+
+.splash_securityFeedsTitle a:hover
+{
+    color: #5AD3FF;
+    text-decoration: none;
+}
+
+.splash_securityFeedsDescription
+{
+    color: #ffffff;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: justify;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+
+.splash_securityFeedsDate
+{
+    color: #ffffff;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: left;
+    font-style: italic;
+}
+/******** End Security Alert *******/
+
+
+
+
+
+/******* Breadcrumb *******/
+.splash_Breadcrumb
+{
+    text-align: left;
+    width: 330px;
+    padding-left: 5px;
+    padding-top: 20px;
+    color: #ffffff;
+}
+/******* end Breadcrumb *******/
+
+
+/******* CommonLinks *******/
+#splash_linksMenu
+{
+    color: #ffffff;
+    list-style-image: url(images/arrowCommonLinks.gif);
+}
+
+#splash_linksMenu li
+{
+    margin-left: 25px;
+    margin-top: 0px;
+}
+
+#splash_linksMenu a
+{
+    color: #ffffff;
+    line-height: 12pt;
+}
+
+.splash_commonLinksBody
+{
+    background: url(images/leftNavgradient.jpg) bottom repeat-x;
+    text-align: left;
+    vertical-align: baseline;
+    width: 330px;
+    color: #ffffff;
+}
+/******* End CommonLinks *******/
+
+
+/******* Security Audit *******/
+.splash_securityAuditTitleHeadIcon
+{
+    background: url(images/securityaudit.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+    padding-right: 0px;
+}
+
+.splash_divSecurityAudit
+{
+    padding-left: 80px;
+}
+
+.splash_contentSecurityaudit
+{
+    padding-left: 5px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    text-align: justify;
+}
+
+.splash_SecurityAudit
+{
+    font-weight: bold;
+    font-size: 10px;
+    padding: 4px;
+}
+	.splash_SecurityAudit strong
+	{
+		color: #F28D13;
+		font-style: normal;
+	}
+
+/******** End Security Audit *******/
+
+
+/******* Statistics *******/
+.splash_StatisticsTitleHeadIcon
+{
+    background: url(images/statistic2.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+.splash_statsTitle
+{
+    padding-left: 50px;
+    padding-top: 20px;
+    font-weight: bold;
+    font-size: 14pt;
+    color: #696969;
+}
+
+.splash_statsTitle span
+{
+    font-size: 12pt;
+    color: #696969;
+}
+
+.splash_customersStatsTitleIcon
+{
+    background: url(images/statistic2.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+}
+
+.splash_ordersStatsTitleIcon
+{
+    background: url(images/statistic2.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+}
+/******* End Statistics *******/
+
+
+/******* News *******/
+.splash_NewsTitleHeadIcon
+{
+    background: url(images/news.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+.splash_newsFeedsTitle
+{
+    color: #696969;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 11px;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.splash_newsFeedsTitle a
+{
+    text-decoration: underline;
+}
+
+.splash_newsFeedsTitle a:hover
+{
+    text-decoration: none;
+}
+
+.splash_newsFeedsDescription
+{
+    color: #696969;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 11px;
+    text-align: justify;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+
+.splash_newsFeedsDate
+{
+    color: #696969;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: left;
+}
+
+/**sponsor feeds**/
+.splash_sponsorsFeedsTitle
+{
+    color: #696969;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: left;
+    font-style: italic;
+    margin-right: 10px;
+    padding-top: 20px;
+}
+
+.splash_sponsorsFeedsTitle a
+{
+    text-decoration: underline;
+}
+
+.splash_sponsorsFeedsTitle a:hover
+{
+    text-decoration: none;
+}
+
+.splash_sponsorsFeedsDescription
+{
+    color: #696969;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: justify;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+
+.splash_sponsorsFeedsDate
+{
+    color: #696969;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 10pt;
+    text-align: left;
+    font-style: italic;
+}
+
+#divFeeds_Content
+{
+    overflow: auto;
+    padding-right: 60px;
+}
+/******* End News *******/
+
+
+/******* Latest Orders *******/
+.splash_latestOrdersTitleHeadIcon
+{
+    background: url(images/orders.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+    padding-right: 0px;
+}
+
+.splash_divLatestOrders
+{
+    padding-left: 80px;
+    padding-right: 60px;
+}
+/******* End Latest Orders *******/
+
+
+/******* Latest Registered Customers *******/
+.splash_latestRegisteredTCustomersTitleHeadIcon
+{
+    background: url(images/customer.jpg) no-repeat;
+    width: 45px;
+    height: 40px;
+    padding-right: 0px;
+}
+
+.splash_divLatestCustomers
+{
+    padding-left: 80px;
+    padding-right: 60px;
+}
+/******* End Latest Orders *******/
+
+
+/******* Miscellaneous *******/
+.splash_ImageButton
+{
+    cursor: pointer;
+}
+
+.splash_ImageGroupMinimize
+{
+    padding-top: 5px;
+}
+
+
+.splash_SwitchButton
+{
+    color: #5AD3FF;
+    font-weight: bold;
+    text-decoration: underline;
+}
+/******* End Miscellaneous *******/
+

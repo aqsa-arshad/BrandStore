@@ -1,0 +1,36 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+        <img src="images/HSBC.gif" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=hsbc&type=signup" target="_blank">Sign up for HSBC</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=hsbc&type=info" target="_blank">Learn more about HSBC</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=hsbc&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure HSBC]]></Title>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Client Alias"><Name>HSBC.ClientAlias</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Client ID"><Name>HSBC.ClientID</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Client Password"><Name>HSBC.ClientPassword</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Client Name"><Name>HSBC.ClientName</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.CcpaClientID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.CcpaURL</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.DocVersion</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.Live.Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.Mode.Live</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.Test.Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.Mode.Test</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName=""><Name>HSBC.Pipeline</Name></AppConfig>
+</ConfigurationAtom>

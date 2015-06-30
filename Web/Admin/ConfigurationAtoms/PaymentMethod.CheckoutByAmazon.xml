@@ -1,0 +1,57 @@
+<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+      
+
+      <td width="225">
+        <img src="images/CheckoutByAmazon.png" border="0"/>
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=checkoutbyamazon&type=signup" target="_blank">Sign Up</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=checkoutbyamazon&type=info" target="_blank">More info about Checkout by Amazon</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=checkoutbyamazon&type=manual" target="_blank">Configuration Help</a>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title>Configure Checkout By Amazon</Title>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Access Key">
+    <Name>CheckoutByAmazon.CbaAccessKey</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Secret Key">
+    <Name>CheckoutByAmazon.CbaSecretKey</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Marketplace">
+    <Name>CheckoutByAmazon.Marketplace</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Merchant ID">
+    <Name>CheckoutByAmazon.MerchantId</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Marketplace Access Key">
+    <Name>CheckoutByAmazon.MwsAccessKey</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Marketplace Secret Key">
+    <Name>CheckoutByAmazon.MwsSecretKey</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Order Fulfillment Type">
+    <Name>CheckoutByAmazon.OrderFulfillmentType</Name>
+  </AppConfig>
+
+  <AppConfig Required="false" Advanced="false" FriendlyName="Use Sandbox">
+    <Name>CheckoutByAmazon.UseSandbox</Name>
+  </AppConfig>
+  
+</ConfigurationAtom>

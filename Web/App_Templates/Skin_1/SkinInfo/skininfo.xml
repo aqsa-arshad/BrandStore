@@ -1,0 +1,24 @@
+<Skin version="1.0">
+	<DisplayName>Default</DisplayName>
+	<Description>This is the default skin that ships with AspDotNetStorefront. It is a great starting point for your own custom skin.</Description>
+	<Author>
+		<Name>AspDotNetStorefront</Name>
+		<Email>sales@aspdotnetstorefront.com</Email>
+		<Url>http://www.aspdotnetstorefront.com</Url>
+	</Author>
+	<MobileOnly>false</MobileOnly>
+	<Colors>
+		<Color>
+			<Name>Primary Color</Name>
+			<Value>#F5F5F5</Value>
+		</Color>
+		<Color>
+			<Name>Background Color</Name>
+			<Value>#FFFFFF</Value>
+		</Color>
+		<Color>
+			<Name>Text Color</Name>
+			<Value>#333333</Value>
+		</Color>
+	</Colors>
+</Skin>

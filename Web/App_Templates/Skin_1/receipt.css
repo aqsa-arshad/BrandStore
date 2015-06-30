@@ -1,0 +1,318 @@
+﻿body 
+{
+	font-family:Arial, Tahoma, verdana,Helvetica,sans-serif;
+	font-size:12px;
+	margin:4em 2em 4em 2em;
+}
+
+table
+{
+	font-size:12px;
+}
+
+#divContents
+{
+	width:630px;
+}
+
+#tblAddressInfo td
+{
+	width:50%;
+	text-align:left;
+	vertical-align:top;
+}
+
+#tblOrderInfo
+{
+	border:solid 1px black;
+	/*font-size:small;*/
+	width:100%;
+}
+
+#tblOrderInfo td
+{
+	text-align:left;
+	vertical-align:top;
+	/*border:solid 1px black;*/
+}
+
+#tblOrderInfo .tdOrderInfoLabel
+{
+	font-weight:bold;
+	width:15%
+}
+
+#tblOrderInfo .tdOrderInfoValue
+{
+	width:35%
+}
+
+#tblLineItems
+{
+	text-align:left;
+	/*font-size:small;*/
+	width:100%;
+}
+
+#tblLineItems td
+{
+	/*line-height:20px;*/
+	vertical-align:top;
+}
+
+#tblLineItems .tdLineItemHeader
+{
+	color: White;
+	background-color: #003366;
+	font-weight: bold;
+	border:solid 1px #777777;
+	text-align:center;
+}
+
+#tblLineItems .tdLineItem
+{
+}
+
+#tblOrderHeader
+{
+	font-weight:bold;
+	font-size:15px;
+}
+.tdOrderHeaderLabel
+{
+	text-align:right;
+	vertical-align:top;
+}
+
+.tdOrderHeaderValue
+{
+	padding-left:1em;
+	text-align:left;
+	vertical-align:top;
+}
+
+#lblOrderNumber
+{
+	/*font-size:large;*/
+	font-weight:bolder;
+}
+
+#colSKU
+{
+	font-weight:bold;
+	padding-left:1em;
+	text-align:left;
+}
+
+#colProductName
+{
+	padding-left:1em;
+}
+
+#colQuantity
+{
+	font-weight:bold;
+	text-align:center;
+}
+
+#colPrice
+{
+	font-weight:bold;
+	text-align:right;
+	padding-right:1em;
+}
+
+#colDiscount
+{
+	font-weight:bold;
+	text-align:right;
+	padding-right:1em;
+}
+
+#colExtPrice
+{
+	font-weight:bold;
+	text-align:right;
+	padding-right:1em;
+}
+
+.colTextOrNotes
+{
+	padding-left:1em;
+}
+
+#lblProductName
+{
+	font-weight:bold;
+}
+
+.pnlTextOption
+{
+	font-size:smaller;
+}
+
+.textOptionPrompt
+{
+	font-weight:bold;	
+}
+
+.textOption
+{
+}
+
+.vatLabel
+{
+	font-weight:normal;
+}
+
+.discountLabel
+{
+	font-weight:normal;
+}
+
+.shipToAddressLabel
+{
+	font-weight:bold;
+}
+
+.shipToAddress
+{
+	/*font-style:italic;*/
+}
+
+.shipToAddressShippingMethodLabel
+{
+	font-weight:bold;
+}
+
+.shipToAddressShippingMethod
+{
+}
+
+#lblBillTo
+{
+	font-weight:bold;
+}
+
+#lblNotes
+{
+	font-weight:bold;
+}
+
+.pnlItemNotes
+{
+	font-size:smaller;
+}
+
+.itemNotesPrompt
+{
+	font-weight:bold;
+}
+
+.itemNotes
+{
+	/*text-indent:2em;*/
+}
+/*
+.kitItems
+{
+	text-indent:2em;
+}
+*/
+
+#tblSummary
+{
+	width:100%;
+	border-top:solid 1px black;
+}
+
+#tdSummaryNotes
+{
+	text-align:left;
+	vertical-align:top;
+	width:50%;
+}
+
+#tdOrderSummary
+{
+	text-align:left;
+	vertical-align:top;
+	width:50%;
+}
+
+#tblOrderSummary
+{
+	width:100%;
+}
+
+.tdOrderSummaryLabel
+{
+	text-align:right;
+	vertical-align:top;
+	width:40%;
+	font-weight:bold;
+}
+
+.tdOrderSummaryValue
+{
+	text-align:right;
+	vertical-align:top;
+	width:40%;
+}
+
+.tdOrderSummaryMisc
+{
+	padding-left:1em;
+	text-align:left;
+	vertical-align:top;
+	width:30%;
+}
+
+.pnlPackDetail
+{
+	font-size:smaller;
+}
+
+.pnlKitDetail
+{
+	font-size:smaller;
+}
+
+.pnlKitItemImage
+{
+	padding-left:1em;
+}
+
+.pnlGiftCardSerialNumber
+{
+	font-size:smaller;
+}
+
+.pnlNoShippingRequired
+{
+	font-size:smaller;
+}
+
+#tblLineItems ul
+{
+	font-size:smaller;
+	list-style:circle none outside;
+	margin:0;
+	padding-left:2em;
+}
+
+.spacerBorder
+{
+	border-top: solid 1px #CCC;
+}
+
+#tblMultiShipAddress
+{
+	outline-color:Gray;
+}
+
+.lblMultiShipAddress
+{
+	background:#f0ffff;
+	
+}

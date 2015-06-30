@@ -1,0 +1,26 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=pinnacle&type=signup" target="_blank">Sign up for Pinnacle Payments</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=pinnacle&type=info" target="_blank">Learn more about Pinnacle Payments</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=pinnacle&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Pinnacle Payments]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Username"><Name>PinnaclePayments.UserName</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Password"><Name>PinnaclePayments.Password</Name></AppConfig>
+  
+  <AppConfig Required="false" Advanced="true" FriendlyName="SOAP URL"><Name>PinnaclePayments.SOAPURL</Name></AppConfig>
+</ConfigurationAtom>

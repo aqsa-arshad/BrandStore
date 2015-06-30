@@ -1,0 +1,16 @@
+#FixedHeader a#HeaderSearchLink
+{
+    background-image:url(templateimages/searchbutton2x.png);
+}
+#FixedHeader a#HeaderAccountLink
+{
+    background-image:url(templateimages/accountbutton2x.png);
+}
+#FixedHeader a#HeaderWishlistLink
+{
+    background-image:url(templateimages/wishlistbutton2x.png);
+}
+#FixedHeader a#FixedHeaderCart
+{
+    background-image:url(templateimages/cartbutton2x.png);
+}

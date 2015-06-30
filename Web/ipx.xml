@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<AspDotNetStorefrontImportControl>
+	<Tables>
+		<Table Name="Address" IDColumn="AddressID" GUIDColumn="AddressGUID"/>
+		<Table Name="AppConfig" IDColumn="AppConfigID" GUIDColumn="AppConfigGUID"/>
+		<Table Name="Category" IDColumn="CategoryID" GUIDColumn="CategoryGUID"/>
+		<Table Name="Customer" IDColumn="CustomerID" GUIDColumn="CustomerGUID"/>
+		<Table Name="Distributor" IDColumn="DistributorID" GUIDColumn="DistributorGUID"/>
+		<Table Name="KitGroup" IDColumn="KitGroupID" GUIDColumn="KitGroupGUID"/>
+		<Table Name="KitItem" IDColumn="KitItemID" GUIDColumn="KitItemGUID"/>
+		<Table Name="Manufacturer" IDColumn="ManufacturerID" GUIDColumn="ManufacturerGUID"/>
+		<Table Name="Orders" IDColumn="OrderNumber" GUIDColumn="OrderGUID"/>
+		<Table Name="Product" IDColumn="ProductID" GUIDColumn="ProductGUID"/>
+		<Table Name="ProductType" IDColumn="ProductTypeID" GUIDColumn="ProductTypeGUID"/>
+		<Table Name="ProductVariant" IDColumn="VariantID" GUIDColumn="VariantGUID"/>
+		<Table Name="Section" IDColumn="SectionID" GUIDColumn="SectionGUID"/>
+		<Table Name="ShoppingCart" IDColumn="ShoppingCartID" GUIDColumn="ShoppingCartGUID"/>
+	</Tables>
+</AspDotNetStorefrontImportControl>

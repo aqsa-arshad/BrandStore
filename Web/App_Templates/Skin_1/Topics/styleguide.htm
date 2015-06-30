@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Style Guide</title>
+</head>
+<body>
+	<h1>This is an h1 tag</h1>
+	<h2>This is an h2 tag</h2>
+	<h3>This is an h3 tag</h3>
+	<h4>This is an h4 tag</h4>
+	<h5>This is an h5 tag</h5>
+	<h6>This is an h6 tag</h6>
+	
+	<h3>Body Copy and Paragraph Tags</h3>
+	<p>This is a block of body copy. Font size and line length were chosen for ease of readability. The fact is, human beings as a species have survived for hundreds of thousands of years and have populated the widest geographical range of any species in large part because our dietary needs are met so readily with the foods generally available to us.<sup>1</sup> Personal eating choices such as vegetarianism, veganism and pescetarianism aside (for the moment), human beings are omnivores, shaped by millions of years of evolution to thrive on a much wider range of foods than other animals.</p>
+	<h3>Em, Strong, Subscript, Superscript, Anchors (links) &amp; Citations</h3>
+	<p>This is a paragraph of body text. Use the &#39;p&#39; tag to layout blocks of body copy. <em>TheElements of Typographic Style</em> is a book by Canadian typographer, poet and translator Robert Bringhurst <strong>use the &#39;strong&#39; tag for bold elements</strong>. <em>Use the &#39;em&#39; tag for italicized or to emphasize text.</em> Originally published in1992 by Hartley &amp; <a href="http://en.wikipedia.org/wiki/Hartley_%26_Marks_Publishers" target="_blank">Marks Publishers</a>, it was revised in 1996, 2001 (v2.4), 2002 (v2.5), 2004(v3.0), 2005 (v3.1), and 2008 (v3.2). A history and guide to typography, it has been praised by Hermann Zapf, who said &ldquo;I wish to see this book become the Typographers&rsquo; Bible.&rdquo;<sup>1</sup> JonathanHoefler and Tobias Frere-Jones consider it "the finest book ever written about typography," accordingto the FAQ section of their type foundry&#39;s website.<sup>2</sup> Because of its widespread use, it issometimes <sub>this is subscript</sub>abbreviated simply as <strong>Bringhurst</strong>.</p>
+	<p><cite><sup>1</sup>This is a citation or footnote. It uses the html &#39;cite&#39; tag. Use the html &#39;sup&#39;tag to create the number style. This is a dream for disclaimers as well. Use this for footnotes andcitations and google just might share a little love with you.</cite></p>
+	<h3>Other Useful Tags for Content</h3>
+	<strong>The ABBR Tag</strong>
+	<p>This is the abbr tag. Use it for abbreviations with a title. Like "Can you read this
+		<abbr title="Message">
+			msg</abbr>
+		if you hover over it?. It just adds nice functionality for the user whilereading.</p>
+	<h3>Blockquotes</h3>
+	<p>Use blockquotes for quoting or indenting text. You can also use the &#39;cite&#39; tag and the &#39;title&#39; attributes to be more descriptive.</p>
+	<blockquote>
+		This is blockquote text. Use the blockquote html tag to indent blocks of text, or forquotes or to draw attention to a snippet of content.</blockquote>
+	<blockquote cite="Jonathan Hoefler, Elements of Typographic Style">
+		<h3>"I wish to see this book become the Typographers&rsquo; Bible"</h3>
+		<h4>-Jonathan Hoefler</h4>
+	</blockquote>
+	<p>Related (X)HTML elements include the q and cite elements for shorter, probably in-line, quotations and for citations respectively. An (X)HTML attribute specific to the blockquote and q elements is cite= where the provenance of the material quoted may be given. If the quotation is in a language other than that of the main document, lang= and maybe dir= attributes may be relevant to specify the language of the quoted text and perhaps its direction, left-to-right or right-to-left.</p>
+	<h3>Ordered and Unordered List Styles</h3>
+	<p>The titles of the chapters in the book&#39;s third edition are as follows:</p>
+	<ul>
+		<li>The Grand Design</li>
+		<li>Rhythm &amp; Proportion</li>
+		<li>Harmony &amp; Counterpoint</li>
+		<li>Structural Forms &amp; Devices</li>
+		<li>Analphabetic Symbols</li>
+		<li>Choosing &amp; Combining Type</li>
+		<ul class="listBullets">
+			<li>Use &#39;ul&#39; class &#39;listBullets&#39; to get bullets</li>
+			<li>Serifed</li>
+			<li>Sans-Serif</li>
+		</ul>
+		<li>Shaping the Page</li>
+		<li>The State of the Art</li>
+	</ul>
+	<p>The following outline uses ordered list tags; for an outline style:</p>
+	<ol>
+		<li>The Grand Design</li>
+		<li>Rhythm &amp; Proportion</li>
+		<li>Harmony &amp; Counterpoint</li>
+		<li>Structural Forms &amp; Devices</li>
+		<li>Analphabetic Symbols</li>
+		<li>Choosing &amp; Combining Type</li>
+		<li>Shaping the Page</li>
+		<li>The State of the Art</li>
+	</ol>
+	<p>In addition to these chapters, the book also contains five appendices, an historical synopsis, and aforeword.</p>
+	<h2>Layout & Grid Column Page Structure</h2>
+    <div class="page-row">
+    	<div class="one-third">
+    		<p>
+            This is an example of the column system that is in place on your site. If you look at this code you will se that there is a &lt;div&gt; tag around this text with the class &quot;one-third&quot;. This utility class allows you to break your page into thirds. The way that this content block is setup.
+            </p>
+            <p>
+            You will also notice if you look at this HTML that there is a &lt;div&gt; tag wrapped around all of the columns. It has a class on it called &quot;page-row&quot;. This class is used to contain all of the columns properly.
+            </p>
+    	</div>
+        <div class="one-third">
+    		<p>
+            This is a block of body copy. Lorem ipsum dolor sit amet, <a href="#NeedsLink">this is a link</a>. Nullam pulvinar auctor nisl sit amet facilisis. Nulla condimentum lacus nec libero sodales porta. <a href="#NeedsLink">Quisque vel</a> ante enim. Morbi vel tortor neque. Phasellus ipsum nisi, molestie scelerisque ullamcorper tempus, <a href="#NeedsLink">rhoncus eu turpis</a>. 
+            </p>
+            <p>
+            This is a block of body copy. Lorem ipsum dolor sit amet, <a href="#NeedsLink">this is a link</a>. Nullam pulvinar auctor nisl sit amet facilisis. Nulla condimentum lacus nec libero sodales porta. <a href="#NeedsLink">Quisque vel</a> ante enim. Morbi vel tortor neque. Phasellus ipsum nisi, molestie scelerisque ullamcorper tempus, <a href="#NeedsLink">rhoncus eu turpis</a>. 
+            </p>
+    	</div>
+        <div class="one-third">
+    		<p>
+            This is a block of body copy. Lorem ipsum dolor sit amet, <a href="#NeedsLink">this is a link</a>. Nullam pulvinar auctor nisl sit amet facilisis. Nulla condimentum lacus nec libero sodales porta. <a href="#NeedsLink">Quisque vel</a> ante enim. Morbi vel tortor neque. Phasellus ipsum nisi, molestie scelerisque ullamcorper tempus, <a href="#NeedsLink">rhoncus eu turpis</a>. 
+            </p>
+            <p>
+            This is a block of body copy. Lorem ipsum dolor sit amet, <a href="#NeedsLink">this is a link</a>. Nullam pulvinar auctor nisl sit amet facilisis. Nulla condimentum lacus nec libero sodales porta. <a href="#NeedsLink">Quisque vel</a> ante enim. Morbi vel tortor neque. Phasellus ipsum nisi, molestie scelerisque ullamcorper tempus, <a href="#NeedsLink">rhoncus eu turpis</a>. 
+            </p>
+    	</div>
+    </div>
+    <h4>HTML from the columns above</h4>
+    <code style="background: none repeat scroll 0 0 #EEEEEE;
+    display: block;
+    margin-bottom: 18px;
+    padding: 0px;
+    white-space: pre-wrap;">
+            &lt;div class=&quot;<span style="color:red">page-row</span>&quot;&gt;
+    	        &lt;div class=&quot;<span style="color:red">one-third</span>&quot;&gt;
+    		        &lt;p&gt;This is an example of the column system that is in place on your site. If you... &lt;/p&gt;
+    	        &lt;/div&gt;
+                &lt;div class=&quot;<span style="color:red">one-third</span>&quot;&gt;
+    		        &lt;p&gt;This is a block of body copy. Lorem ipsum dolor sit amet...&lt;/p&gt;
+    	        &lt;/div&gt;
+                &lt;div class=&quot;<span style="color:red">one-third</span>&quot;&gt;
+    		        &lt;p&gt;This is a block of body copy. Lorem ipsum dolor sit amet...&lt;/p&gt;
+    	        &lt;/div&gt;
+            &lt;/div&gt;
+    </code>
+
+    <h4>OneThird and TwoThirds Columns</h4>
+     <div class="page-row">
+    	<div class="one-third">
+    		<p>
+            This is a column using the <strong>one-third</strong> class. If you look at this code you will se that there is a &lt;div&gt; tag around this text with the class &quot;one-third&quot;. This utility class allows you to break your page into thirds. The way that this content block is setup.
+            </p>
+            <p>
+            You will also notice if you look at this HTML that there is a &lt;div&gt; tag wrapped around all of the columns. It has a class on it called &quot;page-row&quot;. This class is used to contain all of the columns properly.
+            </p>
+    	</div>
+        <div class="two-thirds">
+            <p>
+            This is a <strong>two-thirds</strong> column. Lorem ipsum dolor sit amet, <a href="#NeedsLink">this is a link</a>. Nullam pulvinar auctor nisl sit amet facilisis. Nulla condimentum lacus nec libero sodales porta. <a href="#NeedsLink">Quisque vel</a> ante enim. Morbi vel tortor neque. Phasellus ipsum nisi, molestie scelerisque ullamcorper tempus, <a href="#NeedsLink">rhoncus eu turpis</a>. 
+            </p>
+            <p>
+            This is a <strong>two-thirds</strong> column. Lorem ipsum dolor sit amet, <a href="#NeedsLink">this is a link</a>. Nullam pulvinar auctor nisl sit amet facilisis. Nulla condimentum lacus nec libero sodales porta. <a href="#NeedsLink">Quisque vel</a> ante enim. Morbi vel tortor neque. Phasellus ipsum nisi, molestie scelerisque ullamcorper tempus, <a href="#NeedsLink">rhoncus eu turpis</a>. 
+            </p>
+    	</div>
+    </div>
+    <h4>OneQuarter Columns</h4>
+     <div class="page-row">
+    	<div class="one-fourth">
+    		<p>
+            This is a column using the <strong>one-fourth</strong> class. If you look at this code you will se that there is a &lt;div&gt; tag around this text with the class &quot;one-fourth&quot;. 
+            </p>
+            
+    	</div>
+        <div class="one-fourth">
+    		<p>
+            This is a column using the <strong>one-fourth</strong> class. If you look at this code you will se that there is a &lt;div&gt; tag around this text with the class &quot;one-fourth&quot;. 
+            </p>
+            
+    	</div>
+        <div class="one-fourth">
+    		<p>
+            This is a column using the <strong>one-fourth</strong> class. If you look at this code you will se that there is a &lt;div&gt; tag around this text with the class &quot;one-fourth&quot;. 
+            </p>
+            
+    	</div>
+        <div class="one-fourth">
+    		<p>
+            This is a column using the <strong>one-fourth</strong> class. If you look at this code you will se that there is a &lt;div&gt; tag around this text with the class &quot;one-fourth&quot;. 
+            </p>
+            
+    	</div>
+    </div>
+    <h4>All Column Classes</h4>
+    <ul>
+        <li><strong>page-row:</strong> goes around columns</li>
+        <li><strong>one-half:</strong> half width column</li>
+        <li><strong>one-third:</strong> one third column</li>
+        <li><strong>two-thirds:</strong> spans two thirds of the page</li>
+        <li><strong>one-fourth:</strong> one quarter column</li>
+        <li><strong>three-fourths:</strong> spans three quarters of the page</li>
+		<li><strong>one-fifth:</strong> one fifth column</li>
+		<li><strong>two-fifths:</strong> spans two fifths of the page</li>
+		<li><strong>three-fifths:</strong> spans three fifths of the page</li>
+		<li><strong>four-fifths:</strong> spans four fifths of the page</li>
+		<li><strong>one-sixth:</strong> one sixth column</li>
+    </ul>
+    <p> That&#39;s it! With those classes you should be able to construct some pretty complex layouts. Have fun.</p>
+</body>
+</html>

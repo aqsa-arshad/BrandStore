@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:simpleType name="SystemDataType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="String" />
+      <xsd:enumeration value="Boolean" />
+      <xsd:enumeration value="Int" />
+      <xsd:enumeration value="Decimal" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:element name="RequiredElements">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="RequestXmlPackage" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="ResponseXmlPackage" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="TestUsername" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="TestPassword" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="TestUrl" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="LiveUsername" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="LivePassword" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="LiveUrl" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="AllowsPOBoxes" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="InsuredThreshold" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="ShippingMethodsToPrevent" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="PackageDefaultWeight" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="PackageExtraWeight" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="MinShipmentWeight" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="MaxShipmentWeight" minOccurs="0" maxOccurs="1" />
+        <xsd:element ref="MarkupPercent" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="RequestXmlPackage">
+    <xsd:complexType>
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ResponseXmlPackage">
+    <xsd:complexType>
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="TestUsername">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>    
+  </xsd:element>
+  <xsd:element name="TestPassword">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="TestUrl">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>    
+  </xsd:element>
+  <xsd:element name="LiveUsername">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="LivePassword">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>  
+  </xsd:element>
+  <xsd:element name="LiveUrl">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AllowsPOBoxes">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>    
+  </xsd:element>
+  <xsd:element name="InsuredThreshold">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ShippingMethodsToPrevent">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="PackageDefaultWeight">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>    
+  </xsd:element>
+  <xsd:element name="PackageExtraWeight">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="MinShipmentWeight">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>    
+  </xsd:element>
+  <xsd:element name="MaxShipmentWeight">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="MarkupPercent">
+    <xsd:complexType>
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required" />
+    </xsd:complexType>    
+  </xsd:element>
+
+ <xsd:element name="CarrierSpecificElements">
+   <xsd:complexType>
+     <xsd:sequence>
+       <xsd:element ref="Carrier" minOccurs="0" maxOccurs="unbounded" />
+     </xsd:sequence>
+   </xsd:complexType>
+ </xsd:element>
+
+  <xsd:element name ="Carrier">
+    <xsd:complexType>
+      <xsd:attribute name="Name" type="xsd:string" use="required" />
+      <xsd:attribute name="Prompt" type="xsd:string" use="required" />
+      <xsd:attribute name="AllowUserEdit" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(true)|(false)" />
+          </xsd:restriction>
+        </xsd:simpleType>        
+      </xsd:attribute>
+      <xsd:attribute name="Type" type="SystemDataType" use="required" />
+      <xsd:attribute name="Default" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="UpgradeMigration">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="AppConfig" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="AppConfig">
+    <xsd:complexType>
+      <xsd:attribute name="Name" type="xsd:string" use="required" />
+      <xsd:attribute name="MoveTo" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+    
+  <xsd:element name="RTShippingProvider">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="RequiredElements" minOccurs="0" maxOccurs="unbounded" />
+        <xsd:element ref="CarrierSpecificElements" minOccurs="0" maxOccurs="unbounded" />
+        <xsd:element ref="UpgradeMigration" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+      <xsd:attribute name="Name" use="required" />
+      <xsd:attribute name="Description" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  
+</xsd:schema>

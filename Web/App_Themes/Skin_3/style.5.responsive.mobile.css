@@ -1,0 +1,154 @@
+
+@media (max-width: 480px)
+{
+.feedback{
+	display:none;
+}
+.shoppingcart a{
+	font-size:12px;
+}
+.header-cart .form-group{
+	width:50%;
+}
+.featured-item{
+	width:100%;
+	border-right:none;
+	border-top:2px solid #FFF;
+	box-shadow:0px 8px 8px #EEE;
+	margin-bottom:16px;
+}
+.featured-item:last-child{
+	margin:0;
+}
+.grid-item-image, .list-item-image{
+	width:100%;
+	max-width:215px;
+}
+  #SliderContainerTablet
+  {
+  	display: none !important;
+  }
+  
+  #SliderContainerMobile
+  {
+  	display: block !important;
+  }
+  
+  .add-to-cart-buttons
+  {
+    overflow:hidden;
+    display: block;
+  }
+  
+  .add-to-cart-button,
+  .add-to-wishlist-button
+  {
+  	margin-top: 8px;
+    z-index: 1000;
+    display: block;
+  }
+  
+.order-history .table tr th
+    {
+    	display: block;
+    }
+    
+    .order-history .table tr td
+    {
+    	display: block;
+    }
+    
+    .cart-header .cart-column-description,
+    .cart-row .cart-column-description
+    {
+    	width: 30%;
+    }
+    
+    .cart-header .cart-column-subtotal,
+    .cart-row .cart-column-subtotal
+    {
+    	width: 55%;
+    }
+    
+    .cart-row .cart-column-edit
+    {
+    }
+    
+    .cart-row .cart-column-edit input[type="text"]
+    {
+    	width: 80%;
+      margin-top: 2px;
+      text-align: center;
+    }
+    
+    #ProductTable td + td + td + td
+    {
+    	display: none;
+    }
+  
+  	.cart-header
+  	{
+    	display: none;
+    }
+  
+  	.cart-column,
+  	.cart-column-description
+  	{
+      display: block !important;
+      width: 100% !important;
+  	}
+  
+  	.cart-column-edit input[type="text"]
+  	{
+    	width: 33% !important;
+    }
+  
+  .register-half .register-form
+  {
+  	padding: 0;
+  }
+  
+  #ctl00_PageContent_btnContinueCheckout
+  {
+  	padding-left: 3%;
+  	padding-right: 3%;
+    font-size: 1em;
+    line-height: 2.1em;
+  }
+  
+  .footer-lists ul
+  {
+  	margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .quantity-field
+  {
+  	width: 20% !important;
+  }
+  
+  #ctl00_PageContent_ctl00_lblCaptchaError
+  {
+  	display: block;
+  }
+  
+  td.Caption
+  {
+  	display: none;
+  }
+  
+  td.Value
+  {
+    padding-bottom: 10px;
+  }
+  
+  td.Value span
+  {
+  	display: block !important;
+  }
+  
+  .productcontrollabel
+  {
+  	white-space: nowrap;
+  }
+}

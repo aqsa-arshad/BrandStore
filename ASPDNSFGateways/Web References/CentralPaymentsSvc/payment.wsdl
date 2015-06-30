@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://pay.centralpayments.net/soap/v6" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://pay.centralpayments.net/soap/v6" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://pay.centralpayments.net/soap/v6">
+      <s:element name="DirectPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AssociateName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AssociatePassword" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StreetAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DayPhone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CreditCard" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExpirationMonth" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExpirationYear" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TrackingId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BrowserType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BrowserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardVerification" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HostName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DirectPaymentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthorizePayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AssociateName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AssociatePassword" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DayPhone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CreditCard" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExpirationMonth" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExpirationYear" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BrowserType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BrowserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardVerification" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HostName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthorizePaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthorizePaymentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AssociateName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AssociatePassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF2" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreditPaymentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CapturePayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AssociateName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AssociatePassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Authorization" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UDF2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BrowserType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BrowserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardVerification" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HostName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CapturePaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CapturePaymentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DirectPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:DirectPayment" />
+  </wsdl:message>
+  <wsdl:message name="DirectPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:DirectPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizePaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthorizePayment" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizePaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthorizePaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreditPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:CreditPayment" />
+  </wsdl:message>
+  <wsdl:message name="CreditPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:CreditPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CapturePaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:CapturePayment" />
+  </wsdl:message>
+  <wsdl:message name="CapturePaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:CapturePaymentResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PaymentSoap">
+    <wsdl:operation name="DirectPayment">
+      <wsdl:input message="tns:DirectPaymentSoapIn" />
+      <wsdl:output message="tns:DirectPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizePayment">
+      <wsdl:input message="tns:AuthorizePaymentSoapIn" />
+      <wsdl:output message="tns:AuthorizePaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreditPayment">
+      <wsdl:input message="tns:CreditPaymentSoapIn" />
+      <wsdl:output message="tns:CreditPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CapturePayment">
+      <wsdl:input message="tns:CapturePaymentSoapIn" />
+      <wsdl:output message="tns:CapturePaymentSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentSoap" type="tns:PaymentSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DirectPayment">
+      <soap:operation soapAction="http://pay.centralpayments.net/soap/v6/DirectPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizePayment">
+      <soap:operation soapAction="http://pay.centralpayments.net/soap/v6/AuthorizePayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditPayment">
+      <soap:operation soapAction="http://pay.centralpayments.net/soap/v6/CreditPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CapturePayment">
+      <soap:operation soapAction="http://pay.centralpayments.net/soap/v6/CapturePayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Payment">
+    <documentation xmlns="http://schemas.xmlsoap.org/wsdl/" />
+    <wsdl:port name="PaymentSoap" binding="tns:PaymentSoap">
+      <soap:address location="https://pay.centralpayments.net/soap/v6/payment.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

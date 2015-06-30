@@ -1,0 +1,30 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=netaxept&type=info" target="_blank">Learn more about NetAxept</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=netaxept&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure Netaxept]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Merchant ID"><Name>NETAXEPT.Merchant_Id</Name></AppConfig>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Merchant Token"><Name>NETAXEPT.Merchant_Token</Name></AppConfig>
+
+  <AppConfig Required="false" Advanced="true" FriendlyName="Error.Setup"><Name>NETAXEPT.Error.Setup</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live_Server"><Name>NETAXEPT.Live_Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live_UI"><Name>NETAXEPT.Live_UI</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="MerchantSettings.RedirectUrl"><Name>NETAXEPT.MerchantSettings.RedirectUrl</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test_Server"><Name>NETAXEPT.Test_Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test_UI"><Name>NETAXEPT.Test_UI</Name></AppConfig>
+</ConfigurationAtom>

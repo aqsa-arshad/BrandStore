@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://gateway.securenet.com/API/DATA/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SERVICE" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="wsBinding_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsoma:OptimizedMimeSerialization xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:import namespace="http://gateway.securenet.com/API/DATA/" location="http://certify.securenet.com/API/Data/SERVICE.svc?wsdl=wsdl0" />
+  <wsdl:types />
+  <wsdl:binding name="BasicHttpBinding_ISERVICE" type="i0:ISERVICE">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetABAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetABAccounts">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultCustomers">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultCustomers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccountByCustomer">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccountByCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccount">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultRecordByCardNo">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultRecordByCardNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetP2PKey">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetP2PKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmP2PKey">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/ConfirmP2PKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateP2PKey">
+      <soap:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/CreateP2PKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsBinding" type="i0:ISERVICE">
+    <wsp:PolicyReference URI="#wsBinding_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetABAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetABAccounts">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetABAccounts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultCustomers">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultCustomers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccountByCustomer">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccountByCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccount">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultRecordByCardNo">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetVaultRecordByCardNo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetP2PKey">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/GetP2PKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmP2PKey">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/ConfirmP2PKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateP2PKey">
+      <soap12:operation soapAction="http://gateway.securenet.com/API/DATA/ISERVICE/CreateP2PKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="webBinding" type="i0:ISERVICE">
+    <wsdl:operation name="GetABAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetABAccounts">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultCustomers">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccountByCustomer">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultAccount">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetVaultRecordByCardNo">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetP2PKey">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmP2PKey">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="CreateP2PKey">
+      <wsdl:input />
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SERVICE">
+    <wsdl:port name="BasicHttpBinding_ISERVICE" binding="tns:BasicHttpBinding_ISERVICE">
+      <soap:address location="http://certify.securenet.com/API/Data/SERVICE.svc/soap" />
+    </wsdl:port>
+    <wsdl:port name="wsBinding" binding="tns:wsBinding">
+      <soap12:address location="http://certify.securenet.com/API/Data/SERVICE.svc/wsHttp" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://certify.securenet.com/API/Data/SERVICE.svc/wsHttp</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="webBinding" binding="tns:webBinding" />
+  </wsdl:service>
+</wsdl:definitions>

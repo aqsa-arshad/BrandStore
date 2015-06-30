@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4e9a5d29-bd7d-4b2d-8763-f05d8f0e8b23" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://certify.securenet.com/api/data/service.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SERVICE.wsdl" MetadataType="Wsdl" ID="472e45e5-fc75-451c-ad66-ffe3c26cfe19" SourceId="1" SourceUrl="http://certify.securenet.com/API/Data/SERVICE.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="SERVICE1.wsdl" MetadataType="Wsdl" ID="4dfbb6b2-a8e3-41e7-9dbe-7e799b714dab" SourceId="1" SourceUrl="http://certify.securenet.com/API/Data/SERVICE.svc?wsdl" />
+    <MetadataFile FileName="SERVICE.xsd" MetadataType="Schema" ID="f36760aa-dd74-4a48-9f2e-6f0116e56a24" SourceId="1" SourceUrl="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd2" />
+    <MetadataFile FileName="SERVICE1.xsd" MetadataType="Schema" ID="137abf61-7c4d-45c3-a9f8-12bb67e052b5" SourceId="1" SourceUrl="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd0" />
+    <MetadataFile FileName="SERVICE2.xsd" MetadataType="Schema" ID="04f34b0c-8aa8-4d88-aea9-b1af266e21b4" SourceId="1" SourceUrl="http://certify.securenet.com/API/Data/SERVICE.svc?xsd=xsd1" />
+    <MetadataFile FileName="SERVICE.disco" MetadataType="Disco" ID="2db4a525-86b7-4654-94aa-d13861419a69" SourceId="1" SourceUrl="http://certify.securenet.com/API/Data/SERVICE.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

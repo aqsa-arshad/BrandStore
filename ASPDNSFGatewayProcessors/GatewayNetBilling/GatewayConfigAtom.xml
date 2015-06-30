@@ -1,0 +1,29 @@
+﻿<ConfigurationAtom>
+  <HtmlHeader>
+    <![CDATA[
+      <table width="780" cellpadding="4" cellspacing="0" class="modalTable">
+      <tbody>
+      <tr>
+
+      <td width="225">
+      </td>
+        <td class="globalAdmin" align="right">
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=netbilling&type=signup" target="_blank">Sign up for NetBilling</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=netbilling&type=info" target="_blank">Learn more about NetBilling</a><br />
+        <a href="http://www.aspdotnetstorefront.com/linkmanager.aspx?topic=netbilling&type=manual" target="_blank">Configuration Help</a><br />
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    ]]>
+  </HtmlHeader>
+  <Title><![CDATA[Configure NetBilling]]></Title>
+  <AppConfig Required="true" Advanced="false" FriendlyName="Account ID"><Name>NetBilling.Account_ID</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Pay Type"><Name>NetBilling.Pay_Type</Name></AppConfig>
+  <AppConfig Required="false" Advanced="false" FriendlyName="Site Tag"><Name>NetBilling.Site_Tag</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Verify Addresses"><Name>NetBilling.Verify_Addresses</Name></AppConfig>
+
+  <AppConfig Required="false" Advanced="true" FriendlyName="Live_Server"><Name>NetBilling.Live_Server</Name></AppConfig>
+  <AppConfig Required="false" Advanced="true" FriendlyName="Test_Server"><Name>NetBilling.Test_Server</Name></AppConfig>
+</ConfigurationAtom>
