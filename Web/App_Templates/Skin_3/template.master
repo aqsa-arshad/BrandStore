@@ -66,7 +66,6 @@
                     </div>
 				    <div class="col-sm-6 logo-wrap">
 					    <aspdnsf:Topic ID="LogoTopic" runat="server" TopicName="Template.Logo" />
-                        <span class="header-cmd-message">This site and the sale of DTF merchandise offered on this site are administered by CMD Agency.</span>
 				    </div>
 				    <div class="col-sm-6 text-right header-cart">
 					    <custom:Search ID="Search1" runat="server" />
@@ -80,6 +79,19 @@
 				    </div>
 			    </div>
 			    <div class="clearfix"></div>
+            </div>
+            <div class="breadcrumb-container">
+			    <div class="breadcrumb">
+				    <%-- The ID SectionTitle is required --%>
+				    <a id="homeLink" class="homeLink" runat="server" href="~/default.aspx">
+					    <asp:Literal ID="Literal11" runat="server" Text='<%$ Tokens:StringResource, menu.home %>' />
+				    </a>
+				    <asp:Literal ID="Literal12" runat="server" Text='<%$ Tokens:AppConfig, BreadcrumbSeparator %>' />
+				    <asp:Literal ID="SectionTitle" runat="server" Text='' />
+			    </div>
+                <div class="mobile-breadcrumb" style="display:none;">
+                    <a href="javascript:window.history.back();">Back</a>
+                </div>
             </div>
             <div class="topnav-container">
 			    <div class="navbar navbar-default topnav" role="navigation">
@@ -136,19 +148,6 @@
                     </div>
 				    <!--/.nav-collapse -->
 			    </div>
-            </div>
-            <div class="breadcrumb-container">
-			    <div class="breadcrumb">
-				    <%-- The ID SectionTitle is required --%>
-				    <a id="homeLink" class="homeLink" runat="server" href="~/default.aspx">
-					    <asp:Literal ID="Literal11" runat="server" Text='<%$ Tokens:StringResource, menu.home %>' />
-				    </a>
-				    <asp:Literal ID="Literal12" runat="server" Text='<%$ Tokens:AppConfig, BreadcrumbSeparator %>' />
-				    <asp:Literal ID="SectionTitle" runat="server" Text='' />
-			    </div>
-                <div class="mobile-breadcrumb" style="display:none;">
-                    <a href="javascript:window.history.back();">Back</a>
-                </div>
             </div>
             
 			<!-- CONTENTS START -->
@@ -236,6 +235,7 @@
             <div class="subfooter-container">
 			    <div class="subfooter">
 				    <aspdnsf:Topic ID="Topic2" runat="server" TopicName="Template.SubFooter" />
+                        <span class="header-cmd-message">This site and the sale of DTF merchandise offered on this site are administered by CMD.</span>
 			    </div>
             </div>
 		</div>
@@ -253,6 +253,9 @@
                     value = value.substring(0, value.indexOf("$"));
                     $("label[for='ctl00_PageContent_ctrlShippingMethods_ctrlShippingMethods_1']").html(value);
                 }
+
+                $(".subfooter").html($(".subfooter").html().replace('YYYY', (new Date()).getFullYear()));
+
             });
         </script>
 	</form>

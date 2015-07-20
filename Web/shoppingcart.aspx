@@ -144,6 +144,17 @@
 							ShowPicsInCart='<%$ Tokens:AppConfigBool, ShowPicsInCart %>' ShowEditButtonInCartForKitProducts='<%$ Tokens:AppConfigBool, ShowEditButtonInCartForKitProducts %>'
 							ShowMultiShipAddressUnderItemDescription="true" />
 					</aspdnsfc:ShoppingCartControl>
+                    <script type="text/javascript">
+                        (function ($) {
+                            $(".quantity-box").change(function () {
+                                var quantity = $(this).val();
+                                var inventory = $(this).parent().parent().parent().find("input[type=hidden]").val();
+                                if (parseInt(quantity) > parseInt(inventory)) {
+                                    alert("Your order may be delayed because you have selected more than what is currently in stock. Please select a smaller quantity in your cart if you want to avoid any shipping delays.");
+                                }
+                            });
+                        })(jQuery);
+                    </script>
 				</div>
 				<div class="page-row text-right update-cart">
 					<asp:ValidationSummary ID="vsQuantity" runat="server" ValidationGroup="val" DisplayMode="List" ShowMessageBox="true" ShowSummary="false" />

@@ -4837,7 +4837,7 @@ namespace AspDotNetStorefrontCore
                     }
                 }
             }
-			return inventory;
+            return (inventory < 0) ? 0 : inventory;
         }
 
         static public bool CustomerLevelAllowsPO(int CustomerLevelID)

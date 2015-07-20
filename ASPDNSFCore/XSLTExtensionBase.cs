@@ -3092,7 +3092,8 @@ function popupzoom(url,alturl)
             StringBuilder results = new StringBuilder("");
             if (AppLogic.AppConfigBool("ShowInventoryTable"))
             {
-                results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, ThisCustomer.IsAdminUser, ThisCustomer.SkinID, true, false));
+                //results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, ThisCustomer.IsAdminUser, ThisCustomer.SkinID, true, false));
+                results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, true, ThisCustomer.SkinID, true, false));
             }
             return results.ToString();
         }

@@ -163,8 +163,9 @@ h1, h2
 
 .home-clearance-nav
 {
-	overflow: hidden;
-  padding: 0 0 10px 0;
+	/*overflow: hidden;
+    padding: 0 0 10px 0;*/
+    display: none;
 }
 
 .home-clearance-nav .clearance-buttons
@@ -177,7 +178,7 @@ h1, h2
 {
 	max-width: 1332px;
   margin: 0 auto;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .featured-products .featured-items-header
@@ -190,7 +191,7 @@ h1, h2
 
 .featured-item-name-wrap
 {
-	text-align: right;
+	text-align: center;
 }
 
 .featured-item-name-wrap a:after
@@ -227,21 +228,35 @@ h1, h2
 }
 
 .slick-prev,
+.slick-prev:focus
+{
+	left: 25px;
+    width: 17px;
+    height: 34px;
+    background: url('images/prev-arrow.png');
+}
 .slick-prev:hover
 {
 	left: 25px;
-  width: 17px;
-  height: 34px;
-  background: url('images/prev-arrow.png');
+    width: 17px;
+    height: 34px;
+    background: url('images/prev-arrow.png');
 }
 
 .slick-next,
+.slick-next:focus
+{
+	right: 25px;
+    width: 17px;
+    height: 34px;
+    background: url('images/next-arrow.png');
+}
 .slick-next:hover
 {
 	right: 25px;
-  width: 17px;
-  height: 34px;
-  background: url('images/next-arrow.png');
+    width: 17px;
+    height: 34px;
+    background: url('images/next-arrow.png');
 }
 
 .slick-dots li
@@ -547,4 +562,48 @@ padding-left: 30px;
     font-size:.8em;
     color:gray;
     margin: 5px 0;
+}
+
+.feedback 
+{
+    display: none !important;
+}
+
+.topnav .navbar-nav > li > a > span.caret
+{
+    border-left: 0;
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    display: inline-block;
+    height: 0;
+    vertical-align: top;
+    width: 0;
+    margin-top: 5px;
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
+.topnav .navbar-nav > li > a:hover > span.caret, .topnav .navbar-nav > li > a:focus > span.caret
+{
+    border-left: 5px solid transparent;
+    border-bottom: 0;
+    border-right: 5px solid transparent;
+    display: inline-block;
+    height: 0;
+    vertical-align: top;
+    width: 0;
+    margin-top: 8px;
+    margin-left: 2px;
+    margin-right: 0;
+}
+
+.featured-products .stock-hint 
+{
+    display: none;
+}
+
+.product-page .add-to-cart-group .quantity-field, .quantity-box {
+    display: inline;
+    width: 80px;
+    text-align: center;
 }

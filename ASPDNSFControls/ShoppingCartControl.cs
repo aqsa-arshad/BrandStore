@@ -1151,7 +1151,17 @@ namespace AspDotNetStorefrontControls
                     lblQtyDiscount.Text = String.Empty;
                 }
 
-                Controls.Add(new LiteralControl("<div class='cart-row'>")); 
+                Controls.Add(new LiteralControl("<div class='cart-row'>"));
+
+                //NOTE: Added hidden field for js to check for overstock; display message, but allow user to proceed as per business rules
+                var inventory = AppLogic.GetInventory(cItem.ProductID, cItem.VariantID, cItem.ChosenSize, cItem.ChosenColor);
+                HiddenField hiddenInventory = new HiddenField
+                {
+                    ID = "Inventory",
+                    Value = inventory.ToString()
+                };
+                Controls.Add(hiddenInventory);
+                //END
 
                 if (this.DisplayMode != CartDisplayMode.MiniCart)
                 {
@@ -1174,7 +1184,6 @@ namespace AspDotNetStorefrontControls
                     if (this.CartItem.RestrictedQuantities.Count == 0 || !this.AllowEdit)
                     {
                         Controls.Add(txtQuantity as Control);
-
                         if (this.AllowEdit)
                         {
                             Controls.Add(vreQuantity);
@@ -1278,32 +1287,32 @@ namespace AspDotNetStorefrontControls
                 {
                     int itemInventory = AppLogic.GetInventory(cItem.ProductID, cItem.VariantID, cItem.ChosenSize, cItem.ChosenColor);
 
-                    if (itemInventory > 0)
+                    //if (itemInventory > 0)
+                    //{
+                    Button btnMoveToCart = new Button();
+
+                    if (this.DisplayMode == CartDisplayMode.WishList)
                     {
-                        Button btnMoveToCart = new Button();
-
-                        if (this.DisplayMode == CartDisplayMode.WishList)
-                        {
-                            btnMoveToCart.Text = LineItemSetting.MoveFromWishListText;
-                        }
-                        else
-                        {
-                            btnMoveToCart.Text = LineItemSetting.MoveFromGiftRegistryText;
-                        }
-
-                        btnMoveToCart.ID = "btnMoveToCart";
-                        btnMoveToCart.CssClass = "button call-to-action button-move-to-cart";
-                        btnMoveToCart.CommandName = "MoveToShoppingCart";
-                        btnMoveToCart.CommandArgument = cItem.ShoppingCartRecordID.ToString();
-                        Controls.Add(btnMoveToCart);
+                        btnMoveToCart.Text = LineItemSetting.MoveFromWishListText;
                     }
                     else
                     {
-                        Literal ltUnavailableMessage = new Literal();
-                        ltUnavailableMessage.ID = "ltUnavailableMessage";
-                        ltUnavailableMessage.Text = AppLogic.GetString("shoppingcart.outofstock", Customer.Current.LocaleSetting);
-                        Controls.Add(ltUnavailableMessage);
+                        btnMoveToCart.Text = LineItemSetting.MoveFromGiftRegistryText;
                     }
+
+                    btnMoveToCart.ID = "btnMoveToCart";
+                    btnMoveToCart.CssClass = "button call-to-action button-move-to-cart";
+                    btnMoveToCart.CommandName = "MoveToShoppingCart";
+                    btnMoveToCart.CommandArgument = cItem.ShoppingCartRecordID.ToString();
+                    Controls.Add(btnMoveToCart);
+                    //}
+                    //else
+                    //{
+                    //    Literal ltUnavailableMessage = new Literal();
+                    //    ltUnavailableMessage.ID = "ltUnavailableMessage";
+                    //    ltUnavailableMessage.Text = AppLogic.GetString("shoppingcart.outofstock", Customer.Current.LocaleSetting);
+                    //    Controls.Add(ltUnavailableMessage);
+                    //}
                 }
                 else
                 {
