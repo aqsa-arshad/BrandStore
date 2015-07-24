@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Xml;
 using AspDotNetStorefrontAdmin;
 using AspDotNetStorefrontCore;
+using System.Text.RegularExpressions;
 
 public partial class Admin_export : AdminPageBase
 {
@@ -86,7 +87,7 @@ public partial class Admin_export : AdminPageBase
                     var cardName = reader["CardName"] != null ? reader["CardName"].ToString() : "";
                     var last4 = reader["Last4"] != null ? reader["Last4"].ToString() : "";
                     var cardExpirationMonth = reader["CardExpirationMonth"] != null ? reader["CardExpirationMonth"].ToString() : "";
-                    var cardExpirationYear = reader["CardExpirationYear"] != null ? reader["CardExpirationYear"].ToString() : "";
+                    var cardExpirationYear = reader["CardExpirationYear"] != null ? reader["CardExpirationYear"].ToString().Substring(2) : "";
                     var authorizationCode = reader["AuthorizationCode"] != null ? reader["AuthorizationCode"].ToString() : "";
                     var paymentGateway = reader["PaymentGateway"] != null ? reader["PaymentGateway"].ToString() : "";
                     var transactionState = reader["TransactionState"] != null ? reader["TransactionState"].ToString() : "";
@@ -109,7 +110,6 @@ public partial class Admin_export : AdminPageBase
                     var taxRate = Convert.ToDecimal(reader["TaxRate"]);
 
                     dateString = orderDate.ToShortDateString().Replace("/", "-");
-                    cardExpirationYear = !String.IsNullOrEmpty(cardExpirationYear) ? cardExpirationYear.Substring(2) : cardExpirationYear;
 
                     var order = new CustomOrder
                     {
@@ -168,7 +168,6 @@ public partial class Admin_export : AdminPageBase
                     var orderedProductName = reader["OrderedProductName"].ToString();
                     var quantity = Convert.ToInt32(reader["Quantity"]);
                     var chosenColorSKUModifier = reader["ChosenColorSKUModifier"] != null ? reader["ChosenColorSKUModifier"].ToString() : "";
-                    var chosenSizeSKUModifier = reader["ChosenSizeSKUModifier"] != null ? reader["ChosenSizeSKUModifier"].ToString() : "";
                     var orderedProductSKU = reader["OrderedProductSKU"] != null ? reader["OrderedProductSKU"].ToString() : "";
                     var orderedProductPrice = Convert.ToDecimal(reader["OrderedProductPrice"]);
                     var orderedProductRegularPrice = Convert.ToDecimal(reader["OrderedProductRegularPrice"]);
@@ -180,7 +179,6 @@ public partial class Admin_export : AdminPageBase
                         OrderedProductName = orderedProductName,
                         Quantity = quantity,
                         ChosenColorSKUModifier = chosenColorSKUModifier,
-                        ChosenSizeSKUModifier = chosenSizeSKUModifier,
                         OrderedProductSKU = orderedProductSKU,
                         OrderedProductPrice = orderedProductPrice,
                         OrderedProductRegularPrice = orderedProductRegularPrice
@@ -199,6 +197,7 @@ public partial class Admin_export : AdminPageBase
                     var kitId = reader["KitID"].ToString();
                     var quantity = Convert.ToInt32(reader["Quantity"]);
                     var color = reader["Color"].ToString();
+                    var sort = Convert.ToInt32(reader["Sort"]);
 
                     var productExtra = new CustomProductExtra
                     {
@@ -206,7 +205,8 @@ public partial class Admin_export : AdminPageBase
                         PartID = partId,
                         KitID = kitId,
                         Quantity = quantity,
-                        Color = color
+                        Color = color,
+                        Sort = sort
                     };
 
                     productExtras.Add(productExtra);
@@ -319,23 +319,23 @@ public partial class Admin_export : AdminPageBase
             {
                 xmlTextWriter.WriteStartElement("items");
 
-                var extras = productExtras.Where(x => x.ProductID == item.ProductID && x.Color == item.ChosenColorSKUModifier);
-
                 //get quantity and use as multiplier for extras
                 var multiplier = item.Quantity;
-                
+
                 var color = item.ChosenColorSKUModifier == null ? "" : item.ChosenColorSKUModifier;
-                var size = item.ChosenSizeSKUModifier == null ? "" : item.ChosenSizeSKUModifier;
-                var itemno = item.OrderedProductSKU;
-                if(!String.IsNullOrEmpty(color))
-                {
-                    itemno = itemno.Replace(color, "");
-                }
-                if (!String.IsNullOrEmpty(size))
-                {
-                    itemno = itemno.Replace(size, "");
-                }
-                var subno = size + color;
+                var itemno = color == "" ? item.OrderedProductSKU : item.OrderedProductSKU.Replace(color, "");
+                // Get the numerical portion of the item number 
+                // The KitID might contain one or more alpha characters at the end which we will ignore)
+                String partialKit = Regex.Match(itemno.ToString(), @"\d+").ToString();
+
+                // Filter extra data by productID, Color, and Kit.  Since there could be more than one kit
+                // with the same product extras, we just want to get the distinct list so we don't have 
+                // duplicates.
+                var extras = productExtras.Where(x => x.ProductID == item.ProductID &&
+                                                 x.Color == item.ChosenColorSKUModifier &&
+                                                 x.KitID.StartsWith(partialKit)).
+                                                 GroupBy(x => new { x.ProductID, x.Color, x.KitID, x.Sort }).
+                                                 Select(grp => grp.First());
 
                 xmlTextWriter.WriteStartElement("item");
                 xmlTextWriter.WriteElementString("rectype", "I");
@@ -343,7 +343,7 @@ public partial class Admin_export : AdminPageBase
                 xmlTextWriter.WriteElementString("webtrack", order.OrderID.ToString());
                 xmlTextWriter.WriteElementString("seqno", "1");
                 xmlTextWriter.WriteElementString("itemno", itemno);
-                xmlTextWriter.WriteElementString("subno", subno);
+                xmlTextWriter.WriteElementString("subno", "");
                 xmlTextWriter.WriteElementString("itemcustno", "0");
                 xmlTextWriter.WriteElementString("qtyord", item.Quantity.ToString());
                 xmlTextWriter.WriteElementString("taxable", "");
