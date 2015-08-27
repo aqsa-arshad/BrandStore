@@ -1,0 +1,18 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\bin\Debug\ASPDNSFApplication.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\bin\Debug\ASPDNSFEncrypt.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\bin\Debug\ExcelWrapper.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\bin\Debug\GemBox.Spreadsheet.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.pdb
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.pdb
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\ASPDNSFApplication.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\ASPDNSFEncrypt.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\ExcelWrapper.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\GemBox.Spreadsheet.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.pdb

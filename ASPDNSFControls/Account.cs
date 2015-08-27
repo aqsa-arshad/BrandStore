@@ -25,7 +25,7 @@ namespace AspDotNetStorefrontControls
     /// </summary>
     [ToolboxData("<{0}:Account runat=server></{0}:Account>")]
     public class Account : CompositeControl
-    {
+    { 
 
         #region Variable Declaration
 
@@ -100,7 +100,7 @@ namespace AspDotNetStorefrontControls
         private bool _ShowSecurityCodeValidators = false;
         private bool _ShowValidatorsInline = false;
         private bool _DisablePasswordAutocomplete = false;
-
+     
         #endregion
 
         #region Constructor
@@ -164,7 +164,7 @@ namespace AspDotNetStorefrontControls
         [Browsable(true), Category("LABELS")]
         public string LastNameCaption
         {
-            get { return _lblLastName.Text; }
+            get { return _lblLastName.Text;}
             set { _lblLastName.Text = value; }
         }
 
@@ -505,8 +505,7 @@ namespace AspDotNetStorefrontControls
         public Boolean DisablePasswordAutocomplete
         {
             get { return _DisablePasswordAutocomplete; }
-            set
-            {
+            set { 
                 _DisablePasswordAutocomplete = value;
                 if (value)
                 {
@@ -791,7 +790,7 @@ namespace AspDotNetStorefrontControls
             get { return _rfvDOBYear.ErrorMessage; }
             set { _rfvDOBYear.ErrorMessage = value; }
         }
-
+        
         /// <summary>
         /// Gets or sets the email required field error message.
         /// </summary>
@@ -803,7 +802,7 @@ namespace AspDotNetStorefrontControls
             set { _rfvEmail.ErrorMessage = value; }
         }
 
-        /// <summary>
+                /// <summary>
         /// Gets or sets the email confirmation comparison failed error message.
         /// </summary>
         /// <value>The email required field error message.</value>
@@ -813,7 +812,7 @@ namespace AspDotNetStorefrontControls
             get { return _cfvEmail.ErrorMessage; }
             set { _cfvEmail.ErrorMessage = value; }
         }
-
+        
         /// <summary>
         /// Gets or sets the email confirmation required error message.
         /// </summary>
@@ -1118,7 +1117,7 @@ namespace AspDotNetStorefrontControls
         [Browsable(true), Category("VALIDATION_EXPRESSION")]
         public string EmailRegEx
         {
-            get { return _revEmail.ValidationExpression; }
+			get { return _revEmail.ValidationExpression; }
             set { _revEmail.ValidationExpression = value; }
         }
 
@@ -1172,7 +1171,7 @@ namespace AspDotNetStorefrontControls
             {
                 if (!string.IsNullOrEmpty(months[i].ToString()))
                 {
-                    _cboMonth.Items.Add(new ListItem(months[i], (i + 1).ToString()));
+                    _cboMonth.Items.Add(new ListItem(months[i], (i+1).ToString()));
                 }
             }
             _cboMonth.Items.Insert(0, new ListItem("Month", "0"));
@@ -1247,7 +1246,7 @@ namespace AspDotNetStorefrontControls
             _txtVATRegistrationID.MaxLength = 20;
 
             _rfvFirstName.ControlToValidate = _txtFirstName.ID;
-            _rfvLastName.ControlToValidate = _txtLastName.ID;
+            _rfvLastName.ControlToValidate = _txtLastName.ID;   
             _rfvEmail.ControlToValidate = _txtEmail.ID;
             _cfvEmail.ControlToValidate = _txtReEnterEmail.ID;
             _cfvEmail.ControlToCompare = _txtEmail.ID;
@@ -1273,7 +1272,7 @@ namespace AspDotNetStorefrontControls
             //_Over13Validator.ControlToValidate = _chkOver13.ID; // _txtPassword.ID;
             _Over13Validator.ControlInstanceToValidate = _chkOver13;
             _SecurityCodeValidator.ControlToValidate = _txtSecurityCode.ID;
-
+            
             _rbOKToEmailYes.GroupName = "OKToEmail";
             _rbOKToEmailNo.GroupName = "OKToEmail";
 
@@ -1398,24 +1397,24 @@ namespace AspDotNetStorefrontControls
 
 
             //Confirm email address
-            if (AppLogic.AppConfigBool("RequireEmailConfirmation"))
-            {
+			if (AppLogic.AppConfigBool("RequireEmailConfirmation"))
+			{
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
-                this.Controls.Add(new LiteralControl("<label>"));
-                this.Controls.Add(_lblReEnterEmail);
+				this.Controls.Add(new LiteralControl("<label>"));
+				this.Controls.Add(_lblReEnterEmail);
                 this.Controls.Add(new LiteralControl("</label>"));
-                this.Controls.Add(_txtReEnterEmail);
-                _rfvReEnterEmail.Display = ValidatorDisplay.Dynamic;
-                _cfvEmail.Display = ValidatorDisplay.Dynamic;
-                if (!_ShowValidatorsInline)
-                {
-                    _rfvReEnterEmail.Display = ValidatorDisplay.None;
-                    _cfvEmail.Display = ValidatorDisplay.None;
-                }
-                this.Controls.Add(_rfvReEnterEmail);
-                this.Controls.Add(_cfvEmail);
+				this.Controls.Add(_txtReEnterEmail);
+				_rfvReEnterEmail.Display = ValidatorDisplay.Dynamic;
+				_cfvEmail.Display = ValidatorDisplay.Dynamic;
+				if (!_ShowValidatorsInline)
+				{
+					_rfvReEnterEmail.Display = ValidatorDisplay.None;
+					_cfvEmail.Display = ValidatorDisplay.None;
+				}
+				this.Controls.Add(_rfvReEnterEmail);
+				this.Controls.Add(_cfvEmail);
                 this.Controls.Add(new LiteralControl("</div>"));
-            }
+			}
 
             if (_ShowPassword)
             {
@@ -1429,7 +1428,7 @@ namespace AspDotNetStorefrontControls
                 this.Controls.Add(new LiteralControl("</div>"));
                 if (!_ShowValidatorsInline)
                 {
-                    _rfvPassword.Display = ValidatorDisplay.None;
+                    _rfvPassword.Display = ValidatorDisplay.None;                    
                 }
                 _PasswordValidator.Display = ValidatorDisplay.None;
                 if (_ShowPasswordReqVal)
@@ -1445,7 +1444,7 @@ namespace AspDotNetStorefrontControls
                 this.Controls.Add(new LiteralControl("</label>"));
 
                 this.Controls.Add(_txtPasswordConfirm);
-
+  
                 this.Controls.Add(new LiteralControl("</div>"));
             }
             this.Controls.Add(new LiteralControl("<div class='clear'></div>"));

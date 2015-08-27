@@ -1,0 +1,60 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll.config
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\ASPDNSFApplication.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\ASPDNSFEncrypt.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\Avalara.AvaTax.Adapter.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\CMPCDotNet.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\eWorld.UI.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\ExcelWrapper.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\GemBox.Spreadsheet.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.pdb
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll.config
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.pdb
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\ASPDNSFApplication.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\ASPDNSFEncrypt.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\Avalara.AvaTax.Adapter.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\CMPCDotNet.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\eWorld.UI.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\ExcelWrapper.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\GemBox.Spreadsheet.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.pdb
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.dll
+C:\Business\Xerratus\Projects\CMD\MBFS eCommerce\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.pdb
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll.config
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.pdb
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\ASPDNSFApplication.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\ASPDNSFEncrypt.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\Avalara.AvaTax.Adapter.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\CMPCDotNet.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\eWorld.UI.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\ExcelWrapper.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\GemBox.Spreadsheet.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.pdb
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.csprojResolveAssemblyReference.cache
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.dll
+C:\Users\John\Documents\Repos\CMD\MBFS eCommerce\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.pdb
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll.config
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\AspDotNetStorefrontCore.pdb
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\ASPDNSFApplication.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\ASPDNSFEncrypt.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\Avalara.AvaTax.Adapter.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\CMPCDotNet.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\eWorld.UI.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\ExcelWrapper.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\GemBox.Spreadsheet.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\bin\debug\AspDotNetStorefrontPromotions.pdb
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.csprojResolveAssemblyReference.cache
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.dll
+C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCore\obj\Debug\AspDotNetStorefrontCore.pdb

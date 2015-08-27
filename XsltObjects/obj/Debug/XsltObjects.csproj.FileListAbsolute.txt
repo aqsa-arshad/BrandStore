@@ -1,0 +1,5 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\bin\Debug\XsltObjects.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\bin\Debug\XsltObjects.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\obj\Debug\XsltObjects.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\obj\Debug\XsltObjects.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\obj\Debug\XsltObjects.pdb

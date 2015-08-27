@@ -1,0 +1,5 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\bin\Debug\AspDotNetStorefrontLayout.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\bin\Debug\AspDotNetStorefrontLayout.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.pdb

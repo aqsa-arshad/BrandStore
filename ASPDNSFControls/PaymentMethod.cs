@@ -43,7 +43,7 @@ namespace AspDotNetStorefrontControls
         private RadioButton _rbMICROPAY = new RadioButton();
         private RadioButton _rbPAYPALEXPRESS = new RadioButton();
         private RadioButton _rbAMAZONSIMPLEPAY = new RadioButton();
-		private RadioButton _rbMONEYBOOKERSQUICKCHECKOUT = new RadioButton();
+        private RadioButton _rbMONEYBOOKERSQUICKCHECKOUT = new RadioButton();
         private RadioButton _rbSECURENETVAULT = new RadioButton();
         private RadioButton _rbPAYPALEMBEDDEDCHECKOUT = new RadioButton();
 
@@ -51,13 +51,13 @@ namespace AspDotNetStorefrontControls
         private Image _imgCREDITCARD_Discover = new Image();
         private Image _imgCREDITCARD_MasterCard = new Image();
         private Image _imgCREDITCARD_Visa = new Image();
-		private Image _imgCREDITCARD_Laser = new Image();
-		private Image _imgCREDITCARD_Maestro = new Image();
-		private Image _imgCREDITCARD_VisaDebit = new Image();
-		private Image _imgCREDITCARD_VisaElectron = new Image();
-		private Image _imgCREDITCARD_Jcb = new Image();
-		private Image _imgCREDITCARD_Diners = new Image();
-		private Image _imgPURCHASEORDER = new Image();
+        private Image _imgCREDITCARD_Laser = new Image();
+        private Image _imgCREDITCARD_Maestro = new Image();
+        private Image _imgCREDITCARD_VisaDebit = new Image();
+        private Image _imgCREDITCARD_VisaElectron = new Image();
+        private Image _imgCREDITCARD_Jcb = new Image();
+        private Image _imgCREDITCARD_Diners = new Image();
+        private Image _imgPURCHASEORDER = new Image();
         private Image _imgCODMONEYORDER = new Image();
         private Image _imgCODCOMPANYCHECK = new Image();
         private Image _imgCODNET30 = new Image();
@@ -70,7 +70,7 @@ namespace AspDotNetStorefrontControls
         private Image _imgMICROPAY = new Image();
         private Image _imgPAYPALEXPRESS = new Image();
         private Image _imgAMAZONSIMPLEPAY = new Image();
-		private Image _imgMONEYBOOKERSQUICKCHECKOUT = new Image();
+        private Image _imgMONEYBOOKERSQUICKCHECKOUT = new Image();
         private Image _imgSECURENETVAULT = new Image();
         private Image _imgPAYPALEMBEDDEDCHECKOUT = new Image();
 
@@ -88,7 +88,7 @@ namespace AspDotNetStorefrontControls
         private Label _lblMICROPAY = new Label();
         private Label _lblPAYPALEXPRESS = new Label();
         private Label _lblAMAZONSIMPLEPAY = new Label();
-		private Label _lblMONEYBOOKERSQUICKCHECKOUT = new Label();
+        private Label _lblMONEYBOOKERSQUICKCHECKOUT = new Label();
         private Label _lblSECURENETVAULT = new Label();
         private Label _lblPAYPALEMBEDDEDCHECKOUT = new Label();
 
@@ -96,8 +96,8 @@ namespace AspDotNetStorefrontControls
         private Label _msgMICROPAY = new Label();
         private Label _msgPAYPALEXPRESS = new Label();
         private Label _msgAMAZONSIMPLEPAY = new Label();
-		private Label _msgMONEYBOOKERSQUICKCHECKOUT = new Label();
-        
+        private Label _msgMONEYBOOKERSQUICKCHECKOUT = new Label();
+
         private const string SHOW_CREDITCARD = "ShowCREDITCARD";
         private const string SHOW_PURCHASEORDER = "ShowPURCHASEORDER";
         private const string SHOW_CODMONEYORDER = "ShowCODMONEYORDER";
@@ -113,10 +113,10 @@ namespace AspDotNetStorefrontControls
         private const string SHOW_MICROPAYMESSAGE = "ShowMICROPAYMessage";
         private const string SHOW_PAYPALEXPRESS = "ShowPAYPALEXPRESS";
         private const string SHOW_AMAZONSIMPLEPAY = "ShowAMAZONSIMPLEPAY";
-		private const string SHOW_MONEYBOOKERSQUICKCHECKOUT = "ShowMONEYBOOKERSQUICKCHECKOUT";
+        private const string SHOW_MONEYBOOKERSQUICKCHECKOUT = "ShowMONEYBOOKERSQUICKCHECKOUT";
         private const string SHOW_SECURENETVAULT = "ShowSECURENETVAULT";
         private const string SHOW_PAYPALEMBEDDEDCHECKOUT = "ShowPAYPALEMBEDDEDCHECKOUT";
- 
+
         public event EventHandler PaymentMethodChanged;
 
         #endregion
@@ -160,18 +160,18 @@ namespace AspDotNetStorefrontControls
             set { _msgPAYPALEXPRESS.Text = value; }
         }
 
-		/// <summary>
-		/// Gets or sets the MONEYBOOKERSQUICKCHECKOUT label.
-		/// </summary>
-		/// <value>The MONEYBOOKERSQUICKCHECKOUT label.</value>
-		[Browsable(true), Category("PAYPAL_SETTINGS")]
-		public string MONEYBOOKERSQUICKCHECKOUTLabel
-		{
-			get { return _msgMONEYBOOKERSQUICKCHECKOUT.Text; }
-			set { _msgMONEYBOOKERSQUICKCHECKOUT.Text = value; }
-		}
-		
-		#endregion
+        /// <summary>
+        /// Gets or sets the MONEYBOOKERSQUICKCHECKOUT label.
+        /// </summary>
+        /// <value>The MONEYBOOKERSQUICKCHECKOUT label.</value>
+        [Browsable(true), Category("PAYPAL_SETTINGS")]
+        public string MONEYBOOKERSQUICKCHECKOUTLabel
+        {
+            get { return _msgMONEYBOOKERSQUICKCHECKOUT.Text; }
+            set { _msgMONEYBOOKERSQUICKCHECKOUT.Text = value; }
+        }
+
+        #endregion
 
         #region AMAZON
 
@@ -199,11 +199,11 @@ namespace AspDotNetStorefrontControls
 
         #endregion
 
-		#region PaymentMethods
+        #region PaymentMethods
 
-		#region CHECKBOXLABELS
+        #region CHECKBOXLABELS
 
-		/// <summary>
+        /// <summary>
         /// Gets or sets the CREDITCARD caption.
         /// </summary>
         /// <value>The CREDITCARD caption.</value>
@@ -428,47 +428,47 @@ namespace AspDotNetStorefrontControls
             set { _imgCREDITCARD_Visa.ImageUrl = value; }
         }
 
-		[Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public string CREDITCARDImage_Laser
-		{
-			get { return _imgCREDITCARD_Laser.ImageUrl; }
-			set { _imgCREDITCARD_Laser.ImageUrl = value; }
-		}
+        [Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        public string CREDITCARDImage_Laser
+        {
+            get { return _imgCREDITCARD_Laser.ImageUrl; }
+            set { _imgCREDITCARD_Laser.ImageUrl = value; }
+        }
 
-		[Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public string CREDITCARDImage_Maestro
-		{
-			get { return _imgCREDITCARD_Maestro.ImageUrl; }
-			set { _imgCREDITCARD_Maestro.ImageUrl = value; }
-		}
+        [Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        public string CREDITCARDImage_Maestro
+        {
+            get { return _imgCREDITCARD_Maestro.ImageUrl; }
+            set { _imgCREDITCARD_Maestro.ImageUrl = value; }
+        }
 
-		[Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public string CREDITCARDImage_VisaDebit
-		{
-			get { return _imgCREDITCARD_VisaDebit.ImageUrl; }
-			set { _imgCREDITCARD_VisaDebit.ImageUrl = value; }
-		}
+        [Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        public string CREDITCARDImage_VisaDebit
+        {
+            get { return _imgCREDITCARD_VisaDebit.ImageUrl; }
+            set { _imgCREDITCARD_VisaDebit.ImageUrl = value; }
+        }
 
-		[Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public string CREDITCARDImage_VisaElectron
-		{
-			get { return _imgCREDITCARD_VisaElectron.ImageUrl; }
-			set { _imgCREDITCARD_VisaElectron.ImageUrl = value; }
-		}
+        [Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        public string CREDITCARDImage_VisaElectron
+        {
+            get { return _imgCREDITCARD_VisaElectron.ImageUrl; }
+            set { _imgCREDITCARD_VisaElectron.ImageUrl = value; }
+        }
 
-		[Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public string CREDITCARDImage_Jcb
-		{
-			get { return _imgCREDITCARD_Jcb.ImageUrl; }
-			set { _imgCREDITCARD_Jcb.ImageUrl = value; }
-		}
+        [Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        public string CREDITCARDImage_Jcb
+        {
+            get { return _imgCREDITCARD_Jcb.ImageUrl; }
+            set { _imgCREDITCARD_Jcb.ImageUrl = value; }
+        }
 
-		[Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public string CREDITCARDImage_Diners
-		{
-			get { return _imgCREDITCARD_Diners.ImageUrl; }
-			set { _imgCREDITCARD_Diners.ImageUrl = value; }
-		}
+        [Browsable(true), Category("PM_IMAGE_URL"), Editor("System.Web.UI.Design.ImageUrlEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        public string CREDITCARDImage_Diners
+        {
+            get { return _imgCREDITCARD_Diners.ImageUrl; }
+            set { _imgCREDITCARD_Diners.ImageUrl = value; }
+        }
 
         /// <summary>
         /// Gets or sets the PURCHASEORDER image.
@@ -630,8 +630,8 @@ namespace AspDotNetStorefrontControls
             set { _imgPAYPALEMBEDDEDCHECKOUT.ImageUrl = value; }
         }
 
-        
-		
+
+
         #endregion
 
         #region VIEWSTATES
@@ -1022,7 +1022,7 @@ namespace AspDotNetStorefrontControls
         public bool CREDITCARDChecked
         {
             get { return _rbCREDITCARD.Checked; }
-			set { _rbCREDITCARD.Checked = value; }
+            set { _rbCREDITCARD.Checked = value; }
         }
 
         /// <summary>
@@ -1033,7 +1033,7 @@ namespace AspDotNetStorefrontControls
         public bool PURCHASEORDERChecked
         {
             get { return _rbPURCHASEORDER.Checked; }
-			set { _rbPURCHASEORDER.Checked = value; }
+            set { _rbPURCHASEORDER.Checked = value; }
         }
 
         /// <summary>
@@ -1044,7 +1044,7 @@ namespace AspDotNetStorefrontControls
         public bool CODMONEYORDERChecked
         {
             get { return _rbCODMONEYORDER.Checked; }
-			set { _rbCODMONEYORDER.Checked = value; }
+            set { _rbCODMONEYORDER.Checked = value; }
         }
 
         /// <summary>
@@ -1057,176 +1057,176 @@ namespace AspDotNetStorefrontControls
         public bool CODCOMPANYCHECKChecked
         {
             get { return _rbCODCOMPANYCHECK.Checked; }
-			set { _rbCODCOMPANYCHECK.Checked = value; }
+            set { _rbCODCOMPANYCHECK.Checked = value; }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether [CODNE T30 checked].
         /// </summary>
         /// <value><c>true</c> if [CODNET30 checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool CODNET30Checked
-		{
-			get { return _rbCODNET30.Checked; }
-			set { _rbCODNET30.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool CODNET30Checked
+        {
+            get { return _rbCODNET30.Checked; }
+            set { _rbCODNET30.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [PAYPAL checked].
         /// </summary>
         /// <value><c>true</c> if [PAYPAL checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool PAYPALChecked
-		{
-			get { return _rbPAYPAL.Checked; }
-			set { _rbPAYPAL.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool PAYPALChecked
+        {
+            get { return _rbPAYPAL.Checked; }
+            set { _rbPAYPAL.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [AmazonSimplePay checked].
         /// </summary>
         /// <value><c>true</c> if [AmazonSimplePay checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool AMAZONSIMPLEPAYChecked
-		{
-			get { return _rbAMAZONSIMPLEPAY.Checked; }
-			set { _rbAMAZONSIMPLEPAY.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool AMAZONSIMPLEPAYChecked
+        {
+            get { return _rbAMAZONSIMPLEPAY.Checked; }
+            set { _rbAMAZONSIMPLEPAY.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [REQUESTQUOTE checked].
         /// </summary>
         /// <value><c>true</c> if [REQUESTQUOTE checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool REQUESTQUOTEChecked
-		{
-			get { return _rbREQUESTQUOTE.Checked; }
-			set { _rbREQUESTQUOTE.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool REQUESTQUOTEChecked
+        {
+            get { return _rbREQUESTQUOTE.Checked; }
+            set { _rbREQUESTQUOTE.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [CHECKBYMAIL checked].
         /// </summary>
         /// <value><c>true</c> if [CHECKBYMAIL checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool CHECKBYMAILChecked
-		{
-			get { return _rbCHECKBYMAIL.Checked; }
-			set { _rbCHECKBYMAIL.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool CHECKBYMAILChecked
+        {
+            get { return _rbCHECKBYMAIL.Checked; }
+            set { _rbCHECKBYMAIL.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [COD checked].
         /// </summary>
         /// <value><c>true</c> if [COD checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool CODChecked
-		{
-			get { return _rbCOD.Checked; }
-			set { _rbCOD.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool CODChecked
+        {
+            get { return _rbCOD.Checked; }
+            set { _rbCOD.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [ECHECK checked].
         /// </summary>
         /// <value><c>true</c> if [ECHECK checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool ECHECKChecked
-		{
-			get { return _rbECHECK.Checked; }
-			set { _rbECHECK.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool ECHECKChecked
+        {
+            get { return _rbECHECK.Checked; }
+            set { _rbECHECK.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [CARDINALMYECHECK checked].
         /// </summary>
         /// <value><c>true</c> if [CARDINALMYECHECK checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool CARDINALMYECHECKChecked
-		{
-			get { return _rbCARDINALMYECHECK.Checked; }
-			set { _rbCARDINALMYECHECK.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool CARDINALMYECHECKChecked
+        {
+            get { return _rbCARDINALMYECHECK.Checked; }
+            set { _rbCARDINALMYECHECK.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [MICROPAY checked].
         /// </summary>
         /// <value><c>true</c> if [MICROPAY checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool MICROPAYChecked
-		{
-			get { return _rbMICROPAY.Checked; }
-			set { _rbMICROPAY.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool MICROPAYChecked
+        {
+            get { return _rbMICROPAY.Checked; }
+            set { _rbMICROPAY.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [PAYPALEXPRESS checked].
         /// </summary>
         /// <value><c>true</c> if [PAYPALEXPRESS checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool PAYPALEXPRESSChecked
-		{
-			get { return _rbPAYPALEXPRESS.Checked; }
-			set { _rbPAYPALEXPRESS.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool PAYPALEXPRESSChecked
+        {
+            get { return _rbPAYPALEXPRESS.Checked; }
+            set { _rbPAYPALEXPRESS.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [MONEYBOOKERSQUICKCHECKOUT checked].
         /// </summary>
         /// <value><c>true</c> if [MONEYBOOKERSQUICKCHECKOUT checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool MONEYBOOKERSQUICKCHECKOUTChecked
-		{
-			get { return _rbMONEYBOOKERSQUICKCHECKOUT.Checked; }
-			set { _rbMONEYBOOKERSQUICKCHECKOUT.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool MONEYBOOKERSQUICKCHECKOUTChecked
+        {
+            get { return _rbMONEYBOOKERSQUICKCHECKOUT.Checked; }
+            set { _rbMONEYBOOKERSQUICKCHECKOUT.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [SECURENETVAULT checked].
         /// </summary>
         /// <value><c>true</c> if [SECURENETVAULT checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		public bool SECURENETVAULTChecked
-		{
-			get { return _rbSECURENETVAULT.Checked; }
-			set { _rbSECURENETVAULT.Checked = value; }
-		}
+        [Browsable(false)]
+        public bool SECURENETVAULTChecked
+        {
+            get { return _rbSECURENETVAULT.Checked; }
+            set { _rbSECURENETVAULT.Checked = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [PAYPALEMBEDDEDCHECKOUTChecked checked].
         /// </summary>
         /// <value><c>true</c> if [PAYPALEMBEDDEDCHECKOUTChecked checked]; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
+        [Browsable(false)]
         public bool PAYPALEMBEDDEDCHECKOUTChecked
-		{
+        {
             get { return _rbPAYPALEMBEDDEDCHECKOUT.Checked; }
             set { _rbPAYPALEMBEDDEDCHECKOUT.Checked = value; }
-		}
+        }
 
-        
+
 
         [Browsable(false)]
         public bool HasPaymentMethodSelected
         {
-            get 
-			{
-				return AMAZONSIMPLEPAYChecked
-					|| CARDINALMYECHECKChecked
-					|| CHECKBYMAILChecked
-					|| CODChecked
-					|| CODCOMPANYCHECKChecked
-					|| CODMONEYORDERChecked
-					|| CODNET30Checked
-					|| CREDITCARDChecked
-					|| ECHECKChecked
-					|| MICROPAYChecked
-					|| MONEYBOOKERSQUICKCHECKOUTChecked
-					|| PAYPALChecked
-					|| PAYPALEXPRESSChecked
-					|| PURCHASEORDERChecked
-					|| REQUESTQUOTEChecked
-					|| SECURENETVAULTChecked;
-			}
+            get
+            {
+                return AMAZONSIMPLEPAYChecked
+                    || CARDINALMYECHECKChecked
+                    || CHECKBYMAILChecked
+                    || CODChecked
+                    || CODCOMPANYCHECKChecked
+                    || CODMONEYORDERChecked
+                    || CODNET30Checked
+                    || CREDITCARDChecked
+                    || ECHECKChecked
+                    || MICROPAYChecked
+                    || MONEYBOOKERSQUICKCHECKOUTChecked
+                    || PAYPALChecked
+                    || PAYPALEXPRESSChecked
+                    || PURCHASEORDERChecked
+                    || REQUESTQUOTEChecked
+                    || SECURENETVAULTChecked;
+            }
         }
 
 
@@ -1420,7 +1420,7 @@ namespace AspDotNetStorefrontControls
             get { return _lblPAYPALEMBEDDEDCHECKOUT.Text; }
             set { _lblPAYPALEMBEDDEDCHECKOUT.Text = value; }
         }
-        
+
 
         #endregion
 
@@ -1449,7 +1449,7 @@ namespace AspDotNetStorefrontControls
             _rbMICROPAY.ID = "rbMICROPAY";
             _rbPAYPALEXPRESS.ID = "rbPAYPALEXPRESS";
             _rbAMAZONSIMPLEPAY.ID = "rbAMAZONSIMPLEPAY";
-			_rbMONEYBOOKERSQUICKCHECKOUT.ID = "rbMONEYBOOKERSQUICKCHECKOUT";
+            _rbMONEYBOOKERSQUICKCHECKOUT.ID = "rbMONEYBOOKERSQUICKCHECKOUT";
             _rbSECURENETVAULT.ID = "rbSECURENETVAULT";
             _rbPAYPALEMBEDDEDCHECKOUT.ID = "rbPAYPALEMBEDDEDCHECKOUT";
 
@@ -1457,13 +1457,13 @@ namespace AspDotNetStorefrontControls
             _imgCREDITCARD_Discover.ID = "imgCREDITCARDDiscover";
             _imgCREDITCARD_MasterCard.ID = "imgCREDITCARDMasterCard";
             _imgCREDITCARD_Visa.ID = "imgCREDITCARDVisa";
-			_imgCREDITCARD_Laser.ID = "imgCREDITCARDLaser";
-			_imgCREDITCARD_Maestro.ID = "imgCREDITCARDMaestro";
-			_imgCREDITCARD_VisaDebit.ID = "imgCREDITCARDVisaDebit";
-			_imgCREDITCARD_VisaElectron.ID = "imgCREDITCARDVisaElectron";
-			_imgCREDITCARD_Jcb.ID = "imgCREDITCARDJcb";
-			_imgCREDITCARD_Diners.ID = "imgCREDITCARDDiners";
-			_imgPURCHASEORDER.ID = "imgPURCHASEORDER";
+            _imgCREDITCARD_Laser.ID = "imgCREDITCARDLaser";
+            _imgCREDITCARD_Maestro.ID = "imgCREDITCARDMaestro";
+            _imgCREDITCARD_VisaDebit.ID = "imgCREDITCARDVisaDebit";
+            _imgCREDITCARD_VisaElectron.ID = "imgCREDITCARDVisaElectron";
+            _imgCREDITCARD_Jcb.ID = "imgCREDITCARDJcb";
+            _imgCREDITCARD_Diners.ID = "imgCREDITCARDDiners";
+            _imgPURCHASEORDER.ID = "imgPURCHASEORDER";
             _imgCODMONEYORDER.ID = "imgCODMONEYORDER";
             _imgCODCOMPANYCHECK.ID = "imgCODCOMPANYCHECK";
             _imgCODNET30.ID = "imgCODNET30";
@@ -1476,10 +1476,10 @@ namespace AspDotNetStorefrontControls
             _imgMICROPAY.ID = "imgMICROPAY";
             _imgPAYPALEXPRESS.ID = "imgPAYPALEXPRESS";
             _imgAMAZONSIMPLEPAY.ID = "imgAMAZONSIMPLEPAY";
-			_imgMONEYBOOKERSQUICKCHECKOUT.ID = "imgMONEYBOOKERSQUICKCHECKOUT";
+            _imgMONEYBOOKERSQUICKCHECKOUT.ID = "imgMONEYBOOKERSQUICKCHECKOUT";
 
             _lblCREDITCARD.ID = "_lblCREDITCARD";
-            _lblPURCHASEORDER.ID ="lblPURCHASEORDER";
+            _lblPURCHASEORDER.ID = "lblPURCHASEORDER";
             _lblCODMONEYORDER.ID = "lblCODMONEYORDER";
             _lblCODCOMPANYCHECK.ID = "lblCODCOMPANYCHECK";
             _lblCODNET30.ID = "lblCODNET30";
@@ -1492,14 +1492,14 @@ namespace AspDotNetStorefrontControls
             _lblMICROPAY.ID = "lblMICROPAY";
             _lblPAYPALEXPRESS.ID = "lblPAYPALEXPRESS";
             _lblAMAZONSIMPLEPAY.ID = "lblAMAZONSIMPLEPAY";
-			_lblMONEYBOOKERSQUICKCHECKOUT.ID = "MONEYBOOKERSQUICKCHECKOUT";
+            _lblMONEYBOOKERSQUICKCHECKOUT.ID = "MONEYBOOKERSQUICKCHECKOUT";
             _lblSECURENETVAULT.ID = "lblSECURENETVAULT";
 
             _msgPAYPAL.ID = "msgPAYPAL";
             _msgMICROPAY.ID = "msgMICROPAY";
             _msgPAYPALEXPRESS.ID = "msgPAYPALEXPRESS";
             _msgAMAZONSIMPLEPAY.ID = "msgAMAZONSIMPLEPAY";
-			_msgMONEYBOOKERSQUICKCHECKOUT.ID = "msgMONEYBOOKERSQUICKCHECKOUT";
+            _msgMONEYBOOKERSQUICKCHECKOUT.ID = "msgMONEYBOOKERSQUICKCHECKOUT";
         }
 
         /// <summary>
@@ -1521,7 +1521,7 @@ namespace AspDotNetStorefrontControls
             _rbMICROPAY.GroupName = "PaymentSelection";
             _rbPAYPALEXPRESS.GroupName = "PaymentSelection";
             _rbAMAZONSIMPLEPAY.GroupName = "PaymentSelection";
-			_rbMONEYBOOKERSQUICKCHECKOUT.GroupName = "PaymentSelection";
+            _rbMONEYBOOKERSQUICKCHECKOUT.GroupName = "PaymentSelection";
             _rbSECURENETVAULT.GroupName = "PaymentSelection";
             _rbPAYPALEMBEDDEDCHECKOUT.GroupName = "PaymentSelection";
 
@@ -1539,7 +1539,7 @@ namespace AspDotNetStorefrontControls
             _rbMICROPAY.AutoPostBack = true;
             _rbPAYPALEXPRESS.AutoPostBack = true;
             _rbAMAZONSIMPLEPAY.AutoPostBack = true;
-			_rbMONEYBOOKERSQUICKCHECKOUT.AutoPostBack = true;
+            _rbMONEYBOOKERSQUICKCHECKOUT.AutoPostBack = true;
             _rbSECURENETVAULT.AutoPostBack = true;
             _rbPAYPALEMBEDDEDCHECKOUT.AutoPostBack = true;
         }
@@ -1564,7 +1564,7 @@ namespace AspDotNetStorefrontControls
             _rbMICROPAY.CheckedChanged += PaymentMethod_CheckChanged;
             _rbPAYPALEXPRESS.CheckedChanged += PaymentMethod_CheckChanged;
             _rbAMAZONSIMPLEPAY.CheckedChanged += PaymentMethod_CheckChanged;
-			_rbMONEYBOOKERSQUICKCHECKOUT.CheckedChanged += PaymentMethod_CheckChanged;
+            _rbMONEYBOOKERSQUICKCHECKOUT.CheckedChanged += PaymentMethod_CheckChanged;
             _rbSECURENETVAULT.CheckedChanged += PaymentMethod_CheckChanged;
             _rbPAYPALEMBEDDEDCHECKOUT.CheckedChanged += PaymentMethod_CheckChanged;
 
@@ -1607,7 +1607,7 @@ namespace AspDotNetStorefrontControls
                 this.ShowCODMONEYORDER = true;
                 this.ShowCODNET30 = true;
                 this.ShowAmazonSimplePay = true;
-				this.ShowMONEYBOOKERSQUICKCHECKOUT = true;
+                this.ShowMONEYBOOKERSQUICKCHECKOUT = true;
                 this.ShowSECURENETVAULT = true;
                 this.ShowPAYPALEMBEDDEDCHECKOUT = true;
             }
@@ -1636,47 +1636,47 @@ namespace AspDotNetStorefrontControls
                         _imgCREDITCARD_Discover.CssClass = "cc-image";
                         this.Controls.Add(_imgCREDITCARD_Discover);
                     }
-					else if(type.Equals("MasterCard", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_MasterCard.ImageUrl))
+                    else if (type.Equals("MasterCard", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_MasterCard.ImageUrl))
                     {
                         _imgCREDITCARD_MasterCard.CssClass = "cc-image";
                         this.Controls.Add(_imgCREDITCARD_MasterCard);
                     }
-					else if(type.Equals("VISA", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Visa.ImageUrl))
+                    else if (type.Equals("VISA", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Visa.ImageUrl))
                     {
                         _imgCREDITCARD_Visa.CssClass = "cc-image";
                         this.Controls.Add(_imgCREDITCARD_Visa);
                     }
-					else if(type.Equals("Laser", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Laser.ImageUrl))
+                    else if (type.Equals("Laser", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Laser.ImageUrl))
                     {
                         _imgCREDITCARD_Laser.CssClass = "cc-image";
                         this.Controls.Add(_imgCREDITCARD_Laser);
                     }
-					else if(type.Equals("Maestro", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Maestro.ImageUrl))
-					{
-						_imgCREDITCARD_Maestro.CssClass = "cc-image";
-						this.Controls.Add(_imgCREDITCARD_Maestro);
-					}
-					else if(type.Equals("Visa Debit", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaDebit.ImageUrl))
-					{
-						_imgCREDITCARD_VisaDebit.CssClass = "cc-image";
-						this.Controls.Add(_imgCREDITCARD_VisaDebit);
-					}
-					else if(type.Equals("Visa Electron", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaElectron.ImageUrl))
-					{
-						_imgCREDITCARD_VisaElectron.CssClass = "cc-image";
-						this.Controls.Add(_imgCREDITCARD_VisaElectron);
-					}
-					else if(type.Equals("JCB", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Jcb.ImageUrl))
-					{
-						_imgCREDITCARD_Jcb.CssClass = "cc-image";
-						this.Controls.Add(_imgCREDITCARD_Jcb);
-					}
-					else if(type.Equals("Diners", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Diners.ImageUrl))
-					{
-						_imgCREDITCARD_Diners.CssClass = "cc-image";
-						this.Controls.Add(_imgCREDITCARD_Diners);
-					}
-				}
+                    else if (type.Equals("Maestro", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Maestro.ImageUrl))
+                    {
+                        _imgCREDITCARD_Maestro.CssClass = "cc-image";
+                        this.Controls.Add(_imgCREDITCARD_Maestro);
+                    }
+                    else if (type.Equals("Visa Debit", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaDebit.ImageUrl))
+                    {
+                        _imgCREDITCARD_VisaDebit.CssClass = "cc-image";
+                        this.Controls.Add(_imgCREDITCARD_VisaDebit);
+                    }
+                    else if (type.Equals("Visa Electron", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaElectron.ImageUrl))
+                    {
+                        _imgCREDITCARD_VisaElectron.CssClass = "cc-image";
+                        this.Controls.Add(_imgCREDITCARD_VisaElectron);
+                    }
+                    else if (type.Equals("JCB", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Jcb.ImageUrl))
+                    {
+                        _imgCREDITCARD_Jcb.CssClass = "cc-image";
+                        this.Controls.Add(_imgCREDITCARD_Jcb);
+                    }
+                    else if (type.Equals("Diners", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Diners.ImageUrl))
+                    {
+                        _imgCREDITCARD_Diners.CssClass = "cc-image";
+                        this.Controls.Add(_imgCREDITCARD_Diners);
+                    }
+                }
                 this.Controls.Add(new LiteralControl("</div>"));
                 this.Controls.Add(new LiteralControl("</div>"));
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
@@ -1720,7 +1720,7 @@ namespace AspDotNetStorefrontControls
                 if (_imgCODCOMPANYCHECK.ImageUrl.Length != 0)
                 {
                     this.Controls.Add(_imgCODCOMPANYCHECK);
-                }                    
+                }
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
                 this.Controls.Add(_lblCODCOMPANYCHECK);
                 this.Controls.Add(new LiteralControl("</div>"));
@@ -1734,7 +1734,7 @@ namespace AspDotNetStorefrontControls
                 if (_imgCODNET30.ImageUrl.Length != 0)
                 {
                     this.Controls.Add(_imgCODNET30);
-                }                    
+                }
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
                 this.Controls.Add(_lblCODNET30);
                 this.Controls.Add(new LiteralControl("</div>"));
@@ -1777,7 +1777,7 @@ namespace AspDotNetStorefrontControls
                 if (_imgCHECKBYMAIL.ImageUrl.Length != 0)
                 {
                     this.Controls.Add(_imgCHECKBYMAIL);
-                }                    
+                }
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
                 this.Controls.Add(_lblCHECKBYMAIL);
                 this.Controls.Add(new LiteralControl("</div>"));
@@ -1827,7 +1827,7 @@ namespace AspDotNetStorefrontControls
             if (this.ShowMICROPAY)
             {
                 if (!(Customer.Current.CustomerLevelName == "Public" | Customer.Current.CustomerLevelID == 0))
-                { 
+                {
                     paymentMethodsEnabled++;
                     this.Controls.Add(new LiteralControl("<div class='form-group'>"));
                     this.Controls.Add(_rbMICROPAY);
@@ -1842,20 +1842,20 @@ namespace AspDotNetStorefrontControls
                 }
             }
 
-			if(this.ShowMONEYBOOKERSQUICKCHECKOUT)
+            if (this.ShowMONEYBOOKERSQUICKCHECKOUT)
             {
                 paymentMethodsEnabled++;
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
-				this.Controls.Add(_rbMONEYBOOKERSQUICKCHECKOUT);
+                this.Controls.Add(_rbMONEYBOOKERSQUICKCHECKOUT);
                 this.Controls.Add(new LiteralControl("</div>"));
-				if(_imgMONEYBOOKERSQUICKCHECKOUT.ImageUrl.Length != 0)
-				{
-					this.Controls.Add(_imgMONEYBOOKERSQUICKCHECKOUT);
-				}
+                if (_imgMONEYBOOKERSQUICKCHECKOUT.ImageUrl.Length != 0)
+                {
+                    this.Controls.Add(_imgMONEYBOOKERSQUICKCHECKOUT);
+                }
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
-				this.Controls.Add(_lblMONEYBOOKERSQUICKCHECKOUT);
+                this.Controls.Add(_lblMONEYBOOKERSQUICKCHECKOUT);
                 this.Controls.Add(new LiteralControl("</div>"));
-			}
+            }
             if (this.ShowSECURENETVAULT)
             {
                 paymentMethodsEnabled++;
@@ -1874,8 +1874,8 @@ namespace AspDotNetStorefrontControls
 
             HandlePayPalOptions(ref paymentMethodsEnabled, ref disablePaymentMethod);
 
-			this.Controls.Add(new LiteralControl("</div>"));
-            
+            this.Controls.Add(new LiteralControl("</div>"));
+
             if (this.ShowMICROPAYMessage)
             {
                 if (!(Customer.Current.CustomerLevelName == "Public" | Customer.Current.CustomerLevelID == 0))
@@ -1886,12 +1886,12 @@ namespace AspDotNetStorefrontControls
                 }
             }
 
-			if(this.MONEYBOOKERSQUICKCHECKOUTChecked && !String.IsNullOrEmpty(MONEYBOOKERSQUICKCHECKOUTLabel))
+            if (this.MONEYBOOKERSQUICKCHECKOUTChecked && !String.IsNullOrEmpty(MONEYBOOKERSQUICKCHECKOUTLabel))
             {
-				this.Controls.Add(new LiteralControl("<div class='page-row'>"));
-				this.Controls.Add(_msgMONEYBOOKERSQUICKCHECKOUT);
-				this.Controls.Add(new LiteralControl("</div>"));
-			}
+                this.Controls.Add(new LiteralControl("<div class='page-row'>"));
+                this.Controls.Add(_msgMONEYBOOKERSQUICKCHECKOUT);
+                this.Controls.Add(new LiteralControl("</div>"));
+            }
 
             if (this.PAYPALChecked)
             {
@@ -1911,7 +1911,7 @@ namespace AspDotNetStorefrontControls
         private void HandlePayPalOptions(ref int paymentMethodsEnabled, ref Action disablePaymentMethod)
         {
             string payPalOptionSelected = null;
-             
+
             string paymentRowTop = "";
             string paymentRowBottom = "";
             string paymentCellBottom = "";
@@ -1981,7 +1981,7 @@ namespace AspDotNetStorefrontControls
 
             //if there is only one availible payment method and its pay pal then don't show the radio button or image
             if (paymentMethodsEnabled == 1 && disablePaymentMethod != null)
-            {                
+            {
                 switch (payPalOptionSelected)
                 {
                     case "embedded":
@@ -2021,26 +2021,26 @@ namespace AspDotNetStorefrontControls
             }
         }
 
-		public void ClearSelection()
-		{
-			_rbCREDITCARD.Checked = false;
-			_rbPURCHASEORDER.Checked = false;
-			_rbCODMONEYORDER.Checked = false;
-			_rbCODCOMPANYCHECK.Checked = false;
-			_rbCODNET30.Checked = false;
-			_rbPAYPAL.Checked = false;
-			_rbREQUESTQUOTE.Checked = false;
-			_rbCHECKBYMAIL.Checked = false;
-			_rbCOD.Checked = false;
-			_rbECHECK.Checked = false;
-			_rbCARDINALMYECHECK.Checked = false;
-			_rbMICROPAY.Checked = false;
-			_rbPAYPALEXPRESS.Checked = false;
-			_rbAMAZONSIMPLEPAY.Checked = false;
-			_rbMONEYBOOKERSQUICKCHECKOUT.Checked = false;
-			_rbSECURENETVAULT.Checked = false;
+        public void ClearSelection()
+        {
+            _rbCREDITCARD.Checked = false;
+            _rbPURCHASEORDER.Checked = false;
+            _rbCODMONEYORDER.Checked = false;
+            _rbCODCOMPANYCHECK.Checked = false;
+            _rbCODNET30.Checked = false;
+            _rbPAYPAL.Checked = false;
+            _rbREQUESTQUOTE.Checked = false;
+            _rbCHECKBYMAIL.Checked = false;
+            _rbCOD.Checked = false;
+            _rbECHECK.Checked = false;
+            _rbCARDINALMYECHECK.Checked = false;
+            _rbMICROPAY.Checked = false;
+            _rbPAYPALEXPRESS.Checked = false;
+            _rbAMAZONSIMPLEPAY.Checked = false;
+            _rbMONEYBOOKERSQUICKCHECKOUT.Checked = false;
+            _rbSECURENETVAULT.Checked = false;
             _rbPAYPALEMBEDDEDCHECKOUT.Checked = false;
-		}
+        }
         #endregion
 
     }
