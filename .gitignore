@@ -16,6 +16,8 @@ build/
 [Oo]bj/
 log4net.2.0.3/
 appstart
+XsltObjects/obj/Debug/
+ASPDNSFCommon/obj/Debug/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
@@ -111,6 +113,7 @@ AppPackages/
 # Others
 sql/
 *.Cache
+*.cache
 ClientBin/
 [Ss]tyle[Cc]op.*
 ~$*
