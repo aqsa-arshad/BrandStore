@@ -1,0 +1,15 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontAdmin.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontAdmin.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontCore.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\Avalara.AvaTax.Adapter.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontPromotions.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\ASPDNSFApplication.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\CMPCDotNet.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\ASPDNSFEncrypt.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\ExcelWrapper.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\GemBox.Spreadsheet.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontCore.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontPromotions.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.pdb

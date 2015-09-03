@@ -1888,20 +1888,20 @@ namespace AspDotNetStorefrontControls
                 Controls.Add(_cboCountry);
                 Controls.Add(new LiteralControl("</div>"));
             }
-            if (this.ShowCity)
-            {
-                Controls.Add(new LiteralControl("<div class='form-group city'>\n"));
-                Controls.Add(new LiteralControl("<label>"));
-                Controls.Add(_lblCityCaption);
-                Controls.Add(new LiteralControl("</label>"));
-                Controls.Add(_txtCity);
-                if (!ShowValidatorsInline)
-                {
-                    _rfvCity.Display = ValidatorDisplay.None;
-                }
-                Controls.Add(_rfvCity);
-                Controls.Add(new LiteralControl("</div>"));
-            }
+			if(this.ShowCity)
+			{
+				Controls.Add(new LiteralControl("<div class='form-group city'>\n"));
+				Controls.Add(new LiteralControl("<label>"));
+				Controls.Add(_lblCityCaption);
+				Controls.Add(new LiteralControl("</label>"));
+				Controls.Add(_txtCity);
+				if(!ShowValidatorsInline)
+				{
+					_rfvCity.Display = ValidatorDisplay.None;
+				}
+				Controls.Add(_rfvCity);
+				Controls.Add(new LiteralControl("</div>"));
+			}
             if (this.ShowState)
             {
                 Controls.Add(new LiteralControl("<div class='form-group state'>\n"));
@@ -1911,7 +1911,7 @@ namespace AspDotNetStorefrontControls
                 Controls.Add(_cboState);
                 Controls.Add(new LiteralControl("</div>"));
             }
-
+           
 
 
             if (this.ShowZip)

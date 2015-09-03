@@ -1,0 +1,14 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.csprojResolveAssemblyReference.cache
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontGateways.dll.config
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontGateways.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontGateways.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\ASPDNSFEncrypt.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontPromotions.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\ExcelWrapper.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\GatewayCheckoutByAmazon.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\CBASDK.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\MarketplaceWebService.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\GatewayCheckoutByAmazon.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontPromotions.pdb
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.dll
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.pdb

@@ -1,0 +1,1 @@
+C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontBuySafe\obj\Debug\AspDotNetStorefrontBuySafe.csprojResolveAssemblyReference.cache

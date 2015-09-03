@@ -8,20 +8,20 @@ using System.Text.RegularExpressions;
 
 namespace AspDotNetStorefrontCore.Validation
 {
-    public class EmailAddressValidator
-    {
-        private const string ValidationRegularExpression = @"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$";
+	public class EmailAddressValidator
+	{
+		private const string ValidationRegularExpression = @"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$";
 
-        public string GetValidationRegExString()
-        {
-            return ValidationRegularExpression;
-        }
+		public string GetValidationRegExString()
+		{
+			return ValidationRegularExpression;
+		}
 
-        public bool IsValidEmailAddress(string email)
-        {
-            return string.IsNullOrEmpty(email) ? false : Regex.IsMatch(email, ValidationRegularExpression, RegexOptions.IgnoreCase);
-        }
-    }
+		public bool IsValidEmailAddress(string email)
+		{
+			return string.IsNullOrEmpty(email) ? false : Regex.IsMatch(email, ValidationRegularExpression, RegexOptions.IgnoreCase);
+		}
+	}
 
     public class PhoneValidator
     {
