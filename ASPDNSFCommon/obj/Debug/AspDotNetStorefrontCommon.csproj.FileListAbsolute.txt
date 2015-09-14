@@ -16,3 +16,12 @@ C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\bin\Debug\GemBox.Spreadshee
 C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
 C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.dll
 C:\Users\John\Documents\Repos\CMD\mbfs\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.pdb
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.pdb
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\ASPDNSFApplication.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\ASPDNSFEncrypt.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\ExcelWrapper.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\GemBox.Spreadsheet.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.pdb

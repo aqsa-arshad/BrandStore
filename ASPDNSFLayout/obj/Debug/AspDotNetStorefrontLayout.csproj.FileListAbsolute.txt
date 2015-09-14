@@ -3,3 +3,8 @@ C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\bin\Deb
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\bin\Debug\AspDotNetStorefrontLayout.pdb
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.dll
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.pdb
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFLayout\bin\Debug\AspDotNetStorefrontLayout.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFLayout\bin\Debug\AspDotNetStorefrontLayout.pdb
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.csprojResolveAssemblyReference.cache
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFLayout\obj\Debug\AspDotNetStorefrontLayout.pdb

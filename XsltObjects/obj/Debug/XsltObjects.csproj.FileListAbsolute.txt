@@ -3,3 +3,8 @@ C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\bin\Debug
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\obj\Debug\XsltObjects.csprojResolveAssemblyReference.cache
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\obj\Debug\XsltObjects.dll
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\XsltObjects\obj\Debug\XsltObjects.pdb
+D:\ConfizProjects\aspdotnetstorefrontstores\XsltObjects\bin\Debug\XsltObjects.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\XsltObjects\bin\Debug\XsltObjects.pdb
+D:\ConfizProjects\aspdotnetstorefrontstores\XsltObjects\obj\Debug\XsltObjects.csprojResolveAssemblyReference.cache
+D:\ConfizProjects\aspdotnetstorefrontstores\XsltObjects\obj\Debug\XsltObjects.dll
+D:\ConfizProjects\aspdotnetstorefrontstores\XsltObjects\obj\Debug\XsltObjects.pdb

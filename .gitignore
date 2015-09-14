@@ -18,6 +18,8 @@ log4net.2.0.3/
 appstart
 XsltObjects/obj/Debug/
 ASPDNSFCommon/obj/Debug/
+ASPDNSFCommon/bin/Debug/
+Web/Bin/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
