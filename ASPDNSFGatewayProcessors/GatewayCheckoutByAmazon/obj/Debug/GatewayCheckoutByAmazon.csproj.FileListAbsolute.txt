@@ -8,3 +8,22 @@ C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcess
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.csprojResolveAssemblyReference.cache
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.dll
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\GatewayCheckoutByAmazon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\GatewayCheckoutByAmazon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCommon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCore.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\CBASDK.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\MarketplaceWebService.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\Avalara.AvaTax.Adapter.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontPromotions.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\ASPDNSFApplication.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\CMPCDotNet.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\ASPDNSFEncrypt.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\ExcelWrapper.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\GemBox.Spreadsheet.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCommon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontCore.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\bin\Debug\AspDotNetStorefrontPromotions.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.csprojResolveAssemblyReference.cache
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\obj\Debug\GatewayCheckoutByAmazon.pdb

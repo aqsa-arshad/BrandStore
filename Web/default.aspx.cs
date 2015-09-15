@@ -10,6 +10,8 @@ using System.Globalization;
 using AspDotNetStorefrontCore;
 using AspDotNetStorefrontCommon;
 using AspDotNetStorefrontControls;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AspDotNetStorefront
 {
@@ -21,6 +23,13 @@ namespace AspDotNetStorefront
     {
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            /*This is temp code for getting  value of latest product by category*/
+
+            
+           /* End */
+              divMarkeetingExample.Controls.Add(LoadControl("~/Controls/MarkeetingExample.ascx"));
+              divBrandAssetExample.Controls.Add(LoadControl("~/Controls/BrandAssetExample.ascx"));
+              divlogin.Controls.Add(LoadControl("~/Controls/JWBSignin.ascx"));
             if (CommonLogic.ServerVariables("HTTP_HOST").IndexOf(AppLogic.LiveServer(), StringComparison.InvariantCultureIgnoreCase) != -1 &&
                 CommonLogic.ServerVariables("HTTP_HOST").IndexOf("WWW", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
@@ -38,17 +47,17 @@ namespace AspDotNetStorefront
             // this may be overwridden by the XmlPackage below!
             SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
 
-            Package1.PackageName = "page.default.xml.config";
+            //Package1.PackageName = "page.default.xml.config";
 
             // set the Customer context, and set the SkinBase context, so meta tags to be set if they are not blank in the XmlPackage results
-            Package1.SetContext = this;
-
+           // Package1.SetContext = this;
+           // pnlContent1.Controls.Add(LoadControl("~/Controls/Signin.ascx"));
             // unsupported feature:
             //System.Diagnostics.Trace.WriteLineIf(Config.TraceLevel.TraceVerbose, "Welcome to AspDotNetStorefront");
 
 			PayPalAd homePageAd = new PayPalAd(PayPalAd.TargetPage.Home);
-			if (homePageAd.Show)
-				ltPayPalAd.Text = homePageAd.ImageScript;
+			//if (homePageAd.Show)
+				//ltPayPalAd.Text = homePageAd.ImageScript;
         }
 
         protected override string OverrideTemplate()
@@ -57,7 +66,8 @@ namespace AspDotNetStorefront
 
             if (MasterHome.Trim().Length == 0)
             {
-                MasterHome = "template";
+
+                MasterHome = "empty";// "template";
             }
 
             if (MasterHome.EndsWith(".ascx"))
@@ -72,7 +82,8 @@ namespace AspDotNetStorefront
 
             if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
             {
-                MasterHome = "template.master";
+                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
+                MasterHome = "empty";// "template.master";
             }
 
             return MasterHome;

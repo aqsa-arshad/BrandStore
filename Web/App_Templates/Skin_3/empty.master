@@ -22,7 +22,7 @@
     <script type="text/javascript" src="jscripts/core.js"></script>
 
 </head>
-<body rightmargin="0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#ffffff">
+<body rightmargin="0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> <%--bgcolor="#ffffff"--%>
 <!-- PAGE INVOCATION: '(!INVOCATION!)' -->
 <!-- PAGE REFERRER: '(!REFERRER!)' -->
 <!-- STORE LOCALE: '(!STORELOCALE!)' -->
@@ -37,12 +37,12 @@
          <asp:ScriptManager ID="scrptMgr" runat="server" >
         </asp:ScriptManager>
     <% } %>
-    <div align="center" style="width:100%;"><p style="background-color:#FFFF00; padding: 4px;"><span style="font-size: 12px;"><font color="red"><b>
+    <%--<div align="center" style="width:100%;"><p style="background-color:#FFFF00; padding: 4px;"><span style="font-size: 12px;"><font color="red"><b>
         **** You Are Acting For Customer: <asp:Literal ID="Literal2" runat="server" Text='<%$ Tokens:User_Menu_Name %>' />, 
         ID=<asp:Literal ID="Literal3" runat="server" Text='<%$ Tokens:CustomerID %>' /> ****</b>&nbsp;&nbsp;<b><a href="default.aspx?IGD=">End 
-        Session</a></b></font></span></p></div>
+        Session</a></b></font></span></p></div>--%>
           <asp:ContentPlaceHolder ID="PageContent" runat="server">
-                    </asp:ContentPlaceHolder>         
+          </asp:ContentPlaceHolder>         
     <!-- CONTENTS END -->   
     
     <%--temporary solution for rendering the form validation--%>

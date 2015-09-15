@@ -69,6 +69,7 @@
                     <div id="content" class="content">
                         <!-- CONTENTS START -->
                         <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                         
                         </asp:ContentPlaceHolder>
                         <!-- CONTENTS END -->
                         <div class="clear"></div>

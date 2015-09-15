@@ -13,3 +13,18 @@ C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAd
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontPromotions.pdb
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.dll
 C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontAdmin.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontAdmin.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontCore.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\Avalara.AvaTax.Adapter.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontPromotions.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\ASPDNSFApplication.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\CMPCDotNet.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\ASPDNSFEncrypt.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\ExcelWrapper.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\GemBox.Spreadsheet.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontCore.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\bin\Debug\AspDotNetStorefrontPromotions.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.csprojResolveAssemblyReference.cache
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\AspDotNetStorefrontAdmin\obj\Debug\AspDotNetStorefrontAdmin.pdb
