@@ -25,3 +25,12 @@ D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\GemBox.Sprea
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.dll
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\AspDotNetStorefrontCommon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\ASPDNSFApplication.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\ASPDNSFEncrypt.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\ExcelWrapper.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\bin\Debug\GemBox.Spreadsheet.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.csprojResolveAssemblyReference.cache
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFCommon\obj\Debug\AspDotNetStorefrontCommon.pdb

@@ -26,3 +26,17 @@ D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\AspDotNetS
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.csprojResolveAssemblyReference.cache
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.dll
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontGateways.dll.config
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontGateways.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontGateways.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\ASPDNSFEncrypt.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontPromotions.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\ExcelWrapper.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\GatewayCheckoutByAmazon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\CBASDK.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\MarketplaceWebService.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\GatewayCheckoutByAmazon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\bin\Debug\AspDotNetStorefrontPromotions.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.csprojResolveAssemblyReference.cache
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFGateways\obj\Debug\AspDotNetStorefrontGateways.pdb

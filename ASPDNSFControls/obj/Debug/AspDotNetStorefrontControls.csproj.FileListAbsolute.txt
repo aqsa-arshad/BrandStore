@@ -68,3 +68,17 @@ D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetS
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.csproj.GenerateResource.Cache
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.dll
 D:\ConfizProjects\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontControls.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontControls.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AjaxControlToolkit.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontAdmin.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontCommon.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontPromotions.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontCommon.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontAdmin.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\bin\Debug\AspDotNetStorefrontPromotions.pdb
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.csprojResolveAssemblyReference.cache
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.ScriptControls.resources
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.csproj.GenerateResource.Cache
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.dll
+E:\Projects\JWBStore\aspdotnetstorefrontstores\ASPDNSFControls\obj\Debug\AspDotNetStorefrontControls.pdb

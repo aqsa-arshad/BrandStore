@@ -140,9 +140,10 @@
         <tr>            
             <td id="mainContentBody">
                <asp:Panel runat="server" style="z-index: -1;">
-                <asp:ContentPlaceHolder ID="bodyContentPlaceholder" runat="server" />
+                <asp:ContentPlaceHolder ID="bodyContentPlaceholder" runat="server" />                  
                </asp:Panel> 
             </td>
+           
         </tr>
         </table>
         <!-- END BODY -->
