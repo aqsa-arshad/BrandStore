@@ -42,8 +42,8 @@
       </ul>
     </nav>
     <div class="user-grid">
-      <input type="text" value="Search Site">
-      
+      <input type="text" value="Search Site"  onblur="if(this.value==''){ this.value='Search Site';}"
+  onfocus="if (this.value == 'Search Site') { this.value = ''; }">      
     </div>
   </div>
 
@@ -56,12 +56,12 @@
             <%--Calling topic defind through admin console.--%>
              <aspdnsf:Topic ID="Topic2" runat="server" TopicName="LandingPageTopic" />         
         <!-- Contect Box 02  -->
-        <div class="content-box-02">
+        <div class="content-box-02" >
 
           <div class="row">  
              <%--calling xml package thst bringd featured products--%>    
               <asp:Literal ID="FeaturedProducts" runat="server" Text='<%$ Tokens:XMLPACKAGE, featuredproducts.xml.config, featuredentityid=11&featuredentitytype=category&headertext=Featured Products&numberofitems=4&columns=4&showprice=true %>' />
-      </div>
+         </div>
 
         </div>
       </div>
@@ -105,7 +105,8 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-2 col-md-2"><img src="App_Themes/Skin_3/images/bottom-logo.png"></div>
+           
+        <div class="col-sm-2 col-md-2"><a href="default.aspx"><img src="App_Themes/Skin_3/images/bottom-logo.png"></a></div>
         <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
       </div>
 

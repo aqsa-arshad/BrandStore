@@ -4607,22 +4607,22 @@ label {
   background-repeat: no-repeat;
 }
 .nav li a.nav-market {
-  background-image: url(../images/nav-merket-static.png);
+  background-image: url(images/nav-merket-static.png);
 }
 .nav li a:hover.nav-market {
-  background-image: url(../images/nav-merket-active.png);
+  background-image: url(images/nav-merket-active.png);
 }
 .nav li a.nav-asset {
-  background-image: url(../images/nav-asset-static.png);
+  background-image: url(images/nav-asset-static.png);
 }
 .nav li a:hover.nav-asset {
-  background-image: url(../images/nav-asset-active.png);
+  background-image: url(images/nav-asset-active.png);
 }
 .nav li a.nav-merchandise {
-  background-image: url(../images/nav-merchandise-static.png);
+  background-image: url(images/nav-merchandise-static.png);
 }
 .nav li a:hover.nav-merchandise {
-  background-image: url(../images/nav-merchandise-active.png);
+  background-image: url(images/nav-merchandise-active.png);
 }
 .nav li a.nav-custom {
   border-right: none;
@@ -4652,7 +4652,7 @@ padding-bottom:0;
 }
 .user-grid input[type="text"] {
   margin-top: 15px;
-  background: url('../images/search-img.png') no-repeat 10px 2px;
+  background: url('images/search-img.png') no-repeat 10px 2px;
   padding: 5px 5px 5px 35px;
   color: #afb0a9;
   float: right;
@@ -4769,4 +4769,17 @@ footer .footer-privacy-link span {
 }
 footer .footer-privacy-link a {
   color: #b4b7b0;
+}
+
+/*Added ruby tayyab*/
+.content-box-feature {
+  background-color: #e0e0e0;
+  padding: 2em 3em;  
+  line-height: 28px;
+  margin-bottom: 1.8em;
+}
+
+.row-feature {
+  margin-left: -5px;
+  margin-right: -5px;
 }
