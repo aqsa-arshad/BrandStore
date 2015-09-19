@@ -27,9 +27,12 @@ namespace AspDotNetStorefront
 
             
            /* End */
-              divMarkeetingExample.Controls.Add(LoadControl("~/Controls/MarkeetingExample.ascx"));
-              divBrandAssetExample.Controls.Add(LoadControl("~/Controls/BrandAssetExample.ascx"));
-              divlogin.Controls.Add(LoadControl("~/Controls/JWBSignin.ascx"));
+              //divMarkeetingExample.Controls.Add(LoadControl("~/Controls/MarkeetingExample.ascx"));
+              //divBrandAssetExample.Controls.Add(LoadControl("~/Controls/BrandAssetExample.ascx"));
+              //divlogin.Controls.Add(LoadControl("~/Controls/JWBSignin.ascx"));
+              ((System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("divlogin")).Style["display"] = "none";
+              ((System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("separatorafterlogin")).Style["display"] = "none";
+            
             if (CommonLogic.ServerVariables("HTTP_HOST").IndexOf(AppLogic.LiveServer(), StringComparison.InvariantCultureIgnoreCase) != -1 &&
                 CommonLogic.ServerVariables("HTTP_HOST").IndexOf("WWW", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
@@ -67,7 +70,7 @@ namespace AspDotNetStorefront
             if (MasterHome.Trim().Length == 0)
             {
 
-                MasterHome = "empty";// "template";
+                MasterHome = "JeldWenTemplate";// "template";
             }
 
             if (MasterHome.EndsWith(".ascx"))
@@ -83,7 +86,7 @@ namespace AspDotNetStorefront
             if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
             {
                 //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "empty";// "template.master";
+                MasterHome = "JeldWenTemplate";// "template.master";
             }
 
             return MasterHome;

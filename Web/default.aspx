@@ -24,7 +24,7 @@
 
       <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
-  <div class="header clearfix">
+ <%-- <div class="header clearfix">
     <div class="header-part">
         <a href="default.aspx" class="logo"><img src="App_Themes/Skin_3/images/logo.png"></a>
         <span class="head-tagline">Brand Store</span>
@@ -45,7 +45,7 @@
       <input type="text" value="Search Site"  onblur="if(this.value==''){ this.value='Search Site';}"
   onfocus="if (this.value == 'Search Site') { this.value = ''; }">      
     </div>
-  </div>
+  </div>--%>
 
   <div class="body-container">
     <div class="row">
@@ -71,37 +71,36 @@
     </div>
       <div class="col-md-4">
         <div class="side-bar">
-          <!-- Login Box -->
-          <div class="login-box" id="divlogin" runat="server">
-           <%-- <h4>Login</h4>
-             <%--Login control goes here--%>
+         
+         <%-- <div class="login-box" id="divlogin" runat="server">
+         
           </div>
 
-          <!-- Separator Line -->
+        
           <div class="separator-line"></div>
 
-          <!-- Side Box -->
+         
           <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-           <%--Markeeting Example Category control goes here--%>
+        
           </div>
 
-          <!-- Separator Line -->
+        
           <div class="separator-line"></div>
 
-          <!-- Side Box -->
+        
           <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-          <%--Brand Asset Category control goes here--%>
-          </div>
+         
+          </div>--%>
         </div>
       </div>
     </div>
   </div>
       <!-- Site footer -->
-      <footer class="footer">
+<%--      <footer class="footer">
         <div class="row">
         <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
-        <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div><%--About TrueBLU™--%>
-        <%--<div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>--%>
+        <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>
+        <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>
       </div>
 
       <div class="row">
@@ -110,7 +109,7 @@
         <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
       </div>
 
-      </footer>
+      </footer>--%>
 
     </div>
 
