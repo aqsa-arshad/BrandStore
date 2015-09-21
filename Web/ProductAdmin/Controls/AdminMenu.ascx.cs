@@ -189,6 +189,7 @@ namespace AspDotNetStorefrontAdmin.Controls
                 //CUSTOMER MENU NODES
                 #region customerMenu
                 case "customers":
+                    parent.ChildItems.Add(GetMenuItem("admin.menu.CustomerAlerts", "customerAlerts", "customeralerts.aspx"));
                     parent.ChildItems.Add(GetMenuItem("admin.menu.CustomerLevels", "customersLevels", "customerlevels.aspx"));
                     parent.ChildItems.Add(GetMenuItem("admin.menu.CustomerEdit", "customersEdit", "customers.aspx"));
                     parent.ChildItems.Add(GetMenuItem("admin.menu.CustomerAdd", "customersAdd", "CustomerDetail.aspx"));
