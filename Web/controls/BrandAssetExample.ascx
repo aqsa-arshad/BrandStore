@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="BrandAssetExample.ascx.cs" Inherits="controls_BrandAssetExample" %>
-<h4>Brand asset example </h4>
+<h4>Brand Asset</h4>
 <div class="row">
     <div class="col-sm-6">
         <div class="primary-img-box">

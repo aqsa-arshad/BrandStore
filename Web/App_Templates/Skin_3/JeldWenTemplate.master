@@ -7,6 +7,8 @@
 <%@ Register TagPrefix="aspdnsf" TagName="JWBSignin" Src="~/Controls/JWBSignin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBBrandAssetExample" Src="~/Controls/MarkeetingExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/BrandAssetExample.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBUserInfoAfterLogin" Src="~/Controls/UserInfoAfterLogin.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBDealerInfoAfterLogin" Src="~/Controls/DealerInfoAfterLogin.ascx" %>
 <%@ Import Namespace="AspDotNetStorefrontCore" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,7 +45,6 @@
     <link href="../../App_Themes/Skin_3/app.css" rel="stylesheet" />
     <aspdnsf:XmlPackage ID="XmlPackage2" runat="server" PackageName="script.headclose" />
 </head>
-
 <body>
 
     <!-- Google Tag Manager -->
@@ -137,17 +138,17 @@
             </nav>
         </div>
 
-  <div class="body-container">
-    <div class="row">
-      <!-- left Contect Area  -->
-      <div class="col-md-8">
+        <div class="body-container">
+            <div class="row">
+                <!-- left Contect Area  -->
+                <div class="col-md-8">
 
-        <div class="left-side">
-                         
-				    <asp:ContentPlaceHolder ID="PageContent" runat="server">
-				    </asp:ContentPlaceHolder>
-			    
-          <%--<div class="header-img-box">
+                    <div class="left-side">
+
+                        <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                        </asp:ContentPlaceHolder>
+
+                        <%--<div class="header-img-box">
             <img class="img-responsive" src="images/header-img-01.png">
             <div class="header-text">
               <h1>Welcome headline goes here</h1>
@@ -206,60 +207,52 @@
             </div>
 
           </div>--%>
+                    </div>
+                </div>
 
-        </div>
-      </div>
 
+                <div class="col-md-4">
+                    <div class="side-bar">
 
-      <div class="col-md-4">
-        <div class="side-bar">
+                        <!-- Side Box -->
+                        <div id="afterlogindiv" runat="server">
+                            <div class="side-bar-box">
+                                <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
+                            </div>
 
-          <!-- Side Box -->
-         <%-- <div class="side-bar-box">
-            <h4>Hi, Bubba Hotep </h4>
-            <p>Sales Operations Funds = $$$$</p>
-            <a href="#">Request sales operations funds</a>
-            <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-          </div>
+                            <!-- Side Box -->
+                            <div class="side-bar-box">
+                                <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
+                            </div>
+                        </div>
+                        <div id="beforelogindiv" runat="server">
+                        <div class="login-box" id="divlogin" runat="server">
+                            <%--Login control goes here--%>
+                            <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
+                        </div>
 
-          <!-- Side Box -->
-          <div class="side-bar-box">
-            <h4>Brand asset example </h4>
-            <div class="row">
-            <div class="col-md-6">
-              <div class="primary-img-box">
-                <img class="img-responsive" src="images/brand-ex-img.png">
-              </div>
+                        <!-- Separator Line -->
+                        <div class="separator-line" id="separatorafterlogin" runat="server"></div>
+
+                        <!-- Side Box -->
+                        <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                            <%--Markeeting Example Category control goes here--%>
+                            <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
+                        </div>
+
+                        <!-- Separator Line -->
+                        <div class="separator-line"></div>
+
+                        <!-- Side Box -->
+                        <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                            <%--Brand Asset Category control goes here--%>
+                            <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
+                        </div>
+                            </div>
+                    </div>
+                </div>
             </div>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut </p>
-          </div>--%>
-            <div class="login-box" id="divlogin" runat="server">          
-             <%--Login control goes here--%>
-                <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
-          </div>
-
-          <!-- Separator Line -->
-          <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-
-          <!-- Side Box -->
-          <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-           <%--Markeeting Example Category control goes here--%>
-               <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
-          </div>
-
-          <!-- Separator Line -->
-          <div class="separator-line"></div>
-
-          <!-- Side Box -->
-          <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-          <%--Brand Asset Category control goes here--%>
-               <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
         <!-- Site footer -->
         <footer class="footer">
             <div class="row">
@@ -270,7 +263,7 @@
 
             <div class="row">
                 <div class="col-sm-2 col-md-2">
-                   <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
+                    <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
                 </div>
                 <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
             </div>

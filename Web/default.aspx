@@ -14,13 +14,12 @@
     <title>Home</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/app.css">
 
   </head>
 
   <body>
     
-<div class="container">
+<%--<div class="container">--%>
 
       <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
@@ -47,10 +46,10 @@
     </div>
   </div>--%>
 
-  <div class="body-container">
-    <div class="row">
+ <%-- <div class="body-container">
+    <div class="row">--%>
       <!-- left Contect Area  -->
-      <div class="col-md-8">
+      <%--<div class="col-md-8">--%>
 
         <div class="left-side">
             <%--Calling topic defind through admin console.--%>
@@ -64,37 +63,19 @@
          </div>
 
         </div>
-      </div>
+  <%--    </div>--%>
 
 
 
     </div>
-      <div class="col-md-4">
+      <%--<div class="col-md-4">
         <div class="side-bar">
          
-         <%-- <div class="login-box" id="divlogin" runat="server">
-         
-          </div>
-
-        
-          <div class="separator-line"></div>
-
-         
-          <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-        
-          </div>
-
-        
-          <div class="separator-line"></div>
-
-        
-          <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-         
-          </div>--%>
+       
         </div>
-      </div>
-    </div>
-  </div>
+      </div>--%>
+  <%--  </div>
+  </div>--%>
       <!-- Site footer -->
 <%--      <footer class="footer">
         <div class="row">
@@ -111,7 +92,7 @@
 
       </footer>--%>
 
-    </div>
+   <%-- </div>--%>
 
 
     <!-- Bootstrap core JavaScript
