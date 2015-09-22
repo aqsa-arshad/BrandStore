@@ -5779,10 +5779,6 @@ a:hover.mb-link {
   font-family: 'FrutigerLTStd-Roman';
   letter-spacing: 2;
 }
-.desktop-nav .nav li a:hover {
-  background-color: transparent;
-  color: #1d446b;
-}
 .desktop-nav .nav li img {
   float: left;
   margin-right: 10px;
@@ -5796,6 +5792,10 @@ a:hover.mb-link {
 }
 .desktop-nav .nav li a:hover .nav-img-hover {
   display: block;
+}
+.desktop-nav .nav li a:hover {
+  background-color: transparent;
+  color: #1d446b;
 }
 .desktop-nav .nav li span {
   display: block;
@@ -5817,8 +5817,8 @@ a:hover.mb-link {
 .mobile-nav .nav li a {
   color: #b4b7b0;
   text-align: left;
-  line-height: 20px;
-  padding: 18px 0 18px 65px;
+  line-height: 30px;
+  padding: 25px 0 25px 20px;
   border-bottom: solid 1px #c0c0c0;
   background-position: 18px 20px;
   background-repeat: no-repeat;
@@ -5827,35 +5827,18 @@ a:hover.mb-link {
   font-family: 'FrutigerLTStd-Roman';
   letter-spacing: 2;
 }
-.mobile-nav .nav li a.mb-market {
-  background-image: url(../images/mb-merket-static.png);
+.mobile-nav .nav li img {
+  float: left;
+  margin-right: 10px;
 }
-.mobile-nav .nav li a:hover.mb-market {
-  background-image: url(../images/mb-merket-active.png);
-  background-color: #1d446b;
+.mobile-nav .nav li a .nav-img-hover {
+  display: none;
 }
-.mobile-nav .nav li a.mb-asset {
-  background-image: url(../images/mb-asset-static.png);
-  padding: 28px 0 28px 65px;
+.mobile-nav .nav li a:hover .nav-img-active {
+  display: none;
 }
-.mobile-nav .nav li a:hover.mb-asset {
-  background-image: url(../images/mb-asset-active.png);
-  background-color: #4d7297;
-}
-.mobile-nav .nav li a.mb-merchandise {
-  background-image: url(../images/mb-merchandise-static.png);
-}
-.mobile-nav .nav li a:hover.mb-merchandise {
-  background-image: url(../images/mb-merchandise-active.png);
-  background-color: #8ca7c2;
-}
-.mobile-nav .nav li a.mb-custom {
-  background-image: url(../images/mb-custom-static.png);
-  padding: 28px 0 28px 65px;
-}
-.mobile-nav .nav li a:hover.mb-custom {
-  background-image: url(../images/mb-custom-active.png);
-  background-color: #a8a8a8;
+.mobile-nav .nav li a:hover .nav-img-hover {
+  display: block;
 }
 .mobile-nav .nav li a:hover {
   color: #ffffff;
@@ -5914,10 +5897,10 @@ a:hover.mb-link {
   }
 }
 .user-grid input[type="text"].search-feild {
-  background: url('../images/search-img.png') no-repeat 10px 2px;
+  background: url('images/search-img.png') no-repeat 10px 2px;
   padding: 5px 5px 5px 35px;
   color: #afb0a9;
-  width: 240px;
+  width: 200px;
   height: 30px;
 }
 .desktop-profile {

@@ -107,8 +107,8 @@
                     <a href="#" class="prelogin">Shopping Cart</a>
                 </span>
 
-                <input type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
-                    onfocus="if (this.value == 'Search Site') { this.value = ''; }">
+                <input class="search-feild" type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
+                    onfocus="if (this.value == 'Search Site') { this.value = ''; }"/>
             </div>
 
             <nav class="mobile-nav">
