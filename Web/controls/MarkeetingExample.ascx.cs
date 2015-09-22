@@ -26,13 +26,24 @@ public partial class controls_MarkeetingExample : System.Web.UI.UserControl
                     String PDescription = rs["Description"].ToString()+"";
                     String PImagename = rs["Imagename"].ToString();
 
+                   /*Get immage for product if it exists and check its name/extension*/
+                    String path = HttpContext.Current.Request.MapPath("~/images/product/icon");
+                    string[] filePaths = System.IO.Directory.GetFiles(path, PImagename + ".*", System.IO.SearchOption.TopDirectoryOnly);
+                         if (filePaths.Length >0)
+                         {
+                             PImagename = PImagename + System.IO.Path.GetExtension(filePaths[0]);
+                         }
+                        
                     if (PDescription.Length > 187)
                     {
                         PDescription = PDescription.Substring(0, 187) + ".....";
                     }
                    
                     productdescription.InnerHtml=PDescription;
-                    productimmage.Attributes["src"] = "../images/product/icon/" + PImagename + ".jpg";
+                    productimmage.Attributes["src"] = "../images/product/icon/" + PImagename;
+
+                    productdescriptionAfterLogin.InnerHtml = PDescription;
+                    productimmageAfterLogin.Attributes["src"] = "../images/product/icon/" + PImagename;
                 }
             }
         }

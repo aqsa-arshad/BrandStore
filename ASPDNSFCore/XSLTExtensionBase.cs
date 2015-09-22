@@ -651,7 +651,40 @@ function popupzoom(url,alturl)
             }
             return result;
         }
+        /*Added by Tayyab to show immages with categories in menue*/
+        public virtual string ImmageEntityLink(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            InputValidator IV = new InputValidator("EntityLink");
+            String SEName = IV.ValidateString("SEName", sSEName);
+            String EntityName = IV.ValidateString("EntityName", sEntityName);
+            int EntityID = IV.ValidateInt("EntityID", sEntityID);
+            bool IncludeATag = IV.ValidateBool("IncludeATag", sIncludeATag);
+            string result = String.Empty;
+            result = SE.MakeEntityLink(EntityName, EntityID, SEName);
 
+            result = "images/category/icon/" + sEntityID + ".png";
+           
+            return result;
+        }
+
+        public virtual string GetCategoryID(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            String result = "";
+            result = "Category" + sEntityID;
+
+           
+
+            return result;
+        }
+        public virtual string GetCategoryIDForMobile(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            String result = "";
+            result = "MobileCategory" + sEntityID;
+
+
+
+            return result;
+        }
         public virtual string ObjectLink(String sObjectID, String sSEName, String sObjectName, String sIncludeATag)
         {
             InputValidator IV = new InputValidator("ObjectLink");

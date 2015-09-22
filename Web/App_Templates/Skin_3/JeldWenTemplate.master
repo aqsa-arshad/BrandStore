@@ -67,7 +67,7 @@
             <div class="header-part">
                 <a href="#" class="logo">
                     <img src="../../App_Themes/Skin_3/images/logo.png"></a>
-                <span class="head-tagline">Brand Store        
+                <span class="head-tagline prelogin">Brand Store        
      
                     <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
                         <span class="sr-only">Toggle navigation</span>
@@ -79,16 +79,16 @@
                 </span>
                 <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
                     <ul class="nav navbar-nav">
-                        <li>
+                        <li class="prelogin">
                             <a href="#">Alerts</a>
                         </li>
-                        <li>
+                        <li class="prelogin">
                             <a href="#">My Account</a>
                         </li>
-                        <li>
+                        <li class="prelogin">
                             <a href="#">Shopping Cart</a>
                         </li>
-                        <li>
+                        <li class="prelogin">
                             <a href="#" class="nav-bar-last">Logout</a>
                         </li>
                     </ul>
@@ -102,9 +102,9 @@
 
             <div class="user-grid">
                 <span class="desktop-profile">
-                    <a href="#">Alerts</a>
-                    <a href="#">My Account</a>
-                    <a href="#">Shopping Cart</a>
+                    <a href="#" class="prelogin">Alerts</a>
+                    <a href="#" class="prelogin">My Account</a>
+                    <a href="#" class="prelogin">Shopping Cart</a>
                 </span>
 
                 <input type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
@@ -112,7 +112,7 @@
             </div>
 
             <nav class="mobile-nav">
-                <ul class="nav nav-justified">
+                <%--<ul class="nav nav-justified">
                     <li>
                         <a class="mb-market" href="#">Marketing
                             <br>
@@ -134,7 +134,8 @@
                         <a class="mb-custom" href="#">Custom Services
           </a>
                     </li>
-                </ul>
+                </ul>--%>
+                 <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
             </nav>
         </div>
 
@@ -215,7 +216,7 @@
                     <div class="side-bar">
 
                         <!-- Side Box -->
-                        <div id="afterlogindiv" runat="server">
+                        <div id="afterlogindiv">
                             <div class="side-bar-box">
                                 <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
                             </div>
@@ -225,7 +226,7 @@
                                 <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
                             </div>
                         </div>
-                        <div id="beforelogindiv" runat="server">
+                        <div id="beforelogindiv">
                         <div class="login-box" id="divlogin" runat="server">
                             <%--Login control goes here--%>
                             <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
