@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="JWBSignin.ascx.cs" Inherits="controls_JWBSignin" %>
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
+
 <div id="LoginPanel" runat="server">
     <h4>Login</h4>
 
@@ -64,3 +65,4 @@
     <a href="#" class="account-link">Why do I have to create an account?</a>
 
 </div>
+   
