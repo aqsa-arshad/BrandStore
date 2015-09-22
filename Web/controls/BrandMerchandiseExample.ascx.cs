@@ -8,14 +8,14 @@ using System.Data.SqlClient;
 using System.Configuration;
 using AspDotNetStorefrontCore;
 
-public partial class controls_BrandAssetExample : System.Web.UI.UserControl
+public partial class controls_BrandMerchandiseExample : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         using (SqlConnection conn = DB.dbConn())
         {
             conn.Open();
-            String CategoryID = AppLogic.AppConfig("BrandAssetCategoryID");// ConfigurationManager.AppSettings["BrandAsset"];
+            String CategoryID = AppLogic.AppConfig("BrandMerchandiseCategoryID");// ConfigurationManager.AppSettings["BrandAsset"];
             using (System.Data.IDataReader rs = DB.GetRS("aspdnsf_GetLatestProductByCategory " + CategoryID, conn))
             {
                 if (rs.Read())

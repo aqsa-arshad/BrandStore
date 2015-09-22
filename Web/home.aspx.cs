@@ -19,7 +19,7 @@ namespace AspDotNetStorefront
     /// Summary description for _default.
     /// </summary>
     [PageType("home")]
-    public partial class _default : SkinBase
+    public partial class _home : SkinBase
     {
         protected void Page_Load(object sender, System.EventArgs e)
         {
