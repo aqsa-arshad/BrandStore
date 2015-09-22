@@ -11,18 +11,19 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3" valign="top">
-                Please enter the following information about this Customer Alert. Fields marked with an asterisk (*) are required. All other fields are optional.
+            <td colspan="3" valign="top">Please enter the following information about this Customer Alert. Fields marked with an asterisk (*) are required. All other fields are optional.
             </td>
         </tr>
         <tr>
-            <td><br /></td>
+            <td>
+                <br />
+            </td>
         </tr>
         <tr>
-            <td style="text-align:right; width:15%">
+            <td style="text-align: right; width: 15%">
                 <asp:Label ID="lblCustomerLevel" runat="server" Text="*Customer Level:"></asp:Label>
             </td>
-            <td style="text-align:left; width:35%">
+            <td style="text-align: left; width: 35%">
                 <asp:DropDownList ID="ddlCustomerLevel" runat="server" Width="70%"></asp:DropDownList>
             </td>
             <td align="left" valign="top">
@@ -30,10 +31,10 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align:right; width:15%">
+            <td style="text-align: right; width: 15%">
                 <asp:Label ID="lblTitle" runat="server" Text="*Title:"></asp:Label>
             </td>
-            <td style="text-align:left; width:30%">
+            <td style="text-align: left; width: 30%">
                 <asp:HiddenField ID="hfCustomerAlertID" runat="server" />
                 <asp:TextBox ID="txtTitle" runat="server" MaxLength="100" Width="70%" CssClass="TXTFIELD"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="CustomerAlertEdit" runat="server" ControlToValidate="txtTitle"
@@ -45,10 +46,10 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align:right; width:15%">
+            <td style="text-align: right; width: 15%">
                 <asp:Label ID="lblDescription" runat="server" Text="*Description:"></asp:Label>
             </td>
-            <td style="text-align:left; width:35%">
+            <td style="text-align: left; width: 35%">
                 <asp:TextBox ID="txtDescription" runat="server" MaxLength="250" Width="100%"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ValidationGroup="CustomerAlertEdit" runat="server" ControlToValidate="txtDescription"
                     ErrorMessage="<br/>Please enter description here." ForeColor="Red" Display="Dynamic">
@@ -65,7 +66,7 @@
             <td align="left">
                 <asdnsf:CalendarPopup ID="txtAlertDate" runat="server" Height="20px" DisableTextBoxEntry="True" AllowArbitraryText="False"
                     PadSingleDigits="True" Nullable="false" CalendarWidth="200" Width="80px" ShowGoToToday="True" ImageUrl="~/App_Themes/Admin_Default/images/calendar.gif"
-                    Font-Size="9px" >
+                    Font-Size="9px">
                 </asdnsf:CalendarPopup>
             </td>
             <td align="left" valign="top">
@@ -76,11 +77,16 @@
             <td></td>
             <td>
                 <br />
-                <asp:Button ValidationGroup="CustomerAlertEdit" CausesValidation="True" Visible="false"
-                    ID="btnAddAlert" runat="server" CssClass="normalButtons" Text="Add Alert" OnClick="btnAddAlert_Click" />
-
-                <asp:Button ValidationGroup="CustomerAlertEdit" CausesValidation="True" Visible="false"
-                    ID="btnUpdate" runat="server" CssClass="normalButtons" Text="Update Alert" OnClick="btnUpdate_Click" />
+                <asp:Panel ID="pnlNewAlert" runat="server" Visible="false">
+                    <asp:Button ValidationGroup="CustomerAlertEdit" CausesValidation="True"
+                        ID="btnAddAlert" runat="server" CssClass="normalButtons" Text="Add Alert" OnClick="btnAddAlert_Click" />
+                    <asp:Button ID="btnCancel" runat="server" CssClass="normalButtons" Text="Cancel" OnClick="btnCancel_Click" />
+                </asp:Panel>
+                <asp:Panel ID="pnlEditAlert" runat="server" Visible="false">
+                    <asp:Button ValidationGroup="CustomerAlertEdit" CausesValidation="True" 
+                        ID="btnUpdate" runat="server" CssClass="normalButtons" Text="Update Alert" OnClick="btnUpdate_Click" />
+                    <asp:Button ID="btnReset" runat="server" CssClass="normalButtons" Text="Reset" OnClick="btnReset_Click" />
+                </asp:Panel>
             </td>
             <td></td>
         </tr>
