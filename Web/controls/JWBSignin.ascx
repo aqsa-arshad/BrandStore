@@ -5,7 +5,7 @@
 
     <label>Email address</label>
     <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"
-        CausesValidation="True" AutoCompleteType="None"></asp:TextBox>  <%--AutoCompleteType="Email"   same for request New password--%>
+        CausesValidation="True" AutoCompleteType="Email"></asp:TextBox> 
     <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator1" runat="server" ValidationGroup="LoginGroup"
         ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="EmailTextField"></asp:RequiredFieldValidator>
 
@@ -50,7 +50,7 @@
     <br />
     <label>Email address</label>
     <asp:TextBox ID="ForgotPasswordEmailTextField" CssClass="form-control" runat="server" ValidationGroup="ForgotPasswordGroup" MaxLength="100"
-        CausesValidation="True" AutoCompleteType="None"></asp:TextBox>
+        CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
     <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator3" runat="server" ValidationGroup="ForgotPasswordGroup"
         ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="ForgotPasswordEmailTextField"></asp:RequiredFieldValidator>
 
