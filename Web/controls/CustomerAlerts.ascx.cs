@@ -41,10 +41,11 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         using (var conn = DB.dbConn())
         {
             conn.Open();
-            using (var cmd = new SqlCommand("aspdnsf_CustomerAlertSelectByCustomerIDAlertDate", conn))
+            using (var cmd = new SqlCommand("aspdnsf_CustomerAlertStatusSelectByCustomerIDAlertDate", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                cmd.Parameters.AddWithValue("@CustomerLevelID", ThisCustomer.CustomerLevelID);
                 cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
 
                 IDataReader idr = cmd.ExecuteReader();
@@ -55,22 +56,22 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     }
     protected void rptCustomerAlerts_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
-        int CustomerAlertID = Convert.ToInt32(e.CommandArgument);
-        const string readSP = "aspdnsf_CustomerAlertRead";
-        const string deleteSP = "aspdnsf_CustomerAlertDelete";
+        int customerAlertStatusID = Convert.ToInt32(e.CommandArgument);
+        const string readSP = "aspdnsf_CustomerAlertStatusRead";
+        const string deleteSP = "aspdnsf_CustomerAlertStatusDelete";
 
         if (e.CommandName == "Delete")
         {
-            UpdateCustomerAlert(CustomerAlertID, deleteSP);
+            UpdateCustomerAlert(customerAlertStatusID, deleteSP);
         }
         else if (e.CommandName == "Read")
         {
-            UpdateCustomerAlert(CustomerAlertID, readSP);
+            UpdateCustomerAlert(customerAlertStatusID, readSP);
         }
         GetCustomerAlerts();
     }
 
-    private void UpdateCustomerAlert(int CustomerAlertID, string spName)
+    private void UpdateCustomerAlert(int customerAlertStatusID, string spName)
     {
         using (var conn = DB.dbConn())
         {
@@ -78,13 +79,8 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
             using (var cmd = new SqlCommand(spName, conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CustomerAlertID", CustomerAlertID);
-                cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
-                cmd.Parameters.AddWithValue("@ModifiedBy", ThisCustomer.EMail);
-
-                IDataReader idr = cmd.ExecuteReader();
-                rptCustomerAlerts.DataSource = idr;
-                rptCustomerAlerts.DataBind();
+                cmd.Parameters.AddWithValue("@CustomerAlertStatusID", customerAlertStatusID);
+                cmd.ExecuteNonQuery();
             }
         }
     }
