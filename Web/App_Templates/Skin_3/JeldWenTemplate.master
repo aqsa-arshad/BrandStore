@@ -93,7 +93,7 @@
                         </li>
                     </ul>
                 </nav>
-                <a href="#" class="desktop-logout">Logout</a>
+                <a href="#" class="desktop-logout prelogin">Logout</a>
             </div>
             <nav class="desktop-nav">
                 <%--calling xml package for getting menue dynamically--%>
