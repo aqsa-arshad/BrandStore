@@ -170,8 +170,8 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         m_SkinID = (Page as AspDotNetStorefront.SkinBase).SkinID;
 
-        EmailTextField.Text = ThisCustomer.EMail;
-        PasswordTextField.Text = ThisCustomer.Password;
+        //EmailTextField.Text = ThisCustomer.EMail;
+        //PasswordTextField.Text = ThisCustomer.Password;
 
         // aqsa arshad 19/09/2015
         // Below code is realted to doing login before checkout, as this functionality is not included in this sprit so i commented this code.
