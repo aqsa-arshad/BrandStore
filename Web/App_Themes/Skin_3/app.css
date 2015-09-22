@@ -4530,7 +4530,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 body {
   color: #545759;
 }
-input[type="text"] {
+input[type="text"]
+input[type="password"] {
   border: 1px solid #c6c6c6;
   padding: 4px 12px;
   height: 26px;
