@@ -65,7 +65,7 @@
            Multiple lines will require custom code not provided by Bootstrap. -->
         <div class="header clearfix">
             <div class="header-part">
-                <a href="#" class="logo">
+                <a href="#" class="logo" id="headerlogo">
                     <img src="../../App_Themes/Skin_3/images/logo.png"></a>
                 <span class="head-tagline prelogin">Brand Store        
      

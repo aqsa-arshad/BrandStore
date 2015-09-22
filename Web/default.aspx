@@ -56,6 +56,11 @@
             $("#afterlogindiv").hide();
             $(".afterlogin").hide();
 
+            $("#headerlogo").click(function () {
+                $("#headerlogo").attr("href", "default.aspx")
+
+            });
+
         });
     </script>
 </asp:Content>

@@ -59,6 +59,11 @@
             $("#beforelogindiv").hide();
             $(".beforelogin").hide();
 
+            $("#headerlogo").click(function () {
+                $("#headerlogo").attr("href", "home.aspx")
+
+            });
+
         });
     </script>
 </asp:Content>
