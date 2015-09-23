@@ -667,6 +667,21 @@ function popupzoom(url,alturl)
             return result;
         }
 
+        public virtual string ImmageEntityLinkActive(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            InputValidator IV = new InputValidator("EntityLink");
+            String SEName = IV.ValidateString("SEName", sSEName);
+            String EntityName = IV.ValidateString("EntityName", sEntityName);
+            int EntityID = IV.ValidateInt("EntityID", sEntityID);
+            bool IncludeATag = IV.ValidateBool("IncludeATag", sIncludeATag);
+            string result = String.Empty;
+            result = SE.MakeEntityLink(EntityName, EntityID, SEName);
+
+            result = "images/category/icon/" + sEntityID + "_active.png";
+
+            return result;
+        }
+
         public virtual string GetCategoryID(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
         {
             String result = "";
