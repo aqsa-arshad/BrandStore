@@ -62,7 +62,14 @@
     </asp:Panel>
 
     <asp:Button type="submit" ID="ForgotPasswordButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="ForgotPasswordGroup" OnClick="forgotpasswordButton_Click" Text="Request A New Password" />
-    <a href="#" class="account-link">Why do I have to create an account?</a>
+   <%-- <a href="#" class="account-link">Go Back to Login</a>--%>
+     <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click">Go Back to Login?</asp:LinkButton>
 
 </div>
+<script>
+    $(document).ready(function () {
+        $("#ForgotPasswordErrorPanel").hide();   
+    });
+</script>
+
    

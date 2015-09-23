@@ -119,6 +119,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         LoginPanel.Visible = false;
 
     }
+    protected void GoBackToLoginLink_Click(object sender, EventArgs e)
+    {
+        HiddenLabel.Text = "false";
+        ForgotPasswordPanel.Visible = false;
+        LoginPanel.Visible = true;
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         string HiddenFieldText = HiddenLabel.Text;
@@ -126,6 +132,8 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         {
             ForgotPasswordPanel.Visible = true;
             LoginPanel.Visible = false;
+            ForgotPasswordErrorPanel.Visible = false; // that is where the status msg goes, in all cases in this routine
+            ForgotPasswordErrorMsgLabel.Text = String.Empty;
         }
         else
         {
