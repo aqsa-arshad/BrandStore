@@ -264,7 +264,9 @@
 
             <div class="row">
                 <div class="col-sm-2 col-md-2">
+                    <a href="http://www.jeld-wen.com/">
                     <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
+                        </a>
                 </div>
                 <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
             </div>
