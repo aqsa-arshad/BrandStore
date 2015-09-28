@@ -66,7 +66,7 @@
         <div class="header clearfix">
             <div class="header-part">
                 <a href="#" class="logo" id="headerlogo">
-                    <img src="../../App_Themes/Skin_3/images/logo.png"></a>
+                    <img src="App_Themes/Skin_3/images/logo.png"></a>
                 <span class="head-tagline prelogin">Brand Store        
      
                     <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
@@ -89,11 +89,11 @@
                             <a href="#">Shopping Cart</a>
                         </li>
                         <li class="prelogin">
-                            <a href="/signout.aspx" class="nav-bar-last">Logout</a>
+                            <a href="signout.aspx" class="nav-bar-last">Logout</a>
                         </li>
                     </ul>
                 </nav>
-                <a href="/signout.aspx" class="desktop-logout">Logout</a>
+                <a href="signout.aspx" class="desktop-logout">Logout</a>
             </div>
             <nav class="desktop-nav">
                 <%--calling xml package for getting menue dynamically--%>

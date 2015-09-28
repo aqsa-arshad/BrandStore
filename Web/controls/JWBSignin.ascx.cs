@@ -511,7 +511,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
                     //Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
 
-                    Response.Redirect("/home.aspx");
+                    Response.Redirect("home.aspx");
 
                     // aqsa arshad 19/09/2015 
                     // Below code work when admin password expires , it will show UI for changing its passowrd. as there is no need of it so i comment code below
