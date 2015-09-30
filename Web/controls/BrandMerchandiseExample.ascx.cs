@@ -34,6 +34,11 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
                         PImagename = PImagename + System.IO.Path.GetExtension(filePaths[0]);
                     }
 
+                    else
+                    {
+                        PImagename = "nopicture.gif";
+                    }
+
                     if (PDescription.Length > 190)
                     {
                         PDescription = PDescription.Substring(0, 190) + ".....";
