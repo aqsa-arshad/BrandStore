@@ -4735,8 +4735,32 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 @import "bootstrap/list-group.less";
 @import "bootstrap/panels.less";
 @import "bootstrap/responsive-embed.less";
-@import "bootstrap/wells.less";
-@import "bootstrap/close.less";*/
+@import "bootstrap/wells.less";*/
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+.close:hover,
+.close:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+button.close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -5292,9 +5316,132 @@ fieldset[disabled] .btn-danger.active {
   -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+.modal-open {
+  overflow: hidden;
+}
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  -o-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+.modal-content {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #999999;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+  outline: 0;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000000;
+}
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+.modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  min-height: 16.52857143px;
+}
+.modal-header .close {
+  margin-top: -2px;
+}
+.modal-title {
+  margin: 0;
+  line-height: 1.52857143;
+}
+.modal-body {
+  position: relative;
+  padding: 15px;
+}
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.modal-footer .btn + .btn {
+  margin-left: 5px;
+  margin-bottom: 0;
+}
+.modal-footer .btn-group .btn + .btn {
+  margin-left: -1px;
+}
+.modal-footer .btn-block + .btn-block {
+  margin-left: 0;
+}
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  .modal-sm {
+    width: 300px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px;
+  }
+}
 /*
 // Components w/ JavaScript
-@import "bootstrap/modals.less";
 @import "bootstrap/tooltip.less";
 @import "bootstrap/popovers.less";
 @import "bootstrap/carousel.less";
@@ -5322,7 +5469,9 @@ fieldset[disabled] .btn-danger.active {
 .navbar-header:before,
 .navbar-header:after,
 .navbar-collapse:before,
-.navbar-collapse:after {
+.navbar-collapse:after,
+.modal-footer:before,
+.modal-footer:after {
   content: " ";
   display: table;
 }
@@ -5337,7 +5486,8 @@ fieldset[disabled] .btn-danger.active {
 .nav:after,
 .navbar:after,
 .navbar-header:after,
-.navbar-collapse:after {
+.navbar-collapse:after,
+.modal-footer:after {
   clear: both;
 }
 .center-block {
@@ -5888,12 +6038,11 @@ a:hover.mb-link {
 .user-grid {
   border-top: solid 1px #c0c0c0;
   padding: 15px 20px;
-  text-align: center;
 }
 @media screen and (min-width: 800px) {
   .user-grid {
     border-bottom: solid 1px #c0c0c0;
-    text-align: right;
+    height: 62px;
   }
 }
 .user-grid input[type="text"].search-feild {
@@ -5902,20 +6051,23 @@ a:hover.mb-link {
   color: #afb0a9;
   width: 200px;
   height: 30px;
+  float: right;
 }
 .desktop-profile {
   display: none;
+  float: right;
 }
 @media screen and (min-width: 800px) {
   .desktop-profile {
     font-size: 12px;
-    text-transform: uppercase;
     padding-right: 30px;
     display: inline-block;
   }
-  .desktop-profile a {
+  .desktop-profile > a {
     margin: 0 25px;
     color: #b4b7b0;
+    line-height: 30px;
+    text-transform: uppercase;
   }
 }
 .mb-login-btn {
@@ -5931,6 +6083,53 @@ a:hover.mb-link {
   .mb-login-btn {
     display: none;
   }
+}
+.modal-dialog {
+  font-size: 14px;
+  font-family: 'FrutigerLTStd-Roman';
+}
+.modal-dialog a {
+  color: #6f9abb;
+  font-weight: bold;
+}
+.modal-dialog a.more-alerts {
+  text-transform: uppercase;
+  font-family: 'FrutigerLTStd-Light';
+}
+@media screen and (min-width: 800px) {
+  .modal-dialog {
+    width: 900px;
+  }
+}
+.modal-body {
+  padding: 35px;
+}
+.modal-body h4 {
+  color: #6f9abb;
+  font-family: 'FrutigerLTStd-Roman';
+  font-size: 18px;
+}
+.modal-body .close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 1;
+}
+.modal-body .modal-list {
+  padding: 0;
+  margin: 10px 0 30px;
+  list-style: none;
+  color: #969b9e;
+}
+.modal-body .modal-list li {
+  border-bottom: 1px solid #c0c0c0;
+  padding: 18px 0;
+}
+.modal-body .modal-list li b {
+  text-transform: uppercase;
+}
+.modal-body .modal-list li.unread {
+  color: #545759;
 }
 /******************* Left Contect Bar ***********************/
 .left-side {
@@ -6040,6 +6239,7 @@ a:hover.mb-link {
   width: 100%;
   float: left;
   line-height: 22px;
+  padding: 0;
 }
 .side-bar .login-box .checkbox label {
   margin-top: 0;
