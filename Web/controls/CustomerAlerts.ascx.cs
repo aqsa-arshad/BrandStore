@@ -26,6 +26,9 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
     }
 
+    /// <summary>
+    /// Page Load Event
+    /// </summary>
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -36,6 +39,9 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
     }
 
+    /// <summary>
+    /// Get All Customer Alerts for Admin
+    /// </summary>
     private void GetCustomerAlerts()
     {
         using (var conn = DB.dbConn())
@@ -54,6 +60,10 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
             }
         }
     }
+    
+    /// <summary>
+    /// Repeater ItemCommand Event
+    /// </summary>
     protected void rptCustomerAlerts_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
         int customerAlertStatusID = Convert.ToInt32(e.CommandArgument);
@@ -71,6 +81,11 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         GetCustomerAlerts();
     }
 
+    /// <summary>
+    /// Update Customer Alert
+    /// </summary>
+    /// <param name="customerAlertStatusID">customerAlertStatusID</param>
+    /// <param name="spName">spName</param>
     private void UpdateCustomerAlert(int customerAlertStatusID, string spName)
     {
         using (var conn = DB.dbConn())
