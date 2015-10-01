@@ -1,11 +1,24 @@
-<%@ Page language="c#" Inherits="AspDotNetStorefront.search" CodeFile="search.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master"  %>
+<%@ Page Language="c#" Inherits="AspDotNetStorefront.search" CodeFile="search.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
+
 <%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
-<%@ Register assembly="AspDotNetStorefrontControls" namespace="AspDotNetStorefrontControls" tagprefix="aspdnsf" %>
+<%@ Register Assembly="AspDotNetStorefrontControls" Namespace="AspDotNetStorefrontControls" TagPrefix="aspdnsf" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
-    <asp:Panel ID="pnlContent" runat="server" >
-    
-        <asp:Literal ID="litSearch" runat="server"></asp:Literal>       
-        
+    <asp:Panel ID="pnlContent" runat="server">
+
+        <asp:Literal ID="litSearch" runat="server"></asp:Literal>
+
     </asp:Panel>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#beforelogindiv").hide();
+            $(".beforelogin").hide();
+
+            $("#headerlogo").click(function () {
+                $("#headerlogo").attr("href", "home.aspx")
+            });
+        });
+    </script>
+
 </asp:Content>

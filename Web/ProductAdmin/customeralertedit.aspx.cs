@@ -78,7 +78,7 @@ namespace AspDotNetStorefrontAdmin
                                 txtDescription.Text = reader["Description"].ToString();
                                 txtAlertDate.SelectedDate = Convert.ToDateTime(reader["AlertDate"]);
 
-                                btnUpdate.Visible = true;
+                                pnlEditAlert.Visible = true;
                                 lblHeading.Text = "Editing Customer Alert: " + reader["Title"].ToString() + " (ID=" + reader["CustomerAlertID"].ToString() +")";
                             }
                         }
@@ -89,7 +89,7 @@ namespace AspDotNetStorefrontAdmin
             else
             {
                 lblHeading.Text = "Adding New Customer Alert:";
-                btnAddAlert.Visible = true;
+                pnlNewAlert.Visible = true;
             }
         }
 
@@ -146,5 +146,21 @@ namespace AspDotNetStorefrontAdmin
                 }
             }
         }
-    }
+        
+        /// <summary>
+        /// Cancel Button Event
+        /// </summary>        
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("customeralerts.aspx");
+        }
+
+        /// <summary>
+        /// Reset Button Event
+        /// </summary>
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            GetCustomerAlert(Request.QueryString["CustomerAlertID"]);
+        }
+}
 }

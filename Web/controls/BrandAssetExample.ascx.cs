@@ -33,6 +33,10 @@ public partial class controls_BrandAssetExample : System.Web.UI.UserControl
                     {
                         PImagename = PImagename + System.IO.Path.GetExtension(filePaths[0]);
                     }
+                    else
+                    {
+                        PImagename = "nopicture.gif";
+                    }
 
                     if (PDescription.Length > 190)
                     {

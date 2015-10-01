@@ -9,6 +9,8 @@
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/BrandAssetExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBUserInfoAfterLogin" Src="~/Controls/UserInfoAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBDealerInfoAfterLogin" Src="~/Controls/DealerInfoAfterLogin.ascx" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register TagPrefix="aspdnsf" TagName="CustomerAlerts" Src="~/controls/CustomerAlerts.ascx" %>
 <%@ Import Namespace="AspDotNetStorefrontCore" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -35,6 +37,7 @@
 
     <%-- jQuery is required in versions 9.4 and higher --%>
     <script src="jscripts/jquery.min.js" type="text/javascript"></script>
+    <script src="js/modal.js"></script>
     <script type="text/javascript">
         adnsf$ = jQuery; <%-- to avoid conflicts with existing jQuery versions and other javascript frameworks, change this line to adnsf$ = jQuery.noConflict(); --%>
     </script>
@@ -66,7 +69,7 @@
             <div class="header clearfix">
                 <div class="header-part">
                     <a href="#" class="logo" id="headerlogo">
-                        <img src="../../App_Themes/Skin_3/images/logo.png"></a>
+                        <img src="App_Themes/Skin_3/images/logo.png"></a>
                     <span class="head-tagline prelogin">Brand Store        
      
                     <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
@@ -80,7 +83,8 @@
                     <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
                         <ul class="nav navbar-nav">
                             <li class="prelogin">
-                                <a href="#">Alerts</a>
+                                <a href="#"  data-toggle="modal" data-target="#myModal" class="prelogin" id="lnkAlertMobile">Alerts</a>
+                                 <%-- <aspdnsf:CustomerAlerts ID="CustomerAlerts1" runat="server" />   --%>
                             </li>
                             <li class="prelogin">
                                 <a href="#">My Account</a>
@@ -89,11 +93,11 @@
                                 <a href="#">Shopping Cart</a>
                             </li>
                             <li class="prelogin">
-                                <a href="#" class="nav-bar-last">Logout</a>
+                                <a href="signout.aspx" class="nav-bar-last">Logout</a>
                             </li>
                         </ul>
                     </nav>
-                    <a href="#" class="desktop-logout">Logout</a>
+                    <a href="signout.aspx" class="desktop-logout prelogin">Logout</a>
                 </div>
                 <nav class="desktop-nav">
                     <%--calling xml package for getting menue dynamically--%>
@@ -102,41 +106,22 @@
 
                 <div class="user-grid">
                     <span class="desktop-profile">
-                        <a href="#" class="prelogin">Alerts</a>
+                        <asp:ScriptManager ID="ScriptManager1" runat="server">
+                        </asp:ScriptManager>
+                        <a href="#"  data-toggle="modal" data-target="#myModal" class="prelogin"  id="lnkAlertDesktop" runat="server">Alerts</a>
+                        <!-- ModalPopupExtender -->                       
+                             <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />                     
+                        <!-- ModalPopupExtender -->
                         <a href="#" class="prelogin">My Account</a>
                         <a href="#" class="prelogin">Shopping Cart</a>
                     </span>
 
-                    <%--<div class="search-wrap">--%>
-                        <custom:Search ID="Search1" runat="server" />
-                    <%--</div>                    
-
+                    <%--<input class="search-feild" type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
+                        onfocus="if (this.value == 'Search Site') { this.value = ''; }" />--%>
+                    <custom:Search ID="Search1" runat="server" />
                 </div>
 
-                <nav class="mobile-nav">
-                    <%--<ul class="nav nav-justified">
-                    <li>
-                        <a class="mb-market" href="#">Marketing
-                            <br>
-                            Materials
-            
-          </a>
-                    </li>
-                    <li>
-                        <a class="mb-asset" href="#">Brand Assets
-          </a>
-                    </li>
-                    <li>
-                        <a class="mb-merchandise" href="#">Branded
-                            <br>
-                            Merchandise
-          </a>
-                    </li>
-                    <li>
-                        <a class="mb-custom" href="#">Custom Services
-          </a>
-                    </li>
-                </ul>--%>
+                <nav class="mobile-nav">                  
                     <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
                 </nav>
             </div>
@@ -149,67 +134,7 @@
                         <div class="left-side">
 
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
-                            </asp:ContentPlaceHolder>
-
-                            <%--<div class="header-img-box">
-            <img class="img-responsive" src="images/header-img-01.png">
-            <div class="header-text">
-              <h1>Welcome headline goes here</h1>
-              <div class="help-text">Subhead would go here</div>
-          </div>
-        </div>
-        <!-- Contect Box 01  -->
-        <div class="content-box-01">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-          <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-
-        </div>
-
-        <!-- Contect Box 02  -->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="content-box-02">
-
-            <h4>Brand Asset Overview headline goes here  </h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-              </p>
-              
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="primary-img-box">
-                    <img class="img-responsive" src="images/jw-img.png">
-                  </div>
-                  <div class="img-tag-line">branded Asset</div>
-                </div>
-              </div>
-              <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-            <div class="clearfix"></div>
-            </div>
-            </div>
-
-            <div class="col-md-6">
-            <div class="content-box-02">
-
-            <h4>Branded Merchandise Overview headline here </h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-              </p>
-            
-                <div class="row">
-                <div class="col-md-8">
-                  <div class="primary-img-box">
-                    <img class="img-responsive" src="images/jw-img.png">
-                  </div>
-                  <div class="img-tag-line">brand Merchandise</div>
-                </div>
-              </div>
-              <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-            <div class="clearfix"></div>
-            </div>
-            </div>
-
-          </div>--%>
+                            </asp:ContentPlaceHolder>                         
                         </div>
                     </div>
 
@@ -261,12 +186,14 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
                     <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
-                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>
+                    <div class="col-sm-6 col-md-4 footer-nav prelogin"><a href="#">Terms & Conditions</a></div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-2 col-md-2">
-                        <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
+                        <a href="http://www.jeld-wen.com/">
+                            <img src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
+                        </a>
                     </div>
                     <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
                 </div>
@@ -289,4 +216,6 @@
 
 
 </body>
+
 </html>
+

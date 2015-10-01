@@ -119,6 +119,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         LoginPanel.Visible = false;
 
     }
+    protected void GoBackToLoginLink_Click(object sender, EventArgs e)
+    {
+        HiddenLabel.Text = "false";
+        ForgotPasswordPanel.Visible = false;
+        LoginPanel.Visible = true;
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         string HiddenFieldText = HiddenLabel.Text;
@@ -126,6 +132,8 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         {
             ForgotPasswordPanel.Visible = true;
             LoginPanel.Visible = false;
+            ForgotPasswordErrorPanel.Visible = false; // that is where the status msg goes, in all cases in this routine
+            ForgotPasswordErrorMsgLabel.Text = String.Empty;
         }
         else
         {
@@ -503,7 +511,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
                     //Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
 
-                    Response.Redirect("/home.aspx");
+                    Response.Redirect("home.aspx");
 
                     // aqsa arshad 19/09/2015 
                     // Below code work when admin password expires , it will show UI for changing its passowrd. as there is no need of it so i comment code below
