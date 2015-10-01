@@ -1,7 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="JWBSignin.ascx.cs" Inherits="controls_JWBSignin" %>
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
-
-<div id="LoginPanel" runat="server">
+<asp:ScriptManager ID="LoginScriptManager" runat="server">
+        </asp:ScriptManager>
+<asp:UpdatePanel runat="server">
+    <ContentTemplate>
+        <div id="LoginPanel" runat="server">
     <h4>Login</h4>
 
     <label>Email address</label>
@@ -9,7 +12,7 @@
         CausesValidation="True" AutoCompleteType="Email"></asp:TextBox> 
     <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator1" runat="server" ValidationGroup="LoginGroup"
         ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="EmailTextField"></asp:RequiredFieldValidator>
-
+     <br />
     <label>Password</label>
 
     <asp:TextBox runat="server" class="form-control" ID="PasswordTextField" ValidationGroup="LoginGroup" MaxLength="50"
@@ -44,7 +47,12 @@
     <a href="#" class="account-link">Why do I have to create an account?</a>
 
 </div>
-<div id="ForgotPasswordPanel" runat="server">
+</ContentTemplate>
+
+</asp:UpdatePanel>
+<asp:UpdatePanel runat="server">
+    <ContentTemplate>
+        <div id="ForgotPasswordPanel" runat="server">
     <h4>Forgot your password?</h4>
     <label>If you forgot your password, to request a new ONE TIME use only password via e-mail, please enter your e-mail address below, and click the 'Request A New Password' button.</label>
     <br />
@@ -66,10 +74,11 @@
      <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click">Go Back to Login?</asp:LinkButton>
 
 </div>
-<script>
-    $(document).ready(function () {
-        $("#ForgotPasswordErrorPanel").hide();   
-    });
-</script>
+
+
+    </ContentTemplate>
+</asp:UpdatePanel>
+
+
 
    
