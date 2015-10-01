@@ -59,15 +59,15 @@
     '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
-<form id="frm" runat="server">
-    <div class="container">
-        <!-- The justified navigation menu is meant for single line per list item.
+    <form id="frm" runat="server">
+        <div class="container">
+            <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
-        <div class="header clearfix">
-            <div class="header-part">
-                <a href="#" class="logo" id="headerlogo">
-                    <img src="../../App_Themes/Skin_3/images/logo.png"></a>
-                <span class="head-tagline prelogin">Brand Store        
+            <div class="header clearfix">
+                <div class="header-part">
+                    <a href="#" class="logo" id="headerlogo">
+                        <img src="../../App_Themes/Skin_3/images/logo.png"></a>
+                    <span class="head-tagline prelogin">Brand Store        
      
                     <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
                         <span class="sr-only">Toggle navigation</span>
@@ -76,43 +76,45 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                </span>
-                <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
-                    <ul class="nav navbar-nav">
-                        <li class="prelogin">
-                            <a href="#">Alerts</a>
-                        </li>
-                        <li class="prelogin">
-                            <a href="#">My Account</a>
-                        </li>
-                        <li class="prelogin">
-                            <a href="#">Shopping Cart</a>
-                        </li>
-                        <li class="prelogin">
-                            <a href="#" class="nav-bar-last">Logout</a>
-                        </li>
-                    </ul>
+                    </span>
+                    <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
+                        <ul class="nav navbar-nav">
+                            <li class="prelogin">
+                                <a href="#">Alerts</a>
+                            </li>
+                            <li class="prelogin">
+                                <a href="#">My Account</a>
+                            </li>
+                            <li class="prelogin">
+                                <a href="#">Shopping Cart</a>
+                            </li>
+                            <li class="prelogin">
+                                <a href="#" class="nav-bar-last">Logout</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <a href="#" class="desktop-logout">Logout</a>
+                </div>
+                <nav class="desktop-nav">
+                    <%--calling xml package for getting menue dynamically--%>
+                    <aspdnsf:XmlPackage ID="XmlPackage1" runat="server" PackageName="entitymenu" RuntimeParams="entitytype=category" />
                 </nav>
-                <a href="#" class="desktop-logout">Logout</a>
-            </div>
-            <nav class="desktop-nav">
-                <%--calling xml package for getting menue dynamically--%>
-                <aspdnsf:XmlPackage ID="XmlPackage1" runat="server" PackageName="entitymenu" RuntimeParams="entitytype=category" />
-            </nav>
 
-            <div class="user-grid">
-                <span class="desktop-profile">
-                    <a href="#" class="prelogin">Alerts</a>
-                    <a href="#" class="prelogin">My Account</a>
-                    <a href="#" class="prelogin">Shopping Cart</a>
-                </span>
+                <div class="user-grid">
+                    <span class="desktop-profile">
+                        <a href="#" class="prelogin">Alerts</a>
+                        <a href="#" class="prelogin">My Account</a>
+                        <a href="#" class="prelogin">Shopping Cart</a>
+                    </span>
 
-                <input type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
-                    onfocus="if (this.value == 'Search Site') { this.value = ''; }">
-            </div>
+                    <%--<div class="search-wrap">--%>
+                        <custom:Search ID="Search1" runat="server" />
+                    <%--</div>                    
 
-            <nav class="mobile-nav">
-                <%--<ul class="nav nav-justified">
+                </div>
+
+                <nav class="mobile-nav">
+                    <%--<ul class="nav nav-justified">
                     <li>
                         <a class="mb-market" href="#">Marketing
                             <br>
@@ -135,21 +137,21 @@
           </a>
                     </li>
                 </ul>--%>
-                 <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
-            </nav>
-        </div>
+                    <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
+                </nav>
+            </div>
 
-        <div class="body-container">
-            <div class="row">
-                <!-- left Contect Area  -->
-                <div class="col-md-8">
+            <div class="body-container">
+                <div class="row">
+                    <!-- left Contect Area  -->
+                    <div class="col-md-8">
 
-                    <div class="left-side">
+                        <div class="left-side">
 
-                        <asp:ContentPlaceHolder ID="PageContent" runat="server">
-                        </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                            </asp:ContentPlaceHolder>
 
-                        <%--<div class="header-img-box">
+                            <%--<div class="header-img-box">
             <img class="img-responsive" src="images/header-img-01.png">
             <div class="header-text">
               <h1>Welcome headline goes here</h1>
@@ -208,72 +210,72 @@
             </div>
 
           </div>--%>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="col-md-4">
-                    <div class="side-bar">
-
-                        <!-- Side Box -->
-                        <div id="afterlogindiv">
-                            <div class="side-bar-box">
-                                <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
-                            </div>
+                    <div class="col-md-4">
+                        <div class="side-bar">
 
                             <!-- Side Box -->
-                            <div class="side-bar-box">
-                                <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
+                            <div id="afterlogindiv">
+                                <div class="side-bar-box">
+                                    <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
+                                </div>
+
+                                <!-- Side Box -->
+                                <div class="side-bar-box">
+                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
+                                </div>
+                            </div>
+                            <div id="beforelogindiv">
+                                <div class="login-box" id="divlogin" runat="server">
+                                    <%--Login control goes here--%>
+                                    <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
+                                </div>
+
+                                <!-- Separator Line -->
+                                <div class="separator-line" id="separatorafterlogin" runat="server"></div>
+
+                                <!-- Side Box -->
+                                <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                                    <%--Markeeting Example Category control goes here--%>
+                                    <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
+                                </div>
+
+                                <!-- Separator Line -->
+                                <div class="separator-line"></div>
+
+                                <!-- Side Box -->
+                                <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                                    <%--Brand Asset Category control goes here--%>
+                                    <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
+                                </div>
                             </div>
                         </div>
-                        <div id="beforelogindiv">
-                        <div class="login-box" id="divlogin" runat="server">
-                            <%--Login control goes here--%>
-                            <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
-                        </div>
-
-                        <!-- Separator Line -->
-                        <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-
-                        <!-- Side Box -->
-                        <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-                            <%--Markeeting Example Category control goes here--%>
-                            <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
-                        </div>
-
-                        <!-- Separator Line -->
-                        <div class="separator-line"></div>
-
-                        <!-- Side Box -->
-                        <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-                            <%--Brand Asset Category control goes here--%>
-                            <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
-                        </div>
-                            </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Site footer -->
-        <footer class="footer">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
-                <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
-                <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-2 col-md-2">
-                    <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
+            <!-- Site footer -->
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
+                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
+                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>
                 </div>
-                <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
-            </div>
 
-        </footer>
+                <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                        <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
+                    </div>
+                    <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
+                </div>
 
-    </div>
+            </footer>
 
-        </form>
+        </div>
+
+    </form>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

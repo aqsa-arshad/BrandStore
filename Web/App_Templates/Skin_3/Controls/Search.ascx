@@ -2,15 +2,15 @@
 
 <asp:Panel runat="server" DefaultButton="SearchButton">
 
-	<div class="form-group">
-		<asp:TextBox runat="server" 
-			ID="SearchBox" 
-			CssClass="search-box form-control" />
-	</div>
-	<asp:Button runat="server" 
-		ID="SearchButton" 
-		CssClass="search-go btn btn-default" 
-		OnClick="SearchButton_Click" 
-		UseSubmitBehavior="false" 
-		Text="<%$ Tokens:STRINGRESOURCE, search.go %>"/>
+    <div class="form-group">       
+        <asp:TextBox ID="SearchBox" runat="server"
+             CssClass="search-feild" />
+
+        <asp:Button runat="server"
+            ID="SearchButton"            
+            OnClick="SearchButton_Click"
+            UseSubmitBehavior="false"             
+            style="display:none"/>
+    </div>
+
 </asp:Panel>

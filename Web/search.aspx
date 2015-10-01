@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="AspDotNetStorefront.search" CodeFile="search.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/template.master"  %>
+<%@ Page language="c#" Inherits="AspDotNetStorefront.search" CodeFile="search.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master"  %>
 <%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
 <%@ Register assembly="AspDotNetStorefrontControls" namespace="AspDotNetStorefrontControls" tagprefix="aspdnsf" %>
 

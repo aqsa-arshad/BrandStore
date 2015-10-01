@@ -22,7 +22,7 @@ public partial class controls_Search : System.Web.UI.UserControl
 {
 	protected void Page_Load(object sender, EventArgs e)
 	{
-		SearchBox.Attributes.Add("placeholder", AppLogic.GetString("search.prompt", Localization.GetDefaultLocale()));
+		SearchBox.Attributes.Add("placeholder", "Search Site");
 
 		string queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
 		if (!IsPostBack)
@@ -32,7 +32,7 @@ public partial class controls_Search : System.Web.UI.UserControl
 		}
 		
 	}
-
+    
 	protected void SearchButton_Click(object sender, EventArgs e)
 	{
 		Response.Redirect(String.Format("~/search.aspx?searchterm={0}", Server.UrlEncode(SearchBox.Text)));
