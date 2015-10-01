@@ -155,8 +155,7 @@ namespace AspDotNetStorefront
                 rfvSecurity.Enabled = true;
             }
         }
-
-
+        
         protected void ctrlLogin_LoggingIn(object sender, LoginCancelEventArgs e)
         {
             int CurrentCustomerID = ThisCustomer.CustomerID;                       
