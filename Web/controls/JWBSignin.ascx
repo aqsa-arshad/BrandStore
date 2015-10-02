@@ -1,7 +1,5 @@
 ﻿<%@ control language="C#" autoeventwireup="true" codefile="JWBSignin.ascx.cs" inherits="controls_JWBSignin" %>
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
-<asp:ScriptManager ID="LoginScriptManager" runat="server">
-</asp:ScriptManager>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
         <div id="LoginPanel" runat="server">
@@ -12,10 +10,7 @@
                 CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
             <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator1" runat="server" ValidationGroup="LoginGroup"
                 ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="EmailTextField"></asp:RequiredFieldValidator>
-
             <br />
-            <br />
-
             <label>Password</label>
 
             <asp:TextBox runat="server" class="form-control" ID="PasswordTextField" ValidationGroup="LoginGroup" MaxLength="50"
@@ -47,7 +42,7 @@
 
 
             <asp:Button type="submit" ID="LoginButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="LoginGroup" OnClick="submitButton_Click" Text="Sign in" />
-            <a href="#" class="account-link">Why do I have to create an account?</a>
+            <a href="createaccount.aspx" class="account-link">Why do I have to create an account?</a>
 
         </div>
     </ContentTemplate>

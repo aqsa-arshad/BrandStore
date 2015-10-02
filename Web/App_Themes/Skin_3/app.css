@@ -115,7 +115,6 @@ samp {
   font-size: 1em;
 }
 button,
-input,
 optgroup,
 select,
 textarea {
@@ -5755,7 +5754,7 @@ body {
   color: #545759;
   font-family: 'FrutigerLTStd-Light';
 }
-input[type="text"] {
+input[type="text"],input[type="password"]{
   border: 1px solid #c6c6c6;
   padding: 4px 12px;
   height: 26px;
@@ -6045,7 +6044,8 @@ a:hover.mb-link {
     height: 62px;
   }
 }
-.user-grid input[type="text"].search-feild {
+.user-grid input[type="text"].search-feild 
+{
   background: url('images/search-img.png') no-repeat 10px 2px;
   padding: 5px 5px 5px 35px;
   color: #afb0a9;
@@ -6227,7 +6227,7 @@ a:hover.mb-link {
   text-align: center;
   font-size: 18px;
 }
-.side-bar .login-box input[type=text] {
+.side-bar .login-box input[type=text],input[type="password"] {
   width: 100%;
 }
 .side-bar .login-box > label {
