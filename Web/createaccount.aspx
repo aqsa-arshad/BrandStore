@@ -15,7 +15,7 @@
             </div>
             <aspdnsf:Topic runat="server" ID="CreateAccountPageHeader" TopicName="CreateAccountPageHeader" />
             <asp:Panel ID="pnlErrorMsg" runat="Server" Visible="false">
-                <div class="error-wrap">
+                <div class="error-wrap"> 
                     <asp:Label ID="lblErrorMessage" runat="server" CssClass="error-large"></asp:Label>
                 </div>
             </asp:Panel>
