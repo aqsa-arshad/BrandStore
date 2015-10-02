@@ -83,5 +83,7 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
                 cmd.ExecuteNonQuery();
             }
         }
-    }
+    }    
+
+   
 }
