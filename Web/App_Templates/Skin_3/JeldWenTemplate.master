@@ -9,6 +9,8 @@
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/BrandAssetExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBUserInfoAfterLogin" Src="~/Controls/UserInfoAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBDealerInfoAfterLogin" Src="~/Controls/DealerInfoAfterLogin.ascx" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register TagPrefix="aspdnsf" TagName="CustomerAlerts" Src="~/controls/CustomerAlerts.ascx" %>
 <%@ Import Namespace="AspDotNetStorefrontCore" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -35,6 +37,7 @@
 
     <%-- jQuery is required in versions 9.4 and higher --%>
     <script src="jscripts/jquery.min.js" type="text/javascript"></script>
+    <script src="js/modal.js"></script>
     <script type="text/javascript">
         adnsf$ = jQuery; <%-- to avoid conflicts with existing jQuery versions and other javascript frameworks, change this line to adnsf$ = jQuery.noConflict(); --%>
     </script>
@@ -59,15 +62,15 @@
     '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
-<form id="frm" runat="server">
-    <div class="container">
-        <!-- The justified navigation menu is meant for single line per list item.
+    <form id="frm" runat="server">
+        <div class="container">
+            <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
-        <div class="header clearfix">
-            <div class="header-part">
-                <a href="#" class="logo" id="headerlogo">
-                    <img src="../../App_Themes/Skin_3/images/logo.png"></a>
-                <span class="head-tagline prelogin">Brand Store        
+            <div class="header clearfix">
+                <div class="header-part">
+                    <a href="#" class="logo" id="headerlogo">
+                        <img src="App_Themes/Skin_3/images/logo.png"></a>
+                    <span class="head-tagline prelogin">Brand Store        
      
                     <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
                         <span class="sr-only">Toggle navigation</span>
@@ -76,206 +79,130 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                </span>
-                <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
-                    <ul class="nav navbar-nav">
-                        <li class="prelogin">
-                            <a href="#">Alerts</a>
-                        </li>
-                        <li class="prelogin">
-                            <a href="#">My Account</a>
-                        </li>
-                        <li class="prelogin">
-                            <a href="#">Shopping Cart</a>
-                        </li>
-                        <li class="prelogin">
-                            <a href="/signout.aspx" class="nav-bar-last">Logout</a>
-                        </li>
-                    </ul>
+                    </span>
+                    <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
+                        <ul class="nav navbar-nav">
+                            <li class="prelogin">
+                                <a href="#"  data-toggle="modal" data-target="#myModal" class="prelogin" id="lnkAlertMobile">Alerts</a>
+                                 <%-- <aspdnsf:CustomerAlerts ID="CustomerAlerts1" runat="server" />   --%>
+                            </li>
+                            <li class="prelogin">
+                                <a href="#">My Account</a>
+                            </li>
+                            <li class="prelogin">
+                                <a href="#">Shopping Cart</a>
+                            </li>
+                            <li class="prelogin">
+                                <a href="signout.aspx" class="nav-bar-last">Logout</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <a href="signout.aspx" class="desktop-logout prelogin">Logout</a>
+                </div>
+                <nav class="desktop-nav">
+                    <%--calling xml package for getting menue dynamically--%>
+                    <aspdnsf:XmlPackage ID="XmlPackage1" runat="server" PackageName="entitymenu" RuntimeParams="entitytype=category" />
                 </nav>
-                <a href="/signout.aspx" class="desktop-logout">Logout</a>
-            </div>
-            <nav class="desktop-nav">
-                <%--calling xml package for getting menue dynamically--%>
-                <aspdnsf:XmlPackage ID="XmlPackage1" runat="server" PackageName="entitymenu" RuntimeParams="entitytype=category" />
-            </nav>
 
-            <div class="user-grid">
-                <span class="desktop-profile">
-                    <a href="#" class="prelogin">Alerts</a>
-                    <a href="#" class="prelogin">My Account</a>
-                    <a href="#" class="prelogin">Shopping Cart</a>
-                </span>
+                <div class="user-grid">
+                    <span class="desktop-profile">
+                        <asp:ScriptManager ID="ScriptManager1" runat="server">
+                        </asp:ScriptManager>
+                        <a href="#"  data-toggle="modal" data-target="#myModal" class="prelogin"  id="lnkAlertDesktop" runat="server">Alerts</a>
+                        <!-- ModalPopupExtender -->                       
+                             <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />                     
+                        <!-- ModalPopupExtender -->
+                        <a href="#" class="prelogin">My Account</a>
+                        <a href="#" class="prelogin">Shopping Cart</a>
+                    </span>
 
-                <input class="search-feild" type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
-                    onfocus="if (this.value == 'Search Site') { this.value = ''; }"/>
-            </div>
-
-            <nav class="mobile-nav">
-                <%--<ul class="nav nav-justified">
-                    <li>
-                        <a class="mb-market" href="#">Marketing
-                            <br>
-                            Materials
-            
-          </a>
-                    </li>
-                    <li>
-                        <a class="mb-asset" href="#">Brand Assets
-          </a>
-                    </li>
-                    <li>
-                        <a class="mb-merchandise" href="#">Branded
-                            <br>
-                            Merchandise
-          </a>
-                    </li>
-                    <li>
-                        <a class="mb-custom" href="#">Custom Services
-          </a>
-                    </li>
-                </ul>--%>
-                 <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
-            </nav>
-        </div>
-
-        <div class="body-container">
-            <div class="row">
-                <!-- left Contect Area  -->
-                <div class="col-md-8">
-
-                    <div class="left-side">
-
-                        <asp:ContentPlaceHolder ID="PageContent" runat="server">
-                        </asp:ContentPlaceHolder>
-
-                        <%--<div class="header-img-box">
-            <img class="img-responsive" src="images/header-img-01.png">
-            <div class="header-text">
-              <h1>Welcome headline goes here</h1>
-              <div class="help-text">Subhead would go here</div>
-          </div>
-        </div>
-        <!-- Contect Box 01  -->
-        <div class="content-box-01">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-          <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-
-        </div>
-
-        <!-- Contect Box 02  -->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="content-box-02">
-
-            <h4>Brand Asset Overview headline goes here  </h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-              </p>
-              
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="primary-img-box">
-                    <img class="img-responsive" src="images/jw-img.png">
-                  </div>
-                  <div class="img-tag-line">branded Asset</div>
+                    <%--<input class="search-feild" type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
+                        onfocus="if (this.value == 'Search Site') { this.value = ''; }" />--%>
+                    <custom:Search ID="Search1" runat="server" />
                 </div>
-              </div>
-              <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-            <div class="clearfix"></div>
-            </div>
+
+                <nav class="mobile-nav">                  
+                    <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
+                </nav>
             </div>
 
-            <div class="col-md-6">
-            <div class="content-box-02">
-
-            <h4>Branded Merchandise Overview headline here </h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-              </p>
-            
+            <div class="body-container">
                 <div class="row">
-                <div class="col-md-8">
-                  <div class="primary-img-box">
-                    <img class="img-responsive" src="images/jw-img.png">
-                  </div>
-                  <div class="img-tag-line">brand Merchandise</div>
-                </div>
-              </div>
-              <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>
-            <div class="clearfix"></div>
-            </div>
-            </div>
+                    <!-- left Contect Area  -->
+                    <div class="col-md-8">
 
-          </div>--%>
+                        <div class="left-side">
+
+                            <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                            </asp:ContentPlaceHolder>                         
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="col-md-4">
-                    <div class="side-bar">
-
-                        <!-- Side Box -->
-                        <div id="afterlogindiv">
-                            <div class="side-bar-box">
-                                <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
-                            </div>
+                    <div class="col-md-4">
+                        <div class="side-bar">
 
                             <!-- Side Box -->
-                            <div class="side-bar-box">
-                                <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
+                            <div id="afterlogindiv">
+                                <div class="side-bar-box">
+                                    <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
+                                </div>
+
+                                <!-- Side Box -->
+                                <div class="side-bar-box">
+                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
+                                </div>
+                            </div>
+                            <div id="beforelogindiv">
+                                <div class="login-box" id="divlogin" runat="server">
+                                    <%--Login control goes here--%>
+                                    <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
+                                </div>
+
+                                <!-- Separator Line -->
+                                <div class="separator-line" id="separatorafterlogin" runat="server"></div>
+
+                                <!-- Side Box -->
+                                <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                                    <%--Markeeting Example Category control goes here--%>
+                                    <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
+                                </div>
+
+                                <!-- Separator Line -->
+                                <div class="separator-line"></div>
+
+                                <!-- Side Box -->
+                                <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                                    <%--Brand Asset Category control goes here--%>
+                                    <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
+                                </div>
                             </div>
                         </div>
-                        <div id="beforelogindiv">
-                        <div class="login-box" id="divlogin" runat="server">
-                            <%--Login control goes here--%>
-                            <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
-                        </div>
-
-                        <!-- Separator Line -->
-                        <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-
-                        <!-- Side Box -->
-                        <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-                            <%--Markeeting Example Category control goes here--%>
-                            <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
-                        </div>
-
-                        <!-- Separator Line -->
-                        <div class="separator-line"></div>
-
-                        <!-- Side Box -->
-                        <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-                            <%--Brand Asset Category control goes here--%>
-                            <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
-                        </div>
-                            </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Site footer -->
-        <footer class="footer">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
-                <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
-                <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Terms & Conditions</a></div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-2 col-md-2">
-                    <a href="http://www.jeld-wen.com/">
-                    <img src="../../App_Themes/Skin_3/images/bottom-logo.png" />
-                        </a>
+            <!-- Site footer -->
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
+                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
+                    <div class="col-sm-6 col-md-4 footer-nav prelogin"><a href="#">Terms & Conditions</a></div>
                 </div>
-                <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
-            </div>
 
-        </footer>
+                <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                        <a href="http://www.jeld-wen.com/">
+                            <img src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
+                </div>
 
-    </div>
+            </footer>
 
-        </form>
+        </div>
+
+    </form>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -289,4 +216,6 @@
 
 
 </body>
+
 </html>
+

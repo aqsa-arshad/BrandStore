@@ -8,6 +8,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
+using AspDotNetStorefront;
 
 public partial class controls_JWBSignin : System.Web.UI.UserControl
 {
@@ -46,6 +47,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         ctrl = ctrlCol[Index].FindControl(Name) as Control;
         return ctrl;
     }
+    
     private void PopulateFields(ControlCollection cc)
     {
         tbSecurityCode = GetControl("SecurityCode") as TextBox;
@@ -64,6 +66,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         tbNewPassword = GetControl("NewPassword") as TextBox;
         tbNewPassword2 = GetControl("NewPassword2") as TextBox;
     }
+    
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
@@ -112,6 +115,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
 
     }
+    
     protected void forgotpasswordLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
@@ -119,12 +123,14 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         LoginPanel.Visible = false;
 
     }
+    
     protected void GoBackToLoginLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "false";
         ForgotPasswordPanel.Visible = false;
         LoginPanel.Visible = true;
     }
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         string HiddenFieldText = HiddenLabel.Text;
@@ -242,6 +248,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             rfvSecurity.Enabled = true;
         }
     }
+    
     protected void submitButton_Click(object sender, EventArgs e)
     {
         int CurrentCustomerID = ThisCustomer.CustomerID;
@@ -342,8 +349,13 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
         else //normal login
         {
-            ThisCustomer = new Customer(EMailField, true);
+            /*
+             * Atir Zubair 
+             * Initialize Customer Object after OKTA Authentication
+             * */
+            ThisCustomer = AuthenticationSSO.InitializeCustomerObject(EMailField, PasswordField);
 
+            //ThisCustomer = new Customer(EMailField, true);
             if (ThisCustomer.IsRegistered)
             {
                 LoginOK = System.Web.Security.Membership.ValidateUser(EMailField, PasswordField);
@@ -511,7 +523,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
                     //Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
 
-                    Response.Redirect("/home.aspx");
+                    Response.Redirect("home.aspx");
 
                     // aqsa arshad 19/09/2015 
                     // Below code work when admin password expires , it will show UI for changing its passowrd. as there is no need of it so i comment code below
@@ -611,4 +623,5 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             }
         }
     }
+
 }

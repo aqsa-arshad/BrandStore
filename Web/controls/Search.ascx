@@ -6,7 +6,7 @@
         <asp:TextBox runat="server"
             ID="SearchBox"
             CssClass="form-control search-text"
-            Text="<%$ Tokens:STRINGRESOURCE, search.prompt %>" />
+            Text="<%$ Tokens:STRINGRESOURCE, search.prompt %>"/>
 
         <asp:Button runat="server"
             ID="SearchButton"
@@ -17,3 +17,4 @@
     </div>
 
 </asp:Panel>
+ 
