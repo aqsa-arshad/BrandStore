@@ -57,8 +57,7 @@
             $(".afterlogin").hide();
 
             $("#headerlogo").click(function () {
-            $("#headerlogo").attr("href", "default.aspx")
-
+                $("#headerlogo").attr("href", "default.aspx");
             });
 
         });
