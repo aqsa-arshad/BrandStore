@@ -14,17 +14,12 @@
         <meta content="" name="description">
         <meta content="" name="author">
         <title>Home</title>
-
     </head>
     <body>
-
-
         <div class="left-side">
             <%--Calling topic defind through admin console.--%>
             <aspdnsf:Topic ID="Topic2" runat="server" TopicName="HomePageTopic" />
             <!-- Contect Box 02  -->
-
-
             <div class="row">
                 <div class="col-md-6">
                     <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
@@ -34,8 +29,6 @@
                     <aspdnsf:JWBBrandMerchandiseExampleExample runat="server" ID="JWBBrandMerchandiseExampleExample" />
                 </div>
             </div>
-
-
         </div>
 
 
@@ -44,13 +37,10 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../../dist/js/bootstrap.min.js"></script>
-
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
         <script src="offcanvas.js"></script>
-
-
+        <asp:label runat="server" ID="lblisAuthenticated" Visible="false"/> 
     </body>
     </html>
     <script type="text/javascript">
@@ -62,7 +52,17 @@
             $("#headerlogo").click(function () {
                 $("#headerlogo").attr("href", "home.aspx")
 
-            });       
+            });
+
+        //    if($("#lblisAuthenticated").val() == 1)
+        //    {
+        //        alert($("#lblisAuthenticated").val());
+        //    }
+        //else
+        //    {
+        //        this.
+        //    alert($("#lblisAuthenticated").val());
+        //    }
                      
             
         });
