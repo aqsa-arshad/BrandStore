@@ -47,7 +47,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         ctrl = ctrlCol[Index].FindControl(Name) as Control;
         return ctrl;
     }
-    
+
     private void PopulateFields(ControlCollection cc)
     {
         tbSecurityCode = GetControl("SecurityCode") as TextBox;
@@ -66,7 +66,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         tbNewPassword = GetControl("NewPassword") as TextBox;
         tbNewPassword2 = GetControl("NewPassword2") as TextBox;
     }
-    
+
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
@@ -115,27 +115,30 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
 
     }
-    
+
     protected void forgotpasswordLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
+        ForgotPasswordEmailTextField.Focus();
         ForgotPasswordPanel.Visible = true;
         LoginPanel.Visible = false;
 
     }
-    
+
     protected void GoBackToLoginLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "false";
         ForgotPasswordPanel.Visible = false;
         LoginPanel.Visible = true;
     }
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
+       
         string HiddenFieldText = HiddenLabel.Text;
         if (HiddenFieldText.Equals("true"))
         {
+            ForgotPasswordEmailTextField.Focus();
             ForgotPasswordPanel.Visible = true;
             LoginPanel.Visible = false;
             ForgotPasswordErrorPanel.Visible = false; // that is where the status msg goes, in all cases in this routine
@@ -143,6 +146,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
         else
         {
+            EmailTextField.Focus();
             ForgotPasswordPanel.Visible = false;
             LoginPanel.Visible = true;
         }
@@ -248,7 +252,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             rfvSecurity.Enabled = true;
         }
     }
-    
+
     protected void submitButton_Click(object sender, EventArgs e)
     {
         int CurrentCustomerID = ThisCustomer.CustomerID;
