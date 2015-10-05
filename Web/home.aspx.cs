@@ -23,9 +23,7 @@ namespace AspDotNetStorefront
     {
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            //divMarkeetingExample.Controls.Add(LoadControl("~/Controls/MarkeetingExample.ascx"));
-            //((System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("beforelogindiv")).Style["display"] = "none";
-
+           
             if (CommonLogic.ServerVariables("HTTP_HOST").IndexOf(AppLogic.LiveServer(), StringComparison.InvariantCultureIgnoreCase) != -1 &&
                 CommonLogic.ServerVariables("HTTP_HOST").IndexOf("WWW", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
@@ -41,19 +39,12 @@ namespace AspDotNetStorefront
             }
 
             // this may be overwridden by the XmlPackage below!
-            SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
-
-            //Package1.PackageName = "page.default.xml.config";
-
-            // set the Customer context, and set the SkinBase context, so meta tags to be set if they are not blank in the XmlPackage results
-            // Package1.SetContext = this;
-            // pnlContent1.Controls.Add(LoadControl("~/Controls/Signin.ascx"));
-            // unsupported feature:
-            //System.Diagnostics.Trace.WriteLineIf(Config.TraceLevel.TraceVerbose, "Welcome to AspDotNetStorefront");
-
-            //PayPalAd homePageAd = new PayPalAd(PayPalAd.TargetPage.Home);
-            //if (homePageAd.Show)
-            //ltPayPalAd.Text = homePageAd.ImageScript;
+            //SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
+           
+            if (!ThisCustomer.IsAuthenticated)
+            {
+                Response.Redirect("default.aspx");
+            }           
         }
 
         protected override string OverrideTemplate()

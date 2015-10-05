@@ -81,39 +81,48 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
 
         ForgotPasswordErrorMsgLabel.Text = "Email: " + EMail;
-        Customer c = new Customer(EMail);
-        if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
+        bool SendWasOk = false;
+        UserModel userModel = AuthenticationSSO.GetUserModel(EMail);
+
+        if (userModel != null) // If Okta User
         {
-            ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-            return;
+            SendWasOk = AuthenticationSSO.ChangePasswordRequest(userModel.id);
         }
         else
         {
-            bool SendWasOk = false;
-            try
+            Customer c = new Customer(EMail);
+            if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
             {
-                MembershipUser user = System.Web.Security.Membership.GetUser(EMail);
-                string newPassword = user.ResetPassword();
-                while (newPassword.Contains('*')) // *'s in passwords fail because of replacement - keep generating new passwords until no *'s
-                {
-                    newPassword = user.ResetPassword();
-                }
-                String FromEMail = AppLogic.AppConfig("MailMe_FromAddress");
-                String PackageName = AppLogic.AppConfig("XmlPackage.LostPassword");
-                AppLogic.SendMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("lostpassword.aspx.6", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, m_SkinID, string.Empty, "newpwd=" + newPassword + "&thiscustomerid=" + ThisCustomer.CustomerID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
-                SendWasOk = true;
-            }
-            catch { }
-            if (!SendWasOk)
-            {
-                ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                return;
             }
             else
             {
-                ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+                try
+                {
+                    MembershipUser user = System.Web.Security.Membership.GetUser(EMail);
+                    string newPassword = user.ResetPassword();
+                    while (newPassword.Contains('*')) // *'s in passwords fail because of replacement - keep generating new passwords until no *'s
+                    {
+                        newPassword = user.ResetPassword();
+                    }
+                    String FromEMail = AppLogic.AppConfig("MailMe_FromAddress");
+                    String PackageName = AppLogic.AppConfig("XmlPackage.LostPassword");
+                    AppLogic.SendMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("lostpassword.aspx.6", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, m_SkinID, string.Empty, "newpwd=" + newPassword + "&thiscustomerid=" + ThisCustomer.CustomerID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
+                    SendWasOk = true;
+                }
+                catch { }
             }
         }
 
+        if (!SendWasOk)
+        {
+            ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+        }
+        else
+        {
+            ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+        }
     }
 
     protected void forgotpasswordLink_Click(object sender, EventArgs e)
@@ -353,13 +362,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
         else //normal login
         {
-            /*
-             * Atir Zubair 
+            /*            
              * Initialize Customer Object after OKTA Authentication
-             * */
+             */
             ThisCustomer = AuthenticationSSO.InitializeCustomerObject(EMailField, PasswordField);
-
             //ThisCustomer = new Customer(EMailField, true);
+
             if (ThisCustomer.IsRegistered)
             {
                 LoginOK = System.Web.Security.Membership.ValidateUser(EMailField, PasswordField);

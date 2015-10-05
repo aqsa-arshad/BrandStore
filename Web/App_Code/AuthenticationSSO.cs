@@ -67,13 +67,6 @@ namespace AspDotNetStorefront
                 HttpContent content = new StringContent(str, Encoding.UTF8, "application/json");
 
                 return client.PostAsync(url, content).Result.IsSuccessStatusCode;
-
-                //var response = client.PostAsync(url, content).Result;
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    var json = response.Content.ReadAsStringAsync().Result;
-                //    var sessionModel = JsonConvert.DeserializeObject<SessionModel>(json);
-                //}
             }
         }
 
@@ -82,7 +75,7 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="userName">userName</param>
         /// <returns>UserModel</returns>
-        private static UserModel GetUserModel(string userName)
+        public static UserModel GetUserModel(string userName)
         {
             using (var client = new HttpClient())
             {
@@ -125,6 +118,7 @@ namespace AspDotNetStorefront
         private static void UpdateCustomer(Profile profile, string userName, string password)
         {
             Password p = new Password(password);
+            int customerLevelID = GetCustomerLevelID(profile.userType);
 
             ThisCustomer = new Customer(userName);
             SqlParameter[] sqlParameter = {
@@ -135,7 +129,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@FirstName", profile.firstName),
                                         new SqlParameter("@LastName", profile.lastName),
                                         new SqlParameter("@Phone", profile.primaryPhone),
-                                        new SqlParameter("@CustomerLevelID", 0),
+                                        new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@BillingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID == null ? 0 : ThisCustomer.PrimaryBillingAddressID)),
                                         new SqlParameter("@ShippingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryShippingAddressID == null ? 0 : ThisCustomer.PrimaryShippingAddressID)),
                                         new SqlParameter("@IsAdmin", 0)
@@ -188,6 +182,41 @@ namespace AspDotNetStorefront
                 anyAddress.UpdateDB();
 
             return anyAddress.AddressID; ;
+        }
+    
+        /// <summary>
+        /// Get CustomerLevelID w.r.t Okta UserType
+        /// </summary>
+        /// <param name="userType">userType</param>
+        /// <returns>CustomerLevelID</returns>
+        private static int GetCustomerLevelID(string userType)
+        {
+            string enumUserType = userType.Replace(" ", "").ToUpper();
+            if (Enum.IsDefined(typeof(UserType), enumUserType))
+            {
+                return (int)Enum.Parse(typeof(UserType), enumUserType);
+            }
+            return (int)UserType.PUBLIC;
+        }
+
+        /// <summary>
+        /// Send Email to User for Change Password Request
+        /// </summary>
+        /// <param name="userName">userName</param>
+        /// <returns>Status</returns>
+        public static bool ChangePasswordRequest(string UserModelID)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = ConfigurationManager.AppSettings["UserURL"] + UserModelID + ConfigurationManager.AppSettings["ResetPassword"];
+                var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
+                client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", authorization);
+
+                return client.PostAsync(url, new StringContent("")).Result.IsSuccessStatusCode;
+            }
         }
     
     }

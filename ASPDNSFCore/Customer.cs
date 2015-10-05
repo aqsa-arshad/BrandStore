@@ -4643,4 +4643,17 @@ namespace AspDotNetStorefrontCore
         #endregion
     }
 
+    #region Public Enums for Customer Level
+    public enum UserType
+    {
+        STOREADMINISTRATOR = 1,
+        BUDGETADMINISTRATOR = 2,
+        SALESREPS = 3,
+        DEALERSTIER1 = 4,
+        DEALERSTIER2 = 5,
+        DEALERSTIER3 = 6,
+        INTERNAL= 7,
+        PUBLIC = 8
+    }
+    #endregion
 }
