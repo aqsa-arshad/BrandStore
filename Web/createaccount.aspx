@@ -2,13 +2,13 @@
     CodeFile="createaccount.aspx.cs" MaintainScrollPositionOnPostback="true" MasterPageFile="~/App_Templates/Skin_1/template.master" %>
 
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
-<%@ Register src="controls/CheckoutSteps.ascx" tagname="CheckoutSteps" tagprefix="checkout" %>
+<%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <asp:Panel ID="pnlContent" runat="server">
         <div class="page-wrap create-account-page">
             <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
             <h1>
-                 <asp:Literal ID="Literal5" Text="<%$ Tokens:StringResource,Header.CreateAccount %>" runat="server" />
+                <asp:Literal ID="Literal5" Text="<%$ Tokens:StringResource,Header.CreateAccount %>" runat="server" />
             </h1>
             <div class="group-header account-header">
                 <asp:Literal ID="ltAccount" Text="<%$ Tokens:StringResource,Header.AccountInformation %>" runat="server" />
@@ -64,7 +64,7 @@
                         YearOfBirthReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.90 %>"
                         EmailReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.16 %>"
                         PhoneReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.24 %>"
-                        PhoneRegExErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.24.a %>"
+                        PhoneRegExErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.24 %>"
                         SecurityCodeReqFieldErrorMessage="<%$ Tokens:StringResource, signin.aspx.20 %>"
                         EmailRegExErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>"
                         ReEnterEmailReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.94 %>"
@@ -104,7 +104,7 @@
                         <asp:TextBox ID="txtSkipRegEmail" runat="server" CssClass="form-control" MaxLength="100" ValidationGroup="registration"></asp:TextBox>
                         <asp:Literal ID="Literal4" runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.81 %>"></asp:Literal>
                         <asp:RequiredFieldValidator ID="valReqSkipRegEmail" runat="server" ControlToValidate="txtSkipRegEmail" Enabled="false" Display="none" ValidationGroup="registration" EnableClientScript="true" ErrorMessage="<%$ Tokens:StringResource,createaccount.aspx.81 %>"></asp:RequiredFieldValidator>
-						<aspdnsf:EmailValidator ID="valRegExSkipRegEmail" ControlToValidate="txtSkipRegEmail" ValidationGroup="registration" Display="none" runat="server" />
+                        <aspdnsf:EmailValidator ID="valRegExSkipRegEmail" ControlToValidate="txtSkipRegEmail" ValidationGroup="registration" Display="none" runat="server" />
                     </div>
                     <div class="form-group">
                         <label>
@@ -121,7 +121,8 @@
                         <asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.BillingInformation %>" runat="server" />
                     </div>
                     <div class="form-text">
-                        <asp:Literal ID="createaccountaspx30" Mode="PassThrough" runat="Server"></asp:Literal></div>
+                        <asp:Literal ID="createaccountaspx30" Mode="PassThrough" runat="Server"></asp:Literal>
+                    </div>
                     <div class="checkbox">
                         <label>
                             <asp:CheckBox ID="BillingEqualsAccount" runat="server" />

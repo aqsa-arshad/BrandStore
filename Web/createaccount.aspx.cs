@@ -164,7 +164,7 @@ namespace AspDotNetStorefront
             if (CommonLogic.QueryStringNativeInt("errormsg") > 0)
             {
                 ErrorMessage e = new ErrorMessage(CommonLogic.QueryStringNativeInt("errormsg"));
-				lblErrorMessage.Text = string.Format("<div class='error-large'>{0}</div>", e.Message);
+                lblErrorMessage.Text = string.Format("<div class='error-large'>{0}</div>", e.Message);
                 pnlErrorMsg.Visible = true;
             }
 
@@ -804,8 +804,8 @@ namespace AspDotNetStorefront
             }
             else
             {
-				lblErrorMessage.Text += String.Format("<div class='error-header'>{0}</div>", AppLogic.GetString("createaccount.aspx.84", 1, Localization.GetDefaultLocale()));
-				lblErrorMessage.Text += "<ul class='error-list'>";
+                lblErrorMessage.Text += String.Format("<div class='error-header'>{0}</div>", AppLogic.GetString("createaccount.aspx.84", 1, Localization.GetDefaultLocale()));
+                lblErrorMessage.Text += "<ul class='error-list'>";
                 if (AccountName.Length == 0)
                 {
                     lblErrorMessage.Text += String.Format("<li>{0}</li>", AppLogic.GetString("createaccount.aspx.5", 1, Localization.GetDefaultLocale()));
@@ -817,7 +817,7 @@ namespace AspDotNetStorefront
                         lblErrorMessage.Text += String.Format("<li>{0}</li>", aValidator.ErrorMessage);
                     }
                 }
-				lblErrorMessage.Text += "</ul>";
+                lblErrorMessage.Text += "</ul>";
                 lblErrorMessage.Text += "";
                 ResetScrollPosition();
             }

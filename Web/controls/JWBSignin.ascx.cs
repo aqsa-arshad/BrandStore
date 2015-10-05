@@ -128,6 +128,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     protected void forgotpasswordLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
+        ForgotPasswordEmailTextField.Focus();
         ForgotPasswordPanel.Visible = true;
         LoginPanel.Visible = false;
 
@@ -142,9 +143,11 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
+       
         string HiddenFieldText = HiddenLabel.Text;
         if (HiddenFieldText.Equals("true"))
         {
+            ForgotPasswordEmailTextField.Focus();
             ForgotPasswordPanel.Visible = true;
             LoginPanel.Visible = false;
             ForgotPasswordErrorPanel.Visible = false; // that is where the status msg goes, in all cases in this routine
@@ -152,6 +155,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
         else
         {
+            EmailTextField.Focus();
             ForgotPasswordPanel.Visible = false;
             LoginPanel.Visible = true;
         }
@@ -383,7 +387,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                         return;
                     }
 
-                    // aqsa arshad 19/09/2015 
+                    //TODO: aqsa arshad 19/09/2015 
                     // Below code work when admin password expires, if i uncomment this then i have to Update UI of login control, as right now there is no need of it so i comment it.
 
                     //if (((ThisCustomer.IsAdminSuperUser || ThisCustomer.IsAdminUser) && ThisCustomer.PwdChanged.AddDays(AppLogic.AppConfigUSDouble("AdminPwdChangeDays")) < DateTime.Now) || ThisCustomer.PwdChangeRequired)
