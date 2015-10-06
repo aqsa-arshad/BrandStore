@@ -21,8 +21,7 @@ namespace AspDotNetStorefront
     [PageType("home")]
     public partial class _default : SkinBase
     {
-        public String abc = "aa";
-        protected void Page_Load(object sender, System.EventArgs e)
+       protected void Page_Load(object sender, System.EventArgs e)
         {
 
             if (CommonLogic.ServerVariables("HTTP_HOST").IndexOf(AppLogic.LiveServer(), StringComparison.InvariantCultureIgnoreCase) != -1 &&

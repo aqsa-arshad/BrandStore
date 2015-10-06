@@ -41,7 +41,7 @@ namespace AspDotNetStorefront
                 else
                 {
                     ShowPreLoginControls();
-                    this.hdnCustomerLevel.Text = "-1";
+                    hdnCustomerLevel.Text = "-1";
                 }
             }
 
@@ -53,16 +53,16 @@ namespace AspDotNetStorefront
         /// </summary>
         private void ShowPostLoginControls()
         {
-            this.divbeforelogin.Visible = false;
-            this.divafterlogin.Visible = true;
+            divbeforelogin.Visible = false;
+            divafterlogin.Visible = true;
         }
         /// <summary>
         /// 
         /// </summary>
         private void ShowPreLoginControls()
         {
-            this.divbeforelogin.Visible = true;
-            this.divafterlogin.Visible = false;
+            divbeforelogin.Visible = true;
+            divafterlogin.Visible = false;
         }
     }
 }
