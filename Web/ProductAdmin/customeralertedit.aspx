@@ -20,21 +20,24 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align: right; width: 15%">
+            <td style="text-align: right; vertical-align:top; width: 15%">
                 <asp:Label ID="lblCustomerLevel" runat="server" Text="*Customer Level:"></asp:Label>
             </td>
             <td style="text-align: left; width: 35%">
-                <asp:DropDownList ID="ddlCustomerLevel" runat="server" Width="70%"></asp:DropDownList>
+                <asp:ListBox ID="lstCustomerLevel" SelectionMode="Multiple" runat="server" Width="70%" Height="120px"></asp:ListBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ValidationGroup="CustomerAlertEdit" runat="server" ControlToValidate="lstCustomerLevel"
+                    ErrorMessage="<br/>Please select atleast one customer level." ForeColor="Red" Display="Dynamic">
+                </asp:RequiredFieldValidator>
             </td>
             <td align="left" valign="top">
-                <small>Select the customer level. This alert will be sent to all the user of selected customer level.</small>
+                <small>Select the customer level. This alert will be sent to all the user of selected customer level. You can select multiple customer level, this will generate separate record for each each selected customer level.</small>
             </td>
         </tr>
         <tr>
             <td style="text-align: right; width: 15%">
                 <asp:Label ID="lblTitle" runat="server" Text="*Title:"></asp:Label>
             </td>
-            <td style="text-align: left; width: 30%">
+            <td style="text-align: left; width: 35%">
                 <asp:HiddenField ID="hfCustomerAlertID" runat="server" />
                 <asp:TextBox ID="txtTitle" runat="server" MaxLength="100" Width="70%" CssClass="TXTFIELD"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="CustomerAlertEdit" runat="server" ControlToValidate="txtTitle"
