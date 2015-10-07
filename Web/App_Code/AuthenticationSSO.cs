@@ -14,8 +14,6 @@ namespace AspDotNetStorefront
 {
     public static class AuthenticationSSO
     {
-        //private static Customer ThisCustomer;
-
         /// <summary>
         /// Initialize Customer Object after OKTA Authentication
         /// </summary>
