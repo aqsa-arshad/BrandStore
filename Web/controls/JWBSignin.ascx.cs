@@ -86,7 +86,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         if (userModel != null) // If Okta User
         {
-            SendWasOk = AuthenticationSSO.ChangePasswordRequest(userModel.id);
+            SendWasOk = AuthenticationSSO.ForgotPasswordRequest(userModel.id);
         }
         else
         {

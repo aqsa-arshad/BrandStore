@@ -14,7 +14,7 @@ namespace AspDotNetStorefront
 {
     public static class AuthenticationSSO
     {
-        private static Customer ThisCustomer;
+        //private static Customer ThisCustomer;
 
         /// <summary>
         /// Initialize Customer Object after OKTA Authentication
@@ -24,14 +24,16 @@ namespace AspDotNetStorefront
         /// <returns>Status</returns>
         public static Customer InitializeCustomerObject(string userName, string password)
         {
-            if (UserAuthentication(userName, password))
+            var ThisCustomer = new Customer(userName, true);
+            var IsCustomerAvailable = ThisCustomer.HasCustomerRecord;
+            var userModel = GetUserModel(userName);
+
+            if (userModel == null) // Execute Local Authentication if User is not Exist in Okta
+                return ThisCustomer;
+
+            if (UserAuthentication(userName, password)) // If User is Authenticated by Okta then Add / Update local Customer object
             {
-                var userModel = GetUserModel(userName);
-
-                if (userModel == null)
-                    return new Customer(userName, true);
-
-                if (!IsCustomerAvailable(userName))
+                if (!IsCustomerAvailable)
                 {
                     // Add New Customer in local DB
                     InsertCustomer(userName);
@@ -39,6 +41,14 @@ namespace AspDotNetStorefront
                 // Update Customer in local DB w.r.t Okta UserModel
                 UpdateCustomer(userModel.profile, userName, password);
             }
+            else if (IsCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
+            {
+                SqlParameter sp = new SqlParameter("@IsRegistered", System.Data.SqlDbType.TinyInt);
+                sp.Value = 0;
+                SqlParameter[] spa = { sp };
+                ThisCustomer.UpdateCustomer(spa);
+            }
+
             return new Customer(userName, true);
         }
 
@@ -99,17 +109,6 @@ namespace AspDotNetStorefront
         }
 
         /// <summary>
-        /// Validate if userName is available in DB
-        /// </summary>
-        /// <param name="userName">userName</param>
-        /// <returns>Status</returns>
-        private static bool IsCustomerAvailable(string userName)
-        {
-            ThisCustomer = new Customer(userName);
-            return ThisCustomer.IsRegistered;
-        }
-
-        /// <summary>
         /// Update Customer in local DB w.r.t Okta UserModel
         /// </summary>
         /// <param name="profile">profile</param>
@@ -120,7 +119,7 @@ namespace AspDotNetStorefront
             Password p = new Password(password);
             int customerLevelID = GetCustomerLevelID(profile.userType);
 
-            ThisCustomer = new Customer(userName);
+            var ThisCustomer = new Customer(userName);
             SqlParameter[] sqlParameter = {
                                         new SqlParameter("@Password", p.SaltedPassword),
                                         new SqlParameter("@SaltKey", p.Salt),
@@ -144,6 +143,7 @@ namespace AspDotNetStorefront
         /// <param name="userName">userName</param>
         private static void InsertCustomer(string userName)
         {
+            var ThisCustomer = new Customer(userName);
             Customer.CreateCustomerRecord(userName, null, ThisCustomer.SkinID,
                         null, null, 0, null, ThisCustomer.LocaleSetting, 0, ThisCustomer.CurrencySetting,
                         ThisCustomer.VATSettingRAW, ThisCustomer.VATRegistrationID, 0);
@@ -183,7 +183,7 @@ namespace AspDotNetStorefront
 
             return anyAddress.AddressID; ;
         }
-    
+
         /// <summary>
         /// Get CustomerLevelID w.r.t Okta UserType
         /// </summary>
@@ -191,10 +191,13 @@ namespace AspDotNetStorefront
         /// <returns>CustomerLevelID</returns>
         private static int GetCustomerLevelID(string userType)
         {
-            string enumUserType = userType.Replace(" ", "").ToUpper();
-            if (Enum.IsDefined(typeof(UserType), enumUserType))
+            if (!string.IsNullOrEmpty(userType))
             {
-                return (int)Enum.Parse(typeof(UserType), enumUserType);
+                string enumUserType = userType.Replace(" ", "").ToUpper();
+                if (Enum.IsDefined(typeof(UserType), enumUserType))
+                {
+                    return (int)Enum.Parse(typeof(UserType), enumUserType);
+                }
             }
             return (int)UserType.PUBLIC;
         }
@@ -204,7 +207,7 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="userName">userName</param>
         /// <returns>Status</returns>
-        public static bool ChangePasswordRequest(string UserModelID)
+        public static bool ForgotPasswordRequest(string UserModelID)
         {
             using (var client = new HttpClient())
             {
@@ -218,6 +221,10 @@ namespace AspDotNetStorefront
                 return client.PostAsync(url, new StringContent("")).Result.IsSuccessStatusCode;
             }
         }
-    
+
+        private static bool IsActiveUser(string status)
+        {
+            return string.Equals(status, "ACTIVE", StringComparison.OrdinalIgnoreCase);
+        }
     }
 }
