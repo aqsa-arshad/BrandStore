@@ -38,8 +38,8 @@ namespace AspDotNetStorefront
                 GoNonSecureAgain();
             }
 
-            // this may be overwridden by the XmlPackage below!
-            //SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
+             //this may be overwridden by the XmlPackage below!
+            SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
            
             if (!ThisCustomer.IsAuthenticated)
             {

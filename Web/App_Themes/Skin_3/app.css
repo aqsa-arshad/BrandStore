@@ -2617,7 +2617,7 @@ input[type="search"] {
   }
 }
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 .radio,
 .checkbox {
@@ -6278,4 +6278,8 @@ footer .footer-privacy-link span {
 }
 footer .footer-privacy-link a {
   color: #b4b7b0;
+}
+.hide-element {  
+  visibility:hidden;
+ 
 }

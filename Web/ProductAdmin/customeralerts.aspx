@@ -7,14 +7,12 @@
             <HeaderTemplate>
                 <tr class="table-header">
                     <td style="width:5%">ID</td>
-                    <td style="width:10%">Customer Level ID</td>
-                    <td style="width:15%">Customer Level Name</td>
-                    <td style="width:10%">Title</td>
-                    <td style="width:25%">Description</td>
-                    <td style="width:6%">Alert Date</td>
-                    <td style="width:7%">Created Date</td>
-                    <td style="width:7%">Modified Date</td>
-                    <td style="width:5%">IsDeleted</td>
+                    <td style="width:20%">Title</td>
+                    <td style="width:35%">Description</td>
+                    <td style="width:8%">Alert Date</td>
+                    <td style="width:8%">Created Date</td>
+                    <td style="width:8%">Modified Date</td>
+                    <td style="width:6%">IsDeleted</td>
                     <td style="width:5%">Edit</td>
                     <td style="width:5%">Delete</td>
                 </tr>
@@ -22,8 +20,6 @@
             <ItemTemplate>
                 <tr class="table-row2">
                     <td><%# Eval("CustomerAlertID") %></td>
-                    <td><%# Eval("CustomerLevelID") %></td>
-                    <td><%# Eval("Name") %></td>
                     <td><%# Eval("Title") %></td>
                     <td><%# Eval("Description") %></td>
                     <td><%# Eval("AlertDate") %></td>
@@ -41,8 +37,6 @@
             <AlternatingItemTemplate>
                 <tr class="table-alternatingrow2">
                     <td><%# Eval("CustomerAlertID") %></td>
-                    <td><%# Eval("CustomerLevelID") %></td>
-                    <td><%# Eval("Name") %></td>
                     <td><%# Eval("Title") %></td>
                     <td><%# Eval("Description") %></td>
                     <td><%# Eval("AlertDate") %></td>

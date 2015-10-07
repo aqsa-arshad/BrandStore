@@ -21,7 +21,7 @@ namespace AspDotNetStorefront
     [PageType("home")]
     public partial class _default : SkinBase
     {
-        protected void Page_Load(object sender, System.EventArgs e)
+       protected void Page_Load(object sender, System.EventArgs e)
         {
 
             if (CommonLogic.ServerVariables("HTTP_HOST").IndexOf(AppLogic.LiveServer(), StringComparison.InvariantCultureIgnoreCase) != -1 &&
@@ -37,14 +37,15 @@ namespace AspDotNetStorefront
             {
                 GoNonSecureAgain();
             }           
-            // this may be overwridden by the XmlPackage below!
+         
            
             if (ThisCustomer.IsAuthenticated)
             {
                 Response.Redirect("home.aspx");
-            }            
-            SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
-              
+            }
+            // this may be overwridden by the XmlPackage below!
+            SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));           
+           
 
 
         }
