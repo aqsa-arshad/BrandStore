@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" CodeFile="JeldWenTemplate.master.cs" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.JeldWenMasterPage" CodeFile="JeldWenTemplate.master.cs" %>
 
 <%@ Register TagPrefix="aspdnsfc" Namespace="AspDotNetStorefrontControls" Assembly="AspDotNetStorefrontControls" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
-    public partial class MasterPageBase : MasterPage
+    public partial class JeldWenMasterPage : MasterPageBase
     {
         private Customer m_ThisCustomer;
         public Customer ThisCustomer

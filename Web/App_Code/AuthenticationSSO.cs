@@ -131,7 +131,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@BillingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID == null ? 0 : ThisCustomer.PrimaryBillingAddressID)),
                                         new SqlParameter("@ShippingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryShippingAddressID == null ? 0 : ThisCustomer.PrimaryShippingAddressID)),
-                                        new SqlParameter("@IsAdmin", 0)
+                                        new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
 
             ThisCustomer.UpdateCustomer(sqlParameter);
@@ -222,9 +222,5 @@ namespace AspDotNetStorefront
             }
         }
 
-        private static bool IsActiveUser(string status)
-        {
-            return string.Equals(status, "ACTIVE", StringComparison.OrdinalIgnoreCase);
-        }
     }
 }
