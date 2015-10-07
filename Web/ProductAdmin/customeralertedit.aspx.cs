@@ -40,10 +40,10 @@ namespace AspDotNetStorefrontAdmin
                     cmd.CommandType = CommandType.Text;
 
                     IDataReader reader = cmd.ExecuteReader();
-                    ddlCustomerLevel.DataSource = reader;
-                    ddlCustomerLevel.DataTextField = "Name";
-                    ddlCustomerLevel.DataValueField = "CustomerLevelID";
-                    ddlCustomerLevel.DataBind();
+                    lstCustomerLevel.DataSource = reader;
+                    lstCustomerLevel.DataTextField = "Name";
+                    lstCustomerLevel.DataValueField = "CustomerLevelID";
+                    lstCustomerLevel.DataBind();
                 }
             }
         }
@@ -60,10 +60,12 @@ namespace AspDotNetStorefrontAdmin
                 {
                     int customerAlertID = int.Parse(CustomerAlertID);
 
-                    using (var conn = DB.dbConn())
+                    using (var con = DB.dbConn())
                     {
-                        conn.Open();
-                        using (var cmd = new SqlCommand("aspdnsf_CustomerAlertSelectByCustomerAlertID", conn))
+                        con.Open();
+
+                        // Get Customer Alert Data
+                        using (var cmd = new SqlCommand("aspdnsf_CustomerAlertSelectByCustomerAlertID", con))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@CustomerAlertID", customerAlertID);
@@ -72,19 +74,34 @@ namespace AspDotNetStorefrontAdmin
                             if (reader.Read())
                             {
                                 hfCustomerAlertID.Value = reader["CustomerAlertID"].ToString();
-                                ddlCustomerLevel.SelectedValue = reader["CustomerLevelID"].ToString();
-                                ddlCustomerLevel.Enabled = false;
                                 txtTitle.Text = reader["Title"].ToString();
                                 txtDescription.Text = reader["Description"].ToString();
                                 txtAlertDate.SelectedDate = Convert.ToDateTime(reader["AlertDate"]);
 
                                 pnlEditAlert.Visible = true;
-                                lblHeading.Text = "Editing Customer Alert: " + reader["Title"].ToString() + " (ID=" + reader["CustomerAlertID"].ToString() +")";
+                                lblHeading.Text = "Editing Customer Alert: " + reader["Title"].ToString() + " (ID=" + reader["CustomerAlertID"].ToString() + ")";
                             }
+                            reader.Close();
                         }
-                    }
+
+                        // Get Selected CustomerLevel
+                        using (var cmd = new SqlCommand("aspdnsf_CustomerAlertCustomerLevelMappingSelectByCustomerAlertID", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@CustomerAlertID", customerAlertID);
+
+                            IDataReader reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                                lstCustomerLevel.Items.FindByValue(reader["CustomerLevelID"].ToString()).Selected = true;
+
+                            reader.Close();
+                        }
+                    }                    
                 }
-                catch { }
+                catch (Exception ex)
+                    {
+                        Response.Write(ex.Message);
+                    }
             }
             else
             {
@@ -98,13 +115,16 @@ namespace AspDotNetStorefrontAdmin
         /// </summary>
         protected void btnAddAlert_Click(object sender, EventArgs e)
         {
+
             using (SqlConnection con = DB.dbConn())
             {
+                con.Open();
+                int CustomerAlertID;
+
                 using (var cmd = new SqlCommand("aspdnsf_CustomerAlertInsert", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CustomerLevelID", ddlCustomerLevel.SelectedValue);
                     cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
                     cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
                     cmd.Parameters.AddWithValue("@AlertDate", txtAlertDate.VisibleDate);
@@ -113,12 +133,31 @@ namespace AspDotNetStorefrontAdmin
                     cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
                     cmd.Parameters.AddWithValue("@CreatedBy", ThisCustomer.EMail);
                     cmd.Parameters.AddWithValue("@ModifiedBy", ThisCustomer.EMail);
+                    cmd.Parameters.Add("@CustomerAlertID", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                    con.Open();
                     cmd.ExecuteNonQuery();
-                    Response.Redirect("customeralerts.aspx");
+                    CustomerAlertID = (int)cmd.Parameters["@CustomerAlertID"].Value; 
+                }
+
+                //Insert Selected Customer Level
+                foreach (ListItem item in lstCustomerLevel.Items)
+                {
+                    if (item.Selected)
+                    {
+                        using (var cmd = new SqlCommand("aspdnsf_CustomerAlertCustomerLevelMappingInsert", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.AddWithValue("@CustomerAlertID", CustomerAlertID);
+                            cmd.Parameters.AddWithValue("@CustomerLevelID", item.Value);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
             }
+
+            Response.Redirect("customeralerts.aspx");
         }
 
         /// <summary>
@@ -128,11 +167,12 @@ namespace AspDotNetStorefrontAdmin
         {
             using (SqlConnection con = DB.dbConn())
             {
+                con.Open();
+
                 using (var cmd = new SqlCommand("aspdnsf_CustomerAlertUpdate", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CustomerAlertID", hfCustomerAlertID.Value);
-                    cmd.Parameters.AddWithValue("@CustomerLevelID", ddlCustomerLevel.SelectedValue);
                     cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
                     cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
                     cmd.Parameters.AddWithValue("@AlertDate", txtAlertDate.VisibleDate);
@@ -140,13 +180,30 @@ namespace AspDotNetStorefrontAdmin
                     cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
                     cmd.Parameters.AddWithValue("@ModifiedBy", ThisCustomer.EMail);
 
-                    con.Open();
                     cmd.ExecuteNonQuery();
-                    Response.Redirect("customeralerts.aspx");
+                }
+
+                //Insert Selected Customer Level
+                foreach (ListItem item in lstCustomerLevel.Items)
+                {
+                    if (item.Selected)
+                    {
+                        using (var cmd = new SqlCommand("aspdnsf_CustomerAlertCustomerLevelMappingInsert", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.AddWithValue("@CustomerAlertID", hfCustomerAlertID.Value);
+                            cmd.Parameters.AddWithValue("@CustomerLevelID", item.Value);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
             }
+
+            Response.Redirect("customeralerts.aspx");
         }
-        
+
         /// <summary>
         /// Cancel Button Event
         /// </summary>        
@@ -162,5 +219,5 @@ namespace AspDotNetStorefrontAdmin
         {
             GetCustomerAlert(Request.QueryString["CustomerAlertID"]);
         }
-}
+    }
 }
