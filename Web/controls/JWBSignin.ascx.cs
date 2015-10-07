@@ -66,16 +66,27 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         tbNewPassword = GetControl("NewPassword") as TextBox;
         tbNewPassword2 = GetControl("NewPassword2") as TextBox;
     }
-
+    protected void errorMessageNotification()
+    {
+        ForgotPaswwordSuccessMessage.Text = String.Empty;
+        ForgotPasswordExecutepanel.Visible = false;
+        ForgotPasswordErrorPanel.Visible = true;
+        ForgotPasswordErrorMsgLabel.Text = String.Empty;
+    }
+    protected void successMessageNotification()
+    {
+        ForgotPasswordErrorPanel.Visible = false;
+        ForgotPasswordErrorMsgLabel.Text = String.Empty;
+        ForgotPasswordExecutepanel.Visible = true;
+        ForgotPaswwordSuccessMessage.Text = String.Empty;
+    }
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
-        ForgotPasswordErrorPanel.Visible = true; // that is where the status msg goes, in all cases in this routine
-        ForgotPasswordErrorMsgLabel.Text = String.Empty;
         string EMail = ForgotPasswordEmailTextField.Text.ToString();
-
         if (EMail.Length == 0)
         {
+            errorMessageNotification();
             ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
             return;
         }
@@ -93,6 +104,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             Customer c = new Customer(EMail);
             if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
             {
+                errorMessageNotification();
                 ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 return;
             }
@@ -117,11 +129,13 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         if (!SendWasOk)
         {
+            errorMessageNotification();
             ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
         }
         else
         {
-            ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+            successMessageNotification();
+            ForgotPaswwordSuccessMessage.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
         }
     }
 
@@ -143,12 +157,13 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
         string HiddenFieldText = HiddenLabel.Text;
         if (HiddenFieldText.Equals("true"))
         {
             ForgotPasswordEmailTextField.Focus();
             ForgotPasswordPanel.Visible = true;
+            ForgotPasswordExecutepanel.Visible = false;
             LoginPanel.Visible = false;
             ForgotPasswordErrorPanel.Visible = false; // that is where the status msg goes, in all cases in this routine
             ForgotPasswordErrorMsgLabel.Text = String.Empty;
@@ -185,7 +200,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         //}
 
 
-
         if (!string.IsNullOrEmpty(EMailField))
         {
             ThisCustomer = new Customer(EMailField);
@@ -197,11 +211,8 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         m_SkinID = (Page as AspDotNetStorefront.SkinBase).SkinID;
 
-        //EmailTextField.Text = ThisCustomer.EMail;
-        //PasswordTextField.Text = ThisCustomer.Password;
-
         // aqsa arshad 19/09/2015
-        // Below code is realted to doing login before checkout, as this functionality is not included in this sprit so i commented this code.
+        // Below code is realted to doing login just before checkout, as this functionality is not included in this sprint so i commented this code.
 
 
         //ControlCollection ctrlcol = ctrlLogin.Controls;
@@ -265,7 +276,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     protected void submitButton_Click(object sender, EventArgs e)
     {
         int CurrentCustomerID = ThisCustomer.CustomerID;
-
         bool RememberMeCheckBox = RememberMe.Checked;
         String EMailField = EmailTextField.Text.ToString();
         String PasswordField = PasswordTextField.Text.ToString();
@@ -351,7 +361,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                         //        sReturnURL = "default.aspx";
                         //    }
                         //}
-                        Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
+                        Response.Redirect("home.aspx");
                     }
                     else
                     {
@@ -532,9 +542,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                     //}
 
                     // Response line after login 
-
-                    //Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
-
                     Response.Redirect("home.aspx");
 
                     // aqsa arshad 19/09/2015 

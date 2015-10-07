@@ -14,14 +14,14 @@ using AspDotNetStorefront;
 public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
 {
     Customer ThisCustomer;
-    string WelcomeHeading;
+    String WelcomeHeading=String.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (ThisCustomer == null)
         {
             ThisCustomer = (Page as AspDotNetStorefront.SkinBase).ThisCustomer;
         }
-        WelcomeHeading=" HI"+" "+ThisCustomer.FirstName.Trim()+" "+ThisCustomer.LastName.Trim();
-        UserInfo.InnerText = WelcomeHeading;
+        WelcomeHeading = " HI" + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
+        WelcomeHeadingAfterUserLogin.InnerText = WelcomeHeading;
     }
 }

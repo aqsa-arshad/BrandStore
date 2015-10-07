@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" CodeFile="JeldWenTemplate.master.cs" %>
 
 <%@ Register TagPrefix="aspdnsfc" Namespace="AspDotNetStorefrontControls" Assembly="AspDotNetStorefrontControls" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
@@ -63,6 +63,9 @@
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
     <form id="frm" runat="server">
+        <%--Hidden Variables Regions--%>
+        <asp:Label ID="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
+        <%--End Hidden Variables Region--%>
         <div class="container">
             <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
@@ -70,7 +73,7 @@
                 <div class="header-part">
                     <a href="" class="logo" id="headerlogo">
                         <img src="App_Themes/Skin_3/images/logo.png"></a>
-                    <span class="head-tagline prelogin">Brand Store        
+                    <span class="head-tagline">Brand Store        
      
                     <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
                         <span class="sr-only">Toggle navigation</span>
@@ -78,26 +81,24 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
                     </span>
                     <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
-                        <ul class="nav navbar-nav">
-                            <li class="prelogin">
-                                <a href="#"  data-toggle="modal" data-target="#myModal" class="prelogin" id="lnkAlertMobile">Alerts</a>
-                                 <%-- <aspdnsf:CustomerAlerts ID="CustomerAlerts1" runat="server" />   --%>
+                        <ul >
+                            <li class="prelogin hide-element">
+                                <a href="#" data-toggle="modal" data-target="#myModal" class="prelogin" id="lnkAlertMobile">Alerts</a>
                             </li>
-                            <li class="prelogin">
+                            <li class="prelogin hide-element">
                                 <a href="#">My Account</a>
                             </li>
-                            <li class="prelogin">
+                            <li class="prelogin hide-element">
                                 <a href="#">Shopping Cart</a>
                             </li>
-                            <li class="prelogin">
+                            <li class="lnkLogout">
                                 <a href="signout.aspx" class="nav-bar-last">Logout</a>
                             </li>
                         </ul>
                     </nav>
-                    <a href="signout.aspx" class="desktop-logout prelogin">Logout</a>
+                    <a href="signout.aspx" class="desktop-logout lnkLogout">Logout</a>
                 </div>
                 <nav class="desktop-nav">
                     <%--calling xml package for getting menue dynamically--%>
@@ -105,72 +106,57 @@
                 </nav>
 
                 <div class="user-grid">
-                    <span class="desktop-profile">
+                    <span class="desktop-profile prelogin hide-element" >
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
-                        <a href="#"  data-toggle="modal" data-target="#myModal" class="prelogin"  id="lnkAlertDesktop" runat="server">Alerts</a>
-                        <!-- ModalPopupExtender -->                       
-                             <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />                     
+                        <a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server">Alerts</a>
                         <!-- ModalPopupExtender -->
-                        <a href="#" class="prelogin">My Account</a>
-                        <a href="#" class="prelogin">Shopping Cart</a>
+                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
+                        <!-- ModalPopupExtender -->
+                        <a href="#" class="prelogin hide-element">My Account</a>
+                        <a href="#" class="prelogin hide-element">Shopping Cart</a>
                     </span>
-
-                    <%--<input class="search-feild" type="text" value="Search Site" onblur="if(this.value==''){ this.value='Search Site';}"
-                        onfocus="if (this.value == 'Search Site') { this.value = ''; }" />--%>
                     <custom:Search ID="Search1" runat="server" />
                 </div>
-
-                <nav class="mobile-nav">                  
+                <nav class="mobile-nav">
                     <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
                 </nav>
             </div>
-
             <div class="body-container">
                 <div class="row">
                     <!-- left Contect Area  -->
                     <div class="col-md-8">
-
                         <div class="left-side">
-
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
-                            </asp:ContentPlaceHolder>                         
+                            </asp:ContentPlaceHolder>
                         </div>
                     </div>
-
-
                     <div class="col-md-4">
                         <div class="side-bar">
-
                             <!-- Side Box -->
-                            <div id="afterlogindiv">
+                            <div id="divafterlogin" runat="server">
                                 <div class="side-bar-box">
                                     <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
                                 </div>
-
                                 <!-- Side Box -->
                                 <div class="side-bar-box">
                                     <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
                                 </div>
                             </div>
-                            <div id="beforelogindiv">
+                            <div id="divbeforelogin" runat="server">
                                 <div class="login-box" id="divlogin" runat="server">
                                     <%--Login control goes here--%>
                                     <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
                                 </div>
-
                                 <!-- Separator Line -->
                                 <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-
                                 <!-- Side Box -->
                                 <div class="side-bar-box" id="divMarkeetingExample" runat="server">
                                     <%--Markeeting Example Category control goes here--%>
                                     <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
                                 </div>
-
                                 <!-- Separator Line -->
                                 <div class="separator-line"></div>
-
                                 <!-- Side Box -->
                                 <div class="side-bar-box" id="divBrandAssetExample" runat="server">
                                     <%--Brand Asset Category control goes here--%>
@@ -188,7 +174,6 @@
                     <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
                     <div class="col-sm-6 col-md-4 footer-nav prelogin"><a href="#">Terms & Conditions</a></div>
                 </div>
-
                 <div class="row">
                     <div class="col-sm-2 col-md-2">
                         <a href="http://www.jeld-wen.com/">
@@ -197,24 +182,61 @@
                     </div>
                     <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
                 </div>
-
             </footer>
-
         </div>
-
     </form>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-
     <script src="offcanvas.js"></script>
     <script src="js/collapse.js"></script>
     <script src="js/transition.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+           ShowHideMenueControls();
+        });
 
+        function ShowHideMenueControls() {
+            if (document.getElementById('hdnCustomerLevel').innerText == "-1" || document.getElementById('hdnCustomerLevel').innerText == "8")
+            {
+                //Hide menue categories for prelogin page and for after login page(home) if customer is public user               
+                $("#Category3").removeClass("hide-element");              
+                $("#MobileCategory3").removeClass("hide-element");                
+                //Hide Menue for Alerts,My Account and Shopping Cart
+                $(".prelogin").hide();
+                if (document.getElementById('hdnCustomerLevel').innerText == "8")
+                {
+                    $(".beforeloginControl").hide();
+                    $(".lnkLogout").show();
+                    $("#headerlogo").attr("href", "home.aspx");
+                }
+                else
+                {
+                    $(".afterloginControl").hide();
+                    $(".lnkLogout").hide();
+                    $("#headerlogo").attr("href", "default.aspx");
+                }
+                $(".hide-element").css("display","none");
+            }
+            else
+            {
+                $("#Category1").removeClass("hide-element");
+                $("#Category2").removeClass("hide-element");
+                $("#Category3").removeClass("hide-element");
+                $("#Category4").removeClass("hide-element");
 
+                $("#MobileCategory1").removeClass("hide-element");
+                $("#MobileCategory2").removeClass("hide-element");
+                $("#MobileCategory3").removeClass("hide-element");
+                $("#MobileCategory4").removeClass("hide-element");
+
+                $(".beforeloginControl").hide();
+                $(".prelogin").show();
+                $(".prelogin").removeClass("hide-element");
+                $(".lnkLogout").show();
+                $("#headerlogo").attr("href", "home.aspx");
+            }
+        }
+    </script>
 </body>
 
 </html>
