@@ -66,19 +66,27 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         tbNewPassword = GetControl("NewPassword") as TextBox;
         tbNewPassword2 = GetControl("NewPassword2") as TextBox;
     }
-
+    protected void errorMessageNotification()
+    {
+        ForgotPaswwordSuccessMessage.Text = String.Empty;
+        ForgotPasswordExecutepanel.Visible = false;
+        ForgotPasswordErrorPanel.Visible = true;
+        ForgotPasswordErrorMsgLabel.Text = String.Empty;
+    }
+    protected void successMessageNotification()
+    {
+        ForgotPasswordErrorPanel.Visible = false;
+        ForgotPasswordErrorMsgLabel.Text = String.Empty;
+        ForgotPasswordExecutepanel.Visible = true;
+        ForgotPaswwordSuccessMessage.Text = String.Empty;
+    }
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
     {
-
         HiddenLabel.Text = "true";
         string EMail = ForgotPasswordEmailTextField.Text.ToString();
-
         if (EMail.Length == 0)
         {
-            ForgotPasswordErrorPanel.Visible = true;
-            ForgotPasswordErrorMsgLabel.Text = String.Empty;
-            ForgotPaswwordSuccessMessage.Text = String.Empty;
-            ForgotPasswordExecutepanel.Visible = false;
+            errorMessageNotification();
             ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
             return;
         }
@@ -96,10 +104,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             Customer c = new Customer(EMail);
             if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
             {
-                ForgotPasswordErrorPanel.Visible = true;
-                ForgotPasswordErrorMsgLabel.Text = String.Empty;
-                ForgotPaswwordSuccessMessage.Text = String.Empty;
-                ForgotPasswordExecutepanel.Visible = false;
+                errorMessageNotification();
                 ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 return;
             }
@@ -124,18 +129,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         if (!SendWasOk)
         {
-            ForgotPaswwordSuccessMessage.Text = String.Empty;
-            ForgotPasswordExecutepanel.Visible = false;
-            ForgotPasswordErrorPanel.Visible = true;
-            ForgotPasswordErrorMsgLabel.Text = String.Empty;
+            errorMessageNotification();
             ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
         }
         else
         {
-            ForgotPasswordErrorPanel.Visible = false;
-            ForgotPasswordErrorMsgLabel.Text = String.Empty;
-            ForgotPasswordExecutepanel.Visible = true;
-            ForgotPaswwordSuccessMessage.Text = String.Empty;
+            successMessageNotification();
             ForgotPaswwordSuccessMessage.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
         }
     }
@@ -277,7 +276,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     protected void submitButton_Click(object sender, EventArgs e)
     {
         int CurrentCustomerID = ThisCustomer.CustomerID;
-
         bool RememberMeCheckBox = RememberMe.Checked;
         String EMailField = EmailTextField.Text.ToString();
         String PasswordField = PasswordTextField.Text.ToString();
@@ -363,7 +361,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                         //        sReturnURL = "default.aspx";
                         //    }
                         //}
-                        //Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
                         Response.Redirect("home.aspx");
                     }
                     else
