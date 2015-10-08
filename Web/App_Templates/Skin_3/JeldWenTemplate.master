@@ -83,7 +83,7 @@
                     </button>
                     </span>
                     <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
-                        <ul >
+                        <ul>
                             <li class="prelogin hide-element">
                                 <a href="#" data-toggle="modal" data-target="#myModal" class="prelogin" id="lnkAlertMobile">Alerts</a>
                             </li>
@@ -106,7 +106,7 @@
                 </nav>
 
                 <div class="user-grid">
-                    <span class="desktop-profile prelogin hide-element" >
+                    <span class="desktop-profile prelogin hide-element">
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
                         <a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server">Alerts</a>
@@ -190,35 +190,44 @@
     <script src="js/collapse.js"></script>
     <script src="js/transition.js"></script>
     <script type="text/javascript">
-        $(document).ready(function ()
-        {
-           ShowHideMenueControls();
+        $(document).ready(function () {
+            ShowHideMenueControls();
         });
 
         function ShowHideMenueControls() {
-            if (document.getElementById('hdnCustomerLevel').innerText == "-1" || document.getElementById('hdnCustomerLevel').innerText == "8")
-            {
+
+            if (document.getElementById('hdnCustomerLevel')) {
+                elem = document.getElementById('hdnCustomerLevel');
+            }
+            else if (document.all) {
+                elem = document.all['hdnCustomerLevel'];
+            }
+            else if (document.layers) {
+                elem = document.layers['hdnCustomerLevel'];
+            }
+            if (elem.innerText == "-1" || elem.innerText == "8") {
+                //user is either not logged in or is public user
                 //Hide menue categories for prelogin page and for after login page(home) if customer is public user               
-                $("#Category3").removeClass("hide-element");              
-                $("#MobileCategory3").removeClass("hide-element");                
+                $("#Category3").removeClass("hide-element");
+                $("#MobileCategory3").removeClass("hide-element");
                 //Hide Menue for Alerts,My Account and Shopping Cart
                 $(".prelogin").hide();
-                if (document.getElementById('hdnCustomerLevel').innerText == "8")
-                {
+                if (document.getElementById('hdnCustomerLevel').innerText == "8") {
+                    //it means public user
                     $(".beforeloginControl").hide();
                     $(".lnkLogout").show();
                     $("#headerlogo").attr("href", "home.aspx");
                 }
-                else
-                {
+                else {
+                    //it means user is not logged in
                     $(".afterloginControl").hide();
                     $(".lnkLogout").hide();
                     $("#headerlogo").attr("href", "default.aspx");
                 }
-                $(".hide-element").css("display","none");
+                $(".hide-element").css("display", "none");
             }
-            else
-            {
+            else {
+                //user is logged inn
                 $("#Category1").removeClass("hide-element");
                 $("#Category2").removeClass("hide-element");
                 $("#Category3").removeClass("hide-element");
