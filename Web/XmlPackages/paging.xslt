@@ -251,11 +251,11 @@
               </xsl:choose>
             </option>
             
-              <option value="4">              
-              <xsl:if test="$PageSize = 4 or $PageSize = ''">
+              <option value="6">              
+              <xsl:if test="$PageSize = 6 or $PageSize = ''">
                 <xsl:attribute name="selected">selected</xsl:attribute>
               </xsl:if>
-              <xsl:text>4</xsl:text>
+              <xsl:text>6</xsl:text>
             </option>
             
             <option value="12">

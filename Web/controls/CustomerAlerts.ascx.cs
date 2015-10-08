@@ -33,8 +33,6 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     {
         if (!Page.IsPostBack)
         {
-           // lblCustomerName.Text = "Customer Name: " + ThisCustomer.FullName();
-           // lblCustomerID.Text = "Customer ID: " + ThisCustomer.CustomerID.ToString();
             GetCustomerAlerts();
         }
     }
