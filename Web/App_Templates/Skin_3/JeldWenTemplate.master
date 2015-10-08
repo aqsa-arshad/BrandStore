@@ -64,7 +64,7 @@
     <!-- End Google Tag Manager -->
     <form id="frm" runat="server">
         <%--Hidden Variables Regions--%>
-        <asp:Label ID="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
+        <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
         <div class="container">
             <!-- The justified navigation menu is meant for single line per list item.
@@ -194,25 +194,25 @@
             ShowHideMenueControls();
         });
 
-        function ShowHideMenueControls() {
-
-            if (document.getElementById('hdnCustomerLevel')) {
-                elem = document.getElementById('hdnCustomerLevel');
+        function ShowHideMenueControls() {            
+            var CustomerLevelElemment;
+            if (document.getElementById('hdnCustomerLevel')) {              
+                CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
             }
-            else if (document.all) {
-                elem = document.all['hdnCustomerLevel'];
+            else if (document.all) {              
+                CustomerLevelElemment = document.all['hdnCustomerLevel'];
             }
-            else if (document.layers) {
-                elem = document.layers['hdnCustomerLevel'];
+            else   {               
+                CustomerLevelElemment = document.layers['hdnCustomerLevel'];
             }
-            if (elem.innerText == "-1" || elem.innerText == "8") {
+            if (CustomerLevelElemment.innerHTML == "-1" || CustomerLevelElemment.innerHTML == "8") {
                 //user is either not logged in or is public user
                 //Hide menue categories for prelogin page and for after login page(home) if customer is public user               
                 $("#Category3").removeClass("hide-element");
                 $("#MobileCategory3").removeClass("hide-element");
                 //Hide Menue for Alerts,My Account and Shopping Cart
                 $(".prelogin").hide();
-                if (document.getElementById('hdnCustomerLevel').innerText == "8") {
+                if (CustomerLevelElemment.innerHTML == "8") {
                     //it means public user
                     $(".beforeloginControl").hide();
                     $(".lnkLogout").show();
