@@ -3622,7 +3622,7 @@ function popupzoom(url,alturl)
 
             // instantiate return variable
             StringBuilder results = new StringBuilder(1024);
-            results.Append("<div class=\"price-wrap\">");
+            
             // short-circuit this procedure if the price will be hidden
             if (hidePriceUntilCart)
             {
@@ -3700,23 +3700,23 @@ function popupzoom(url,alturl)
                 {
                     if (includeHTMLMarkup)
                     {
-                        results.Append("<div class=\"variant-price\"><span>" + genericPriceLabel + "</span> " + regularPriceFormatted + "</div>");
+                        results.Append("<p>" + genericPriceLabel + " " + regularPriceFormatted );                        
                     }
                     else
                     {
-                        results.Append(genericPriceLabel + regularPriceFormatted);
+                        results.Append("<p>" + genericPriceLabel + " " + regularPriceFormatted);
                     }
                     schemaPrice = regularPrice;
                 }
                 else if (includeHTMLMarkup)
                 {
-                    results.Append("<div class=\"price regular-price\"><span>" + regularPriceLabel + "</span> " + regularPriceFormatted + "</div>");
-                    results.Append("<div class=\"price sale-price\"><span>" + salePriceLabel + "</span> " + discountedPriceFormatted + "</div>");
+                    results.Append("<p>" + regularPriceLabel + " " + regularPriceFormatted);
+                    results.Append("<br>" + salePriceLabel + " " + discountedPriceFormatted);
                     schemaPrice = discountedPrice;
                 }
                 else
                 {
-                    results.Append(" " + regularPriceLabel + regularPriceFormatted + " " + salePriceLabel + discountedPriceFormatted);
+                    results.Append("<p>" + regularPriceLabel + " " + regularPriceFormatted + "<br>" + salePriceLabel + " " + discountedPriceFormatted);
                     schemaPrice = discountedPrice;
                 }
 
@@ -3786,7 +3786,6 @@ function popupzoom(url,alturl)
                 results.AppendFormat("<meta itemprop=\"priceCurrency\" content=\"{0}\"/>", schemaRegionInfo.ISOCurrencySymbol);
             }
 
-            results.Append("</div>");
             return results.ToString();
         }
 

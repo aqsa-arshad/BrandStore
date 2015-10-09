@@ -237,6 +237,27 @@
 
           <select id="PageSize{$uniqueID}" onchange="setParam('pagesize', this.value)" name="PageSize" >
 
+            <option value="100">
+              <xsl:if test="$PageSize = 100">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+              </xsl:if>
+              <xsl:choose>
+                <xsl:when test="$ProductCount > 100">
+                  <xsl:text>100</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageSizeViewAll')" disable-output-escaping="yes" />
+                </xsl:otherwise>
+              </xsl:choose>
+            </option>
+            
+              <option value="6">              
+              <xsl:if test="$PageSize = 6 or $PageSize = ''">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+              </xsl:if>
+              <xsl:text>6</xsl:text>
+            </option>
+            
             <option value="12">
               <xsl:if test="$PageSize = 12 or $PageSize = ''">
                 <xsl:attribute name="selected">selected</xsl:attribute>
@@ -255,19 +276,7 @@
               </xsl:if>
               <xsl:text>48</xsl:text>
             </option>
-            <option value="100">
-            <xsl:if test="$PageSize = 100">
-                <xsl:attribute name="selected">selected</xsl:attribute>
-              </xsl:if>
-            <xsl:choose>
-              <xsl:when test="$ProductCount > 100">
-                <xsl:text>100</xsl:text>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageSizeViewAll')" disable-output-escaping="yes" />
-              </xsl:otherwise>
-            </xsl:choose>
-            </option>
+            
           </select>
         </div>
       </xsl:if>
