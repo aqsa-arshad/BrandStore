@@ -5,10 +5,12 @@
 <%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
 <%@ Register TagPrefix="custom" TagName="Search" Src="Controls/Search.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBSignin" Src="~/Controls/JWBSignin.ascx" %>
-<%@ Register TagPrefix="aspdnsf" TagName="JWBBrandAssetExample" Src="~/Controls/MarkeetingExample.ascx" %>
-<%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/BrandAssetExample.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/MarkeetingExample.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBBrandAssetExample" Src="~/Controls/BrandAssetExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBUserInfoAfterLogin" Src="~/Controls/UserInfoAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBDealerInfoAfterLogin" Src="~/Controls/DealerInfoAfterLogin.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBMarketingServices" Src="~/Controls/MarketingServices.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBTrueBlueUserInfo" Src="~/Controls/TrueBlueUserInfo.ascx" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register TagPrefix="aspdnsf" TagName="CustomerAlerts" Src="~/controls/CustomerAlerts.ascx" %>
 <%@ Import Namespace="AspDotNetStorefrontCore" %>
@@ -135,12 +137,24 @@
                         <div class="side-bar">
                             <!-- Side Box -->
                             <div id="divafterlogin" runat="server">
-                                <div class="side-bar-box">
-                                    <aspdnsf:JWBUserInfoAfterLogin runat="server" ID="UserInfoAfterLoginControl" />
+                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
+                                    <%--User information for logged in user(Sales rep/JW Internal User)--%>
+                                    <aspdnsf:JWBUserInfoAfterLogin runat="server" />
                                 </div>
                                 <!-- Side Box -->
-                                <div class="side-bar-box">
-                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" ID="DealerInfoAfterLogincontrol" />
+                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
+                                    <%--Dealer information for logged in user--%>
+                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
+                                </div>
+                                <!-- Side Box -->
+                                <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
+                                    <%--TRUBLUE User information for logged in user--%>
+                                    <aspdnsf:JWBTrueBlueUserInfo runat="server" />
+                                </div>
+                                <!-- Side Box -->
+                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
+                                    <%--Marketing services module--%>
+                                    <aspdnsf:JWBMarketingServices runat="server" />
                                 </div>
                             </div>
                             <div id="divbeforelogin" runat="server">
@@ -191,59 +205,98 @@
     <script src="js/transition.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            ShowHideMenueControls();
+            ShowHideControls();
         });
 
-        function ShowHideMenueControls() {            
-            var CustomerLevelElemment;
-            if (document.getElementById('hdnCustomerLevel')) {              
-                CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
-            }
-            else if (document.all) {              
-                CustomerLevelElemment = document.all['hdnCustomerLevel'];
-            }
-            else   {               
-                CustomerLevelElemment = document.layers['hdnCustomerLevel'];
-            }
-            if (CustomerLevelElemment.innerHTML == "-1" || CustomerLevelElemment.innerHTML == "8") {
+        function ShowHideControls() {
+            debugger;
+            var CustomerLevel = GetCustomerLevel();
+            if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user
-                //Hide menue categories for prelogin page and for after login page(home) if customer is public user               
+                //Show only One Category Item in menue for prelogin page and for after login page(home) if customer is public user               
                 $("#Category3").removeClass("hide-element");
                 $("#MobileCategory3").removeClass("hide-element");
                 //Hide Menue for Alerts,My Account and Shopping Cart
                 $(".prelogin").hide();
-                if (CustomerLevelElemment.innerHTML == "8") {
-                    //it means public user
+                if (CustomerLevel == "8") {
+                    //it means public user logged in
                     $(".beforeloginControl").hide();
+                    $(".afterloginControl").removeClass("hide-element");
                     $(".lnkLogout").show();
-                    $("#headerlogo").attr("href", "home.aspx");
+                    $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
+                    $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+                    $(".hide-element").css("display", "none");
                 }
                 else {
                     //it means user is not logged in
-                    $(".afterloginControl").hide();
-                    $(".lnkLogout").hide();
-                    $("#headerlogo").attr("href", "default.aspx");
+                    ShowControlsForBeforeLoginPage()
+
                 }
+                //Free space by hidden categories in menue 
                 $(".hide-element").css("display", "none");
             }
             else {
                 //user is logged inn
-                $("#Category1").removeClass("hide-element");
-                $("#Category2").removeClass("hide-element");
-                $("#Category3").removeClass("hide-element");
-                $("#Category4").removeClass("hide-element");
+                ShowMenueCategories();
+                ShowControlsForAfterLoginPage()
+                if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6") {
+                    //Dealer Login                   
+                    $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
+                    $("#JWBMarketingServicesControl").removeClass("hide-element");
+                    $(".hide-element").css("display", "none");
+                }
 
-                $("#MobileCategory1").removeClass("hide-element");
-                $("#MobileCategory2").removeClass("hide-element");
-                $("#MobileCategory3").removeClass("hide-element");
-                $("#MobileCategory4").removeClass("hide-element");
+                else if (CustomerLevel == "7" || CustomerLevel == "3" || CustomerLevel == "1" || CustomerLevel == "2") {
+                    //Sales Rep or JW Internal(Store Admin/Budget Admin) Login                   
+                    $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
+                    $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+                    $(".hide-element").css("display", "none");
+                }
 
-                $(".beforeloginControl").hide();
-                $(".prelogin").show();
-                $(".prelogin").removeClass("hide-element");
-                $(".lnkLogout").show();
-                $("#headerlogo").attr("href", "home.aspx");
             }
+        }
+
+        function GetCustomerLevel() {
+            var CustomerLevelElemment;
+            if (document.getElementById('hdnCustomerLevel')) {
+                CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
+            }
+            else if (document.all) {
+                CustomerLevelElemment = document.all['hdnCustomerLevel'];
+            }
+            else {
+                CustomerLevelElemment = document.layers['hdnCustomerLevel'];
+            }
+
+            return CustomerLevelElemment.innerHTML;
+        }
+
+        function ShowMenueCategories() {
+            //Just remove the class and categories will be displayed in menue
+            $("#Category1").removeClass("hide-element");
+            $("#Category2").removeClass("hide-element");
+            $("#Category3").removeClass("hide-element");
+            $("#Category4").removeClass("hide-element");
+
+            $("#MobileCategory1").removeClass("hide-element");
+            $("#MobileCategory2").removeClass("hide-element");
+            $("#MobileCategory3").removeClass("hide-element");
+            $("#MobileCategory4").removeClass("hide-element");
+
+        }
+        function ShowControlsForAfterLoginPage() {
+            $(".beforeloginControl").hide();
+            $(".afterloginControl").removeClass("hide-element");
+            $(".prelogin").show();
+            $(".prelogin").removeClass("hide-element");
+            $(".lnkLogout").show();
+            $("#headerlogo").attr("href", "home.aspx");
+        }
+        function ShowControlsForBeforeLoginPage() {
+            $(".afterloginControl").hide();
+            $(".beforeloginControl").removeClass("hide-element");
+            $(".lnkLogout").hide();
+            $("#headerlogo").attr("href", "default.aspx");
         }
     </script>
 </body>

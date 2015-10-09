@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="MarkeetingExample.ascx.cs" Inherits="controls_MarkeetingExample" %>
-<div class="beforeloginControl">
+<div class="beforeloginControl hide-element">
     <h4>Marketing</h4>
     <div class="row">
         <div class="col-sm-6">
@@ -11,7 +11,7 @@
     <p id="productdescription" runat="server">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut </p>
 </div>
 
-<div class="content-box-02 afterloginControl">
+<div class="content-box-02 afterloginControl hide-element">
     <h4>Branded Merchandise Overview headline here </h4>
     <p id="productdescriptionAfterLogin" runat="server">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore             
