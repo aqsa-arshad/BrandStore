@@ -15,6 +15,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.XPath;
 using System.Text.RegularExpressions;
+using AspDotNetStorefrontCore.dhl;
 
 namespace AspDotNetStorefrontCore
 {
@@ -3143,7 +3144,16 @@ function popupzoom(url,alturl)
                 //results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, ThisCustomer.IsAdminUser, ThisCustomer.SkinID, true, false));
                 results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, true, ThisCustomer.SkinID, true, false));
             }
+
             return results.ToString();
+        }
+
+        public string ShowProductStock(String sProductID, String sVariantID)
+        {
+            var result = ShowInventoryTable(sProductID, sVariantID);
+            var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
+            var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
+            return result.Substring(startIndex, lastIndex - startIndex);            
         }
 
         public virtual string GetJSPopupRoutines()

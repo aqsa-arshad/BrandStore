@@ -174,6 +174,29 @@ input[type="submit"] {
         padding: 0;
     }
 
+.content-box-03 {
+    padding: 2em 3em;
+    background-color: #bcc7c4;
+    line-height: 28px;
+    margin-bottom: 1.8em;
+}
+
+.content-box-03 {
+    background-color: #e0e0e0;
+    line-height: 24px;
+    color: #1d446b;
+}
+
+    .content-box-03 h5 {
+        margin-top: 5px;
+    }
+
+    .content-box-03 ul {
+        padding: 0;
+        float: left;
+    }
+
+
 input {
     line-height: normal;
 }
