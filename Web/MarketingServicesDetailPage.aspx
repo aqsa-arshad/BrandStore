@@ -3,8 +3,7 @@
 <%@ Register TagPrefix="aspdnsf" TagName="MarketingServicesDetail" Src="~/Controls/MarketingServicesDetailControl.ascx" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">      
-    <asp:Panel ID="pnlContent" runat="server">        
-        <%--<aspdnsf:MarketingServicesDetail runat="server" ID="JWBMarkeetingExample" />--%>
+    <asp:Panel ID="pnlContent" runat="server">               
 
     </asp:Panel>
 </asp:Content>
