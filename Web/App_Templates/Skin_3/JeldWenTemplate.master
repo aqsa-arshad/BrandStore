@@ -80,7 +80,7 @@
                         </asp:ScriptManager>
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>                       
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />                        
-                        <li><a href="#" class="prelogin hide-element account-link"><span>My Account</span></a></li>
+                        <li><a href="Account.aspx" class="prelogin hide-element account-link"><span>My Account</span></a></li>
                         <li><a href="#" class="prelogin hide-element shopping-link"><span>Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="prelogin hide-element logout-link lnkLogout"><span>Logout</span></a></li>
                     </ul>
