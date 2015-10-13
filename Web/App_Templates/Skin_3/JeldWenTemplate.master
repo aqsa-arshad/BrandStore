@@ -51,7 +51,6 @@
     <aspdnsf:XmlPackage ID="XmlPackage2" runat="server" PackageName="script.headclose" />
 </head>
 <body>
-
     <!-- Google Tag Manager -->
     <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KPVNQV"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -68,65 +67,54 @@
         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
-        <div class="container">
-            <!-- The justified navigation menu is meant for single line per list item.
-           Multiple lines will require custom code not provided by Bootstrap. -->
+        <div class="container">           
             <div class="header clearfix">
                 <div class="header-part">
                     <a href="" class="logo" id="headerlogo">
-                        <img src="App_Themes/Skin_3/images/logo.png"></a>
-                    <span class="head-tagline">Brand Store        
-     
-                    <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    </span>
-                    <nav class="navbar-collapse collapse" id="bs-navbar" aria-expanded="false" style="height: 1px;">
-                        <ul>
-                            <li class="prelogin hide-element">
-                                <a href="#" data-toggle="modal" data-target="#myModal" class="prelogin" id="lnkAlertMobile">Alerts</a>
-                            </li>
-                            <li class="prelogin hide-element">
-                                <a href="#">My Account</a>
-                            </li>
-                            <li class="prelogin hide-element">
-                                <a href="#">Shopping Cart</a>
-                            </li>
-                            <li class="lnkLogout">
-                                <a href="signout.aspx" class="nav-bar-last">Logout</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <a href="signout.aspx" class="desktop-logout lnkLogout">Logout</a>
+                        <img src="App_Themes/Skin_3/images/logo.png" /></a>
+                    <span class="head-tagline">Brand Store      </span>
                 </div>
-                <nav class="desktop-nav">
-                    <%--calling xml package for getting menue dynamically--%>
-                    <aspdnsf:XmlPackage ID="XmlPackage1" runat="server" PackageName="entitymenu" RuntimeParams="entitytype=category" />
-                </nav>
-
                 <div class="user-grid">
-                    <span class="desktop-profile prelogin hide-element">
+                    <ul class="desktop-profile profile-links">
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
-                        <a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server">Alerts</a>
-                        <!-- ModalPopupExtender -->
-                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <!-- ModalPopupExtender -->
-                        <a href="#" class="prelogin hide-element">My Account</a>
-                        <a href="#" class="prelogin hide-element">Shopping Cart</a>
-                    </span>
+                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>                       
+                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />                        
+                        <li><a href="#" class="prelogin hide-element account-link"><span>My Account</span></a></li>
+                        <li><a href="#" class="prelogin hide-element shopping-link"><span>Shopping Cart</span></a></li>
+                        <li><a href="signout.aspx" class="prelogin hide-element logout-link lnkLogout"><span>Logout</span></a></li>
+                    </ul>
                     <custom:Search ID="Search1" runat="server" />
                 </div>
-                <nav class="mobile-nav">
-                    <aspdnsf:XmlPackage ID="XmlPackage3" runat="server" PackageName="entitymenuMobile" RuntimeParams="entitytype=category" />
+                <div class="clearfix">
+                </div>
+                <nav class="navbar navbar-inverse">
+                    <div class="navbar-header">
+                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                            Shop Products
+                        </button>
+                    </div>
+                    <%--calling xml package for getting menue dynamically--%>
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <aspdnsf:XmlPackage ID="XmlPackage1" runat="server" PackageName="entitymenu" RuntimeParams="entitytype=category" />
+                    </div>
                 </nav>
             </div>
             <div class="body-container">
-                <div class="row">
-                    <!-- left Contect Area  -->
+                <div class="row">                   
+                    <div class="col-md-4 pull-right side-bar" id="divbeforelogin" runat="server">
+                        <div class="login-box" id="divlogin" runat="server">
+                            <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
+                        </div>
+                        <div class="separator-line" id="separatorafterlogin" runat="server"></div>
+                        <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                            <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
+                        </div>
+                        <div class="separator-line"></div>
+                        <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                            <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
+                        </div>
+                    </div>
                     <div class="col-md-8">
                         <div class="left-side">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
@@ -134,67 +122,46 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="side-bar">
-                            <!-- Side Box -->
-                            <div id="divafterlogin" runat="server">
-                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
-                                    <%--User information for logged in user(Sales rep/JW Internal User)--%>
+                        <div class="side-bar" id="divafterlogin" runat="server">                           
+                            <div>                              
+                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">                                
                                     <aspdnsf:JWBUserInfoAfterLogin runat="server" />
-                                </div>
-                                <!-- Side Box -->
-                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
-                                    <%--Dealer information for logged in user--%>
+                                </div>                               
+                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">                                  
                                     <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
-                                </div>
-                                <!-- Side Box -->
-                                <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
-                                    <%--TRUBLUE User information for logged in user--%>
+                                </div>                               
+                                <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">                                   
                                     <aspdnsf:JWBTrueBlueUserInfo runat="server" />
-                                </div>
-                                <!-- Side Box -->
-                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
-                                    <%--Marketing services module--%>
+                                </div>                               
+                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">                                  
                                     <aspdnsf:JWBMarketingServices runat="server" />
-                                </div>
-                            </div>
-                            <div id="divbeforelogin" runat="server">
-                                <div class="login-box" id="divlogin" runat="server">
-                                    <%--Login control goes here--%>
-                                    <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
-                                </div>
-                                <!-- Separator Line -->
-                                <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-                                <!-- Side Box -->
-                                <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-                                    <%--Markeeting Example Category control goes here--%>
-                                    <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
-                                </div>
-                                <!-- Separator Line -->
-                                <div class="separator-line"></div>
-                                <!-- Side Box -->
-                                <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-                                    <%--Brand Asset Category control goes here--%>
-                                    <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Site footer -->
+            </div>           
             <footer class="footer">
+
                 <div class="row">
-                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">Support</a></div>
-                    <div class="col-sm-6 col-md-4 footer-nav"><a href="#">About TrueBLU™</a></div>
-                    <div class="col-sm-6 col-md-4 footer-nav prelogin"><a href="#">Terms & Conditions</a></div>
+                    <div class="col-md-4 footer-nav"><a href="#">Support</a></div>
+                    <div class="col-md-6 ooter-nav prelogin"><a href="#">About TrueBLU™</a></div>
+                    <div class="col-md-2 footer-nav"><a href="#">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2 col-md-2">
-                        <a href="http://www.jeld-wen.com/">
-                            <img src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
-                        </a>
+                    <div class="col-md-2">
+                        <img src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
                     </div>
-                    <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
+                    <div class="col-md-4 social-links">
+                        <ul class="">
+                            <li><a href="#" class="fb"></a></li>
+                            <li><a href="#" class="tw"></a></li>
+                            <li><a href="#" class="dp"></a></li>
+                            <li><a href="#" class="pin"></a></li>
+                            <li><a href="#" class="youtube"></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
                 </div>
             </footer>
         </div>
@@ -214,45 +181,36 @@
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user
                 //Show only One Category Item in menue for prelogin page and for after login page(home) if customer is public user               
-                $("#Category3").removeClass("hide-element");
-                $("#MobileCategory3").removeClass("hide-element");
+                $("#Category1").removeClass("hide-element");
                 //Hide Menue for Alerts,My Account and Shopping Cart
-                $(".prelogin").hide();
-                if (CustomerLevel == "8") {
+                $(".prelogin").hide();            
+                if (CustomerLevel == "8")
+                {
                     //it means public user logged in
-                    $(".beforeloginControl").hide();
-                    $(".afterloginControl").removeClass("hide-element");
-                    $(".lnkLogout").show();
-                    $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
-                    $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
-                    $(".hide-element").css("display", "none");
+                    ShowControlsForPublicLogin()
                 }
-                else {
+                else
+                {
                     //it means user is not logged in
                     ShowControlsForBeforeLoginPage()
-
-                }
-                //Free space by hidden categories in menue 
-                $(".hide-element").css("display", "none");
+                }               
             }
-            else {
+            else
+            {
                 //user is logged inn
                 ShowMenueCategories();
                 ShowControlsForAfterLoginPage()
-                if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6") {
-                    //Dealer Login                   
-                    $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
-                    $("#JWBMarketingServicesControl").removeClass("hide-element");
-                    $(".hide-element").css("display", "none");
+                if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6")
+                {
+                    //Dealer Login
+                    ShowControlsForDealerLogin()
                 }
 
-                else if (CustomerLevel == "7" || CustomerLevel == "3" || CustomerLevel == "1" || CustomerLevel == "2") {
+                else if (CustomerLevel == "7" || CustomerLevel == "3" || CustomerLevel == "1" || CustomerLevel == "2")
+                {
                     //Sales Rep or JW Internal(Store Admin/Budget Admin) Login                   
-                    $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
-                    $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
-                    $(".hide-element").css("display", "none");
+                    ShowControlsForSalesRepAndInternalLogin()
                 }
-
             }
         }
 
@@ -277,11 +235,8 @@
             $("#Category2").removeClass("hide-element");
             $("#Category3").removeClass("hide-element");
             $("#Category4").removeClass("hide-element");
-
-            $("#MobileCategory1").removeClass("hide-element");
-            $("#MobileCategory2").removeClass("hide-element");
-            $("#MobileCategory3").removeClass("hide-element");
-            $("#MobileCategory4").removeClass("hide-element");
+            $("#Category5").removeClass("hide-element");
+            $("#Category6").removeClass("hide-element");
 
         }
         function ShowControlsForAfterLoginPage() {
@@ -297,6 +252,27 @@
             $(".beforeloginControl").removeClass("hide-element");
             $(".lnkLogout").hide();
             $("#headerlogo").attr("href", "default.aspx");
+        }
+        function ShowControlsForDealerLogin() {
+            $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
+            $("#JWBMarketingServicesControl").removeClass("hide-element");
+            $(".hide-element").css("display", "none");
+        }
+
+        function ShowControlsForSalesRepAndInternalLogin() {
+            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
+            $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+            $(".hide-element").css("display", "none");
+        }
+        function ShowControlsForPublicLogin() {
+            $(".beforeloginControl").hide();
+            $(".afterloginControl").removeClass("hide-element");
+            $(".lnkLogout").show();
+            $(".lnkLogout").removeClass("hide-element");
+            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
+            $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+            $(".hide-element").css("display", "none");
+            $(".prelogin").show();
         }
     </script>
 </body>
