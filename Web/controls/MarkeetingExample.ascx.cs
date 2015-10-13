@@ -15,7 +15,7 @@ public partial class controls_MarkeetingExample : System.Web.UI.UserControl
         using (SqlConnection conn = DB.dbConn())
         {
             conn.Open();
-            String CategoryID = AppLogic.AppConfig("MarkeetingMaterialCategoryID");// ConfigurationManager.AppSettings["MarkeetingMaterial"];
+            String CategoryID = AppLogic.AppConfig("MarkeetingMaterialCategoryID");
             using (System.Data.IDataReader rs = DB.GetRS("aspdnsf_GetLatestProductByCategory " + CategoryID, conn))
             {
                 if (rs.Read())

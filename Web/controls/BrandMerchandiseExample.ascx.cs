@@ -15,7 +15,7 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
         using (SqlConnection conn = DB.dbConn())
         {
             conn.Open();
-            String CategoryID = AppLogic.AppConfig("BrandMerchandiseCategoryID");// ConfigurationManager.AppSettings["BrandAsset"];
+            String CategoryID = AppLogic.AppConfig("PromotionalItemsCategoryID");
             using (System.Data.IDataReader rs = DB.GetRS("aspdnsf_GetLatestProductByCategory " + CategoryID, conn))
             {
                 if (rs.Read())

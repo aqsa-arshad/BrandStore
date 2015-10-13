@@ -1,5 +1,4 @@
 <%@ Page Language="c#" Inherits="AspDotNetStorefront._default" CodeFile="default.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master" %>
-
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <%@ Register TagPrefix="custom" TagName="Search" Src="Controls/Search.ascx" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">

@@ -15,7 +15,7 @@ public partial class controls_BrandAssetExample : System.Web.UI.UserControl
         using (SqlConnection conn = DB.dbConn())
         {
             conn.Open();
-            String CategoryID = AppLogic.AppConfig("BrandAssetCategoryID");// ConfigurationManager.AppSettings["BrandAsset"];
+            String CategoryID = AppLogic.AppConfig("DisplayAndSignageCategoryID");
             using (System.Data.IDataReader rs = DB.GetRS("aspdnsf_GetLatestProductByCategory " + CategoryID, conn))
             {
                 if (rs.Read())
