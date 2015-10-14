@@ -47,6 +47,7 @@
     <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/slick.min.js" type="text/javascript"></script>
     <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/jquery.html5-placeholder-shim.js" type="text/javascript"></script>
     <!-- Bootstrap core CSS -->
+  
     <link href="../../App_Themes/Skin_3/app.css" rel="stylesheet" />
     <aspdnsf:XmlPackage ID="XmlPackage2" runat="server" PackageName="script.headclose" />
 </head>
@@ -181,15 +182,15 @@
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user
                 //Show only One Category Item in menue for prelogin page and for after login page(home) if customer is public user               
-                $("#Category1").removeClass("hide-element");
-                //Hide Menue for Alerts,My Account and Shopping Cart
-                $(".prelogin").hide();
+                $("#Category1").removeClass("hide-element");                
+               
                 if (CustomerLevel == "8") {
                     //it means public user logged in
                     ShowControlsForPublicLogin()
                 }
                 else {
                     //it means user is not logged in
+                   //Hide Menue for Alerts,My Account and Shopping Cart                 
                     ShowControlsForBeforeLoginPage()
                 }
             }
@@ -243,9 +244,9 @@
             $("#headerlogo").attr("href", "home.aspx");
         }
         function ShowControlsForBeforeLoginPage() {
+            $(".prelogin").hide();
             $(".afterloginControl").hide();
-            $(".beforeloginControl").removeClass("hide-element");
-            $(".lnkLogout").hide();
+            $(".beforeloginControl").removeClass("hide-element");           
             $("#headerlogo").attr("href", "default.aspx");
         }
         function ShowControlsForDealerLogin() {
@@ -261,13 +262,12 @@
         }
         function ShowControlsForPublicLogin() {
             $(".beforeloginControl").hide();
-            $(".afterloginControl").removeClass("hide-element");
-            $(".lnkLogout").show();
-            $(".lnkLogout").removeClass("hide-element");
-            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
-            $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+           // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
+            $(".prelogin").removeClass("hide-element");           
+            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");          
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
+            $(".hideforpublicuser").hide();//hide user info that is not required for public user
         }
     </script>
 </body>
