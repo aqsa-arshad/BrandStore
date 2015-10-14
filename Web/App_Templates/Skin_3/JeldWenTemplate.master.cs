@@ -33,6 +33,7 @@ namespace AspDotNetStorefront
         {
             if (!Page.IsPostBack)
             {
+                SetPageHeading();
                 if (ThisCustomer.IsRegistered)
                 {
                     ShowPostLoginControls();
@@ -63,6 +64,41 @@ namespace AspDotNetStorefront
         {
             divbeforelogin.Visible = true;
             divafterlogin.Visible = false;
+        }
+
+        private void SetPageHeading()
+        {
+            var currentURL = Request.Url.AbsolutePath;
+            if (currentURL.ToUpper().Contains("HOME"))
+            {
+                lblPageHeading.Text = string.Empty;
+                pnlPageHeading.Visible = false;
+            }
+            else if (currentURL.ToUpper().Contains("SEARCH"))
+            {
+                lblPageHeading.Text = string.Empty;
+                pnlPageHeading.Visible = false;
+            }
+            else if (currentURL.ToUpper().Contains("JWMYACCOUNT"))
+            { 
+                lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
+                pnlPageHeading.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
+            {
+                lblPageHeading.Text = "MY ADDRESSES";
+                pnlPageHeading.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("JWADDADDRESSES"))
+            {
+                lblPageHeading.Text = "ADD/EDIT ADDRESS";
+                pnlPageHeading.Visible = true;
+            }
+            else
+            {
+                lblPageHeading.Text = string.Empty;
+                pnlPageHeading.Visible = false;
+            }
         }
     }
 }
