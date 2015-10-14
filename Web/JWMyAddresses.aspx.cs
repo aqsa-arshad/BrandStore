@@ -19,8 +19,7 @@ namespace AspDotNetStorefront
 
             if (MasterHome.Trim().Length == 0)
             {
-
-                MasterHome = "JeldWenTemplate";// "template";
+                MasterHome = "JeldWenTemplate";
             }
 
             if (MasterHome.EndsWith(".ascx"))
@@ -35,8 +34,7 @@ namespace AspDotNetStorefront
 
             if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
             {
-                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "JeldWenTemplate";// "template.master";
+                MasterHome = "JeldWenTemplate";
             }
 
             return MasterHome;

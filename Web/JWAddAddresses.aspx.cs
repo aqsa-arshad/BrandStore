@@ -10,14 +10,16 @@ namespace AspDotNetStorefront
 {
     public partial class JWAddAddresses : SkinBase
     {
+        /// <summary>
+        /// Override JeldWen Master Template
+        /// </summary>
         protected override string OverrideTemplate()
         {
             String MasterHome = AppLogic.HomeTemplate();
 
             if (MasterHome.Trim().Length == 0)
             {
-
-                MasterHome = "JeldWenTemplate";// "template";
+                MasterHome = "JeldWenTemplate";
             }
 
             if (MasterHome.EndsWith(".ascx"))
@@ -32,13 +34,15 @@ namespace AspDotNetStorefront
 
             if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
             {
-                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "JeldWenTemplate";// "template.master";
+                MasterHome = "JeldWenTemplate";
             }
 
             return MasterHome;
         }
 
+        /// <summary>
+        /// Page Load Event
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -48,6 +52,9 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Get Country Data for DropDown List
+        /// </summary>
         private void GetCountryDropDownData()
         {
             ddlCountry.ClearSelection();
@@ -59,6 +66,9 @@ namespace AspDotNetStorefront
             ddlState.Items.Insert(0, "Please select");
         }
 
+        /// <summary>
+        /// Get Sate Data for DropDown List
+        /// </summary>
         private void GetStateDropDownData()
         {
             ddlState.ClearSelection();
@@ -69,11 +79,18 @@ namespace AspDotNetStorefront
             ddlState.Items.Insert(0, "Please select");
         }
 
+        /// <summary>
+        /// Country DropDown List Selection Changed Event
+        /// </summary>
         protected void ddlCountry_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetStateDropDownData();
         }
 
+        /// <summary>
+        /// Get Customer Address
+        /// </summary>
+        /// <param name="AddressID">AddressID</param>
         private void GetCustomerAddress(string AddressID)
         {
             if (!string.IsNullOrEmpty(AddressID))
@@ -101,6 +118,10 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Load Form Fields from Address Class 
+        /// </summary>
+        /// <param name="anyAddress">anyAddress</param>
         private void LoadFormData(Address anyAddress)
         {
             txtNickName.Text = anyAddress.NickName;
@@ -118,6 +139,10 @@ namespace AspDotNetStorefront
             txtZip.Text = anyAddress.Zip;
         }
 
+        /// <summary>
+        /// Load Address Class from Form Fields
+        /// </summary>
+        /// <returns>Address</returns>
         private Address LoadClassData()
         {
             Address anyAddress = new Address();
@@ -144,11 +169,17 @@ namespace AspDotNetStorefront
             return anyAddress;
         }
 
+        /// <summary>
+        /// Cancel Button Click Event
+        /// </summary>
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("JWMyAddresses.aspx");
         }
 
+        /// <summary>
+        /// Save Form Data
+        /// </summary>
         protected void btnSave_Click(object sender, EventArgs e)
         {
             Address anyAddress = LoadClassData();
@@ -169,6 +200,9 @@ namespace AspDotNetStorefront
             Response.Redirect("JWMyAddresses.aspx");
         }
 
+        /// <summary>
+        /// Update Form Data
+        /// </summary>
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             Address anyAddress = LoadClassData();
