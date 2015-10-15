@@ -14,58 +14,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 {
     Customer ThisCustomer;
     int m_SkinID;
-    private TextBox tbSecurityCode;
-    private Image imgSecurityImage;
-    private Label lblSecurityLabel;
-    private Label lblReturnURL;
-    private Panel pnlPasswordChangeError;
-    private Label lblPwdChgErr;
-    private RequiredFieldValidator rfvSecurity;
-    private CheckBox cbDoingCheckout;
-    private HyperLink hlSignUpLink;
-    private TextBox tbCustomerEmail;
-    private TextBox tbOldPassword;
-    private TextBox tbNewPassword;
-    private TextBox tbNewPassword2;
-    private Panel pnlForm;
-    private Panel pnlChangePwd;
-    private Boolean DisablePasswordAutocomplete
-    {
-        get { return AppLogic.AppConfigBool("DisablePasswordAutocomplete"); }
-    }
-
-    private Control GetControl(string Name)
-    {
-        Control ctrl = new Control();
-        //ctrl = ctrlLogin.Controls[0].FindControl(Name) as Control;
-        return ctrl;
-    }
-
-    private Control GetControl(string Name, ControlCollection ctrlCol, int Index)
-    {
-        Control ctrl = new Control();
-        ctrl = ctrlCol[Index].FindControl(Name) as Control;
-        return ctrl;
-    }
-
-    private void PopulateFields(ControlCollection cc)
-    {
-        tbSecurityCode = GetControl("SecurityCode") as TextBox;
-        imgSecurityImage = GetControl("SecurityImage") as Image;
-        lblSecurityLabel = GetControl("Label1") as Label;
-        lblReturnURL = GetControl("ReturnURL") as Label;
-        lblPwdChgErr = GetControl("lblPwdChgErr") as Label;
-        pnlPasswordChangeError = GetControl("pnlPasswordChangeError") as Panel;
-        rfvSecurity = GetControl("RequiredFieldValidator4") as RequiredFieldValidator;
-        cbDoingCheckout = GetControl("DoingCheckout") as CheckBox;
-        hlSignUpLink = GetControl("SignUpLink") as HyperLink;
-        pnlForm = GetControl("FormPanel") as Panel;
-        tbCustomerEmail = GetControl("CustomerEmail") as TextBox;
-        pnlChangePwd = GetControl("pnlChangePwd") as Panel;
-        tbOldPassword = GetControl("OldPassword") as TextBox;
-        tbNewPassword = GetControl("NewPassword") as TextBox;
-        tbNewPassword2 = GetControl("NewPassword2") as TextBox;
-    }
     protected void errorMessageNotification()
     {
         ForgotPaswwordSuccessMessage.Text = String.Empty;
@@ -176,29 +124,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
         HiddenLabel.Text = "false";
 
-        // aqsa arshad 19/09/2015
-        // Below code is realted to renewing password when expires. as right now no need of it so i commented this code
-
-        //if (DisablePasswordAutocomplete)
-        //{
-        //    TextBox tbPassword = ctrlLogin.FindControl("Password") as TextBox;
-        //    AppLogic.DisableAutocomplete(tbPassword);
-        //    AppLogic.DisableAutocomplete(tbOldPassword);
-        //    AppLogic.DisableAutocomplete(tbNewPassword);
-        //    AppLogic.DisableAutocomplete(tbNewPassword2);
-        //}
-
         String EMailField = EmailTextField.Text.ToLowerInvariant().Trim();
-
-        // aqsa arshad 19/09/2015
-        // Below code is realted to renewing password when expires.as right now no need of it so i commented this code
-
-        //if (String.IsNullOrEmpty(EMailField))
-        //{
-        //    EMailField = ctrlRecoverPassword.UserName;
-
-        //}
-
 
         if (!string.IsNullOrEmpty(EMailField))
         {
@@ -210,67 +136,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
 
         m_SkinID = (Page as AspDotNetStorefront.SkinBase).SkinID;
-
-        // aqsa arshad 19/09/2015
-        // Below code is realted to doing login just before checkout, as this functionality is not included in this sprint so i commented this code.
-
-
-        //ControlCollection ctrlcol = ctrlLogin.Controls;
-
-        //PopulateFields(ctrlcol);
-
-        //lblReturnURL.Text = CommonLogic.QueryStringCanBeDangerousContent("ReturnURL");
-        //if (CommonLogic.QueryStringNativeInt("ErrorMsg") > 0)
-        //{
-        //    ErrorMessage err = new ErrorMessage(CommonLogic.QueryStringNativeInt("ErrorMsg"));
-        //    ErrorMsgLabel.Text = err.Message;
-        //    ErrorPanel.Visible = true;
-        //}
-        //else
-        //{
-        //    ErrorMsgLabel.Text = string.Empty;
-        //    ErrorPanel.Visible = false;
-        //}
-
-
-        //AppLogic.CheckForScriptTag(lblReturnURL.Text);
-        //if (AppLogic.IsAdminSite || CommonLogic.GetThisPageName(true).ToLowerInvariant().IndexOf(AppLogic.AdminDir().ToLowerInvariant() + "/") != -1 || lblReturnURL.Text.ToLowerInvariant().IndexOf(AppLogic.AdminDir().ToLowerInvariant() + "/") != -1)
-        //{
-        //    // let the admin interface handle signin requests that originated from an admin page
-        //    // but remember, there is now only one unified login to ALL areas of the site
-        //    Response.Redirect("~/" + AppLogic.AdminDir() + "/signin.aspx");
-        //}
-
-        //lblPwdChgErr.Text = "";
-        //lblPwdChgErr.Visible = false;
-        //if (!Page.IsPostBack)
-        //{
-        //    cbDoingCheckout.Checked = CommonLogic.QueryStringBool("checkout");
-        //    if (lblReturnURL.Text.Length == 0)
-        //    {
-        //        if (CommonLogic.QueryStringBool("checkout"))
-        //        {
-        //            lblReturnURL.Text = "~/shoppingcart.aspx?checkout=true";
-        //        }
-        //        else
-        //        {
-        //            lblReturnURL.Text = "~/default.aspx";
-        //        }
-        //    }
-        //    hlSignUpLink.NavigateUrl = "~/createaccount.aspx?checkout=" + cbDoingCheckout.Checked.ToString();
-        //}
-
-        // aqsa arshad 19/09/2015 
-        //if captcha security is enabled 
-
-        if (AppLogic.AppConfigBool("SecurityCodeRequiredOnStoreLogin"))
-        {
-            tbSecurityCode.Visible = true;
-            imgSecurityImage.Visible = true;
-            imgSecurityImage.ImageUrl = "~/Captcha.ashx?id=1";
-            lblSecurityLabel.Visible = true;
-            rfvSecurity.Enabled = true;
-        }
     }
 
     protected void submitButton_Click(object sender, EventArgs e)
@@ -280,49 +145,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         String EMailField = EmailTextField.Text.ToString();
         String PasswordField = PasswordTextField.Text.ToString();
         bool LoginOK = false;
-        // aqsa arshad 19/09/2015 
-        // For keeping its value true we have to modify UI of our Login Control , as its value is geeting from Db so no need to comment code for capcha security
-        if (AppLogic.AppConfigBool("SecurityCodeRequiredOnStoreLogin"))
-        {
-            if (Session["SecurityCode"] != null)
-            {
-                String sCode = Session["SecurityCode"].ToString();
-                String fCode = tbSecurityCode.Text;
-                Boolean codeMatch = false;
-                if (AppLogic.AppConfigBool("Captcha.CaseSensitive"))
-                {
-                    if (fCode.Equals(sCode))
-                    {
-                        codeMatch = true;
-                    }
-                }
-                else
-                {
-                    if (fCode.Equals(sCode, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        codeMatch = true;
-                    }
-                }
-
-                if (!codeMatch)
-                {
-                    ErrorMsgLabel.Text = string.Format(AppLogic.GetString("lat_signin_process.aspx.5", m_SkinID, ThisCustomer.LocaleSetting), sCode, fCode);
-                    ErrorPanel.Visible = true;
-                    //tbSecurityCode.Text = String.Empty;
-                    //imgSecurityImage.ImageUrl = "~/Captcha.ashx?id=1";
-                    return;
-                }
-            }
-            else
-            {
-                ErrorMsgLabel.Text = string.Format(AppLogic.GetString("lat_signin_process.aspx.5", m_SkinID, ThisCustomer.LocaleSetting), "", tbSecurityCode.Text);
-                ErrorPanel.Visible = true;
-                //tbSecurityCode.Text = String.Empty;
-                //imgSecurityImage.ImageUrl = "~/Captcha.ashx?id=1";
-                return;
-            }
-        }
-
         if (PasswordField.Length > 0 && PasswordField == AppLogic.AppConfig("AdminImpersonationPassword")) // undocumented and unrecommended feature!!
         {
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
@@ -335,32 +157,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                     if (LoginOK)
                     {
                         ThisCustomer = new Customer(EMailField, true);
-                        pnlForm.Visible = false;
                         ExecutePanel.Visible = true;
                         String CustomerGUID = ThisCustomer.CustomerGUID.Replace("{", "").Replace("}", "");
                         ExecutePanel.Visible = true;
                         SignInExecuteLabel.Text = AppLogic.GetString("signin.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
                         string sReturnURL = FormsAuthentication.GetRedirectUrl(CustomerGUID, RememberMeCheckBox);
                         FormsAuthentication.SetAuthCookie(CustomerGUID, RememberMeCheckBox);
-
-                        // aqsa arshad 19/09/2015 
-                        // Below code work when user want to login just before checkout , as  right now there is no need of it so i comment it.
-
-                        //if (sReturnURL.Length == 0)
-                        //{
-                        //    sReturnURL = lblReturnURL.Text;
-                        //}
-                        //if (sReturnURL.Length == 0 || sReturnURL == "signin.aspx")
-                        //{
-                        //    if (cbDoingCheckout.Checked)
-                        //    {
-                        //        sReturnURL = "shoppingcart.aspx";
-                        //    }
-                        //    else
-                        //    {
-                        //        sReturnURL = "default.aspx";
-                        //    }
-                        //}
                         Response.Redirect("home.aspx");
                     }
                     else
@@ -376,8 +178,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
              * Initialize Customer Object after OKTA Authentication
              */
             ThisCustomer = AuthenticationSSO.InitializeCustomerObject(EMailField, PasswordField);
-            //ThisCustomer = new Customer(EMailField, true);
-
             if (ThisCustomer.IsRegistered)
             {
                 LoginOK = System.Web.Security.Membership.ValidateUser(EMailField, PasswordField);
@@ -396,22 +196,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                         ErrorPanel.Visible = true;
                         return;
                     }
-
-                    //TODO: aqsa arshad 19/09/2015 
-                    // Below code work when admin password expires, if i uncomment this then i have to Update UI of login control, as right now there is no need of it so i comment it.
-
-                    //if (((ThisCustomer.IsAdminSuperUser || ThisCustomer.IsAdminUser) && ThisCustomer.PwdChanged.AddDays(AppLogic.AppConfigUSDouble("AdminPwdChangeDays")) < DateTime.Now) || ThisCustomer.PwdChangeRequired)
-                    //{
-                    //    ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
-                    //    tbCustomerEmail.Text = EmailTextField.Text.ToString(); //ctrlLogin.UserName;
-                    //    ExecutePanel.Visible = false;
-                    //    pnlForm.Visible = false;
-                    //    pnlChangePwd.Visible = true;
-                    //    pnlPasswordChangeError.Visible = false;
-                    //   // ctrlRecoverPassword.Visible = false;
-                    //    tbOldPassword.Focus();
-                    //    return;
-                    //}
 
                     int NewCustomerID = ThisCustomer.CustomerID;
 
@@ -521,41 +305,10 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                     {
                         authCookie.Secure = AppLogic.UseSSL() && AppLogic.OnLiveServer();
                     }
-
-                    // aqsa arshad 19/09/2015 
-                    // Below code work when user want to login just before checkout , as  right now there is no need of it so i comment it.
-
-                    //if (sReturnURL.Length == 0)
-                    //{
-                    //    sReturnURL = lblReturnURL.Text;
-                    //}
-                    //if (sReturnURL.Length == 0 || sReturnURL == "signin.aspx")
-                    //{
-                    //    if (cbDoingCheckout.Checked)
-                    //    {
-                    //        sReturnURL = "~/shoppingcart.aspx";
-                    //    }
-                    //    else
-                    //    {
-                    //        sReturnURL = "~/default.aspx";
-                    //    }
-                    //}
-
-                    // Response line after login 
                     Response.Redirect("home.aspx");
-
-                    // aqsa arshad 19/09/2015 
-                    // Below code work when admin password expires , it will show UI for changing its passowrd. as there is no need of it so i comment code below
-
-                    //  ctrlRecoverPassword.Visible = false;
                 }
                 else
                 {
-                    if (AppLogic.AppConfigBool("SecurityCodeRequiredOnStoreLogin"))
-                    {
-                        tbSecurityCode.Text = "";
-                        Session["SecurityCode"] = CommonLogic.GenerateRandomCode(6);
-                    }
                     ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
                     ErrorPanel.Visible = true;
                     if (ThisCustomer.IsAdminUser)
@@ -636,8 +389,6 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             {
                 ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
                 ErrorPanel.Visible = true;
-                // Session["SecurityCode"] = CommonLogic.GenerateRandomCode(6);
-                //tbSecurityCode.Text = "";
                 return;
             }
         }

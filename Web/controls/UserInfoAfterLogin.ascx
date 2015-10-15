@@ -5,10 +5,10 @@
 <button class="btn btn-md btn-primary btn-block" type="button" id="btnViewAccountofuser">VIEW MY ACCOUNT</button>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-      
-        $("#btnViewAccountofuser").click(function () {
-            window.open("Account.aspx", '_self');
+    $(document).ready(function () {      
+                $("#btnViewAccount").click(function () {
+            window.open("JWMyAccount.aspx", '_self');
+
         });
     });
 </script>

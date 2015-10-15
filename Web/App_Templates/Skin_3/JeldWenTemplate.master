@@ -103,6 +103,12 @@
             </div>
             <div class="body-container">
                 <div class="row">
+                    <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
+                        <div class="body-heading">
+                            <h3>
+                                <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading"></asp:Label></h3>
+                        </div>
+                    </asp:Panel>
                     <div class="col-md-4 pull-right">
                         <div class="side-bar" id="divbeforelogin" runat="server" clientidmode="Static">
                             <div class="login-box" id="divlogin" runat="server">
@@ -118,55 +124,55 @@
                             </div>
                         </div>
                     </div>
-                <div class="col-md-8">
-                    <div class="left-side">
-                        <asp:ContentPlaceHolder ID="PageContent" runat="server">
-                        </asp:ContentPlaceHolder>
+                    <div class="col-md-8">
+                        <div class="left-side">
+                            <asp:ContentPlaceHolder ID="PageContent" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="side-bar" id="divafterlogin" runat="server">
-                        <div>
-                            <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
-                                <aspdnsf:JWBUserInfoAfterLogin runat="server" />
-                            </div>
-                            <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
-                                <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
-                            </div>
-                            <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
-                                <aspdnsf:JWBTrueBlueUserInfo runat="server" />
-                            </div>
-                            <div class="side-bar-box hide-element" id="JWBMarketingServicesControl" >
-                                <aspdnsf:JWBMarketingServices runat="server" />
+                    <div class="col-md-4">
+                        <div class="side-bar" id="divafterlogin" runat="server">
+                            <div>
+                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
+                                    <aspdnsf:JWBUserInfoAfterLogin runat="server" />
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
+                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
+                                    <aspdnsf:JWBTrueBlueUserInfo runat="server" />
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
+                                    <aspdnsf:JWBMarketingServices runat="server" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <footer class="footer">
+            <footer class="footer">
 
-            <div class="row">
-                <div class="col-md-4 footer-nav"><a href="#">Support</a></div>
-                <div class="col-md-6 ooter-nav prelogin"><a href="#">About TrueBLU™</a></div>
-                <div class="col-md-2 footer-nav"><a href="#">Terms & Conditions</a></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
+                <div class="row">
+                    <div class="col-md-4 footer-nav"><a href="#">Support</a></div>
+                    <div class="col-md-6 ooter-nav prelogin"><a href="#">About TrueBLU™</a></div>
+                    <div class="col-md-2 footer-nav"><a href="#">Terms & Conditions</a></div>
                 </div>
-                <div class="col-md-4 social-links">
-                    <ul class="">
-                        <li><a href="#" class="fb"></a></li>
-                        <li><a href="#" class="tw"></a></li>
-                        <li><a href="#" class="dp"></a></li>
-                        <li><a href="#" class="pin"></a></li>
-                        <li><a href="#" class="youtube"></a></li>
-                    </ul>
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
+                    </div>
+                    <div class="col-md-4 social-links">
+                        <ul class="">
+                            <li><a href="#" class="fb"></a></li>
+                            <li><a href="#" class="tw"></a></li>
+                            <li><a href="#" class="dp"></a></li>
+                            <li><a href="#" class="pin"></a></li>
+                            <li><a href="#" class="youtube"></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
                 </div>
-                <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
-            </div>
-        </footer>
+            </footer>
         </div>
     </form>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -185,15 +191,15 @@
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user
                 //Show only One Category Item in menue for prelogin page and for after login page(home) if customer is public user               
-                $("#Category1").removeClass("hide-element");                
-               
+                $("#Category1").removeClass("hide-element");
+
                 if (CustomerLevel == "8") {
                     //it means public user logged in
                     ShowControlsForPublicLogin()
                 }
                 else {
                     //it means user is not logged in
-                   //Hide Menue for Alerts,My Account and Shopping Cart                 
+                    //Hide Menue for Alerts,My Account and Shopping Cart                 
                     ShowControlsForBeforeLoginPage()
                 }
             }
@@ -249,7 +255,7 @@
         function ShowControlsForBeforeLoginPage() {
             $(".prelogin").hide();
             $(".afterloginControl").hide();
-            $(".beforeloginControl").removeClass("hide-element");           
+            $(".beforeloginControl").removeClass("hide-element");
             $("#headerlogo").attr("href", "default.aspx");
         }
         function ShowControlsForDealerLogin() {
@@ -266,14 +272,14 @@
             $(".hide-element").css("display", "none");
             $("#controlHeadingforPromotionalItems").text("Our brand is their brand.");
             $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
-            
+
         }
         function ShowControlsForPublicLogin() {
             $("#PublicHomePageTopic").removeClass("hide-element");
             $(".beforeloginControl").hide();
-           // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
-            $(".prelogin").removeClass("hide-element");           
-            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");          
+            // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
+            $(".prelogin").removeClass("hide-element");
+            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
