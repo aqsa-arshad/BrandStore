@@ -25,7 +25,6 @@
                 </div>
                 <br />
                 <br />
-                <br />
                 <asp:Panel ID="ExecutePanel" runat="server" Visible="false">
                     <div class="notice-wrap signin-executing-text">
                         <asp:Literal ID="SignInExecuteLabel" runat="server"></asp:Literal>
@@ -56,7 +55,7 @@
                     CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
                 <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator3" runat="server" ValidationGroup="ForgotPasswordGroup"
                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="ForgotPasswordEmailTextField"></asp:RequiredFieldValidator>
-
+                <br />
                 <asp:Panel ID="ForgotPasswordExecutepanel" runat="server" Visible="false">
                     <div class="notice-wrap signin-executing-text">
                         <asp:Literal ID="ForgotPaswwordSuccessMessage" runat="server"></asp:Literal>

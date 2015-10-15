@@ -10,7 +10,27 @@ using AspDotNetStorefrontCore;
 
 public partial class controls_BrandMerchandiseExample : System.Web.UI.UserControl
 {
+    private Customer m_ThisCustomer;
+    public Customer ThisCustomer
+    {
+        get
+        {
+            if (m_ThisCustomer == null)
+                m_ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
+
+            return m_ThisCustomer;
+        }
+        set
+        {
+            m_ThisCustomer = value;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
+    {
+        SetControlValues();
+    }
+
+    protected void SetControlValues()
     {
         using (SqlConnection conn = DB.dbConn())
         {
@@ -22,7 +42,7 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
                 {
 
                     String PGuid = rs["ProductGUID"].ToString();
-                    String PID = rs["ProductID"].ToString(); 
+                    String PID = rs["ProductID"].ToString();
                     String PDescription = rs["Description"].ToString();
                     String PImagename = rs["Imagename"].ToString();
 
@@ -44,13 +64,31 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
                         PDescription = PDescription.Substring(0, 190) + ".....";
 
                     }
-                    productdescription.InnerHtml=PDescription;
+                    productdescription.InnerHtml = PDescription;
                     productimmage.Attributes["src"] = "../images/product/icon/" + PImagename;
-
-                    productdescriptionAfterLogin.InnerHtml = PDescription;
                     productimmageAfterLogin.Attributes["src"] = "../images/product/icon/" + PImagename;
+
+                    SetLoginSpecificValues(); 
+
                 }
             }
+        }
+    }
+
+    protected void SetLoginSpecificValues()
+    {
+        String CustomerLevel = ThisCustomer.CustomerLevelID.ToString();
+        if (CustomerLevel == "7" || CustomerLevel == "3" || CustomerLevel == "1" || CustomerLevel == "2")
+        {
+            //sales rep or internal user
+            controlHeadingforPromotionalItems.InnerHtml = "Our brand is their brand.";
+            productdescriptionAfterLogin.InnerHtml = "Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ";
+        }
+        else if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6")
+        {
+            //dealer login
+            controlHeadingforPromotionalItems.InnerHtml = "Suit up for the showroom.";
+            productdescriptionAfterLogin.InnerHtml = "Inside you’ll find a variety of JELD-WEN merchandise to enhance the showroom experience, all of which can be purchased with BLU Bucks or through your regular business account. ";
         }
     }
 }

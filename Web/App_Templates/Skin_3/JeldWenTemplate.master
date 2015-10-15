@@ -47,6 +47,7 @@
     <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/slick.min.js" type="text/javascript"></script>
     <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/jquery.html5-placeholder-shim.js" type="text/javascript"></script>
     <!-- Bootstrap core CSS -->
+
     <link href="../../App_Themes/Skin_3/app.css" rel="stylesheet" />
     <aspdnsf:XmlPackage ID="XmlPackage2" runat="server" PackageName="script.headclose" />
 </head>
@@ -92,7 +93,6 @@
                     <div class="navbar-header">
                         <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                             Shop Products
-                       
                         </button>
                     </div>
                     <%--calling xml package for getting menue dynamically--%>
@@ -102,18 +102,26 @@
                 </nav>
             </div>
             <div class="body-container">
+                <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
+                    <div class="body-heading">
+                        <h3>
+                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading"></asp:Label></h3>
+                    </div>
+                </asp:Panel>
                 <div class="row">
-                    <div class="col-md-4 pull-right side-bar" id="divbeforelogin" runat="server">
-                        <div class="login-box" id="divlogin" runat="server">
-                            <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
-                        </div>
-                        <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-                        <div class="side-bar-box" id="divMarkeetingExample" runat="server">
-                            <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
-                        </div>
-                        <div class="separator-line"></div>
-                        <div class="side-bar-box" id="divBrandAssetExample" runat="server">
-                            <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
+                    <div class="col-md-4 pull-right">
+                        <div class="side-bar" id="divbeforelogin" runat="server" clientidmode="Static">
+                            <div class="login-box" id="divlogin" runat="server">
+                                <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
+                            </div>
+                            <div class="separator-line" id="separatorafterlogin" runat="server"></div>
+                            <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                                <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
+                            </div>
+                            <div class="separator-line"></div>
+                            <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                                <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -134,7 +142,7 @@
                                 <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
                                     <aspdnsf:JWBTrueBlueUserInfo runat="server" />
                                 </div>
-                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl" >
+                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
                                     <aspdnsf:JWBMarketingServices runat="server" />
                                 </div>
                             </div>
@@ -174,22 +182,24 @@
     <script type="text/javascript">
         $(document).ready(function () {
             ShowHideControls();
+            $("#HomePageTopic").hide();
         });
 
         function ShowHideControls() {
+            debugger;
             var CustomerLevel = GetCustomerLevel();
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user
                 //Show only One Category Item in menue for prelogin page and for after login page(home) if customer is public user               
                 $("#Category1").removeClass("hide-element");
-                //Hide Menue for Alerts,My Account and Shopping Cart
-                $(".prelogin").hide();
+
                 if (CustomerLevel == "8") {
                     //it means public user logged in
                     ShowControlsForPublicLogin()
                 }
                 else {
                     //it means user is not logged in
+                    //Hide Menue for Alerts,My Account and Shopping Cart                 
                     ShowControlsForBeforeLoginPage()
                 }
             }
@@ -243,31 +253,36 @@
             $("#headerlogo").attr("href", "home.aspx");
         }
         function ShowControlsForBeforeLoginPage() {
+            $(".prelogin").hide();
             $(".afterloginControl").hide();
             $(".beforeloginControl").removeClass("hide-element");
-            $(".lnkLogout").hide();
             $("#headerlogo").attr("href", "default.aspx");
         }
         function ShowControlsForDealerLogin() {
+            $("#DealerHomePageTopic").removeClass("hide-element");
             $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
             $("#JWBMarketingServicesControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
         }
 
         function ShowControlsForSalesRepAndInternalLogin() {
+            $("#InternalHomePageTopic").removeClass("hide-element");
             $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
             $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
+            $("#controlHeadingforPromotionalItems").text("Our brand is their brand.");
+            $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
+
         }
         function ShowControlsForPublicLogin() {
+            $("#PublicHomePageTopic").removeClass("hide-element");
             $(".beforeloginControl").hide();
-            $(".afterloginControl").removeClass("hide-element");
-            $(".lnkLogout").show();
-            $(".lnkLogout").removeClass("hide-element");
+            // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
+            $(".prelogin").removeClass("hide-element");
             $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
-            $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
+            $(".hideforpublicuser").hide();//hide user info that is not required for public user
         }
     </script>
 </body>

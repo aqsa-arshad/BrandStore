@@ -1,4 +1,5 @@
 <%@ Page Language="c#" Inherits="AspDotNetStorefront._home" CodeFile="home.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master" %>
+
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <%@ Register TagPrefix="custom" TagName="Search" Src="Controls/Search.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBBrandMerchandiseExampleExample" Src="~/Controls/BrandMerchandiseExample.ascx" %>
@@ -17,7 +18,16 @@
     <body>
         <div class="left-side">
             <%--Calling topic defind through admin console.--%>
-            <aspdnsf:Topic ID="Topic2" runat="server" TopicName="HomePageTopic" />
+            <div id="InternalHomePageTopic" class="hide-element">
+                <aspdnsf:Topic ID="Topic1" runat="server" TopicName="HomePageTopic" />
+            </div>
+            <div id="DealerHomePageTopic" class="hide-element">
+                <aspdnsf:Topic ID="Topic2" runat="server" TopicName="DealerHomePageTopic" />
+            </div>
+            <div id="PublicHomePageTopic" class="hide-element">
+                <aspdnsf:Topic ID="Topic3" runat="server" TopicName="PublicHomePageTopic" />
+            </div>
+            <%--End Calling topic defind through admin console.--%>
             <!-- Contect Box 02  -->
             <div class="row">
                 <div class="col-md-6">
@@ -27,13 +37,13 @@
                     <aspdnsf:JWBBrandMerchandiseExampleExample runat="server" ID="JWBBrandMerchandiseExampleExample" />
                 </div>
             </div>
-        </div>      
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="../../dist/js/bootstrap.min.js"></script>       
+        <script src="../../dist/js/bootstrap.min.js"></script>
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-        <script src="offcanvas.js"></script>        
+        <script src="offcanvas.js"></script>
     </body>
-    </html>    
+    </html>
 </asp:Content>
 
 

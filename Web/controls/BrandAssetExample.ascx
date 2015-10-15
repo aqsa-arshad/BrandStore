@@ -21,7 +21,7 @@
             <div class="primary-img-box">
                <img id="productimmageAfterLogin" runat="server" class="img-responsive" src="App_Themes/Skin_3/images/brand-ex-img.png">
             </div>
-           <div class="img-tag-line">Display & Signage</div>
+           <div class="img-tag-line"></div>
         </div>
     </div>
     <button class="btn btn-md btn-primary btn-block" type="submit">See All</button>

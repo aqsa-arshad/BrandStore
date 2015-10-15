@@ -1117,6 +1117,7 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+  margin: 0 auto;
 }
 .img-rounded {
   border-radius: 0;
@@ -5795,11 +5796,15 @@ label {
 ul {
   list-style: none;
 }
+select {
+  padding: 3px;
+  border: solid 1px #c0c0c0;
+}
 .padding-none {
   padding: 0;
 }
 .body-container {
-  padding: 0 20px;
+  padding: 0 20px !important;
 }
 .separator-line {
   border-top: solid 1px #c0c0c0;
@@ -5870,6 +5875,27 @@ a:hover.mb-link {
 }
 .hide-element {
   visibility: hidden;
+}
+a.underline-link {
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: none;
+}
+.btn-center {
+  text-align: center;
+}
+.btn-center .btn-primary {
+  min-width: 250px;
+}
+.gray-color {
+  color: #b4b7b0;
+}
+.btn-half {
+  width: 49%;
+}
+.img-responsive {
+  margin: 0 auto;
 }
 .header-part {
   padding-top: 40px;
@@ -6003,6 +6029,10 @@ a:hover.mb-link {
 .profile-links > li .alerts-link {
   background-image: url(images/alerts-icon.png);
 }
+.profile-links > li .new-alerts {
+  color: #88421b;
+  background-image: url(images/new-alerts-icon.png);
+}
 .profile-links > li .account-link {
   background-image: url(images/account-icon.png);
 }
@@ -6019,6 +6049,9 @@ a:hover.mb-link {
   .profile-links > li span {
     display: inline-block;
   }
+}
+.profile-links > li span:hover {
+  text-decoration: underline;
 }
 .mb-login-btn {
   font-size: 18px;
@@ -6192,6 +6225,13 @@ a:hover.mb-login-btn {
   color: #1d446b;
   font-weight: bold;
   margin-bottom: 0;
+  margin-top: 5px;
+}
+@media screen and (min-width: 800px) {
+  .header-img-box .header-text h1 {
+    font-size: 40px;
+    margin-top: 10px;
+  }
 }
 .header-img-box .header-text .help-text {
   font-size: 14px;
@@ -6224,6 +6264,8 @@ a:hover.mb-login-btn {
 }
 .content-box-03 h5 {
   margin-top: 5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
 .content-box-03 ul {
   padding: 0;
@@ -6247,6 +6289,28 @@ a:hover.mb-login-btn {
   margin: 15px 0;
   color: #1d446b;
   line-height: 24px;
+}
+.address .col-md-6 {
+  margin: 35px 0 10px;
+}
+.address .col-md-6:nth-child(1) {
+  margin-top: 0;
+}
+.address .col-md-6:nth-child(2) {
+  margin-top: 0;
+}
+.body-forms .form-group {
+  margin-bottom: 10px;
+}
+.body-forms .form-group label {
+  display: block;
+  margin-bottom: 0;
+}
+.body-forms .form-group input[type="text"] {
+  width: 100%;
+}
+.body-forms .form-group select {
+  width: 100%;
 }
 /******************* Side Bar ***********************/
 .mb-login-bar {
@@ -6302,6 +6366,11 @@ a:hover.mb-login-btn {
   margin: 10px 0 2px;
   display: block;
 }
+.side-bar .login-box input[type="password"] {
+  border: 1px solid #c6c6c6;
+  padding: 4px 12px;
+  height: 26px;
+}
 .side-bar .login-box .checkbox {
   font-size: 12px;
   width: 100%;
@@ -6336,6 +6405,22 @@ a.sm-link {
 }
 a:hover.sm-link {
   text-decoration: none;
+}
+.right-logo-box {
+  padding: 0 0 35px;
+}
+.right-logo-box img {
+  height: 60px;
+  margin-right: 6px;
+}
+.right-logo-box span {
+  vertical-align: bottom;
+  color: #b4b7b0;
+  font-size: 10px;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 45px;
+  line-height: 14px;
 }
 /******************* Footer ***********************/
 footer {

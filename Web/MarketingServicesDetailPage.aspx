@@ -4,11 +4,6 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#divContentPageHeading").html("<h3>About Marketing Services</h3>");            
-        });
-    </script>
 
     <aspdnsf:MarketingServicesDetail runat="server" />
 </asp:Content>
