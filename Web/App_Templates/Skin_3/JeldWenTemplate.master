@@ -67,7 +67,7 @@
         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
-        <div class="container">           
+        <div class="container">
             <div class="header clearfix">
                 <div class="header-part">
                     <a href="" class="logo" id="headerlogo">
@@ -78,8 +78,8 @@
                     <ul class="desktop-profile profile-links">
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
-                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>                       
-                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />                        
+                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
+                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
                         <li><a href="Account.aspx" class="prelogin hide-element account-link"><span>My Account</span></a></li>
                         <li><a href="#" class="prelogin hide-element shopping-link"><span>Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="prelogin hide-element logout-link lnkLogout"><span>Logout</span></a></li>
@@ -92,6 +92,7 @@
                     <div class="navbar-header">
                         <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                             Shop Products
+                       
                         </button>
                     </div>
                     <%--calling xml package for getting menue dynamically--%>
@@ -101,7 +102,7 @@
                 </nav>
             </div>
             <div class="body-container">
-                <div class="row">                   
+                <div class="row">
                     <div class="col-md-4 pull-right side-bar" id="divbeforelogin" runat="server">
                         <div class="login-box" id="divlogin" runat="server">
                             <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
@@ -122,25 +123,25 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="side-bar" id="divafterlogin" runat="server">                           
-                            <div>                              
-                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">                                
+                        <div class="side-bar" id="divafterlogin" runat="server">
+                            <div>
+                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
                                     <aspdnsf:JWBUserInfoAfterLogin runat="server" />
-                                </div>                               
-                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">                                  
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
                                     <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
-                                </div>                               
-                                <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">                                   
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
                                     <aspdnsf:JWBTrueBlueUserInfo runat="server" />
-                                </div>                               
-                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">                                  
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBMarketingServicesControl" >
                                     <aspdnsf:JWBMarketingServices runat="server" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>
             <footer class="footer">
 
                 <div class="row">
@@ -176,7 +177,6 @@
         });
 
         function ShowHideControls() {
-            debugger;
             var CustomerLevel = GetCustomerLevel();
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user

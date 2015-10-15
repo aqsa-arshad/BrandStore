@@ -5,10 +5,6 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
-using System.Web;
-using System.Data;
-using System.Globalization;
-using AspDotNetStorefrontCommon;
 using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
@@ -16,7 +12,7 @@ namespace AspDotNetStorefront
     /// <summary>
     /// Summary description for search.
     /// </summary>
-	[PageType("search")]
+    [PageType("search")]
     public partial class search : SkinBase
     {
         protected override void OnInit(EventArgs e)
@@ -29,18 +25,18 @@ namespace AspDotNetStorefront
             // this may be overwridden by the XmlPackage below!
             SectionTitle = AppLogic.GetString("search.aspx.1", SkinID, ThisCustomer.LocaleSetting);
 
-			int minSearchLength = AppLogic.AppConfigNativeInt("MinSearchStringLength");
+            int minSearchLength = AppLogic.AppConfigNativeInt("MinSearchStringLength");
 
             string searchTermFromQueryString = CommonLogic.QueryStringCanBeDangerousContent("SearchTerm");
-			if (minSearchLength <= searchTermFromQueryString.Length)
-			{
-				RunSearch(Server.UrlEncode(searchTermFromQueryString));
-			}
-			else
-			{
-				litSearch.Text = String.Format(AppLogic.GetString("search.aspx.2", ThisCustomer.LocaleSetting), minSearchLength);
-			}
-           
+            if (minSearchLength <= searchTermFromQueryString.Length)
+            {
+                RunSearch(Server.UrlEncode(searchTermFromQueryString));
+            }
+            else
+            {
+                litSearch.Text = String.Format(AppLogic.GetString("search.aspx.2", ThisCustomer.LocaleSetting), minSearchLength);
+            }
+
             base.OnInit(e);
         }
 
@@ -51,8 +47,8 @@ namespace AspDotNetStorefront
                 DB.ExecuteSQL("insert into SearchLog(SearchTerm,CustomerID,LocaleSetting) values(" + DB.SQuote(CommonLogic.Ellipses(searchTerm, 97, true)) + "," + ThisCustomer.CustomerID.ToString() + "," + DB.SQuote(ThisCustomer.LocaleSetting) + ")");
             }
 
-			string searchXmlPackageName = AppLogic.AppConfig("XmlPackage.SearchPage");
-			string searchHTML = AppLogic.RunXmlPackage(searchXmlPackageName,
+            string searchXmlPackageName = AppLogic.AppConfig("XmlPackage.SearchPage");
+            string searchHTML = AppLogic.RunXmlPackage(searchXmlPackageName,
                                     null,
                                     ThisCustomer,
                                     ThisCustomer.SkinID,
@@ -65,32 +61,25 @@ namespace AspDotNetStorefront
         }
         protected override string OverrideTemplate()
         {
-            String MasterHome = AppLogic.HomeTemplate();
-
-            if (MasterHome.Trim().Length == 0)
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
             {
-
-                MasterHome = "JeldWenTemplate";// "template";
+                masterHome = "JeldWenTemplate";
             }
-
-            if (MasterHome.EndsWith(".ascx"))
+            if (masterHome.EndsWith(".ascx"))
             {
-                MasterHome = MasterHome.Replace(".ascx", ".master");
+                masterHome = masterHome.Replace(".ascx", ".master");
             }
-
-            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
             {
-                MasterHome = MasterHome + ".master";
+                masterHome = masterHome + ".master";
             }
-
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
             {
-                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "JeldWenTemplate";// "template.master";
+                masterHome = "JeldWenTemplate";
             }
-
-            return MasterHome;
+            return masterHome;
         }
-        
+
     }
 }
