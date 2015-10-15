@@ -23,7 +23,7 @@ namespace AspDotNetStorefront
             SectionTitle = AppLogic.GetString("signin.aspx.1", SkinID, ThisCustomer.LocaleSetting);
 
             pnlContent.Controls.Add(LoadControl("~/Controls/Signin.ascx"));
-            Master.ShowPanel = false;
+           
             if (ThisCustomer.IsAuthenticated)
             {
                 Response.Redirect("home.aspx");

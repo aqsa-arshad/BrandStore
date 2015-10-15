@@ -13,9 +13,6 @@ namespace AspDotNetStorefront
     public partial class JeldWenMasterPage : MasterPageBase
     {
 
-        private bool showPanel = true;
-        public bool ShowPanel { get { return showPanel; } set { showPanel = value; } }
-
         private Customer m_ThisCustomer;
         public Customer ThisCustomer
         {
@@ -51,7 +48,7 @@ namespace AspDotNetStorefront
                     hdnCustomerLevel.Text = "-1";
                 }
             }
-            divbeforelogin.Visible = showPanel;
+
 
         }
 
