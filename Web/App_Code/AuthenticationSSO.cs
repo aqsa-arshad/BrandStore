@@ -37,7 +37,7 @@ namespace AspDotNetStorefront
                     InsertCustomer(userName);
                 }
                 // Update Customer in local DB w.r.t Okta UserModel
-                UpdateCustomer(userModel.profile, userName, password);
+                UpdateCustomer(userModel.profile, userName, password, IsCustomerAvailable);
             }
             else if (IsCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
             {
@@ -112,13 +112,16 @@ namespace AspDotNetStorefront
         /// <param name="profile">profile</param>
         /// <param name="userName">userName</param>
         /// <param name="password">password</param>
-        private static void UpdateCustomer(Profile profile, string userName, string password)
+        private static void UpdateCustomer(Profile profile, string userName, string password, bool IsCustomerAvailable)
         {
             Password p = new Password(password);
             int customerLevelID = GetCustomerLevelID(profile.userType);
 
             var ThisCustomer = new Customer(userName);
-            SqlParameter[] sqlParameter = {
+            
+            if (!IsCustomerAvailable)
+            {
+                SqlParameter[] sqlParameter = {
                                         new SqlParameter("@Password", p.SaltedPassword),
                                         new SqlParameter("@SaltKey", p.Salt),
                                         new SqlParameter("@SkinID", AppLogic.DefaultSkinID()), 
@@ -131,8 +134,20 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@ShippingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryShippingAddressID == null ? 0 : ThisCustomer.PrimaryShippingAddressID)),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
+                ThisCustomer.UpdateCustomer(sqlParameter);
+            }
+            else
+            {
+                SqlParameter[] sqlParameter = {
+                                        new SqlParameter("@Password", p.SaltedPassword),
+                                        new SqlParameter("@SaltKey", p.Salt),
+                                        new SqlParameter("@CustomerLevelID", customerLevelID),
+                                        new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
+                                       };
+                ThisCustomer.UpdateCustomer(sqlParameter);
+            }
 
-            ThisCustomer.UpdateCustomer(sqlParameter);
+            
         }
 
         /// <summary>

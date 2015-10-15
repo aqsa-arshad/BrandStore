@@ -98,6 +98,11 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "ADD/EDIT ADDRESS";
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("CREATEACCOUNT"))
+            {
+                lblPageHeading.Text = "CREATE MY ACCOUNT";
+                pnlPageHeading.Visible = true;
+            }
             else
             {
                 lblPageHeading.Text = string.Empty;

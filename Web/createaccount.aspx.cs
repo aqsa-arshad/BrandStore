@@ -31,6 +31,36 @@ namespace AspDotNetStorefront
         Address ShippingAddress = new AspDotNetStorefrontCore.Address(); // qualification needed for vb.net (not sure why)
         Address StandardizedAddress = new AspDotNetStorefrontCore.Address();
 
+        /// <summary>
+        /// Override JeldWen Master Template
+        /// </summary>
+        protected override string OverrideTemplate()
+        {
+            String MasterHome = AppLogic.HomeTemplate();
+
+            if (MasterHome.Trim().Length == 0)
+            {
+                MasterHome = "JeldWenTemplate";
+            }
+
+            if (MasterHome.EndsWith(".ascx"))
+            {
+                MasterHome = MasterHome.Replace(".ascx", ".master");
+            }
+
+            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                MasterHome = MasterHome + ".master";
+            }
+
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            {
+                MasterHome = "JeldWenTemplate";
+            }
+
+            return MasterHome;
+        }
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Response.CacheControl = "private";
@@ -116,7 +146,6 @@ namespace AspDotNetStorefront
                 GetJavaScriptFunctions();
             }
         }
-
 
         #region EventHandlers
 
@@ -797,7 +826,7 @@ namespace AspDotNetStorefront
                         }
                         else
                         {
-                            Response.Redirect("account.aspx?newaccount=true");
+                            Response.Redirect("JWMyAccount.aspx");
                         }
                     }
                 }
