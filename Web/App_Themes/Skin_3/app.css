@@ -5755,7 +5755,7 @@ body {
   color: #545759;
   font-family: 'FrutigerLTStd-Light';
 }
-input[type="text"] {
+input[type="text"],input[type="password"] {
   border: 1px solid #c6c6c6;
   padding: 4px 12px;
   height: 26px;
@@ -5803,7 +5803,7 @@ select {
   padding: 0;
 }
 .body-container {
-  padding: 0 20px;
+  padding: 0 20px !important;
 }
 .separator-line {
   border-top: solid 1px #c0c0c0;
@@ -6338,12 +6338,17 @@ a:hover.mb-login-btn {
   text-align: center;
   font-size: 18px;
 }
-.side-bar .login-box input[type=text] {
+.side-bar .login-box input[type=text],input[type="password"] {
   width: 100%;
 }
 .side-bar .login-box > label {
   margin: 10px 0 2px;
   display: block;
+}
+.side-bar .login-box input[type="password"] {
+  border: 1px solid #c6c6c6;
+  padding: 4px 12px;
+  height: 26px;
 }
 .side-bar .login-box .checkbox {
   font-size: 12px;

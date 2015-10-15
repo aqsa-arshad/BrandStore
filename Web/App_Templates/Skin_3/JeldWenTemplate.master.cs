@@ -8,8 +8,11 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
+
+    
     public partial class JeldWenMasterPage : MasterPageBase
     {
+
         private Customer m_ThisCustomer;
         public Customer ThisCustomer
         {
@@ -45,6 +48,7 @@ namespace AspDotNetStorefront
                     hdnCustomerLevel.Text = "-1";
                 }
             }
+
 
         }
 

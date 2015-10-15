@@ -1,6 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="MarketingServices.ascx.cs" Inherits="controls_MarketingServices" %>
-<a href="#"><u>Learn more about TrueBLU ></u></a>
-<br><br>
 <h4>MARKETING SERVICES</h4>
 <div class="row">  
 </div>

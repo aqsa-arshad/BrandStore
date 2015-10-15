@@ -1,9 +1,3 @@
-// --------------------------------------------------------------------------------
-// Copyright AspDotNetStorefront.com. All Rights Reserved.
-// http://www.aspdotnetstorefront.com
-// For details on this license please visit the product homepage at the URL above.
-// THE ABOVE NOTICE MUST REMAIN INTACT. 
-// --------------------------------------------------------------------------------
 using System;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -29,6 +23,39 @@ namespace AspDotNetStorefront
             SectionTitle = AppLogic.GetString("signin.aspx.1", SkinID, ThisCustomer.LocaleSetting);
 
             pnlContent.Controls.Add(LoadControl("~/Controls/Signin.ascx"));
+           
+            if (ThisCustomer.IsAuthenticated)
+            {
+                Response.Redirect("home.aspx");
+            }
+        }
+        protected override string OverrideTemplate()
+        {
+            String MasterHome = AppLogic.HomeTemplate();
+
+            if (MasterHome.Trim().Length == 0)
+            {
+
+                MasterHome = "JeldWenTemplate";// "template";
+            }
+
+            if (MasterHome.EndsWith(".ascx"))
+            {
+                MasterHome = MasterHome.Replace(".ascx", ".master");
+            }
+
+            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                MasterHome = MasterHome + ".master";
+            }
+
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            {
+                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
+                MasterHome = "JeldWenTemplate";// "template.master";
+            }
+
+            return MasterHome;
         }
     }
 }
