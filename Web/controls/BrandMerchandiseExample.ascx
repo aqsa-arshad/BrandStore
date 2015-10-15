@@ -12,7 +12,7 @@
 </div>
 
 <div class="content-box-02 afterloginControl hide-element">
-    <h4>Promotional Items Overview headline goes here  </h4>
+    <h4 id="controlHeadingforPromotionalItems" runat="server">Promotional Items Overview headline goes here  </h4>
     <p id="productdescriptionAfterLogin" runat="server">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore              
     </p>

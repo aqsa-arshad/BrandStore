@@ -28,7 +28,7 @@
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
         <script src="offcanvas.js"></script>
     </body>
-    </html>
+    </html>    
 </asp:Content>
 
 
