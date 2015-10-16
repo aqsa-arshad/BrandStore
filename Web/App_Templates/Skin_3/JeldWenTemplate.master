@@ -263,6 +263,7 @@
             $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
             $("#JWBMarketingServicesControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
+            $("#headerlogo").attr("href", "home.aspx");
         }
 
         function ShowControlsForSalesRepAndInternalLogin() {
@@ -272,6 +273,7 @@
             $(".hide-element").css("display", "none");
             $("#controlHeadingforPromotionalItems").text("Our brand is their brand.");
             $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
+            $("#headerlogo").attr("href", "home.aspx");
 
         }
         function ShowControlsForPublicLogin() {
@@ -283,6 +285,7 @@
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
+            $("#headerlogo").attr("href", "home.aspx");
         }
     </script>
 </body>
