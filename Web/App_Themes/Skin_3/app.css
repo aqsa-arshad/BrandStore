@@ -1117,6 +1117,7 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+  margin: 0 auto;
 }
 .img-rounded {
   border-radius: 0;
@@ -5755,7 +5756,7 @@ body {
   color: #545759;
   font-family: 'FrutigerLTStd-Light';
 }
-input[type="text"],input[type="password"] {
+input[type="text"] {
   border: 1px solid #c6c6c6;
   padding: 4px 12px;
   height: 26px;
@@ -5803,7 +5804,7 @@ select {
   padding: 0;
 }
 .body-container {
-  padding: 0 20px;
+  padding: 0 20px !important;
 }
 .separator-line {
   border-top: solid 1px #c0c0c0;
@@ -5884,11 +5885,22 @@ a:hover {
 .btn-center {
   text-align: center;
 }
+.btn-center .btn-primary {
+  min-width: 100%;
+}
+@media screen and (min-width: 800px) {
+  .btn-center .btn-primary {
+    min-width: 250px;
+  }
+}
 .gray-color {
   color: #b4b7b0;
 }
 .btn-half {
   width: 49%;
+}
+.img-responsive {
+  margin: 0 auto;
 }
 .header-part {
   padding-top: 40px;
@@ -6022,6 +6034,10 @@ a:hover {
 .profile-links > li .alerts-link {
   background-image: url(images/alerts-icon.png);
 }
+.profile-links > li .new-alerts {
+  color: #88421b;
+  background-image: url(images/new-alerts-icon.png);
+}
 .profile-links > li .account-link {
   background-image: url(images/account-icon.png);
 }
@@ -6038,6 +6054,9 @@ a:hover {
   .profile-links > li span {
     display: inline-block;
   }
+}
+.profile-links > li span:hover {
+  text-decoration: underline;
 }
 .mb-login-btn {
   font-size: 18px;
@@ -6086,7 +6105,7 @@ a:hover.mb-login-btn {
   .nav li a {
     display: inline-block;
     padding: 20px 0;
-    width: 105px;
+    width: 100px;
   }
 }
 .nav li a:hover {
@@ -6211,6 +6230,13 @@ a:hover.mb-login-btn {
   color: #1d446b;
   font-weight: bold;
   margin-bottom: 0;
+  margin-top: 5px;
+}
+@media screen and (min-width: 800px) {
+  .header-img-box .header-text h1 {
+    font-size: 40px;
+    margin-top: 10px;
+  }
 }
 .header-img-box .header-text .help-text {
   font-size: 14px;
@@ -6338,12 +6364,17 @@ a:hover.mb-login-btn {
   text-align: center;
   font-size: 18px;
 }
-.side-bar .login-box input[type=text],input[type="password"] {
+.side-bar .login-box input[type=text] {
   width: 100%;
 }
 .side-bar .login-box > label {
   margin: 10px 0 2px;
   display: block;
+}
+.side-bar .login-box input[type="password"] {
+  border: 1px solid #c6c6c6;
+  padding: 4px 12px;
+  height: 26px;
 }
 .side-bar .login-box .checkbox {
   font-size: 12px;

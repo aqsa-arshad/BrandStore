@@ -4,6 +4,7 @@
 <%@ Register Assembly="AspDotNetStorefrontControls" Namespace="AspDotNetStorefrontControls" TagPrefix="aspdnsf" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
+    <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server">
 
         <asp:Literal ID="litSearch" runat="server"></asp:Literal>
@@ -16,7 +17,7 @@
             $(".beforelogin").hide();
 
             $("#headerlogo").click(function () {
-                $("#headerlogo").attr("href", "home.aspx")
+                $("#headerlogo").attr("href", "home.aspx");
             });
         });
     </script>

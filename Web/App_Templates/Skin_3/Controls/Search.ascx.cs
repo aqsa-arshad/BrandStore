@@ -24,7 +24,8 @@ public partial class controls_Search : System.Web.UI.UserControl
 	{
 		SearchBox.Attributes.Add("placeholder", "Search Site");
 
-		string queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
+		
+        string queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
 		if (!IsPostBack)
 		{
 			if (queryStringSearchTerm.Length > 0)

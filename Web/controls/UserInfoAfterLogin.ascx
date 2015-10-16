@@ -2,13 +2,13 @@
 <h4 id="WelcomeHeadingAfterUserLogin" runat="server"></h4>
 <p class="hideforpublicuser">Sales Operations Funds = $$$$</p>
 <a href="#" class="hideforpublicuser"><u>Request sales operations funds</u></a>
-<button class="btn btn-md btn-primary btn-block" type="button" id="btnViewAccount">VIEW MY ACCOUNT</button>
+<button class="btn btn-md btn-primary btn-block" type="button" id="btnViewAccountofuser">VIEW MY ACCOUNT</button>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-      
-        $("#btnViewAccount").click(function () {
+    $(document).ready(function () {      
+        $("#btnViewAccountofuser").click(function () {
             window.open("JWMyAccount.aspx", '_self');
+
         });
     });
 </script>
