@@ -98,6 +98,13 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "ADD/EDIT ADDRESS";
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("SIGNIN"))
+            {
+                lblPageHeading.Text = "CHECK OUT";
+                pnlPageHeading.Visible = true;
+                divlogin.Visible = false;
+                separatorafterlogin.Visible = false;
+            }
             else
             {
                 lblPageHeading.Text = string.Empty;
