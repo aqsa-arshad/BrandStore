@@ -182,11 +182,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             ShowHideControls();
-            $("#HomePageTopic").hide();
+           
         });
 
         function ShowHideControls() {
-            debugger;
+           
             var CustomerLevel = GetCustomerLevel();
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user

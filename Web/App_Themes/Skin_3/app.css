@@ -6088,6 +6088,8 @@ a:hover.mb-login-btn {
     border-bottom: 0;
     border-right: solid 1px #c0c0c0;
     text-align: center;
+    width: 16.66%;
+    float: left;
   }
 }
 .nav li a {
