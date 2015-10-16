@@ -1,8 +1,15 @@
 <%@ Page Language="c#" Inherits="AspDotNetStorefront.signin" CodeFile="signin.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master"%>
 <%@ Register TagPrefix="aspdnsf" TagName="login" Src="~/Controls/Signin.ascx" %>
-<%@ MasterType VirtualPath="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
+<%--<script type="text/javascript">
+          $(document).ready(function () {
+              $("#divlogin").hide();
+              $("#divlogin").addClass("hide-element");
+              $("#separatorafterlogin").hide();
+              $("#separatorafterlogin").addClass("hide-element");
+          });
+</script>--%>
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <html lang="en">
     <head>
