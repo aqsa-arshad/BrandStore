@@ -67,8 +67,8 @@
                                 </asp:Panel>
                                 <asp:CheckBox ID="DoingCheckout" runat="server" Visible="False" />
                                 <asp:Label ID="ReturnURL" runat="server" Text="default.aspx" Visible="False" />
-
-                                <%-- password change panel starts here--%>
+                                
+                                <%-- change password panel for admin starts here--%>
                                 <asp:Panel ID="pnlChangePwd" runat="server" Visible="false" DefaultButton="btnChgPwd">
                                     <div class="form login-form">
                                         <asp:Panel runat="server" ID="pnlPasswordChangeError" Visble="false">
@@ -85,23 +85,21 @@
                                         <div class="form-text signin-text">
                                             <asp:Label ID="Label13" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.23 %>'></asp:Label>
                                         </div>
-                                        <%--<div class="form-group">--%>
+                                        
                                         <label>
                                             <asp:Label ID="Label14" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox CssClass="form-control" ID="CustomerEmail" runat="server" ValidationGroup="Group3"
                                             MaxLength="100" CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator5" runat="server" ValidationGroup="Group3"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="CustomerEmail"></asp:RequiredFieldValidator>
-                                        <%--</div>--%>
-                                        <%-- <div class="form-group">--%>
+                                       
                                         <label>
                                             <asp:Label ID="Label15" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.33 %>'></asp:Label></label>
                                         <asp:TextBox CssClass="form-control" ID="OldPassword" runat="server" ValidationGroup="Group3"
                                             MaxLength="50" CausesValidation="True" TextMode="Password"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator6" runat="server" ValidationGroup="Group3"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="OldPassword"></asp:RequiredFieldValidator>
-                                        <%-- </div>--%>
-                                        <%-- <div class="form-group">--%>
+                                       
                                         <label>
                                             <asp:Label ID="Label16" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.34 %>'></asp:Label>
                                         </label>
@@ -109,16 +107,14 @@
                                             MaxLength="50" CausesValidation="True" TextMode="Password"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator7" runat="server" ValidationGroup="Group3"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="NewPassword"></asp:RequiredFieldValidator>
-                                        <%--</div>--%>
-                                        <%--<div class="form-group">--%>
+                                
                                         <label>
                                             <asp:Label ID="Label17" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.35 %>'></asp:Label></label>
                                         <asp:TextBox CssClass="form-control" ID="NewPassword2" runat="server" ValidationGroup="Group3"
                                             MaxLength="50" CausesValidation="True" TextMode="Password"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator8" runat="server" ValidationGroup="Group3"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="NewPassword2"></asp:RequiredFieldValidator>
-                                        <%--</div>
-                        <div class="form-group">--%>
+                                      
                                         <label>
                                             <asp:Label ID="Label18" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.21 %>' Visible="False"></asp:Label>
                                         </label>
@@ -127,14 +123,14 @@
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator9" runat="server" ControlToValidate="SecurityCode2"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.20 %>' ValidationGroup="Group3"
                                             Enabled="False"></asp:RequiredFieldValidator>
-                                        <%--</div>--%>
+                                   
                                         <div class="form-submit-wrap">
                                             <asp:Button ID="btnChgPwd" CssClass="btn btn-md btn-primary btn-block" OnClick="btnChgPwd_Click" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.36 %>'
                                                 ValidationGroup="Group3"></asp:Button>
                                         </div>
                                     </div>
                                 </asp:Panel>
-                                <%-- password change panel ends here--%>
+                                <%--change password panel for admin ends here--%>
                             </LayoutTemplate>
                         </asp:Login>
 
