@@ -6,35 +6,27 @@ public partial class MarketingServicesDetailPage : SkinBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        pnlContent.Controls.Add(LoadControl("~/Controls/MarketingServicesDetailControl.ascx"));
     }
 
     protected override string OverrideTemplate()
     {
-        String MasterHome = AppLogic.HomeTemplate();
-
-        if (MasterHome.Trim().Length == 0)
+        var masterHome = AppLogic.HomeTemplate();
+        if (masterHome.Trim().Length == 0)
         {
-
-            MasterHome = "JeldWenTemplate";// "template";
+            masterHome = "JeldWenTemplate";
         }
-
-        if (MasterHome.EndsWith(".ascx"))
+        if (masterHome.EndsWith(".ascx"))
         {
-            MasterHome = MasterHome.Replace(".ascx", ".master");
+            masterHome = masterHome.Replace(".ascx", ".master");
         }
-
-        if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+        if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
         {
-            MasterHome = MasterHome + ".master";
+            masterHome = masterHome + ".master";
         }
-
-        if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+        if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
         {
-            //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-            MasterHome = "JeldWenTemplate";// "template.master";
+            masterHome = "JeldWenTemplate";
         }
-
-        return MasterHome;
+        return masterHome;
     }
 }

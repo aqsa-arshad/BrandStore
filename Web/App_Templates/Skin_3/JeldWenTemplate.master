@@ -102,13 +102,13 @@
                 </nav>
             </div>
             <div class="body-container">
+                <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
+                    <div class="body-heading">
+                        <h3>
+                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading"></asp:Label></h3>
+                    </div>
+                </asp:Panel>
                 <div class="row">
-                    <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
-                        <div class="body-heading">
-                            <h3>
-                                <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading"></asp:Label></h3>
-                        </div>
-                    </asp:Panel>
                     <div class="col-md-4 pull-right">
                         <div class="side-bar" id="divbeforelogin" runat="server" clientidmode="Static">
                             <div class="login-box" id="divlogin" runat="server">
