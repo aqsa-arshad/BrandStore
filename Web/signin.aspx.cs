@@ -23,11 +23,12 @@ namespace AspDotNetStorefront
             SectionTitle = AppLogic.GetString("signin.aspx.1", SkinID, ThisCustomer.LocaleSetting);
 
             pnlContent.Controls.Add(LoadControl("~/Controls/Signin.ascx"));
-           
+            
             if (ThisCustomer.IsAuthenticated)
             {
                 Response.Redirect("home.aspx");
             }
+
         }
         protected override string OverrideTemplate()
         {
@@ -36,7 +37,7 @@ namespace AspDotNetStorefront
             if (MasterHome.Trim().Length == 0)
             {
 
-                MasterHome = "JeldWenTemplate";// "template";
+                MasterHome = "JeldWenTemplate";
             }
 
             if (MasterHome.EndsWith(".ascx"))

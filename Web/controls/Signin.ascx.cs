@@ -73,9 +73,21 @@ namespace AspDotNetStorefront
             tbNewPassword = GetControl("NewPassword") as TextBox;
             tbNewPassword2 = GetControl("NewPassword2") as TextBox;
         }
+        protected void forgotpasswordLink_Click(object sender, EventArgs e)
+        {
+            ForgotPasswordPanel.Visible = true;
+            LoginPanel.Visible = false;
 
+        }
+        protected void GoBackToLoginLink_Click(object sender, EventArgs e)
+        {           
+            ForgotPasswordPanel.Visible = false;
+            LoginPanel.Visible = true;
+        }
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            ForgotPasswordPanel.Visible = false;
+            LoginPanel.Visible = true;
             if (DisablePasswordAutocomplete)
             {
                 TextBox tbPassword = ctrlLogin.FindControl("Password") as TextBox;
@@ -239,7 +251,8 @@ namespace AspDotNetStorefront
                                 {
                                     sReturnURL = "default.aspx";
                                 }
-                            }
+                            }                           
+                            Response.Redirect("home.aspx");
                             Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
                         }
                         else
@@ -407,9 +420,9 @@ namespace AspDotNetStorefront
                                 sReturnURL = "~/default.aspx";
                             }
                         }
-                        Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
-
                         ctrlRecoverPassword.Visible = false;
+                        Response.Redirect("home.aspx");                        
+                        Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
                     }
                     else
                     {
