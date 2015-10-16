@@ -5886,7 +5886,12 @@ a:hover {
   text-align: center;
 }
 .btn-center .btn-primary {
-  min-width: 250px;
+  min-width: 100%;
+}
+@media screen and (min-width: 800px) {
+  .btn-center .btn-primary {
+    min-width: 250px;
+  }
 }
 .gray-color {
   color: #b4b7b0;
@@ -6083,8 +6088,6 @@ a:hover.mb-login-btn {
     border-bottom: 0;
     border-right: solid 1px #c0c0c0;
     text-align: center;
-    width: 16.66%;
-    float: left;
   }
 }
 .nav li a {
@@ -6100,7 +6103,7 @@ a:hover.mb-login-btn {
   .nav li a {
     display: inline-block;
     padding: 20px 0;
-    width: 105px;
+    width: 100px;
   }
 }
 .nav li a:hover {
