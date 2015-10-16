@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {      
-                $("#btnViewAccount").click(function () {
+        $("#btnViewAccountofuser").click(function () {
             window.open("JWMyAccount.aspx", '_self');
 
         });
