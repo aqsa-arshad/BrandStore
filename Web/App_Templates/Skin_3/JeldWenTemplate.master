@@ -81,7 +81,7 @@
                         </asp:ScriptManager>
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <li><a href="Account.aspx" class="prelogin hide-element account-link"><span>My Account</span></a></li>
+                        <li><a href="JWMyAccount.aspx" class="prelogin hide-element account-link"><span>My Account</span></a></li>
                         <li><a href="#" class="prelogin hide-element shopping-link"><span>Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="prelogin hide-element logout-link lnkLogout"><span>Logout</span></a></li>
                     </ul>
@@ -182,10 +182,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             ShowHideControls();
-            $("#HomePageTopic").hide();
+
         });
 
-        function ShowHideControls() {           
+        function ShowHideControls() {
+
             var CustomerLevel = GetCustomerLevel();
             if (CustomerLevel == "-1" || CustomerLevel == "8") {
                 //user is either not logged in or is public user
@@ -262,6 +263,7 @@
             $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
             $("#JWBMarketingServicesControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
+            $("#headerlogo").attr("href", "home.aspx");
         }
 
         function ShowControlsForSalesRepAndInternalLogin() {
@@ -271,6 +273,7 @@
             $(".hide-element").css("display", "none");
             $("#controlHeadingforPromotionalItems").text("Our brand is their brand.");
             $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
+            $("#headerlogo").attr("href", "home.aspx");
 
         }
         function ShowControlsForPublicLogin() {
@@ -282,6 +285,7 @@
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
+            $("#headerlogo").attr("href", "home.aspx");
         }
     </script>
 </body>
