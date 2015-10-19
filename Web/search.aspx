@@ -3,16 +3,17 @@
 <%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
 <%@ Register Assembly="AspDotNetStorefrontControls" Namespace="AspDotNetStorefrontControls" TagPrefix="aspdnsf" %>
 
-<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
+<asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
-    <asp:Panel ID="pnlContent" runat="server">
 
+    <asp:Panel runat="server">
         <asp:Literal ID="litSearch" runat="server"></asp:Literal>
-
     </asp:Panel>
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#divbeforelogin").addClass("search-rigth");
+            $("#ctl00_divafterlogin").addClass("search-rigth");            
             $("#beforelogindiv").hide();
             $(".beforelogin").hide();
 
@@ -21,5 +22,4 @@
             });
         });
     </script>
-
 </asp:Content>
