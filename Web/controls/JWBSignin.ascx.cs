@@ -90,10 +90,11 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     protected void forgotpasswordLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
-        ForgotPasswordEmailTextField.Focus();
         ForgotPasswordPanel.Visible = true;
         LoginPanel.Visible = false;
-
+        ErrorPanel.Visible = false;
+        ForgotPasswordExecutepanel.Visible = false;
+        ForgotPasswordErrorPanel.Visible = false;
     }
 
     protected void GoBackToLoginLink_Click(object sender, EventArgs e)
@@ -101,6 +102,9 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         HiddenLabel.Text = "false";
         ForgotPasswordPanel.Visible = false;
         LoginPanel.Visible = true;
+        ErrorPanel.Visible = false;
+        ForgotPasswordExecutepanel.Visible = false;
+        ForgotPasswordErrorPanel.Visible = false;
     }
 
     protected void Page_Load(object sender, EventArgs e)
