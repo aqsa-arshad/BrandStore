@@ -35,11 +35,12 @@
                     <li><asp:Label ID="lblBANA" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAFullName" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAAddress1" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblBAAddress2" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAStateZip" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBACountry" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAPhone" runat="server"></asp:Label></li>
                 </ul>
+                <div class="clearfix"></div>
+                <asp:Button ID="btnChangeBillingAddress" runat="server" CssClass="btn btn-md btn-primary" Text="Change Billing Addresses" OnClick="btnChangeBillingAddress_Click" />
             </div>
 
             <div class="col-md-6">
@@ -48,15 +49,13 @@
                     <li><asp:Label ID="lblSANA" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAFullName" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAAddress1" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblSAAddress2" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAStateZip" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSACountry" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAPhone" runat="server"></asp:Label></li>
                 </ul>
+                <div class="clearfix"></div>
+                <asp:Button ID="btnChangeShippingAddress" runat="server" CssClass="btn btn-md btn-primary" Text="Change Shipping Addresses" OnClick="btnChangeShippingAddress_Click" />
             </div>
-        </div>
-        <div class="text-center">
-            <asp:Button ID="btnUpdateAddresses" runat="server" CssClass="btn btn-md btn-primary" Text="Update Your Address" OnClick="btnUpdateAddresses_Click" />
         </div>
     </div>
 

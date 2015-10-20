@@ -8,6 +8,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <asp:HiddenField ID="hfAddressID" runat="server" />
+                    <asp:HiddenField ID="hfPreviousURL" runat="server" />
                     <label><asp:Label ID="lblNickName" runat="server" Text='<%$ Tokens:StringResource, address.cs.49 %>'></asp:Label></label>
                     <asp:TextBox ID="txtNickName" runat="server" MaxLength="100"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtNickName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.90 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
