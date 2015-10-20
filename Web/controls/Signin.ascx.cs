@@ -279,7 +279,10 @@ namespace AspDotNetStorefront
             }
             else //normal login
             {
-                ThisCustomer = new Customer(EMailField, true);
+                /*            
+             * Initialize Customer Object after OKTA Authentication
+             */
+            ThisCustomer = AuthenticationSSO.InitializeCustomerObject(EMailField, PasswordField);
 
                 if (ThisCustomer.IsRegistered)
                 {
@@ -563,7 +566,16 @@ namespace AspDotNetStorefront
             }
 
             ErrorMsgLabel.Text = "Email: " + EMail;
-            Customer c = new Customer(EMail);
+             bool SendWasOk = false;
+             UserModel userModel = AuthenticationSSO.GetUserModel(EMail);
+
+             if (userModel != null) // If Okta User
+             {
+                 SendWasOk = AuthenticationSSO.ForgotPasswordRequest(userModel.id);
+             }
+            else
+            {
+                 Customer c = new Customer(EMail);
             if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
             {
                 errorMessageNotification();
@@ -572,7 +584,7 @@ namespace AspDotNetStorefront
             }
             else
             {
-                bool SendWasOk = false;
+               
                 try
                 {
                     MembershipUser user = System.Web.Security.Membership.GetUser(EMail);
@@ -598,6 +610,8 @@ namespace AspDotNetStorefront
                     ForgotPaswwordSuccessMessage1.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
                 }
             }
+            }
+           
         }
 
         protected void btnChgPwd_Click(object sender, EventArgs e)

@@ -29,7 +29,7 @@
                                                 CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
                                             <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator3" runat="server" ValidationGroup="Group1"
                                                 ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="UserName"></asp:RequiredFieldValidator>
-
+                                            <br />
                                             <label>Password</label>
                                             <asp:TextBox ID="Password" runat="server" CssClass="form-control" ValidationGroup="Group1" MaxLength="50"
                                                 CausesValidation="True" TextMode="Password"></asp:TextBox>
