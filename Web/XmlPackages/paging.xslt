@@ -5,6 +5,7 @@
 				xmlns:aspdnsf="urn:aspdnsf"
 				xmlns:mobile="urn:mobile"
 				exclude-result-prefixes="msxsl aspdnsf mobile ">
+
   <xsl:output method="html" indent="yes"/>
 
   <!-- Values to override -->
@@ -60,8 +61,8 @@
   <xsl:param name="DisplayNextAndPreviousPageButtons" select="true()" />
   <xsl:param name="FirstPageButtonContent">&lt;&lt;</xsl:param>
   <xsl:param name="LastPageButtonContent">&gt;&gt;</xsl:param>
-  <xsl:param name="PreviousPageButtonContent">&lt;</xsl:param>
-  <xsl:param name="NextPageButtonContent">&gt;</xsl:param>
+  <xsl:param name="PreviousPageButtonContent">Previous</xsl:param>
+  <xsl:param name="NextPageButtonContent">Next</xsl:param>
 
   <!-- End values to override -->
 
@@ -93,27 +94,24 @@
 
   <xsl:template name="ProductControl">
     <xsl:param name="uniqueID" />
-    <div class="productControl">
-      <div class="entityPageSortWrap">
-        <xsl:call-template name="sortby">
-          <xsl:with-param name="uniqueID" select="$uniqueID" />
-        </xsl:call-template>
-        <xsl:call-template name="ProductsPerPage">
-          <xsl:with-param name="uniqueID" select="$uniqueID" />
-        </xsl:call-template>
-        <div class="clearable"></div>
-      </div>
-    </div>
+
+    <xsl:call-template name="sortby">
+      <xsl:with-param name="uniqueID" select="$uniqueID" />
+    </xsl:call-template>
+    <xsl:call-template name="ProductsPerPage">
+      <xsl:with-param name="uniqueID" select="$uniqueID" />
+    </xsl:call-template>
+    <div class="clearable"></div>
   </xsl:template>
 
   <xsl:template name="sortby">
     <xsl:param name="uniqueID" />
 
-    <div class="catSortBy" id="catSortBy{$uniqueID}">
-      <span class="sortbylabel productcontrollabel">
+    <div class="col-md-6" id="catSortBy{$uniqueID}">
+      <label >
         <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.SortBy')" disable-output-escaping="yes" />
         <xsl:text>&#32;</xsl:text>
-      </span>
+      </label>
       <select id="SelectSort{$uniqueID}" onchange="setParam('sortby', this.value)" name="SelectSort">
         <option value="relevance">
           <xsl:if test="$PageSorting = 'relevance' or $PageSorting = 'default' or not($PageSorting)">
@@ -144,26 +142,13 @@
   </xsl:template>
 
   <xsl:template name="paging">
-    <div class="pagerWrap">
-      <xsl:if test="$DisplayDescriptivePageNumber = true()">
-        <div class="viewingPageHeading productcontrollabel">
-          <xsl:variable name="PageDesriptionLabelReplace" select="aspdnsf:StrReplace(aspdnsf:StringResource('GuidedNavigation.PageLocationDescription'), '{0}', $CurrentPage)" />
-          <xsl:value-of select="aspdnsf:StrReplace($PageDesriptionLabelReplace, '{1}', $PageCount)" disable-output-escaping="yes" />
-        </div>
-      </xsl:if>
+    <div >
       <xsl:if test="$PageCount &gt; 1">
-        <div class="pageLinksWrap">
-          <xsl:if test="$DisplayPagePrompt = true()">
-            <span class="pageHeadingWrap">
-              <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageLabel')" disable-output-escaping="yes" />
-            </span>
-          </xsl:if>
-          <xsl:if test="$CurrentPage &gt; 1 and ($DisplayFirstAndLastPageButtons = true() or $DisplayNextAndPreviousPageButtons = true())">
+
+        <xsl:choose>
+          <xsl:when test="$CurrentPage &gt; 1 and  $DisplayNextAndPreviousPageButtons = true()">
             <span class="pageArrowWrap">
               <xsl:if test="$DisplayFirstAndLastPageButtons = true()">
-                <a class="pagelink firstLink" href="javascript:void(0);" onclick="setParam('pagenum', '{1}');">
-                  <xsl:value-of select="$FirstPageButtonContent" />
-                </a>
               </xsl:if>
               <xsl:if test="$DisplayNextAndPreviousPageButtons = true()">
                 <a class="pagelink prevLink" href="javascript:void(0);" onclick="setParam('pagenum', '{$CurrentPage - 1}');">
@@ -171,27 +156,39 @@
                 </a>
               </xsl:if>
             </span>
-          </xsl:if>
-          <xsl:call-template name="pagelink">
-            <xsl:with-param name="page">
-              <xsl:value-of select="$CurrentPage - $BackwardPages" />
-            </xsl:with-param>
-          </xsl:call-template>
-          <xsl:if test="$CurrentPage &lt; $PageCount and ($DisplayFirstAndLastPageButtons = true() or $DisplayNextAndPreviousPageButtons = true())">
+          </xsl:when>
+
+          <xsl:otherwise>
+            <span class="pageArrowWrap">
+              <xsl:value-of select="$PreviousPageButtonContent" />
+            </span>
+          </xsl:otherwise>
+        </xsl:choose>
+
+        <xsl:variable name="PageDesriptionLabelReplace" select="aspdnsf:StrReplace(aspdnsf:StringResource('GuidedNavigation.PageLocationDescription'),'{0}', $CurrentPage)" />
+        <xsl:value-of select="aspdnsf:StrReplace($PageDesriptionLabelReplace, '{1}', $PageCount)" disable-output-escaping="yes" />
+
+        <xsl:choose>
+          <xsl:when test="($CurrentPage &lt; $PageCount) and $DisplayNextAndPreviousPageButtons = true()">
             <span class="pageArrowWrap">
               <xsl:if test="$DisplayNextAndPreviousPageButtons = true()">
                 <a class="pagelink nextLink" href="javascript:void(0);" onclick="setParam('pagenum', '{$CurrentPage + 1}');">
                   <xsl:value-of select="$NextPageButtonContent" />
                 </a>
               </xsl:if>
+
               <xsl:if test="$DisplayFirstAndLastPageButtons = true()">
-                <a class="pagelink lastLink" href="javascript:void(0);" onclick="setParam('pagenum', '{$PageCount}');">
-                  <xsl:value-of select="$LastPageButtonContent" />
-                </a>
               </xsl:if>
             </span>
-          </xsl:if>
-        </div>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <span class="pageArrowWrap">
+              <xsl:value-of select="$NextPageButtonContent" />
+            </span>
+          </xsl:otherwise>
+        </xsl:choose>
+
       </xsl:if>
       <div class="clearable"></div>
     </div>
@@ -225,11 +222,11 @@
   <xsl:template name="ProductsPerPage">
     <xsl:param name="uniqueID" />
     <xsl:if test="$ProductCount > 0">
-      <div class="pagesize">
-        <span class="pageSizeHeading productcontrollabel">
+      <div class="col-md-6">
+        <label>
           <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageSizeLabel')" disable-output-escaping="yes" />
           <xsl:text>&#32;</xsl:text>
-        </span>
+        </label>
 
         <select id="PageSize{$uniqueID}" onchange="setParam('pagesize', this.value)" name="PageSize" >
 
@@ -245,6 +242,14 @@
                 <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageSizeViewAll')" disable-output-escaping="yes" />
               </xsl:otherwise>
             </xsl:choose>
+          </option>
+
+
+          <option value="4">
+            <xsl:if test="$PageSize = 4 or $PageSize = ''">
+              <xsl:attribute name="selected">selected</xsl:attribute>
+            </xsl:if>
+            <xsl:text>4</xsl:text>
           </option>
 
           <option value="6">

@@ -85,8 +85,8 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("SEARCH"))
             {
-                lblPageHeading.Text = string.Empty;
-                pnlPageHeading.Visible = false;
+                lblPageHeading.Text = "SEARCH RESULTS";
+                pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("JWMYACCOUNT"))
             {

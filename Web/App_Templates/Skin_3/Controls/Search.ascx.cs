@@ -11,11 +11,6 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 
 public partial class controls_Search : System.Web.UI.UserControl
@@ -23,15 +18,13 @@ public partial class controls_Search : System.Web.UI.UserControl
 	protected void Page_Load(object sender, EventArgs e)
 	{
 		SearchBox.Attributes.Add("placeholder", "Search Site");
-
 		
-        string queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
+        var queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
 		if (!IsPostBack)
 		{
 			if (queryStringSearchTerm.Length > 0)
 				SearchBox.Text = queryStringSearchTerm;
-		}
-		
+		}		
 	}
     
 	protected void SearchButton_Click(object sender, EventArgs e)

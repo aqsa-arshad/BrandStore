@@ -530,7 +530,7 @@ namespace AspDotNetStorefront
                         strDOB = (strDOB.Equals("0/0/0", StringComparison.Ordinal)) ? null : strDOB;
                     }
 
-                    var defaultCustomerLevel_Public = 4;
+                    var defaultCustomerLevel_Public = (int)UserType.PUBLIC;
 
                     ThisCustomer.UpdateCustomer(
                         /*CustomerLevelID*/ defaultCustomerLevel_Public,
@@ -833,21 +833,14 @@ namespace AspDotNetStorefront
             }
             else
             {
-                lblErrorMessage.Text += String.Format("<div class='error-header'>{0}</div>", AppLogic.GetString("createaccount.aspx.84", 1, Localization.GetDefaultLocale()));
-                lblErrorMessage.Text += "<ul class='error-list'>";
-                if (AccountName.Length == 0)
-                {
-                    lblErrorMessage.Text += String.Format("<li>{0}</li>", AppLogic.GetString("createaccount.aspx.5", 1, Localization.GetDefaultLocale()));
-                }
                 foreach (IValidator aValidator in this.Validators)
                 {
                     if (!aValidator.IsValid)
                     {
-                        lblErrorMessage.Text += String.Format("<li>{0}</li>", aValidator.ErrorMessage);
+                        lblErrorMessage.Text = aValidator.ErrorMessage;
+                        break;
                     }
                 }
-                lblErrorMessage.Text += "</ul>";
-                lblErrorMessage.Text += "";
                 ResetScrollPosition();
             }
 

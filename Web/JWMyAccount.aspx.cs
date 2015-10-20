@@ -45,6 +45,9 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
+            RequireSecurePage();
+            RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
+
             if (!Page.IsPostBack)
             {
                 LoadAddresses();
