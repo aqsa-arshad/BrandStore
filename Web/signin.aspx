@@ -1,15 +1,7 @@
 <%@ Page Language="c#" Inherits="AspDotNetStorefront.signin" CodeFile="signin.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master"%>
 <%@ Register TagPrefix="aspdnsf" TagName="login" Src="~/Controls/Signin.ascx" %>
 
-<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
-<%--<script type="text/javascript">
-          $(document).ready(function () {
-              $("#divlogin").hide();
-              $("#divlogin").addClass("hide-element");
-              $("#separatorafterlogin").hide();
-              $("#separatorafterlogin").addClass("hide-element");
-          });
-</script>--%>
+<asp:Content  runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <html lang="en">
     <head>
@@ -27,6 +19,5 @@
         <script src="offcanvas.js"></script>
         </body>
         </html>
-    <asp:Panel ID="pnlContent" runat="server">        
-    </asp:Panel>
+    <aspdnsf:login runat="server" />
 </asp:Content>

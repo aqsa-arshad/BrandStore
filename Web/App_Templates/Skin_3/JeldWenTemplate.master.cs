@@ -51,7 +51,7 @@ namespace AspDotNetStorefront
                     ShowPreLoginControls();
                     hdnCustomerLevel.Text = "-1";
                 }
-            }
+            }         
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace AspDotNetStorefront
 
             else if (currentURL.ToUpper().Contains("SIGNIN"))
             {
-                lblPageHeading.Text = "CHECK OUT";
+                lblPageHeading.Text = "CHECKOUT";
                 pnlPageHeading.Visible = true;
                 divlogin.Visible = false;
                 separatorafterlogin.Visible = false;
