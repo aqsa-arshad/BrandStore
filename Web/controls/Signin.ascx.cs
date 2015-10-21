@@ -600,7 +600,9 @@ namespace AspDotNetStorefront
                 }
                 catch (Exception ex)
                 {
-                    SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
                 }
                 if (!SendWasOk)
                 {
@@ -838,8 +840,11 @@ namespace AspDotNetStorefront
                         lblPwdChgErr.Text = "" + AppLogic.GetString("account.aspx.7", m_SkinID, ThisCustomer.LocaleSetting);
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
                     AppLogic.SendMail("Invalid Password Validation Pattern", "", false, AppLogic.AppConfig("MailMe_ToAddress"), AppLogic.AppConfig("MailMe_ToAddress"), AppLogic.AppConfig("MailMe_ToAddress"), AppLogic.AppConfig("MailMe_ToAddress"), "", "", AppLogic.MailServer());
                     throw new Exception("Password validation expression is invalid, please notify site administrator");
                 }

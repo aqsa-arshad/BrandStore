@@ -72,7 +72,9 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
         }
 
@@ -92,7 +94,9 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
         }
 
@@ -126,7 +130,9 @@ namespace AspDotNetStorefront
                 }
                 catch (Exception ex)
                 {
-                    SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
                 }
             }
             else
@@ -159,7 +165,9 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
 
         }
@@ -197,7 +205,9 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
             return anyAddress;
         }
@@ -235,7 +245,9 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
 
         }
@@ -253,7 +265,9 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
 
         }

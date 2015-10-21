@@ -62,7 +62,9 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
         catch (Exception ex)
         {
-            SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+            ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
         }
     }
     
@@ -89,7 +91,9 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
         catch(Exception ex)
         {
-         SysLog.LogMessage( GetType().FullName + "::"+System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+            ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
         }
     }
 
@@ -115,7 +119,9 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
         catch (Exception ex)
         {
-            SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+            ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
         }
 
     }    

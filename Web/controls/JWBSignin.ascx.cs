@@ -30,6 +30,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     }
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
     {
+        
         HiddenLabel.Text = "true";
         string EMail = ForgotPasswordEmailTextField.Text.ToString();
         if (EMail.Length == 0)
@@ -73,7 +74,9 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                 }
                 catch (Exception ex)
                 {
-                    SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
                 }
             }
         }
@@ -183,7 +186,9 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
             catch (Exception ex)
             {
-                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
         }
         else //normal login
