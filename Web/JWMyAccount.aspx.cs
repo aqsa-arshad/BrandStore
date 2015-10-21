@@ -67,7 +67,6 @@ namespace AspDotNetStorefront
                 {
                     lblBAFullName.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryBillingAddress.FirstName) ? "" : ThisCustomer.PrimaryBillingAddress.FirstName + " " + ThisCustomer.PrimaryBillingAddress.LastName;
                     lblBAAddress1.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryBillingAddress.Address1) ? "" : ThisCustomer.PrimaryBillingAddress.Address1;
-                    lblBAAddress2.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryBillingAddress.Address2) ? "" : ThisCustomer.PrimaryBillingAddress.Address2;
 
                     lblBAStateZip.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryBillingAddress.State) ? "" : ThisCustomer.PrimaryBillingAddress.State;
 
@@ -86,7 +85,6 @@ namespace AspDotNetStorefront
                 {
                     lblSAFullName.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryShippingAddress.FirstName) ? "" : ThisCustomer.PrimaryShippingAddress.FirstName + " " + ThisCustomer.PrimaryShippingAddress.LastName;
                     lblSAAddress1.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryShippingAddress.Address1) ? "" : ThisCustomer.PrimaryShippingAddress.Address1;
-                    lblSAAddress2.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryShippingAddress.Address2) ? "" : ThisCustomer.PrimaryShippingAddress.Address2;
 
                     lblSAStateZip.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryShippingAddress.State) ? "" : ThisCustomer.PrimaryShippingAddress.State;
 
@@ -101,18 +99,27 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
+
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 
         /// <summary>
-        /// View All Addresses
+        /// View All Billing Addresses
         /// </summary>
-        protected void btnUpdateAddresses_Click(object sender, EventArgs e)
+        protected void btnChangeBillingAddress_Click(object sender, EventArgs e)
         {
-            Response.Redirect("JWMyAddresses.aspx");
+            Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Billing);
+        }
+
+        /// <summary>
+        /// View All Shipping Addresses
+        /// </summary>
+        protected void btnChangeShippingAddress_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Shipping);
         }
     }
 }

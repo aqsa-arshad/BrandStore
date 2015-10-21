@@ -40,7 +40,7 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     /// <summary>
     /// Get All Customer Alerts for Admin
     /// </summary>
-    private void GetCustomerAlerts()   
+    private void GetCustomerAlerts()
     {
         try
         {
@@ -64,10 +64,10 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         {
             SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
             ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
     }
-    
+
     /// <summary>
     /// Repeater ItemCommand Event
     /// </summary>
@@ -89,11 +89,11 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
             }
             GetCustomerAlerts();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
             ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
     }
 
@@ -121,10 +121,10 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         {
             SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
             ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
 
-    }    
+    }
 
-   
+
 }

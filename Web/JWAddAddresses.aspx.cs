@@ -47,9 +47,10 @@ namespace AspDotNetStorefront
         {
             RequireSecurePage();
             RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
-
+            
             if (!Page.IsPostBack)
             {
+                hfPreviousURL.Value = Request.UrlReferrer.ToString();
                 GetCountryDropDownData();
                 GetCustomerAddress(Request.QueryString["AddressID"]);
             }
@@ -217,7 +218,7 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("JWMyAddresses.aspx");
+            Response.Redirect(hfPreviousURL.Value);
         }
 
         /// <summary>
@@ -257,6 +258,7 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+
             try
             {
                 Address anyAddress = LoadClassData();
