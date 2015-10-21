@@ -51,7 +51,7 @@ namespace AspDotNetStorefront
                     ShowPreLoginControls();
                     hdnCustomerLevel.Text = "-1";
                 }
-            }
+            }         
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
             {
-                lblPageHeading.Text = "MY ADDRESSES";
+                // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("JWADDADDRESSES"))
@@ -106,7 +106,7 @@ namespace AspDotNetStorefront
 
             else if (currentURL.ToUpper().Contains("SIGNIN"))
             {
-                lblPageHeading.Text = "CHECK OUT";
+                lblPageHeading.Text = "CHECKOUT";
                 pnlPageHeading.Visible = true;
                 divlogin.Visible = false;
                 separatorafterlogin.Visible = false;

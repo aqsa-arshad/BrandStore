@@ -75,19 +75,34 @@ namespace AspDotNetStorefront
         }
         protected void forgotpasswordLink_Click(object sender, EventArgs e)
         {
+            HiddenLabel.Text = "true";
             ForgotPasswordPanel.Visible = true;
             LoginPanel.Visible = false;
 
         }
         protected void GoBackToLoginLink_Click(object sender, EventArgs e)
-        {           
+        {
+            HiddenLabel.Text = "false";
             ForgotPasswordPanel.Visible = false;
             LoginPanel.Visible = true;
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            ForgotPasswordPanel.Visible = false;
-            LoginPanel.Visible = true;
+            string HiddenFieldText = HiddenLabel.Text;
+            if (HiddenFieldText.Equals("true"))
+            {
+                ForgotPasswordPanel.Visible = true;
+                ForgotPasswordExecutepanel1.Visible = false;
+                LoginPanel.Visible = false;
+                ForgotPasswordErrorPanel1.Visible = false; // that is where the status msg goes, in all cases in this routine
+                ForgotPasswordErrorMsgLabel1.Text = String.Empty;
+            }
+            else
+            {
+                ForgotPasswordPanel.Visible = false;
+                LoginPanel.Visible = true;
+            }
+            HiddenLabel.Text = "false";
             if (DisablePasswordAutocomplete)
             {
                 TextBox tbPassword = ctrlLogin.FindControl("Password") as TextBox;
@@ -517,17 +532,33 @@ namespace AspDotNetStorefront
                 }
             }
         }
+        protected void errorMessageNotification()
+        {
+            ForgotPaswwordSuccessMessage1.Text = String.Empty;
+            ForgotPasswordExecutepanel1.Visible = false;
+            ForgotPasswordErrorPanel1.Visible = true;
+            ForgotPasswordErrorMsgLabel1.Text = String.Empty;
+        }
+        protected void successMessageNotification()
+        {
+            ForgotPasswordErrorPanel1.Visible = false;
+            ForgotPasswordErrorMsgLabel1.Text = String.Empty;
+            ForgotPasswordExecutepanel1.Visible = true;
+            ForgotPaswwordSuccessMessage1.Text = String.Empty;
+        }
 
         protected void ctrlRecoverPassword_VerifyingUser(object sender, LoginCancelEventArgs e)
         {
             e.Cancel = true;
+            HiddenLabel.Text = "true";
             ErrorPanel.Visible = true; // that is where the status msg goes, in all cases in this routine
             ErrorMsgLabel.Text = String.Empty;
             string EMail = ctrlRecoverPassword.UserName;
 
             if (EMail.Length == 0)
             {
-                ErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
+                errorMessageNotification();
+                ForgotPasswordErrorMsgLabel1.Text = AppLogic.GetString("lostpassword.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
                 return;
             }
 
@@ -535,7 +566,8 @@ namespace AspDotNetStorefront
             Customer c = new Customer(EMail);
             if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
             {
-                ErrorMsgLabel.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                errorMessageNotification();
+                ForgotPasswordErrorMsgLabel1.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 return;
             }
             else
@@ -557,11 +589,13 @@ namespace AspDotNetStorefront
                 catch { }
                 if (!SendWasOk)
                 {
-                    ErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                    errorMessageNotification();
+                    ForgotPasswordErrorMsgLabel1.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
                 }
                 else
                 {
-                    ErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+                    successMessageNotification();
+                    ForgotPaswwordSuccessMessage1.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
                 }
             }
         }

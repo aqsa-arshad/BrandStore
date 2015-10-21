@@ -1199,19 +1199,8 @@ namespace AspDotNetStorefrontControls
             _chkOver13.ID = "chkOver13";
             _chkSaveCC.ID = "chkSaveCC";
 
-            _txtFirstName.CssClass = "form-control";
-            _txtLastName.CssClass = "form-control";
-            _cboMonth.CssClass = "form-control";
-            _cboDay.CssClass = "form-control";
-            _cboYear.CssClass = "form-control";
-            _txtEmail.CssClass = "form-control";
-            _txtReEnterEmail.CssClass = "form-control";
             _txtPassword.CssClass = "form-control";
             _txtPasswordConfirm.CssClass = "form-control";
-            _txtPhone.CssClass = "form-control";
-            _txtVATRegistrationID.CssClass = "form-control";
-            _txtSecurityCode.CssClass = "form-control";
-
         }
 
         public static void DisableAutocomplete(TextBox tb)

@@ -1,9 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Signin.ascx.cs" Inherits="AspDotNetStorefront.Signin" %>
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+<asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
-        <div id="LoginPanel" runat="server">
-            <div class="content-box-03">
+            <div class="content-box-03" id="LoginPanel" runat="server">
                 <asp:Panel ID="pnlLogin" runat="server">
                     <div class="page-wrap signin-page">
                         <asp:Panel ID="ErrorPanel" runat="server" Visible="False" HorizontalAlign="Left">
@@ -137,32 +137,13 @@
                     </div>
                 </asp:Panel>
             </div>
-        </div>
     </ContentTemplate>
 </asp:UpdatePanel>
-
-
-
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
-        <div id="ForgotPasswordPanel" runat="server">
-            <div class="content-box-03">
-                <h5>Forgot Your Password?</h5>
-                <p>
-                    <asp:Label ID="lblForgotPasswordInstructions" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.16 %>'></asp:Label>
-                </p>
-                <asp:PasswordRecovery ID="ctrlRecoverPassword" runat="server" OnVerifyingUser="ctrlRecoverPassword_VerifyingUser">
-                    <UserNameTemplate>
-                        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnRequestNewPassword">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Email address</label>
-                                    <asp:TextBox CssClass="form-control" ID="UserName" runat="server" ValidationGroup="Group2" CausesValidation="True"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="UserName"
-                                        ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ValidationGroup="Group2"
-                                        Display="Dynamic"></asp:RequiredFieldValidator>
-                                    <br />
-                                    <asp:Panel ID="ForgotPasswordExecutepanel1" runat="server" Visible="false">
+     
+            <div class="content-box-03" id="ForgotPasswordPanel" runat="server">
+                 <asp:Panel ID="ForgotPasswordExecutepanel1" runat="server" Visible="false">
                                         <div class="notice-wrap signin-executing-text">
                                             <asp:Literal ID="ForgotPaswwordSuccessMessage1" runat="server"></asp:Literal>
                                         </div>
@@ -172,6 +153,22 @@
                                             <asp:Label CssClass="error-large" ID="ForgotPasswordErrorMsgLabel1" runat="server"></asp:Label>
                                         </div>
                                     </asp:Panel>
+                <h5>Forgot Your Password?</h5>
+                <p>
+                    <asp:Label ID="lblForgotPasswordInstructions" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.16 %>'></asp:Label>
+                </p>
+                <asp:PasswordRecovery ID="ctrlRecoverPassword" runat="server" OnVerifyingUser="ctrlRecoverPassword_VerifyingUser">
+                    <UserNameTemplate>
+                        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnRequestNewPassword">
+                            <div class="row" runat="server">
+                                <div class="col-md-12" runat="server">
+                                    <label>Email address</label>
+                                    <asp:TextBox CssClass="form-control" ID="UserName" runat="server" ValidationGroup="Group2" CausesValidation="True"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="UserName"
+                                        ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ValidationGroup="Group2"
+                                        Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <br />
+                                   
                                     <asp:Button class="form-control" CssClass="btn btn-md btn-primary btn-block" ID="btnRequestNewPassword" CommandName="Submit" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.18 %>'
                                         ValidationGroup="Group2"></asp:Button>
                                      <br />
@@ -182,7 +179,7 @@
                     </UserNameTemplate>
                 </asp:PasswordRecovery>
             </div>
-        </div>
+     
     </ContentTemplate>
 </asp:UpdatePanel>
 

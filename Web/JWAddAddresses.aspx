@@ -8,6 +8,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <asp:HiddenField ID="hfAddressID" runat="server" />
+                    <asp:HiddenField ID="hfPreviousURL" runat="server" />
                     <label><asp:Label ID="lblNickName" runat="server" Text='<%$ Tokens:StringResource, address.cs.49 %>'></asp:Label></label>
                     <asp:TextBox ID="txtNickName" runat="server" MaxLength="100"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtNickName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.90 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
@@ -16,13 +17,13 @@
                     <label><asp:Label ID="lblFirstName" runat="server" Text='<%$ Tokens:StringResource, address.cs.2 %>'></asp:Label></label>
                     <asp:TextBox ID="txtFirstName" runat="server" MaxLength="100"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtFirstName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.13 %>" />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtFirstName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.91 %>" ValidationExpression="^[a-z A-Z]+$" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtFirstName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.91 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblLastName" runat="server" Text='<%$ Tokens:StringResource, address.cs.3 %>'></asp:Label></label>
                     <asp:TextBox ID="txtLastName" runat="server" MaxLength="100"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtLastName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.14 %>" />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtLastName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.92 %>" ValidationExpression="^[a-z A-Z]+$" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtLastName" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.92 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblPhoneNumber" runat="server" Text='<%$ Tokens:StringResource, address.cs.4 %>'></asp:Label></label>
@@ -51,7 +52,7 @@
                 <div class="form-group">
                     <label><asp:Label ID="lblSuite" runat="server" Text='<%$ Tokens:StringResource, address.cs.8 %>'></asp:Label></label>
                     <asp:TextBox ID="txtSuite" runat="server" MaxLength="50"></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtSuite" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.97 %>" ValidationExpression="^[a-z A-Z]+$" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtSuite" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.97 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblCity" runat="server" Text='<%$ Tokens:StringResource, address.cs.9 %>'></asp:Label></label>
@@ -77,9 +78,9 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="form-group">
-                    <asp:Button ID="btnSave" runat="server" Visible="false" CssClass="btn btn-md btn-primary" Text="Save" ValidationGroup="AddAddress" OnClick="btnSave_Click" />
-                    <asp:Button ID="btnUpdate" runat="server" Visible="false" CssClass="btn btn-md btn-primary" Text="Update" ValidationGroup="AddAddress" OnClick="btnUpdate_Click" />
-                    <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-md btn-primary" Text="Cancel" OnClick="btnCancel_Click" />
+                    <asp:Button ID="btnSave" runat="server" Visible="false" CssClass="btn btn-md btn-primary btn-half" Text="Save" ValidationGroup="AddAddress" OnClick="btnSave_Click" />
+                    <asp:Button ID="btnUpdate" runat="server" Visible="false" CssClass="btn btn-md btn-primary btn-half" Text="Update" ValidationGroup="AddAddress" OnClick="btnUpdate_Click" />
+                    <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-md btn-primary btn-half" Text="Cancel" OnClick="btnCancel_Click" />
                 </div>
             </div>
 

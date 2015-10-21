@@ -530,7 +530,7 @@ namespace AspDotNetStorefront
                         strDOB = (strDOB.Equals("0/0/0", StringComparison.Ordinal)) ? null : strDOB;
                     }
 
-                    var defaultCustomerLevel_Public = 4;
+                    var defaultCustomerLevel_Public = (int)UserType.PUBLIC;
 
                     ThisCustomer.UpdateCustomer(
                         /*CustomerLevelID*/ defaultCustomerLevel_Public,
