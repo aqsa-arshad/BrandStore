@@ -7719,6 +7719,7 @@ a:hover.mb-login-btn {
     margin-bottom: 15px;
     font-size: 16px;
     margin-top: 0;
+    word-break: break-all;
 }
 
 .side-bar .login-box h4 {
