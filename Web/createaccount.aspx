@@ -59,7 +59,7 @@
                     YearOfBirthReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.90 %>"
                     EmailReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.16 %>"
                     PhoneReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.24 %>"
-                    PhoneRegExErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.24 %>"
+                    PhoneRegExErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.25 %>"
                     SecurityCodeReqFieldErrorMessage="<%$ Tokens:StringResource, signin.aspx.20 %>"
                     EmailRegExErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>"
                     ReEnterEmailReqFieldErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.94 %>"
