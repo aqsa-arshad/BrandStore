@@ -20,13 +20,13 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            ScriptManager scrptMgr = Page.Master.FindControl<ScriptManager>("scrptMgr");
-            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
+            //ScriptManager scrptMgr = Page.Master.FindControl<ScriptManager>("scrptMgr");
+            //scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
 
-            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart"))
-            {
-                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-            }
+            //if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart"))
+            //{
+            //    scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
+            //}
 
             
             m_EP = new ShowEntityPage(EntityDefinitions.readonly_CategoryEntitySpecs, this);
@@ -87,17 +87,17 @@ namespace AspDotNetStorefront
             return;
         }
 
-        protected override string OverrideTemplate()
-        {
-            String HT = "template";
+        //protected override string OverrideTemplate()
+        //{
+        //    String HT = "template";
 
-            if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
-            {
-                HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
-            }
+        //    if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
+        //    {
+        //        HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
+        //    }
 
-            return HT;
-        }
+        //    return HT;
+        //}
 
         public override bool IsEntityPage
         {
@@ -121,6 +121,28 @@ namespace AspDotNetStorefront
             {
                 return m_EP.GetActiveEntityID;
             }
+        }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
         }
 
 	}
