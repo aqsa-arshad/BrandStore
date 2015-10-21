@@ -59,11 +59,18 @@ namespace AspDotNetStorefront
         /// </summary>
         private void LoadAddresses()
         {
-            Addresses allAddresses = new Addresses();
-            allAddresses.LoadCustomer(ThisCustomer.CustomerID);
+            try
+            {
+                Addresses allAddresses = new Addresses();
+                allAddresses.LoadCustomer(ThisCustomer.CustomerID);
 
-            rptAddresses.DataSource = allAddresses;
-            rptAddresses.DataBind();
+                rptAddresses.DataSource = allAddresses;
+                rptAddresses.DataBind();
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
         }
 
         /// <summary>
@@ -79,17 +86,24 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void rptAddresses_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            int addressID = 0;
-            if (Int32.TryParse(e.CommandArgument.ToString(), out addressID))
+            try
             {
-                if (e.CommandName == "Delete")
+                int addressID = 0;
+                if (Int32.TryParse(e.CommandArgument.ToString(), out addressID))
                 {
-                    DeleteAddress(addressID);
+                    if (e.CommandName == "Delete")
+                    {
+                        DeleteAddress(addressID);
+                    }
+                    else if (e.CommandName == "Edit")
+                    {
+                        EditAddress(addressID);
+                    }
                 }
-                else if (e.CommandName == "Edit")
-                {
-                    EditAddress(addressID);
-                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
             }
             
         }
@@ -100,15 +114,22 @@ namespace AspDotNetStorefront
         /// <param name="addressID">addressID</param>
         private void DeleteAddress(int addressID)
         {
-            AspDotNetStorefrontCore.Address anyAddress = new AspDotNetStorefrontCore.Address();
-            anyAddress.LoadFromDB(addressID);
-
-            if (ThisCustomer.CustomerID == anyAddress.CustomerID || ThisCustomer.IsAdminSuperUser)
+            try
             {
-                AspDotNetStorefrontCore.Address.DeleteFromDB(anyAddress.AddressID, ThisCustomer.CustomerID);
-            }
+                AspDotNetStorefrontCore.Address anyAddress = new AspDotNetStorefrontCore.Address();
+                anyAddress.LoadFromDB(addressID);
 
-            LoadAddresses();
+                if (ThisCustomer.CustomerID == anyAddress.CustomerID || ThisCustomer.IsAdminSuperUser)
+                {
+                    AspDotNetStorefrontCore.Address.DeleteFromDB(anyAddress.AddressID, ThisCustomer.CustomerID);
+                }
+
+                LoadAddresses();
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
         }
 
         /// <summary>

@@ -41,21 +41,29 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     /// Get All Customer Alerts for Admin
     /// </summary>
     private void GetCustomerAlerts()
+    
     {
-        using (var conn = DB.dbConn())
+        try
         {
-            conn.Open();
-            using (var cmd = new SqlCommand("aspdnsf_CustomerAlertStatusSelectByCustomerIDAlertDate", conn))
+            using (var conn = DB.dbConn())
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
-                cmd.Parameters.AddWithValue("@CustomerLevelID", ThisCustomer.CustomerLevelID);
-                cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
+                conn.Open();
+                using (var cmd = new SqlCommand("aspdnsf_CustomerAlertStatusSelectByCustomerIDAlertDate", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                    cmd.Parameters.AddWithValue("@CustomerLevelID", ThisCustomer.CustomerLevelID);
+                    cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
 
-                IDataReader idr = cmd.ExecuteReader();
-                rptCustomerAlerts.DataSource = idr;
-                rptCustomerAlerts.DataBind();
+                    IDataReader idr = cmd.ExecuteReader();
+                    rptCustomerAlerts.DataSource = idr;
+                    rptCustomerAlerts.DataBind();
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
     }
     
@@ -64,19 +72,26 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     /// </summary>
     protected void rptCustomerAlerts_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
-        int customerAlertStatusID = Convert.ToInt32(e.CommandArgument);
-        const string readSP = "aspdnsf_CustomerAlertStatusRead";
-        const string deleteSP = "aspdnsf_CustomerAlertStatusDelete";
+        try
+        {
+            int customerAlertStatusID = Convert.ToInt32(e.CommandArgument);
+            const string readSP = "aspdnsf_CustomerAlertStatusRead";
+            const string deleteSP = "aspdnsf_CustomerAlertStatusDelete";
 
-        if (e.CommandName == "Delete")
-        {
-            UpdateCustomerAlert(customerAlertStatusID, deleteSP);
+            if (e.CommandName == "Delete")
+            {
+                UpdateCustomerAlert(customerAlertStatusID, deleteSP);
+            }
+            else if (e.CommandName == "Read")
+            {
+                UpdateCustomerAlert(customerAlertStatusID, readSP);
+            }
+            GetCustomerAlerts();
         }
-        else if (e.CommandName == "Read")
+        catch(Exception ex)
         {
-            UpdateCustomerAlert(customerAlertStatusID, readSP);
+         SysLog.LogMessage( this.GetType().FullName + "/"+System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
-        GetCustomerAlerts();
     }
 
     /// <summary>
@@ -86,16 +101,24 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     /// <param name="spName">spName</param>
     private void UpdateCustomerAlert(int customerAlertStatusID, string spName)
     {
-        using (var conn = DB.dbConn())
+        try
         {
-            conn.Open();
-            using (var cmd = new SqlCommand(spName, conn))
+            using (var conn = DB.dbConn())
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CustomerAlertStatusID", customerAlertStatusID);
-                cmd.ExecuteNonQuery();
+                conn.Open();
+                using (var cmd = new SqlCommand(spName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CustomerAlertStatusID", customerAlertStatusID);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
+        catch (Exception ex)
+        {
+            SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+        }
+
     }    
 
    
