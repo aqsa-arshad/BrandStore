@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="My Account" Language="C#" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" AutoEventWireup="true" CodeFile="JWMyAccount.aspx.cs" Inherits="AspDotNetStorefront.JWMyAccount" %>
+<%@ Register TagPrefix="aspdnsf" TagName="CustomerAlerts" Src="~/controls/JWEditAccount.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageContent" runat="Server">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
@@ -26,6 +27,10 @@
             <button class="btn btn-md btn-primary" type="submit">View Order History</button>
         </div>
     </div>
+
+    <%--<div class="content-box-03 body-forms">
+        <aspdnsf:CustomerAlerts ID="UC_EditAccount" runat="server" />
+    </div>--%>
 
     <div class="content-box-03">
         <div class="row">

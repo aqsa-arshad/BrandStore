@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CustomerAlerts.ascx.cs" Inherits="CustomerAlerts" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CustomerAlerts.ascx.cs" Inherits="AspDotNetStorefront.CustomerAlerts" %>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
         <ContentTemplate>
