@@ -598,7 +598,10 @@ namespace AspDotNetStorefront
                     AppLogic.SendMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("lostpassword.aspx.6", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, m_SkinID, string.Empty, "newpwd=" + newPassword + "&thiscustomerid=" + ThisCustomer.CustomerID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
                     SendWasOk = true;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                }
                 if (!SendWasOk)
                 {
                     errorMessageNotification();

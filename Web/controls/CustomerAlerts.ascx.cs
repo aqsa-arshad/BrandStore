@@ -40,8 +40,7 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
     /// <summary>
     /// Get All Customer Alerts for Admin
     /// </summary>
-    private void GetCustomerAlerts()
-    
+    private void GetCustomerAlerts()   
     {
         try
         {
@@ -63,7 +62,7 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
         catch (Exception ex)
         {
-            SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
     }
     
@@ -90,7 +89,7 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
         catch(Exception ex)
         {
-         SysLog.LogMessage( this.GetType().FullName + "/"+System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+         SysLog.LogMessage( GetType().FullName + "::"+System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
     }
 
@@ -116,7 +115,7 @@ public partial class CustomerAlerts : System.Web.UI.UserControl
         }
         catch (Exception ex)
         {
-            SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
         }
 
     }    

@@ -106,8 +106,6 @@ namespace AspDotNetStorefront
 
             else if (currentURL.ToUpper().Contains("SIGNIN"))
             {
-                lblPageHeading.Text = "SIGN IN";
-                pnlPageHeading.Visible = true;
                 divlogin.Visible = false;
                 separatorafterlogin.Visible = false;
             }

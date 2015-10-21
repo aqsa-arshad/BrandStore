@@ -101,7 +101,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 

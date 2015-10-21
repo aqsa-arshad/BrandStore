@@ -72,7 +72,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
             }
         }
 
@@ -92,7 +92,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
             }
         }
 
@@ -126,7 +126,7 @@ namespace AspDotNetStorefront
                 }
                 catch (Exception ex)
                 {
-                    Response.Write(ex.Message);
+                    SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.DatabaseException, MessageSeverityEnum.Error);
                 }
             }
             else
@@ -159,7 +159,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
 
         }
@@ -197,7 +197,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return anyAddress;
         }
@@ -235,7 +235,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
 
         }
@@ -253,7 +253,7 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
 
         }

@@ -73,7 +73,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                 }
                 catch (Exception ex)
                 {
-                    SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                    SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
                 }
             }
         }
@@ -183,7 +183,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
             catch (Exception ex)
             {
-                SysLog.LogMessage(this.GetType().FullName + "/" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(GetType().FullName + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
         else //normal login
