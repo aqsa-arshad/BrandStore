@@ -5,7 +5,7 @@
         <asp:Panel runat="server" DefaultButton="LoginButton">
             <div id="LoginPanel" runat="server">
                 <h4>Login</h4>
-                <label>Email address</label>
+                <label>Username</label>
                 <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"
                     CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
                 <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator1" runat="server" ValidationGroup="LoginGroup"

@@ -120,6 +120,28 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "About Marketing Services";
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("JWSUPPORT"))
+            {
+                lblPageHeading.Text = "Support";
+                pnlPageHeading.Visible = true;
+                divbeforelogin.Visible = false;
+                divafterlogin.Visible = false;
+                SideBarAfterLogin.Visible = false;
+                SideBarBeforeLogin.Visible = false;
+                SideBarForJWsupport.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU"))
+            {
+                lblPageHeading.Text = "ABOUT TRUEBLU";
+                pnlPageHeading.Visible = true;
+                
+            }
+            else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
+            {
+                lblPageHeading.Text = "TERMS AND CONDITIONS";
+                pnlPageHeading.Visible = true;
+                
+            }
             else
             {
                 lblPageHeading.Text = string.Empty;
