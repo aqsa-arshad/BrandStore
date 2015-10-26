@@ -133,10 +133,10 @@ namespace AspDotNetStorefront
                     {
                         EditAddress(addressID);
                     }
-                }
-                else if (e.CommandName == "Select")
-                {
-                    SelectPrimaryAddress(addressID);
+                    else if (e.CommandName == "Select")
+                    {
+                        SelectPrimaryAddress(addressID);
+                    }
                 }
             }
             catch (Exception ex)
@@ -145,7 +145,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
         }
 
         /// <summary>
@@ -155,6 +154,14 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                // Format CityStateZip
+
+                (e.Item.FindControl("lblCityStateZip") as Label).Text = 
+                                FormatCityStateZip((e.Item.FindControl("hfCity") as HiddenField).Value,
+                                                (e.Item.FindControl("hfState") as HiddenField).Value,
+                                                (e.Item.FindControl("hfZip") as HiddenField).Value);
+
+
                 int addressType = GetAddressType(Request.QueryString["AddressType"]);
                 int itemAddressID = Int32.Parse((e.Item.FindControl("hfAddressID") as HiddenField).Value);
                 int primaryID = 0;
@@ -180,6 +187,33 @@ namespace AspDotNetStorefront
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// FormatCityStateZip
+        /// </summary>
+        /// <param name="city">city</param>
+        /// <param name="state">state</param>
+        /// <param name="zip">zip</param>
+        /// <returns>Formated CityStateZip</returns>
+        private string FormatCityStateZip(string city, string state, string zip)
+        {
+            string strBACityStateZip;
+            strBACityStateZip = string.IsNullOrEmpty(city) ? "" : city;
+            strBACityStateZip += ", ";
+            strBACityStateZip += string.IsNullOrEmpty(state) ? "" : state;
+            strBACityStateZip += " ";
+            strBACityStateZip += string.IsNullOrEmpty(zip) ? "" : zip;
+
+            if (string.IsNullOrEmpty(city))
+                strBACityStateZip.Replace(", ", "");
+            if (string.IsNullOrEmpty(state))
+            {
+                strBACityStateZip.Replace(" ", "");
+                strBACityStateZip.Replace(",", ", ");
+            }
+
+            return strBACityStateZip;
         }
 
         /// <summary>

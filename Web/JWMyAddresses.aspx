@@ -12,7 +12,14 @@
                         <ul>
                             <li><asp:Label ID="lblFullName" runat="server" Text='<%# Eval("FirstName") + " " + Eval("LastName") %>'></asp:Label></li>
                             <li><asp:Label ID="lblAddress1" runat="server" Text='<%# Eval("Address1") %>'></asp:Label></li>
-                            <li><asp:Label ID="lblStateZip" runat="server" Text='<%# string.IsNullOrEmpty(Eval("Zip").ToString()) ? Eval("State") : Eval("State") + ", " + Eval("Zip") %>'></asp:Label></li>
+                            <li><asp:Label ID="lblAddress2" runat="server" Text='<%# Eval("Address2") %>'></asp:Label></li>
+                            <li><asp:Label ID="lblSuite" runat="server" Text='<%# Eval("Suite") %>'></asp:Label></li>
+                            <li>
+                                <asp:HiddenField ID="hfCity" runat="server" Value='<%# Eval("City") %>' />
+                                <asp:HiddenField ID="hfState" runat="server" Value='<%# Eval("State") %>' />
+                                <asp:HiddenField ID="hfZip" runat="server" Value='<%# Eval("Zip") %>' />
+                                <asp:Label ID="lblCityStateZip" runat="server"></asp:Label>
+                            </li>
                             <li><asp:Label ID="lblCountry" runat="server" Text='<%# Eval("Country") %>'></asp:Label></li>
                             <li><asp:Label ID="lblPhone" runat="server" Text='<%# Eval("Phone") %>'></asp:Label></li>
                         </ul>

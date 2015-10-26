@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label><asp:Label ID="lblSuite" runat="server" Text='<%$ Tokens:StringResource, address.cs.8 %>'></asp:Label></label>
                     <asp:TextBox ID="txtSuite" runat="server" MaxLength="50"></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtSuite" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.97 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtSuite" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.97 %>" ValidationExpression="^[0-9a-zA-Z .,'-]*$" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblCity" runat="server" Text='<%$ Tokens:StringResource, address.cs.9 %>'></asp:Label></label>
