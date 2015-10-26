@@ -51,7 +51,7 @@ namespace AspDotNetStorefront
                     ShowPreLoginControls();
                     hdnCustomerLevel.Text = "-1";
                 }
-            }         
+            }
         }
 
         /// <summary>
@@ -126,21 +126,21 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divbeforelogin.Visible = false;
                 divafterlogin.Visible = false;
-                SideBarAfterLogin.Visible = false;
-                SideBarBeforeLogin.Visible = false;
-                SideBarForJWsupport.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divJWsupport.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU"))
             {
                 lblPageHeading.Text = "ABOUT TRUEBLU";
                 pnlPageHeading.Visible = true;
-                
+
             }
             else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
             {
                 lblPageHeading.Text = "TERMS AND CONDITIONS";
                 pnlPageHeading.Visible = true;
-                
+
             }
             else
             {

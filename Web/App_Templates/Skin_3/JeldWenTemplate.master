@@ -109,7 +109,7 @@
                     </div>
                 </asp:Panel>
                 <div class="row">
-                    <div class="col-md-4 pull-right" id="SideBarBeforeLogin" runat="server">
+                    <div class="col-md-4 pull-right" id="divSideBarBeforeLogin" runat="server">
                         <div class="side-bar" id="divbeforelogin" runat="server">
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
@@ -130,7 +130,7 @@
                             </asp:ContentPlaceHolder>
                         </div>
                     </div>
-                    <div class="col-md-4" id="SideBarAfterLogin" runat="server">
+                    <div class="col-md-4" id="divSideBarAfterLogin" runat="server">
                         <div class="side-bar" id="divafterlogin" runat="server">
                             <div>
                                 <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
@@ -148,10 +148,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" id="SideBarForJWsupport" runat="server" visible="false">
-                        <div class="side-bar" id="divForJWSupport" runat="server">                          
-                                <div class="side-bar-box" id="JWSupportSControl">
-                                    <aspdnsf:Topic ID="FooterSupportSideBar" runat="server" TopicName="Footer.SupportSideBar" />
+                    <div class="col-md-4" id="divJWsupport" runat="server" visible="false">
+                        <div class="side-bar" runat="server">                          
+                                <div class="side-bar-box" id="JWSupportTopic">
+                                    <aspdnsf:Topic runat="server" TopicName="Footer.SupportSideBar" />
                                 </div>                              
                             
                         </div>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="c#" Inherits="AspDotNetStorefront.JWSupport" CodeFile="JWSupport.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master"%>
+﻿<%@ Page Language="c#" Inherits="AspDotNetStorefront.JWSupport" CodeFile="JWSupport.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/jeldWenTemplate.master"%>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 
 <asp:Content  runat="server" ContentPlaceHolderID="PageContent">
@@ -10,7 +10,7 @@
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <meta content="" name="description">
         <meta content="" name="author">
-        <title>SignIn</title>
+        <title>Support</title>
     </head>
         <body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

@@ -5,16 +5,17 @@
         <asp:Panel runat="server" DefaultButton="LoginButton">
             <div id="LoginPanel" runat="server">
                 <h4>Login</h4>
-                <label>Username</label>
+                <label>
+                    <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                 <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"
                     CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
                 <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator1" runat="server" ValidationGroup="LoginGroup"
                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="EmailTextField"></asp:RequiredFieldValidator>
                 <br />
-                <label>Password</label>
+                <label>
+                    <asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
                 <asp:TextBox runat="server" class="form-control" ID="PasswordTextField" ValidationGroup="LoginGroup" MaxLength="50"
                     CausesValidation="True" TextMode="Password" AutoCompleteType="None"></asp:TextBox>
-
                 <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator2" runat="server" ValidationGroup="LoginGroup"
                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="PasswordTextField"></asp:RequiredFieldValidator>
                 <div class="checkbox">
@@ -47,9 +48,8 @@
         <asp:Panel runat="server" DefaultButton="ForgotPasswordButton">
             <div id="ForgotPasswordPanel" runat="server">
                 <h4>Forgot your password?</h4>
-                <label>If you forgot your password, to request a new ONE TIME use only password via e-mail, please enter your e-mail address below, and click the 'Request A New Password' button.</label>
-                <br />
-                <br />
+                <p>
+                    <asp:Label ID="lblForgotPasswordInstructions" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.16 %>'></asp:Label></p>
                 <label>Email address</label>
                 <asp:TextBox ID="ForgotPasswordEmailTextField" CssClass="form-control" runat="server" ValidationGroup="ForgotPasswordGroup" MaxLength="100"
                     CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
