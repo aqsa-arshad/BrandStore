@@ -50,14 +50,10 @@ namespace AspDotNetStorefrontCore
             BaseURL = EnforceBaseURL(BaseURL);
             PageNum = EnforcePageNum(PageNum);
             String Separator = GetSeperator(BaseURL);
-            //tmpS.Append("<ul class=\"pagination\">");
             tmpS.Append("<div>");
 
             if (PageNum > 1)
-            {
-                //tmpS.Append("<li class=\"pager-back\">");
-                //tmpS.Append(GetPreviousPageLink(BaseURL, PageNum, ThisCustomer, Separator));
-                //tmpS.Append("</li>");
+            {               
                 tmpS.Append("<span class=\"pageArrowWrap\"");
                 tmpS.Append(GetPreviousPageLink(BaseURL, PageNum, ThisCustomer, Separator));
                 tmpS.Append("</span>");
@@ -98,7 +94,6 @@ namespace AspDotNetStorefrontCore
             }
             else
             {
-               // tmpS.Append("<li class=\"pager-forward\"><span class=\"disabled\">&raquo;</span></li>");
                 tmpS.Append("<li class=\"pager-forward\"><span class=\"disabled\">Next</span></li>");
             }
 
