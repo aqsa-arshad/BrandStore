@@ -7937,3 +7937,6 @@ footer .social-links ul li a:hover {
 .search-rigth {
     margin-top: 78px;
 }
+.text-uppercase-no { 
+   text-transform: none !important ; 
+}

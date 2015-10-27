@@ -96,6 +96,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     protected void forgotpasswordLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "true";
+        focusOnEmailTextField(true);
         ForgotPasswordPanel.Visible = true;
         LoginPanel.Visible = false;
         ErrorPanel.Visible = false;
@@ -106,6 +107,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     protected void GoBackToLoginLink_Click(object sender, EventArgs e)
     {
         HiddenLabel.Text = "false";
+        focusOnEmailTextField(false);
         ForgotPasswordPanel.Visible = false;
         LoginPanel.Visible = true;
         ErrorPanel.Visible = false;
@@ -113,13 +115,33 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         ForgotPasswordErrorPanel.Visible = false;
     }
 
-    protected void Page_Load(object sender, EventArgs e)
+    private void focusOnEmailTextField(bool status)
     {
+        var currentURL = Request.Url.AbsolutePath;
+        if(status)
+        {
+            if (currentURL.ToUpper().Contains("DEFAULT"))
+            {
+                ForgotPasswordEmailTextField.Focus();
+            }
+        }
+        else
+        {
+            if (currentURL.ToUpper().Contains("DEFAULT"))
+            {
+                EmailTextField.Focus();
+            }
+        
+        }
+    
+    }
 
+    protected void Page_Load(object sender, EventArgs e)
+    {  
         string HiddenFieldText = HiddenLabel.Text;
         if (HiddenFieldText.Equals("true"))
         {
-            ForgotPasswordEmailTextField.Focus();
+            focusOnEmailTextField(true);
             ForgotPasswordPanel.Visible = true;
             ForgotPasswordExecutepanel.Visible = false;
             LoginPanel.Visible = false;
@@ -128,7 +150,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         }
         else
         {
-            EmailTextField.Focus();
+            focusOnEmailTextField(false);
             ForgotPasswordPanel.Visible = false;
             LoginPanel.Visible = true;
         }
