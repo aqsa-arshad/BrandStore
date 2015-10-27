@@ -10,8 +10,7 @@
     </asp:Panel>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            debugger;
+        $(document).ready(function () {            
             if ('<%=CategoryTypeFlag%>' == "true") {
                 $("#divbeforelogin").addClass("sub-category-right");
                 $("#ctl00_divafterlogin").addClass("sub-category-right");

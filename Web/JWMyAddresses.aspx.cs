@@ -60,6 +60,11 @@ namespace AspDotNetStorefront
         /// </summary>
         private void LoadAddresses(int addressType)
         {
+            try
+            {
+                Addresses allAddresses = new Addresses();
+                allAddresses.LoadCustomer(ThisCustomer.CustomerID);
+
             if (addressType == (int)AddressTypes.Billing)
             {
                 ((Label)this.Master.FindControl("lblPageHeading")).Text = "MY Billing ADDRESSES";
@@ -71,11 +76,17 @@ namespace AspDotNetStorefront
             else
                 return;
 
-            Addresses allAddresses = new Addresses();
-            allAddresses.LoadCustomer(ThisCustomer.CustomerID);
 
-            rptAddresses.DataSource = allAddresses;
-            rptAddresses.DataBind();
+
+                rptAddresses.DataSource = allAddresses;
+                rptAddresses.DataBind();
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
         }
 
         /// <summary>
@@ -109,21 +120,30 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void rptAddresses_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            int addressID = 0;
-            if (Int32.TryParse(e.CommandArgument.ToString(), out addressID))
+            try
             {
-                if (e.CommandName == "Delete")
+                int addressID = 0;
+                if (Int32.TryParse(e.CommandArgument.ToString(), out addressID))
                 {
-                    DeleteAddress(addressID);
-                }
-                else if (e.CommandName == "Edit")
-                {
-                    EditAddress(addressID);
+                    if (e.CommandName == "Delete")
+                    {
+                        DeleteAddress(addressID);
+                    }
+                    else if (e.CommandName == "Edit")
+                    {
+                        EditAddress(addressID);
+                    }
                 }
                 else if (e.CommandName == "Select")
                 {
                     SelectPrimaryAddress(addressID);
                 }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
 
         }
@@ -168,15 +188,24 @@ namespace AspDotNetStorefront
         /// <param name="addressID">addressID</param>
         private void DeleteAddress(int addressID)
         {
-            AspDotNetStorefrontCore.Address anyAddress = new AspDotNetStorefrontCore.Address();
-            anyAddress.LoadFromDB(addressID);
-
-            if (ThisCustomer.CustomerID == anyAddress.CustomerID || ThisCustomer.IsAdminSuperUser)
+            try
             {
-                AspDotNetStorefrontCore.Address.DeleteFromDB(anyAddress.AddressID, ThisCustomer.CustomerID);
-            }
+                AspDotNetStorefrontCore.Address anyAddress = new AspDotNetStorefrontCore.Address();
+                anyAddress.LoadFromDB(addressID);
 
-            LoadAddresses(GetAddressType(Request.QueryString["AddressType"]));
+                if (ThisCustomer.CustomerID == anyAddress.CustomerID || ThisCustomer.IsAdminSuperUser)
+                {
+                    AspDotNetStorefrontCore.Address.DeleteFromDB(anyAddress.AddressID, ThisCustomer.CustomerID);
+                }
+
+                LoadAddresses(GetAddressType(Request.QueryString["AddressType"]));
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
         }
 
         /// <summary>

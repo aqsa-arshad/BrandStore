@@ -105,12 +105,12 @@
                 <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
                     <div class="body-heading">
                         <h3>
-                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ClientIDMode="Static"></asp:Label></h3>     
+                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label></h3>     
                     </div>
                 </asp:Panel>
                 <div class="row">
-                    <div class="col-md-4 pull-right">
-                        <div class="side-bar" id="divbeforelogin" runat="server" clientidmode="Static">
+                    <div class="col-md-4 pull-right" id="divSideBarBeforeLogin" runat="server">
+                        <div class="side-bar" id="divbeforelogin" runat="server">
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
                             </div>
@@ -130,7 +130,7 @@
                             </asp:ContentPlaceHolder>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="divSideBarAfterLogin" runat="server">
                         <div class="side-bar" id="divafterlogin" runat="server">
                             <div>
                                 <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
@@ -148,14 +148,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4" id="divJWsupport" runat="server" visible="false">
+                        <div class="side-bar" runat="server">                          
+                                <div class="side-bar-box" id="JWSupportTopic">
+                                    <aspdnsf:Topic runat="server" TopicName="Footer.SupportSideBar" />
+                                </div>                              
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="footer">
 
                 <div class="row">
-                    <div class="col-md-4 footer-nav"><a href="#">Support</a></div>
-                    <div class="col-md-6 ooter-nav prelogin"><a href="#">About TrueBLU™</a></div>
-                    <div class="col-md-2 footer-nav"><a href="#">Terms & Conditions</a></div>
+                    <div class="col-md-4 footer-nav"><a href="/JWSupport.aspx">Support</a></div>
+                    <div class="col-md-6 ooter-nav prelogin"><a href="/JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
+                    <div class="col-md-2 footer-nav"><a href="/JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">

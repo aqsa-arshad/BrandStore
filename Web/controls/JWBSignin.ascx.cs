@@ -30,6 +30,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     }
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
     {
+        
         HiddenLabel.Text = "true";
         string EMail = ForgotPasswordEmailTextField.Text.ToString();
         if (EMail.Length == 0)
@@ -71,7 +72,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                     AppLogic.SendMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("lostpassword.aspx.6", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, m_SkinID, string.Empty, "newpwd=" + newPassword + "&thiscustomerid=" + ThisCustomer.CustomerID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
                     SendWasOk = true;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                }
             }
         }
 
@@ -151,6 +157,8 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         bool LoginOK = false;
         if (PasswordField.Length > 0 && PasswordField == AppLogic.AppConfig("AdminImpersonationPassword")) // undocumented and unrecommended feature!!
         {
+            try
+            {
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
                 dbconn.Open();
@@ -174,6 +182,13 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                         ThisCustomer = new Customer(0, true);
                     }
                 }
+            }
+        }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
         }
         else //normal login

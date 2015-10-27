@@ -26,27 +26,40 @@ namespace AspDotNetStorefront
             var IsCustomerAvailable = ThisCustomer.HasCustomerRecord;
             var userModel = GetUserModel(userName);
 
-            if (userModel == null) // Execute Local Authentication if User is not Exist in Okta
-                return ThisCustomer;
-
-            if (UserAuthentication(userName, password)) // If User is Authenticated by Okta then Add / Update local Customer object
+            try
             {
-                if (!IsCustomerAvailable)
+                if (userModel == null) // Execute Local Authentication if User is not Exist in Okta
+                    return ThisCustomer;
+
+                if (UserAuthentication(userName, password)) // If User is Authenticated by Okta then Add / Update local Customer object
                 {
-                    // Add New Customer in local DB
-                    InsertCustomer(userName);
+                    if (!IsCustomerAvailable)
+                    {
+                        // Add New Customer in local DB
+                        InsertCustomer(userName);
+                    }
+                    // Update Customer in local DB w.r.t Okta UserModel
+                    UpdateCustomer(userModel.profile, userName, password, IsCustomerAvailable);
                 }
-                // Update Customer in local DB w.r.t Okta UserModel
-                UpdateCustomer(userModel.profile, userName, password, IsCustomerAvailable);
-            }
-            else if (IsCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
-            {
-                SqlParameter sp = new SqlParameter("@IsRegistered", System.Data.SqlDbType.TinyInt);
-                sp.Value = 0;
-                SqlParameter[] spa = { sp };
-                ThisCustomer.UpdateCustomer(spa);
-            }
+                else if (IsCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
+                {
+                    SqlParameter sp = new SqlParameter("@IsRegistered", System.Data.SqlDbType.TinyInt);
+                    sp.Value = 0;
+                    SqlParameter[] spa = { sp };
+                    ThisCustomer.UpdateCustomer(spa);
+                }
 
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            finally
+            { 
+             
+            }
             return new Customer(userName, true);
         }
 
@@ -65,17 +78,26 @@ namespace AspDotNetStorefront
             using (var client = new HttpClient())
             {
                 var url = ConfigurationManager.AppSettings["SessionURL"];
-                var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("Authorization", authorization);
+                try
+                {
+                    var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", authorization);
+                }
+                catch (Exception ex)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                }
 
                 var str = JsonConvert.SerializeObject(userAuthenticationModel);
                 HttpContent content = new StringContent(str, Encoding.UTF8, "application/json");
-
                 return client.PostAsync(url, content).Result.IsSuccessStatusCode;
             }
+
         }
 
         /// <summary>
@@ -85,14 +107,27 @@ namespace AspDotNetStorefront
         /// <returns>UserModel</returns>
         public static UserModel GetUserModel(string userName)
         {
+
+
             using (var client = new HttpClient())
             {
                 var url = ConfigurationManager.AppSettings["UserURL"] + userName;
-                var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("Authorization", authorization);
+                try
+                {
+
+                    var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", authorization);
+
+                }
+                catch (Exception ex)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                }
 
                 var response = client.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
@@ -103,6 +138,8 @@ namespace AspDotNetStorefront
                 }
                 else
                     return null;
+
+
             }
         }
 
@@ -114,14 +151,16 @@ namespace AspDotNetStorefront
         /// <param name="password">password</param>
         private static void UpdateCustomer(Profile profile, string userName, string password, bool IsCustomerAvailable)
         {
-            Password p = new Password(password);
-            int customerLevelID = GetCustomerLevelID(profile.userType);
-
-            var ThisCustomer = new Customer(userName);
-            
-            if (!IsCustomerAvailable)
+            try
             {
-                SqlParameter[] sqlParameter = {
+                Password p = new Password(password);
+                int customerLevelID = GetCustomerLevelID(profile.userType);
+
+                var ThisCustomer = new Customer(userName);
+
+                if (!IsCustomerAvailable)
+                {
+                    SqlParameter[] sqlParameter = {
                                         new SqlParameter("@Password", p.SaltedPassword),
                                         new SqlParameter("@SaltKey", p.Salt),
                                         new SqlParameter("@SkinID", AppLogic.DefaultSkinID()), 
@@ -134,20 +173,25 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@ShippingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryShippingAddressID == null ? 0 : ThisCustomer.PrimaryShippingAddressID)),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
-                ThisCustomer.UpdateCustomer(sqlParameter);
-            }
-            else
-            {
-                SqlParameter[] sqlParameter = {
+                    ThisCustomer.UpdateCustomer(sqlParameter);
+                }
+                else
+                {
+                    SqlParameter[] sqlParameter = {
                                         new SqlParameter("@Password", p.SaltedPassword),
                                         new SqlParameter("@SaltKey", p.Salt),
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
-                ThisCustomer.UpdateCustomer(sqlParameter);
+                    ThisCustomer.UpdateCustomer(sqlParameter);
+                }
             }
-
-            
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
         }
 
         /// <summary>
@@ -156,10 +200,19 @@ namespace AspDotNetStorefront
         /// <param name="userName">userName</param>
         private static void InsertCustomer(string userName)
         {
-            var ThisCustomer = new Customer(userName);
-            Customer.CreateCustomerRecord(userName, null, ThisCustomer.SkinID,
-                        null, null, 0, null, ThisCustomer.LocaleSetting, 0, ThisCustomer.CurrencySetting,
-                        ThisCustomer.VATSettingRAW, ThisCustomer.VATRegistrationID, 0);
+            try
+            {
+                var ThisCustomer = new Customer(userName);
+                Customer.CreateCustomerRecord(userName, null, ThisCustomer.SkinID,
+                            null, null, 0, null, ThisCustomer.LocaleSetting, 0, ThisCustomer.CurrencySetting,
+                            ThisCustomer.VATSettingRAW, ThisCustomer.VATRegistrationID, 0);
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
         }
 
         /// <summary>
@@ -171,28 +224,38 @@ namespace AspDotNetStorefront
         /// <returns></returns>
         private static int AddUpdateAddress(Profile profile, int CustomerID, int AddressID)
         {
+
             Address anyAddress = new Address();
+            try
+            {
 
-            anyAddress.AddressID = AddressID;
-            anyAddress.CustomerID = CustomerID;
-            anyAddress.NickName = string.IsNullOrEmpty(profile.nickName) ? string.Empty : profile.nickName;
-            anyAddress.FirstName = string.IsNullOrEmpty(profile.firstName) ? string.Empty : profile.firstName;
-            anyAddress.LastName = string.IsNullOrEmpty(profile.lastName) ? string.Empty : profile.lastName;
-            anyAddress.Company = string.IsNullOrEmpty(profile.organization) ? string.Empty : profile.organization;
-            anyAddress.Address1 = string.IsNullOrEmpty(profile.streetAddress) ? string.Empty : profile.streetAddress;
-            anyAddress.Address2 = string.Empty;
-            anyAddress.Suite = string.Empty;
-            anyAddress.City = string.IsNullOrEmpty(profile.city) ? string.Empty : profile.city;
-            anyAddress.State = string.IsNullOrEmpty(profile.state) ? string.Empty : profile.state;
-            anyAddress.Zip = string.IsNullOrEmpty(profile.zipCode) ? string.Empty : profile.zipCode;
-            anyAddress.Country = string.IsNullOrEmpty(profile.countryCode) ? string.Empty : profile.countryCode;
-            anyAddress.Phone = string.IsNullOrEmpty(profile.primaryPhone) ? string.Empty : profile.primaryPhone;
-            anyAddress.ResidenceType = ResidenceTypes.Residential;
+                anyAddress.AddressID = AddressID;
+                anyAddress.CustomerID = CustomerID;
+                anyAddress.NickName = string.IsNullOrEmpty(profile.nickName) ? string.Empty : profile.nickName;
+                anyAddress.FirstName = string.IsNullOrEmpty(profile.firstName) ? string.Empty : profile.firstName;
+                anyAddress.LastName = string.IsNullOrEmpty(profile.lastName) ? string.Empty : profile.lastName;
+                anyAddress.Company = string.IsNullOrEmpty(profile.organization) ? string.Empty : profile.organization;
+                anyAddress.Address1 = string.IsNullOrEmpty(profile.streetAddress) ? string.Empty : profile.streetAddress;
+                anyAddress.Address2 = string.Empty;
+                anyAddress.Suite = string.Empty;
+                anyAddress.City = string.IsNullOrEmpty(profile.city) ? string.Empty : profile.city;
+                anyAddress.State = string.IsNullOrEmpty(profile.state) ? string.Empty : profile.state;
+                anyAddress.Zip = string.IsNullOrEmpty(profile.zipCode) ? string.Empty : profile.zipCode;
+                anyAddress.Country = string.IsNullOrEmpty(profile.countryCode) ? string.Empty : profile.countryCode;
+                anyAddress.Phone = string.IsNullOrEmpty(profile.primaryPhone) ? string.Empty : profile.primaryPhone;
+                anyAddress.ResidenceType = ResidenceTypes.Residential;
 
-            if (AddressID == 0)
-                anyAddress.InsertDB();
-            else
-                anyAddress.UpdateDB();
+                if (AddressID == 0)
+                    anyAddress.InsertDB();
+                else
+                    anyAddress.UpdateDB();
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
 
             return anyAddress.AddressID; ;
         }
@@ -204,13 +267,22 @@ namespace AspDotNetStorefront
         /// <returns>CustomerLevelID</returns>
         private static int GetCustomerLevelID(string userType)
         {
-            if (!string.IsNullOrEmpty(userType))
+            try
             {
-                string enumUserType = userType.Replace(" ", "").ToUpper();
-                if (Enum.IsDefined(typeof(UserType), enumUserType))
+                if (!string.IsNullOrEmpty(userType))
                 {
-                    return (int)Enum.Parse(typeof(UserType), enumUserType);
+                    string enumUserType = userType.Replace(" ", "").ToUpper();
+                    if (Enum.IsDefined(typeof(UserType), enumUserType))
+                    {
+                        return (int)Enum.Parse(typeof(UserType), enumUserType);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return (int)UserType.PUBLIC;
         }
@@ -225,11 +297,20 @@ namespace AspDotNetStorefront
             using (var client = new HttpClient())
             {
                 var url = ConfigurationManager.AppSettings["UserURL"] + UserModelID + ConfigurationManager.AppSettings["ResetPassword"];
-                var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("Authorization", authorization);
+                try
+                {
+                    var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", authorization);
+                }
+                catch (Exception ex)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                }
 
                 return client.PostAsync(url, new StringContent("")).Result.IsSuccessStatusCode;
             }

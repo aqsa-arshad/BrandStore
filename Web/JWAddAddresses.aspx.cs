@@ -61,13 +61,22 @@ namespace AspDotNetStorefront
         /// </summary>
         private void GetCountryDropDownData()
         {
-            ddlCountry.ClearSelection();
-            ddlCountry.DataSource = Country.GetAll();
-            ddlCountry.DataTextField = "Name";
-            ddlCountry.DataValueField = "Name";
-            ddlCountry.DataBind();
-            ddlCountry.Items.Insert(0, "Please select");
-            ddlState.Items.Insert(0, "Please select");
+            try
+            {
+                ddlCountry.ClearSelection();
+                ddlCountry.DataSource = Country.GetAll();
+                ddlCountry.DataTextField = "Name";
+                ddlCountry.DataValueField = "Name";
+                ddlCountry.DataBind();
+                ddlCountry.Items.Insert(0, "Please select");
+                ddlState.Items.Insert(0, "Please select");
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
         }
 
         /// <summary>
@@ -75,12 +84,21 @@ namespace AspDotNetStorefront
         /// </summary>
         private void GetStateDropDownData()
         {
-            ddlState.ClearSelection();
-            ddlState.DataSource = State.GetAllStateForCountry(AppLogic.GetCountryID(ddlCountry.SelectedValue), ThisCustomer.LocaleSetting);
-            ddlState.DataTextField = "Name";
-            ddlState.DataValueField = "Name";
-            ddlState.DataBind();
-            ddlState.Items.Insert(0, "Please select");
+            try
+            {
+                ddlState.ClearSelection();
+                ddlState.DataSource = State.GetAllStateForCountry(AppLogic.GetCountryID(ddlCountry.SelectedValue), ThisCustomer.LocaleSetting);
+                ddlState.DataTextField = "Name";
+                ddlState.DataValueField = "Name";
+                ddlState.DataBind();
+                ddlState.Items.Insert(0, "Please select");
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
         }
 
         /// <summary>
@@ -113,7 +131,9 @@ namespace AspDotNetStorefront
                 }
                 catch (Exception ex)
                 {
-                    Response.Write(ex.Message);
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
                 }
             }
             else
@@ -128,19 +148,29 @@ namespace AspDotNetStorefront
         /// <param name="anyAddress">anyAddress</param>
         private void LoadFormData(Address anyAddress)
         {
-            txtNickName.Text = anyAddress.NickName;
-            txtFirstName.Text = anyAddress.FirstName;
-            txtLastName.Text = anyAddress.LastName;
-            txtPhoneNumber.Text = anyAddress.Phone;
-            txtCompany.Text = anyAddress.Company;
-            txtAddress1.Text = anyAddress.Address1;
-            txtAddress2.Text = anyAddress.Address2;
-            txtSuite.Text = anyAddress.Suite;
-            txtCity.Text = anyAddress.City;
-            ddlCountry.Items.FindByValue(anyAddress.Country).Selected = true;
-            GetStateDropDownData();
-            ddlState.Items.FindByValue(anyAddress.State).Selected = true;
-            txtZip.Text = anyAddress.Zip;
+            try
+            {
+                txtNickName.Text = anyAddress.NickName;
+                txtFirstName.Text = anyAddress.FirstName;
+                txtLastName.Text = anyAddress.LastName;
+                txtPhoneNumber.Text = anyAddress.Phone;
+                txtCompany.Text = anyAddress.Company;
+                txtAddress1.Text = anyAddress.Address1;
+                txtAddress2.Text = anyAddress.Address2;
+                txtSuite.Text = anyAddress.Suite;
+                txtCity.Text = anyAddress.City;
+                ddlCountry.Items.FindByValue(anyAddress.Country).Selected = true;
+                GetStateDropDownData();
+                ddlState.Items.FindByValue(anyAddress.State).Selected = true;
+                txtZip.Text = anyAddress.Zip;
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
+
         }
 
         /// <summary>
@@ -149,27 +179,37 @@ namespace AspDotNetStorefront
         /// <returns>Address</returns>
         private Address LoadClassData()
         {
+
             Address anyAddress = new Address();
+            try
+            {
 
-            if (!string.IsNullOrEmpty(hfAddressID.Value))
-                anyAddress.LoadFromDB(Convert.ToInt32(hfAddressID.Value));
+                if (!string.IsNullOrEmpty(hfAddressID.Value))
+                {
+                    anyAddress.LoadFromDB(Convert.ToInt32(hfAddressID.Value));
+                }
+                anyAddress.CustomerID = ThisCustomer.CustomerID;
+                anyAddress.NickName = txtNickName.Text.Trim();
+                anyAddress.FirstName = txtFirstName.Text.Trim();
+                anyAddress.LastName = txtLastName.Text.Trim();
+                anyAddress.Phone = txtPhoneNumber.Text.Trim();
+                anyAddress.Company = txtCompany.Text.Trim();
+                anyAddress.Address1 = txtAddress1.Text.Trim();
+                anyAddress.Address2 = txtAddress2.Text.Trim();
+                anyAddress.Suite = txtSuite.Text.Trim();
+                anyAddress.City = txtCity.Text.Trim();
+                anyAddress.Country = ddlCountry.SelectedItem.Text.Trim();
+                anyAddress.State = ddlState.SelectedItem.Text.Trim();
+                anyAddress.Zip = txtZip.Text.Trim();
 
-            anyAddress.CustomerID = ThisCustomer.CustomerID;
-            anyAddress.NickName = txtNickName.Text.Trim();
-            anyAddress.FirstName = txtFirstName.Text.Trim();
-            anyAddress.LastName = txtLastName.Text.Trim();
-            anyAddress.Phone = txtPhoneNumber.Text.Trim();
-            anyAddress.Company = txtCompany.Text.Trim();
-            anyAddress.Address1 = txtAddress1.Text.Trim();
-            anyAddress.Address2 = txtAddress2.Text.Trim();
-            anyAddress.Suite = txtSuite.Text.Trim();
-            anyAddress.City = txtCity.Text.Trim();
-            anyAddress.Country = ddlCountry.SelectedItem.Text.Trim();
-            anyAddress.State = ddlState.SelectedItem.Text.Trim();
-            anyAddress.Zip = txtZip.Text.Trim();
-
-            anyAddress.ResidenceType = (int)ResidenceTypes.Unknown;
-
+                anyAddress.ResidenceType = (int)ResidenceTypes.Unknown;
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
             return anyAddress;
         }
 
@@ -186,22 +226,31 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Address anyAddress = LoadClassData();
-            anyAddress.InsertDB();
-
-            int addressID = anyAddress.AddressID;
-
-            if (ThisCustomer.PrimaryBillingAddressID == 0)
+            try
             {
-                DB.ExecuteSQL("Update Customer set BillingAddressID=" + addressID + " where CustomerID=" + ThisCustomer.CustomerID.ToString());
+                Address anyAddress = LoadClassData();
+                anyAddress.InsertDB();
+
+                int addressID = anyAddress.AddressID;
+
+                if (ThisCustomer.PrimaryBillingAddressID == 0)
+                {
+                    DB.ExecuteSQL("Update Customer set BillingAddressID=" + addressID + " where CustomerID=" + ThisCustomer.CustomerID.ToString());
+                }
+                if (ThisCustomer.PrimaryShippingAddressID == 0)
+                {
+                    DB.ExecuteSQL("Update Customer set ShippingAddressID=" + addressID + " where CustomerID=" + ThisCustomer.CustomerID.ToString());
+                    ThisCustomer.SetPrimaryShippingAddressForShoppingCart(ThisCustomer.PrimaryShippingAddressID, addressID);
+                }
+                Response.Redirect("JWMyAddresses.aspx");
             }
-            if (ThisCustomer.PrimaryShippingAddressID == 0)
+            catch (Exception ex)
             {
-                DB.ExecuteSQL("Update Customer set ShippingAddressID=" + addressID + " where CustomerID=" + ThisCustomer.CustomerID.ToString());
-                ThisCustomer.SetPrimaryShippingAddressForShoppingCart(ThisCustomer.PrimaryShippingAddressID, addressID);
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
             }
 
-            Response.Redirect(hfPreviousURL.Value);
         }
 
         /// <summary>
@@ -209,9 +258,20 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            Address anyAddress = LoadClassData();
-            anyAddress.UpdateDB();
-            Response.Redirect(hfPreviousURL.Value);
-        }    
+
+            try
+            {
+                Address anyAddress = LoadClassData();
+                anyAddress.UpdateDB();
+                Response.Redirect("JWMyAddresses.aspx");
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+            }
+
+        }
     }
 }
