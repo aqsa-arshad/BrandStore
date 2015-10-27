@@ -7932,8 +7932,20 @@ footer .social-links ul li a:hover {
 
 .search-left {
     margin-top: -35px;
+    margin-bottom: 25px;
 }
 
-.search-rigth {
-    margin-top: 78px;
+.search-right {
+    margin-top: 77px;
+}
+
+.category-right {
+    margin-top: 39px;
+}
+
+.sub-category-right {
+    margin-top: 68px;
+}
+.text-uppercase-no { 
+   text-transform: none !important ; 
 }

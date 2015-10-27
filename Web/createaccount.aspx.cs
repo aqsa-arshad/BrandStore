@@ -63,6 +63,7 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            Page.SetFocus(ctrlAccount.txtFirstName.ID);
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");

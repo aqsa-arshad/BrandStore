@@ -165,21 +165,24 @@ public class CustomXsltExtension : XSLTExtensionBase
                     if (tier == 1)
                         continue;
 
-                    var name = reader["Name"];
+                    string name = reader["Name"].ToString();
                     var url = String.Format("c-{0}-{1}.aspx", reader["CategoryID"], reader["SEName"]);
-                    var total = reader["Total"];
 
-                    var products = GetProductListByCategory(catId);
+                    var imageLocalPath = AppLogic.LookupImage("Category", catId, string.Empty, string.Empty, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    var imageUrl = "<img id=\"CategoryPic" + catId + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(name), name, "ProductPic" + catId) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageLocalPath + "\">";          
 
-                    output.Append("<div class=\"top-category-container\">");
-                    output.Append("<div class=\"title-container\"><h3>" + name + " <span>(" + total + ")</span></h3>");
-                    output.Append("<a href=\"" + url + "\" class=\"btn call-to-action\">View All " + name + "</a></div>");
-                    output.Append("<table border=\"0\" cellpadding=\"0\" id=\"ProductTable\" cellspacing=\"4\" width=\"100%\">");
-                    output.Append("<tr>");
-                    output.Append(products);
-                    output.Append("</tr>");
-                    output.Append("</table>");
-                    output.Append("</div>");
+                    output.Append("<div class=\"col-md-6\"> <div class=\"thumbnail\">");
+                    
+                    output.Append("<a href=\"" + url + "\" \">");
+                    output.Append("<h4>" + name + "</h4></a>");
+
+                    output.Append("<a class=\"img-responsive\" href=\"" + url + "\" \">");
+                    output.Append(imageUrl + "</a>");
+
+                    output.Append("<a class=\"btn btn-primary btn-block\" role=\"button\" href=\"" + url + "\" \">");
+                    output.Append("VEIW All" + "</a>");
+
+                    output.Append("</div></div>");
                 }
             }
             finally

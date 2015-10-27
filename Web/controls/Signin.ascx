@@ -23,7 +23,7 @@
                                     <div class="col-md-6">
                                         <h5>SIGN IN</h5>
                                         <p>if you already have an account, please sign in using your email address and password</p>
-                                        <h4>Login</h4>
+                                        <h4 class="text-uppercase-no">Login</h4>
                                         <label>
                                             <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox ID="UserName" CssClass="form-control" runat="server" ValidationGroup="Group1" MaxLength="100"
