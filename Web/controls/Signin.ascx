@@ -31,7 +31,8 @@
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator3" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="UserName"></asp:RequiredFieldValidator>
                                         <br />
-                                         <label><asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
+                                        <label>
+                                            <asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
                                         <asp:TextBox ID="Password" runat="server" CssClass="form-control" ValidationGroup="Group1" MaxLength="50"
                                             CausesValidation="True" TextMode="Password"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator2" runat="server" ValidationGroup="Group1"
@@ -48,13 +49,13 @@
 
                                         <div class="checkbox">
                                             <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>Remember me
-                           <asp:LinkButton runat="server" CssClass="pull right" OnClick="forgotpasswordLink_Click">Forgot Password?</asp:LinkButton>
+                           <asp:LinkButton runat="server" CssClass="pull right" OnClick="forgotpasswordLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <h5>DON'T HAVE AN ACCOUNT?</h5>
                                         <p>Create an account if you don't have one with the JELD WEN Brand store.</p>
-                                        <asp:HyperLink ID="SignUpLink" class="account-link" runat="server" Text="Why do I have to create an account?"></asp:HyperLink>
+                                        <asp:HyperLink ID="SignUpLink" class="account-link" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -162,7 +163,8 @@
                     <asp:Panel ID="Panel1" runat="server" DefaultButton="btnRequestNewPassword">
                         <div class="row" runat="server">
                             <div class="col-md-12" runat="server">
-                                <label>Email address</label>
+                                <label>
+                                    <asp:Label runat="server" Text='<%$ Tokens:StringResource,signin.aspx.11 %>'></asp:Label></label>
                                 <asp:TextBox CssClass="form-control" ID="UserName" runat="server" ValidationGroup="Group2" CausesValidation="True"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="UserName"
                                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ValidationGroup="Group2"
@@ -171,7 +173,7 @@
                                 <asp:Button class="form-control" CssClass="btn btn-md btn-primary btn-block" ID="btnRequestNewPassword" CommandName="Submit" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.18 %>'
                                     ValidationGroup="Group2"></asp:Button>
                                 <br />
-                                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click">Go Back to Login?</asp:LinkButton>
+                                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.3 %>'></asp:LinkButton>
                             </div>
                         </div>
                     </asp:Panel>
