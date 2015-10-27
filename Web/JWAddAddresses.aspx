@@ -29,7 +29,7 @@
                     <label><asp:Label ID="lblPhoneNumber" runat="server" Text='<%$ Tokens:StringResource, address.cs.4 %>'></asp:Label></label>
                     <asp:TextBox ID="txtPhoneNumber" runat="server" MaxLength="25"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtPhoneNumber" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.15 %>" />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ControlToValidate="txtPhoneNumber" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.93 %>" ValidationExpression="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ControlToValidate="txtPhoneNumber" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.93 %>" ValidationExpression="\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblCompany" runat="server" Text='<%$ Tokens:StringResource, address.cs.5 %>'></asp:Label></label>
@@ -60,7 +60,7 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtCity" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.17 %>" />
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator9" runat="server" ControlToValidate="txtCity" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.98 %>" ValidationExpression="^[a-z A-Z]+$" />
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden="hidden">
                     <label><asp:Label ID="lblCountry" runat="server" Text='<%$ Tokens:StringResource, address.cs.53 %>'></asp:Label></label>
                     <asp:DropDownList ID="ddlCountry" runat="server" OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="ddlCountry" Display="Dynamic" ValidationGroup="AddAddress" InitialValue="Please select" ErrorMessage="<%$ Tokens:StringResource, address.cs.102 %>" />

@@ -20,7 +20,7 @@
                                 <asp:HiddenField ID="hfZip" runat="server" Value='<%# Eval("Zip") %>' />
                                 <asp:Label ID="lblCityStateZip" runat="server"></asp:Label>
                             </li>
-                            <li><asp:Label ID="lblCountry" runat="server" Text='<%# Eval("Country") %>'></asp:Label></li>
+                            <li><asp:Label ID="lblCountry" runat="server" Text='<%# Eval("Country") %>' Visible="false"></asp:Label></li>
                             <li><asp:Label ID="lblPhone" runat="server" Text='<%# Eval("Phone") %>'></asp:Label></li>
                         </ul>
                         <asp:HiddenField ID="hfAddressID" runat="server" Value='<%# Eval("AddressID") %>' />
@@ -29,7 +29,7 @@
                         <div class="clearfix"></div>
                         <asp:LinkButton ID="btnDelete" runat="server" Text="Delete Address" CssClass="underline-link" CommandName="Delete" CommandArgument='<%# Eval("AddressID") %>' OnClientClick='return confirm("Are you sure you want to delete this?")' />
                         <div class="clearfix"></div>
-                        <asp:Button ID="btnSelect" runat="server" Text="Select" CssClass="btn btn-md btn-primary btn-block" CommandName="Select" CommandArgument='<%# Eval("AddressID") %>' OnClientClick='return confirm("Are you sure you want make this as your primary address?")' />
+                        <asp:Button ID="btnSelect" runat="server" Text="Select" CssClass="btn btn-md btn-primary btn-block" CommandName="Select" CommandArgument='<%# Eval("AddressID") %>' />
                     </div>
                 </ItemTemplate>
             </asp:Repeater>

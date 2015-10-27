@@ -50,8 +50,9 @@ namespace AspDotNetStorefront
 
             if (!Page.IsPostBack)
             {
-                hfPreviousURL.Value = Request.UrlReferrer.ToString();
+                hfPreviousURL.Value = (Request.UrlReferrer == null) ? "JWMyAccount.aspx" : Request.UrlReferrer.ToString();
                 GetCountryDropDownData();
+                GetStateDropDownData();
                 GetCustomerAddress(Request.QueryString["AddressID"]);
             }
         }
@@ -69,7 +70,9 @@ namespace AspDotNetStorefront
                 ddlCountry.DataValueField = "Name";
                 ddlCountry.DataBind();
                 ddlCountry.Items.Insert(0, "Please select");
+                ddlCountry.SelectedValue = "United States";
                 ddlState.Items.Insert(0, "Please select");
+
             }
             catch (Exception ex)
             {

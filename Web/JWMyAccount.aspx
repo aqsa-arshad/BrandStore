@@ -43,7 +43,7 @@
                     <li><asp:Label ID="lblBAAddress2" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBASuite" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBACityStateZip" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblBACountry" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblBACountry" runat="server" Visible="false"></asp:Label></li>
                     <li><asp:Label ID="lblBAPhone" runat="server"></asp:Label></li>
                 </ul>
                 <div class="clearfix"></div>
@@ -59,7 +59,7 @@
                     <li><asp:Label ID="lblSAAddress2" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSASuite" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSACityStateZip" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblSACountry" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblSACountry" runat="server" Visible="false"></asp:Label></li>
                     <li><asp:Label ID="lblSAPhone" runat="server"></asp:Label></li>
                 </ul>
                 <div class="clearfix"></div>
