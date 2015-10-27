@@ -12,8 +12,13 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#divbeforelogin").addClass("search-rigth");
-            $("#ctl00_divafterlogin").addClass("search-rigth");            
+            if ('<%=IsProductExist%>' == "true") {
+                $("#divbeforelogin").addClass("search-right");
+                $("#ctl00_divafterlogin").addClass("search-right");                
+            } else {
+                $("#divbeforelogin").removeClass("search-right");
+                $("#ctl00_divafterlogin").removeClass("search-right");
+            }
             $("#beforelogindiv").hide();
             $(".beforelogin").hide();
 

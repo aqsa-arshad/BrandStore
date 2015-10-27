@@ -5,6 +5,8 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
@@ -15,6 +17,7 @@ namespace AspDotNetStorefront
     [PageType("search")]
     public partial class search : SkinBase
     {
+        protected string IsProductExist = string.Empty;
         protected override void OnInit(EventArgs e)
         {
             if (AppLogic.AppConfigBool("GoNonSecureAgain"))
@@ -57,7 +60,8 @@ namespace AspDotNetStorefront
                                     true,
                                     false);
 
-            litSearch.Text = searchHTML;
+            IsProductExist = searchHTML.Contains("Your search did not result in any matches") ? "false" : "true";
+            litSearch.Text = searchHTML;            
         }
         protected override string OverrideTemplate()
         {
