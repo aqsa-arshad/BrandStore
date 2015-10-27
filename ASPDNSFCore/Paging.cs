@@ -50,17 +50,21 @@ namespace AspDotNetStorefrontCore
             BaseURL = EnforceBaseURL(BaseURL);
             PageNum = EnforcePageNum(PageNum);
             String Separator = GetSeperator(BaseURL);
-            tmpS.Append("<ul class=\"pagination\">");
+            //tmpS.Append("<ul class=\"pagination\">");
+            tmpS.Append("<div>");
 
             if (PageNum > 1)
             {
-                tmpS.Append("<li class=\"pager-back\">");
+                //tmpS.Append("<li class=\"pager-back\">");
+                //tmpS.Append(GetPreviousPageLink(BaseURL, PageNum, ThisCustomer, Separator));
+                //tmpS.Append("</li>");
+                tmpS.Append("<span class=\"pageArrowWrap\"");
                 tmpS.Append(GetPreviousPageLink(BaseURL, PageNum, ThisCustomer, Separator));
-                tmpS.Append("</li>");
+                tmpS.Append("</span>");
             }
             else
             {
-                tmpS.Append("<li class=\"page-between\"><span class=\"disabled\">&laquo;</span></li>");
+                tmpS.Append("<span class=\"pageArrowWrap\"><span class=\"disabled\">Previous</span></span>");
             }
 
             tmpS.Append("<li>");
@@ -94,7 +98,8 @@ namespace AspDotNetStorefrontCore
             }
             else
             {
-                tmpS.Append("<li class=\"pager-forward\"><span class=\"disabled\">&raquo;</span></li>");
+               // tmpS.Append("<li class=\"pager-forward\"><span class=\"disabled\">&raquo;</span></li>");
+                tmpS.Append("<li class=\"pager-forward\"><span class=\"disabled\">Next</span></li>");
             }
 
             tmpS.Append("</ul>");
@@ -109,7 +114,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("<a href=\"" + BaseURL + Separator + "pagenum=" + Convert.ToString(PageNum + 1) + "\">");
             else
                 tmpS.Append("<a href=\"" + Regex.Replace(BaseURL, @"pagenum=\w*", "pagenum=" + Convert.ToString(PageNum + 1), RegexOptions.Compiled) + "\">");
-            tmpS.Append("&raquo;");
+            tmpS.Append("Next");
             tmpS.Append("</a>");
             return tmpS.ToString();
         }
@@ -131,7 +136,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("<a href=\"" + BaseURL + Separator + "pagenum=" + Convert.ToString(PageNum - 1) + "\">");
             else
                 tmpS.Append("<a href=\"" + Regex.Replace(BaseURL, @"pagenum=\w*", "pagenum=" + Convert.ToString(PageNum - 1), RegexOptions.Compiled) + "\">");
-            tmpS.Append("&laquo;");
+            tmpS.Append("Previous");
             tmpS.Append("</a>");
             return tmpS.ToString();
         }

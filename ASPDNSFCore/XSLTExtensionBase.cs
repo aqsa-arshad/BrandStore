@@ -639,6 +639,8 @@ function popupzoom(url,alturl)
 
         public virtual string EntityLink(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
         {
+            if (sSEName.Equals("marketing-services"))
+                return "MarketingServicesDetailPage.aspx";
             InputValidator IV = new InputValidator("EntityLink");
             String SEName = IV.ValidateString("SEName", sSEName);
             String EntityName = IV.ValidateString("EntityName", sEntityName);
@@ -664,7 +666,7 @@ function popupzoom(url,alturl)
             result = SE.MakeEntityLink(EntityName, EntityID, SEName);
 
             result = "images/category/icon/" + sEntityID + ".png";
-           
+
             return result;
         }
 
@@ -688,7 +690,7 @@ function popupzoom(url,alturl)
             String result = "";
             result = "Category" + sEntityID;
 
-           
+
 
             return result;
         }
@@ -1559,7 +1561,7 @@ function popupzoom(url,alturl)
                     StringBuilder tmpS = new StringBuilder(4096);
                     tmpS.Append("<div class=\"image-wrap medium-image-wrap\">");
                     String ProductPicture = String.Empty;
-					ProductPicture = AppLogic.LookupImage("Product", ID, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    ProductPicture = AppLogic.LookupImage("Product", ID, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                     String LargePic = AppLogic.LookupImage("Product", ID, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                     bool HasLargePic = (LargePic.Length != 0);
                     String LargePicForPopup = LargePic;
@@ -1678,7 +1680,7 @@ function popupzoom(url,alturl)
                 }
                 else
                 {
-					result = AppLogic.LookupImage("Product", ID, IFO, sku, DesiredSize.ToLowerInvariant(), ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    result = AppLogic.LookupImage("Product", ID, IFO, sku, DesiredSize.ToLowerInvariant(), ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
 
                     // we must ALWAYS return an image here back to Xsl (this is a little different than the prior version logic, where large did not have a "no picture" returned!)
                     if (result.Length == 0)
@@ -1794,8 +1796,8 @@ function popupzoom(url,alturl)
             string seName = AppLogic.GetProductSEName(ProductID, ThisCustomer.LocaleSetting);
 
             if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
-            {				
-				result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+            {
+                result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 result = "<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + result + "\" />";
                 if (IncludeATag)
                 {
@@ -1807,7 +1809,7 @@ function popupzoom(url,alturl)
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
                 String ProductPicture = String.Empty;
-				ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 bool HasLargePic = (LargePic.Length != 0);
                 String LargePicForPopup = LargePic;
@@ -2020,8 +2022,8 @@ function popupzoom(url,alturl)
 
 
             if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
-            {			
-				result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+            {
+                result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 result = "<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + result + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />";
                 if (IncludeATag)
                 {
@@ -2033,7 +2035,7 @@ function popupzoom(url,alturl)
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
                 String ProductPicture = String.Empty;
-				ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 bool HasLargePic = (LargePic.Length != 0);
                 String LargePicForPopup = LargePic;
@@ -2172,7 +2174,7 @@ function popupzoom(url,alturl)
 
             if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
             {
-				result = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                result = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 result = "<img id=\"ProductPic" + VariantID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + VariantID.ToString()) + "\" class=\"actionelement\" src=\"" + result + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />";
             }
             else
@@ -2180,7 +2182,7 @@ function popupzoom(url,alturl)
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div align=\"center\">");
                 String ProductPicture = String.Empty;
-				ProductPicture = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ProductPicture = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 bool HasLargePic = (LargePic.Length != 0);
                 String LargePicForPopup = LargePic;
@@ -2249,7 +2251,7 @@ function popupzoom(url,alturl)
             String ProdPic = String.Empty;
 
             string results = "";
-			ProdPic = ProductImageUrl(intProductID, sImageFileNameOverride, sSKU, "icon", "false");
+            ProdPic = ProductImageUrl(intProductID, sImageFileNameOverride, sSKU, "icon", "false");
 
             int MaxWidth = AppLogic.AppConfigNativeInt("MiniCartMaxIconWidth");
             if (MaxWidth == 0)
@@ -2317,17 +2319,17 @@ function popupzoom(url,alturl)
             string ImgPath = String.Empty;
             string sURL = CommonLogic.IIF(FullUrl, AppLogic.GetStoreHTTPLocation(false), "");
             sURL = sURL.Replace(AppLogic.AdminDir() + "/", "");
-            
-			if (!sURL.EndsWith("/"))
-			{
-				sURL += "/";
-			}
-			ImgPath = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, DesiredSize, ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("..", "");
+
+            if (!sURL.EndsWith("/"))
+            {
+                sURL += "/";
+            }
+            ImgPath = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, DesiredSize, ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("..", "");
 
             if (FullUrl && ImgPath.StartsWithIgnoreCase(HttpContext.Current.Request.ApplicationPath))
-			{
-				ImgPath = ImgPath.Substring(HttpContext.Current.Request.ApplicationPath.Length);
-			}                
+            {
+                ImgPath = ImgPath.Substring(HttpContext.Current.Request.ApplicationPath.Length);
+            }
 
             ImgPath = ImgPath.TrimStart('/');
             result = sURL + ImgPath;
@@ -3153,7 +3155,7 @@ function popupzoom(url,alturl)
             var result = ShowInventoryTable(sProductID, sVariantID);
             var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
             var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
-            return result.Substring(startIndex, lastIndex - startIndex);            
+            return result.Substring(startIndex, lastIndex - startIndex);
         }
 
         public virtual string GetJSPopupRoutines()
@@ -3632,7 +3634,7 @@ function popupzoom(url,alturl)
 
             // instantiate return variable
             StringBuilder results = new StringBuilder(1024);
-            
+
             // short-circuit this procedure if the price will be hidden
             if (hidePriceUntilCart)
             {
@@ -3710,7 +3712,7 @@ function popupzoom(url,alturl)
                 {
                     if (includeHTMLMarkup)
                     {
-                        results.Append("<p>" + genericPriceLabel + " " + regularPriceFormatted );                        
+                        results.Append("<p>" + genericPriceLabel + " " + regularPriceFormatted);
                     }
                     else
                     {
@@ -5340,7 +5342,7 @@ function popupzoom(url,alturl)
             Used = 1,
             Refurbished = 2
         }
-        
+
         /// <summary>
         /// Gets the in stock/out of stock text
         /// </summary>
@@ -5368,7 +5370,7 @@ function popupzoom(url,alturl)
                     {
                         stockText = "InStock|In Stock";
                     }
-                }                
+                }
             }
             return stockText;
         }
@@ -5390,10 +5392,10 @@ function popupzoom(url,alturl)
             else
             {
                 ISODateTimeOutput = string.Empty;
-            }      
+            }
             return ISODateTimeOutput;
         }
 
-        #endregion        
+        #endregion
     }
 }

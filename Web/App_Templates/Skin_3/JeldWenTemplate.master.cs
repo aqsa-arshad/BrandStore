@@ -122,6 +122,11 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "About Marketing Services";
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("C-"))
+            {
+                // Label will be loaded from Content Page w.r.t AddressType in QueryString
+                pnlPageHeading.Visible = true;
+            }
             else
             {
                 lblPageHeading.Text = string.Empty;
