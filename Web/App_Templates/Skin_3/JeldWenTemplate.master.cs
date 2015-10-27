@@ -51,7 +51,7 @@ namespace AspDotNetStorefront
                     ShowPreLoginControls();
                     hdnCustomerLevel.Text = "-1";
                 }
-            }         
+            }
         }
 
         /// <summary>
@@ -119,6 +119,28 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "About Marketing Services";
                 pnlPageHeading.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("JWSUPPORT"))
+            {
+                lblPageHeading.Text = "Support";
+                pnlPageHeading.Visible = true;
+                divbeforelogin.Visible = false;
+                divafterlogin.Visible = false;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divJWsupport.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU"))
+            {
+                lblPageHeading.Text = "ABOUT TRUEBLU";
+                pnlPageHeading.Visible = true;
+
+            }
+            else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
+            {
+                lblPageHeading.Text = "TERMS AND CONDITIONS";
+                pnlPageHeading.Visible = true;
+
             }
             else
             {

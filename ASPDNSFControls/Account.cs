@@ -1305,6 +1305,7 @@ namespace AspDotNetStorefrontControls
         {
 
             #region "First Column"
+           
 
             this.Controls.Add(new LiteralControl("<div class='col-md-5'>"));
 

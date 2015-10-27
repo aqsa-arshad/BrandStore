@@ -5,10 +5,9 @@
 <%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
-
-    <div class="content-box-03 body-forms">
-        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
-        
+    <asp:Panel runat="server" DefaultButton="btnContinueCheckout">
+        <div class="content-box-03 body-forms">
+        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />       
         <h5>Why do i have to create an account?</h5>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
         <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae. </p>
@@ -222,4 +221,7 @@
             </div>
         </div>
     </div>
+    </asp:Panel>
+
+    
 </asp:Content>

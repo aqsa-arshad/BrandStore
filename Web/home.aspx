@@ -1,4 +1,4 @@
-<%@ Page Language="c#" Inherits="AspDotNetStorefront._home" CodeFile="home.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master" %>
+<%@ Page Language="c#" Inherits="AspDotNetStorefront._home" CodeFile="home.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/jeldWenTemplate.master" %>
 
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <%@ Register TagPrefix="custom" TagName="Search" Src="Controls/Search.ascx" %>
