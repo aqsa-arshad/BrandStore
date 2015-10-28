@@ -198,7 +198,7 @@ namespace AspDotNetStorefront
                 anyAddress.Company = txtCompany.Text.Trim();
                 anyAddress.Address1 = txtAddress1.Text.Trim();
                 anyAddress.Address2 = txtAddress2.Text.Trim();
-                anyAddress.Suite = char.IsLetter(txtSuite.Text.Trim().FirstOrDefault()) ? txtSuite.Text.Trim() : "Suite " + txtSuite.Text.Trim();
+                anyAddress.Suite = (!string.IsNullOrEmpty(txtSuite.Text.Trim()) && char.IsNumber(txtSuite.Text.Trim().FirstOrDefault())) ? "Suite " + txtSuite.Text.Trim() : txtSuite.Text.Trim();
                 anyAddress.City = txtCity.Text.Trim();
                 anyAddress.Country = ddlCountry.SelectedItem.Text.Trim();
                 anyAddress.State = ddlState.SelectedItem.Text.Trim();
