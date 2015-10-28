@@ -47,11 +47,12 @@ namespace AspDotNetStorefront
         {
             RequireSecurePage();
             RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
-            
+
             if (!Page.IsPostBack)
             {
-                hfPreviousURL.Value = Request.UrlReferrer.ToString();
+                hfPreviousURL.Value = (Request.UrlReferrer == null) ? "JWMyAccount.aspx" : Request.UrlReferrer.ToString();
                 GetCountryDropDownData();
+                GetStateDropDownData();
                 GetCustomerAddress(Request.QueryString["AddressID"]);
             }
         }
@@ -69,13 +70,15 @@ namespace AspDotNetStorefront
                 ddlCountry.DataValueField = "Name";
                 ddlCountry.DataBind();
                 ddlCountry.Items.Insert(0, "Please select");
+                ddlCountry.SelectedValue = "United States";
                 ddlState.Items.Insert(0, "Please select");
+
             }
             catch (Exception ex)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 
@@ -97,7 +100,7 @@ namespace AspDotNetStorefront
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 
@@ -133,7 +136,7 @@ namespace AspDotNetStorefront
                 {
                     SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
                 }
             }
             else
@@ -157,20 +160,21 @@ namespace AspDotNetStorefront
                 txtCompany.Text = anyAddress.Company;
                 txtAddress1.Text = anyAddress.Address1;
                 txtAddress2.Text = anyAddress.Address2;
-                txtSuite.Text = anyAddress.Suite;
+                txtSuite.Text = anyAddress.Suite.StartsWith("Suite ") ? anyAddress.Suite.Remove(0, 6) : anyAddress.Suite;
                 txtCity.Text = anyAddress.City;
-                ddlCountry.Items.FindByValue(anyAddress.Country).Selected = true;
+                if (!string.IsNullOrEmpty(anyAddress.Country))
+                    ddlCountry.Items.FindByValue(anyAddress.Country).Selected = true;
                 GetStateDropDownData();
-                ddlState.Items.FindByValue(anyAddress.State).Selected = true;
+                if (!string.IsNullOrEmpty(anyAddress.State))
+                    ddlState.Items.FindByValue(anyAddress.State).Selected = true;
                 txtZip.Text = anyAddress.Zip;
             }
             catch (Exception ex)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
         }
 
         /// <summary>
@@ -179,11 +183,9 @@ namespace AspDotNetStorefront
         /// <returns>Address</returns>
         private Address LoadClassData()
         {
-
             Address anyAddress = new Address();
             try
             {
-
                 if (!string.IsNullOrEmpty(hfAddressID.Value))
                 {
                     anyAddress.LoadFromDB(Convert.ToInt32(hfAddressID.Value));
@@ -196,7 +198,7 @@ namespace AspDotNetStorefront
                 anyAddress.Company = txtCompany.Text.Trim();
                 anyAddress.Address1 = txtAddress1.Text.Trim();
                 anyAddress.Address2 = txtAddress2.Text.Trim();
-                anyAddress.Suite = txtSuite.Text.Trim();
+                anyAddress.Suite = (!string.IsNullOrEmpty(txtSuite.Text.Trim()) && char.IsNumber(txtSuite.Text.Trim().FirstOrDefault())) ? "Suite " + txtSuite.Text.Trim() : txtSuite.Text.Trim();
                 anyAddress.City = txtCity.Text.Trim();
                 anyAddress.Country = ddlCountry.SelectedItem.Text.Trim();
                 anyAddress.State = ddlState.SelectedItem.Text.Trim();
@@ -208,7 +210,7 @@ namespace AspDotNetStorefront
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return anyAddress;
         }
@@ -242,15 +244,14 @@ namespace AspDotNetStorefront
                     DB.ExecuteSQL("Update Customer set ShippingAddressID=" + addressID + " where CustomerID=" + ThisCustomer.CustomerID.ToString());
                     ThisCustomer.SetPrimaryShippingAddressForShoppingCart(ThisCustomer.PrimaryShippingAddressID, addressID);
                 }
-                Response.Redirect("JWMyAddresses.aspx");
+                Response.Redirect(hfPreviousURL.Value);
             }
             catch (Exception ex)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
         }
 
         /// <summary>
@@ -258,20 +259,18 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-
             try
             {
                 Address anyAddress = LoadClassData();
                 anyAddress.UpdateDB();
-                Response.Redirect("JWMyAddresses.aspx");
+                Response.Redirect(hfPreviousURL.Value);
             }
             catch (Exception ex)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
         }
     }
 }

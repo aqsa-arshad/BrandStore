@@ -40,8 +40,10 @@
                     <li><asp:Label ID="lblBANA" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAFullName" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAAddress1" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblBAStateZip" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblBACountry" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblBAAddress2" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblBASuite" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblBACityStateZip" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblBACountry" runat="server" Visible="false"></asp:Label></li>
                     <li><asp:Label ID="lblBAPhone" runat="server"></asp:Label></li>
                 </ul>
                 <div class="clearfix"></div>
@@ -54,8 +56,10 @@
                     <li><asp:Label ID="lblSANA" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAFullName" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAAddress1" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblSAStateZip" runat="server"></asp:Label></li>
-                    <li><asp:Label ID="lblSACountry" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblSAAddress2" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblSASuite" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblSACityStateZip" runat="server"></asp:Label></li>
+                    <li><asp:Label ID="lblSACountry" runat="server" Visible="false"></asp:Label></li>
                     <li><asp:Label ID="lblSAPhone" runat="server"></asp:Label></li>
                 </ul>
                 <div class="clearfix"></div>
