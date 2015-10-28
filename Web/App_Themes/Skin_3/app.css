@@ -7949,3 +7949,11 @@ footer .social-links ul li a:hover {
 .text-uppercase-no { 
    text-transform: none !important ; 
 }
+
+.body-heading .back-link {
+    color: #b4b7b0;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-left: 25px;
+    text-transform: none;
+}
