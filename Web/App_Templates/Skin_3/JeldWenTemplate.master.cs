@@ -143,7 +143,7 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
             {
-                lblPageHeading.Text = "TERMS AND CONDITIONS";
+                lblPageHeading.Text = "Terms and Privacy Policy";
                 pnlPageHeading.Visible = true;              
             }
             else
