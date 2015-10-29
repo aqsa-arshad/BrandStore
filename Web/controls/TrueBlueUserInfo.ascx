@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TrueBlueUserInfo.ascx.cs" Inherits="controls_TrueBlueUserInfo" %>
-<h2 id="WelcomeHeadingAfterUserLogin" runat="server">Hi, Johnny Appleseed</h2>
+<h3 id="WelcomeHeadingAfterUserLogin" runat="server">Hi, Johnny Appleseed</h3>
 <div class="right-logo-box">
     <img src="../App_Themes/Skin_3/images/true-blue-logo.png" />
     <span>Elite Dealer</span>

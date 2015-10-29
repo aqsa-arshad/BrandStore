@@ -13,7 +13,7 @@
         <title>Home</title>
     </head>
     <body>
-        <div class="left-side">
+        <%--<div class="left-side">--%>
             <%--Calling topic defind through admin console.--%>
             <aspdnsf:Topic ID="Topic2" runat="server" TopicName="LandingPageTopic" />
             <div class="content-box-02">
@@ -22,7 +22,7 @@
                     <asp:Literal ID="FeaturedProducts" runat="server" Text='<%$ Tokens:XMLPACKAGE, featuredproducts.xml.config, featuredentityid=11&featuredentitytype=category&headertext=Featured Products&numberofitems=4&columns=4&showprice=true %>' />
                 </div>
             </div>
-        </div>
+        <%--</div>--%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../../dist/js/bootstrap.min.js"></script>
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>

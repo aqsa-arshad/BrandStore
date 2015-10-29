@@ -76,7 +76,7 @@
                     <span class="head-tagline">Brand Store      </span>
                 </div>
                 <div class="user-grid">
-                    <ul class="desktop-profile profile-links">
+                    <ul class="profile-links">
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
@@ -104,11 +104,11 @@
             <div class="body-container">
                 <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
                     <div class="body-heading">
-                        <h3>
+                        <h2>
                             <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label>
                             <asp:HyperLink ID="lnkBack" runat="server" CssClass="back-link"></asp:HyperLink>
                             <%--<a href="#" class="back-link"> &lt; Back to Marketing Materials</a>--%>
-                        </h3>
+                        </h2>
                     </div>
                 </asp:Panel>
                 <div class="row">
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="left-side">
+                        <div class="left-side pull-left">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
                         </div>
