@@ -63,14 +63,12 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            Page.SetFocus(ctrlAccount.txtFirstName.ID);
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
 
             RequireSecurePage();
-            ThisCustomer.RequireCustomerRecord();
-
+           
             SectionTitle = AppLogic.GetString("createaccount.aspx.1", SkinID, ThisCustomer.LocaleSetting);
             Checkout = CommonLogic.QueryStringBool("checkout");
             SkipRegistration = CommonLogic.QueryStringBool("skipreg");
@@ -384,6 +382,7 @@ namespace AspDotNetStorefront
         }
         private void CreateAccount()
         {
+            ThisCustomer.RequireCustomerRecord();
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
 
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut && checkoutByAmazon.GetDefaultShippingAddress() == null)
