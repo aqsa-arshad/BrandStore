@@ -4573,6 +4573,12 @@ function popupzoom(url,alturl)
             String S = IV.ValidateString("S", sS);
             return CommonLogic.Capitalize(S);
         }
+        public virtual string PageIdGet(String sS)
+        {
+            InputValidator IV = new InputValidator("StrCapitalize");
+            String S = IV.ValidateString("S", sS);
+            return CommonLogic.Capitalize(S);
+        }
 
         // returns trim of string
         public virtual string StrTrim(String sS)

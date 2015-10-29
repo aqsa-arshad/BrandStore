@@ -7949,3 +7949,7 @@ footer .social-links ul li a:hover {
 .text-uppercase-no { 
    text-transform: none !important ; 
 }
+
+.selected {
+    color: #449d44 !important
+}
