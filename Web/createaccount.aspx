@@ -31,7 +31,7 @@
 
             <asp:Panel ID="pnlAccountInfo" runat="server" Visible="false">
 
-                <aspdnsf:Account ID="ctrlAccount" runat="server"
+                <aspdnsf:Account ID="ctrlAccount" runat="server" 
                     EmailCaption="<%$ Tokens:StringResource, createaccount.aspx.15 %>"
                     EmailReenterCaption="<%$ Tokens:StringResource, createaccount.aspx.91 %>"
                     FirstNameCaption="<%$ Tokens:StringResource, createaccount.aspx.13 %>"
@@ -221,6 +221,9 @@
         </div>
     </div>
     </asp:Panel>
-
-    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            document.getElementById("ctl00_PageContent_ctrlAccount_txtFirstName").focus();
+        });
+    </script>
 </asp:Content>

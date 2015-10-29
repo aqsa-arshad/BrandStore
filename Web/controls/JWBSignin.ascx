@@ -68,7 +68,7 @@
                     </div>
                 </asp:Panel>
                 <asp:Button type="submit" ID="ForgotPasswordButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="ForgotPasswordGroup" OnClick="forgotpasswordButton_Click" Text='<%$ Tokens:StringResource,signin.aspx.18 %>' />
-                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.3 %>' ></asp:LinkButton>
+                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.13 %>' ></asp:LinkButton>
             </div>
         </asp:Panel>
     </ContentTemplate>
