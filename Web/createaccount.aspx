@@ -223,7 +223,8 @@
     </asp:Panel>
     <script type="text/javascript">
         $(document).ready(function () {
-            document.getElementById("ctl00_PageContent_ctrlAccount_txtFirstName").focus();
+            var txtFirstNameClientId = '<%= ctrlAccount.txtFirstName.ClientID %>';           
+            $("#" + txtFirstNameClientId).focus();
         });
     </script>
 </asp:Content>
