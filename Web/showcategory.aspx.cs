@@ -20,7 +20,7 @@ namespace AspDotNetStorefront
         ShowEntityPage m_EP;
         protected string CategoryTypeFlag = string.Empty;
         protected void Page_Load(object sender, System.EventArgs e)
-        {            
+        {
             m_EP = new ShowEntityPage(EntityDefinitions.readonly_CategoryEntitySpecs, this);
             m_EP.Page_Load(sender, e);
 

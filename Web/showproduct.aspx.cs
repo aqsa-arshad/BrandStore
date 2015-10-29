@@ -208,6 +208,8 @@ namespace AspDotNetStorefront
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
             VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
 
+            ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SEDescription;
+
             String SourceEntityInstanceName = String.Empty;
 
             if (ManufacturerID != 0)
@@ -429,14 +431,14 @@ namespace AspDotNetStorefront
         /// Registers the required scripts and webservice references
         /// </summary>
         /// <param name="scrptMgr"></param>
-        public override void RegisterScriptAndServices(ScriptManager scrptMgr)
-        {
-            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
-            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
-            {
-                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-            }            
-        }
+        //public override void RegisterScriptAndServices(ScriptManager scrptMgr)
+        //{
+        //    scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
+        //    if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
+        //    {
+        //        scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
+        //    }
+        //}
 
         private void HandleKitUpdate()
         {
@@ -555,58 +557,58 @@ namespace AspDotNetStorefront
             base.OnPreRender(e);
         }
 
-        protected override string OverrideTemplate()
-        {
-            if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
-            {
-                String HT = String.Empty;
-                if (CommonLogic.QueryStringUSInt("CategoryID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("SectionID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_SectionEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("ManufacturerID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("DistributorID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_DistributorEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("GenreID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("VectorID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_VectorEntitySpecs.m_EntityName);
-                }
-                else
-                {
-                    // try to pull from profile
-                    String TemplateSourceEntity = Profile.LastViewedEntityName;
-                    int TemplateSourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
+        //protected override string OverrideTemplate()
+        //{
+        //    if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
+        //    {
+        //        String HT = String.Empty;
+        //        if (CommonLogic.QueryStringUSInt("CategoryID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("SectionID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_SectionEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("ManufacturerID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("DistributorID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_DistributorEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("GenreID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("VectorID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_VectorEntitySpecs.m_EntityName);
+        //        }
+        //        else
+        //        {
+        //            // try to pull from profile
+        //            String TemplateSourceEntity = Profile.LastViewedEntityName;
+        //            int TemplateSourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
 
-                    if (TemplateSourceEntity.Length != 0 && TemplateSourceEntityID > 0)
-                    {
-                        HT = AppLogic.GetCurrentEntityTemplateName(TemplateSourceEntity, TemplateSourceEntityID);
-                    }
-                }
+        //            if (TemplateSourceEntity.Length != 0 && TemplateSourceEntityID > 0)
+        //            {
+        //                HT = AppLogic.GetCurrentEntityTemplateName(TemplateSourceEntity, TemplateSourceEntityID);
+        //            }
+        //        }
 
-                if (HT.Length == 0)
-                {
-                    int FirstCategoryID = AppLogic.GetFirstProductEntityID(AppLogic.LookupHelper("Category", 0), CommonLogic.QueryStringUSInt("ProductID"), false);
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName, FirstCategoryID);
-                }
+        //        if (HT.Length == 0)
+        //        {
+        //            int FirstCategoryID = AppLogic.GetFirstProductEntityID(AppLogic.LookupHelper("Category", 0), CommonLogic.QueryStringUSInt("ProductID"), false);
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName, FirstCategoryID);
+        //        }
 
-                return HT;
-            }
+        //        return HT;
+        //    }
 
-            return base.OverrideTemplate();
-        }
+        //    return base.OverrideTemplate();
+        //}
 
         public override bool IsProductPage
         {
@@ -622,6 +624,28 @@ namespace AspDotNetStorefront
             {
                 return ProductID;
             }
+        }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
         }
     }
 }

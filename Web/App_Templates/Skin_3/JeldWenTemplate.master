@@ -105,7 +105,9 @@
                 <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
                     <div class="body-heading">
                         <h3>
-                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label></h3>     
+                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label>
+                            <a href="#" class="back-link"> &lt; Back to Marketing Materials</a>
+                        </h3>     
                     </div>
                 </asp:Panel>
                 <div class="row">

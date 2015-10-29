@@ -125,6 +125,11 @@ namespace AspDotNetStorefront
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("P-"))
+            {
+                // Label will be loaded from Content Page w.r.t AddressType in QueryString
+                pnlPageHeading.Visible = true;
+            }
             else if (currentURL.ToUpper().Contains("JWSUPPORT"))
             {
                 lblPageHeading.Text = "Support";
