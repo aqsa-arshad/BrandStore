@@ -208,12 +208,12 @@ namespace AspDotNetStorefront
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
             VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);            
 
-            string address = (Request.UrlReferrer == null) ? "JWMyAccount.aspx" : Request.UrlReferrer.ToString();
+            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.ToString();
             if (address.ToUpper().Contains("C-"))
             {
-                int first = address.IndexOf("-", StringComparison.Ordinal);
-                int last = address.IndexOf("-", Convert.ToInt32(first) + 1);
-                int subCategoryId = Convert.ToInt32(address.Substring(first + 1, last - first - 1));                
+                var firstOccurance = address.IndexOf("-", StringComparison.Ordinal);
+                var lastOccurance = address.IndexOf("-", Convert.ToInt32(firstOccurance) + 1);
+                var subCategoryId = Convert.ToInt32(address.Substring(firstOccurance + 1, lastOccurance - firstOccurance - 1));                
                 if (!string.IsNullOrEmpty(GetParentCategoryName(subCategoryId)))
                 {
                     ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = GetCategoryName(subCategoryId);
@@ -440,6 +440,7 @@ namespace AspDotNetStorefront
             }
         }
 
+        // TODO : It Will be removed after implementing the ScriptManager 
         /// <summary>
         /// Registers the required scripts and webservice references
         /// </summary>
@@ -570,6 +571,7 @@ namespace AspDotNetStorefront
             base.OnPreRender(e);
         }
 
+        // TODO : It Will be removed after implementing the ScriptManager 
         //protected override string OverrideTemplate()
         //{
         //    if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
