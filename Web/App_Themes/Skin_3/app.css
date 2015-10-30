@@ -5393,8 +5393,12 @@ a:hover.mb-login-btn {
   }
 }
 /******************* Side Bar ***********************/
+.pre-login-pannel {
+  margin-bottom: 30px;
+}
 @media screen and (min-width: 800px) {
-  .pre-login-panel {
+  .pre-login-pannel {
+    margin-bottom: 0;
     float: right;
   }
 }

@@ -111,7 +111,7 @@
                     </div>
                 </asp:Panel>
                 <div class="row">
-                    <div class="col-md-4 prelogin-pannel" id="divSideBarBeforeLogin" runat="server">
+                    <div class="col-md-4 pre-login-pannel" id="divSideBarBeforeLogin" runat="server">
                         <div class="side-bar" id="divbeforelogin" runat="server">
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
