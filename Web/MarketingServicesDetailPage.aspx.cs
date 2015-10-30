@@ -2,8 +2,10 @@
 using AspDotNetStorefront;
 using AspDotNetStorefrontCore;
 
+ [PageType("category")]
 public partial class MarketingServicesDetailPage : SkinBase
 {
+   
     protected void Page_Load(object sender, EventArgs e)
     {
     }

@@ -206,7 +206,22 @@ namespace AspDotNetStorefront
             ManufacturerName = ManufacturerHelper.GetEntityName(ManufacturerID, ThisCustomer.LocaleSetting);
             DistributorName = DistributorHelper.GetEntityName(DistributorID, ThisCustomer.LocaleSetting);
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
-            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
+            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);            
+
+            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.ToString();
+            if (address.ToUpper().Contains("C-"))
+            {
+                var firstOccurance = address.IndexOf("-", StringComparison.Ordinal);
+                var lastOccurance = address.IndexOf("-", Convert.ToInt32(firstOccurance) + 1);
+                var subCategoryId = Convert.ToInt32(address.Substring(firstOccurance + 1, lastOccurance - firstOccurance - 1));                
+                if (!string.IsNullOrEmpty(GetParentCategoryName(subCategoryId)))
+                {
+                    ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = GetCategoryName(subCategoryId);
+                    Master.FindControl("pnlPageHeading").Visible = true;
+                    ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + GetParentCategoryName(subCategoryId);
+                    ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = (Request.UrlReferrer == null) ? "~/Default.aspx" : Request.UrlReferrer.ToString();
+                }
+            }           
 
             String SourceEntityInstanceName = String.Empty;
 
@@ -425,18 +440,19 @@ namespace AspDotNetStorefront
             }
         }
 
+        // TODO : It Will be removed after implementing the ScriptManager 
         /// <summary>
         /// Registers the required scripts and webservice references
         /// </summary>
         /// <param name="scrptMgr"></param>
-        public override void RegisterScriptAndServices(ScriptManager scrptMgr)
-        {
-            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
-            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
-            {
-                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-            }            
-        }
+        //public override void RegisterScriptAndServices(ScriptManager scrptMgr)
+        //{
+        //    scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
+        //    if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
+        //    {
+        //        scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
+        //    }
+        //}
 
         private void HandleKitUpdate()
         {
@@ -555,58 +571,59 @@ namespace AspDotNetStorefront
             base.OnPreRender(e);
         }
 
-        protected override string OverrideTemplate()
-        {
-            if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
-            {
-                String HT = String.Empty;
-                if (CommonLogic.QueryStringUSInt("CategoryID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("SectionID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_SectionEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("ManufacturerID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("DistributorID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_DistributorEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("GenreID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("VectorID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_VectorEntitySpecs.m_EntityName);
-                }
-                else
-                {
-                    // try to pull from profile
-                    String TemplateSourceEntity = Profile.LastViewedEntityName;
-                    int TemplateSourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
+        // TODO : It Will be removed after implementing the ScriptManager 
+        //protected override string OverrideTemplate()
+        //{
+        //    if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
+        //    {
+        //        String HT = String.Empty;
+        //        if (CommonLogic.QueryStringUSInt("CategoryID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("SectionID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_SectionEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("ManufacturerID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("DistributorID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_DistributorEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("GenreID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
+        //        }
+        //        else if (CommonLogic.QueryStringUSInt("VectorID") != 0)
+        //        {
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_VectorEntitySpecs.m_EntityName);
+        //        }
+        //        else
+        //        {
+        //            // try to pull from profile
+        //            String TemplateSourceEntity = Profile.LastViewedEntityName;
+        //            int TemplateSourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
 
-                    if (TemplateSourceEntity.Length != 0 && TemplateSourceEntityID > 0)
-                    {
-                        HT = AppLogic.GetCurrentEntityTemplateName(TemplateSourceEntity, TemplateSourceEntityID);
-                    }
-                }
+        //            if (TemplateSourceEntity.Length != 0 && TemplateSourceEntityID > 0)
+        //            {
+        //                HT = AppLogic.GetCurrentEntityTemplateName(TemplateSourceEntity, TemplateSourceEntityID);
+        //            }
+        //        }
 
-                if (HT.Length == 0)
-                {
-                    int FirstCategoryID = AppLogic.GetFirstProductEntityID(AppLogic.LookupHelper("Category", 0), CommonLogic.QueryStringUSInt("ProductID"), false);
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName, FirstCategoryID);
-                }
+        //        if (HT.Length == 0)
+        //        {
+        //            int FirstCategoryID = AppLogic.GetFirstProductEntityID(AppLogic.LookupHelper("Category", 0), CommonLogic.QueryStringUSInt("ProductID"), false);
+        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName, FirstCategoryID);
+        //        }
 
-                return HT;
-            }
+        //        return HT;
+        //    }
 
-            return base.OverrideTemplate();
-        }
+        //    return base.OverrideTemplate();
+        //}
 
         public override bool IsProductPage
         {
@@ -622,6 +639,66 @@ namespace AspDotNetStorefront
             {
                 return ProductID;
             }
+        }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
+        }
+
+        private string GetParentCategoryName(int subCategoryId)
+        {
+            string parentCategoryName = string.Empty;
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select Name as ParentCategoryName from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + subCategoryId + ")";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        parentCategoryName = reader["ParentCategoryName"].ToString();
+                }
+            }
+            return parentCategoryName;
+        }
+
+        private string GetCategoryName(int subCategoryId)
+        {
+            string parentCategoryName = string.Empty;
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select Name as ParentCategoryName from Category where CategoryID = " + subCategoryId ;
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        parentCategoryName = reader["ParentCategoryName"].ToString();
+                }
+            }
+            return parentCategoryName;
         }
     }
 }

@@ -76,13 +76,13 @@
                     <span class="head-tagline">Brand Store      </span>
                 </div>
                 <div class="user-grid">
-                    <ul class="desktop-profile profile-links">
+                    <ul class="profile-links">
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <li><a href="JWMyAccount.aspx" class="prelogin hide-element account-link"><span>My Account</span></a></li>
-                        <li><a href="#" class="prelogin hide-element shopping-link"><span>Shopping Cart</span></a></li>
+                        <li><a href="JWMyAccount.aspx" class="prelogin hide-element account-link"><span id="myAccount" runat="server">My Account</span></a></li>
+                        <li><a href="#" class="prelogin hide-element shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="prelogin hide-element logout-link lnkLogout"><span>Logout</span></a></li>
                     </ul>
                     <custom:Search ID="Search1" runat="server" />
@@ -104,11 +104,10 @@
             <div class="body-container">
                 <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
                     <div class="body-heading">
-                        <h3>
+                        <h2>
                             <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label>
                             <asp:HyperLink ID="lnkBack" runat="server" CssClass="back-link"></asp:HyperLink>
-                            <%--<a href="#" class="back-link"> &lt; Back to Marketing Materials</a>--%>
-                        </h3>
+                        </h2>
                     </div>
                 </asp:Panel>
                 <div class="row">
@@ -128,7 +127,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="left-side">
+                        <div class="left-side pull-left">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
                         </div>
