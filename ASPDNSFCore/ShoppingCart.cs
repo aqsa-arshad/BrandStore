@@ -8464,7 +8464,6 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("</div>");
             }
 
-            //tmpS.Append("<div class=\"form-group add-to-cart-group\">");
             tmpS.Append("<div>");
             if (CustomerEntersPrice)
             {
@@ -8474,7 +8473,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.AppendFormat(" <input maxLength=\"10\" class=\"form-control price-field\" name=\"Price_{0}_{1}\" id=\"Price_{0}_{1}\" value=\"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ProductPriceForEdit) + "\">", ProductID, VariantID);
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
             }
-			//tmpS.Append("	<span class=\"add-to-cart-quantity\">");
+
             tmpS.Append("<Span class=\"select-quantity\">");
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
             {
@@ -8493,14 +8492,12 @@ namespace AspDotNetStorefrontCore
                     {
                         InitialQ = QuantityForEdit;
                     }
-                   // tmpS.AppendFormat("<label class=\"quantity-label\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</label> <input type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" class=\"form-control quantity-field\" maxlength=\"4\">", ProductID, VariantID);
                     tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
                     tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
                 }
                 else
                 {
                     tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
-                    //tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" class=\"form-control quantity-select\">", ProductID, VariantID);
                     tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
                     foreach (String s in RestrictedQuantities.Split(','))
                     {
@@ -8524,7 +8521,6 @@ namespace AspDotNetStorefrontCore
                 MM = String.Empty; // something international happened, so just leave empty, we only want currency symbol, not any digits
             }
             tmpS.Append("<label>Limit 5</label>	</span>");
-            //tmpS.Append("	<span class=\"add-to-cart-selectors\">");
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
             {
                 if (SizesMaster.Length != 0)
@@ -8604,7 +8600,6 @@ namespace AspDotNetStorefrontCore
             bool showAddGiftRegistryButton = false;
 
             showAddToCartButton = true;
-			//tmpS.Append("	<span class=\"add-to-cart-buttons\">");
             
             if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToCartButton") != "")
             {
@@ -8637,6 +8632,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.AppendFormat(" <input type=\"button\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
             }
 
+            // TODO: Commented for the Wishlist and Gift button functionality 
             //if (AppLogic.AppConfigBool("ShowWishButtons") && showWishListButton)
             //{
             //    showAddToWishListButton = true;
@@ -8705,10 +8701,7 @@ namespace AspDotNetStorefrontCore
             //        // render normal html button
             //        tmpS.AppendFormat("<input type=\"button\" id=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" value=\"" + AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
             //    }
-            //}
-            
-			//tmpS.Append("	</span>");
-            
+            //}                       
 
             if (AppLogic.GetNextVariant(ProductID, VariantID) == VariantID) // single variant product
             {
