@@ -2034,7 +2034,6 @@ function popupzoom(url,alturl)
             {
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
-                //tmpS.Append("<div class=\"product-img-box\">");
                 
                 String ProductPicture = String.Empty;
                 ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
