@@ -165,7 +165,7 @@
                 <div class="row">
                     <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
                     <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
-                    <div class="col-md-3 footer-nav terms"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
+                    <div class="col-md-3 footer-nav terms" style="text-align:left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -261,6 +261,7 @@
             $(".prelogin").removeClass("hide-element");
             $(".lnkLogout").show();
             $("#headerlogo").attr("href", "home.aspx");
+            $(".terms").removeAttr("style");
         }
         function ShowControlsForBeforeLoginPage() {
             $(".prelogin").hide();
