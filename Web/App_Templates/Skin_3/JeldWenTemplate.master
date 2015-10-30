@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="left-side pull-left">
+                        <div class="left-side">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
                         </div>
@@ -163,9 +163,9 @@
             <footer class="footer">
 
                 <div class="row">
-                    <div class="col-md-4 footer-nav"><a href="JWSupport.aspx">Support</a></div>
-                    <div class="col-md-6 ooter-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
-                    <div class="col-md-2 footer-nav"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
+                    <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
+                    <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
+                    <div class="col-md-3 footer-nav terms"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">

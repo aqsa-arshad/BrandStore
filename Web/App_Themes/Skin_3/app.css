@@ -4883,9 +4883,6 @@ a:hover {
   margin-top: -35px;
   margin-bottom: 25px;
 }
-.search-right {
-  margin-top: 77px;
-}
 .category-right {
   margin-top: 39px;
 }
@@ -5118,6 +5115,9 @@ a:hover.mb-login-btn {
   background-color: transparent;
   color: #1d446b;
 }
+.nav li a:focus {
+  background-color: transparent;
+}
 .nav li:nth-last-child(1) {
   border: 0;
 }
@@ -5231,7 +5231,7 @@ a:hover.mb-login-btn {
   right: 0;
   left: 15px;
   padding: 10px 15px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.75);
 }
 .header-img-box .header-text h1 {
   font-size: 18px;
@@ -5332,14 +5332,14 @@ a:hover.mb-login-btn {
 .body-forms .form-group select {
   width: 100%;
 }
-.search_filters {
-  padding-top: 25px;
+.search-filters {
+  padding-bottom: 15px;
 }
-.search_filters label {
+.search-filters label {
   color: #b4b7b0;
   padding-right: 10px;
 }
-.search_filters select {
+.search-filters select {
   padding: 1px 10px;
   min-width: 70px;
   color: #b4b7b0;
@@ -5514,6 +5514,9 @@ a:hover.sm-link {
   display: inline-block;
   width: 45px;
   line-height: 14px;
+}
+.search-right {
+  margin-top: 53px;
 }
 /******************* Footer ***********************/
 footer {
