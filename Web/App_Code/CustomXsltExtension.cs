@@ -176,7 +176,7 @@ public class CustomXsltExtension : XSLTExtensionBase
                     output.Append("<a href=\"" + url + "\" \">");
                     output.Append("<h4>" + name + "</h4></a>");
 
-                    output.Append("<a class=\"img-responsive\" href=\"" + url + "\" \">");
+                    output.Append("<a class=\"product-img-box\" href=\"" + url + "\" \">");
                     output.Append(imageUrl + "</a>");
 
                     output.Append("<a class=\"btn btn-primary btn-block\" role=\"button\" href=\"" + url + "\" \">");

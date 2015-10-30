@@ -126,6 +126,10 @@ namespace AspDotNetStorefront
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("P-"))
+            {
+                //Label and it's visibilty will be loaded from Content Page w.r.t AddressType in QueryString that's why it's empty
+            }
             else if (currentURL.ToUpper().Contains("JWSUPPORT"))
             {
                 lblPageHeading.Text = "Support";

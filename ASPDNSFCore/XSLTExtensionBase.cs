@@ -2034,6 +2034,7 @@ function popupzoom(url,alturl)
             {
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
+                
                 String ProductPicture = String.Empty;
                 ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
@@ -2102,6 +2103,7 @@ function popupzoom(url,alturl)
                     tmpS.Append("<div id=\"divProductPicZ" + ProductID.ToString() + "\" style=\"display:none\">\n");
                     tmpS.Append("</div>\n");
                     tmpS.Append("<div class=\"medium-image-wrap\" id=\"divProductPic" + ProductID.ToString() + "\">\n");
+                    tmpS.Append("<div id=\"divProductPic" + ProductID.ToString() + "\">\n");
                 }
 
                 if (ZoomifyLarge)
@@ -2112,7 +2114,7 @@ function popupzoom(url,alturl)
                 }
                 else if (HasLargePic)
                 {
-                    tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + "\" title=\"" + AppLogic.GetString("showproduct.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                    tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + "\" title=\"" + AppLogic.GetString("showproduct.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");		
                     tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", LargePicForPopup);
                 }
                 else
@@ -2151,6 +2153,30 @@ function popupzoom(url,alturl)
                 result = tmpS.ToString();
             }
             return result;
+        }
+
+        public virtual string LookupProductImageForDetail(string sProductID, String sImageFileNameOverride, String sSKU, String sDesiredSize, String sIncludeATag, string sAltText)
+        {
+            InputValidator IV = new InputValidator("LookupProductImage");
+            int ProductID = IV.ValidateInt("ProductID", sProductID);
+            String DesiredSize = IV.ValidateString("DesiredSize", sDesiredSize);
+            String ImageFileNameOverride = IV.ValidateString("ImageFileNameOverride", sImageFileNameOverride);
+            String SKU = IV.ValidateString("SKU", sSKU);
+            IV.ValidateBool("IncludeATag", sIncludeATag);
+            String AltText = IV.ValidateString("AltText", sAltText);
+            string imageURL = String.Empty;
+            StringBuilder result = new StringBuilder(4096);
+            string seName = AppLogic.GetProductSEName(ProductID, ThisCustomer.LocaleSetting);
+
+
+            if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
+            {
+			    result.Append("<a class=\"product-img-box\">");
+                imageURL = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                result.Append("<img id=\"ProductPic" + ProductID + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageURL + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                result.Append("</a>");
+            }            
+            return result.ToString();
         }
 
         [Obsolete("Depricated. Please include another parameter, AltText.")]
@@ -3854,6 +3880,147 @@ function popupzoom(url,alturl)
             }
         }
 
+        public virtual string GetVariantPriceForItem(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, string sTaxClassID)
+        {
+            return GetVariantPriceForItem(sVariantID, sHidePriceUntilCart, sPrice, sSalePrice, sExtPrice, sPoints, sSalesPromptName, "True", sTaxClassID, "0.00", "true");
+        }
+
+        public virtual string GetVariantPriceForItem(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, String sShowpricelabel, string sTaxClassID, String sChosenAttributesPriceDelta, String sIncludeHTMLMarkup)
+        {
+            InputValidator IV = new InputValidator("GetVariantPrice");
+            int variantID = IV.ValidateInt("VariantID", sVariantID);
+            bool hidePriceUntilCart = IV.ValidateBool("HidePriceUntilCart", sHidePriceUntilCart);
+            decimal regularPrice = IV.ValidateDecimal("Price", sPrice);
+            decimal salePrice = IV.ValidateDecimal("SalePrice", sSalePrice);
+            decimal extPrice = IV.ValidateDecimal("ExtPrice", sExtPrice);
+            int points = IV.ValidateInt("Points", sPoints);
+            string salesPromptName = IV.ValidateString("SalesPromptName", sSalesPromptName);
+            bool showPriceLabel = IV.ValidateBool("Showpricelabel", sShowpricelabel);
+            int taxClassID = IV.ValidateInt("TaxClassID", sTaxClassID);
+            decimal attributesPriceDelta = IV.ValidateDecimal("AttributesPriceDelta", sChosenAttributesPriceDelta);
+            bool includeHTMLMarkup = IV.ValidateBool("IncludeHTMLMarkup", sIncludeHTMLMarkup);
+            decimal discountedPrice = System.Decimal.Zero;
+            decimal schemaPrice = 0;
+
+            // instantiate return variable
+            StringBuilder results = new StringBuilder(1024);
+
+            // short-circuit this procedure if the price will be hidden
+            if (hidePriceUntilCart)
+            {
+                return string.Empty;
+            }
+
+            string taxSuffix = string.Empty;
+
+            bool taxable = false;
+
+            if (m_VATOn)
+            {
+                taxable = Prices.IsTaxable(variantID);
+
+                // get suffix to display after pricing             
+                if (m_VATEnabled)
+                {
+                    // put another validation stuff here if the product variant is taxable or not 
+                    // set tax suffix to an empty string when the item is non-taxable regardless if the VAT Setting is either
+                    // Inclusive or Exclusive
+                    if (m_VATOn && !taxable)
+                    {
+                        taxSuffix = String.Empty;
+                    }
+                    else if (m_VATOn && taxable)
+                    {
+                        taxSuffix = AppLogic.GetString("setvatsetting.aspx.6", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    }
+                    else if (!m_VATOn && taxable)
+                    {
+                        taxSuffix = AppLogic.GetString("setvatsetting.aspx.7", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    }
+                }
+            }
+
+            Decimal origRegularPrice = regularPrice;
+
+            // add inclusive tax, convert all pricing to ThisCustomer's currency, and round
+            regularPrice = Prices.VariantPrice(ThisCustomer, variantID, origRegularPrice, salePrice, extPrice, attributesPriceDelta, false, taxClassID);
+            discountedPrice = Prices.VariantPrice(ThisCustomer, variantID, origRegularPrice, salePrice, extPrice, attributesPriceDelta, true, taxClassID);
+
+            // format pricing
+            string regularPriceFormatted = Localization.CurrencyStringForDisplayWithExchangeRate(regularPrice, ThisCustomer.CurrencySetting);
+            string discountedPriceFormatted = Localization.CurrencyStringForDisplayWithExchangeRate(discountedPrice, ThisCustomer.CurrencySetting);
+
+            // get pricing labels
+            string genericPriceLabel = string.Empty;
+            string regularPriceLabel = string.Empty;
+            string salePriceLabel = string.Empty;
+            string customerLevelName = string.Empty;
+
+            if (showPriceLabel)
+            {
+                genericPriceLabel = AppLogic.GetString("showproduct.aspx.26", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                regularPriceLabel = AppLogic.GetString("showproduct.aspx.27", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                salePriceLabel = salesPromptName + ":";
+                customerLevelName = ThisCustomer.CustomerLevelName;
+            }
+
+            // format micropay points
+            string pointsFormatted = string.Empty;
+            if (AppLogic.AppConfigBool("MicroPay.ShowPointsWithPrices"))
+            {
+                pointsFormatted = "(" + points.ToString() + " Points)";
+            }
+
+            // create results string
+            if (AppLogic.HideForWholesaleSite(ThisCustomer.CustomerLevelID))  // wholesale site with default customerLevel
+            {
+
+            }
+            else  // show Level 0 Pricing
+            {
+                if (salePrice == 0 || ThisCustomer.CustomerLevelID > 0)
+                {
+                    if (includeHTMLMarkup)
+                    {
+                        results.Append("<p> <span> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    }
+                    else
+                    {
+                        results.Append("<p> <span> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    }
+                    schemaPrice = regularPrice;
+                }
+                else if (includeHTMLMarkup)
+                {
+                    results.Append("<p> <span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    results.Append("<span> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");
+                    schemaPrice = discountedPrice;
+                }
+                else
+                {
+                    results.Append("<p> <span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>" + "<span> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");                    
+                    schemaPrice = discountedPrice;
+                }
+                results.Append("<span><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
+                results.Append(" ");
+
+                results.Append(taxSuffix);
+            }
+
+            
+            if (schemaPrice > 0)
+            {
+                var storeDefaultCultureInfo = CultureInfo.GetCultureInfo(Localization.GetDefaultLocale());
+                var formattedSchemaPrice = String.Format(storeDefaultCultureInfo, "{0:C}", schemaPrice);
+                var schemaRegionInfo = new RegionInfo(storeDefaultCultureInfo.Name);
+
+                results.AppendFormat("<meta itemprop=\"price\" content=\"{0}\"/>", formattedSchemaPrice);
+                results.AppendFormat("<meta itemprop=\"priceCurrency\" content=\"{0}\"/>", schemaRegionInfo.ISOCurrencySymbol);
+            }
+
+            return results.ToString();
+        }
+        
         public virtual string GetUpsellVariantPrice(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, String sShowpricelabel, string sTaxClassID, string decUpSelldiscountPct)
         {
             return Prices.GetUpsellVariantPrice(ThisCustomer, sVariantID, sHidePriceUntilCart, sPrice, sSalePrice, sExtPrice, sPoints, sSalesPromptName, sShowpricelabel, sTaxClassID, decUpSelldiscountPct);

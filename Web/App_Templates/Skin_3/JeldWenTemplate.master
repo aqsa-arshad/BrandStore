@@ -107,7 +107,6 @@
                         <h2>
                             <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label>
                             <asp:HyperLink ID="lnkBack" runat="server" CssClass="back-link"></asp:HyperLink>
-                            <%--<a href="#" class="back-link"> &lt; Back to Marketing Materials</a>--%>
                         </h2>
                     </div>
                 </asp:Panel>
