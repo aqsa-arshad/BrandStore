@@ -4886,9 +4886,7 @@ a:hover {
 .category-right {
   margin-top: 39px;
 }
-.sub-category-right {
-  margin-top: 68px;
-}
+
 .text-right {
   text-align: right;
 }
@@ -5527,6 +5525,10 @@ a:hover.sm-link {
 .search-right {
   margin-top: 53px;
 }
+.sub-category-right {
+  margin-top: 68px;
+}
+
 /******************* Footer ***********************/
 footer {
   border: 0;
