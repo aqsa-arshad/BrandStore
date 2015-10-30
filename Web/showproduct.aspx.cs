@@ -206,9 +206,9 @@ namespace AspDotNetStorefront
             ManufacturerName = ManufacturerHelper.GetEntityName(ManufacturerID, ThisCustomer.LocaleSetting);
             DistributorName = DistributorHelper.GetEntityName(DistributorID, ThisCustomer.LocaleSetting);
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
-            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);            
+            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
 
-            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.ToString();
+            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.AbsolutePath.ToString();
             if (address.ToUpper().Contains("C-"))
             {
                 var firstOccurance = address.IndexOf("-", StringComparison.Ordinal);
