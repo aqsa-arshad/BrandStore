@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
 using AspDotNetStorefrontCore;
+using System.Globalization;
 
 public partial class controls_BrandMerchandiseExample : System.Web.UI.UserControl
 {
@@ -49,11 +50,12 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
                     /*Get immage for product if it exists and check its name/extension*/
                     String path = HttpContext.Current.Request.MapPath("~/images/product/icon");
                     string[] filePaths = System.IO.Directory.GetFiles(path, PImagename + ".*", System.IO.SearchOption.TopDirectoryOnly);
+                    
                     if (filePaths.Length > 0)
                     {
+                        if (!PImagename.EndsWith(".JPG", true, new CultureInfo("en-US")))
                         PImagename = PImagename + System.IO.Path.GetExtension(filePaths[0]);
                     }
-
                     else
                     {
                         PImagename = "nopicture.gif";

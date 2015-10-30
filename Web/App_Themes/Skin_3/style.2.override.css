@@ -351,11 +351,11 @@ form[action="default.aspx"] #ctl00_PageContent_pnlContent
   width: 15%;
 }
 
-#categoryContent
+/*#categoryContent
 {
 	float: left;
   width: 85%;
-}
+}*/
 
 #staticCategoryList h3
 {

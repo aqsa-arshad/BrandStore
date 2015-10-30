@@ -5034,6 +5034,12 @@ a:hover {
     text-transform: uppercase;
   }
 }
+.profile-links > li a:hover {
+  color: #1d446b;
+}
+.profile-links > li a.active {
+  color: #1d446b;
+}
 .profile-links > li .alerts-link {
   background-image: url(images/alerts-icon.png);
 }
@@ -5057,9 +5063,6 @@ a:hover {
   .profile-links > li span {
     display: inline-block;
   }
-}
-.profile-links > li span:hover {
-  text-decoration: underline;
 }
 .mb-login-btn {
   font-size: 18px;
@@ -5117,6 +5120,9 @@ a:hover.mb-login-btn {
 }
 .nav li a:focus {
   background-color: transparent;
+}
+.nav li a.active {
+  color: #1d446b;
 }
 .nav li:nth-last-child(1) {
   border: 0;
@@ -5303,6 +5309,9 @@ a:hover.mb-login-btn {
   margin: 15px 0;
   color: #1d446b;
   line-height: 24px;
+}
+.thumbnail .img-responsive {
+  height: 160px;
 }
 .address {
   margin-left: -40px;
