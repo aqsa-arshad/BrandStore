@@ -7,11 +7,10 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel runat="server" DefaultButton="btnContinueCheckout">
         <div class="content-box-03 body-forms">
-        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />       
-        <h5>Why do i have to create an account?</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae. </p>
-
+        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />    
+          <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5> 
+            <p><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.12 %>"></asp:Label></p>
+       
         <asp:Panel ID="pnlErrorMsg" runat="Server" Visible="false">
             <div class="error-wrap">
                 <asp:Label ID="lblErrorMessage" runat="server" CssClass="error-large"></asp:Label>
@@ -32,7 +31,7 @@
 
             <asp:Panel ID="pnlAccountInfo" runat="server" Visible="false">
 
-                <aspdnsf:Account ID="ctrlAccount" runat="server"
+                <aspdnsf:Account ID="ctrlAccount" runat="server" 
                     EmailCaption="<%$ Tokens:StringResource, createaccount.aspx.15 %>"
                     EmailReenterCaption="<%$ Tokens:StringResource, createaccount.aspx.91 %>"
                     FirstNameCaption="<%$ Tokens:StringResource, createaccount.aspx.13 %>"
@@ -222,6 +221,10 @@
         </div>
     </div>
     </asp:Panel>
-
-    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var txtFirstNameClientId = '<%= ctrlAccount.txtFirstName.ClientID %>';           
+            $("#" + txtFirstNameClientId).focus();
+        });
+    </script>
 </asp:Content>

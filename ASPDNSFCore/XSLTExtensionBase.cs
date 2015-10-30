@@ -2033,8 +2033,8 @@ function popupzoom(url,alturl)
             else
             {
                 StringBuilder tmpS = new StringBuilder(4096);
-                //tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
-                tmpS.Append("<div class=\"product-img-box\">");
+                tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
+                //tmpS.Append("<div class=\"product-img-box\">");
                 
                 String ProductPicture = String.Empty;
                 ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
@@ -2084,12 +2084,12 @@ function popupzoom(url,alturl)
                     tmpS.Append(Scripts.Zoomify());
                 }
 
-                //if (HasLargePic)
-                //{
-                //    tmpS.Append(
-                //        Scripts.PopupImage(CommonLogic.GetImagePixelSize(LargePic))
-                //        );
-                //}
+                if (HasLargePic)
+                {
+                    tmpS.Append(
+                        Scripts.PopupImage(CommonLogic.GetImagePixelSize(LargePic))
+                        );
+                }
 
                 if (ZoomifyMedium)
                 {
@@ -2101,10 +2101,10 @@ function popupzoom(url,alturl)
                 }
                 else
                 {
-                    //tmpS.Append("<div id=\"divProductPicZ" + ProductID.ToString() + "\" style=\"display:none\">\n");
-                   // tmpS.Append("</div>\n");
-                    //tmpS.Append("<div class=\"medium-image-wrap\" id=\"divProductPic" + ProductID.ToString() + "\">\n");
-                    //tmpS.Append("<div id=\"divProductPic" + ProductID.ToString() + "\">\n");
+                    tmpS.Append("<div id=\"divProductPicZ" + ProductID.ToString() + "\" style=\"display:none\">\n");
+                    tmpS.Append("</div>\n");
+                    tmpS.Append("<div class=\"medium-image-wrap\" id=\"divProductPic" + ProductID.ToString() + "\">\n");
+                    tmpS.Append("<div id=\"divProductPic" + ProductID.ToString() + "\">\n");
                 }
 
                 if (ZoomifyLarge)
@@ -2115,46 +2115,69 @@ function popupzoom(url,alturl)
                 }
                 else if (HasLargePic)
                 {
-                    //tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + "\" title=\"" + AppLogic.GetString("showproduct.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
-                    tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
-                    //tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", LargePicForPopup);
+                    tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + "\" title=\"" + AppLogic.GetString("showproduct.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");		
+                    tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", LargePicForPopup);
                 }
                 else
                 {
                     tmpS.Append("<img class=\"product-image medium-image img-responsive\" id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
                     tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", ProductPicture);
                 }
-                //tmpS.Append("</div>\n");
-                //tmpS.Append("<div class=\"image-controls\">");
-                //if (ImgGal.ImgGalIcons.Length != 0)
-                //{
-                //    tmpS.Append("<div class=\"image-icons\">");
-                //    tmpS.Append(ImgGal.ImgGalIcons);
-                //    tmpS.Append("</div>");
-                //}
-                //if (SwatchPic.Length != 0)
-                //{
-                //    tmpS.Append("<div class=\"swatch-image-wrap\">");
-                //    tmpS.Append(SwatchImageMap);
-                //    tmpS.Append("<img class=\"product-image swatch-image\" src=\"" + SwatchPic + "\" usemap=\"#SwatchMap\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
-                //    tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", SwatchPic);
-                //    tmpS.Append("</div>");
-                //}
+                tmpS.Append("</div>\n");
+                tmpS.Append("<div class=\"image-controls\">");
+                if (ImgGal.ImgGalIcons.Length != 0)
+                {
+                    tmpS.Append("<div class=\"image-icons\">");
+                    tmpS.Append(ImgGal.ImgGalIcons);
+                    tmpS.Append("</div>");
+                }
+                if (SwatchPic.Length != 0)
+                {
+                    tmpS.Append("<div class=\"swatch-image-wrap\">");
+                    tmpS.Append(SwatchImageMap);
+                    tmpS.Append("<img class=\"product-image swatch-image\" src=\"" + SwatchPic + "\" usemap=\"#SwatchMap\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                    tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", SwatchPic);
+                    tmpS.Append("</div>");
+                }
 
-                //if (ZoomifyLarge)
-                //{
-                //    tmpS.Append("<div class=\"view-larger-wrap\"><a href=\"javascript:void(0);\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupzoom('" + ZoomifyPath + "','" + LargePicForPopup + "')") + ";\">" + "showproduct.aspx.43".StringResource() + "</a></div>");
-                //}
-                //else if (HasLargePic)
-                //{
-                //    tmpS.Append("<div class=\"pop-large-wrap\"><a href=\"javascript:void(0);\" class=\"pop-large-link\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + ";\">" + "showproduct.aspx.43".StringResource() + "</a></div>");
-                //    tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", LargePicForPopup);
-                //}
-                //tmpS.Append("</div>");
+                if (ZoomifyLarge)
+                {
+                    tmpS.Append("<div class=\"view-larger-wrap\"><a href=\"javascript:void(0);\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupzoom('" + ZoomifyPath + "','" + LargePicForPopup + "')") + ";\">" + "showproduct.aspx.43".StringResource() + "</a></div>");
+                }
+                else if (HasLargePic)
+                {
+                    tmpS.Append("<div class=\"pop-large-wrap\"><a href=\"javascript:void(0);\" class=\"pop-large-link\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + ";\">" + "showproduct.aspx.43".StringResource() + "</a></div>");
+                    tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", LargePicForPopup);
+                }
+                tmpS.Append("</div>");
                 tmpS.Append("</div>");
                 result = tmpS.ToString();
             }
             return result;
+        }
+
+        public virtual string LookupProductImageForDetail(string sProductID, String sImageFileNameOverride, String sSKU, String sDesiredSize, String sIncludeATag, string sAltText)
+        {
+            InputValidator IV = new InputValidator("LookupProductImage");
+            int ProductID = IV.ValidateInt("ProductID", sProductID);
+            String DesiredSize = IV.ValidateString("DesiredSize", sDesiredSize);
+            String ImageFileNameOverride = IV.ValidateString("ImageFileNameOverride", sImageFileNameOverride);
+            String SKU = IV.ValidateString("SKU", sSKU);
+            IV.ValidateBool("IncludeATag", sIncludeATag);
+            String AltText = IV.ValidateString("AltText", sAltText);
+            string imageURL = String.Empty;
+            StringBuilder result = new StringBuilder(4096);
+            string seName = AppLogic.GetProductSEName(ProductID, ThisCustomer.LocaleSetting);
+
+
+            if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
+            {
+			    result.Append("<a class=\"product-img-box\">");
+                imageURL = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                result.Append("<img id=\"ProductPic" + ProductID + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageURL + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                result.Append("</a>");
+            }            
+            return result.ToString();
         }
 
         [Obsolete("Depricated. Please include another parameter, AltText.")]

@@ -23,7 +23,6 @@
                                     <div class="col-md-6">
                                         <h5>SIGN IN</h5>
                                         <p>if you already have an account, please sign in using your email address and password</p>
-                                        <h4>Login</h4>
                                         <label>
                                             <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox ID="UserName" CssClass="form-control" runat="server" ValidationGroup="Group1" MaxLength="100"
@@ -173,7 +172,7 @@
                                 <asp:Button class="form-control" CssClass="btn btn-md btn-primary btn-block" ID="btnRequestNewPassword" CommandName="Submit" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.18 %>'
                                     ValidationGroup="Group2"></asp:Button>
                                 <br />
-                                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.3 %>'></asp:LinkButton>
+                                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.13 %>'></asp:LinkButton>
                             </div>
                         </div>
                     </asp:Panel>

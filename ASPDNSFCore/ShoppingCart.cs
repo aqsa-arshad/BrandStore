@@ -8500,7 +8500,8 @@ namespace AspDotNetStorefrontCore
                 else
                 {
                     tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
-                    tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" class=\"form-control quantity-select\">", ProductID, VariantID);
+                    //tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" class=\"form-control quantity-select\">", ProductID, VariantID);
+                    tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
                     foreach (String s in RestrictedQuantities.Split(','))
                     {
                         if (s.Trim().Length != 0)

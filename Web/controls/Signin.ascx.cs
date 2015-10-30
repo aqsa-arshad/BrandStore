@@ -266,9 +266,8 @@ namespace AspDotNetStorefront
                                 {
                                     sReturnURL = "default.aspx";
                                 }
-                            }                           
-                            Response.Redirect("home.aspx");
-                            Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
+                            }
+                            Response.Redirect(sReturnURL);         
                         }
                         else
                         {
@@ -439,8 +438,7 @@ namespace AspDotNetStorefront
                             }
                         }
                         ctrlRecoverPassword.Visible = false;
-                        Response.Redirect("home.aspx");                        
-                        Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
+                        Response.Redirect(sReturnURL);                        
                     }
                     else
                     {

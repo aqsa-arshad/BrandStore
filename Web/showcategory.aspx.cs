@@ -7,6 +7,8 @@
 using System;
 using System.Reflection.Emit;
 using AspDotNetStorefrontCore;
+using System.Data.SqlClient;
+using System.Data;
 
 
 namespace AspDotNetStorefront
@@ -27,6 +29,11 @@ namespace AspDotNetStorefront
             PayPalAd entityPageAd = new PayPalAd(PayPalAd.TargetPage.Entity);
             ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SEDescription;
 
+            if (!string.IsNullOrEmpty(GetParentCategoryName()))
+            {
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + GetParentCategoryName();
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = (Request.UrlReferrer == null) ? "~/Default.aspx" : Request.UrlReferrer.ToString();
+            }
             if (entityPageAd.Show)
             {
                 ltPayPalAd.Text = entityPageAd.ImageScript;
@@ -105,6 +112,25 @@ namespace AspDotNetStorefront
             {
                 return m_EP.GetActiveEntityID;
             }
+        }
+
+        private string GetParentCategoryName()
+        {
+            string parentCategoryName = string.Empty;
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select Name as ParentCategoryName from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + PageID + ")";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        parentCategoryName = reader["ParentCategoryName"].ToString();
+                }
+            }
+            return parentCategoryName;
         }
 
         protected override string OverrideTemplate()

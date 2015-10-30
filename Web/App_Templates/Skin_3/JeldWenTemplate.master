@@ -106,8 +106,8 @@
                     <div class="body-heading">
                         <h3>
                             <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label>
-                            <a href="#" class="back-link"> &lt; Back to Marketing Materials</a>
-                        </h3>     
+                            <asp:HyperLink ID="lnkBack" runat="server" CssClass="back-link"></asp:HyperLink>
+                        </h3>
                     </div>
                 </asp:Panel>
                 <div class="row">
@@ -163,9 +163,9 @@
             <footer class="footer">
 
                 <div class="row">
-                    <div class="col-md-4 footer-nav"><a href="/JWSupport.aspx">Support</a></div>
-                    <div class="col-md-6 ooter-nav prelogin"><a href="/JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
-                    <div class="col-md-2 footer-nav"><a href="/JWTermsAndConditions.aspx">Terms & Conditions</a></div>
+                    <div class="col-md-4 footer-nav"><a href="JWSupport.aspx">Support</a></div>
+                    <div class="col-md-6 ooter-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
+                    <div class="col-md-2 footer-nav"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -180,7 +180,7 @@
                             <li><a href="#" class="youtube"></a></li>
                         </ul>
                     </div>
-                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="#">Privacy Policy</a></div>
+                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Privacy Policy</a></div>
                 </div>
             </footer>
         </div>

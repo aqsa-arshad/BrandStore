@@ -128,7 +128,7 @@ namespace AspDotNetStorefront
             else if (currentURL.ToUpper().Contains("P-"))
             {
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
-                pnlPageHeading.Visible = true;
+                //pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("JWSUPPORT"))
             {
@@ -148,7 +148,7 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
             {
-                lblPageHeading.Text = "TERMS AND CONDITIONS";
+                lblPageHeading.Text = "Terms and Privacy Policy";
                 pnlPageHeading.Visible = true;              
             }
             else

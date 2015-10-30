@@ -206,9 +206,22 @@ namespace AspDotNetStorefront
             ManufacturerName = ManufacturerHelper.GetEntityName(ManufacturerID, ThisCustomer.LocaleSetting);
             DistributorName = DistributorHelper.GetEntityName(DistributorID, ThisCustomer.LocaleSetting);
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
-            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
+            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);            
 
-            ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SEDescription;
+            string address = (Request.UrlReferrer == null) ? "JWMyAccount.aspx" : Request.UrlReferrer.ToString();
+            if (address.ToUpper().Contains("C-"))
+            {
+                int first = address.IndexOf("-", StringComparison.Ordinal);
+                int last = address.IndexOf("-", Convert.ToInt32(first) + 1);
+                int subCategoryId = Convert.ToInt32(address.Substring(first + 1, last - first - 1));                
+                if (!string.IsNullOrEmpty(GetParentCategoryName(subCategoryId)))
+                {
+                    ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = GetCategoryName(subCategoryId);
+                    Master.FindControl("pnlPageHeading").Visible = true;
+                    ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + GetParentCategoryName(subCategoryId);
+                    ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = (Request.UrlReferrer == null) ? "~/Default.aspx" : Request.UrlReferrer.ToString();
+                }
+            }           
 
             String SourceEntityInstanceName = String.Empty;
 
@@ -646,6 +659,44 @@ namespace AspDotNetStorefront
                 masterHome = "JeldWenTemplate";
             }
             return masterHome;
+        }
+
+        private string GetParentCategoryName(int subCategoryId)
+        {
+            string parentCategoryName = string.Empty;
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select Name as ParentCategoryName from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + subCategoryId + ")";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        parentCategoryName = reader["ParentCategoryName"].ToString();
+                }
+            }
+            return parentCategoryName;
+        }
+
+        private string GetCategoryName(int subCategoryId)
+        {
+            string parentCategoryName = string.Empty;
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select Name as ParentCategoryName from Category where CategoryID = " + subCategoryId ;
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        parentCategoryName = reader["ParentCategoryName"].ToString();
+                }
+            }
+            return parentCategoryName;
         }
     }
 }
