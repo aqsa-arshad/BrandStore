@@ -76,14 +76,14 @@
                     <span class="head-tagline">Brand Store      </span>
                 </div>
                 <div class="user-grid">
-                    <ul class="profile-links">
+                    <ul class="profile-links prelogin hide-element">
                         <asp:ScriptManager ID="ScriptManager1" runat="server">
                         </asp:ScriptManager>
-                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link"><span>Alerts</span></a></li>
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <li><a href="JWMyAccount.aspx" class="prelogin hide-element account-link"><span id="myAccount" runat="server">My Account</span></a></li>
-                        <li><a href="#" class="prelogin hide-element shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
-                        <li><a href="signout.aspx" class="prelogin hide-element logout-link lnkLogout"><span>Logout</span></a></li>
+                        <li><a href="JWMyAccount.aspx" class="account-link"><span id="myAccount" runat="server">My Account</span></a></li>
+                        <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
+                        <li><a href="signout.aspx" class="logout-link lnkLogout"><span>Logout</span></a></li>
                     </ul>
                     <custom:Search ID="Search1" runat="server" />
                 </div>
@@ -111,7 +111,7 @@
                     </div>
                 </asp:Panel>
                 <div class="row">
-                    <div class="col-md-4 pull-right" id="divSideBarBeforeLogin" runat="server">
+                    <div class="col-md-4 pre-login-pannel" id="divSideBarBeforeLogin" runat="server">
                         <div class="side-bar" id="divbeforelogin" runat="server">
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="left-side pull-left">
+                        <div class="left-side">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
                         </div>
@@ -163,9 +163,9 @@
             <footer class="footer">
 
                 <div class="row">
-                    <div class="col-md-4 footer-nav"><a href="JWSupport.aspx">Support</a></div>
-                    <div class="col-md-6 ooter-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
-                    <div class="col-md-2 footer-nav"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
+                    <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
+                    <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
+                    <div class="col-md-3 footer-nav terms" style="text-align:left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -261,6 +261,7 @@
             $(".prelogin").removeClass("hide-element");
             $(".lnkLogout").show();
             $("#headerlogo").attr("href", "home.aspx");
+            $(".terms").removeAttr("style");
         }
         function ShowControlsForBeforeLoginPage() {
             $(".prelogin").hide();

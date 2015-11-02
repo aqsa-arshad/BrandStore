@@ -12,10 +12,10 @@
     <script type="text/javascript">
         $(document).ready(function () {            
             if ('<%=CategoryTypeFlag%>' == "true") {
-                $("#divbeforelogin").addClass("sub-category-right");
+                $("#ctl00_divbeforelogin").addClass("sub-category-right");
                 $("#ctl00_divafterlogin").addClass("sub-category-right");
             } else {
-                $("#divbeforelogin").addClass("category-right");
+                $("#ctl00_divbeforelogin").addClass("category-right");
                 $("#ctl00_divafterlogin").addClass("category-right");
             }
             $("#beforelogindiv").hide();

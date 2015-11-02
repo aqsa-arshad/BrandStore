@@ -13,10 +13,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             if ('<%=IsProductExist%>' == "true") {
-                $("#divbeforelogin").addClass("search-right");
+                $("#ctl00_divbeforelogin").addClass("search-right");
                 $("#ctl00_divafterlogin").addClass("search-right");                
             } else {
-                $("#divbeforelogin").removeClass("search-right");
+                $("#ctl00_divbeforelogin").removeClass("search-right");
                 $("#ctl00_divafterlogin").removeClass("search-right");
             }
             $("#beforelogindiv").hide();
