@@ -216,7 +216,7 @@
             else {
                 //user is logged inn
                 ShowMenueCategories();
-                ShowControlsForAfterLoginPage()
+                ShowControlsForAfterLoginPage();
                 if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6") {
                     //Dealer Login
                     ShowControlsForDealerLogin()
@@ -275,7 +275,6 @@
             $(".hide-element").css("display", "none");
             $("#headerlogo").attr("href", "home.aspx");
         }
-
         function ShowControlsForSalesRepAndInternalLogin() {
             $("#InternalHomePageTopic").removeClass("hide-element");
             $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
@@ -288,6 +287,7 @@
         }
         function ShowControlsForPublicLogin() {
             $("#PublicHomePageTopic").removeClass("hide-element");
+            $("#FeaturedProduct").removeClass("hide-element");
             $(".beforeloginControl").hide();
             // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
             $(".prelogin").removeClass("hide-element");

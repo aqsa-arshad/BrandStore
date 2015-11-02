@@ -11,7 +11,7 @@
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <meta content="" name="description">
         <meta content="" name="author">
-        <title>Home</title>
+        <title>Default</title>
     </head>
     <body>
         <%--<div class="left-side">--%>

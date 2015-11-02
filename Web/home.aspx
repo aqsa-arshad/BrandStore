@@ -1,4 +1,5 @@
 <%@ Page Language="c#" Inherits="AspDotNetStorefront._home" CodeFile="home.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/empty.master" %>
+
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <%@ Register TagPrefix="custom" TagName="Search" Src="Controls/Search.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBBrandMerchandiseExampleExample" Src="~/Controls/BrandMerchandiseExample.ascx" %>
@@ -36,6 +37,12 @@
                     <aspdnsf:JWBBrandMerchandiseExampleExample runat="server" ID="JWBBrandMerchandiseExampleExample" />
                 </div>
             </div>
+            <div class="content-box-02 hide-element" id="FeaturedProduct">
+                <div class="row">
+                    <aspdnsf:Topic ID="FeaturedProductTopic" runat="server" TopicName="Default.FeaturedProducts" />
+                </div>
+            </div>
+
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../../dist/js/bootstrap.min.js"></script>
@@ -44,6 +51,7 @@
     </body>
     </html>
 </asp:Content>
+
 
 
 
