@@ -65,6 +65,12 @@
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
     <form id="frm" runat="server">
+        <%  if (RequireScriptManager)
+            { %>
+        <%-- Only render for pages that require ajax --%>
+        <asp:ScriptManager ID="scrptMgr" runat="server">
+        </asp:ScriptManager>
+        <% } %>
         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
@@ -77,8 +83,6 @@
                 </div>
                 <div class="user-grid">
                     <ul class="profile-links prelogin hide-element">
-                        <asp:ScriptManager ID="ScriptManager1" runat="server">
-                        </asp:ScriptManager>
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link"><span>Alerts</span></a></li>
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
                         <li><a href="JWMyAccount.aspx" class="account-link"><span id="myAccount" runat="server">My Account</span></a></li>
@@ -105,7 +109,7 @@
                 <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
                     <div class="body-heading">
                         <h2>
-                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading" ></asp:Label>
+                            <asp:Label ID="lblPageHeading" runat="server" Text="Page Heading"></asp:Label>
                             <asp:HyperLink ID="lnkBack" runat="server" CssClass="back-link"></asp:HyperLink>
                         </h2>
                     </div>
@@ -151,11 +155,11 @@
                         </div>
                     </div>
                     <div class="col-md-4" id="divJWsupport" runat="server" visible="false">
-                        <div class="side-bar" runat="server">                          
-                                <div class="side-bar-box" id="JWSupportTopic">
-                                    <aspdnsf:Topic runat="server" TopicName="Footer.SupportSideBar" />
-                                </div>                              
-                            
+                        <div class="side-bar" runat="server">
+                            <div class="side-bar-box" id="JWSupportTopic">
+                                <aspdnsf:Topic runat="server" TopicName="Footer.SupportSideBar" />
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -164,8 +168,8 @@
 
                 <div class="row">
                     <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
-                    <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div> 
-                    <div class="col-md-3 footer-nav terms" style="text-align:left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
+                    <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div>
+                    <div class="col-md-3 footer-nav terms" style="text-align: left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">

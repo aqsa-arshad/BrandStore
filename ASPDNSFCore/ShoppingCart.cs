@@ -7961,7 +7961,7 @@ namespace AspDotNetStorefrontCore
         {
             return GetAddToCartForm(ThisCustomer, forPack, forKit, showWishListButton, showGiftRegistryButton, ProductID, VariantID, SkinID, DisplayFormat, LocaleSetting, ColorChangeProductImage, VariantStyle, false);
         }
-
+      
         // ERPFlag = 0 means to use our normal variant with attributes
         // ERPFlag = 1 means to use ERP variant structure but recompute variants into size/color drop down lists
         // ERPFlag = 2 means to use ERP variant structure, with each variant in a dropdown list to select
