@@ -4886,7 +4886,9 @@ a:hover {
 .category-right {
   margin-top: 39px;
 }
-
+.sub-category-right {
+  margin-top: 68px;
+}
 .text-right {
   text-align: right;
 }
@@ -5084,11 +5086,11 @@ a:hover.mb-login-btn {
 .nav {
   border-bottom: solid 1px #c0c0c0;
 }
-.nav li {
+.nav > li {
   border-bottom: solid 1px #c0c0c0;
 }
 @media screen and (min-width: 800px) {
-  .nav li {
+  .nav > li {
     border-bottom: 0;
     border-right: solid 1px #c0c0c0;
     text-align: center;
@@ -5096,7 +5098,7 @@ a:hover.mb-login-btn {
     float: left;
   }
 }
-.nav li a {
+.nav > li > a {
   color: #b4b7b0;
   padding: 14px 20px;
   font-family: 'FrutigerLTStd-Roman';
@@ -5106,20 +5108,20 @@ a:hover.mb-login-btn {
   margin: 0;
 }
 @media screen and (min-width: 800px) {
-  .nav li a {
+  .nav > li > a {
     display: inline-block;
     padding: 13px 0;
     width: 95px;
   }
 }
-.nav li a:hover {
+.nav > li a:hover {
   background-color: transparent;
   color: #1d446b;
 }
-.nav li a:focus {
+.nav > li a:focus {
   background-color: transparent;
 }
-.nav li a.active {
+.nav > li a.active {
   color: #1d446b;
 }
 .nav li:nth-last-child(1) {
@@ -5157,6 +5159,35 @@ a:hover.mb-login-btn {
 .navbar-inverse .navbar-collapse {
   padding: 0;
   border: 0;
+}
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  background: transparent;
+  color: #1d446b;
+}
+.nav-justified > .dropdown .dropdown-menu {
+  margin-top: 0;
+  width: 270px;
+  left: -1px;
+  padding: 20px 40px;
+  box-shadow: none;
+  letter-spacing: 1.5px;
+  font-size: 13px;
+}
+.nav-justified > .dropdown .dropdown-menu a {
+  display: block;
+  padding: 0;
+  line-height: 27px;
+  color: #b4b7b0;
+  background: transparent;
+}
+.nav-justified > .dropdown .dropdown-menu a:hover {
+  background: transparent;
+  color: #1d446b;
+}
+.nav li.dropdown:hover ul.dropdown-menu {
+  display: block !important;
 }
 .modal-dialog {
   font-size: 14px;
@@ -5440,6 +5471,7 @@ a:hover.mb-login-btn {
 .side-bar .btn-primary {
   margin: 12px 0;
   display: inline-block;
+  -webkit-appearance: none;
 }
 .side-bar h2 {
   margin: 10px 0 30px;
@@ -5488,10 +5520,16 @@ a:hover.mb-login-btn {
 }
 .side-bar .login-box .checkbox label {
   margin-top: 0;
-  float: left;
 }
 .side-bar .login-box .checkbox a {
-  float: right;
+  display: block;
+  margin-bottom: 8px;
+}
+@media screen and (min-width: 800px) {
+  .side-bar .login-box .checkbox a {
+    position: absolute;
+    right: 0;
+  }
 }
 .side-bar .login-box .account-link {
   font-size: 12px;
@@ -5524,9 +5562,6 @@ a:hover.sm-link {
 }
 .search-right {
   margin-top: 53px;
-}
-.sub-category-right {
-  margin-top: 39px;
 }
 /******************* Footer ***********************/
 footer {

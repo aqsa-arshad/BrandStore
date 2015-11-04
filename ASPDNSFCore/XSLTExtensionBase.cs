@@ -694,6 +694,7 @@ function popupzoom(url,alturl)
 
             return result;
         }
+      
         public virtual string GetCategoryIDForMobile(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
         {
             String result = "";
