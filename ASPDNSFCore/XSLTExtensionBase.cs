@@ -638,9 +638,7 @@ function popupzoom(url,alturl)
         }
 
         public virtual string EntityLink(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
-        {
-            if (sSEName.Equals("marketing-services"))
-                return "MarketingServicesDetailPage.aspx";
+        {            
             InputValidator IV = new InputValidator("EntityLink");
             String SEName = IV.ValidateString("SEName", sSEName);
             String EntityName = IV.ValidateString("EntityName", sEntityName);
