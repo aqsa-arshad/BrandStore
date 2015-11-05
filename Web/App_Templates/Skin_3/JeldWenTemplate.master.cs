@@ -92,7 +92,7 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
-                myAccount.Attributes.Add("class","active");
+                myAccount.Attributes.Add("class", "selected1");
             }
             else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
             {

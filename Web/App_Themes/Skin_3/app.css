@@ -2067,6 +2067,8 @@ fieldset[disabled] .btn-default.active {
   color: #ffffff;
   background-color: #1d446b;
   border-color: #183757;
+  border-radius:0;
+  -webkit-appearance: none;
 }
 .btn-primary:focus,
 .btn-primary.focus {
@@ -4843,7 +4845,7 @@ a:hover.mb-link {
   border-radius: 0 !important;
 }
 .hide-element {
-  visibility: hidden;
+   display:none !important;
 }
 a.underline-link {
   text-decoration: underline;
@@ -4972,7 +4974,7 @@ a:hover {
 .user-grid .search-feild {
   background: url('images/search-img.png') no-repeat 5px 5px;
   padding: 5px 5px 5px 28px;
-  color: #b4b7b0;
+  color: #1d446b;
   width: 220px;
   height: 28px;
   margin-top: 20px;
@@ -5633,4 +5635,7 @@ footer {
 }
 .social-links ul li a:hover {
   background-color: #ababab;
+}
+.selected1 {
+    color: #4cae4c;
 }

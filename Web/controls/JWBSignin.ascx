@@ -37,7 +37,7 @@
                     </div>
                 </asp:Panel>
                 <asp:Button type="submit" ID="LoginButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="LoginGroup" OnClick="submitButton_Click" Text="Sign in" />
-                <asp:LinkButton runat="server" CssClass="account-link" href="createaccount.aspx" Text='<%$ Tokens:StringResource,signin.aspx.7 %>' ></asp:LinkButton>
+                <asp:LinkButton ID="createAccountLink" runat="server" CssClass="account-link" Text='<%$ Tokens:StringResource,signin.aspx.7 %>' OnClick="CreateAccountLink_Click"></asp:LinkButton>
             </div>
 
         </asp:Panel>

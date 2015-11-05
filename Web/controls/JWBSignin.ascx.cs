@@ -115,6 +115,12 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         ForgotPasswordErrorPanel.Visible = false;
     }
 
+    protected void CreateAccountLink_Click(object sender, EventArgs e)
+    {
+        Response.Redirect(Request.Browser.IsMobileDevice ? "createaccount.aspx#createAccountDiv" : "createaccount.aspx");
+    }
+
+
     private void focusOnEmailTextField(bool status)
     {
         var currentURL = Request.Url.AbsolutePath;
