@@ -3469,16 +3469,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    float: none;
     margin-right: -15px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
-  }
-}
-@media (min-width: 768px) and screen and (min-width: 800px) {
-  .navbar-right {
-    float: right;
   }
 }
 .navbar-default {
@@ -4865,7 +4859,7 @@ a:hover.mb-link {
 a.underline-link {
   text-decoration: underline;
 }
-a:hover {
+a:hover.underline-link {
   text-decoration: none;
 }
 .btn-center {
@@ -4912,13 +4906,34 @@ a:hover {
 .text-right {
   text-align: right;
 }
-.pull-right {
-  float: none;
+.pull-desktop-right {
+  float: none !important;
 }
 @media screen and (min-width: 800px) {
-  .pull-right {
-    float: right;
+  .pull-desktop-right {
+    float: righ !important ;
   }
+}
+.pull-desktop-left {
+  float: none !important;
+}
+@media screen and (min-width: 800px) {
+  .pull-desktop-left {
+    float: left !important ;
+  }
+}
+.fix-heading-height {
+  height: 66px;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 5px 0;
+  padding: 15px 0;
+}
+.thr-line-fix {
+  height: 84px;
+}
+.vertical-top {
+  vertical-align: top;
 }
 .header-part {
   padding-top: 40px;
@@ -5378,9 +5393,6 @@ a:hover.mb-login-btn {
 .thumbnail h4 {
   color: #545759;
   margin: 20px 0;
-  height: 66px;
-  display: table-cell;
-  vertical-align: middle;
 }
 .thumbnail p {
   margin: 15px 0;
@@ -5501,7 +5513,7 @@ a:hover.mb-login-btn {
   border-collapse: collapse;
 }
 .table tbody tr {
-  border-top: solid 1px #c6c6c6;
+  border-bottom: solid 1px #c6c6c6;
   width: 100%;
   padding: 10px 0;
   float: left;
