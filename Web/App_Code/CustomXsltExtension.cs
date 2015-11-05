@@ -143,6 +143,45 @@ public class CustomXsltExtension : XSLTExtensionBase
         return "<div id=\"staticCategoryList\"><h3>Categories</h3>" + result + "</div>";
     }
 
+    public virtual string GetSubCategoryListByCategory(string categoryId)
+                                
+    {        
+        var output = new StringBuilder();
+        output.Append("<ul class='dropdown-menu'>");
+        using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["DBConn"]))
+        {
+            string query = "EXEC custom_GetSubCategoryListByCategory @CategoryID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@CategoryID", categoryId);
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            try
+            {
+                while (reader.Read())
+                {
+                    var name = reader["Name"];
+                    var url = String.Format("c-{0}-{1}.aspx", reader["CategoryID"], reader["SEName"]);                  
+                    var isSelected = false;
+                    var selectedClass = isSelected ? " selected" : "";
+                    var arrow = isSelected ? "<span class=\"arrow\">&#9658;</span>" : "";
+                    output.Append(String.Format("<li class=\"{0}{1}\"><a href=\"{2}\">{3}</a></li>", "", selectedClass, url, name));
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
+        }
+
+        output.Append("</ul>");
+
+        var result = output.ToString();
+        if (result == "<ul></ul>")
+            return "";
+
+        return result;
+    }
     public virtual string GetCategoryRootLevelList(int categoryId)
     {
         var output = new StringBuilder();

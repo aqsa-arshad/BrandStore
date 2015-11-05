@@ -206,9 +206,9 @@ namespace AspDotNetStorefront
             ManufacturerName = ManufacturerHelper.GetEntityName(ManufacturerID, ThisCustomer.LocaleSetting);
             DistributorName = DistributorHelper.GetEntityName(DistributorID, ThisCustomer.LocaleSetting);
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
-            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);            
+            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
 
-            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.ToString();
+            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.AbsolutePath.ToString();
             if (address.ToUpper().Contains("C-"))
             {
                 var firstOccurance = address.IndexOf("-", StringComparison.Ordinal);
@@ -439,20 +439,19 @@ namespace AspDotNetStorefront
                 return true;
             }
         }
-
-        // TODO : It Will be removed after implementing the ScriptManager 
+        
         /// <summary>
         /// Registers the required scripts and webservice references
         /// </summary>
         /// <param name="scrptMgr"></param>
-        //public override void RegisterScriptAndServices(ScriptManager scrptMgr)
-        //{
-        //    scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
-        //    if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
-        //    {
-        //        scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-        //    }
-        //}
+        public override void RegisterScriptAndServices(ScriptManager scrptMgr)
+        {
+            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
+            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
+            {
+                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
+            }
+        }
 
         private void HandleKitUpdate()
         {
@@ -569,61 +568,7 @@ namespace AspDotNetStorefront
                 }
             }
             base.OnPreRender(e);
-        }
-
-        // TODO : It Will be removed after implementing the ScriptManager 
-        //protected override string OverrideTemplate()
-        //{
-        //    if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
-        //    {
-        //        String HT = String.Empty;
-        //        if (CommonLogic.QueryStringUSInt("CategoryID") != 0)
-        //        {
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
-        //        }
-        //        else if (CommonLogic.QueryStringUSInt("SectionID") != 0)
-        //        {
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_SectionEntitySpecs.m_EntityName);
-        //        }
-        //        else if (CommonLogic.QueryStringUSInt("ManufacturerID") != 0)
-        //        {
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName);
-        //        }
-        //        else if (CommonLogic.QueryStringUSInt("DistributorID") != 0)
-        //        {
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_DistributorEntitySpecs.m_EntityName);
-        //        }
-        //        else if (CommonLogic.QueryStringUSInt("GenreID") != 0)
-        //        {
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
-        //        }
-        //        else if (CommonLogic.QueryStringUSInt("VectorID") != 0)
-        //        {
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_VectorEntitySpecs.m_EntityName);
-        //        }
-        //        else
-        //        {
-        //            // try to pull from profile
-        //            String TemplateSourceEntity = Profile.LastViewedEntityName;
-        //            int TemplateSourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
-
-        //            if (TemplateSourceEntity.Length != 0 && TemplateSourceEntityID > 0)
-        //            {
-        //                HT = AppLogic.GetCurrentEntityTemplateName(TemplateSourceEntity, TemplateSourceEntityID);
-        //            }
-        //        }
-
-        //        if (HT.Length == 0)
-        //        {
-        //            int FirstCategoryID = AppLogic.GetFirstProductEntityID(AppLogic.LookupHelper("Category", 0), CommonLogic.QueryStringUSInt("ProductID"), false);
-        //            HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName, FirstCategoryID);
-        //        }
-
-        //        return HT;
-        //    }
-
-        //    return base.OverrideTemplate();
-        //}
+        }        
 
         public override bool IsProductPage
         {

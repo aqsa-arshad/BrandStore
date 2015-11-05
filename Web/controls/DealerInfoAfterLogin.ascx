@@ -3,4 +3,5 @@
 <div class="row">  
 </div>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut </p>
-<button class="btn btn-md btn-primary btn-block" type="submit">VIEW MY REPORTS</button>
+<asp:Button ID="btnViewReport" runat="server" CssClass="btn btn-md btn-primary btn-block" OnClientClick="return false;" Text="VIEW MY REPORTS" />
+

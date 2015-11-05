@@ -177,12 +177,13 @@ namespace AspDotNetStorefront
         #region Methods
 
         protected override void OnInit(EventArgs e)
-        {           
-            if (this.RequireScriptManager)
-            {               
-                // provide hookup for individual pages
-                (this.Page as SkinBase).RegisterScriptAndServices(scrptMgr);                
-            }
+        {
+            //TODO: It will be removed after script manager implemented to all pages
+            //if (this.RequireScriptManager)
+            //{
+            //    // provide hookup for individual pages
+            //    (this.Page as SkinBase).RegisterScriptAndServices(scrptMgr);
+            //}
             Page.ClientScript.RegisterClientScriptInclude(Page.GetType(), "formvalidate", ResolveClientUrl("~/jscripts/formvalidate.js"));
             Page.ClientScript.RegisterClientScriptInclude(Page.GetType(), "core", ResolveClientUrl("~/jscripts/core.js"));
             

@@ -31,6 +31,16 @@ namespace AspDotNetStorefront
             }
         }
 
+        protected override void OnInit(EventArgs e)
+        {
+            if (this.RequireScriptManager)
+            {
+                // provide hookup for individual pages
+                (this.Page as SkinBase).RegisterScriptAndServices(scrptMgr);
+            }
+            base.OnInit(e);
+        }
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>

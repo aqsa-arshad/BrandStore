@@ -694,6 +694,7 @@ function popupzoom(url,alturl)
 
             return result;
         }
+      
         public virtual string GetCategoryIDForMobile(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
         {
             String result = "";
@@ -3176,12 +3177,40 @@ function popupzoom(url,alturl)
             return results.ToString();
         }
 
-        public string ShowProductStock(String sProductID, String sVariantID)
+        public string ShowProductStockStatus(String sProductID, String sVariantID)
         {
             var result = ShowInventoryTable(sProductID, sVariantID);
             var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
             var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
             return result.Substring(startIndex, lastIndex - startIndex);
+        }
+
+        public int IsShowProductStockStatus(String sProductID, String sVariantID)
+        {
+            var result = ShowInventoryTable(sProductID, sVariantID);
+            var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
+            var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
+            return result.Substring(startIndex, lastIndex - startIndex).ToUpper().Contains("OUT OF STOCK") ? 1 : 0;
+        }
+
+        public string NotifyMeButton(String sProductID, String sVariantID)
+        {
+            StringBuilder result = new StringBuilder(3000);
+            result.Append("<div class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
+            result.Append("<div class=\"buttons-group\">");
+            result.Append(" <button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa2\">Notify Me</button>");
+            result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
+            result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
+            result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
+            result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
+            result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
+            result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
+            result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
+            result.Append("<input class=\"form-control\" value=\"jappleseed@gmail.com\" type=\"text\"> </div>");
+            result.Append("<div class=\"buttons-group\"> <button type=\"button\" class=\"btn btn-primary\">Submit</button> ");
+            result.Append("<button type=\"button\" data-dismiss=\"modal\" class=\"btn btn-primary\">Cancel</button> </div>");
+            result.Append("</div> </div> </div> </div>");
+            return result.ToString();
         }
 
         public virtual string GetJSPopupRoutines()
@@ -4001,7 +4030,8 @@ function popupzoom(url,alturl)
                     results.Append("<p> <span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>" + "<span> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");                    
                     schemaPrice = discountedPrice;
                 }
-                results.Append("<span><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
+                //TODO: Will be uncommented when true blue point implemented
+                //results.Append("<span><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
                 results.Append(" ");
 
                 results.Append(taxSuffix);
