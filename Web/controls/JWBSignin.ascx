@@ -4,7 +4,7 @@
     <ContentTemplate>
         <asp:Panel runat="server" DefaultButton="LoginButton">
             <div id="LoginPanel" runat="server">
-                <h4>Login</h4>
+                <h4></h4>
                 <label>
                     <asp:Label runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                 <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"

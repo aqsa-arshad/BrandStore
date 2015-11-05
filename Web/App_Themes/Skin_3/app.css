@@ -5062,9 +5062,6 @@ a:hover {
 .profile-links > li a:hover {
   color: #1d446b;
 }
-.profile-links > li a span.active {
-  color: #1d446b;
-}
 .profile-links > li .alerts-link {
   background-image: url(images/alerts-icon.png);
 }
@@ -5088,6 +5085,9 @@ a:hover {
   .profile-links > li span {
     display: inline-block;
   }
+}
+.profile-links > li span.active {
+  color: #1d446b;
 }
 .mb-login-btn {
   font-size: 18px;
@@ -5378,9 +5378,9 @@ a:hover.mb-login-btn {
 .thumbnail h4 {
   color: #545759;
   margin: 20px 0;
-    height: 66px;
-    display: table-cell;
-    vertical-align: middle;
+  height: 66px;
+  display: table-cell;
+  vertical-align: middle;
 }
 .thumbnail p {
   margin: 15px 0;
@@ -5405,8 +5405,10 @@ a:hover.mb-login-btn {
 .address .col-md-6:nth-child(2) {
   margin-top: 0;
 }
-.address ul {
+@media screen and (min-width: 800px) {
+  .address ul {
     height: 138px;
+  }
 }
 .body-forms .form-group {
   margin-bottom: 10px;
