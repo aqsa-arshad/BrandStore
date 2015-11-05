@@ -4760,6 +4760,9 @@ select {
 .padding-none {
   padding: 0;
 }
+.margin-none {
+  margin: 0;
+}
 .body-container {
   padding: 30px 20px 0 !important;
 }
@@ -4849,6 +4852,7 @@ a:hover.mb-link {
 }
 .hide-element {
   visibility: hidden;
+  display: none;
 }
 a.underline-link {
   text-decoration: underline;
@@ -4891,7 +4895,6 @@ a:hover {
 .category-right {
   margin-top: 39px;
 }
-
 .text-right {
   text-align: right;
 }
@@ -5210,7 +5213,7 @@ a:hover.mb-login-btn {
   width: 300px;
 }
 .modal-checkout h5 {
-  margin-top: 0;
+  margin-top: 0 !important;
 }
 .modal-checkout label {
   margin-bottom: 0;
@@ -5450,6 +5453,20 @@ a:hover.mb-login-btn {
     display: inline-block;
   }
 }
+.notify {
+  color: #d9534f;
+  text-transform: uppercase;
+  font-family: 'FrutigerLTStd-Roman';
+}
+.stock-message {
+  color: #1d446b;
+  width: 50%;
+  display: inline-flex;
+  font-size: 12px;
+  vertical-align: top;
+  line-height: 18px;
+  padding-left: 10px;
+}
 /******************* Side Bar ***********************/
 .pre-login-pannel {
   margin-bottom: 30px;
@@ -5583,7 +5600,6 @@ a:hover.sm-link {
 .search-right {
   margin-top: 53px;
 }
-
 .sub-category-right {
   margin-top: 39px;
 }

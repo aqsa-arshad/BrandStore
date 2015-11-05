@@ -694,6 +694,7 @@ function popupzoom(url,alturl)
 
             return result;
         }
+      
         public virtual string GetCategoryIDForMobile(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
         {
             String result = "";
@@ -4029,6 +4030,7 @@ function popupzoom(url,alturl)
                     results.Append("<p> <span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>" + "<span> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");                    
                     schemaPrice = discountedPrice;
                 }
+                //TODO: Will be uncommented when true blue point implemented
                 //results.Append("<span><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
                 results.Append(" ");
 

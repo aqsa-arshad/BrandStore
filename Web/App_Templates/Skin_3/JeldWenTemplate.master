@@ -64,13 +64,10 @@
     '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
-    <form id="frm" runat="server">
-        <%  if (RequireScriptManager)
-            { %>
+    <form id="frm" runat="server">       
         <%-- Only render for pages that require ajax --%>
         <asp:ScriptManager ID="scrptMgr" runat="server">
-        </asp:ScriptManager>
-        <% } %>
+        </asp:ScriptManager>        
         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
