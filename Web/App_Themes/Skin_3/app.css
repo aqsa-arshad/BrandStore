@@ -4713,6 +4713,7 @@ input[type="password"] {
   border: 1px solid #c6c6c6;
   padding: 4px 12px;
   height: 26px;
+  color: #1d446b;
 }
 input[type="text"]:focus,
 input[type="password"]:focus {
@@ -4726,6 +4727,7 @@ h1 {
 }
 h3 {
   font-family: 'Minion Pro';
+  color: #1d446b;
 }
 h2,
 h4 {
@@ -4892,7 +4894,13 @@ a:hover {
   margin-top: -35px;
   margin-bottom: 25px;
 }
+.search-right {
+  margin-top: 53px;
+}
 .category-right {
+  margin-top: 39px;
+}
+.sub-category-right {
   margin-top: 39px;
 }
 .text-right {
@@ -5510,7 +5518,7 @@ a:hover.mb-login-btn {
   display: inline-block;
   -webkit-appearance: none;
 }
-.side-bar h2 {
+.side-bar h3 {
   margin: 10px 0 30px;
   font-size: 20px;
   color: #1d446b;
@@ -5596,12 +5604,6 @@ a:hover.sm-link {
   display: inline-block;
   width: 45px;
   line-height: 14px;
-}
-.search-right {
-  margin-top: 53px;
-}
-.sub-category-right {
-  margin-top: 39px;
 }
 /******************* Footer ***********************/
 footer {
