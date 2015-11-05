@@ -25,7 +25,7 @@
                 <aspdnsf:Topic ID="Topic2" runat="server" TopicName="DealerHomePageTopic" />
             </div>
             <div id="PublicHomePageTopic" class="hide-element">
-                <aspdnsf:Topic ID="Topic3" runat="server" TopicName="PublicHomePageTopic" />
+               <aspdnsf:Topic ID="Topic3" runat="server" TopicName="LandingPageTopic" />
             </div>
             <%--End Calling topic defind through admin console.--%>
             <!-- Contect Box 02  -->

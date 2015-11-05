@@ -117,12 +117,12 @@
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
                             </div>
-                            <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-                            <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                            <div class="separator-line hide-element" id="separatorafterlogin" runat="server"></div>
+                            <div class="side-bar-box hide-element" id="divMarkeetingExample" runat="server">
                                 <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
                             </div>
-                            <div class="separator-line"></div>
-                            <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                            <div class="separator-line hide-element"></div>
+                            <div class="side-bar-box hide-element" id="divBrandAssetExample" runat="server">
                                 <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
                             </div>
                         </div>

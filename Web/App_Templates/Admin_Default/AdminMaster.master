@@ -59,7 +59,7 @@
                                                             border="0" /></a>
                                                 </td>
                                                 <td align="center" valign="middle">
-                                                    <a href="signout.aspx" target="_top" title="Logout">
+                                                    <a href="../signout.aspx" target="_top" title="Logout">
                                                         <img  runat="server" id="imgLogout" src="~/App_Themes/Admin_Default/images/logout.png" hover="../App_Themes/Admin_Default/images/logout_hover.png" border="0" /></a>
                                                 </td>
                                             </tr>
