@@ -5800,7 +5800,8 @@ a:hover.underline-link {
   padding: 15px 0;
 }
 .thr-line-fix {
-  height: 84px;
+  height: 75px;
+  overflow: hidden;
 }
 .vertical-top {
   vertical-align: top;
