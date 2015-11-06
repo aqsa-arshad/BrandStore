@@ -174,11 +174,11 @@
                     </div>
                     <div class="col-md-4 social-links">
                         <ul class="">
-                            <li><a href="#" class="fb"></a></li>
-                            <li><a href="#" class="tw"></a></li>
-                            <li><a href="#" class="dp"></a></li>
-                            <li><a href="#" class="pin"></a></li>
-                            <li><a href="#" class="youtube"></a></li>
+                             <li><a target="_blank" href="https://www.facebook.com/jeldwenwindowsanddoors" class="fb"></a></li>
+                            <li><a target="_blank" href="https://twitter.com/jeldwen" class="tw"></a></li>
+                            <li><a target="_blank" href="http://www.houzz.com/jeld-wen-windows" class="dp"></a></li>
+                            <li><a target="_blank" href="https://www.pinterest.com/jeldwen/" class="pin"></a></li>
+                            <li><a target="_blank"  href="https://www.youtube.com/user/JELDWENVIDEOS" class="youtube"></a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Privacy Policy</a></div>
