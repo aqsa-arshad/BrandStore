@@ -139,14 +139,14 @@
                                 <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
                                     <aspdnsf:JWBUserInfoAfterLogin runat="server" />
                                 </div>
-                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
-                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
-                                </div>
                                 <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
                                     <aspdnsf:JWBTrueBlueUserInfo runat="server" />
                                 </div>
+                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
+                                    <br /><aspdnsf:JWBDealerInfoAfterLogin runat="server" />
+                                </div>
                                 <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
-                                    <aspdnsf:JWBMarketingServices runat="server" />
+                                    <br /><aspdnsf:JWBMarketingServices runat="server" />
                                 </div>
                             </div>
                         </div>
