@@ -1,4 +1,5 @@
-﻿using AspDotNetStorefrontCore;
+﻿using System.Activities.Expressions;
+using AspDotNetStorefrontCore;
 using System;
 
 namespace AspDotNetStorefront
@@ -102,7 +103,7 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
-                myAccount.Attributes.Add("class","active");
+                myAccount.Attributes.Add("class", "active");
             }
             else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
             {
@@ -159,7 +160,20 @@ namespace AspDotNetStorefront
             else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
             {
                 lblPageHeading.Text = "Terms and Privacy Policy";
-                pnlPageHeading.Visible = true;              
+                pnlPageHeading.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("ORDERHISTORY"))
+            {
+                if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
+                    ThisCustomer.CustomerLevelID == 6)
+                {
+                    //For Dealer lblPageHeading will be set in OrderHistory Page
+                }
+                else
+                {
+                    lblPageHeading.Text = "ORDER HISTORY";
+                }
+                pnlPageHeading.Visible = true;
             }
             else
             {

@@ -83,7 +83,7 @@
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link"><span>Alerts</span></a></li>
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
                         <li><a href="JWMyAccount.aspx" class="account-link"><span id="myAccount" runat="server">My Account</span></a></li>
-                        <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
+                        <li><a href="ShoppingCart.aspx" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout"><span>Logout</span></a></li>
                     </ul>
                     <custom:Search ID="Search1" runat="server" />

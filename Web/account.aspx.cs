@@ -523,7 +523,7 @@ namespace AspDotNetStorefront
             }
             else litShippingAddress.Text = ShippingAddress.DisplayHTML(true);
 
-            pnlOrderHistory.Visible = !Checkout;
+           // pnlOrderHistory.Visible = !Checkout;
 
             GiftCards gc = new GiftCards(ThisCustomer.CustomerID, GiftCardCollectionFilterType.UsingCustomerID);
             if (gc.Count > 0)
