@@ -5127,17 +5127,11 @@ a:hover.mb-login-btn {
   width: 100%;
 }
 .header-img-box {
-  height: 200px;
   color: #ffffff;
   position: relative;
   text-align: right;
   margin-bottom: 0.7em;
   overflow: hidden;
-}
-@media screen and (min-width: 800px) {
-  .header-img-box {
-    height: 398px;
-  }
 }
 .header-img-box img {
   width: 100%;
@@ -5801,7 +5795,7 @@ a:hover.underline-link {
 }
 .thr-line-fix {
   height: 75px;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 .vertical-top {
   vertical-align: top;
