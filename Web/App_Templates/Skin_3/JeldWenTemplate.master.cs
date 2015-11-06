@@ -153,7 +153,7 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU"))
             {
-                lblPageHeading.Text = "ABOUT TRUEBLU";
+                lblPageHeading.Text = "ABOUT True BLU™";
                 pnlPageHeading.Visible = true;
 
             }
