@@ -1635,5 +1635,27 @@ namespace AspDotNetStorefront
                 ProcessPayment(AppLogic.ro_PMSecureNetVault);
             }
         }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
+        }
     }
 }

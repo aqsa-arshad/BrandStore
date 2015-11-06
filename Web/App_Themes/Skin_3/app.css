@@ -4894,15 +4894,6 @@ a:hover.underline-link {
   margin-top: -35px;
   margin-bottom: 25px;
 }
-.search-right {
-  margin-top: 53px;
-}
-.category-right {
-  margin-top: 39px;
-}
-.sub-category-right {
-  margin-top: 39px;
-}
 .text-right {
   text-align: right;
 }
@@ -5540,6 +5531,10 @@ a:hover.mb-login-btn {
   margin-bottom: 10px;
   border-top: none !important;
 }
+.table tbody tr td .underline-link {
+  display: table;
+  margin-top: 5px;
+}
 .blk-normal-heading {
   color: #545759;
   font-family: 'FrutigerLTStd-Roman';
@@ -5687,6 +5682,12 @@ a:hover.sm-link {
   display: inline-block;
   width: 45px;
   line-height: 14px;
+}
+.search-right {
+  margin-top: 53px;
+}
+.sub-category-right {
+  margin-top: 39px;
 }
 /******************* Footer ***********************/
 footer {
