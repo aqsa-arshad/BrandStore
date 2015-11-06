@@ -117,12 +117,12 @@
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
                             </div>
-                            <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-                            <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                            <div class="separator-line hide-element" id="separatorafterlogin" runat="server"></div>
+                            <div class="side-bar-box hide-element" id="divMarkeetingExample" runat="server">
                                 <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
                             </div>
-                            <div class="separator-line"></div>
-                            <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                            <div class="separator-line hide-element"></div>
+                            <div class="side-bar-box hide-element" id="divBrandAssetExample" runat="server">
                                 <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
                             </div>
                         </div>
@@ -165,7 +165,7 @@
 
                 <div class="row">
                     <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
-                    <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div>
+                    <div id="TrueBlu" class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About True BLU™</a></div>
                     <div class="col-md-3 footer-nav terms" style="text-align: left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
@@ -206,7 +206,8 @@
 
                 if (CustomerLevel == "8") {
                     //it means public user logged in
-                    ShowControlsForPublicLogin()
+                    ShowControlsForPublicLogin();
+
                 }
                 else {
                     //it means user is not logged in
@@ -288,6 +289,7 @@
 
         }
         function ShowControlsForPublicLogin() {
+            $(".prelogin").hide();
             $("#PublicHomePageTopic").removeClass("hide-element");
             $("#FeaturedProduct").removeClass("hide-element");
             $(".beforeloginControl").hide();
@@ -296,6 +298,7 @@
             $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
+            $("#TrueBlu").hide();
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
             $("#headerlogo").attr("href", "home.aspx");
         }

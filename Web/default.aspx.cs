@@ -78,5 +78,10 @@ namespace AspDotNetStorefront
 
             return MasterHome;
         }
+
+        protected void FeaturePrdSeeAll_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("c-1-promotional-items.aspx");
+        }
     }
 }

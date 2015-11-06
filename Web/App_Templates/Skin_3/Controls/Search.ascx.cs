@@ -17,9 +17,12 @@ public partial class controls_Search : System.Web.UI.UserControl
 {
 	protected void Page_Load(object sender, EventArgs e)
 	{
-		SearchBox.Attributes.Add("placeholder", "Search Site");
-		
-        var queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
+	    if (Request.Browser.IsMobileDevice == false)
+	    {
+	        SearchBox.Attributes.Add("placeholder", "Search Site");
+	    }
+
+	    var queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
 		if (!IsPostBack)
 		{
 			if (queryStringSearchTerm.Length > 0)

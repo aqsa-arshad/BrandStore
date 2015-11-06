@@ -219,7 +219,7 @@ public class CustomXsltExtension : XSLTExtensionBase
                     output.Append(imageUrl + "</a>");
 
                     output.Append("<a class=\"btn btn-primary btn-block\" role=\"button\" href=\"" + url + "\" \">");
-                    output.Append("VEIW All" + "</a>");
+                    output.Append("VIEW All" + "</a>");
 
                     output.Append("</div></div>");
                 }

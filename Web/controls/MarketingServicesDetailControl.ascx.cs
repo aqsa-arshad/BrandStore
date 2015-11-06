@@ -29,7 +29,7 @@ public partial class controls_MarketingServicesDetailControl : System.Web.UI.Use
                 }
             }
         }        
-        results.Append("<button id=\"btnShopMarketing\" class=\"btn btn-md btn-primary\" type=\"button\">Shope Marketing Services</button >");        
+        results.Append("<button id=\"btnShopMarketing\" class=\"btn btn-md btn-primary\" type=\"button\">Shop Marketing Services</button >");        
         ContentBox.InnerHtml = results.ToString();
     }
 }
