@@ -19,7 +19,7 @@
                 <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator2" runat="server" ValidationGroup="LoginGroup"
                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="PasswordTextField"></asp:RequiredFieldValidator>
                 <div class="checkbox">
-                    <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                    <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="account-link" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
                     <label>
                         <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>Remember me
                     </label>
@@ -44,6 +44,7 @@
     </ContentTemplate>
 </asp:UpdatePanel>
 <asp:UpdatePanel runat="server">
+
     <ContentTemplate>
         <asp:Panel runat="server" DefaultButton="ForgotPasswordButton">
             <div id="ForgotPasswordPanel" runat="server">
