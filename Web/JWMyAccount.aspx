@@ -33,7 +33,7 @@
     </div>--%>
 
     <div class="content-box-03">
-        <div class="row">
+        <div class="row address">
             <div class="col-md-6">
                 <h5>Primary Billing Address</h5>
                 <ul>

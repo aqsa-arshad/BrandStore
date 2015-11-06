@@ -25,7 +25,7 @@
                 <aspdnsf:Topic ID="Topic2" runat="server" TopicName="DealerHomePageTopic" />
             </div>
             <div id="PublicHomePageTopic" class="hide-element">
-                <aspdnsf:Topic ID="Topic3" runat="server" TopicName="PublicHomePageTopic" />
+               <aspdnsf:Topic ID="Topic3" runat="server" TopicName="LandingPageTopic" />
             </div>
             <%--End Calling topic defind through admin console.--%>
             <!-- Contect Box 02  -->
@@ -50,7 +50,29 @@
         <script src="offcanvas.js"></script>
     </body>
     </html>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var CustomerLevelElemment;
+            if (document.getElementById('hdnCustomerLevel')) {
+                CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
+            }
+            else if (document.all) {
+                CustomerLevelElemment = document.all['hdnCustomerLevel'];
+            }
+            else {
+                CustomerLevelElemment = document.layers['hdnCustomerLevel'];
+            }
+
+            var CustomerLevel = CustomerLevelElemment.innerHTML;
+            if (CustomerLevel == "3") {
+                $("#rep-seeAllBtn").hide();
+            }
+
+        });
+
+</script>
 </asp:Content>
+
 
 
 

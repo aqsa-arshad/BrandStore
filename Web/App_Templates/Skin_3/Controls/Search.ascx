@@ -5,8 +5,8 @@
     <div class="form-group">
         <asp:TextBox ID="SearchBox" runat="server"
             CssClass="search-feild" MaxLength="80" />
-
-        <asp:Button runat="server"
+        
+        <asp:Button runat="server" CausesValidation="false"
             ID="SearchButton"
             OnClick="SearchButton_Click"
             OnClientClick="javascript: searchTrim();"

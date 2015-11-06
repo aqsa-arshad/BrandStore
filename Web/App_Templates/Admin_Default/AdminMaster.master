@@ -71,7 +71,7 @@
                                                     <a href="default.aspx?clearcache=true" target="_top"><asp:Literal runat="server" Text="<%$ Tokens:stringresource, admin.common.ResetCache %>" /></a>
                                                 </td>
                                                 <td align="center" valign="middle">
-                                                    <a href="signout.aspx" target="_top"><asp:Literal runat="server" Text="<%$ Tokens:signinout_text %>" /></a>
+                                                    <a href="../signout.aspx" target="_top"><asp:Literal runat="server" Text="<%$ Tokens:signinout_text %>" /></a>
                                                 </td>
                                             </tr>
                                         </table>

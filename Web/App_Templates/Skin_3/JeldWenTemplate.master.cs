@@ -134,12 +134,13 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("C-"))
             {
-                // Label will be loaded from Content Page w.r.t AddressType in QueryString
+                // Label & Back Link will be loaded from Content Page w.r.t Category in QueryString
                 pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("P-"))
             {
-                //Label and it's visibilty will be loaded from Content Page w.r.t AddressType in QueryString that's why it's empty
+                // Label & Back Link will be loaded from Content Page w.r.t Category &  Sub-Category in QueryString
+                pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("JWSUPPORT"))
             {
@@ -153,7 +154,7 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU"))
             {
-                lblPageHeading.Text = "ABOUT TRUEBLU";
+                lblPageHeading.Text = "ABOUT True BLU™";
                 pnlPageHeading.Visible = true;
 
             }

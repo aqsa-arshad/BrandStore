@@ -208,21 +208,6 @@ namespace AspDotNetStorefront
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
             VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
 
-            string address = (Request.UrlReferrer == null) ? "Default.aspx" : Request.UrlReferrer.AbsolutePath.ToString();
-            if (address.ToUpper().Contains("C-"))
-            {
-                var firstOccurance = address.IndexOf("-", StringComparison.Ordinal);
-                var lastOccurance = address.IndexOf("-", Convert.ToInt32(firstOccurance) + 1);
-                var subCategoryId = Convert.ToInt32(address.Substring(firstOccurance + 1, lastOccurance - firstOccurance - 1));                
-                if (!string.IsNullOrEmpty(GetParentCategoryName(subCategoryId)))
-                {
-                    ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = GetCategoryName(subCategoryId);
-                    Master.FindControl("pnlPageHeading").Visible = true;
-                    ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + GetParentCategoryName(subCategoryId);
-                    ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = (Request.UrlReferrer == null) ? "~/Default.aspx" : Request.UrlReferrer.ToString();
-                }
-            }           
-
             String SourceEntityInstanceName = String.Empty;
 
             if (ManufacturerID != 0)
@@ -301,6 +286,13 @@ namespace AspDotNetStorefront
             SourceEntity = Profile.LastViewedEntityName;
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
             SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
+            
+            if (!string.IsNullOrEmpty(SourceEntityInstanceName))
+            {
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SourceEntityInstanceName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + SourceEntityInstanceName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
+            }
 
             // validate that source entity id is actually valid for this product:
             if (SourceEntityID != 0)
@@ -608,42 +600,5 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
-        private string GetParentCategoryName(int subCategoryId)
-        {
-            string parentCategoryName = string.Empty;
-            using (var conn = DB.dbConn())
-            {
-                conn.Open();
-                var query = "select Name as ParentCategoryName from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + subCategoryId + ")";
-                using (var cmd = new SqlCommand(query, conn))
-                {
-                    cmd.CommandType = CommandType.Text;
-
-                    IDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                        parentCategoryName = reader["ParentCategoryName"].ToString();
-                }
-            }
-            return parentCategoryName;
-        }
-
-        private string GetCategoryName(int subCategoryId)
-        {
-            string parentCategoryName = string.Empty;
-            using (var conn = DB.dbConn())
-            {
-                conn.Open();
-                var query = "select Name as ParentCategoryName from Category where CategoryID = " + subCategoryId ;
-                using (var cmd = new SqlCommand(query, conn))
-                {
-                    cmd.CommandType = CommandType.Text;
-
-                    IDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                        parentCategoryName = reader["ParentCategoryName"].ToString();
-                }
-            }
-            return parentCategoryName;
-        }
     }
 }

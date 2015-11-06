@@ -4,7 +4,7 @@
     <ContentTemplate>
         <asp:Panel runat="server" DefaultButton="LoginButton">
             <div id="LoginPanel" runat="server">
-                <h4>Login</h4>
+                <h4></h4>
                 <label>
                     <asp:Label runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                 <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"
@@ -19,7 +19,7 @@
                 <asp:RequiredFieldValidator Display="Dynamic" ID="LoginRequiredFieldValidator2" runat="server" ValidationGroup="LoginGroup"
                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="PasswordTextField"></asp:RequiredFieldValidator>
                 <div class="checkbox">
-                    <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                    <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="account-link" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
                     <label>
                         <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>Remember me
                     </label>
@@ -37,13 +37,14 @@
                     </div>
                 </asp:Panel>
                 <asp:Button type="submit" ID="LoginButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="LoginGroup" OnClick="submitButton_Click" Text="Sign in" />
-                <asp:LinkButton runat="server" CssClass="account-link" href="createaccount.aspx" Text='<%$ Tokens:StringResource,signin.aspx.7 %>' ></asp:LinkButton>
+                <asp:LinkButton ID="createAccountLink" runat="server" CssClass="account-link" Text='<%$ Tokens:StringResource,signin.aspx.7 %>' OnClick="CreateAccountLink_Click"></asp:LinkButton>
             </div>
 
         </asp:Panel>
     </ContentTemplate>
 </asp:UpdatePanel>
 <asp:UpdatePanel runat="server">
+
     <ContentTemplate>
         <asp:Panel runat="server" DefaultButton="ForgotPasswordButton">
             <div id="ForgotPasswordPanel" runat="server">
