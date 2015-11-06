@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button class="btn btn-md btn-primary" type="submit">View Order History</button>
+            <a href="OrderHistory.aspx" class="btn btn-md btn-primary" type="submit">View Order History</a>
         </div>
     </div>
 
