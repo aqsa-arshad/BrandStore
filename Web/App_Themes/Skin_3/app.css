@@ -4839,7 +4839,7 @@ select {
 .user-grid .search-feild {
   background: url('images/search-img.png') no-repeat 5px 5px;
   padding: 5px 5px 5px 28px;
-  color: #b4b7b0;
+  color: #1d446b;
   width: 220px;
   height: 28px;
   margin-top: 20px;
@@ -5629,8 +5629,20 @@ footer {
   background-image: url(images/you-icon.png);
   margin-right: 0;
 }
-.social-links ul li a:hover {
-  background-color: #ababab;
+.social-links ul li a.fb:hover {
+    background-color: #3b5998;
+}
+.social-links ul li a.tw:hover {
+    background-color: #4099ff;
+}
+.social-links ul li a.dp:hover {
+    background-color: #55a32a;
+}
+.social-links ul li a.pin:hover {
+    background-color: #cb2027;
+}
+.social-links ul li a.youtube:hover {
+    background-color: #bb0000;
 }
 .padding-none {
   padding: 0;

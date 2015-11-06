@@ -174,7 +174,7 @@
                     </div>
                     <div class="col-md-4 social-links">
                         <ul class="">
-                             <li><a target="_blank" href="https://www.facebook.com/jeldwenwindowsanddoors" class="fb"></a></li>
+                            <li><a target="_blank" href="https://www.facebook.com/jeldwenwindowsanddoors" class="fb"></a></li>
                             <li><a target="_blank" href="https://twitter.com/jeldwen" class="tw"></a></li>
                             <li><a target="_blank" href="http://www.houzz.com/jeld-wen-windows" class="dp"></a></li>
                             <li><a target="_blank" href="https://www.pinterest.com/jeldwen/" class="pin"></a></li>
@@ -283,7 +283,7 @@
             $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
             $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
-            $("#controlHeadingforPromotionalItems").text("Our brand is their brand.");
+            $("#controlHeadingforPromotionalItems").text("Our brand is their brand");
             $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
             $("#headerlogo").attr("href", "home.aspx");
 
