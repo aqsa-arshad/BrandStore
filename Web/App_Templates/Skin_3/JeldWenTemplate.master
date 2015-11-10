@@ -65,13 +65,45 @@
     '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
-    <form id="frm" runat="server">       
+    <form id="frm" runat="server">
         <%-- Only render for pages that require ajax --%>
         <asp:ScriptManager ID="scrptMgr" runat="server">
-        </asp:ScriptManager>        
+        </asp:ScriptManager>
         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
+        <%-- Customer Alerts Region starts here--%>
+        <asp:Panel ID="popuppanel" runat="server" Visible="false">
+            <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: block;">
+                <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseDialog()">
+                                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
+                                    <h4 class="modal-title" id="myModalLabel">Daily Alerts</h4>
+                                    <ul class="modal-list">
+                                        <asp:Repeater ID="rptCustomerAlerts" runat="server" OnItemCommand="rptCustomerAlerts_ItemCommand">
+                                            <ItemTemplate>
+                                                <li class="unread">
+                                                    <asp:Label ID="lblAlertTitle" runat="server" Text='<%# Eval("Title") %>' Font-Bold='<%# bool.Parse(Eval("IsRead").ToString()) ? false : true %>'></asp:Label>
+                                                    <asp:Label ID="lblSeprator" runat="server" Text=" - " Font-Bold='<%# bool.Parse(Eval("IsRead").ToString()) ? false : true %>'></asp:Label>
+                                                    <asp:Label ID="lblAlertDescription" runat="server" ForeColor="GrayText" Text='<%# Eval("Description") %>' Font-Bold='<%# bool.Parse(Eval("IsRead").ToString()) ? false : true %>'></asp:Label>
+                                                    <asp:LinkButton ID="btnDelete" runat="server" Text="Delete" CommandName="Delete" CommandArgument='<%# Eval("CustomerAlertStatusID") %>'></asp:LinkButton>
+                                                </li>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+            <cc1:ModalPopupExtender ID="mpe" runat="server" TargetControlID="lnkAlertDesktop" PopupControlID="myModal" OkControlID="OKButton" />
+        </asp:Panel>
+        <%--Customer Alerts Region ends here    --%>
         <div class="container">
             <div class="header clearfix">
                 <div class="header-part">
@@ -81,9 +113,9 @@
                 </div>
                 <div class="user-grid">
                     <ul class="profile-links">
-                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
-                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <li><a href="JWMyAccount.aspx" class="account-link prelogin hide-element"><span id="myAccount" runat="server">My Account</span></a></li>
+                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link" OnClick="ServerButton_Click" ><span>Alerts</span></asp:LinkButton> </li>
+                        <li>
+                            <asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
@@ -144,12 +176,14 @@
                                     <aspdnsf:JWBTrueBlueUserInfo runat="server" />
                                 </div>
                                 <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
-                                    <br /><aspdnsf:JWBDealerInfoAfterLogin runat="server" />
+                                    <br />
+                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
                                 </div>
                                 <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
-                                    <br /><aspdnsf:JWBMarketingServices runat="server" />
+                                    <br />
+                                    <aspdnsf:JWBMarketingServices runat="server" />
                                 </div>
-                                 <div class="side-bar-box hide-element" id="JWBPublicUserAfterLoginControl" runat="server">
+                                <div class="side-bar-box hide-element" id="JWBPublicUserAfterLoginControl" runat="server">
                                     <aspdnsf:JWBPublicUserAfterLogin runat="server" />
                                 </div>
                             </div>
@@ -182,7 +216,7 @@
                             <li><a target="_blank" href="https://twitter.com/jeldwen" class="tw"></a></li>
                             <li><a target="_blank" href="http://www.houzz.com/jeld-wen-windows" class="dp"></a></li>
                             <li><a target="_blank" href="https://www.pinterest.com/jeldwen/" class="pin"></a></li>
-                            <li><a target="_blank"  href="https://www.youtube.com/user/JELDWENVIDEOS" class="youtube"></a></li>
+                            <li><a target="_blank" href="https://www.youtube.com/user/JELDWENVIDEOS" class="youtube"></a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Privacy Policy</a></div>
@@ -194,6 +228,21 @@
     <script src="offcanvas.js"></script>
     <script src="js/collapse.js"></script>
     <script src="js/transition.js"></script>
+
+     <script type="text/javascript">
+         function CloseDialog() {
+             var dialog = '<%= popuppanel.ClientID %>'
+             $("#" + dialog).hide();
+      }
+
+    </script>
+    <script type="text/javascript">
+        function preventLoad(e) {
+            e.preventDefault();
+        }
+
+        </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             ShowHideControls();
