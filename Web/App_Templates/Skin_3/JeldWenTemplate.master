@@ -82,7 +82,8 @@
                     <ul class="profile-links">
                         <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element"><span>Alerts</span></a></li>
                         <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <li><a href="JWMyAccount.aspx" class="account-link prelogin hide-element"><span id="myAccount" runat="server">My Account</span></a></li>
+                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" id="liMyAccount" Text="My Account"></asp:LinkButton></li>
+                      <%--  <li ><a href="JWMyAccount.aspx" class="account-link prelogin hide-element" id="liMyAccount" runat="server"><span id="myAccount" runat="server">My Account</span></a></li>--%>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
