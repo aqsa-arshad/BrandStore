@@ -9,7 +9,7 @@
             <asp:Repeater ID="rptAddresses" runat="server" OnItemCommand="rptAddresses_ItemCommand" OnItemDataBound="rptAddresses_ItemDataBound">
                 <ItemTemplate>
                     <div class="col-md-6">
-                        <ul>
+                        <ul style="overflow: hidden;">
                             <li><asp:Label ID="lblFullName" runat="server" Text='<%# Eval("FirstName") + " " + Eval("LastName") %>'></asp:Label></li>
                             <li><asp:Label ID="lblAddress1" runat="server" Text='<%# Eval("Address1") %>'></asp:Label></li>
                             <li><asp:Label ID="lblAddress2" runat="server" Text='<%# Eval("Address2") %>'></asp:Label></li>

@@ -36,7 +36,7 @@
         <div class="row address">
             <div class="col-md-6">
                 <h5>Primary Billing Address</h5>
-                <ul>
+                <ul style="overflow: hidden;">
                     <li><asp:Label ID="lblBANA" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAFullName" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblBAAddress1" runat="server"></asp:Label></li>
@@ -52,7 +52,7 @@
 
             <div class="col-md-6">
                 <h5>Primary Shipping Address</h5>
-                <ul>
+                <ul style="overflow: hidden;">
                     <li><asp:Label ID="lblSANA" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAFullName" runat="server"></asp:Label></li>
                     <li><asp:Label ID="lblSAAddress1" runat="server"></asp:Label></li>

@@ -42,12 +42,12 @@
                     <label><asp:Label ID="lblAddress1" runat="server" Text='<%$ Tokens:StringResource, address.cs.6 %>'></asp:Label></label>
                     <asp:TextBox ID="txtAddress1" runat="server" MaxLength="100"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtAddress1" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.16 %>" />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="txtAddress1" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.95 %>" ValidationExpression="[0-9a-zA-Z #,-]+" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="txtAddress1" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.95 %>" ValidationExpression="[0-9a-zA-Z #.,-/():]+" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblAddress2" runat="server" Text='<%$ Tokens:StringResource, address.cs.7 %>'></asp:Label></label>
                     <asp:TextBox ID="txtAddress2" runat="server" MaxLength="100"></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ControlToValidate="txtAddress2" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.96 %>" ValidationExpression="[0-9a-zA-Z #,-]+" />
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ControlToValidate="txtAddress2" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.96 %>" ValidationExpression="[0-9a-zA-Z #.,-/():]+" />
                 </div>
                 <div class="form-group">
                     <label><asp:Label ID="lblSuite" runat="server" Text='<%$ Tokens:StringResource, address.cs.8 %>'></asp:Label></label>
