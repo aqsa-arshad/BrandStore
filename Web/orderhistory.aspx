@@ -17,7 +17,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="<%$ Tokens:StringResource,account.aspx.36 %>"/>
                                         </Span>								
 										<a target="_blank" href='<%#m_StoreLoc + "receipt.aspx?ordernumber=" + DataBinder.Eval(Container.DataItem, "OrderNumber") %>'><%# DataBinder.Eval(Container.DataItem, "OrderNumber").ToString() %></a>										
-                                        <a class="underline-link" href="#">View Detail</a>
+                                        <a class="underline-link" href='<%#m_StoreLoc + "OrderDetail.aspx?ordernumber=" + DataBinder.Eval(Container.DataItem, "OrderNumber") %>'>View Detail</a>
 									</td>
 									<td>
 									    <Span class="blk-normal-heading">

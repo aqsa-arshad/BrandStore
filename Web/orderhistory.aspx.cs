@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Web;
 using System.Data;
 using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
@@ -37,33 +36,43 @@ namespace AspDotNetStorefront
 
         public void GetOrders(int pageIndex)
         {
-            string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };            
-            using (var conn = DB.dbConn())
+            string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
+            try
             {
-                conn.Open();
-                using (var cmd = new SqlCommand("aspdnsf_GetAllOrders", conn))
+                using (var conn = DB.dbConn())
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-                    cmd.Parameters.AddWithValue("@PageSize", PageSize);
-                    cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
-                    cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
-                    cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
-                    cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
-                    cmd.Parameters.AddWithValue("@AllowCustomerFiltering", CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0));
-                    cmd.Parameters.AddWithValue("@StoreID", AppLogic.StoreID());
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetAllOrders", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                        cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                        cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
+                        cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
+                        cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
+                        cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                        cmd.Parameters.AddWithValue("@AllowCustomerFiltering",
+                            CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0));
+                        cmd.Parameters.AddWithValue("@StoreID", AppLogic.StoreID());
 
-                    IDataReader reader = cmd.ExecuteReader();
-                    rptOrderhistory.DataSource = reader;
-                    rptOrderhistory.DataBind();
-                    
-                    reader.Close();
-                    conn.Close();
+                        IDataReader reader = cmd.ExecuteReader();
+                        rptOrderhistory.DataSource = reader;
+                        rptOrderhistory.DataBind();
 
-                    var recordCount = Convert.ToInt32(cmd.Parameters["@RecordCount"].Value);
-                    PopulatePager(recordCount, pageIndex);
+                        reader.Close();
+                        conn.Close();
+
+                        var recordCount = Convert.ToInt32(cmd.Parameters["@RecordCount"].Value);
+                        PopulatePager(recordCount, pageIndex);
+                    }
                 }
-            }            
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
             accountaspx55.Visible = (rptOrderhistory.Items.Count == 0);
         }
 
@@ -182,17 +191,32 @@ namespace AspDotNetStorefront
         private static string GetDealerName(int customerId)
         {
             var customerName = string.Empty;
-            using (var conn = DB.dbConn())
+            try
             {
-                conn.Open();
-                var query = "select FirstName + ', ' + LastName as CustomerName from Customer where CustomerID = " + customerId;
-                using (var cmd = new SqlCommand(query, conn))
+                using (var conn = DB.dbConn())
                 {
-                    cmd.CommandType = CommandType.Text;
-                    IDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                        customerName = reader["CustomerName"].ToString();
+                    conn.Open();
+                    var query = "select FirstName + ', ' + LastName as CustomerName from Customer where CustomerID = " +
+                                customerId;
+                    using (var cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        IDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                            customerName = reader["CustomerName"].ToString();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(
+                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
+                    System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message +
+                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
+                        ? " :: " + ex.InnerException.Message
+                        : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return customerName;
         }

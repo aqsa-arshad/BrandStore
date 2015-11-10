@@ -103,7 +103,17 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
+
                 liMyAccount.Attributes.Add("class", "active");
+                if (ThisCustomer.CustomerLevelID == 8)
+                {
+                    var newClassValue = JWBPublicUserAfterLoginControl.Attributes["class"].Replace("hide-element", "");
+                    JWBPublicUserAfterLoginControl.Attributes.Remove("class");
+                    JWBPublicUserAfterLoginControl.Attributes.Add("class", newClassValue);
+                    JWBUserInfoAfterLoginControl.Visible = false;
+                }
+
+
             }
             else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
             {

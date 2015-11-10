@@ -9186,7 +9186,7 @@ namespace AspDotNetStorefrontCore
 			}
 
             return Image1URL;
-        }
+        }        
 
         // Color string MUST be in master store LocaleSetting!
 		public static string LookupProductImageByNumberAndColor(int ProductID, int SkinID, string LocaleSetting, int ImageNumber, string Color, string ImgSize)
