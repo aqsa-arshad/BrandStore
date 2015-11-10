@@ -201,7 +201,7 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
 
-                liMyAccount.Attributes.Add("class", "active");
+                liMyAccount.Attributes.Add("class", "active account-link");
                 if (ThisCustomer.CustomerLevelID == 8)
                 {
                     var newClassValue = JWBPublicUserAfterLoginControl.Attributes["class"].Replace("hide-element", "");

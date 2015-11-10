@@ -103,7 +103,7 @@
             </div>
             <cc1:ModalPopupExtender ID="mpe" runat="server" TargetControlID="lnkAlertDesktop" PopupControlID="myModal" OkControlID="OKButton" />
         </asp:Panel>
-        <%--Customer Alerts Region starts here    --%>
+        <%--Customer Alerts Region ends here    --%>
         <div class="container">
             <div class="header clearfix">
                 <div class="header-part">
