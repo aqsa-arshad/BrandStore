@@ -216,11 +216,13 @@ namespace AspDotNetStorefront
             {
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
+                liMyAccount.Attributes.Add("class", "active account-link");
             }
             else if (currentURL.ToUpper().Contains("JWADDADDRESSES"))
             {
                 lblPageHeading.Text = "ADD/EDIT ADDRESS";
                 pnlPageHeading.Visible = true;
+                liMyAccount.Attributes.Add("class", "active account-link");
             }
 
             else if (currentURL.ToUpper().Contains("SIGNIN"))
@@ -281,6 +283,7 @@ namespace AspDotNetStorefront
                 {
                     lblPageHeading.Text = "ORDER HISTORY";
                 }
+                liMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
             else
