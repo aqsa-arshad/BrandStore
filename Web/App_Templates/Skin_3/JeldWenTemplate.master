@@ -113,7 +113,7 @@
                 </div>
                 <div class="user-grid">
                     <ul class="profile-links">
-                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link" OnClick="ServerButton_Click" ><span>Alerts</span></asp:LinkButton> </li>
+                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click" ><span>Alerts</span></asp:LinkButton> </li>
                         <li>
                             <asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
