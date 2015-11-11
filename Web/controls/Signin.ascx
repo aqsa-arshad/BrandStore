@@ -57,8 +57,8 @@
                                         </div>--%>
                                     </div>
                                     <div class="col-md-6">
-                                        <h5>DON'T HAVE AN ACCOUNT?</h5>
-                                        <p>Create an account to access exclusive JELD-WEN branded items and to receive notifications when new items are added. We want to make it easy for you to keep track of your purchases and enjoy faster checkouts in the future.</p>
+                                        <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
+                                        <p><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.12 %>"></asp:Label></p>
                                         <asp:HyperLink ID="SignUpLink" Font-Underline="true" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
                                     </div>
                                 </div>
