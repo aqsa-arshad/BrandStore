@@ -1,31 +1,77 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.UI;
 using AspDotNetStorefrontCore;
-
 
 namespace AspDotNetStorefront
 {
-    public partial class OrderDetail : SkinBase
+    public partial class OrderReceipt : SkinBase
     {
         protected int OrderNumber;
         private IDataReader reader;
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            RequireSecurePage();
+            Response.CacheControl = "private";
+            Response.Expires = 0;
+            Response.AddHeader("pragma", "no-cache");
 
+            SkinBase.RequireSecurePage();
+
+            OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
+            int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
+
+            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal) Context.User).ThisCustomer;
+                // who is logged in now viewing this page:
+
+            // currently viewing user must be logged in to view receipts:
+            if (!ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("signin.aspx?returnurl=receipt.aspx?" +
+                                  Server.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING")));
+            }
+
+            // are we allowed to view?
+            // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
+            if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
+            {
+                Response.Redirect(SE.MakeDriverLink("ordernotfound"));
+            }
+
+            //For multi store checking
+            //Determine if customer is allowed to view orders from other store.
+            if (!ThisCustomer.IsAdminUser && AppLogic.StoreID() != AppLogic.GetOrdersStoreID(OrderNumber) &&
+                AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true)
+            {
+                Response.Redirect(SE.MakeDriverLink("ordernotfound"));
+            }
             if (!Page.IsPostBack)
             {
-                ClientScriptManager cs = Page.ClientScript;
-                cs.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "function ReOrder(OrderNumber) {if(confirm('" + AppLogic.GetString("account.aspx.64", SkinID, ThisCustomer.LocaleSetting) + "')) {top.location.href='reorder.aspx?ordernumber='+OrderNumber;} }", true);
-                OrderNumber = CommonLogic.QueryStringUSInt("OrderNumber");
                 GetOrderInfo();
                 GetOrderItemsDetail();
-                hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";
             }
+        }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenEmptyTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenEmptyTemplate";
+            }
+            return masterHome;
         }
 
         void GetOrderInfo()
@@ -45,6 +91,8 @@ namespace AspDotNetStorefront
                         {
                             lblOrderNumber.Text = reader["OrderNumber"].ToString();
                             lblOrderDate.Text = reader["OrderDate"].ToString();
+                            lblCustomerID.Text = reader["CustomerID"].ToString();
+
                             //Billing Address
                             lblBAFullName.Text = reader["BillingFirstName"].ToString() + ' ' +
                                                  reader["BillingLastName"].ToString();
@@ -115,28 +163,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-        }
-
-        protected override string OverrideTemplate()
-        {
-            var masterHome = AppLogic.HomeTemplate();
-            if (masterHome.Trim().Length == 0)
-            {
-                masterHome = "JeldWenTemplate";
-            }
-            if (masterHome.EndsWith(".ascx"))
-            {
-                masterHome = masterHome.Replace(".ascx", ".master");
-            }
-            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
-            {
-                masterHome = masterHome + ".master";
-            }
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
-            {
-                masterHome = "JeldWenTemplate";
-            }
-            return masterHome;
         }
     }
 }

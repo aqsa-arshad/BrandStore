@@ -201,7 +201,7 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
 
-                liMyAccount.Attributes.Add("class", "active");
+                liMyAccount.Attributes.Add("class", "active account-link");
                 if (ThisCustomer.CustomerLevelID == 8)
                 {
                     var newClassValue = JWBPublicUserAfterLoginControl.Attributes["class"].Replace("hide-element", "");
@@ -281,6 +281,21 @@ namespace AspDotNetStorefront
                 {
                     lblPageHeading.Text = "ORDER HISTORY";
                 }
+                liMyAccount.Attributes.Add("class", "active account-link");
+                pnlPageHeading.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("ORDERDETAIL"))
+            {
+                if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
+                    ThisCustomer.CustomerLevelID == 6)
+                {
+                    //For Dealer lblPageHeading will be set in OrderHistory Page
+                }
+                else
+                {
+                    lblPageHeading.Text = "ORDER DETAIL";
+                }
+                liMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
             else
