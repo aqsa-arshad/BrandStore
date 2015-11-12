@@ -128,8 +128,20 @@ namespace AspDotNetStorefront
                         cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
 
                         IDataReader idr = cmd.ExecuteReader();
-                        rptCustomerAlerts.DataSource = idr;
-                        rptCustomerAlerts.DataBind();
+                        if ((((System.Data.Common.DbDataReader)idr).HasRows))
+                        {
+                            rptCustomerAlerts.DataSource = idr;
+                            rptCustomerAlerts.DataBind();
+                            ulCustomerAlertNotification.Visible = false;
+                        }
+                        else
+                        {
+                            rptCustomerAlerts.DataSource = null;
+                            rptCustomerAlerts.DataBind();
+                            ulCustomerAlertNotification.Visible = true;
+                        }
+                       
+                       
                     }
                 }
             }
