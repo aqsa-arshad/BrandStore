@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserInfoAfterLogin.ascx.cs" Inherits="controls_UserInfoAfterLogin" %>
-<h4 id="WelcomeHeadingAfterUserLogin" runat="server"></h4>
+<h3 id="WelcomeHeadingAfterUserLogin" runat="server"></h3>
 <%--Todo: True Blu Funtionality in Phase-2--%>
 <%--<p class="hideforpublicuser">Sales Operations Funds = $$$$</p>
 <a href="#" class="hideforpublicuser"><u>Request sales operations funds</u></a>--%>

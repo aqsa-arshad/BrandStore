@@ -113,9 +113,10 @@
                 </div>
                 <div class="user-grid">
                     <ul class="profile-links">
-                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click" ><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
+
                         <li>
-                            <asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
+                            <asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click"><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
+                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
@@ -228,16 +229,16 @@
     <script src="js/collapse.js"></script>
     <script src="js/transition.js"></script>
 
-     <script type="text/javascript">
-         function CloseDialog() {
-             var dialog = '<%= popuppanel.ClientID %>'
+    <script type="text/javascript">
+        function CloseDialog() {
+            var dialog = '<%= popuppanel.ClientID %>'
              $("#" + dialog).hide();
              var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
              $("#" + alertLnk).removeClass("new-alerts");
              $("#" + alertLnk).addClass("alerts-link");
              var alertCount = '<%=  lblAlertCount.ClientID %>'
              $("#" + alertCount).text("ALERTS");
-      }
+         }
 
     </script>
     <script type="text/javascript">
@@ -245,7 +246,7 @@
             e.preventDefault();
         }
 
-        </script>
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
