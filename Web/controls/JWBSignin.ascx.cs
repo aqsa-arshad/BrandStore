@@ -117,7 +117,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
     protected void CreateAccountLink_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Request.Browser.IsMobileDevice ? "createaccount.aspx#createAccountDiv" : "createaccount.aspx");
+        Response.Redirect("createaccount.aspx");
     }
 
 
