@@ -1201,6 +1201,11 @@ namespace AspDotNetStorefrontControls
 
             _txtPassword.CssClass = "form-control";
             _txtPasswordConfirm.CssClass = "form-control";
+            _txtFirstName.CssClass = "form-control";
+            _txtLastName.CssClass = "form-control";
+            _txtEmail.CssClass = "form-control";
+            _txtPhone.CssClass = "form-control";
+            _txtReEnterEmail.CssClass = "form-control"; 
         }
 
         public static void DisableAutocomplete(TextBox tb)
@@ -1361,7 +1366,7 @@ namespace AspDotNetStorefrontControls
             #endregion
 
             #region "Second Column"
-            this.Controls.Add(new LiteralControl("<div class='col-md-5 pull-right'>"));
+            this.Controls.Add(new LiteralControl("<div class='col-md-5 pull-desktop-right'>"));
 
             // [Start] - Phone
             this.Controls.Add(new LiteralControl("<div class='form-group'>"));

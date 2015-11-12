@@ -29,10 +29,14 @@ namespace AspDotNetStorefront
             PayPalAd entityPageAd = new PayPalAd(PayPalAd.TargetPage.Entity);
             ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SEDescription;
 
-            if (!string.IsNullOrEmpty(GetParentCategoryName()))
+            string parentCategoryName = string.Empty; 
+            string parentCategoryID = string.Empty;
+            GetParentCategory(ref parentCategoryName, ref parentCategoryID);
+            
+            if (!string.IsNullOrEmpty(parentCategoryName))
             {
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + GetParentCategoryName();
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = (Request.UrlReferrer == null) ? "~/Default.aspx" : Request.UrlReferrer.ToString();
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + parentCategoryName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
             }
             if (entityPageAd.Show)
             {
@@ -114,23 +118,24 @@ namespace AspDotNetStorefront
             }
         }
 
-        private string GetParentCategoryName()
+        private void GetParentCategory(ref string  parentCategoryName, ref string parentCategoryID )
         {
-            string parentCategoryName = string.Empty;
             using (var conn = DB.dbConn())
             {
                 conn.Open();
-                var query = "select Name as ParentCategoryName from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + PageID + ")";
+                var query = "select Name, CategoryID from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + PageID + ")";
                 using (var cmd = new SqlCommand(query, conn))
                 {
                     cmd.CommandType = CommandType.Text;
 
                     IDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
-                        parentCategoryName = reader["ParentCategoryName"].ToString();
+                    {
+                        parentCategoryName = reader["Name"].ToString();
+                        parentCategoryID = reader["CategoryID"].ToString();
+                    }
                 }
             }
-            return parentCategoryName;
         }
 
         protected override string OverrideTemplate()

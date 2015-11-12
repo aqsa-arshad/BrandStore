@@ -8520,7 +8520,7 @@ namespace AspDotNetStorefrontCore
             {
                 MM = String.Empty; // something international happened, so just leave empty, we only want currency symbol, not any digits
             }
-            tmpS.Append("<label>Limit 5</label>	</span>");
+            tmpS.Append("</span>");
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
             {
                 if (SizesMaster.Length != 0)

@@ -205,9 +205,11 @@ public class CustomXsltExtension : XSLTExtensionBase
                         continue;
 
                     string name = reader["Name"].ToString();
+                    string imageFilenameOverride = reader["ImageFilenameOverride"].ToString();
+
                     var url = String.Format("c-{0}-{1}.aspx", reader["CategoryID"], reader["SEName"]);
 
-                    var imageLocalPath = AppLogic.LookupImage("Category", catId, string.Empty, string.Empty, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    var imageLocalPath = AppLogic.LookupImage("Category", catId, imageFilenameOverride, string.Empty, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                     var imageUrl = "<img id=\"CategoryPic" + catId + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(name), name, "ProductPic" + catId) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageLocalPath + "\">";          
 
                     output.Append("<div class=\"col-md-6\"> <div class=\"thumbnail\">");
@@ -219,7 +221,7 @@ public class CustomXsltExtension : XSLTExtensionBase
                     output.Append(imageUrl + "</a>");
 
                     output.Append("<a class=\"btn btn-primary btn-block\" role=\"button\" href=\"" + url + "\" \">");
-                    output.Append("VEIW All" + "</a>");
+                    output.Append("VIEW All" + "</a>");
 
                     output.Append("</div></div>");
                 }

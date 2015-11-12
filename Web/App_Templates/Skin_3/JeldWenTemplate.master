@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/MarkeetingExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBBrandAssetExample" Src="~/Controls/BrandAssetExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBUserInfoAfterLogin" Src="~/Controls/UserInfoAfterLogin.ascx" %>
+<%@ Register TagPrefix="aspdnsf" TagName="JWBPublicUserAfterLogin" Src="~/Controls/PublicUserAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBDealerInfoAfterLogin" Src="~/Controls/DealerInfoAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarketingServices" Src="~/Controls/MarketingServices.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBTrueBlueUserInfo" Src="~/Controls/TrueBlueUserInfo.ascx" %>
@@ -64,13 +65,48 @@
     '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-KPVNQV');</script>
     <!-- End Google Tag Manager -->
-    <form id="frm" runat="server">       
+    <form id="frm" runat="server">
         <%-- Only render for pages that require ajax --%>
         <asp:ScriptManager ID="scrptMgr" runat="server">
-        </asp:ScriptManager>        
+        </asp:ScriptManager>
         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnCustomerLevel" name="hdnCustomerLevel" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
+        <%-- Customer Alerts Region starts here--%>
+        <asp:Panel ID="popuppanel" runat="server" Visible="false">
+            <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: block;">
+                <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseDialog()">
+                                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
+                                    <h4 class="modal-title" id="myModalLabel">Daily Alerts</h4>
+                                    <ul class="modal-list" id="ulCustomerAlertNotification" runat="server" visible="false">
+                                        <li class="unread"> <asp:Label runat="server" ID="lblAlertNotification" Font-Bold="true" Text="You have 0 alerts at this time."></asp:Label></li>
+                                    </ul>
+                                    <ul class="modal-list">
+                                        <asp:Repeater ID="rptCustomerAlerts" runat="server" OnItemCommand="rptCustomerAlerts_ItemCommand">
+                                            <ItemTemplate>
+                                                <li class="unread">
+                                                    <asp:Label ID="lblAlertTitle" runat="server" Text='<%# Eval("Title") %>' Font-Bold='<%# bool.Parse(Eval("IsRead").ToString()) ? false : true %>'></asp:Label>
+                                                    <asp:Label ID="lblSeprator" runat="server" Text=" - " Font-Bold='<%# bool.Parse(Eval("IsRead").ToString()) ? false : true %>'></asp:Label>
+                                                    <asp:Label ID="lblAlertDescription" runat="server" ForeColor="GrayText" Text='<%# Eval("Description") %>' Font-Bold='<%# bool.Parse(Eval("IsRead").ToString()) ? false : true %>'></asp:Label>
+                                                    <asp:LinkButton ID="btnDelete" runat="server" Text="Delete" CommandName="Delete" CommandArgument='<%# Eval("CustomerAlertStatusID") %>'></asp:LinkButton>
+                                                </li>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+            <cc1:ModalPopupExtender ID="mpe" runat="server" TargetControlID="lnkAlertDesktop" PopupControlID="myModal" OkControlID="OKButton" />
+        </asp:Panel>
+        <%--Customer Alerts Region ends here    --%>
         <div class="container">
             <div class="header clearfix">
                 <div class="header-part">
@@ -79,12 +115,13 @@
                     <span class="head-tagline">Brand Store      </span>
                 </div>
                 <div class="user-grid">
-                    <ul class="profile-links prelogin hide-element">
-                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="lnkAlertDesktop" runat="server" class="alerts-link"><span>Alerts</span></a></li>
-                        <aspdnsf:CustomerAlerts ID="UC_CustomerAlerts" runat="server" />
-                        <li><a href="JWMyAccount.aspx" class="account-link"><span id="myAccount" runat="server">My Account</span></a></li>
+                    <ul class="profile-links">
+
+                        <li>
+                            <asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click"><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
+                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount"><span>My Account</span></asp:LinkButton></li>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
-                        <li><a href="signout.aspx" class="logout-link lnkLogout"><span>Logout</span></a></li>
+                        <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
                     <custom:Search ID="Search1" runat="server" />
                 </div>
@@ -117,12 +154,12 @@
                             <div class="login-box" id="divlogin" runat="server">
                                 <aspdnsf:JWBSignin runat="server" ID="logincontrol" />
                             </div>
-                            <div class="separator-line" id="separatorafterlogin" runat="server"></div>
-                            <div class="side-bar-box" id="divMarkeetingExample" runat="server">
+                            <div class="separator-line hide-element" id="separatorafterlogin" runat="server"></div>
+                            <div class="side-bar-box hide-element" id="divMarkeetingExample" runat="server">
                                 <aspdnsf:JWBMarkeetingExample runat="server" ID="JWBMarkeetingExample" />
                             </div>
-                            <div class="separator-line"></div>
-                            <div class="side-bar-box" id="divBrandAssetExample" runat="server">
+                            <div class="separator-line hide-element"></div>
+                            <div class="side-bar-box hide-element" id="divBrandAssetExample" runat="server">
                                 <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
                             </div>
                         </div>
@@ -136,17 +173,22 @@
                     <div class="col-md-4" id="divSideBarAfterLogin" runat="server">
                         <div class="side-bar" id="divafterlogin" runat="server">
                             <div>
-                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl">
+                                <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl" runat="server">
                                     <aspdnsf:JWBUserInfoAfterLogin runat="server" />
-                                </div>
-                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
-                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
                                 </div>
                                 <div class="side-bar-box hide-element" id="JWBTrueBlueUserInfoControl">
                                     <aspdnsf:JWBTrueBlueUserInfo runat="server" />
                                 </div>
+                                <div class="side-bar-box hide-element" id="JWBDealerInfoAfterLoginControl">
+                                    <br />
+                                    <aspdnsf:JWBDealerInfoAfterLogin runat="server" />
+                                </div>
                                 <div class="side-bar-box hide-element" id="JWBMarketingServicesControl">
+                                    <br />
                                     <aspdnsf:JWBMarketingServices runat="server" />
+                                </div>
+                                <div class="side-bar-box hide-element" id="JWBPublicUserAfterLoginControl" runat="server">
+                                    <aspdnsf:JWBPublicUserAfterLogin runat="server" />
                                 </div>
                             </div>
                         </div>
@@ -165,8 +207,7 @@
 
                 <div class="row">
                     <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
-                    <div class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About TrueBLU™</a></div>
-                    <div class="col-md-3 footer-nav terms" style="text-align: left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
+                    <div id="TrueBlu" class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About True BLU™</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -174,14 +215,14 @@
                     </div>
                     <div class="col-md-4 social-links">
                         <ul class="">
-                            <li><a href="#" class="fb"></a></li>
-                            <li><a href="#" class="tw"></a></li>
-                            <li><a href="#" class="dp"></a></li>
-                            <li><a href="#" class="pin"></a></li>
-                            <li><a href="#" class="youtube"></a></li>
+                            <li><a target="_blank" href="https://www.facebook.com/jeldwenwindowsanddoors" class="fb"></a></li>
+                            <li><a target="_blank" href="https://twitter.com/jeldwen" class="tw"></a></li>
+                            <li><a target="_blank" href="http://www.houzz.com/jeld-wen-windows" class="dp"></a></li>
+                            <li><a target="_blank" href="https://www.pinterest.com/jeldwen/" class="pin"></a></li>
+                            <li><a target="_blank" href="https://www.youtube.com/user/JELDWENVIDEOS" class="youtube"></a></li>
                         </ul>
                     </div>
-                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Privacy Policy</a></div>
+                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Terms & Privacy Policy</a></div>
                 </div>
             </footer>
         </div>
@@ -190,6 +231,26 @@
     <script src="offcanvas.js"></script>
     <script src="js/collapse.js"></script>
     <script src="js/transition.js"></script>
+
+    <script type="text/javascript">
+        function CloseDialog() {
+            var dialog = '<%= popuppanel.ClientID %>'
+             $("#" + dialog).hide();
+             var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
+             $("#" + alertLnk).removeClass("new-alerts");
+             $("#" + alertLnk).addClass("alerts-link");
+             var alertCount = '<%=  lblAlertCount.ClientID %>'
+             $("#" + alertCount).text("ALERTS");
+         }
+
+    </script>
+    <script type="text/javascript">
+        function preventLoad(e) {
+            e.preventDefault();
+        }
+
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             ShowHideControls();
@@ -206,7 +267,8 @@
 
                 if (CustomerLevel == "8") {
                     //it means public user logged in
-                    ShowControlsForPublicLogin()
+                    ShowControlsForPublicLogin();
+
                 }
                 else {
                     //it means user is not logged in
@@ -279,23 +341,27 @@
         }
         function ShowControlsForSalesRepAndInternalLogin() {
             $("#InternalHomePageTopic").removeClass("hide-element");
-            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
+            $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
             $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
-            $("#controlHeadingforPromotionalItems").text("Our brand is their brand.");
+            $("#controlHeadingforPromotionalItems").text("Our brand is their brand");
             $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
             $("#headerlogo").attr("href", "home.aspx");
 
         }
         function ShowControlsForPublicLogin() {
+            $(".prelogin").hide();
             $("#PublicHomePageTopic").removeClass("hide-element");
             $("#FeaturedProduct").removeClass("hide-element");
             $(".beforeloginControl").hide();
             // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
             $(".prelogin").removeClass("hide-element");
-            $("#JWBUserInfoAfterLoginControl").removeClass("hide-element");
+
+            $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
+            //$("#JWBPublicUserAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
             $(".prelogin").show();
+            $("#TrueBlu").hide();
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
             $("#headerlogo").attr("href", "home.aspx");
         }

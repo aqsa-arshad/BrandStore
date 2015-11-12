@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-11">
             <div class="primary-img-box">
-                <img id="productimmageAfterLogin" runat="server" class="img-responsive" src="App_Themes/Skin_3/images/brand-ex-img.png">
+                <img id="productimmageAfterLogin" runat="server" class="img-responsive" src="App_Themes/Skin_3/images/brand-ex-img.png" />
             </div>
             <div class="img-tag-line"></div>
         </div>

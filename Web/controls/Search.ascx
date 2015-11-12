@@ -6,8 +6,8 @@
             ID="SearchBox"
             CssClass="form-control search-text"
             Text="<%$ Tokens:STRINGRESOURCE, search.prompt %>" />
-
-        <asp:Button runat="server"
+        
+        <asp:Button runat="server" CausesValidation="false"
             ID="SearchButton"
             CssClass="button search-button"
             OnClick="SearchButton_Click"

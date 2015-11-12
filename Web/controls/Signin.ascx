@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Signin.ascx.cs" Inherits="AspDotNetStorefront.Signin" %>
+<%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
@@ -22,7 +23,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h5>SIGN IN</h5>
-                                        <p>if you already have an account, please sign in using your email address and password</p>
+                                        <p>If you already have an account, please sign in using your email address and password</p>
                                         <label>
                                             <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox ID="UserName" CssClass="form-control" runat="server" ValidationGroup="Group1" MaxLength="100"
@@ -45,23 +46,29 @@
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.20 %>' ValidationGroup="Group1"
                                             Enabled="False"></asp:RequiredFieldValidator>
                                         <asp:Image ID="SecurityImage" runat="server" Visible="False"></asp:Image>
-
-                                        <div class="checkbox">
-                                            <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>Remember me
-                           <asp:LinkButton runat="server" CssClass="pull right" OnClick="forgotpasswordLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                                        <div>
+                                            <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="pull-right" Font-Underline="true"  CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                                            <label>
+                                                <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>&nbsp;Remember me
+                                            </label>
                                         </div>
+                                        <%--<div class="checkbox">
+                                            <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>Remember me
+                                            <asp:LinkButton runat="server" CssClass="pull-right" Font-Underline="true" OnClick="forgotpasswordLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                                        </div>--%>
                                     </div>
                                     <div class="col-md-6">
-                                        <h5>DON'T HAVE AN ACCOUNT?</h5>
-                                        <p>Create an account if you don't have one with the JELD WEN Brand store.</p>
-                                        <asp:HyperLink ID="SignUpLink" class="account-link" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
+                                       <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
+                                       <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
+
+                                        <asp:HyperLink ID="SignUpLink" Font-Underline="true" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                     </div>
                                     <div class="col-md-6">
-                                        <asp:Button ID="LoginButton" CssClass="btn btn-md btn-primary  btn-block " CommandName="Login" runat="server" Text="SIGN IN"
+                                        <asp:Button ID="LoginButton" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="SIGN IN"
                                             ValidationGroup="Group1"></asp:Button>
                                     </div>
                                 </div>
@@ -172,7 +179,7 @@
                                 <asp:Button class="form-control" CssClass="btn btn-md btn-primary btn-block" ID="btnRequestNewPassword" CommandName="Submit" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.18 %>'
                                     ValidationGroup="Group2"></asp:Button>
                                 <br />
-                                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" Text='<%$ Tokens:StringResource,signin.aspx.13 %>'></asp:LinkButton>
+                                <asp:LinkButton runat="server" OnClick="GoBackToLoginLink_Click" Font-Underline="true" Text='<%$ Tokens:StringResource,signin.aspx.13 %>'></asp:LinkButton>
                             </div>
                         </div>
                     </asp:Panel>

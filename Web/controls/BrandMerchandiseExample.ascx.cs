@@ -83,7 +83,7 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
         if (CustomerLevel == "7" || CustomerLevel == "3" || CustomerLevel == "1" || CustomerLevel == "2")
         {
             //sales rep or internal user
-            controlHeadingforPromotionalItems.InnerHtml = "Our brand is their brand.";
+            controlHeadingforPromotionalItems.InnerHtml = "Our brand is their brand";
             productdescriptionAfterLogin.InnerHtml = "Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ";
         }
         else if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6")
