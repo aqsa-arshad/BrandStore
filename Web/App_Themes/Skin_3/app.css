@@ -4855,7 +4855,9 @@ select {
   }
 }
 .user-grid .search-feild:focus {
-  background: url('images/search-img.png') no-repeat 5px -17px;
+  background: url('images/search-img.png') no-repeat 5px -17px;   
+  border-color: #1d446b;
+  outline: 0;
 }
 .profile-links {
   padding: 0;
