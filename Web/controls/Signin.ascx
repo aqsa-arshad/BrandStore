@@ -58,13 +58,9 @@
                                         </div>--%>
                                     </div>
                                     <div class="col-md-6">
-<<<<<<< HEAD
-                                        <h5>DON'T HAVE AN ACCOUNT?</h5>
+                                       <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
                                        <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
-=======
-                                        <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
-                                        <p><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.12 %>"></asp:Label></p>
->>>>>>> feature/JW-Store-DEV
+
                                         <asp:HyperLink ID="SignUpLink" Font-Underline="true" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
                                     </div>
                                 </div>

@@ -1,6 +1,8 @@
 .btn-primary {
   text-transform: uppercase;
   margin: 15px 0;
+   border-radius:0;
+  -webkit-appearance: none;
 }
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
