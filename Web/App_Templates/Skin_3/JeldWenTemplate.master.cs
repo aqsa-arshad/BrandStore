@@ -84,8 +84,8 @@ namespace AspDotNetStorefront
                         cmd.Parameters.AddWithValue("@CustomerLevelID", ThisCustomer.CustomerLevelID);
                         cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
                         Int32 AlertCount = (Int32)cmd.ExecuteScalar();
-                        
-                        if (AlertCount>0)
+
+                        if (AlertCount > 0)
                         {
                             lnkAlertDesktop.Attributes.Add("class", "new-alerts");
                             lblAlertCount.InnerHtml = "ALERTS" + " - " + AlertCount.ToString() + " - ";
@@ -95,7 +95,7 @@ namespace AspDotNetStorefront
                             lnkAlertDesktop.Attributes.Add("class", "alerts-link");
                             lblAlertCount.InnerHtml = "ALERTS";
                         }
-                        
+
                     }
                 }
             }
@@ -140,8 +140,8 @@ namespace AspDotNetStorefront
                             rptCustomerAlerts.DataBind();
                             ulCustomerAlertNotification.Visible = true;
                         }
-                       
-                       
+
+
                     }
                 }
             }
@@ -334,6 +334,65 @@ namespace AspDotNetStorefront
                 }
                 liMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
+            }
+
+            else if (currentURL.ToUpper().Contains("ORDERDETAIL"))
+            {
+                if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
+                    ThisCustomer.CustomerLevelID == 6)
+                {
+                    //For Dealer lblPageHeading will be set in OrderHistory Page
+                }
+                else
+                {
+                    lblPageHeading.Text = "ORDER DETAIL";
+                }
+                liMyAccount.Attributes.Add("class", "active account-link");
+
+            }
+            else if (currentURL.ToUpper().Contains("SHOPPINGCART"))
+            {
+                lblPageHeading.Text = "SHOPPING CART";
+
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+
+                divcontentarea.Attributes["class"] = "col-md-12";
+
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTSHIPPING"))
+            {
+                lblPageHeading.Text = "SHIPPING OPTIONS";
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTPAYMENT"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTREVIEW"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
             }
             else
             {

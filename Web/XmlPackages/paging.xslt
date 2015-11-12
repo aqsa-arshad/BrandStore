@@ -236,31 +236,23 @@
             </xsl:if>
             <xsl:text>4</xsl:text>
           </option>
-
-          <option value="8">
-            <xsl:if test="$PageSize = 8 or $PageSize = ''">
-              <xsl:attribute name="selected">selected</xsl:attribute>
-            </xsl:if>
-            <xsl:text>8</xsl:text>
-          </option>
-
           <option value="12">
             <xsl:if test="$PageSize = 12 or $PageSize = ''">
               <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
             <xsl:text>12</xsl:text>
           </option>
-          <option value="16">
-            <xsl:if test="$PageSize = 16">
+          <option value="24">
+            <xsl:if test="$PageSize = 24">
               <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
-            <xsl:text>16</xsl:text>
+            <xsl:text>24</xsl:text>
           </option>
-          <option value="20">
-            <xsl:if test="$PageSize = 20">
+          <option value="48">
+            <xsl:if test="$PageSize = 48">
               <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
-            <xsl:text>20</xsl:text>
+            <xsl:text>48</xsl:text>
           </option>
           <option value="100">
             <xsl:if test="$PageSize = 100">
