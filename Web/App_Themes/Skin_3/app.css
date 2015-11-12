@@ -5074,9 +5074,8 @@ a:hover.mb-login-btn {
 }
 .nav-justified > .dropdown .dropdown-menu {
   margin-top: 0;
-  width: 270px;
   left: -1px;
-  padding: 20px 40px;
+  padding: 20px 30px;
   box-shadow: none;
   letter-spacing: 1.5px;
   font-size: 13px;
