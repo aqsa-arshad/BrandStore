@@ -119,7 +119,7 @@
 
                         <li>
                             <asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click"><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
-                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
+                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount"><span>My Account</span></asp:LinkButton></li>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
