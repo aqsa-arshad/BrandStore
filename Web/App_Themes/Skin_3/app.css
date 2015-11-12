@@ -5306,6 +5306,12 @@ a:hover.mb-login-btn {
   padding: 1px 10px;
   min-width: 70px;
   color: #b4b7b0;
+  margin-bottom: 10px;
+}
+@media screen and (min-width: 800px) {
+  .search-filters select {
+    width: auto;
+  }
 }
 .pagerArea {
   text-align: center;
