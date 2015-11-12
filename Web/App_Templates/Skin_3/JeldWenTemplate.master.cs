@@ -60,6 +60,7 @@ namespace AspDotNetStorefront
                 if (ThisCustomer.IsRegistered)
                 {
                     ShowPostLoginControls();
+                    GetUnreadCustomerAlertCount();
                     this.hdnCustomerLevel.Text = ThisCustomer.CustomerLevelID.ToString();
                 }
                 else
@@ -67,6 +68,42 @@ namespace AspDotNetStorefront
                     ShowPreLoginControls();
                     hdnCustomerLevel.Text = "-1";
                 }
+            }
+        }
+        private void GetUnreadCustomerAlertCount()
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerAlertUnreadAlertCount", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                        cmd.Parameters.AddWithValue("@CustomerLevelID", ThisCustomer.CustomerLevelID);
+                        cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
+                        Int32 AlertCount = (Int32)cmd.ExecuteScalar();
+                        
+                        if (AlertCount>0)
+                        {
+                            lnkAlertDesktop.Attributes.Add("class", "new-alerts");
+                            lblAlertCount.InnerHtml = "ALERTS" + " - " + AlertCount.ToString() + " - ";
+                        }
+                        else
+                        {
+                            lnkAlertDesktop.Attributes.Add("class", "alerts-link");
+                            lblAlertCount.InnerHtml = "ALERTS";
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
         protected void ServerButton_Click(object sender, EventArgs e)

@@ -113,7 +113,7 @@
                 </div>
                 <div class="user-grid">
                     <ul class="profile-links">
-                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click" ><span>Alerts</span></asp:LinkButton> </li>
+                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click" ><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
                         <li>
                             <asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
                         <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
@@ -204,7 +204,6 @@
                 <div class="row">
                     <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
                     <div id="TrueBlu" class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About True BLU™</a></div>
-                    <div class="col-md-3 footer-nav terms" style="text-align: left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -231,8 +230,14 @@
 
      <script type="text/javascript">
          function CloseDialog() {
+             debugger;
              var dialog = '<%= popuppanel.ClientID %>'
              $("#" + dialog).hide();
+             var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
+             $("#" + alertLnk).removeClass("new-alerts");
+             $("#" + alertLnk).addClass("alerts-link");
+             var alertCount = '<%=  lblAlertCount.ClientID %>'
+             $("#" + alertCount).text("ALERTS");
       }
 
     </script>
