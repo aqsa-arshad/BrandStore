@@ -3484,7 +3484,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) and screen and (min-width: 800px) {
   .navbar-right {
-    float: left !important ;
+    float: right !important ;
   }
 }
 .navbar-default {
@@ -4774,6 +4774,7 @@ ul {
 select {
   padding: 3px;
   border: solid 1px #c0c0c0;
+  width: 100%;
 }
 .header-part {
   padding-top: 40px;
@@ -4975,6 +4976,7 @@ select {
   letter-spacing: 2;
   color: #1d446b;
   font-family: 'FrutigerLTStd-Roman';
+  border-radius: 0;
 }
 @media screen and (min-width: 800px) {
   .mb-login-btn {
@@ -5028,6 +5030,10 @@ a:hover.mb-login-btn {
 .nav li:nth-last-child(1) {
   border: 0;
 }
+.nav li:last-child .dropdown-menu {
+  right: 0 !important;
+  left: auto;
+}
 .navbar-inverse {
   border: 0;
   background: transparent;
@@ -5069,9 +5075,8 @@ a:hover.mb-login-btn {
 }
 .nav-justified > .dropdown .dropdown-menu {
   margin-top: 0;
-  width: 270px;
   left: -1px;
-  padding: 20px 40px;
+  padding: 20px 30px;
   box-shadow: none;
   letter-spacing: 1.5px;
   font-size: 13px;
@@ -5093,6 +5098,7 @@ a:hover.mb-login-btn {
 .modal-dialog {
   font-size: 14px;
   text-align: left;
+  margin: 170px auto;
 }
 .modal-dialog a {
   color: #6f9abb;
@@ -5102,9 +5108,14 @@ a:hover.mb-login-btn {
   text-transform: uppercase;
   font-family: 'FrutigerLTStd-Light';
 }
-@media screen and (min-width: 800px) {
+@media (min-width: 992px) {
   .modal-dialog {
     width: 900px;
+  }
+}
+@media (min-width: 1200px) {
+  .modal-dialog {
+    width: 1100px;
   }
 }
 .modal-checkout {
@@ -5985,7 +5996,7 @@ a:hover.underline-link {
 .product-img-box {
   background-color: #ffffff;
   display: block;
-  padding: 15px 0;
+  padding: 10px;
 }
 .img-responsive {
   margin: 0 auto;
@@ -6066,6 +6077,6 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 800px) {
   .pull-right {
-    float: left !important ;
+    float: right !important ;
   }
 }
