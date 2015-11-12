@@ -8,8 +8,8 @@
     <asp:Panel runat="server" DefaultButton="btnContinueCheckout">
         <div  id="createAccountDiv" class="content-box-03 body-forms">
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />    
-          <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5> 
-            <p><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.12 %>"></asp:Label></p>
+          <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>            
+            <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
        
         <asp:Panel ID="pnlErrorMsg" runat="Server" Visible="false">
             <div class="error-wrap">
