@@ -230,7 +230,6 @@
 
      <script type="text/javascript">
          function CloseDialog() {
-             debugger;
              var dialog = '<%= popuppanel.ClientID %>'
              $("#" + dialog).hide();
              var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
