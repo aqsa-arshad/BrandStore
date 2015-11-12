@@ -137,10 +137,9 @@
                     <td class="td-40-percent"></td>
                     <td class="td-30-percent"></td>
                     <td class="td-30-percent border-none">
-                        <p>
-                            <span class="black-blu-label">
-                                <font>Subtotal: $</font>
-                                <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                        <p class="label-text">
+                            <span>
+                                <font>Subtotal: $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                             </span>
                         </p>
                         <%--TODO: Commented due to unavailablity Blu Bucks--%>
@@ -152,13 +151,13 @@
                 </p>--%>
 
                         <span class="normal-heading black-color">Charges</span>
-                        <p>
-                            <span class="block-text">Taxes: $<asp:Label runat="server" ID="lblTax"></asp:Label></span>
-                            <span class="block-text">Shipping:  $<asp:Label runat="server" ID="lblShippingCost"></asp:Label></span>
+                        <p class="label-text">
+                            <span>Taxes: $<asp:Label runat="server" ID="lblTax"></asp:Label></span>
+                            <span>Shipping:  $<asp:Label runat="server" ID="lblShippingCost"></asp:Label></span>
                         </p>
 
-                        <p>
-                            <span class="black-blu-label"><font>Total:</font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                        <p class="label-text">
+                            <span><font>Total:</font> $<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
                         </p>
                     </td>
                 </tr>
