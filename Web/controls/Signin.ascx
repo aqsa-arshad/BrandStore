@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Signin.ascx.cs" Inherits="AspDotNetStorefront.Signin" %>
+<%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
@@ -57,8 +58,9 @@
                                         </div>--%>
                                     </div>
                                     <div class="col-md-6">
-                                        <h5>DON'T HAVE AN ACCOUNT?</h5>
-                                        <p>Create an account to access exclusive JELD-WEN branded items and to receive notifications when new items are added. We want to make it easy for you to keep track of your purchases and enjoy faster checkouts in the future.</p>
+                                       <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
+                                       <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
+
                                         <asp:HyperLink ID="SignUpLink" Font-Underline="true" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
                                     </div>
                                 </div>

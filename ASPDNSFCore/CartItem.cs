@@ -36,6 +36,7 @@ namespace AspDotNetStorefrontCore
         private bool m_IsAKit;
         private int m_GiftRegistryForCustomerID;
         private String m_ProductName;
+        private String m_ProductDescription;
         private String m_VariantName;
         private String m_SKU;
         private String m_ManufacturerPartNumber;
@@ -191,6 +192,7 @@ namespace AspDotNetStorefrontCore
             m_ThisCustomer = ci.ThisCustomer;
             m_ThisShoppingCart = ci.ThisShoppingCart;
             m_IsGift = ci.IsGift;
+            m_ProductDescription = ci.ProductDescription;
         }
 
         #endregion
@@ -240,6 +242,12 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_RecurringSubscriptionID; }
             set { m_RecurringSubscriptionID = value; }
+        }
+
+        public String ProductDescription
+        {
+            get { return m_ProductDescription; }
+            set { m_ProductDescription = value; }
         }
 
         /// <summary>

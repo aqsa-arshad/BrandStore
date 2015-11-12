@@ -21,7 +21,7 @@ public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
         {
             ThisCustomer = (Page as AspDotNetStorefront.SkinBase).ThisCustomer;
         }
-        WelcomeHeading = " HI," + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
+        WelcomeHeading = " Hi," + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
         WelcomeHeadingAfterUserLogin.InnerText = WelcomeHeading;
     }
 }

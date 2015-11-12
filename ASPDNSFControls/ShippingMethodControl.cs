@@ -81,10 +81,10 @@ namespace AspDotNetStorefrontControls
             }
 
             //HEADER
-			Controls.Add(AddLiteral("  <div class='group-header form-header shipping-header'>"));                        
-            lblHeader.Text = HeaderText;
-            Controls.Add(lblHeader);
-            Controls.Add(AddLiteral("  </div>"));
+            //Controls.Add(AddLiteral("  <div class='group-header form-header shipping-header'>"));                        
+            //lblHeader.Text = HeaderText;
+            //Controls.Add(lblHeader);
+            //Controls.Add(AddLiteral("  </div>"));
 
             //SHIPPINGMETHODLIST
             Controls.Add(AddLiteral("  <div class='form-group'>"));            

@@ -1614,7 +1614,7 @@ namespace AspDotNetStorefrontControls
 
             this.Controls.Clear();
 
-            this.Controls.Add(new LiteralControl("<div class='form payment-form'>"));
+            this.Controls.Add(new LiteralControl("<div class='form payment-form' style=display:none>"));
             if (this.ShowCREDITCARD)
             {
                 paymentMethodsEnabled++;

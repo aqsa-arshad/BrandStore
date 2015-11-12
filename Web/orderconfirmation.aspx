@@ -1,11 +1,151 @@
-<%@ Page Language="c#" Inherits="AspDotNetStorefront.orderconfirmation" CodeFile="orderconfirmation.aspx.cs" MasterPageFile="~/App_Templates/Skin_1/template.master" %>
-
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" CodeFile="orderconfirmation.aspx.cs" Inherits="AspDotNetStorefront.orderconfirmation" %>
 <%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
-<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
-    <asp:Panel ID="pnlContent" runat="server">
-        <div class="page-wrap create-account-page">
-            <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
-            <asp:Literal ID="litOutput" runat="server"></asp:Literal>
+<asp:Content runat="server" ContentPlaceHolderID="PageContent">
+     <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
+    <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+    <div class="content-box-03">
+        <div class="row">
+            <div class="col-md-8">
+                <p class="label-text">                   
+                    <span>
+                        <font><b>ORDER CONFIRMATION</b></font>                       
+                    </span>
+                   
+                </p>
+                <p class="label-text">
+                    <span>
+                        <p>
+                        <font><b>Thank you! Your order was successfully completed.Your Order Number is</b></font>
+                        <b><asp:Label runat="server" ID="lblOrderNumber"></asp:Label></b></p>
+                    </span>
+
+                     <span>
+                        <p>                      
+                        <b><asp:Label runat="server" ID="lblreceipt">For a printable receipt,<a id="lnkreceipt" runat="server"><u>click here</u></a></asp:Label></b></p>
+                    </span>
+                    <span>
+                        <font><b>Tracking numbers will be on your ORDER HISTORY page when your items are ready to ship. </b></font>                       
+                    </span>
+                   
+                </p>
+            </div>
+        </div>     
+            <div class="col-md-4 hide-element">
+                <span class="normal-heading black-color">Payment Method</span>
+                <p>
+                    <asp:Label class="block-text" ID="lblPMCardInfo" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblPMExpireDate" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblPMCountry" runat="server"></asp:Label>
+                </p>
+            </div>    
+
+        <%--Items Detail--%>
+        <div>
+            <table class="table top-row-adjsut border-line">
+                <tbody>
+                    <asp:Repeater ID="rptOrderItemsDetail" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td class="td-40-percent">                                    
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="primary-img-box">
+                                                <asp:Image ID="Image1" runat="server" class="img-responsive"
+                                                    ImageUrl='<%# AspDotNetStorefrontCore.AppLogic.LookupImage("Product", int.Parse(Eval("ProductID").ToString()), Eval("ImageFileNameOverride").ToString(), Eval("SKU").ToString(), "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)%>' />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="normal-heading blue-color">
+                                                <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
+                                            </span>
+                                            <span>
+                                                <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
+                                            </span>
+                                            <p>
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description").ToString().Take(100).Aggregate("", (x,y) => x + y) %>'></asp:Label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>                                
+                                <td class="td-30-percent">
+                                    <span class="normal-heading black-color">Payment</span>                                  
+                                    <span>Price with (FUND) credit:    $<%# Eval("OrderedProductPrice") %></span>                                    
+                                </td>
+                                <td class="td-30-percent">
+                                    <span class="normal-heading black-color">Quantity</span>
+                                    <span>
+                                        <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
+                                    </span>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <FooterTemplate></FooterTemplate>
+                    </asp:Repeater>
+                </tbody>
+            </table>
         </div>
-    </asp:Panel>
+
+        <%--Billing Amounts--%>
+        <div class="row">
+             <div class="col-md-4">
+                <span class="normal-heading black-color">Shipped to</span>
+                <p>
+                    <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBACompany" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBAAddress1" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBAAddress2" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBASuite" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBACityStateZip" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBACountry" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <span class="normal-heading black-color">Billed to</span>
+                <p>
+                    <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSACompany" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSAAddress1" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSAAddress2" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSASuite" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSACityStateZip" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSACountry" runat="server"></asp:Label>
+
+                    <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <span class="black-blu-label">
+                        <font>Subtotal: $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                    </span>
+                </p>              
+
+                <span class="normal-heading black-color">Charges</span>
+                <p>
+                    <span class="block-text">Taxes: $<asp:Label runat="server" ID="lblTax"></asp:Label></span>
+                    <span class="block-text">Shipping:  $<asp:Label runat="server" ID="lblShippingCost"></asp:Label></span>
+                </p>
+
+                <p>
+                    <span class="black-blu-label"><font>Total:</font> $<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                </p>
+            </div>
+        </div>
+    </div>    
 </asp:Content>

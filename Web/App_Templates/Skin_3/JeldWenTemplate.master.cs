@@ -60,6 +60,7 @@ namespace AspDotNetStorefront
                 if (ThisCustomer.IsRegistered)
                 {
                     ShowPostLoginControls();
+                    GetUnreadCustomerAlertCount();
                     this.hdnCustomerLevel.Text = ThisCustomer.CustomerLevelID.ToString();
                 }
                 else
@@ -67,6 +68,42 @@ namespace AspDotNetStorefront
                     ShowPreLoginControls();
                     hdnCustomerLevel.Text = "-1";
                 }
+            }
+        }
+        private void GetUnreadCustomerAlertCount()
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerAlertUnreadAlertCount", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                        cmd.Parameters.AddWithValue("@CustomerLevelID", ThisCustomer.CustomerLevelID);
+                        cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
+                        Int32 AlertCount = (Int32)cmd.ExecuteScalar();
+
+                        if (AlertCount > 0)
+                        {
+                            lnkAlertDesktop.Attributes.Add("class", "new-alerts");
+                            lblAlertCount.InnerHtml = "ALERTS" + " - " + AlertCount.ToString() + " - ";
+                        }
+                        else
+                        {
+                            lnkAlertDesktop.Attributes.Add("class", "alerts-link");
+                            lblAlertCount.InnerHtml = "ALERTS";
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
         protected void ServerButton_Click(object sender, EventArgs e)
@@ -91,8 +128,20 @@ namespace AspDotNetStorefront
                         cmd.Parameters.AddWithValue("@AlertDate", DateTime.Now);
 
                         IDataReader idr = cmd.ExecuteReader();
-                        rptCustomerAlerts.DataSource = idr;
-                        rptCustomerAlerts.DataBind();
+                        if ((((System.Data.Common.DbDataReader)idr).HasRows))
+                        {
+                            rptCustomerAlerts.DataSource = idr;
+                            rptCustomerAlerts.DataBind();
+                            ulCustomerAlertNotification.Visible = false;
+                        }
+                        else
+                        {
+                            rptCustomerAlerts.DataSource = null;
+                            rptCustomerAlerts.DataBind();
+                            ulCustomerAlertNotification.Visible = true;
+                        }
+
+
                     }
                 }
             }
@@ -216,11 +265,13 @@ namespace AspDotNetStorefront
             {
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
+                liMyAccount.Attributes.Add("class", "active account-link");
             }
             else if (currentURL.ToUpper().Contains("JWADDADDRESSES"))
             {
                 lblPageHeading.Text = "ADD/EDIT ADDRESS";
                 pnlPageHeading.Visible = true;
+                liMyAccount.Attributes.Add("class", "active account-link");
             }
 
             else if (currentURL.ToUpper().Contains("SIGNIN"))
@@ -284,6 +335,7 @@ namespace AspDotNetStorefront
                 liMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
+
             else if (currentURL.ToUpper().Contains("ORDERDETAIL"))
             {
                 if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
@@ -296,7 +348,51 @@ namespace AspDotNetStorefront
                     lblPageHeading.Text = "ORDER DETAIL";
                 }
                 liMyAccount.Attributes.Add("class", "active account-link");
+
+            }
+            else if (currentURL.ToUpper().Contains("SHOPPINGCART"))
+            {
+                lblPageHeading.Text = "SHOPPING CART";
+
                 pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+
+                divcontentarea.Attributes["class"] = "col-md-12";
+
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTSHIPPING"))
+            {
+                lblPageHeading.Text = "SHIPPING OPTIONS";
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTPAYMENT"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTREVIEW"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
             }
             else
             {

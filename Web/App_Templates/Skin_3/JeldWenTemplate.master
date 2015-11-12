@@ -83,6 +83,9 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseDialog()">
                                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
                                     <h4 class="modal-title" id="myModalLabel">Daily Alerts</h4>
+                                    <ul class="modal-list" id="ulCustomerAlertNotification" runat="server" visible="false">
+                                        <li class="unread"> <asp:Label runat="server" ID="lblAlertNotification" Font-Bold="true" Text="You have 0 alerts at this time."></asp:Label></li>
+                                    </ul>
                                     <ul class="modal-list">
                                         <asp:Repeater ID="rptCustomerAlerts" runat="server" OnItemCommand="rptCustomerAlerts_ItemCommand">
                                             <ItemTemplate>
@@ -103,7 +106,7 @@
             </div>
             <cc1:ModalPopupExtender ID="mpe" runat="server" TargetControlID="lnkAlertDesktop" PopupControlID="myModal" OkControlID="OKButton" />
         </asp:Panel>
-        <%--Customer Alerts Region starts here    --%>
+        <%--Customer Alerts Region ends here    --%>
         <div class="container">
             <div class="header clearfix">
                 <div class="header-part">
@@ -113,10 +116,11 @@
                 </div>
                 <div class="user-grid">
                     <ul class="profile-links">
-                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link" OnClick="ServerButton_Click" ><span>Alerts</span></asp:LinkButton> </li>
+
                         <li>
-                            <asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount" Text="My Account"></asp:LinkButton></li>
-                        <li><a href="#" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
+                            <asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click"><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
+                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="liMyAccount"><span>My Account</span></asp:LinkButton></li>
+                        <li><a href="shoppingcart.aspx" class="shopping-link"><span id="shopping_cart" runat="server">Shopping Cart</span></a></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
                     <custom:Search ID="Search1" runat="server" />
@@ -160,7 +164,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8" id="divcontentarea" runat="server">
                         <div class="left-side">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
@@ -204,7 +208,6 @@
                 <div class="row">
                     <div class="col-md-5 footer-nav"><a href="JWSupport.aspx">Support</a></div>
                     <div id="TrueBlu" class="col-md-4 footer-nav prelogin"><a href="JWAboutTrueBlu.aspx">About True BLU™</a></div>
-                    <div class="col-md-3 footer-nav terms" style="text-align: left;"><a href="JWTermsAndConditions.aspx">Terms & Conditions</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -219,7 +222,7 @@
                             <li><a target="_blank" href="https://www.youtube.com/user/JELDWENVIDEOS" class="youtube"></a></li>
                         </ul>
                     </div>
-                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Privacy Policy</a></div>
+                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Terms & Privacy Policy</a></div>
                 </div>
             </footer>
         </div>
@@ -229,11 +232,16 @@
     <script src="js/collapse.js"></script>
     <script src="js/transition.js"></script>
 
-     <script type="text/javascript">
-         function CloseDialog() {
-             var dialog = '<%= popuppanel.ClientID %>'
+    <script type="text/javascript">
+        function CloseDialog() {
+            var dialog = '<%= popuppanel.ClientID %>'
              $("#" + dialog).hide();
-      }
+             var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
+             $("#" + alertLnk).removeClass("new-alerts");
+             $("#" + alertLnk).addClass("alerts-link");
+             var alertCount = '<%=  lblAlertCount.ClientID %>'
+             $("#" + alertCount).text("ALERTS");
+         }
 
     </script>
     <script type="text/javascript">
@@ -241,7 +249,7 @@
             e.preventDefault();
         }
 
-        </script>
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {

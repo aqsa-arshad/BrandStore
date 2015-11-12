@@ -117,7 +117,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
     protected void CreateAccountLink_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Request.Browser.IsMobileDevice ? "createaccount.aspx#createAccountDiv" : "createaccount.aspx");
+        Response.Redirect("createaccount.aspx");
     }
 
 
@@ -143,7 +143,13 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     }
 
     protected void Page_Load(object sender, EventArgs e)
-    {  
+    {
+        var currentURL = Request.Url.AbsolutePath;
+
+        if (currentURL.ToUpper().Contains("CREATEACCOUNT"))
+        {
+            createAccountLink.Visible = false;
+        }
         string HiddenFieldText = HiddenLabel.Text;
         if (HiddenFieldText.Equals("true"))
         {
