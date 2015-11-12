@@ -90,7 +90,7 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
         {
             //dealer login
             controlHeadingforPromotionalItems.InnerHtml = "Suit up for the showroom.";
-            productdescriptionAfterLogin.InnerHtml = "Inside you’ll find a variety of JELD-WEN merchandise to enhance the showroom experience, all of which can be purchased with BLU Bucks or through your regular business account. ";
+            productdescriptionAfterLogin.InnerHtml = "Inside you'll find a variety of JELD-WEN merchandise that can be purchased with BLU™ Bucks or by credit card. Outfit your staff, or find the perfect giveaway for your next event. ";
         }
     }
 }
