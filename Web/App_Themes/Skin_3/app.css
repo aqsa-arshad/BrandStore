@@ -4734,6 +4734,7 @@ input[type="password"]:focus,
 .form-control:focus {
   border-color: #1d446b;
   box-shadow: none;
+  color: #1d446b;
 }
 h1 {
   color: #ffffff;
@@ -6016,22 +6017,6 @@ a:hover.underline-link {
 }
 .text-right {
   text-align: right;
-}
-.pull-desktop-right {
-  float: none !important;
-}
-@media screen and (min-width: 800px) {
-  .pull-desktop-right {
-    float: righ !important ;
-  }
-}
-.pull-desktop-left {
-  float: none !important;
-}
-@media screen and (min-width: 800px) {
-  .pull-desktop-left {
-    float: left !important ;
-  }
 }
 .fix-list-head {
   height: 96px;
