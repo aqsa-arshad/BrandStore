@@ -138,6 +138,12 @@ namespace AspDotNetStorefront
                     m_XmlPackage = Vortx.MobileFramework.MobileXmlPackageController.XmlPackageHook(DB.RSField(rs, "XmlPackage").ToLowerInvariant(),ThisCustomer);
                     #endregion
                     IsAKit = DB.RSFieldBool(rs, "IsAKit");
+                    //this part of code is written for kit products. there is no xml package which supports them.
+                    if (IsAKit)
+                    {
+                        IsAKit = false;
+                    }
+                    //end
                     if (m_XmlPackage.Length == 0)
                     {
                         if (IsAKit)

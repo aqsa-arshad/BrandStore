@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="PageContent" runat="Server">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <div class="content-box-03 body-forms">
-        <p>Update your address by editing the fields below. <label>*Required field</label></p>
+        <p>Update your address by editing the fields below. Cannot ship to P.O boxes. <label>*Required field</label></p>
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
