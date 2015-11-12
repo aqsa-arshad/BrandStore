@@ -41,6 +41,7 @@ namespace AspDotNetStorefrontControls
         private Label lblColorCaption = new Label();
         private Label lblTextOptionCaption = new Label();
         private Label lblItemNotesCaption = new Label();
+        private Label lblProductDescription = new Label();
 
         private HyperLink lnkProductName = new HyperLink();
 
@@ -93,27 +94,29 @@ namespace AspDotNetStorefrontControls
                 }
                 else
                 {
-                    Controls.Add(new LiteralControl("    <div class='cart-product-image'>"));
+                    Controls.Add(new LiteralControl("    <div class='row'><div class='col-md-4'><div class='primary-img-box'>"));
                 }
+                imgProductPic.Attributes["class"] = "img-responsive";
                 Controls.Add(imgProductPic);
-                Controls.Add(new LiteralControl("    </div>"));
+                Controls.Add(new LiteralControl("    </div></div>"));
             }
 
             //line item description quantity and subtotals
 
-            Controls.Add(new LiteralControl("     <div class='cart-title'>"));
+            Controls.Add(new LiteralControl("     <div class='cart-title col-md-8'> <span class='normal-heading blue-color'>"));
             Controls.Add(lnkProductName);
-            Controls.Add(new LiteralControl("     </div>"));
+            Controls.Add(new LiteralControl("     </span>"));
+         //   Controls.Add(new LiteralControl("     </div>"));
 
             if (!this.IsMiniCart)
             {
                 //SKU
                 if (!cItem.IsSystem)
                 {
-                    Controls.Add(new LiteralControl("      <div class='cart-small cart-sku'>"));
-                    Controls.Add(lblSKUCaption);
+                    Controls.Add(new LiteralControl("     <span class='normal-heading blue-color'>"));
+                   // Controls.Add(lblSKUCaption);
                     Controls.Add(lblSKU);
-                    Controls.Add(new LiteralControl("      </div>"));
+                    Controls.Add(new LiteralControl("      </span>"));
                 }
 
                 //GiftRegistry
@@ -222,10 +225,19 @@ namespace AspDotNetStorefrontControls
                     Controls.Add(new LiteralControl("    </div>"));
                 }
 
-                Controls.Add(new LiteralControl("    <div class='cart-shipping'>"));
-                Controls.Add(lblShipping);
-                Controls.Add(new LiteralControl("    </div>"));
+                //Controls.Add(new LiteralControl("    <div class='cart-shipping'>"));
+                //Controls.Add(lblShipping);
+                //Controls.Add(new LiteralControl("    </div>"));
 
+                if (cItem.ProductDescription.Length > 100)
+                {
+                    cItem.ProductDescription = cItem.ProductDescription.Substring(0, 100)+ "...";
+                }
+                lblProductDescription.Text = cItem.ProductDescription;                
+                Controls.Add(new LiteralControl("     <p>"));
+                Controls.Add(lblProductDescription);
+                Controls.Add(new LiteralControl("     </p>"));
+                Controls.Add(new LiteralControl("     </div></div>"));
 
                 //Item Notes              
                 if (LineItemDescriptionSettings.AllowShoppingCartItemNotes && !cItem.IsSystem

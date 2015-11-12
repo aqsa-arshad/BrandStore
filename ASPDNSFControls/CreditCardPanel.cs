@@ -755,10 +755,10 @@ namespace AspDotNetStorefrontControls
         protected override void CreateChildControls()
         {
             this.Controls.Clear();
-            this.Controls.Add(new LiteralControl("<div class='form credit-card-form'>"));
-            this.Controls.Add(new LiteralControl("<div class='form-text'>"));
+            this.Controls.Add(new LiteralControl("<div class='col-md-4' id='divccpane1'>"));
+            this.Controls.Add(new LiteralControl("<p class='margin-top-none'>"));
             this.Controls.Add(_lblHeader);
-            this.Controls.Add(new LiteralControl("</div>"));
+            this.Controls.Add(new LiteralControl("</p>"));
             this.Controls.Add(new LiteralControl("<script type=\"text/javascript\" language=\"Javascript\" src=\"jscripts/tooltip.js\" >\n"));
             this.Controls.Add(new LiteralControl("</script>\n"));
 
@@ -793,6 +793,7 @@ namespace AspDotNetStorefrontControls
 
             if (_boolShowCCVerCd)
             {
+
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
                 this.Controls.Add(new LiteralControl("<label>"));
                 this.Controls.Add(_lblCCVerCd);
@@ -824,7 +825,9 @@ namespace AspDotNetStorefrontControls
                 }
                 this.Controls.Add(new LiteralControl("</div>")); 
             }
-
+            this.Controls.Add(new LiteralControl("</div>"));
+            this.Controls.Add(new LiteralControl("<div class='col-md-4 checkout-field-adjust' id='divccpane2'>"));
+            this.Controls.Add(new LiteralControl("<div class='checkout-field-fix'>"));
             this.Controls.Add(new LiteralControl("<div class='form-group'>"));
             this.Controls.Add(new LiteralControl("<label>"));
             this.Controls.Add(_lblCCType);
@@ -832,13 +835,35 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(_ddlCCType);
             this.Controls.Add(new LiteralControl("</div>"));
 
-            this.Controls.Add(new LiteralControl("<div class='form-group month-year'>"));
+            this.Controls.Add(new LiteralControl("<div class='form-group'>"));
             this.Controls.Add(new LiteralControl("<label>"));
             this.Controls.Add(_lblExpDt);
             this.Controls.Add(new LiteralControl("</label>"));
+            this.Controls.Add(new LiteralControl("<div class='checkout-two-fields'>"));
             this.Controls.Add(_ddlCCExpMonth);
             this.Controls.Add(_ddlCCExpYr);
             this.Controls.Add(new LiteralControl("</div>"));
+            this.Controls.Add(new LiteralControl("</div>"));
+
+            this.Controls.Add(new LiteralControl("</div>"));
+            this.Controls.Add(new LiteralControl("</div>"));
+
+            //Estimate
+           // Button btnRequestestimate = new Button();
+           // btnRequestestimate.ID = "btnRequestEstimates";
+           // btnRequestestimate.CssClass = "btn btn-primary btn-block";
+           // btnRequestestimate.Text = "Request estimate";
+           // btnRequestestimate.CommandName = "btnRequestEstimates_Click";
+           //// btnRequestestimate.Click += new System.EventHandler(btnRequestEstimates_Click);
+           // this.Controls.Add(new LiteralControl("<div class='col-md-4' id='divestimate' runat='server'>"));
+           // this.Controls.Add(btnRequestestimate);
+           // //this.Controls.Add(new LiteralControl("</div>"));
+           //// this.FindControl("divestimate").Controls.Add(new LiteralControl("<asp:Button ID='btnRequestEstimates' CssClass='btn btn-primary btn-block' Text='Request estimate' runat='server' OnClick='btnRequestEstimates_Click' />"));
+           // //this.Controls.Add(new LiteralControl("<asp:Button ID='btnRequestEstimates' CssClass='btn btn-primary btn-block' Text='Request estimate' runat='server' OnClick='btnRequestEstimates_Click' />"));
+           // // this.Controls.Add(new LiteralControl("<asp:Panel ID='pnlShippingAndTaxEstimator' runat='server' CssClass='shipping-estimator-wrap' Visible='false<aspdnsfc:ShippingAndTaxEstimatorAddressControl ID='ctrlEstimateAddress' runat='server'/><aspdnsfc:ShippingAndTaxEstimateTableControl ID='ctrlEstimate' runat='server' Visible='false' />Visible='false' OnRequestEstimateButtonClicked='EstimateAddressControl_RequestEstimateButtonClicked' /></asp:Panel>"));
+           
+           // this.Controls.Add(new LiteralControl("</div>"));
+            //End estimate
             if (_boolShowCCStartDtFields)
             {
                 this.Controls.Add(new LiteralControl("<div class='form-group month-year'>"));
@@ -874,8 +899,7 @@ namespace AspDotNetStorefrontControls
         }
         
         #endregion
-
-
+     
         public void Clear()
         {
             CreditCardName =
@@ -896,5 +920,6 @@ namespace AspDotNetStorefrontControls
 		{
 			base.Render(writer);
 		}
+
     }
 }

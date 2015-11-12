@@ -161,6 +161,57 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "Terms and Privacy Policy";
                 pnlPageHeading.Visible = true;              
             }
+            else if (currentURL.ToUpper().Contains("SHOPPINGCART"))
+            {
+                lblPageHeading.Text = "SHOPPING CART";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+               
+                divcontentarea.Attributes["class"] = "col-md-12";
+                
+            }
+                else if (currentURL.ToUpper().Contains("CHECKOUTSHIPPING"))
+            {
+                lblPageHeading.Text = "SHIPPING OPTIONS";
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+              
+                divcontentarea.Attributes["class"] = "col-md-12";
+                
+            }
+                 else if (currentURL.ToUpper().Contains("CHECKOUTPAYMENT"))
+            {
+              //  lblPageHeading.Text = "PAYMMENT INFORMATION";
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;            
+                divcontentarea.Attributes["class"] = "col-md-12";
+                
+            }
+            else if (currentURL.ToUpper().Contains("CHECKOUTREVIEW"))
+            {
+                //  lblPageHeading.Text = "PAYMMENT INFORMATION";
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+
+            }
+            else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION"))
+            {
+                //  lblPageHeading.Text = "PAYMMENT INFORMATION";
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divcontentarea.Attributes["class"] = "col-md-12";
+
+            }
             else
             {
                 lblPageHeading.Text = string.Empty;

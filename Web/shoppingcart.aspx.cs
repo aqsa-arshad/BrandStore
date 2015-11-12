@@ -76,7 +76,7 @@ namespace AspDotNetStorefront
 		private void InitializeComponent()
 		{
 			btnContinueShoppingTop.Click += new EventHandler(btnContinueShoppingTop_Click);
-			btnContinueShoppingBottom.Click += new EventHandler(btnContinueShoppingBottom_Click);
+			//btnContinueShoppingBottom.Click += new EventHandler(btnContinueShoppingBottom_Click);
 			btnCheckOutNowTop.Click += new EventHandler(btnCheckOutNowTop_Click);
 			btnCheckOutNowBottom.Click += new EventHandler(btnCheckOutNowBottom_Click);
 			btnInternationalCheckOutNowTop.Click += new EventHandler(btnInternationalCheckOutNowTop_Click);
@@ -84,9 +84,9 @@ namespace AspDotNetStorefront
 			btnQuickCheckoutTop.Click += new EventHandler(btnQuickCheckoutTop_Click);
 			btnQuickCheckoutBottom.Click += new EventHandler(btnQuickCheckoutBottom_Click);
             btnUpdateShoppingCart.Click += new EventHandler(btnUpdateCart_Click);
-            btnUpdateCartOrderOptions.Click += new EventHandler(btnUpdateCart_Click);
-            btnUpdateGiftCard.Click += new EventHandler(btnUpdateCart_Click);
-            btnUpdateCartOrderNotes.Click += new EventHandler(btnUpdateCart_Click);
+           // btnUpdateCartOrderOptions.Click += new EventHandler(btnUpdateCart_Click);
+          //  btnUpdateGiftCard.Click += new EventHandler(btnUpdateCart_Click);
+           // btnUpdateCartOrderNotes.Click += new EventHandler(btnUpdateCart_Click);
             btnUpdateCartUpsells.Click += new EventHandler(btnUpdateCart_Click);
 		}
 		#endregion
@@ -203,9 +203,9 @@ namespace AspDotNetStorefront
 			{
 				pnlOrderOptions.Visible = !cart.IsEmpty();
 				pnlUpsellProducts.Visible = !cart.IsEmpty();
-				pnlGiftCard.Visible = !cart.IsEmpty() && cart.GiftCardsEnabled;
-                pnlPromotion.Visible = !cart.IsEmpty() && cart.PromotionsEnabled;
-				pnlOrderNotes.Visible = !AppLogic.AppConfigBool("DisallowOrderNotes") && !cart.IsEmpty();
+				//pnlGiftCard.Visible = !cart.IsEmpty() && cart.GiftCardsEnabled;
+               // pnlPromotion.Visible = !cart.IsEmpty() && cart.PromotionsEnabled;
+				//pnlOrderNotes.Visible = !AppLogic.AppConfigBool("DisallowOrderNotes") && !cart.IsEmpty();
 				btnCheckOutNowBottom.Visible = btnCheckOutNowTop.Visible = (!cart.IsEmpty() && AppLogic.AllowRegularCheckout(cart));
 				btnRequestEstimates.Visible = !cart.IsEmpty();
 				pnlSubTotals.Visible = !cart.IsEmpty();
@@ -217,17 +217,17 @@ namespace AspDotNetStorefront
 			}
 
 			String CurrentCoupon = String.Empty;
-			if (cart.Coupon.CouponCode.Length != 0 && String.IsNullOrEmpty(txtGiftCard.Text))
-				CurrentCoupon = cart.Coupon.CouponCode;
-			else if (cart.CartItems.CouponList.Count == 1)
-				CurrentCoupon = cart.CartItems.CouponList[0].CouponCode;
+            //if (cart.Coupon.CouponCode.Length != 0 && String.IsNullOrEmpty(txtGiftCard.Text))
+            //    CurrentCoupon = cart.Coupon.CouponCode;
+            //else if (cart.CartItems.CouponList.Count == 1)
+            //    CurrentCoupon = cart.CartItems.CouponList[0].CouponCode;
 
-			if (CurrentCoupon.Length > 0 && txtGiftCard.Text.Length == 0)
-				txtGiftCard.Text = CurrentCoupon;
+            //if (CurrentCoupon.Length > 0 && txtGiftCard.Text.Length == 0)
+            //    txtGiftCard.Text = CurrentCoupon;
 
-			btnRemoveGiftCard.Visible = txtGiftCard.Text.Length != 0;
+            //btnRemoveGiftCard.Visible = txtGiftCard.Text.Length != 0;
 
-			lblPromotionError.Text = String.Empty;
+			//lblPromotionError.Text = String.Empty;
 			if (!IsPostBack)
 				BindPromotions();
 		}
@@ -303,7 +303,7 @@ namespace AspDotNetStorefront
 				Response.Redirect(string.Format("shoppingcart.aspx?InvTrimmed=true"));
 			}
 			cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
-			cart.SetCoupon(txtGiftCard.Text.ToUpperInvariant(), true);
+			//cart.SetCoupon(txtGiftCard.Text.ToUpperInvariant(), true);
 			UpdateCartQuantity();
 			ctrlOrderOption.UpdateChanges();
 			ProcessCart(false, false, false);
@@ -323,19 +323,19 @@ namespace AspDotNetStorefront
 			ShoppingCart.Age(ThisCustomer.CustomerID, AgeCartDays, CartTypeEnum.ShoppingCart);
 
 			cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
-			shoppingcartaspx8.Text = AppLogic.GetString("shoppingcart.aspx.8", SkinID, ThisCustomer.LocaleSetting);
-			shoppingcartaspx10.Text = AppLogic.GetString("shoppingcart.aspx.10", SkinID, ThisCustomer.LocaleSetting);
-			shoppingcartaspx11.Text = AppLogic.GetString("shoppingcart.aspx.11", SkinID, ThisCustomer.LocaleSetting);
-			shoppingcartaspx9.Text = AppLogic.GetString("shoppingcart.aspx.9", SkinID, ThisCustomer.LocaleSetting);
-			shoppingcartcs31.Text = AppLogic.GetString("shoppingcart.cs.117", SkinID, ThisCustomer.LocaleSetting);
+           // shoppingcartaspx8.Text = AppLogic.GetString("shoppingcart.aspx.8", SkinID, ThisCustomer.LocaleSetting);
+            //shoppingcartaspx10.Text = AppLogic.GetString("shoppingcart.aspx.10", SkinID, ThisCustomer.LocaleSetting);
+            //shoppingcartaspx11.Text = AppLogic.GetString("shoppingcart.aspx.11", SkinID, ThisCustomer.LocaleSetting);
+            //shoppingcartaspx9.Text = AppLogic.GetString("shoppingcart.aspx.9", SkinID, ThisCustomer.LocaleSetting);
+            //shoppingcartcs31.Text = AppLogic.GetString("shoppingcart.cs.117", SkinID, ThisCustomer.LocaleSetting);
 			btnUpdateShoppingCart.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
-			btnUpdateCartOrderOptions.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
-			btnUpdateGiftCard.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
-			btnUpdateCartOrderNotes.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
+			//btnUpdateCartOrderOptions.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
+			//btnUpdateGiftCard.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
+			//btnUpdateCartOrderNotes.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
 			btnUpdateCartUpsells.Text = AppLogic.GetString("shoppingcart.cs.110", SkinID, ThisCustomer.LocaleSetting);
-			lblOrderNotes.Text = AppLogic.GetString("shoppingcart.cs.66", SkinID, ThisCustomer.LocaleSetting);
+			//lblOrderNotes.Text = AppLogic.GetString("shoppingcart.cs.66", SkinID, ThisCustomer.LocaleSetting);
 			btnContinueShoppingTop.Text = AppLogic.GetString("shoppingcart.cs.62", SkinID, ThisCustomer.LocaleSetting);
-			btnContinueShoppingBottom.Text = AppLogic.GetString("shoppingcart.cs.62", SkinID, ThisCustomer.LocaleSetting);
+			//btnContinueShoppingBottom.Text = AppLogic.GetString("shoppingcart.cs.62", SkinID, ThisCustomer.LocaleSetting);
 			btnCheckOutNowTop.Text = AppLogic.GetString("shoppingcart.cs.111", SkinID, ThisCustomer.LocaleSetting);
 			btnCheckOutNowBottom.Text = AppLogic.GetString("shoppingcart.cs.111", SkinID, ThisCustomer.LocaleSetting);
 
@@ -349,11 +349,11 @@ namespace AspDotNetStorefront
 				// Don't allow checkout
 				btnCheckOutNowTop.Enabled = false;
 			}
-			lblErrorMessage.Text = CommonLogic.IIF(!cart.IsEmpty() && (reqOver13 && !ThisCustomer.IsOver13 && ThisCustomer.IsRegistered), AppLogic.GetString("Over13OnCheckout", SkinID, ThisCustomer.LocaleSetting), String.Empty);
+			//lblErrorMessage.Text = CommonLogic.IIF(!cart.IsEmpty() && (reqOver13 && !ThisCustomer.IsOver13 && ThisCustomer.IsRegistered), AppLogic.GetString("Over13OnCheckout", SkinID, ThisCustomer.LocaleSetting), String.Empty);
 
 			btnCheckOutNowBottom.Enabled = btnCheckOutNowTop.Enabled;
 
-			divPayPalExpressTop.Visible = false;
+			//divPayPalExpressTop.Visible = false;
 			divPayPalExpressBottom.Visible = false;
 
 			Decimal MinOrderAmount = AppLogic.AppConfigUSDecimal("CartMinOrderAmount");
@@ -385,31 +385,31 @@ namespace AspDotNetStorefront
 
 				if (IncludePayPalExpress)
 				{
-					btnPayPalExpressCheckoutTop.ImageUrl = AppLogic.AppConfig("PayPal.Express.ButtonImageURL");
-					btnPayPalExpressCheckoutBottom.ImageUrl = btnPayPalExpressCheckoutTop.ImageUrl;
-					divPayPalExpressTop.Visible = true;
+				//	btnPayPalExpressCheckoutTop.ImageUrl = AppLogic.AppConfig("PayPal.Express.ButtonImageURL");
+					//btnPayPalExpressCheckoutBottom.ImageUrl = btnPayPalExpressCheckoutTop.ImageUrl;
+					//divPayPalExpressTop.Visible = true;
 					divPayPalExpressBottom.Visible = true;
 
-					btnPayPalBillMeLaterTop.ImageUrl = AppLogic.AppConfig("PayPal.Express.BillMeLaterButtonURL");
-					ltBillMeLaterMessageTop.Text = AppLogic.AppConfig("PayPal.Express.BillMeLaterMarketingMessage");
-					ltBillMeLaterMessageBottom.Text = ltBillMeLaterMessageTop.Text;
+					//btnPayPalBillMeLaterTop.ImageUrl = AppLogic.AppConfig("PayPal.Express.BillMeLaterButtonURL");
+					//ltBillMeLaterMessageTop.Text = AppLogic.AppConfig("PayPal.Express.BillMeLaterMarketingMessage");
+					//ltBillMeLaterMessageBottom.Text = ltBillMeLaterMessageTop.Text;
 
-					btnPayPalBillMeLaterBottom.ImageUrl = btnPayPalBillMeLaterTop.ImageUrl;
-					btnPayPalBillMeLaterTop.Visible = AppLogic.AppConfigBool("PayPal.Express.ShowBillMeLaterButton");
+					//btnPayPalBillMeLaterBottom.ImageUrl = btnPayPalBillMeLaterTop.ImageUrl;
+					//btnPayPalBillMeLaterTop.Visible = AppLogic.AppConfigBool("PayPal.Express.ShowBillMeLaterButton");
 					
-					ltBillMeLaterMessageTop.Visible = btnPayPalBillMeLaterTop.Visible;
-					btnPayPalBillMeLaterBottom.Visible = btnPayPalBillMeLaterTop.Visible;
-					ltBillMeLaterMessageBottom.Visible = btnPayPalBillMeLaterTop.Visible;
+					//ltBillMeLaterMessageTop.Visible = btnPayPalBillMeLaterTop.Visible;
+					//btnPayPalBillMeLaterBottom.Visible = btnPayPalBillMeLaterTop.Visible;
+					//ltBillMeLaterMessageBottom.Visible = btnPayPalBillMeLaterTop.Visible;
 
 					if (ThisCustomer.IsRegistered && AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout") && AppLogic.AppConfig("PayPal.API.Signature").Length > 0)
 					{
-						ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(true);
-						btnPayPalExpressCheckoutTop.Attributes.Add("onClick", "return startCheckout();");
+						//ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(true);
+						//btnPayPalExpressCheckoutTop.Attributes.Add("onClick", "return startCheckout();");
 					}
 				}
 			}
 
-			divAmazonCheckoutTop.Visible = false;
+			//divAmazonCheckoutTop.Visible = false;
 			divAmazonCheckoutBottom.Visible = false;
 
 			GatewayCheckoutByAmazon.CheckoutByAmazon cba = new GatewayCheckoutByAmazon.CheckoutByAmazon();
@@ -422,23 +422,23 @@ namespace AspDotNetStorefront
 			Boolean allowCheckoutByAmazon = !cart.IsEmpty() && !cart.ContainsRecurring() && cart.MeetsMinimumOrderAmount(MinOrderAmount) && ThisCustomer.ThisCustomerSession["IGD"].Length == 0;
 			if (allowCheckoutByAmazon && cba.IsEnabled)
 			{
-				divAmazonCheckoutTop.Visible =
+				//divAmazonCheckoutTop.Visible =
 					divAmazonCheckoutBottom.Visible = true;
 
-				ltAmazonCheckoutButtonTop.Text = cba.RenderCheckoutButton("CBAWidgetContainer1", new Guid(ThisCustomer.CustomerGUID), true);
+				//ltAmazonCheckoutButtonTop.Text = cba.RenderCheckoutButton("CBAWidgetContainer1", new Guid(ThisCustomer.CustomerGUID), true);
 				ltAmazonCheckoutButtonBottom.Text = cba.RenderCheckoutButton("CBAWidgetContainer2", new Guid(ThisCustomer.CustomerGUID), true);
 			}
 
-			if (divPayPalExpressTop.Visible || divAmazonCheckoutTop.Visible)
-			{
-				divAltCheckoutsTop.Visible = true;
-				divAltCheckoutsBottom.Visible = true;
-			}
-			else
-			{
-				divAltCheckoutsTop.Visible = false;
-				divAltCheckoutsBottom.Visible = false;
-			}
+            //if (divPayPalExpressTop.Visible || divAmazonCheckoutTop.Visible)
+            //{
+            //    divAltCheckoutsTop.Visible = true;
+            //    divAltCheckoutsBottom.Visible = true;
+            //}
+            //else
+            //{
+            //    divAltCheckoutsTop.Visible = false;
+            //    divAltCheckoutsBottom.Visible = false;
+            //}
 
 			Shipping.ShippingCalculationEnum ShipCalcID = Shipping.GetActiveShippingCalculationID();
 
@@ -464,62 +464,62 @@ namespace AspDotNetStorefront
 				ltShoppingCartHeaderXmlPackage.Text = AppLogic.RunXmlPackage(XmlPackageName, base.GetParser, ThisCustomer, SkinID, String.Empty, String.Empty, true, true);
 			}
 
-			pnlShippingInformation.Visible = (!AppLogic.AppConfigBool("SkipShippingOnCheckout") && !cart.IsAllFreeShippingComponents() && !cart.IsAllSystemComponents());
-			pnlAddresBookLink.Visible = ThisCustomer.IsRegistered;
+			//pnlShippingInformation.Visible = (!AppLogic.AppConfigBool("SkipShippingOnCheckout") && !cart.IsAllFreeShippingComponents() && !cart.IsAllSystemComponents());
+			//pnlAddresBookLink.Visible = ThisCustomer.IsRegistered;
 
 			btnCheckOutNowTop.Visible = btnCheckOutNowBottom.Visible = (!cart.IsEmpty() && AppLogic.AllowRegularCheckout(cart));
 
 			if (!cart.IsEmpty() && cart.HasCoupon() && !cart.CouponIsValid)
 			{
-				pnlCouponError.Visible = true;
-				lblCouponError.Text = cart.CouponStatusMessage + " (" + Server.HtmlEncode(CommonLogic.IIF(cart.Coupon.CouponCode.Length != 0, cart.Coupon.CouponCode, ThisCustomer.CouponCode)) + ")";
+				//pnlCouponError.Visible = true;
+				//lblCouponError.Text = cart.CouponStatusMessage + " (" + Server.HtmlEncode(CommonLogic.IIF(cart.Coupon.CouponCode.Length != 0, cart.Coupon.CouponCode, ThisCustomer.CouponCode)) + ")";
 				cart.ClearCoupon();
-				txtGiftCard.Text = String.Empty;
+				//txtGiftCard.Text = String.Empty;
 			}
 
-			if (!String.IsNullOrEmpty(errorMessage.Message) || lblErrorMessage.Text.Length > 0)
-			{
-				pnlErrorMessage.Visible = true;
-				lblErrorMessage.Text += errorMessage.Message;
-			}
+            //if (!String.IsNullOrEmpty(errorMessage.Message) || lblErrorMessage.Text.Length > 0)
+            //{
+            //    pnlErrorMessage.Visible = true;
+            //    lblErrorMessage.Text += errorMessage.Message;
+            //}
 
-			if (cart.RecurringScheduleConflict)
-			{
-				pnlRecurringScheduleConflictError.Visible = true;
-				lblRecurringScheduleConflictError.Text = AppLogic.GetString("shoppingcart.aspx.19", SkinID, ThisCustomer.LocaleSetting);
-			}
+            //if (cart.RecurringScheduleConflict)
+            //{
+            //    pnlRecurringScheduleConflictError.Visible = true;
+            //    lblRecurringScheduleConflictError.Text = AppLogic.GetString("shoppingcart.aspx.19", SkinID, ThisCustomer.LocaleSetting);
+            //}
 
-			if (CommonLogic.QueryStringBool("minimumQuantitiesUpdated"))
-			{
-				pnlMinimumQuantitiesUpdatedError.Visible = true;
-				lblMinimumQuantitiesUpdatedError.Text = AppLogic.GetString("shoppingcart.aspx.7", SkinID, ThisCustomer.LocaleSetting);
-			}
+            //if (CommonLogic.QueryStringBool("minimumQuantitiesUpdated"))
+            //{
+            //    pnlMinimumQuantitiesUpdatedError.Visible = true;
+            //    lblMinimumQuantitiesUpdatedError.Text = AppLogic.GetString("shoppingcart.aspx.7", SkinID, ThisCustomer.LocaleSetting);
+            //}
 
-			if (!cart.MeetsMinimumOrderAmount(MinOrderAmount))
-			{
-				pnlMinimumOrderAmountError.Visible = true;
-				lblMinimumOrderAmountError.Text = String.Format(AppLogic.GetString("shoppingcart.aspx.4", SkinID, ThisCustomer.LocaleSetting), ThisCustomer.CurrencyString(MinOrderAmount));
-			}
+            //if (!cart.MeetsMinimumOrderAmount(MinOrderAmount))
+            //{
+            //    pnlMinimumOrderAmountError.Visible = true;
+            //    lblMinimumOrderAmountError.Text = String.Format(AppLogic.GetString("shoppingcart.aspx.4", SkinID, ThisCustomer.LocaleSetting), ThisCustomer.CurrencyString(MinOrderAmount));
+            //}
 
-			int MinQuantity = AppLogic.AppConfigUSInt("MinCartItemsBeforeCheckout");
-			if (!cart.MeetsMinimumOrderQuantity(MinQuantity))
-			{
-				pnlMinimumOrderQuantityError.Visible = true;
-				lblMinimumOrderQuantityError.Text = String.Format(AppLogic.GetString("shoppingcart.cs.20", SkinID, ThisCustomer.LocaleSetting), MinQuantity.ToString(), MinQuantity.ToString());
-            }
+            //int MinQuantity = AppLogic.AppConfigUSInt("MinCartItemsBeforeCheckout");
+            //if (!cart.MeetsMinimumOrderQuantity(MinQuantity))
+            //{
+            //    pnlMinimumOrderQuantityError.Visible = true;
+            //    lblMinimumOrderQuantityError.Text = String.Format(AppLogic.GetString("shoppingcart.cs.20", SkinID, ThisCustomer.LocaleSetting), MinQuantity.ToString(), MinQuantity.ToString());
+            //}
 
-            int MaxQuantity = AppLogic.AppConfigUSInt("MaxCartItemsBeforeCheckout");
-            if (cart.ExceedsMaximumOrderQuantity(MaxQuantity))
-            {
-                pnlMaximumOrderQuantityError.Visible = true;
-                lblMaximumOrderQuantityError.Text = String.Format(AppLogic.GetString("shoppingcart.cs.119", SkinID, ThisCustomer.LocaleSetting), MaxQuantity.ToString());
-            }
+            //int MaxQuantity = AppLogic.AppConfigUSInt("MaxCartItemsBeforeCheckout");
+            //if (cart.ExceedsMaximumOrderQuantity(MaxQuantity))
+            //{
+            //    pnlMaximumOrderQuantityError.Visible = true;
+            //    lblMaximumOrderQuantityError.Text = String.Format(AppLogic.GetString("shoppingcart.cs.119", SkinID, ThisCustomer.LocaleSetting), MaxQuantity.ToString());
+            //}
 
 			if (AppLogic.MicropayIsEnabled() && AppLogic.AppConfigBool("Micropay.ShowTotalOnTopOfCartPage"))
 			{
 				//pnlMicropayEnabledNotice.Visible = true;
-                pnlMicropayEnabledNotice.Visible = !(ThisCustomer.CustomerLevelName == "Public" | ThisCustomer.CustomerLevelID == 0);
-				lblMicropayEnabledNotice.Text = String.Format(AppLogic.GetString("account.aspx.10", ThisCustomer.SkinID, ThisCustomer.LocaleSetting), AppLogic.GetString("account.aspx.11", ThisCustomer.SkinID, ThisCustomer.LocaleSetting), ThisCustomer.CurrencyString(ThisCustomer.MicroPayBalance));
+               // pnlMicropayEnabledNotice.Visible = !(ThisCustomer.CustomerLevelName == "Public" | ThisCustomer.CustomerLevelID == 0);
+				//lblMicropayEnabledNotice.Text = String.Format(AppLogic.GetString("account.aspx.10", ThisCustomer.SkinID, ThisCustomer.LocaleSetting), AppLogic.GetString("account.aspx.11", ThisCustomer.SkinID, ThisCustomer.LocaleSetting), ThisCustomer.CurrencyString(ThisCustomer.MicroPayBalance));
 			}
 
 			pnlSubTotals.Visible = !cart.IsEmpty();
@@ -548,38 +548,38 @@ namespace AspDotNetStorefront
 					pnlUpsellProducts.Visible = false;
 				}
 
-				if (cart.GiftCardsEnabled)
-				{
-					if (txtGiftCard.Text.Length == 0)
-						txtGiftCard.Text = cart.Coupon.CouponCode;
+                //if (cart.GiftCardsEnabled)
+                //{
+                //    if (txtGiftCard.Text.Length == 0)
+                //        txtGiftCard.Text = cart.Coupon.CouponCode;
 
-					btnRemoveGiftCard.Visible = txtGiftCard.Text.Length != 0;
-					pnlGiftCard.Visible = true;
-				}
-				else
-				{
-					pnlGiftCard.Visible = false;
-				}
+                //    btnRemoveGiftCard.Visible = txtGiftCard.Text.Length != 0;
+                //    pnlGiftCard.Visible = true;
+                //}
+                //else
+                //{
+                //    pnlGiftCard.Visible = false;
+                //}
 
-                pnlPromotion.Visible = cart.PromotionsEnabled;
+               // pnlPromotion.Visible = cart.PromotionsEnabled;
 
-			    if (!AppLogic.AppConfigBool("DisallowOrderNotes"))
-				{
-					txtOrderNotes.Text = cart.OrderNotes;
-					pnlOrderNotes.Visible = true;
-				}
-				else
-				{
-					pnlOrderNotes.Visible = false;
-				}
+                //if (!AppLogic.AppConfigBool("DisallowOrderNotes"))
+                //{
+                //    txtOrderNotes.Text = cart.OrderNotes;
+                //    pnlOrderNotes.Visible = true;
+                //}
+                //else
+                //{
+                //    pnlOrderNotes.Visible = false;
+                //}
 
 			}
 			else
 			{
 				pnlOrderOptions.Visible = false;
 				pnlUpsellProducts.Visible = false;
-				pnlGiftCard.Visible = pnlPromotion.Visible = false;
-				pnlOrderNotes.Visible = false;
+				//pnlGiftCard.Visible = pnlPromotion.Visible = false;
+				//pnlOrderNotes.Visible = false;
 			}
 
 			if (AppLogic.AppConfigBool("SkipShippingOnCheckout") || cart.IsAllFreeShippingComponents() || cart.IsAllSystemComponents())
@@ -607,30 +607,30 @@ namespace AspDotNetStorefront
 				btnInternationalCheckOutNowBottom.Visible = btnInternationalCheckOutNowTop.Visible;
 			}
 
-			if (cart.ShippingThresHoldIsDefinedButFreeShippingMethodIDIsNot)
-			{
-				pnlErrorMessage.Visible = true;
-				lblErrorMessage.Text += Server.HtmlEncode(AppLogic.GetString("shoppingcart.aspx.21", SkinID, ThisCustomer.LocaleSetting));
-			}
+            //if (cart.ShippingThresHoldIsDefinedButFreeShippingMethodIDIsNot)
+            //{
+            //    //pnlErrorMessage.Visible = true;
+            //    //lblErrorMessage.Text += Server.HtmlEncode(AppLogic.GetString("shoppingcart.aspx.21", SkinID, ThisCustomer.LocaleSetting));
+            //}
 
 			btnRemoveEstimator.Visible = false;
 
 			ToggleShowHideEstimate();
 
 			PayPalAd cartPageAd = new PayPalAd(PayPalAd.TargetPage.Cart);
-			if (cartPageAd.Show)
-				ltPayPalAd.Text = cartPageAd.ImageScript;
+            //if (cartPageAd.Show)
+            //    ltPayPalAd.Text = cartPageAd.ImageScript;
 		}
 
         private void HandleInventoryTrimmed()
         {
-            pnlInventoryTrimmedError.Visible = true;
-            if (cart.TrimmedReason == InventoryTrimmedReason.RestrictedQuantities || TrimmedEarlyReason == InventoryTrimmedReason.RestrictedQuantities)
-                lblInventoryTrimmedError.Text = AppLogic.GetString("shoppingcart.aspx.33", SkinID, ThisCustomer.LocaleSetting);
-            else if (cart.TrimmedReason == InventoryTrimmedReason.MinimumQuantities || TrimmedEarlyReason == InventoryTrimmedReason.MinimumQuantities)
-                lblInventoryTrimmedError.Text = AppLogic.GetString("shoppingcart.aspx.7", SkinID, ThisCustomer.LocaleSetting);
-            else
-                lblInventoryTrimmedError.Text = AppLogic.GetString("shoppingcart.aspx.3", SkinID, ThisCustomer.LocaleSetting);
+            //pnlInventoryTrimmedError.Visible = true;
+            //if (cart.TrimmedReason == InventoryTrimmedReason.RestrictedQuantities || TrimmedEarlyReason == InventoryTrimmedReason.RestrictedQuantities)
+            //    lblInventoryTrimmedError.Text = AppLogic.GetString("shoppingcart.aspx.33", SkinID, ThisCustomer.LocaleSetting);
+            //else if (cart.TrimmedReason == InventoryTrimmedReason.MinimumQuantities || TrimmedEarlyReason == InventoryTrimmedReason.MinimumQuantities)
+            //    lblInventoryTrimmedError.Text = AppLogic.GetString("shoppingcart.aspx.7", SkinID, ThisCustomer.LocaleSetting);
+            //else
+            //    lblInventoryTrimmedError.Text = AppLogic.GetString("shoppingcart.aspx.3", SkinID, ThisCustomer.LocaleSetting);
         }
 
 		private void InitializeShippingAndEstimateControl()
@@ -668,7 +668,7 @@ namespace AspDotNetStorefront
 				pnlShippingAndTaxEstimator.Visible = false;
 			}
 
-			btnRequestEstimates.Text = AppLogic.GetString("checkoutshipping.AddressControl.GetEstimateCaption", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+            btnRequestEstimates.Text = AppLogic.GetString("checkoutshipping.AddressControl.GetShippingAndTaxEstimates", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
 		}
 
 		private void ToggleShowHideEstimate()
@@ -924,17 +924,17 @@ namespace AspDotNetStorefront
 			// will update customer record also:
 			if (cte == CartTypeEnum.ShoppingCart)
 			{
-				cart.SetCoupon(txtGiftCard.Text, true);
+				//cart.SetCoupon(txtGiftCard.Text, true);
 
 				// kind of backwards, but if DisallowOrderNotes is false, then
 				// allow order notes
-				if (!AppLogic.AppConfigBool("DisallowOrderNotes"))
-				{
-					SqlParameter sp = new SqlParameter("@OrderNotes", SqlDbType.NText);
-					sp.Value = txtOrderNotes.Text.Trim();
-					SqlParameter[] spa = { sp };
-					ThisCustomer.UpdateCustomer(spa);
-				}
+                //if (!AppLogic.AppConfigBool("DisallowOrderNotes"))
+                //{
+                //    SqlParameter sp = new SqlParameter("@OrderNotes", SqlDbType.NText);
+                //    sp.Value = txtOrderNotes.Text.Trim();
+                //    SqlParameter[] spa = { sp };
+                //    ThisCustomer.UpdateCustomer(spa);
+                //}
 
 				// rebind the cart summary control to handle coupon
 				ctrlCartSummary.DataSource = cart;
@@ -963,7 +963,7 @@ namespace AspDotNetStorefront
 
 				if (cart.CheckInventory(ThisCustomer.CustomerID))
 				{
-					lblErrorMessage.Text += Server.HtmlEncode(AppLogic.GetString("shoppingcart_process.aspx.1", SkinID, ThisCustomer.LocaleSetting));
+					//lblErrorMessage.Text += Server.HtmlEncode(AppLogic.GetString("shoppingcart_process.aspx.1", SkinID, ThisCustomer.LocaleSetting));
 					// inventory got adjusted, send them back to the cart page to confirm the new values!
 				}
 			}
@@ -1014,17 +1014,17 @@ namespace AspDotNetStorefront
 
 		private void ClearErrors()
 		{
-            lblCouponError.Text =
-                lblErrorMessage.Text =
-                lblInventoryTrimmedError.Text =
-                lblRecurringScheduleConflictError.Text =
-                lblMinimumQuantitiesUpdatedError.Text =
-                lblMinimumOrderAmountError.Text =
-                lblMinimumOrderQuantityError.Text =
-                lblMaximumOrderQuantityError.Text = String.Empty;
+            //lblCouponError.Text =
+            //    lblErrorMessage.Text =
+            //    lblInventoryTrimmedError.Text =
+            //    lblRecurringScheduleConflictError.Text =
+            //    lblMinimumQuantitiesUpdatedError.Text =
+            //    lblMinimumOrderAmountError.Text =
+            //    lblMinimumOrderQuantityError.Text =
+            //    lblMaximumOrderQuantityError.Text = String.Empty;
 			
-            pnlCouponError.Visible = false;
-			pnlPromoError.Visible = false;
+            //pnlCouponError.Visible = false;
+            //pnlPromoError.Visible = false;
 		}
 
 		private void ContinueShopping()
@@ -1606,15 +1606,15 @@ namespace AspDotNetStorefront
 		protected void btnRemoveCoupon_Click(object sender, EventArgs e)
 		{
 			cart.SetCoupon("", true);
-			txtGiftCard.Text = "";
-			btnRemoveGiftCard.Visible = false;
+			//txtGiftCard.Text = "";
+			//btnRemoveGiftCard.Visible = false;
 			UpdateCart();
 		}
 
 		private void BindPromotions()
 		{
-			rptPromotions.DataSource = cart.DiscountResults.Select(dr => dr.Promotion);
-			rptPromotions.DataBind();
+			//rptPromotions.DataSource = cart.DiscountResults.Select(dr => dr.Promotion);
+			//rptPromotions.DataBind();
 		}
 
 		protected void rptPromotions_ItemDataBound(Object sender, RepeaterItemEventArgs e)
@@ -1639,33 +1639,62 @@ namespace AspDotNetStorefront
 
 		protected void btnAddPromotion_Click(Object sender, EventArgs e)
 		{
-			String promotionCode = txtPromotionCode.Text.ToLower().Trim();
-			txtPromotionCode.Text = String.Empty;
-			lblPromotionError.Text = String.Empty;
+			//String promotionCode = txtPromotionCode.Text.ToLower().Trim();
+		//	txtPromotionCode.Text = String.Empty;
+			//lblPromotionError.Text = String.Empty;
 
-			IEnumerable<IPromotionValidationResult> validationResults = PromotionManager.ValidatePromotion(promotionCode, PromotionManager.CreateRuleContext(cart));
-			if (validationResults.Count() > 0 && validationResults.Any(vr => !vr.IsValid))
-			{
-				InitializeShippingAndEstimateControl();
-				pnlPromoError.Visible = true;
-				foreach (var reason in validationResults.Where(vr => !vr.IsValid).SelectMany(vr => vr.Reasons))
-				{
-					String message = reason.MessageKey.StringResource();
-					if (reason.ContextItems != null && reason.ContextItems.Any())
-						foreach (var item in reason.ContextItems)
-							message = message.Replace(String.Format("{{{0}}}", item.Key), item.Value.ToString());
+			//IEnumerable<IPromotionValidationResult> validationResults = PromotionManager.ValidatePromotion(promotionCode, PromotionManager.CreateRuleContext(cart));
+            //if (validationResults.Count() > 0 && validationResults.Any(vr => !vr.IsValid))
+            //{
+            //    InitializeShippingAndEstimateControl();
+            //    //pnlPromoError.Visible = true;
+            //    foreach (var reason in validationResults.Where(vr => !vr.IsValid).SelectMany(vr => vr.Reasons))
+            //    {
+            //        String message = reason.MessageKey.StringResource();
+            //        if (reason.ContextItems != null && reason.ContextItems.Any())
+            //            foreach (var item in reason.ContextItems)
+            //                message = message.Replace(String.Format("{{{0}}}", item.Key), item.Value.ToString());
 
-					lblPromotionError.Text += String.Format("<div class='promotion-reason'>{0}</div>", message);
-				}
-				return;
-			}
-			else
-			{
-				PromotionManager.AssignPromotion(ThisCustomer.CustomerID, promotionCode);
-			}
+            //        //lblPromotionError.Text += String.Format("<div class='promotion-reason'>{0}</div>", message);
+            //    }
+            //    return;
+            //}
+            //else
+            //{
+            //    //PromotionManager.AssignPromotion(ThisCustomer.CustomerID, promotionCode);
+            //}
 
 			UpdateCart();
 			BindPromotions();
 		}
+
+        protected override string OverrideTemplate()
+        {
+            String MasterHome = AppLogic.HomeTemplate();
+
+            if (MasterHome.Trim().Length == 0)
+            {
+
+                MasterHome = "JeldWenTemplate";// "template";
+            }
+
+            if (MasterHome.EndsWith(".ascx"))
+            {
+                MasterHome = MasterHome.Replace(".ascx", ".master");
+            }
+
+            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                MasterHome = MasterHome + ".master";
+            }
+
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            {
+                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
+                MasterHome = "JeldWenTemplate";// "template.master";
+            }
+
+            return MasterHome;
+        }
 	}
 }
