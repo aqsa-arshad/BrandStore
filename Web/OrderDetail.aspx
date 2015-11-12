@@ -24,74 +24,52 @@
                 <div class="col-md-6 ">
                     <span class="normal-heading black-color">Shipped to</span>
                     <p>
-                        <span class="block-text">
-                            <asp:Label ID="lblBAFullName" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBACompany" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBAAddress1" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBAAddress2" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBASuite" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBACityStateZip" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBACountry" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblBAPhone" runat="server"></asp:Label>
-                        </span>
+                        <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBACompany" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBAAddress1" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBAAddress2" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBASuite" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBACityStateZip" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBACountry" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
                     </p>
                 </div>
                 <%--Bill to Address--%>
                 <div class="col-md-6">
                     <span class="normal-heading black-color">Billed to</span>
                     <p>
-                        <span class="block-text">
-                            <asp:Label ID="lblSAFullName" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSACompany" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSAAddress1" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSAAddress2" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSASuite" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSACityStateZip" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSACountry" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblSAPhone" runat="server"></asp:Label>
-                        </span>
+                        <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSACompany" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSAAddress1" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSAAddress2" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSASuite" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSACityStateZip" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSACountry" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
                     </p>
                 </div>
                 <div class="col-md-6">
                     <span class="normal-heading black-color">Payment Method</span>
                     <p>
-                        <span class="block-text">
-                            <asp:Label ID="lblPMCardInfo" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblPMExpireDate" runat="server"></asp:Label>
-                        </span>
-                        <span class="block-text">
-                            <asp:Label ID="lblPMCountry" runat="server"></asp:Label>
-                        </span>
+                        <asp:Label class="block-text" ID="lblPMCardInfo" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblPMExpireDate" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblPMCountry" runat="server"></asp:Label>
                     </p>
                 </div>
             </div>
@@ -106,14 +84,12 @@
                     <asp:Repeater ID="rptOrderItemsDetail" runat="server">
                         <ItemTemplate>
                             <tr>
-                                <td>
-                                    <span class="normal-heading black-color">Branded Merch </span>
+                                <td class="td-50-percent">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <div class="primary-img-box">
                                                 <asp:Image ID="Image1" runat="server" class="img-responsive"
-                                                    ImageUrl='<%# AspDotNetStorefrontCore.AppLogic.LookupImage("Product", int.Parse(Eval("ProductID").ToString()), Eval("ImageFileNameOverride").ToString(), Eval("SKU").ToString(), "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)%>'
-                                                     />
+                                                    ImageUrl='<%# AspDotNetStorefrontCore.AppLogic.LookupImage("Product", int.Parse(Eval("ProductID").ToString()), Eval("ImageFileNameOverride").ToString(), Eval("SKU").ToString(), "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)%>' />
                                             </div>
                                         </div>
                                         <div class="col-md-5">
@@ -129,25 +105,25 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="td-50-percent">
                                     <span class="normal-heading black-color">Quantity</span>
                                     <span>
                                         <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
                                     </span>
                                 </td>
 
-                                <td>
+                                <td class="td-50-percent">
                                     <span class="normal-heading black-color">Payment </span>
                                     <span>Price with (FUND) credit: $Y,YYY.YY</span>
                                     <span>Price with BLU Bucks used: $ZZZ.ZZ</span>
                                 </td>
-                                <td>
+                                <td class="td-25-percent">
                                     <span class="normal-heading black-color">Delivery </span>
                                     <span>
                                         <asp:Label ID="lblDelivery" runat="server" Text='<%# Eval("ShippingMethod") %>'></asp:Label>
                                     </span>
                                 </td>
-                                <td>
+                                <td class="td-25-percent">
                                     <a href="#" class="underline-link">Track item &gt;</a>
                                 </td>
                             </tr>
@@ -169,12 +145,13 @@
                         <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                     </span>
                 </p>
-                <span class="normal-heading black-color">Credits Used</span>
+                <%--TODO: Commented due to unavailablity Blu Bucks--%>
+                <%--<span class="normal-heading black-color">Credits Used</span>
                 <p>
                     <span class="block-text">Credit Name: $X,XXX.XX</span>
                     <span class="block-text">Credit Name: $XXX.XX</span>
                     <span class="block-text">BLU Bucks: $XXX.XX</span>
-                </p>
+                </p>--%>
 
                 <span class="normal-heading black-color">Charges</span>
                 <p>
@@ -187,8 +164,8 @@
                 </p>
 
                 <div class="form-group">
-                    <a class="btn btn-primary btn-half" type="submit" role="button" href='<%=m_StoreLoc + "receipt.aspx?ordernumber=" + orderNumber %>'>Print Receipt</a>
-                    <asp:HyperLink ID="hplReOrder" runat="server"  class="btn btn-primary btn-half" role="button" Text="Reorder"></asp:HyperLink>
+                    <a class="btn btn-primary btn-half" type="submit" role="button" href='<%=m_StoreLoc + "OrderReceipt.aspx?ordernumber=" + OrderNumber %>'>Print Receipt</a>
+                    <asp:HyperLink ID="hplReOrder" runat="server" class="btn btn-primary btn-half" role="button" Text="Reorder"></asp:HyperLink>
                 </div>
             </div>
         </div>

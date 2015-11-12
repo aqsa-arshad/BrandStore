@@ -1,8 +1,6 @@
 .btn-primary {
   text-transform: uppercase;
   margin: 15px 0;
-   border-radius:0;
-  -webkit-appearance: none;
 }
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
@@ -3468,13 +3466,25 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar-left {
     float: left !important;
+    float: none !important;
   }
   .navbar-right {
     float: right !important;
+    float: none !important;
     margin-right: -15px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
+  }
+}
+@media (min-width: 768px) and screen and (min-width: 800px) {
+  .navbar-left {
+    float: left !important ;
+  }
+}
+@media (min-width: 768px) and screen and (min-width: 800px) {
+  .navbar-right {
+    float: left !important ;
   }
 }
 .navbar-default {
@@ -4379,7 +4389,7 @@ fieldset[disabled] .btn-danger.active {
 @media (min-width: 768px) {
   .modal-dialog {
     width: 600px;
-    margin: 170px auto;
+    margin: 30px auto;
   }
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -4717,13 +4727,13 @@ input[type="password"],
   padding: 4px 12px;
   height: 26px;
   color: #1d446b;
+  width: 100%;
 }
 input[type="text"]:focus,
 input[type="password"]:focus,
 .form-control:focus {
   border-color: #1d446b;
   box-shadow: none;
-  color: #1d446b;
 }
 h1 {
   color: #ffffff;
@@ -4740,6 +4750,7 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 2;
   font-family: 'FrutigerLTStd-Roman';
+  font-size: 18px;
 }
 h4 {
   font-size: 1em;
@@ -4857,9 +4868,7 @@ select {
   }
 }
 .user-grid .search-feild:focus {
-  background: url('images/search-img.png') no-repeat 5px -17px;   
-  border-color: #1d446b;
-  outline: 0;
+  background: url('images/search-img.png') no-repeat 5px -17px;
 }
 .profile-links {
   padding: 0;
@@ -5275,12 +5284,6 @@ a:hover.mb-login-btn {
   display: block;
   margin-bottom: 0;
 }
-.form-group input[type="text"] {
-  width: 100%;
-}
-.form-group select {
-  width: 100%;
-}
 .search-filters {
   padding-bottom: 15px;
 }
@@ -5297,21 +5300,11 @@ a:hover.mb-login-btn {
   text-align: center;
   border: none !important;
 }
-.checkout-field-adjust {
-  margin-right: 0;
-  margin-left: 0;
-}
-@media screen and (min-width: 800px) {
-  .checkout-field-adjust {
-    margin-right: 4%;
-    margin-left: 4%;
-  }
-}
 .checkout-two-fields .form-control {
   display: inline-block;
 }
 .checkout-two-fields .form-control:nth-last-child(1) {
-  width: 50%;
+  width: 49%;
 }
 @media screen and (min-width: 800px) {
   .checkout-two-fields .form-control:nth-last-child(1) {
@@ -5320,7 +5313,7 @@ a:hover.mb-login-btn {
   }
 }
 .checkout-two-fields .form-control:nth-last-child(2) {
-  width: 50%;
+  width: 49%;
 }
 @media screen and (min-width: 800px) {
   .checkout-two-fields .form-control:nth-last-child(2) {
@@ -5364,7 +5357,7 @@ a:hover.mb-login-btn {
   height: 30px;
   padding: 4px;
   text-align: center;
-  width: 50px;
+  width: 50px !important;
 }
 .notify {
   color: #d52425;
@@ -5410,6 +5403,14 @@ table tbody tr td span {
 table tbody tr td .underline-link {
   display: table;
   margin-top: 5px;
+}
+table tbody tr td .primary-img-box {
+  margin-top: 5px;
+}
+@media screen and (min-width: 800px) {
+  table tbody tr .col-md-5:nth-child(1) {
+    padding-right: 0;
+  }
 }
 .table {
   border-collapse: collapse;
@@ -5461,13 +5462,16 @@ table tbody tr td .underline-link {
   line-height: 23px;
   margin-bottom: 12px;
 }
-.label-text span {
+.label-text > span {
   display: block;
 }
-.label-text span font {
+.label-text > span font {
   color: #545759;
   font-family: 'FrutigerLTStd-Roman';
   letter-spacing: 0.5px;
+}
+.label-text > span span {
+  display: inline !important;
 }
 table.shopping-cart tbody .col-md-6:nth-child(1) {
   padding-right: 0;
@@ -5495,39 +5499,17 @@ table.shopping-cart tbody tr td {
     width: 15%;
   }
 }
-table.order-detail tbody .col-md-6:nth-child(1) {
-  padding-right: 0;
-}
 table.order-detail tbody tr td {
   display: inline-block;
 }
 @media screen and (min-width: 800px) {
-  table.order-detail tbody tr td:nth-child(1) {
-    width: 52%;
-    padding-bottom: 0;
-  }
-  table.order-detail tbody tr td:nth-child(1) p {
-    margin-bottom: 0;
+  .td-55-percent {
+    width: 55%;
   }
 }
 @media screen and (min-width: 800px) {
-  table.order-detail tbody tr td:nth-child(2) {
-    width: 45%;
-  }
-}
-@media screen and (min-width: 800px) {
-  table.order-detail tbody tr td:nth-child(3) {
-    width: 52%;
-  }
-}
-@media screen and (min-width: 800px) {
-  table.order-detail tbody tr td:nth-child(4) {
-    width: 25%;
-  }
-}
-@media screen and (min-width: 800px) {
-  table.order-detail tbody tr td:nth-child(5) {
-    width: 15%;
+  .td-50-percent {
+    width: 50%;
   }
 }
 @media screen and (min-width: 800px) {
@@ -5569,6 +5551,49 @@ table.order-detail tbody tr td {
   margin-bottom: 10px;
   margin-top: 15px;
   padding-top: 25px;
+}
+.checkout-head {
+  padding-bottom: 36px;
+}
+.checkout-head h2 {
+  margin: 0;
+  display: inline-block;
+}
+.checkout-head ul {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+@media screen and (min-width: 800px) {
+  .checkout-head ul {
+    padding-left: 40px;
+  }
+}
+.checkout-head li {
+  display: inline;
+  padding-right: 10px;
+}
+.checkout-head a {
+  color: #545759;
+}
+.checkout-head li.active a {
+  color: #88421b;
+}
+.checkout-shipping {
+  padding-bottom: 10px;
+}
+.checkout-shipping td {
+  padding: 10px 0;
+}
+.checkout-field-adjust {
+  margin-right: 0;
+  margin-left: 0;
+}
+@media screen and (min-width: 800px) {
+  .checkout-field-adjust {
+    margin-right: 4%;
+    margin-left: 4%;
+  }
 }
 /******************* Side Bar ***********************/
 .pre-login-pannel {
@@ -5835,7 +5860,10 @@ footer {
   background-color: #bb0000;
 }
 .padding-none {
-  padding: 0;
+  padding: 0 !important;
+}
+.padding-top-none {
+  padding-top: 0 !important;
 }
 .margin-none {
   margin: 0;
@@ -5909,7 +5937,7 @@ a:hover.mb-link {
   background-color: #66715f;
 }
 .body-heading {
-  padding-bottom: 40px;
+  padding-bottom: 36px;
 }
 .body-heading h2 {
   margin: 0;
@@ -5977,7 +6005,7 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 800px) {
   .pull-desktop-right {
-    float: right !important ;
+    float: righ !important ;
   }
 }
 .pull-desktop-left {
@@ -6024,4 +6052,20 @@ a:hover.underline-link {
 .roman-blue {
   font-family: 'FrutigerLTStd-Roman';
   padding-bottom: 8px;
+}
+.pull-left {
+  float: none !important;
+}
+@media screen and (min-width: 800px) {
+  .pull-left {
+    float: left !important ;
+  }
+}
+.pull-right {
+  float: none !important;
+}
+@media screen and (min-width: 800px) {
+  .pull-right {
+    float: left !important ;
+  }
 }

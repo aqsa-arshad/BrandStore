@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
 {
-    public partial class orderconfirmation : SkinBase
+    public partial class OrderReceipt : SkinBase
     {
         protected int OrderNumber;
         private IDataReader reader;
@@ -21,10 +21,8 @@ namespace AspDotNetStorefront
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
 
-            lnkreceipt.HRef = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + OrderCustomerID.ToString();
-
-            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
-            // who is logged in now viewing this page:
+            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal) Context.User).ThisCustomer;
+                // who is logged in now viewing this page:
 
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
@@ -54,7 +52,27 @@ namespace AspDotNetStorefront
             }
         }
 
-       
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenEmptyTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenEmptyTemplate";
+            }
+            return masterHome;
+        }
 
         void GetOrderInfo()
         {
@@ -72,8 +90,8 @@ namespace AspDotNetStorefront
                         if (reader.Read())
                         {
                             lblOrderNumber.Text = reader["OrderNumber"].ToString();
-                            //lblOrderDate.Text = reader["OrderDate"].ToString();
-                           // lblCustomerID.Text = reader["CustomerID"].ToString();
+                            lblOrderDate.Text = reader["OrderDate"].ToString();
+                            lblCustomerID.Text = reader["CustomerID"].ToString();
 
                             //Billing Address
                             lblBAFullName.Text = reader["BillingFirstName"].ToString() + ' ' +
@@ -145,40 +163,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-        }
-             
-        protected override string OverrideTemplate()
-        {
-            String MasterHome = AppLogic.HomeTemplate();
-
-            if (MasterHome.Trim().Length == 0)
-            {
-
-                MasterHome = "JeldWenTemplate";// "template";
-            }
-
-            if (MasterHome.EndsWith(".ascx"))
-            {
-                MasterHome = MasterHome.Replace(".ascx", ".master");
-            }
-
-            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
-            {
-                MasterHome = MasterHome + ".master";
-            }
-
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
-            {
-                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "JeldWenTemplate";// "template.master";
-            }
-
-            return MasterHome;
-        }
-
-        private void lblreceipt_click()
-        {
-           // String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
         }
     }
 }

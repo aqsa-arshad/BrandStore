@@ -89,19 +89,20 @@ namespace AspDotNetStorefrontControls
                 //SubTotal
                 if (ShowSubTotal || UseInAjaxMiniCart)
                 {
-                    Controls.Add(new LiteralControl("        <div class='page-row text-right cart-summary-subtotal'>"));
-                    Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                    //<p><span class='black-blu-label'>
+                    Controls.Add(new LiteralControl(" <div class=''>"));
+                    Controls.Add(new LiteralControl(" <p><span class='normal-heading black-color'>         <font>"));
                     Controls.Add(lblSubTotalNoDiscountCaption);
-                    Controls.Add(new LiteralControl("          </span>"));
-                    Controls.Add(new LiteralControl("          <span class='cart-value cart-price'>"));
+                    Controls.Add(new LiteralControl("          </font>"));
+                    //Controls.Add(new LiteralControl("          <span class='cart-value cart-price'>"));
                     Controls.Add(lblSubTotalNoDiscount);
-                    Controls.Add(new LiteralControl("          </span>"));
-                    Controls.Add(new LiteralControl("        </div>"));
+                   // Controls.Add(new LiteralControl("          </span>"));
+                    Controls.Add(new LiteralControl("        </span></p>"));
 
                     if (_dataSource.DiscountResults.Sum(dr => dr.LineItemTotal) < 0)
                     {
                         Controls.Add(new LiteralControl("        <div class='page-row text-right cart-summary-discount'>"));
-                        Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                        Controls.Add(new LiteralControl("          <span class='black-blu-label'>"));
                         Controls.Add(lblLineItemDiscountCaption);
                         Controls.Add(new LiteralControl("          </span>"));
                         Controls.Add(new LiteralControl("           <span class='cart-value'>"));
@@ -113,7 +114,7 @@ namespace AspDotNetStorefrontControls
                     if (AppLogic.AppConfigBool("Debug.DisplayOrderSummaryDiagnostics"))
                     {
                         Controls.Add(new LiteralControl("        <div class='page-row text-right cart-summary-diagnostics'>"));
-                        Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                        Controls.Add(new LiteralControl("          <span class='black-blu-label'>"));
                         Controls.Add(lblSubTotalCaption);
                         Controls.Add(new LiteralControl("          </span>"));
                         Controls.Add(new LiteralControl("          <span class='cart-value'>"));
@@ -123,15 +124,38 @@ namespace AspDotNetStorefrontControls
                     }
                 }
 
+                 Controls.Add(new LiteralControl("<span class='normal-heading black-color'>Charges</span>"));
+                //Tax            
+                if (ShowTax && !UseInAjaxMiniCart)
+                {
+                    if (DesignMode || DataSource != null)
+                    {
+                        if (DesignMode || !this.DataSource.VatIsInclusive)
+                        {
+                           // Controls.Add(new LiteralControl("         <div class='page-row text-right cart-summary-tax'>"));
+                            Controls.Add(new LiteralControl("<p>"));
+                            Controls.Add(new LiteralControl("           <span class='block-text'>"));
+                            Controls.Add(lblTaxCaption);
+                          //  Controls.Add(new LiteralControl("          </span>"));
+                          //  Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                            Controls.Add(lblTax);
+                            Controls.Add(new LiteralControl("          </span>"));
+                            //Controls.Add(new LiteralControl("        </div>"));
+                           // Controls.Add(new LiteralControl("</p>"));
+
+                        }
+                    }
+                }
+
                 //Shipping
                 if (ShowShipping && !UseInAjaxMiniCart)
                 {
-                    Controls.Add(new LiteralControl("       <div class='page-row text-right cart-summary-shipping'>"));
-  
+                   // Controls.Add(new LiteralControl("       <div class='page-row text-right cart-summary-shipping'>"));
+
                     //shipping caption
-                    Controls.Add(new LiteralControl("                <span class='cart-shipping-cost-caption'>"));
+                    Controls.Add(new LiteralControl("                <span class='block-text'>"));
                     Controls.Add(lblShippingCostCaption);
-                    Controls.Add(new LiteralControl("                </span>"));
+                  //  Controls.Add(new LiteralControl("                </span>"));
 
                     //vat display
                     if (DesignMode || DataSource.VatEnabled)
@@ -144,35 +168,18 @@ namespace AspDotNetStorefrontControls
                     //shipping method
                     if (DesignMode || !DataSource.WithMultipleShippingAddresses && !DataSource.WithGiftRegistryConponents && DataSource.FirstCartItem.ShippingMethod.Length != 0 || UseInAjaxMiniCart)
                     {
-                        Controls.Add(new LiteralControl("                <span class='cart-shipping-method'>"));
-                        Controls.Add(lblShippingMethod);
-                        Controls.Add(new LiteralControl("                </span>"));
+                        //Controls.Add(new LiteralControl("                <span class='cart-shipping-method'>"));
+                       // Controls.Add(lblShippingMethod);
+                      //  Controls.Add(new LiteralControl("                </span>"));
                     }
 
-                    Controls.Add(new LiteralControl("          <span class='cart-shipping-cost'>"));
+                  //  Controls.Add(new LiteralControl("          <span class='cart-shipping-cost'>"));
                     Controls.Add(lblShippingCost);
                     Controls.Add(new LiteralControl("          </span>"));
-                    Controls.Add(new LiteralControl("        </div>"));
+                    Controls.Add(new LiteralControl("        </p>"));
                 }
 
-                //Tax            
-                if (ShowTax && !UseInAjaxMiniCart)
-               { 
-                    if (DesignMode || DataSource != null)
-                    {
-                        if (DesignMode || !this.DataSource.VatIsInclusive)
-                        {
-                            Controls.Add(new LiteralControl("         <div class='page-row text-right cart-summary-tax'>"));
-                            Controls.Add(new LiteralControl("           <span class='cart-label'>"));
-                            Controls.Add(lblTaxCaption);
-                            Controls.Add(new LiteralControl("          </span>"));
-                            Controls.Add(new LiteralControl("          <span class='cart-label'>"));
-                            Controls.Add(lblTax);
-                            Controls.Add(new LiteralControl("          </span>"));
-                            Controls.Add(new LiteralControl("        </div>"));
-                        }
-                    }
-                }
+               
                 
                 //Total
                 if (ShowTotal && !UseInAjaxMiniCart)
@@ -213,14 +220,17 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(new LiteralControl("        </div>"));
                     }
 
-                    Controls.Add(new LiteralControl("        <div class='page-row text-right cart-summary-total'>"));
-                    Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                    //Controls.Add(new LiteralControl("        <div class='page-row text-right cart-summary-total'>"));
+                   // Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                    Controls.Add(new LiteralControl("<p>"));
+                    Controls.Add(new LiteralControl("          <span class='normal-heading black-color'>"));
                     Controls.Add(lblTotalCaption);
-                    Controls.Add(new LiteralControl("          </span>"));
-                    Controls.Add(new LiteralControl("         <span class='cart-value'>"));
+                   // Controls.Add(new LiteralControl("          </span>"));
+                    Controls.Add(new LiteralControl("         <font"));
                     Controls.Add(lblTotal);
+                    Controls.Add(new LiteralControl("          </font>"));
                     Controls.Add(new LiteralControl("          </span>"));
-                    Controls.Add(new LiteralControl("        </div>"));
+                    Controls.Add(new LiteralControl("        </p>"));
                 }
 
                 // Promotions
@@ -244,6 +254,7 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(new LiteralControl("        </div>"));
                     }
                 }
+                Controls.Add(new LiteralControl("        </div>"));
             }
         }
 

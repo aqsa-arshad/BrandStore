@@ -2172,7 +2172,7 @@ function popupzoom(url,alturl)
             {
 			    result.Append("<a class=\"product-img-box\">");
                 imageURL = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-                result.Append("<img id=\"ProductPic" + ProductID + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageURL + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                result.Append("<img id=\"productImage\" \"name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageURL + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
                 result.Append("</a>");
             }            
             return result.ToString();
@@ -3204,7 +3204,7 @@ function popupzoom(url,alturl)
             result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
             result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
             result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
-            result.Append("<input class=\"form-control\" value=\"jappleseed@gmail.com\" type=\"text\"> </div>");
+            result.Append("<input class=\"form-control\" type=\"text\"> </div>");
             result.Append("<div class=\"buttons-group\"> <button type=\"button\" class=\"btn btn-primary\">Submit</button> ");
             result.Append("<button type=\"button\" data-dismiss=\"modal\" class=\"btn btn-primary\">Cancel</button> </div>");
             result.Append("</div> </div> </div> </div>");
@@ -4009,23 +4009,23 @@ function popupzoom(url,alturl)
                 {
                     if (includeHTMLMarkup)
                     {
-                        results.Append("<p> <span> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                        results.Append("<p> <span class=\"black-blu-label\"> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
                     }
                     else
                     {
-                        results.Append("<p> <span> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                        results.Append("<p> <span class=\"black-blu-label\"> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
                     }
                     schemaPrice = regularPrice;
                 }
                 else if (includeHTMLMarkup)
                 {
-                    results.Append("<p> <span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
-                    results.Append("<span> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");
+                    results.Append("<p> <span class=\"black-blu-label\"> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    results.Append("<span class=\"black-blu-label\"> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");
                     schemaPrice = discountedPrice;
                 }
                 else
                 {
-                    results.Append("<p> <span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>" + "<span> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");                    
+                    results.Append("<p> <class=\"black-blu-label\"span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>" + "<span class=\"black-blu-label\"> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");                    
                     schemaPrice = discountedPrice;
                 }
                 //TODO: Will be uncommented when true blue point implemented

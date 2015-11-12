@@ -192,7 +192,7 @@ namespace AspDotNetStorefront
         /// </summary>
         private void InitializeComponent()
         {
-            btnContinueCheckout1.Click += new EventHandler(btnContinueCheckout1_Click);
+            //btnContinueCheckout1.Click += new EventHandler(btnContinueCheckout1_Click);
             btnContinueCheckout2.Click += new EventHandler(btnContinueCheckout2_Click);
         }
 
@@ -206,7 +206,7 @@ namespace AspDotNetStorefront
 
         protected void btnContinueCheckout2_Click(object sender, EventArgs e)
         {
-            btnContinueCheckout1.Enabled = false;
+           // btnContinueCheckout1.Enabled = false;
             ContinueCheckout();
         }
 
@@ -262,10 +262,10 @@ namespace AspDotNetStorefront
                 XmlPackage_CheckoutReviewPageFooter.Text = "" + AppLogic.RunXmlPackage(XmlPackageName2, base.GetParser, ThisCustomer, SkinID, String.Empty, String.Empty, true, true);
             }
 
-            AppLogic.GetButtonDisable(btnContinueCheckout1);
+          //  AppLogic.GetButtonDisable(btnContinueCheckout1);
             AppLogic.GetButtonDisable(btnContinueCheckout2);
-            btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
-            btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
+          //  btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
+           // btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
@@ -710,6 +710,8 @@ namespace AspDotNetStorefront
             }
             return masterHome;
         }
+
+       
 
     }
 }

@@ -12,34 +12,33 @@
 						<asp:Repeater ID="rptOrderhistory" runat="server">							
 							<ItemTemplate>
 								<tr class="table-row">
-									<td>
-                                        <Span class="blk-normal-heading">
+									<td class="td-25-percent">
+                                        <Span class="normal-heading black-color">
                                             <asp:Label ID="Label1" runat="server" Text="<%$ Tokens:StringResource,account.aspx.36 %>"/>
                                         </Span>								
-										<a target="_blank" href='<%#m_StoreLoc + "receipt.aspx?ordernumber=" + DataBinder.Eval(Container.DataItem, "OrderNumber") %>'><%# DataBinder.Eval(Container.DataItem, "OrderNumber").ToString() %></a>										
+										<%# DataBinder.Eval(Container.DataItem, "OrderNumber").ToString() %>
                                         <a class="underline-link" href='<%#m_StoreLoc + "OrderDetail.aspx?ordernumber=" + DataBinder.Eval(Container.DataItem, "OrderNumber") %>'>View Detail</a>
 									</td>
-									<td>
-									    <Span class="blk-normal-heading">
+									<td class="td-25-percent">
+									    <Span class="normal-heading black-color">
 									        <asp:Label ID="Label2" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>"/>
 									    </Span>
-									    <%#AspDotNetStorefrontCore.Localization.ConvertLocaleDateTime(DataBinder.Eval(Container.DataItem, "OrderDate").ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting)%>
+									    <%#Localization.ConvertLocaleDateTime(DataBinder.Eval(Container.DataItem, "OrderDate").ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting)%>
 									</td>
-									<td>
-									    <Span class="blk-normal-heading">
+									<td class="td-25-percent">
+									    <Span class="normal-heading black-color">
 									        <asp:Label ID="Label3" runat="server" Text="<%$ Tokens:StringResource,account.aspx.39%>"/>
 									    </Span>
 									    <%#GetPaymentStatus(DataBinder.Eval(Container.DataItem, "PaymentMethod").ToString(), DataBinder.Eval(Container.DataItem, "CardNumber").ToString(), DataBinder.Eval(Container.DataItem, "TransactionState").ToString(), DataBinder.Eval(Container.DataItem, "OrderTotal").ToString())%>
 									</td>
-									<td>
-									    <Span class="blk-normal-heading" >
+									<td class="td-25-percent">
+									    <Span class="normal-heading black-color">
 									        <asp:Label ID="Label4" runat="server" Text="<%$ Tokens:StringResource,account.aspx.40 %>"/>
 									    </Span>
 									    <%#"&nbsp;" + GetShippingStatus(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "OrderNumber").ToString()), DataBinder.Eval(Container.DataItem, "ShippedOn").ToString(), DataBinder.Eval(Container.DataItem, "ShippedVIA").ToString(), DataBinder.Eval(Container.DataItem, "ShippingTrackingNumber").ToString(), DataBinder.Eval(Container.DataItem, "TransactionState").ToString(), DataBinder.Eval(Container.DataItem, "DownloadEMailSentOn").ToString()) + "&nbsp;"%>
 									</td>									
 								</tr>
-							</ItemTemplate>
-							<FooterTemplate></FooterTemplate>
+							</ItemTemplate>							
 						</asp:Repeater>
                     </tbody>
 				</table>
