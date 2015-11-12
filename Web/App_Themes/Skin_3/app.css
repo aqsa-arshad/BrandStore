@@ -3484,7 +3484,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) and screen and (min-width: 800px) {
   .navbar-right {
-    float: left !important ;
+    float: right !important ;
   }
 }
 .navbar-default {
@@ -4774,6 +4774,7 @@ ul {
 select {
   padding: 3px;
   border: solid 1px #c0c0c0;
+  width: 100%;
 }
 .header-part {
   padding-top: 40px;
@@ -6076,6 +6077,6 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 800px) {
   .pull-right {
-    float: left !important ;
+    float: right !important ;
   }
 }
