@@ -22,6 +22,7 @@ namespace AspDotNetStorefront
     {
         String SourceEntityInstanceName = String.Empty;
         protected string parentCategoryID = String.Empty;
+        protected string parentCategoryName = String.Empty;
 
 
         int ProductID;
@@ -291,14 +292,19 @@ namespace AspDotNetStorefront
                 HttpContext.Current.Response.End();
             }
 
+           
+           
             SourceEntity = Profile.LastViewedEntityName;
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
             SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
+            GetParentCategory();
+            parentCategoryName = CategoryHelper.GetEntityName(Convert.ToInt32(parentCategoryID), ThisCustomer.LocaleSetting);
             
             if (!string.IsNullOrEmpty(SourceEntityInstanceName))
             {
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SourceEntityInstanceName;
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + SourceEntityInstanceName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("parentLinkBack")).Text = parentCategoryName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("parentLinkBack")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text ="&gt;&gt; "+SourceEntityInstanceName;
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
             }
 
@@ -627,5 +633,6 @@ namespace AspDotNetStorefront
                 }
             }            
         }
+
     }
 }
