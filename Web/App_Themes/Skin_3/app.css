@@ -6029,6 +6029,15 @@ a:hover.underline-link {
   height: 75px;
   overflow: hidden;
 }
+.two-line-fix {
+  height: 50px;
+  overflow: hidden;
+}
+.five-line-fix {
+  height: 125px;
+  overflow: hidden;
+}
+
 .vertical-top {
   vertical-align: top;
 }
