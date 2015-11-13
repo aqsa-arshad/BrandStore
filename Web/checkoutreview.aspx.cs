@@ -129,8 +129,8 @@ namespace AspDotNetStorefront
             AppLogic.eventHandler("CheckoutReview").CallEvent("&CheckoutReview=true");
 
             //add edit links here
-            HyperLink1.NavigateUrl = String.Format("~/address.aspx?Checkout=True&AddressType=billing&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
-            HyperLink3.NavigateUrl = String.Format("~/address.aspx?Checkout=True&AddressType=shipping&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
+            HyperLink1.NavigateUrl = String.Format("~/JWMyAddresses.aspx?Checkout=True&AddressType=1&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
+            HyperLink3.NavigateUrl = String.Format("~/JWMyAddresses.aspx?Checkout=True&AddressType=2&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
         }
 
         #region Web Form Designer generated code
@@ -192,7 +192,7 @@ namespace AspDotNetStorefront
         /// </summary>
         private void InitializeComponent()
         {
-            btnContinueCheckout1.Click += new EventHandler(btnContinueCheckout1_Click);
+            //btnContinueCheckout1.Click += new EventHandler(btnContinueCheckout1_Click);
             btnContinueCheckout2.Click += new EventHandler(btnContinueCheckout2_Click);
         }
 
@@ -206,7 +206,7 @@ namespace AspDotNetStorefront
 
         protected void btnContinueCheckout2_Click(object sender, EventArgs e)
         {
-            btnContinueCheckout1.Enabled = false;
+           // btnContinueCheckout1.Enabled = false;
             ContinueCheckout();
         }
 
@@ -248,6 +248,7 @@ namespace AspDotNetStorefront
             else if (AppLogic.AppConfigBool("SkipShippingOnCheckout") || cart.IsAllDownloadComponents() || cart.IsAllSystemComponents())
             {
                 ordercs57.Visible = false;
+                spn3.Visible = false;
             }
             else
             {
@@ -262,10 +263,10 @@ namespace AspDotNetStorefront
                 XmlPackage_CheckoutReviewPageFooter.Text = "" + AppLogic.RunXmlPackage(XmlPackageName2, base.GetParser, ThisCustomer, SkinID, String.Empty, String.Empty, true, true);
             }
 
-            AppLogic.GetButtonDisable(btnContinueCheckout1);
+          //  AppLogic.GetButtonDisable(btnContinueCheckout1);
             AppLogic.GetButtonDisable(btnContinueCheckout2);
-            btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
-            btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
+          //  btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
+           // btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
@@ -709,6 +710,11 @@ namespace AspDotNetStorefront
                 masterHome = "JeldWenTemplate";
             }
             return masterHome;
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("checkoutpayment.aspx");
         }
 
     }

@@ -20,6 +20,10 @@ namespace AspDotNetStorefront
 	[PageType("product")]
     public partial class showproduct : SkinBase
     {
+        String SourceEntityInstanceName = String.Empty;
+        protected string parentCategoryID = String.Empty;
+
+
         int ProductID;
         bool IsAKit;
         bool RequiresReg;
@@ -134,6 +138,12 @@ namespace AspDotNetStorefront
                     m_XmlPackage = Vortx.MobileFramework.MobileXmlPackageController.XmlPackageHook(DB.RSField(rs, "XmlPackage").ToLowerInvariant(),ThisCustomer);
                     #endregion
                     IsAKit = DB.RSFieldBool(rs, "IsAKit");
+                    //this part of code is written for kit products. there is no xml package which supports them.
+                    if (IsAKit)
+                    {
+                        IsAKit = false;
+                    }
+                    //end
                     if (m_XmlPackage.Length == 0)
                     {
                         if (IsAKit)
@@ -206,9 +216,7 @@ namespace AspDotNetStorefront
             ManufacturerName = ManufacturerHelper.GetEntityName(ManufacturerID, ThisCustomer.LocaleSetting);
             DistributorName = DistributorHelper.GetEntityName(DistributorID, ThisCustomer.LocaleSetting);
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
-            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
-
-            String SourceEntityInstanceName = String.Empty;
+            VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);           
 
             if (ManufacturerID != 0)
             {
@@ -419,6 +427,7 @@ namespace AspDotNetStorefront
                 }
             }
             litOutput.Text = m_PageOutput;
+            GetParentCategory();
         }
 
         /// <summary>
@@ -600,5 +609,23 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
+        private void GetParentCategory()
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select ParentCategoryID from Category where Name = '" + SourceEntityInstanceName + "'" ;
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        parentCategoryID = reader["ParentCategoryID"].ToString();
+                    }
+                }
+            }            
+        }
     }
 }

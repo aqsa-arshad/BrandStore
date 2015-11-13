@@ -1,4 +1,4 @@
-﻿<%@ Page ClientTarget="UpLevel" Language="c#" Inherits="AspDotNetStorefront.kitproduct" EnableViewState="true" CodeFile="kitproduct.aspx.cs" MaintainScrollPositionOnPostback="true" MasterPageFile="~/App_Templates/Skin_1/template.master" %>
+﻿<%@ Page ClientTarget="UpLevel" Language="c#" Inherits="AspDotNetStorefront.kitproduct" EnableViewState="true" CodeFile="kitproduct.aspx.cs" MaintainScrollPositionOnPostback="true" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="aspdnsf" Namespace="AspDotNetStorefrontControls.Extenders" Assembly="AspDotNetStorefrontControls" %>
