@@ -129,8 +129,8 @@ namespace AspDotNetStorefront
             AppLogic.eventHandler("CheckoutReview").CallEvent("&CheckoutReview=true");
 
             //add edit links here
-            HyperLink1.NavigateUrl = String.Format("~/address.aspx?Checkout=True&AddressType=billing&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
-            HyperLink3.NavigateUrl = String.Format("~/address.aspx?Checkout=True&AddressType=shipping&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
+            HyperLink1.NavigateUrl = String.Format("~/JWMyAddresses.aspx?Checkout=True&AddressType=1&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
+            HyperLink3.NavigateUrl = String.Format("~/JWMyAddresses.aspx?Checkout=True&AddressType=2&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
         }
 
         #region Web Form Designer generated code
@@ -248,6 +248,7 @@ namespace AspDotNetStorefront
             else if (AppLogic.AppConfigBool("SkipShippingOnCheckout") || cart.IsAllDownloadComponents() || cart.IsAllSystemComponents())
             {
                 ordercs57.Visible = false;
+                spn3.Visible = false;
             }
             else
             {
@@ -711,7 +712,10 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
-       
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("checkoutpayment.aspx");
+        }
 
     }
 }

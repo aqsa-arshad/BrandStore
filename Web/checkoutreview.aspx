@@ -86,7 +86,7 @@
                 <aspdnsf:OrderOption ID="ctrlOrderOption" runat="server" EditMode="false" />
             </div>
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-9">                    
                     <div class="page-row order-summary">
                         <div class="one-third">
                             <asp:Label ID="checkoutreviewaspx8" CssClass="bold review-header" Text="<%$ Tokens:StringResource,checkoutreview.aspx.8 %>" runat="server"></asp:Label>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="one-third">
                             <asp:Label ID="ordercs57" CssClass="bold review-header" Text="<%$ Tokens:StringResource,order.cs.57 %>" runat="server"></asp:Label>
-                            <span class="review-edit-link">[<asp:HyperLink ID="HyperLink3" runat="server" Text="edit" />]</span>
+                            <span class="review-edit-link" runat="server" id="spn3">[<asp:HyperLink ID="HyperLink3" runat="server" Text="edit" />]</span>
                             <asp:Literal ID="litShippingAddress" runat="server" Mode="PassThrough"></asp:Literal>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
          <div class="col-md-4"></div>
          <div class="col-md-4">
             
-             <button type="submit" id="btnback" class="btn btn-primary btn-block"  onclick="open_win() ">Back</button>
+             <button type="submit" id="btnback" class="btn btn-primary btn-block" runat="server" onclick="btnBack_Click">Back</button>
                                         <div class="clearfix"></div>
         <asp:Button ID="btnContinueCheckout2" Text="<%$ Tokens:StringResource,checkoutreview.aspx.777 %>" CssClass="btn btn-primary btn-block" runat="server" OnClick="btnContinueCheckout2_Click" />
    </div>
@@ -144,10 +144,5 @@
     </div>
         <asp:Literal ID="ltPayPalIntegratedCheckout" runat="server" />
     </asp:Panel>
-    <script type="text/javascript">
-        function open_win() {
-            window.history.back();
-        
-        }       
-        </script>
+    
 </asp:Content>

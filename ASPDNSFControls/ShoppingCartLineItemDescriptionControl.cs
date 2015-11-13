@@ -130,21 +130,21 @@ namespace AspDotNetStorefrontControls
                 //Size
 				if(cItem.ChosenSize.Length != 0)
                 {
-                    Controls.Add(new LiteralControl("      <div class='cart-small cart-size'>"));
-                    Controls.Add(lblSizeCaption);
-					Controls.Add(new LiteralControl(": "));
-                    Controls.Add(lblSize);
-                    Controls.Add(new LiteralControl("      </div>"));
+                    //Controls.Add(new LiteralControl("      <div class='cart-small cart-size'>"));
+                    //Controls.Add(lblSizeCaption);
+                    //Controls.Add(new LiteralControl(": "));
+                    //Controls.Add(lblSize);
+                    //Controls.Add(new LiteralControl("      </div>"));
                 }
 
                 //Color
                 if (cItem.ChosenColor.Length != 0)
                 {
-                    Controls.Add(new LiteralControl("      <div class='cart-small cart-color'>"));
-                    Controls.Add(lblColorCaption);
-					Controls.Add(new LiteralControl(": "));
-                    Controls.Add(lblColor);
-                    Controls.Add(new LiteralControl("      </div>"));
+                    //Controls.Add(new LiteralControl("      <div class='cart-small cart-color'>"));
+                    //Controls.Add(lblColorCaption);
+                    //Controls.Add(new LiteralControl(": "));
+                    //Controls.Add(lblColor);
+                    //Controls.Add(new LiteralControl("      </div>"));
                 }
 
                 //Text Option
