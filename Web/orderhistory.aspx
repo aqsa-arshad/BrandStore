@@ -5,7 +5,7 @@
 <asp:content runat="server" contentplaceholderid="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlOrderHistory" runat="server">			
-        <div class="content-box-03">
+        <div class="content-box-03 padding-top-none">
 			<div>
 				<table class="table">
 					<tbody>						
