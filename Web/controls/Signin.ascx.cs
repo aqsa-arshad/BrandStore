@@ -19,6 +19,7 @@ namespace AspDotNetStorefront
 {
     public partial class Signin : System.Web.UI.UserControl
     {
+        ShoppingCart cart;
         Customer ThisCustomer;
         int m_SkinID;
         private TextBox tbSecurityCode;
@@ -89,6 +90,7 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, System.EventArgs e)
         {
             string HiddenFieldText = HiddenLabel.Text;
+          
             if (HiddenFieldText.Equals("true"))
             {
                 ForgotPasswordPanel.Visible = true;
@@ -143,7 +145,7 @@ namespace AspDotNetStorefront
                 ErrorMsgLabel.Text = string.Empty;
 				ErrorPanel.Visible = false;
             }
-            
+            cart = new ShoppingCart(3, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
 
             AppLogic.CheckForScriptTag(lblReturnURL.Text);
             if (AppLogic.IsAdminSite || CommonLogic.GetThisPageName(true).ToLowerInvariant().IndexOf(AppLogic.AdminDir().ToLowerInvariant() + "/") != -1 || lblReturnURL.Text.ToLowerInvariant().IndexOf(AppLogic.AdminDir().ToLowerInvariant() + "/") != -1)
@@ -181,7 +183,24 @@ namespace AspDotNetStorefront
                 lblSecurityLabel.Visible = true;
                 rfvSecurity.Enabled = true;
             }
+
+            string fromshoppingcart = Request.QueryString["Checkout"];
+            Button btnlogin = (Button)ctrlLogin.FindControl("LoginButton");
+            Button btnSignInAndCheckout = (Button)ctrlLogin.FindControl("btnSignInAndCheckout");
+            if (fromshoppingcart.ToLower() == "true")
+            {
+
+               // btnlogin.Visible = false;
+                btnSignInAndCheckout.Visible = true;
+            }
+            else
+            {
+                //btnlogin.Visible = true;
+                btnSignInAndCheckout.Visible = false;
+
+            }
         }
+   
         
         protected void ctrlLogin_LoggingIn(object sender, LoginCancelEventArgs e)
         {
@@ -437,6 +456,20 @@ namespace AspDotNetStorefront
                                 sReturnURL = "~/default.aspx";
                             }
                         }
+                        Customer c = new Customer(EMailField, true);
+                        if (!AppLogic.AppConfigBool("Checkout.RedirectToCartOnSignin"))
+                        {
+                            ShoppingCart newCart = new ShoppingCart(3, c, CartTypeEnum.ShoppingCart, 0, false);
+                            sReturnURL = newCart.PageToBeginCheckout(false, false);
+                            if (newCart.Total(true) != cart.Total(true))
+                            {
+                                ErrorMessage em = new ErrorMessage("checkoutshipping.aspx.25".StringResource());
+                                sReturnURL = sReturnURL.AppendQueryString("errormsg=" + em.MessageId);
+                            }
+                            Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
+                        }
+                        else
+                            Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode("shoppingcart.aspx"));
                         ctrlRecoverPassword.Visible = false;
                         Response.Redirect(sReturnURL);                        
                     }
