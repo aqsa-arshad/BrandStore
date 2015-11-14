@@ -70,6 +70,9 @@
                                     <div class="col-md-6">
                                         <asp:Button ID="LoginButton" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="SIGN IN"
                                             ValidationGroup="Group1"></asp:Button>
+                                        <asp:Button ID="btnSignInAndCheckout" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="CONTINUE CHECKOUT"
+                                            ValidationGroup="Group1"></asp:Button>
+                                       
                                     </div>
                                 </div>
                             </asp:Panel>
