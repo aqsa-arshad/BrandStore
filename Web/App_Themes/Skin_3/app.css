@@ -5157,6 +5157,7 @@ a:hover.mb-login-btn {
 @media screen and (min-width: 768px) {
   .nav-justified > .dropdown .dropdown-menu {
     left: -1px;
+    width: 101%;
   }
 }
 .nav-justified > .dropdown .dropdown-menu a {
@@ -5165,21 +5166,7 @@ a:hover.mb-login-btn {
   padding: 5px 0;
   color: #b4b7b0;
   background: transparent;
-}
-@media screen and (min-width: 768px) {
-  .nav-justified > .dropdown .dropdown-menu a {
-    white-space: pre-line;
-  }
-}
-@media screen and (min-width: 992px) {
-  .nav-justified > .dropdown .dropdown-menu a {
-    white-space: pre-line;
-  }
-}
-@media screen and (min-width: 1170px) {
-  .nav-justified > .dropdown .dropdown-menu a {
-    white-space: nowrap;
-  }
+  white-space: pre-line;
 }
 .nav-justified > .dropdown .dropdown-menu a:hover {
   background: transparent;
@@ -5615,6 +5602,17 @@ table.shopping-cart tbody tr td {
 }
 table.order-detail tbody tr td {
   display: inline-block;
+}
+.td-55-percent,
+.td-50-percent,
+.td-45-percent,
+.td-40-percent,
+.td-35-percent,
+.td-30-percent,
+.td-25-percent,
+.td-20-percent,
+.td-15-percent {
+  min-height: 1px;
 }
 @media screen and (min-width: 800px) {
   .td-55-percent {
@@ -6121,16 +6119,12 @@ a:hover.underline-link {
   margin: 5px 0;
   padding: 15px 0;
 }
-.thr-line-fix {
-  height: 75px;
+.fix-landing-head {
+  height: 20px;
   overflow: hidden;
 }
-.two-line-fix {
-  height: 50px;
-  overflow: hidden;
-}
-.five-line-fix {
-  height: 125px;
+.fix-landing-content {
+  height: 105px;
   overflow: hidden;
 }
 .vertical-top {
@@ -6173,5 +6167,13 @@ a:hover.underline-link {
 @media screen and (min-width: 800px) {
   .pull-right {
     float: right !important ;
+  }
+}
+.cart-btn-adjust {
+  padding-right: 0;
+}
+@media screen and (min-width: 800px) {
+  .cart-btn-adjust {
+    padding-right: 5%;
   }
 }
