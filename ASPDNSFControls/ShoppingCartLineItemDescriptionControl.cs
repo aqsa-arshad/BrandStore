@@ -103,7 +103,7 @@ namespace AspDotNetStorefrontControls
 
             //line item description quantity and subtotals
 
-            Controls.Add(new LiteralControl("     <div class='cart-title col-md-8'> <span class='normal-heading blue-color'>"));
+            Controls.Add(new LiteralControl("     <div class='cart-title col-md-6'> <span class='normal-heading black-color'>"));
             Controls.Add(lnkProductName);
             Controls.Add(new LiteralControl("     </span>"));
          //   Controls.Add(new LiteralControl("     </div>"));
@@ -260,7 +260,8 @@ namespace AspDotNetStorefrontControls
         private void IntializeControlsDefaultValues()
         {
             //Product Name
-            lnkProductName.CssClass = "shoppingcartproductname";
+            lnkProductName.CssClass = "black-color underline-no";
+            
 
             //Product image
             imgProductPic.ID = "imgProductPic";
@@ -339,6 +340,7 @@ namespace AspDotNetStorefrontControls
 
             //Product Name
             lnkProductName.Text = cItem.ProperProductName;
+            lnkProductName.Attributes["class"] = "black-color";
             if (LineItemDescriptionSettings != null)
             {
                 if (LineItemDescriptionSettings.LinkToProductPageInCart && !cItem.IsSystem && !cItem.IsAuctionItem)

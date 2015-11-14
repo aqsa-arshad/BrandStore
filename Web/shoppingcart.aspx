@@ -7,7 +7,7 @@
 <%@ Register TagPrefix="aspdnsf" TagName="BuySafeKicker" Src="~/controls/BuySafeKicker.ascx" %>
 <asp:Content ID="PageContent" runat="server" ContentPlaceHolderID="PageContent">
      <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
-	<asp:Panel ID="pnlContent" runat="server">
+	<%--<asp:Panel ID="pnlContent" runat="server">--%>
 		<div class="content-box-03">
 			<%--<h1>
 				<asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
@@ -42,21 +42,23 @@
 						</a>
 					</asp:Panel>
 				</div>--%>
-				<div class="row">
-                    <div class="col-md-4"></div>
-					<div class="col-md-4">
-                        <asp:Button ID="btnContinueShoppingTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
-						CssClass="btn btn-primary btn-block" runat="server" />
+
+                    <div>
+                        <div class="td-45-percent pull-left"></div>
+					    <div class="td-30-percent cart-btn-adjust pull-left">
+                            <asp:Button ID="btnContinueShoppingTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
+						    CssClass="btn btn-primary btn-block margin-none" runat="server" />
+                        </div>
+                        <div class="td-25-percent pull-left">
+					    <asp:Button ID="btnCheckOutNowTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.111 %>"
+						    runat="server" CssClass="btn btn-primary btn-block margin-none" />
+					    <asp:Button ID="btnQuickCheckoutTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.111a %>"
+						    Visible="false" runat="server" CssClass="button call-to-action button-checkout-now" />
+					    <asp:Button ID="btnInternationalCheckOutNowTop" Visible="false" Text="<%$ Tokens:StringResource,shoppingcart.cs.111b %>"
+						    runat="server" CssClass="button call-to-action button-checkout-now  margin-none" />
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="col-md-4">
-					<asp:Button ID="btnCheckOutNowTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.111 %>"
-						runat="server" CssClass="btn btn-primary btn-block" />
-					<asp:Button ID="btnQuickCheckoutTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.111a %>"
-						Visible="false" runat="server" CssClass="button call-to-action button-checkout-now" />
-					<asp:Button ID="btnInternationalCheckOutNowTop" Visible="false" Text="<%$ Tokens:StringResource,shoppingcart.cs.111b %>"
-						runat="server" CssClass="button call-to-action button-checkout-now" />
-                    </div>
-				</div>
 			</div>
 			<%--<div class="row-alt-checkouts" runat="server" id="divAltCheckoutsTop">
 				<div class="page-row" runat="server" id="divAmazonCheckoutTop">
@@ -136,7 +138,7 @@
 				</asp:Panel>
 			</div>--%>
 			<asp:Panel ID="pnlShoppingCart" runat="server" DefaultButton="btnUpdateShoppingCart">
-				<table class="table shopping-cart">
+				<table class="table">
                      <tbody>   
 					<aspdnsfc:ShoppingCartControl ID="ctrlShoppingCart" runat="server"
 						AllowEdit="true" ProductHeaderText=''
@@ -164,12 +166,8 @@
                     </script>
                           </tbody>   
 				</table>
-                <div class="row">
-                    <div class="col-md-4">
-                        </div>
-                    <div class="col-md-4">
-                        </div>
-                    <div class="col-md-4">
+                <div>
+                    <div class="td-25-percent pull-right">
                         <asp:Panel ID="pnlSubTotals" runat="server">
 				<div class="page-row row-sub-totals">
 					<aspdnsf:CartSummary ID="ctrlCartSummary" runat="server" CalculateShippingDuringCheckout="false"
@@ -181,6 +179,7 @@
 						LineItemDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.200 %>" OrderDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.201 %>"
 						IncludeTaxInSubtotal="False" />
 				</div>
+                            
 				<%--<div class="page-row row-shipping-estimator">
 					<asp:Button ID="btnRemoveEstimator" CssClass="button button-remove-estimator" runat="server" OnClick="btnRemoveEstimator_Click"
 						Text="<%$ Tokens:StringResource,checkoutshipping.estimator.control.remove %>"
@@ -196,7 +195,8 @@
 					</asp:Panel>
 				</div>--%>
 			</asp:Panel>
-				        <div class="page-row text-right update-cart ">
+                    
+				        <div >
 					        <asp:ValidationSummary ID="vsQuantity" runat="server" ValidationGroup="val" DisplayMode="List" ShowMessageBox="true" ShowSummary="false" />
 					        <asp:Button ID="btnUpdateShoppingCart" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>"
 						        runat="server" ValidationGroup="val" />
@@ -322,7 +322,6 @@
 						CssClass="button button-update-cart" />
 				</div>
 			</asp:Panel>--%>
-			<div class="page-row text-right row-checkout-controls">
 				<%--<asp:Button ID="btnContinueShoppingBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
 					CssClass="button button-continue-shopping" runat="server" />--%>
 				<asp:Button ID="btnCheckOutNowBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.111 %>"
@@ -330,10 +329,10 @@
 				<asp:Button ID="btnQuickCheckoutBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.111a %>"
 					runat="server" Visible="false" CssClass="button call-to-action button-checkout-now" />
 				<asp:Button ID="btnInternationalCheckOutNowBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.111b %>"
-					Visible="False" runat="server" CssClass="button call-to-action button-checkout-now" />
-			</div>
-
-              
+					Visible="False" runat="server" CssClass="button call-to-action button-checkout-now" />   
+            </div>
+         <div class="clearfix"></div>
+             </div>
 			<div class="row-alt-checkouts" runat="server" id="divAltCheckoutsBottom">
 				<div class="page-row" runat="server" id="divAmazonCheckoutBottom">
 					<asp:Literal ID="ltAmazonCheckoutButtonBottom" runat="server" />
@@ -360,5 +359,5 @@
 			<aspdnsf:Topic ID="topicFooterMessage" runat="server" TopicName="CartPageFooter" />
 			<asp:Literal ID="ltShoppingCartFooterXmlPackage" runat="server"></asp:Literal>
 		</div>
-	</asp:Panel>    
+	<%--</asp:Panel> --%>   
 </asp:Content>

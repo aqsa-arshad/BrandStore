@@ -1086,7 +1086,7 @@ namespace AspDotNetStorefrontControls
 
                 if (this.AllowEdit)
                 {
-                    (txtQuantity as TextBox).CssClass = "form-control quantity-box";
+                    (txtQuantity as TextBox).CssClass = "form-control item-quantity";
                     (txtQuantity as TextBox).MaxLength = 4;
                     if (this.DisplayMode == CartDisplayMode.MiniCart &&
                         cItem.CartType == CartTypeEnum.Deleted)
@@ -1152,7 +1152,7 @@ namespace AspDotNetStorefrontControls
                 }
 
                 Controls.Add(new LiteralControl("<tr>"));
-                Controls.Add(new LiteralControl("<td class='cart-column cart-column-description'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblProductHeader'>Item</span>"));
+                Controls.Add(new LiteralControl("<td class='td-45-percent'>"));//<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblProductHeader'>Item</span>
                 //Controls.Add(new LiteralControl("<td class='cart-column cart-column-subtotal'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span></td>"));
                 //Controls.Add(new LiteralControl("<td class='cart-column cart-column-edit'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblQuantityHeader'>Quantity</span></td>"));
                 //Controls.Add(new LiteralControl("</tr>"));
@@ -1174,7 +1174,7 @@ namespace AspDotNetStorefrontControls
                     Controls.Add(lineItemDescription);
                     Controls.Add(new LiteralControl("    </td>")); 
                     //payment sub total here
-                    Controls.Add(new LiteralControl("<td ><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
+                    Controls.Add(new LiteralControl("<td class='td-30-percent'>"));//<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>
                   //  Controls.Add(new LiteralControl("<td class='cart-column cart-column-subtotal'>"));
 
                    // Controls.Add(new LiteralControl("   <td class='cart-row'>"));
@@ -1222,6 +1222,7 @@ namespace AspDotNetStorefrontControls
                     }
                     else
                     {
+                        Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
                         lblSubTotal.Text = "<span>Price with (FUND) credit: " + lblSubTotal.Text + "</span>";
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
@@ -1231,7 +1232,7 @@ namespace AspDotNetStorefrontControls
                     Controls.Add(new LiteralControl("        </td>"));
                     Controls.Add(new LiteralControl("</td>"));  
                     //end payment sub total 
-                    Controls.Add(new LiteralControl("<td class='cart-column cart-column-edit'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblQuantityHeader'>Quantity</span>"));
+                    Controls.Add(new LiteralControl("<td class='td-25-percent'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblQuantityHeader'>Quantity</span>"));
                     //Controls.Add(new LiteralControl("    <td class='cart-column cart-column-edit'>"));
                     if (this.AllowEdit)
                     {
@@ -1266,6 +1267,7 @@ namespace AspDotNetStorefrontControls
                         if (this.AllowEdit && this.CartItem.RestrictedQuantities.Count == 0)
                         {
                           //  Controls.Add(new LiteralControl("  <td class='delete-wrap'>"));
+                            lnkDelete.CssClass = "underline-link";
                             Controls.Add(lnkDelete);
                             //Controls.Add(new LiteralControl("  </td>")); 
                         }
@@ -1275,7 +1277,7 @@ namespace AspDotNetStorefrontControls
                 }
                 else
                 {
-                    Controls.Add(new LiteralControl(" <td class='cart-column cart-column-quantity'>"));
+                    Controls.Add(new LiteralControl(" <td class='td-25-percent'>"));
                     if (this.AllowEdit)
                     {
                         if (this.DisplayMode == CartDisplayMode.MiniCart &&
@@ -1296,7 +1298,7 @@ namespace AspDotNetStorefrontControls
                     if (txtQuantity is TextBox)
                     {
                         TextBox txt = txtQuantity as TextBox;
-                        txt.CssClass = "form-control quantity-box";
+                        txt.CssClass = "form-control item-quantity";
                         txt.MaxLength = 3;
                     }
 
