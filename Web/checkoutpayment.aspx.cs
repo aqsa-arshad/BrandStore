@@ -38,6 +38,7 @@ namespace AspDotNetStorefront
         string AllowedPaymentMethods = String.Empty;
         decimal CartTotal = Decimal.Zero;
         decimal NetTotal = Decimal.Zero;
+       
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -56,6 +57,18 @@ namespace AspDotNetStorefront
             if (!this.IsPostBack)
             {
                 AspDotNetStorefrontCore.Customer.Current.ThisCustomerSession["ActivePaymentProfileId"] = String.Empty;
+                if (Request.UrlReferrer != null)
+                {
+                    if (Request.UrlReferrer.ToString().ToLower().Contains("shoppingcart"))
+                    {
+                        btnreqfrom.Text = "ShoppingCart.aspx";
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
+                    {
+
+                        btnreqfrom.Text = "checkoutshipping.aspx";
+                    }
+                }
             }
 
             CimWalletSelector.PaymentProfileSelected += (o, l) =>
@@ -201,6 +214,8 @@ namespace AspDotNetStorefront
 
             AppLogic.eventHandler("CheckoutPayment").CallEvent("&CheckoutPayment=true");
            // btnRequestEstimates_Click(null, null);
+
+         
         }
 
 
@@ -2251,6 +2266,14 @@ namespace AspDotNetStorefront
             }
         }
         #endregion
+
+        protected void btnback_Click(object sender, EventArgs e)
+        {
+            if (btnreqfrom.Text.Length>=2)
+            {
+            Response.Redirect(btnreqfrom.Text);
+            }
+        }
 
     }
 }
