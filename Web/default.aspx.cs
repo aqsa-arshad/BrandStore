@@ -39,7 +39,7 @@ namespace AspDotNetStorefront
             }           
          
            
-            if (ThisCustomer.IsAuthenticated)
+            if (ThisCustomer.IsRegistered)
             {
                 Response.Redirect("home.aspx");
             }

@@ -5098,7 +5098,7 @@ a:hover.mb-login-btn {
   border: 0;
 }
 .nav li:last-child .dropdown-menu {
-  right: 0 !important;
+  right: -1px !important;
   left: auto;
 }
 .navbar-inverse {
@@ -5395,6 +5395,7 @@ a:hover.mb-login-btn {
 @media screen and (min-width: 800px) {
   .search-filters select {
     width: auto;
+    margin-bottom: 0;
   }
 }
 .pagerArea {

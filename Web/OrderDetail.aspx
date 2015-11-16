@@ -164,7 +164,7 @@
                 </p>
 
                 <div class="form-group">
-                    <a class="btn btn-primary btn-half" type="submit" role="button" href='<%=m_StoreLoc + "OrderReceipt.aspx?ordernumber=" + OrderNumber %>'>Print Receipt</a>
+                    <a class="btn btn-primary btn-half" type="submit" role="button" target="_blank" href='<%=m_StoreLoc + "OrderReceipt.aspx?ordernumber=" + OrderNumber %>'>Print Receipt</a>
                     <asp:HyperLink ID="hplReOrder" runat="server" class="btn btn-primary btn-half" role="button" Text="Reorder"></asp:HyperLink>
                 </div>
             </div>
