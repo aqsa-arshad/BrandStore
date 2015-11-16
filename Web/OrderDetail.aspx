@@ -19,31 +19,9 @@
         </div>
         <%--Bill and Ship to Address Section--%>
         <div class="top-row-adjsut border-line">
-            <%--Ship to Address--%>
-            <div class="row">
-                <div class="col-md-6 ">
-                    <span class="normal-heading black-color">Shipped to</span>
-                    <p>
-                        <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBACompany" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBAAddress1" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBAAddress2" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBASuite" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBACityStateZip" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBACountry" runat="server"></asp:Label>
-
-                        <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
-                    </p>
-                </div>
-                <%--Bill to Address--%>
+            <%--Bill to Address--%>
                 <div class="col-md-6">
-                    <span class="normal-heading black-color">Billed to</span>
+                    <span class="normal-heading black-color">Shipped to</span>
                     <p>
                         <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
 
@@ -62,6 +40,28 @@
                         <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
                     </p>
                 </div>
+            <%--Ship to Address--%>
+            <div class="row">
+                <div class="col-md-6 ">
+                    <span class="normal-heading black-color">Billed to</span>
+                    <p>
+                        <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBACompany" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBAAddress1" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBAAddress2" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBASuite" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBACityStateZip" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBACountry" runat="server"></asp:Label>
+
+                        <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
+                    </p>
+                </div>                
                 <div class="col-md-6">
                     <span class="normal-heading black-color">Payment Method</span>
                     <p>
