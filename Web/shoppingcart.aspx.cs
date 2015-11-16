@@ -126,7 +126,6 @@ namespace AspDotNetStorefront
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
 
-			this.RequireCustomerRecord();
 			RequireSecurePage();
 			SectionTitle = AppLogic.GetString("AppConfig.CartPrompt", SkinID, ThisCustomer.LocaleSetting);
             ClearErrors();
@@ -230,6 +229,11 @@ namespace AspDotNetStorefront
 			//lblPromotionError.Text = String.Empty;
 			if (!IsPostBack)
 				BindPromotions();
+
+            if (cart.CartItems.Count == 0)
+            {
+                btnUpdateShoppingCart.CssClass = "hide-element";
+            }
 		}
 
 		void btnContinueShoppingTop_Click(object sender, EventArgs e)

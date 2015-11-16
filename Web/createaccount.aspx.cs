@@ -310,12 +310,16 @@ namespace AspDotNetStorefront
                     ctrlShippingAddress.ShowZip = AppLogic.GetCountryPostalCodeRequired(AppLogic.GetCountryID(ctrlShippingAddress.Country));
                 }
 
-                if (!Checkout)
-                {
-                    //hide billing and shipping inputs
-                    pnlBillingInfo.Visible = false;
-                    pnlShippingInfo.Visible = false;
-                }
+                //if (!Checkout)
+                //{
+                //    //hide billing and shipping inputs in case of Checkout
+                //    pnlBillingInfo.Visible = false;
+                //    pnlShippingInfo.Visible = false;
+                //}
+
+                // Hide billing and shipping inputs w.r.t mock-ups
+                pnlBillingInfo.Visible = false;
+                pnlShippingInfo.Visible = false;
             }
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
@@ -572,7 +576,7 @@ namespace AspDotNetStorefront
                         /*ExtensionData*/ null,
                         /*FinalizationData*/ null,
                         /*Deleted*/ null,
-                        /*Over13Checked*/ CommonLogic.IIF(ctrlAccount.Over13 || SkipRegOver13.Checked, 1, 0),
+                        /*Over13Checked*/ 1, //CommonLogic.IIF(ctrlAccount.Over13 || SkipRegOver13.Checked, 1, 0),
                         /*CurrencySetting*/ null,
                         /*VATSetting*/ null,
                         /*VATRegistrationID*/ null,

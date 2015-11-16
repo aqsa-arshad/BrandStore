@@ -165,6 +165,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@SaltKey", p.Salt),
                                         new SqlParameter("@SkinID", AppLogic.DefaultSkinID()), 
                                         new SqlParameter("@IsRegistered", 1), 
+                                        new SqlParameter("@Over13Checked", 1),
                                         new SqlParameter("@FirstName", profile.firstName),
                                         new SqlParameter("@LastName", profile.lastName),
                                         new SqlParameter("@Phone", profile.primaryPhone),

@@ -2215,6 +2215,8 @@ namespace AspDotNetStorefrontControls
                 container.Controls.Add(new LiteralControl("        <div class='cart-row cart-empty'>"));
                 container.Controls.Add(lblCartMessage);
                 container.Controls.Add(new LiteralControl("        </div>"));
+                
+
             }
         }
         #endregion

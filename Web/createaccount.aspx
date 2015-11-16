@@ -5,9 +5,10 @@
 <%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+    <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" /> 
     <asp:Panel runat="server" DefaultButton="btnContinueCheckout">
         <div  id="createAccountDiv" class="content-box-03 body-forms">
-        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />    
+           
           <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>            
             <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
        

@@ -1,9 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Signin.ascx.cs" Inherits="AspDotNetStorefront.Signin" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
+<%@ Register Src="CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
+        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03" id="LoginPanel" runat="server">
             <asp:Panel ID="pnlLogin" runat="server">
                 <div class="page-wrap signin-page">
@@ -23,7 +25,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h5>SIGN IN</h5>
-                                        <p>If you already have an account, please sign in using your email address and password</p>
+                                        <asp:Label runat="server" ID="SignInInstructions" Text="<p>If you already have an account, please sign in using your email address and password</p>"></asp:Label>
+                                        
                                         <label>
                                             <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox ID="UserName" CssClass="form-control" runat="server" ValidationGroup="Group1" MaxLength="100"

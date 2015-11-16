@@ -6143,19 +6143,27 @@ a:hover.underline-link {
   text-align: right;
 }
 .fix-list-head {
-  height: 96px;
-  display: table-cell;
-  vertical-align: middle;
-  margin: 5px 0;
+  margin: 5px 0 !important;
   padding: 15px 0;
 }
-.fix-landing-head {
-  height: 20px;
-  overflow: hidden;
+@media screen and (min-width: 800px) {
+  .fix-list-head {
+    height: 96px;
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
-.fix-landing-content {
-  height: 105px;
-  overflow: hidden;
+@media screen and (min-width: 800px) {
+  .fix-landing-head {
+    height: 20px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width: 800px) {
+  .fix-landing-content {
+    height: 105px;
+    overflow: hidden;
+  }
 }
 .vertical-top {
   vertical-align: top;
