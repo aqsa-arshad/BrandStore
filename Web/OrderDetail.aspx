@@ -81,7 +81,7 @@
             <div class="clearfix"></div>
             <table class="table order-detail border-line">
                 <tbody>
-                    <asp:Repeater ID="rptOrderItemsDetail" runat="server">
+                    <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
                                 <td class="td-50-percent">
@@ -93,6 +93,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
+                                            <asp:HiddenField ID="hfDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
                                             <span class="normal-heading blue-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
