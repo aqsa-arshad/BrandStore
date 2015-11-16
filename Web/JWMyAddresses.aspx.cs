@@ -55,15 +55,19 @@ namespace AspDotNetStorefront
             }
 
             string fromshoppingcart = Request.QueryString["Checkout"];
-            if (fromshoppingcart == "True")
+            if (fromshoppingcart != null)
             {
-                btnBack.Visible = false;
-                btnContinueCheckOut.Visible = true;
-            }
-            else {
-                btnBack.Visible = true;
-                btnContinueCheckOut.Visible = false;
-            
+                if (fromshoppingcart == "True")
+                {
+                    btnBack.Visible = false;
+                    btnContinueCheckOut.Visible = true;
+                }
+                else
+                {
+                    btnBack.Visible = true;
+                    btnContinueCheckOut.Visible = false;
+
+                }
             }
 
         }
@@ -78,16 +82,16 @@ namespace AspDotNetStorefront
                 Addresses allAddresses = new Addresses();
                 allAddresses.LoadCustomer(ThisCustomer.CustomerID);
 
-            if (addressType == (int)AddressTypes.Billing)
-            {
-                ((Label)this.Master.FindControl("lblPageHeading")).Text = "MY Billing ADDRESSES";
-            }
-            else if (addressType == (int)AddressTypes.Shipping)
-            {
-                ((Label)this.Master.FindControl("lblPageHeading")).Text = "MY Shipping ADDRESSES";
-            }
-            else
-                return;
+                if (addressType == (int)AddressTypes.Billing)
+                {
+                    ((Label)this.Master.FindControl("lblPageHeading")).Text = "MY Billing ADDRESSES";
+                }
+                else if (addressType == (int)AddressTypes.Shipping)
+                {
+                    ((Label)this.Master.FindControl("lblPageHeading")).Text = "MY Shipping ADDRESSES";
+                }
+                else
+                    return;
 
 
 
@@ -98,7 +102,7 @@ namespace AspDotNetStorefront
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 
@@ -169,7 +173,7 @@ namespace AspDotNetStorefront
             {
                 // Format CityStateZip
 
-                (e.Item.FindControl("lblCityStateZip") as Label).Text = 
+                (e.Item.FindControl("lblCityStateZip") as Label).Text =
                                 FormatCityStateZip((e.Item.FindControl("hfCity") as HiddenField).Value,
                                                 (e.Item.FindControl("hfState") as HiddenField).Value,
                                                 (e.Item.FindControl("hfZip") as HiddenField).Value);
@@ -251,7 +255,7 @@ namespace AspDotNetStorefront
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 
