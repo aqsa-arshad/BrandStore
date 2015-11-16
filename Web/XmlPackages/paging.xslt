@@ -230,23 +230,11 @@
 
         <select id="PageSize{$uniqueID}" onchange="setParam('pagesize', this.value)" name="PageSize" >        
           
-          <option value="4">
-            <xsl:if test="$PageSize = 4 or $PageSize = ''">
-              <xsl:attribute name="selected">selected</xsl:attribute>
-            </xsl:if>
-            <xsl:text>4</xsl:text>
-          </option>
           <option value="12">
             <xsl:if test="$PageSize = 12 or $PageSize = ''">
               <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
             <xsl:text>12</xsl:text>
-          </option>
-          <option value="24">
-            <xsl:if test="$PageSize = 24">
-              <xsl:attribute name="selected">selected</xsl:attribute>
-            </xsl:if>
-            <xsl:text>24</xsl:text>
           </option>
           <option value="48">
             <xsl:if test="$PageSize = 48">
@@ -254,7 +242,13 @@
             </xsl:if>
             <xsl:text>48</xsl:text>
           </option>
-          <option value="100">
+          <option value="10000">
+            <xsl:if test="$PageSize = 10000">
+              <xsl:attribute name="selected">selected</xsl:attribute>
+            </xsl:if>
+            <xsl:text>View All</xsl:text>
+          </option>
+          <!--<option value="100">
             <xsl:if test="$PageSize = 100">
               <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
@@ -266,7 +260,7 @@
                 <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageSizeViewAll')" disable-output-escaping="yes" />
               </xsl:otherwise>
             </xsl:choose>
-          </option>
+          </option>-->
 
         </select>
       </div>

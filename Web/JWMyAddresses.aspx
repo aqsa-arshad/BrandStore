@@ -40,6 +40,7 @@
         </div>
         <div class="btn-center">
             <asp:Button ID="btnBack" runat="server" CssClass="btn btn-md btn-primary" Text="Back to Account" OnClick="btnBack_Click" />
+             <asp:Button ID="btnContinueCheckOut" runat="server" CssClass="btn btn-md btn-primary" Text="Continue Checkout" OnClick="btnContinueCheckOut_Click" />
         </div>
     </div>
 </asp:Content>

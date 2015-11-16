@@ -4915,7 +4915,7 @@ select {
     padding-left: 38px;
     height: auto;
     color: #b4b7b0;
-    line-height: 30px;
+    line-height: 29px;
     text-transform: uppercase;
   }
 }
@@ -4927,37 +4927,94 @@ select {
 }
 .profile-links > li .alerts-link {
   background-image: url(images/alerts-icon.png);
+  background-position: center 12px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .alerts-link {
+    background-position: 0 top;
+  }
 }
 .profile-links > li .alerts-link:hover {
-  background-image: url(images/alerts-hover-icon.png);
+  background-position: center -31px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .alerts-link:hover {
+    background-position: 0 -43px;
+  }
 }
 .profile-links > li .new-alerts {
+  background-image: url(images/alerts-icon.png);
   color: #88421b;
-  background-image: url(images/new-alerts-icon.png);
+  background-position: center -74px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .new-alerts {
+    background-position: 0 -86px;
+  }
+}
+.profile-links > li .new-alerts:hover {
+  color: #88421b;
+  background-position: center -74px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .new-alerts:hover {
+    background-position: 0 bottom;
+  }
 }
 .profile-links > li .account-link {
   background-image: url(images/account-icon.png);
+  background-position: center 12px;
 }
-.profile-links > li .account-link:hover {
-  background-image: url(images/account-hover-icon.png);
+@media screen and (min-width: 800px) {
+  .profile-links > li .account-link {
+    background-position: 0 top;
+  }
 }
+.profile-links > li .account-link:hover,
 .profile-links > li .account-link.active {
-  background-image: url(images/account-hover-icon.png);
+  background-position: center -31px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .account-link:hover,
+  .profile-links > li .account-link.active {
+    background-position: 0 bottom;
+  }
 }
 .profile-links > li .shopping-link {
   background-image: url(images/shopping-icon.png);
+  background-position: center 12px;
 }
-.profile-links > li .shopping-link:hover {
-  background-image: url(images/shopping-hover-icon.png);
+@media screen and (min-width: 800px) {
+  .profile-links > li .shopping-link {
+    background-position: 0 top;
+  }
 }
+.profile-links > li .shopping-link:hover,
 .profile-links > li .shopping-link.active {
-  background-image: url(images/shopping-hover-icon.png);
+  background-position: center -31px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .shopping-link:hover,
+  .profile-links > li .shopping-link.active {
+    background-position: 0 bottom;
+  }
 }
 .profile-links > li .logout-link {
   background-image: url(images/logout-icon.png);
+  background-position: center 12px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .logout-link {
+    background-position: 0 top;
+  }
 }
 .profile-links > li .logout-link:hover {
-  background-image: url(images/logout-hover-icon.png);
+  background-position: center -31px;
+}
+@media screen and (min-width: 800px) {
+  .profile-links > li .logout-link:hover {
+    background-position: 0 bottom;
+  }
 }
 .profile-links > li span {
   display: none;
@@ -4993,7 +5050,16 @@ a:hover.mb-login-btn {
 .nav > li {
   border-bottom: solid 1px #c0c0c0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
+  .nav > li {
+    border-bottom: 0;
+    border-right: solid 1px #c0c0c0;
+    text-align: center;
+    width: 16.66%;
+    float: left;
+  }
+}
+@media screen and (min-width: 992px) {
   .nav > li {
     border-bottom: 0;
     border-right: solid 1px #c0c0c0;
@@ -5032,7 +5098,7 @@ a:hover.mb-login-btn {
   border: 0;
 }
 .nav li:last-child .dropdown-menu {
-  right: 0 !important;
+  right: -1px !important;
   left: auto;
 }
 .navbar-inverse {
@@ -5042,7 +5108,12 @@ a:hover.mb-login-btn {
   border-top: solid 1px #c0c0c0;
   padding: 20px 20px 0 ;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
+  .navbar-inverse {
+    padding: 0;
+  }
+}
+@media screen and (min-width: 992px) {
   .navbar-inverse {
     padding: 0;
   }
@@ -5076,18 +5147,26 @@ a:hover.mb-login-btn {
 }
 .nav-justified > .dropdown .dropdown-menu {
   margin-top: 0;
-  left: -1px;
-  padding: 20px 30px;
+  left: 0;
+  padding: 20px 25px;
   box-shadow: none;
   letter-spacing: 1.5px;
   font-size: 13px;
+  width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .nav-justified > .dropdown .dropdown-menu {
+    left: -1px;
+    width: 101%;
+  }
 }
 .nav-justified > .dropdown .dropdown-menu a {
   display: block;
-  padding: 0;
-  line-height: 27px;
+  line-height: 18px;
+  padding: 5px 0;
   color: #b4b7b0;
   background: transparent;
+  white-space: pre-line;
 }
 .nav-justified > .dropdown .dropdown-menu a:hover {
   background: transparent;
@@ -5099,7 +5178,6 @@ a:hover.mb-login-btn {
 .modal-dialog {
   font-size: 14px;
   text-align: left;
-  margin: 170px auto;
 }
 .modal-dialog a {
   color: #6f9abb;
@@ -5108,6 +5186,11 @@ a:hover.mb-login-btn {
 .modal-dialog a.more-alerts {
   text-transform: uppercase;
   font-family: 'FrutigerLTStd-Light';
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    margin-top: 170px;
+  }
 }
 @media (min-width: 992px) {
   .modal-dialog {
@@ -5312,6 +5395,7 @@ a:hover.mb-login-btn {
 @media screen and (min-width: 800px) {
   .search-filters select {
     width: auto;
+    margin-bottom: 0;
   }
 }
 .pagerArea {
@@ -5430,6 +5514,11 @@ table tbody tr td .primary-img-box {
     padding-right: 0;
   }
 }
+@media screen and (min-width: 800px) {
+  table tbody tr .col-md-4:nth-child(1) {
+    padding-right: 0;
+  }
+}
 .table {
   border-collapse: collapse;
 }
@@ -5519,6 +5608,17 @@ table.shopping-cart tbody tr td {
 }
 table.order-detail tbody tr td {
   display: inline-block;
+}
+.td-55-percent,
+.td-50-percent,
+.td-45-percent,
+.td-40-percent,
+.td-35-percent,
+.td-30-percent,
+.td-25-percent,
+.td-20-percent,
+.td-15-percent {
+  min-height: 1px;
 }
 @media screen and (min-width: 800px) {
   .td-55-percent {
@@ -6025,8 +6125,12 @@ a:hover.underline-link {
   margin: 5px 0;
   padding: 15px 0;
 }
-.thr-line-fix {
-  height: 75px;
+.fix-landing-head {
+  height: 20px;
+  overflow: hidden;
+}
+.fix-landing-content {
+  height: 105px;
   overflow: hidden;
 }
 .vertical-top {
@@ -6070,4 +6174,18 @@ a:hover.underline-link {
   .pull-right {
     float: right !important ;
   }
+}
+.cart-btn-adjust {
+  padding-right: 0;
+}
+@media screen and (min-width: 800px) {
+  .cart-btn-adjust {
+    padding-right: 5%;
+  }
+}
+.frut-roman-font {
+  font-family: 'FrutigerLTStd-Roman';
+}
+.underline-no:hover {
+  text-decoration: none;
 }

@@ -29,14 +29,15 @@ namespace AspDotNetStorefront
             PayPalAd entityPageAd = new PayPalAd(PayPalAd.TargetPage.Entity);
             ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SEDescription;
 
-            string parentCategoryName = string.Empty; 
+            string parentCategoryName = string.Empty;
             string parentCategoryID = string.Empty;
             GetParentCategory(ref parentCategoryName, ref parentCategoryID);
-            
+
             if (!string.IsNullOrEmpty(parentCategoryName))
             {
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).Text = "&lt; Back to " + parentCategoryName;
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkBack")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblSperator")).Text = ">>";
             }
             if (entityPageAd.Show)
             {
@@ -118,7 +119,7 @@ namespace AspDotNetStorefront
             }
         }
 
-        private void GetParentCategory(ref string  parentCategoryName, ref string parentCategoryID )
+        private void GetParentCategory(ref string parentCategoryName, ref string parentCategoryID)
         {
             using (var conn = DB.dbConn())
             {

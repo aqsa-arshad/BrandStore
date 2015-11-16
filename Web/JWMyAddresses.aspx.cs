@@ -53,6 +53,19 @@ namespace AspDotNetStorefront
             {
                 LoadAddresses(GetAddressType(Request.QueryString["AddressType"]));
             }
+
+            string fromshoppingcart = Request.QueryString["Checkout"];
+            if (fromshoppingcart == "True")
+            {
+                btnBack.Visible = false;
+                btnContinueCheckOut.Visible = true;
+            }
+            else {
+                btnBack.Visible = true;
+                btnContinueCheckOut.Visible = false;
+            
+            }
+
         }
 
         /// <summary>
@@ -273,6 +286,11 @@ namespace AspDotNetStorefront
         protected void btnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("JWMyAccount.aspx");
+        }
+        protected void btnContinueCheckOut_Click(object sender, EventArgs e)
+        {
+            string paymentmethod = Request.QueryString["paymentmethod"];
+            Response.Redirect("checkoutreview.aspx?paymentmethod=" + paymentmethod);
         }
 
     }

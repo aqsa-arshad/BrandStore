@@ -60,7 +60,7 @@
                 <asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
             </div>
             <div class="page-row">
-                <table class="table shopping-cart">
+                <table class="table">
                     <tbody>
                         <%--Shopping cart control--%>
                         <aspdnsfc:ShoppingCartControl ID="ctrlShoppingCart"
@@ -85,31 +85,31 @@
 
                 <aspdnsf:OrderOption ID="ctrlOrderOption" runat="server" EditMode="false" />
             </div>
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="page-row order-summary">
+            <div>
+                <div class="td-45-percent pull-left">                    
                         <div class="one-third">
-                            <asp:Label ID="checkoutreviewaspx8" CssClass="bold review-header" Text="<%$ Tokens:StringResource,checkoutreview.aspx.8 %>" runat="server"></asp:Label>
+                            <asp:Label ID="checkoutreviewaspx8" CssClass="frut-roman-font black-color" Text="<%$ Tokens:StringResource,checkoutreview.aspx.8 %>" runat="server"></asp:Label>
                             <span class="review-edit-link">[<asp:HyperLink ID="HyperLink1" runat="server" Text="edit" />]</span>
-                            <asp:Literal ID="litBillingAddress" runat="server" Mode="PassThrough"></asp:Literal>
+                            <p><asp:Literal ID="litBillingAddress" runat="server" Mode="PassThrough"></asp:Literal></p>
                         </div>
-                        <div class="one-third">
+                </div>
+                        <div class="one-third hide-element">
                             <asp:Label ID="checkoutreviewaspx9" CssClass="bold review-header" Text="<%$ Tokens:StringResource,checkoutreview.aspx.999 %>" runat="server"></asp:Label>
                             <span class="review-edit-link">[<asp:HyperLink ID="HyperLink2" runat="server" Text="edit" NavigateUrl="~/checkoutpayment.aspx" />]</span>
                             <asp:Literal ID="litPaymentMethod" runat="server" Mode="PassThrough"></asp:Literal>
                         </div>
+                <div class="td-30-percent pull-left"> 
                         <div class="one-third">
-                            <asp:Label ID="ordercs57" CssClass="bold review-header" Text="<%$ Tokens:StringResource,order.cs.57 %>" runat="server"></asp:Label>
-                            <span class="review-edit-link">[<asp:HyperLink ID="HyperLink3" runat="server" Text="edit" />]</span>
-                            <asp:Literal ID="litShippingAddress" runat="server" Mode="PassThrough"></asp:Literal>
+                            <asp:Label ID="ordercs57" CssClass="frut-roman-font black-color" Text="<%$ Tokens:StringResource,order.cs.57 %>" runat="server"></asp:Label>
+                            <span class="review-edit-link" runat="server" id="spn3">[<asp:HyperLink ID="HyperLink3" runat="server" Text="edit" />]</span>
+                            <p><asp:Literal ID="litShippingAddress" runat="server" Mode="PassThrough"></asp:Literal></p>
                         </div>
                     </div>
-                </div>
                 <%-- <div class="col-md-4">
                 </div>--%>
-                <div class="col-md-3">
+                <div class="td-25-percent pull-left">
                     <asp:Panel ID="pnlSubTotals" runat="server">
-                        <div class="page-row row-sub-totals">
+                       <%-- <div class="page-row row-sub-totals">--%>
                             <%--Total Summary--%>
                             <aspdnsfc:CartSummary ID="ctrlCartSummary" runat="server"
                                 SubTotalCaption='<%$Tokens:StringResource, shoppingcart.cs.96 %>'
@@ -123,20 +123,17 @@
                                 ShowGiftCardTotal="true"
                                 IncludeTaxInSubtotal="false"
                                 LineItemDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.200 %>" OrderDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.201 %>" />
-                        </div>
+                        <%--</div>--%>
                          </asp:Panel>
-                </div>
-    </asp:Panel>
-    <div class="row">
-        <div class="col-md-4"></div>
-         <div class="col-md-4"></div>
-         <div class="col-md-4">
-            
-             <button type="submit" id="btnback" class="btn btn-primary btn-block"  onclick="open_win() ">Back</button>
+                    <button type="submit" id="btnback" class="btn btn-primary btn-block" runat="server" onclick="btnBack_Click">Back</button>
                                         <div class="clearfix"></div>
         <asp:Button ID="btnContinueCheckout2" Text="<%$ Tokens:StringResource,checkoutreview.aspx.777 %>" CssClass="btn btn-primary btn-block" runat="server" OnClick="btnContinueCheckout2_Click" />
-   </div>
-              </div>
+                </div>
+                <div class="clearfix"></div>
+                </div>
+    </asp:Panel>
+    
+ 
 
     <aspdnsf:Topic runat="server" ID="CheckoutReviewPageFooter" TopicName="CheckoutReviewPageFooter" />
     <asp:Literal ID="XmlPackage_CheckoutReviewPageFooter" runat="server" Mode="PassThrough"></asp:Literal>
@@ -144,10 +141,5 @@
     </div>
         <asp:Literal ID="ltPayPalIntegratedCheckout" runat="server" />
     </asp:Panel>
-    <script type="text/javascript">
-        function open_win() {
-            window.history.back();
-        
-        }       
-        </script>
+    
 </asp:Content>

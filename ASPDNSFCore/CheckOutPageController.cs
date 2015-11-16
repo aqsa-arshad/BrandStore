@@ -93,7 +93,8 @@ namespace AspDotNetStorefrontCore
 			if (!this.Customer.IsRegistered || this.Customer.PrimaryBillingAddressID == 0 ||
 				this.Customer.PrimaryShippingAddressID == 0 || !this.Customer.HasAtLeastOneAddress())
 			{
-				return "checkoutanon.aspx?checkout=true";
+				//return "checkoutanon.aspx?checkout=true";
+                return "signin.aspx?checkout=true";
 			}
 			else
 			{

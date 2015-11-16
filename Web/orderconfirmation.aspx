@@ -6,27 +6,18 @@
     <div class="content-box-03">
         <div class="row">
             <div class="col-md-8">
-                <p class="label-text">                   
-                    <span>
-                        <font><b>ORDER CONFIRMATION</b></font>                       
-                    </span>
-                   
-                </p>
-                <p class="label-text">
-                    <span>
-                        <p>
-                        <font><b>Thank you! Your order was successfully completed.Your Order Number is</b></font>
-                        <b><asp:Label runat="server" ID="lblOrderNumber"></asp:Label></b></p>
-                    </span>
-
-                     <span>
-                        <p>                      
-                        <b><asp:Label runat="server" ID="lblreceipt">For a printable receipt,<a id="lnkreceipt" runat="server"><u>click here</u></a></asp:Label></b></p>
-                    </span>
-                    <span>
-                        <font><b>Tracking numbers will be on your ORDER HISTORY page when your items are ready to ship. </b></font>                       
-                    </span>
-                   
+                
+                 <h4 class="black-color">ORDER CONFIRMATION</h4>                       
+                
+                
+                        <p class="frut-roman-font">
+                            Thank you! Your order was successfully completed.Your Order Number is
+                            <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
+                            
+                           <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" runat="server" class="underline-link">click here</a></asp:Label>
+                        </p>
+                <p class="frut-roman-font">
+                 Tracking numbers will be on your ORDER HISTORY page when your items are ready to ship.                       
                 </p>
             </div>
         </div>     
@@ -48,15 +39,15 @@
                     <asp:Repeater ID="rptOrderItemsDetail" runat="server">
                         <ItemTemplate>
                             <tr>
-                                <td class="td-40-percent">                                    
+                                <td class="td-45-percent">                                    
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <div class="primary-img-box">
                                                 <asp:Image ID="Image1" runat="server" class="img-responsive"
                                                     ImageUrl='<%# AspDotNetStorefrontCore.AppLogic.LookupImage("Product", int.Parse(Eval("ProductID").ToString()), Eval("ImageFileNameOverride").ToString(), Eval("SKU").ToString(), "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)%>' />
                                             </div>
                                         </div>
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <span class="normal-heading blue-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
@@ -73,7 +64,7 @@
                                     <span class="normal-heading black-color">Payment</span>                                  
                                     <span>Price with (FUND) credit:    $<%# Eval("OrderedProductPrice") %></span>                                    
                                 </td>
-                                <td class="td-30-percent">
+                                <td class="td-25-percent">
                                     <span class="normal-heading black-color">Quantity</span>
                                     <span>
                                         <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
@@ -88,8 +79,8 @@
         </div>
 
         <%--Billing Amounts--%>
-        <div class="row">
-             <div class="col-md-4">
+        <div class="top-row-adjsut">
+             <div class="td-45-percent pull-left ">
                 <span class="normal-heading black-color">Shipped to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
@@ -109,7 +100,7 @@
                     <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
                 </p>
             </div>
-            <div class="col-md-4">
+            <div class="td-30-percent pull-left">
                 <span class="normal-heading black-color">Billed to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
@@ -129,7 +120,7 @@
                     <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
                 </p>
             </div>
-            <div class="col-md-4">
+            <div  class="td-25-percent pull-left">
                 <p>
                     <span class="black-blu-label">
                         <font>Subtotal: $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
@@ -146,6 +137,7 @@
                     <span class="black-blu-label"><font>Total:</font> $<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
                 </p>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>    
 </asp:Content>

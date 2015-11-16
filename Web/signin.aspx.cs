@@ -21,10 +21,10 @@ namespace AspDotNetStorefront
         {
             RequireSecurePage();
             SectionTitle = AppLogic.GetString("signin.aspx.1", SkinID, ThisCustomer.LocaleSetting);
-            if (ThisCustomer.IsAuthenticated)
-            {
-                Response.Redirect("home.aspx");
-            }
+            //if (ThisCustomer.IsAuthenticated)
+            //{
+            //    Response.Redirect("home.aspx");
+            //}
         }
         protected override string OverrideTemplate()
         {

@@ -103,7 +103,7 @@ namespace AspDotNetStorefrontControls
 
             //line item description quantity and subtotals
 
-            Controls.Add(new LiteralControl("     <div class='cart-title col-md-8'> <span class='normal-heading blue-color'>"));
+            Controls.Add(new LiteralControl("     <div class='cart-title col-md-6'> <span class='normal-heading black-color'>"));
             Controls.Add(lnkProductName);
             Controls.Add(new LiteralControl("     </span>"));
          //   Controls.Add(new LiteralControl("     </div>"));
@@ -130,21 +130,21 @@ namespace AspDotNetStorefrontControls
                 //Size
 				if(cItem.ChosenSize.Length != 0)
                 {
-                    Controls.Add(new LiteralControl("      <div class='cart-small cart-size'>"));
-                    Controls.Add(lblSizeCaption);
-					Controls.Add(new LiteralControl(": "));
-                    Controls.Add(lblSize);
-                    Controls.Add(new LiteralControl("      </div>"));
+                    //Controls.Add(new LiteralControl("      <div class='cart-small cart-size'>"));
+                    //Controls.Add(lblSizeCaption);
+                    //Controls.Add(new LiteralControl(": "));
+                    //Controls.Add(lblSize);
+                    //Controls.Add(new LiteralControl("      </div>"));
                 }
 
                 //Color
                 if (cItem.ChosenColor.Length != 0)
                 {
-                    Controls.Add(new LiteralControl("      <div class='cart-small cart-color'>"));
-                    Controls.Add(lblColorCaption);
-					Controls.Add(new LiteralControl(": "));
-                    Controls.Add(lblColor);
-                    Controls.Add(new LiteralControl("      </div>"));
+                    //Controls.Add(new LiteralControl("      <div class='cart-small cart-color'>"));
+                    //Controls.Add(lblColorCaption);
+                    //Controls.Add(new LiteralControl(": "));
+                    //Controls.Add(lblColor);
+                    //Controls.Add(new LiteralControl("      </div>"));
                 }
 
                 //Text Option
@@ -260,7 +260,8 @@ namespace AspDotNetStorefrontControls
         private void IntializeControlsDefaultValues()
         {
             //Product Name
-            lnkProductName.CssClass = "shoppingcartproductname";
+            lnkProductName.CssClass = "black-color underline-no";
+            
 
             //Product image
             imgProductPic.ID = "imgProductPic";
@@ -339,6 +340,7 @@ namespace AspDotNetStorefrontControls
 
             //Product Name
             lnkProductName.Text = cItem.ProperProductName;
+            lnkProductName.Attributes["class"] = "black-color";
             if (LineItemDescriptionSettings != null)
             {
                 if (LineItemDescriptionSettings.LinkToProductPageInCart && !cItem.IsSystem && !cItem.IsAuctionItem)
