@@ -348,7 +348,7 @@ namespace AspDotNetStorefront
                     lblPageHeading.Text = "ORDER DETAIL";
                 }
                 liMyAccount.Attributes.Add("class", "active account-link");
-
+                pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("SHOPPINGCART"))
             {

@@ -16,6 +16,10 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, EventArgs e)
         {
             RequireSecurePage();
+            if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 || ThisCustomer.CustomerLevelID == 6)
+            {
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAILS FOR " + GetDealerName(ThisCustomer.CustomerID);
+            }
 
             if (!Page.IsPostBack)
             {
@@ -137,6 +141,39 @@ namespace AspDotNetStorefront
                 masterHome = "JeldWenTemplate";
             }
             return masterHome;
+        }
+
+        private static string GetDealerName(int customerId)
+        {
+            var customerName = string.Empty;
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    var query = "select FirstName + ', ' + LastName as CustomerName from Customer where CustomerID = " +
+                                customerId;
+                    using (var cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        IDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                            customerName = reader["CustomerName"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(
+                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
+                    System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message +
+                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
+                        ? " :: " + ex.InnerException.Message
+                        : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            return customerName;
         }
     }
 }
