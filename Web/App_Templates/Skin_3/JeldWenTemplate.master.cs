@@ -260,7 +260,7 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
 
-                liMyAccount.Attributes.Add("class", "active account-link");
+                lnkMyAccount.Attributes.Add("class", "active account-link");
                 if (ThisCustomer.CustomerLevelID == 8)
                 {
                     var newClassValue = JWBPublicUserAfterLoginControl.Attributes["class"].Replace("hide-element", "");
@@ -275,13 +275,13 @@ namespace AspDotNetStorefront
             {
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
-                liMyAccount.Attributes.Add("class", "active account-link");
+                lnkMyAccount.Attributes.Add("class", "active account-link");
             }
             else if (currentURL.ToUpper().Contains("JWADDADDRESSES"))
             {
                 lblPageHeading.Text = "ADD/EDIT ADDRESS";
                 pnlPageHeading.Visible = true;
-                liMyAccount.Attributes.Add("class", "active account-link");
+                lnkMyAccount.Attributes.Add("class", "active account-link");
             }
 
             else if (currentURL.ToUpper().Contains("SIGNIN"))
@@ -342,7 +342,7 @@ namespace AspDotNetStorefront
                 {
                     lblPageHeading.Text = "ORDER HISTORY";
                 }
-                liMyAccount.Attributes.Add("class", "active account-link");
+                lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
 
@@ -357,7 +357,7 @@ namespace AspDotNetStorefront
                 {
                     lblPageHeading.Text = "ORDER DETAIL";
                 }
-                liMyAccount.Attributes.Add("class", "active account-link");
+                lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("SHOPPINGCART"))
@@ -367,7 +367,7 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
-
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
 
             }
@@ -378,6 +378,7 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
             else if (currentURL.ToUpper().Contains("CHECKOUTPAYMENT"))
@@ -386,6 +387,7 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
             else if (currentURL.ToUpper().Contains("CHECKOUTREVIEW"))
@@ -394,6 +396,7 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
             else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION"))
@@ -402,6 +405,7 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
             else
