@@ -298,10 +298,11 @@ namespace AspDotNetStorefront
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
             SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
             GetParentCategory();
-            parentCategoryName = CategoryHelper.GetEntityName(Convert.ToInt32(parentCategoryID), ThisCustomer.LocaleSetting);
 
-            if (!string.IsNullOrEmpty(SourceEntityInstanceName))
+            if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
             {
+                parentCategoryName = CategoryHelper.GetEntityName(Convert.ToInt32(parentCategoryID), ThisCustomer.LocaleSetting);
+
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = SourceEntityInstanceName;
