@@ -229,6 +229,11 @@ namespace AspDotNetStorefront
 			//lblPromotionError.Text = String.Empty;
 			if (!IsPostBack)
 				BindPromotions();
+
+            if (cart.CartItems.Count == 0)
+            {
+                btnUpdateShoppingCart.CssClass = "hide-element";
+            }
 		}
 
 		void btnContinueShoppingTop_Click(object sender, EventArgs e)

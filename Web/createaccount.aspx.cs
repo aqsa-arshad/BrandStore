@@ -572,7 +572,7 @@ namespace AspDotNetStorefront
                         /*ExtensionData*/ null,
                         /*FinalizationData*/ null,
                         /*Deleted*/ null,
-                        /*Over13Checked*/ CommonLogic.IIF(ctrlAccount.Over13 || SkipRegOver13.Checked, 1, 0),
+                        /*Over13Checked*/ 1, //CommonLogic.IIF(ctrlAccount.Over13 || SkipRegOver13.Checked, 1, 0),
                         /*CurrencySetting*/ null,
                         /*VATSetting*/ null,
                         /*VATRegistrationID*/ null,
