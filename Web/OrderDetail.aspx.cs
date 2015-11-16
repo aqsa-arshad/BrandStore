@@ -181,8 +181,12 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                if ((e.Item.FindControl("hfDownload") as HiddenField).Value != "0")
-                    (e.Item.FindControl("lblDelivery") as Label).Text = "Download";
+                if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
+                {
+                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = "~/images/Product/icon/" +
+                        (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                    (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                }
             }
         }
     }

@@ -93,9 +93,10 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <asp:HiddenField ID="hfDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
+                                            <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
+                                            <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' /> 
                                             <span class="normal-heading blue-color">
-                                                <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
+                                                <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>                                                
                                             </span>
                                             <span>
                                                 <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
@@ -121,6 +122,7 @@
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">Delivery </span>
                                     <span>
+                                        <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
                                         <asp:Label ID="lblDelivery" runat="server" Text='<%# Eval("ShippingMethod") %>'></asp:Label>
                                     </span>
                                 </td>
