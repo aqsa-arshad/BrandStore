@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AspDotNetStorefrontCore;
 namespace AspDotNetStorefront
 {
     /// <summary>
@@ -54,6 +55,15 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            ShoppingCart Shoppingcart = new ShoppingCart(3,ThisCustomer,0,0,false);
+            if (Shoppingcart != null)
+            {
+                if (Shoppingcart.CartItems.Count > 0)
+                    shopping_cart.InnerText = "SHOPPING CART - " + Shoppingcart.CartItems.Count.ToString() + " -";
+                else
+                    shopping_cart.InnerText = "SHOPPING CART";
+            }
+
             if (!Page.IsPostBack)
             {
                 SetPageHeading();
