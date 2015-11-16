@@ -108,7 +108,7 @@ namespace AspDotNetStorefront
         }
         protected void ServerButton_Click(object sender, EventArgs e)
         {
-
+            GetUnreadCustomerAlertCount();
             GetCustomerAlerts();
             popuppanel.Visible = true;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "preventLoad()", true);

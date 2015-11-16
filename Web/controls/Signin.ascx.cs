@@ -164,6 +164,7 @@ namespace AspDotNetStorefront
                 {
                     if (CommonLogic.QueryStringBool("checkout"))
                     {
+                        (ctrlLogin.FindControl("SignInInstructions") as Label).Text = "<p>If you already have an account, please log in to complete your purchase.</p>";
                         lblReturnURL.Text = "~/shoppingcart.aspx?checkout=true";
                     }
                     else
@@ -189,19 +190,24 @@ namespace AspDotNetStorefront
             Button btnSignInAndCheckout = (Button)ctrlLogin.FindControl("btnSignInAndCheckout");
             if (fromshoppingcart != null)
             {
-
+                (ctrlLogin.FindControl("SignInInstructions") as Label).Text = "<p>If you already have an account, please log in to complete your purchase.</p>";
                 if (fromshoppingcart.ToLower() == "true")
                 {
-
-                    // btnlogin.Visible = false;
+                    btnlogin.Visible = false;
                     btnSignInAndCheckout.Visible = true;
                 }
                 else
                 {
-                    //btnlogin.Visible = true;
+                    btnlogin.Visible = true;
                     btnSignInAndCheckout.Visible = false;
 
                 }
+            }
+            else
+            {
+                btnlogin.Visible = true;
+                btnSignInAndCheckout.Visible = false;
+               
             }
         }
 
