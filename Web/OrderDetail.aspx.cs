@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 
 
@@ -174,6 +175,19 @@ namespace AspDotNetStorefront
                     MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return customerName;
+        }
+
+        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
+                {
+                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = "~/images/Product/icon/" +
+                        (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                    (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                }
+            }
         }
     }
 }

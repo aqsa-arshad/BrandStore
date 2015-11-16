@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Data;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.Expressions;
 using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
@@ -134,7 +135,8 @@ namespace AspDotNetStorefront
             {
                 ShippingStatus += string.Format("<div><a href=\"downloads.aspx\">{0}</a></div>", AppLogic.GetString("download.aspx.1", SkinID, ThisCustomer.LocaleSetting));
             }
-
+            if (ShippingStatus.Contains("downloads.aspx"))
+                ShippingStatus = "Downloadable";
             return ShippingStatus;
         }
 

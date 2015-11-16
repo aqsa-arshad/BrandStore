@@ -21,7 +21,7 @@ namespace AspDotNetStorefront
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
 
-            lnkreceipt.HRef = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + OrderCustomerID.ToString();
+            lnkreceipt.HRef = "OrderReceipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + OrderCustomerID.ToString();
 
             Customer ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
             // who is logged in now viewing this page:
