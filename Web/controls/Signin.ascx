@@ -1,9 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Signin.ascx.cs" Inherits="AspDotNetStorefront.Signin" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
+<%@ Register Src="CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
+        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03" id="LoginPanel" runat="server">
             <asp:Panel ID="pnlLogin" runat="server">
                 <div class="page-wrap signin-page">
