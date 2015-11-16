@@ -57,13 +57,21 @@ namespace AspDotNetStorefront
             string fromshoppingcart = Request.QueryString["Checkout"];
             if (fromshoppingcart != null)
             {
-                if (fromshoppingcart == "True")
+                if (fromshoppingcart == "true")
                 {
                     btnBack.Visible = false;
                     btnContinueCheckOut.Visible = true;
                 }
                 else
                 {
+                    btnBack.Visible = true;
+                    btnContinueCheckOut.Visible = false;
+
+                }
+            }
+            else
+            {
+             {
                     btnBack.Visible = true;
                     btnContinueCheckOut.Visible = false;
 

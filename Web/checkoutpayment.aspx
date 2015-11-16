@@ -12,7 +12,8 @@
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
        <asp:Label Id="btnreqfrom" CssClass="hide-element" runat="server" ></asp:Label>
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
-        <div class="content-box-03">
+        <div class="content-box-03">            
+             <h2 class="black-color">BILLING</h2>
             <div class="row" id="divmainrow">
                 <div>
                     <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
