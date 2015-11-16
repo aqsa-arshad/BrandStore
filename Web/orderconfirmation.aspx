@@ -81,7 +81,7 @@
         <%--Billing Amounts--%>
         <div class="top-row-adjsut">
              <div class="td-45-percent pull-left ">
-                <span class="normal-heading black-color">Shipped to</span>
+                <span class="normal-heading black-color">Billed to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
 
@@ -101,7 +101,7 @@
                 </p>
             </div>
             <div class="td-30-percent pull-left">
-                <span class="normal-heading black-color">Billed to</span>
+                <span class="normal-heading black-color">Shipped to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
 
