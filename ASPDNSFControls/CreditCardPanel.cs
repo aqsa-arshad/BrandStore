@@ -805,13 +805,6 @@ namespace AspDotNetStorefrontControls
 					this.Controls.Add(_pnlWhatsThisContainer);
 					_pnlWhatsThisContainer.Controls.Add(new LiteralControl("<div class='form-text'>"));
 					_pnlWhatsThisContainer.Controls.Add(_hlnkWhat);
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl("<script type=\"text/javascript\" language=\"Javascript\" >\n"));
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl("$window_addLoad( \n"));
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl(" function() { \n"));
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl("    " + string.Format(InitJS, WhatsThisClientID) + "\n"));
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl(" }\n"));
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl(") \n"));
-					_pnlWhatsThisContainer.Controls.Add(new LiteralControl("</script>\n"));
 					_pnlWhatsThisContainer.Controls.Add(new LiteralControl("</div>"));
                 }
 
