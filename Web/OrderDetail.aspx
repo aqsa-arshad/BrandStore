@@ -20,26 +20,26 @@
         <%--Bill and Ship to Address Section--%>
         <div class="top-row-adjsut border-line">
             <%--Bill to Address--%>
-                <div class="col-md-6">
-                    <span class="normal-heading black-color">Shipped to</span>
-                    <p>
-                        <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
+            <div class="col-md-6">
+                <span class="normal-heading black-color">Shipped to</span>
+                <p>
+                    <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSACompany" runat="server"></asp:Label>
+                    <asp:Label class="block-text" ID="lblSACompany" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSAAddress1" runat="server"></asp:Label>
+                    <asp:Label class="block-text" ID="lblSAAddress1" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSAAddress2" runat="server"></asp:Label>
+                    <asp:Label class="block-text" ID="lblSAAddress2" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSASuite" runat="server"></asp:Label>
+                    <asp:Label class="block-text" ID="lblSASuite" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSACityStateZip" runat="server"></asp:Label>
+                    <asp:Label class="block-text" ID="lblSACityStateZip" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSACountry" runat="server"></asp:Label>
+                    <asp:Label class="block-text" ID="lblSACountry" runat="server"></asp:Label>
 
-                        <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
-                    </p>
-                </div>
+                    <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
+                </p>
+            </div>
             <%--Ship to Address--%>
             <div class="row">
                 <div class="col-md-6 ">
@@ -61,7 +61,7 @@
 
                         <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
                     </p>
-                </div>                
+                </div>
                 <div class="col-md-6">
                     <span class="normal-heading black-color">Payment Method</span>
                     <p>
@@ -94,15 +94,17 @@
                                         </div>
                                         <div class="col-md-5">
                                             <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
-                                            <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' /> 
+                                            <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
+                                            <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
+                                            <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                             <span class="normal-heading blue-color">
-                                                <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>                                                
+                                                <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
                                             <span>
-                                                <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
+                                                <asp:Label ID="lblProductSKU" runat="server"></asp:Label>
                                             </span>
                                             <p>
-                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description").ToString().Take(70).Aggregate("", (x,y) => x + y) %>'></asp:Label>
+                                                <asp:Label ID="lblDescription" runat="server" ></asp:Label>
                                             </p>
                                         </div>
                                     </div>

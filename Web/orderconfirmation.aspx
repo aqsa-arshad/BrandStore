@@ -14,7 +14,7 @@
                             Thank you! Your order was successfully completed.Your Order Number is
                             <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
                             
-                           <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" runat="server" class="underline-link">click here</a></asp:Label>
+                           <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" target="_blank" runat="server" class="underline-link">click here</a></asp:Label>
                         </p>
                 <p class="frut-roman-font">
                  Tracking numbers will be on your ORDER HISTORY page when your items are ready to ship.                       
