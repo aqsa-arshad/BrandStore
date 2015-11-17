@@ -60,7 +60,7 @@ namespace AspDotNetStorefront
                 if (fromshoppingcart.ToLower() == "true")
                 {
                     btnBack.Visible = false;
-                    btnContinueCheckOut.Visible = true;
+                    btnContinueCheckOut.Visible = rptAddresses.Items.Count > 0; //true;
                 }
                 else
                 {
@@ -299,10 +299,12 @@ namespace AspDotNetStorefront
         {
             Response.Redirect("JWMyAccount.aspx");
         }
+        
         protected void btnContinueCheckOut_Click(object sender, EventArgs e)
         {
-            string paymentmethod = Request.QueryString["paymentmethod"];
-            Response.Redirect("checkoutreview.aspx?paymentmethod=" + paymentmethod);
+            string returnURL = Request.QueryString["returnURL"];
+            //string paymentmethod = Request.QueryString["paymentmethod"];
+            Response.Redirect(returnURL);
         }
 
     }

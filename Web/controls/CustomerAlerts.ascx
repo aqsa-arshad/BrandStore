@@ -7,7 +7,7 @@
                     <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <img src="images/closs-popup.png"></button>
-                        <h4 class="modal-title" id="myModalLabel">Daily Alerts</h4>
+                        <h4 class="modal-title" id="myModalLabel">Alerts</h4>
                         <ul class="modal-list">
                             <asp:Repeater ID="rptCustomerAlerts" runat="server" OnItemCommand="rptCustomerAlerts_ItemCommand">
                                 <ItemTemplate>
