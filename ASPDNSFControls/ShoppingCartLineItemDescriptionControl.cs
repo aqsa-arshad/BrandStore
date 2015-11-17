@@ -229,7 +229,7 @@ namespace AspDotNetStorefrontControls
                 //Controls.Add(lblShipping);
                 //Controls.Add(new LiteralControl("    </div>"));
 
-                if (cItem.ProductDescription.Length > 100)
+                if (cItem.ProductDescription.Length > 180)
                 {
                     cItem.ProductDescription = cItem.ProductDescription.Substring(0, 180) + "...";
                 }
