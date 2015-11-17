@@ -37,6 +37,7 @@
 
 
             <asp:Panel runat="server" ID="pnlSelectShipping">
+               
                 <div class="page-row row-shipping-address">
                     <div class="form login-form">
                         <div class="group-header form-header signin-header">
@@ -137,6 +138,7 @@
                 <div class="col-md-4 checkout-shipping">
                     <asp:Label ID="ShipSelectionMsg" runat="server"></asp:Label>
                     <asp:Label ID="lblMultiShipPrompt" runat="server" Visible="false" />
+                      <label id="Label1" runat="server">Select Shipping Method</label>
                     <aspdnsfc:ShippingMethodControl ID="ctrlShippingMethods" runat="server" />
                 
                 <div class="page-row row-buysafe">

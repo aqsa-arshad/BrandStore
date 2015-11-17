@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 
 
@@ -78,10 +80,10 @@ namespace AspDotNetStorefront
                                                    reader["CardExpirationYear"].ToString();
                             lblPMCountry.Text = reader["BillingCountry"].ToString();
                             //Billing Amounts
-                            lblSubTotal.Text = reader["OrderSubtotal"].ToString();
-                            lblTax.Text = reader["OrderTax"].ToString();
-                            lblShippingCost.Text = reader["OrderShippingCosts"].ToString();
-                            lblTotalAmount.Text = reader["OrderTotal"].ToString();
+                            lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
+                            lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
+                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
+                            lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
                         }
                         conn.Close();
                     }
@@ -174,6 +176,37 @@ namespace AspDotNetStorefront
                     MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return customerName;
+        }
+
+        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
+                {
+                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = "~/images/Product/icon/" +
+                        (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                    (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                }
+                if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+                {
+                    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                                                                          (e.Item.FindControl("hfSKU") as HiddenField)
+                                                                              .Value;
+                }
+                if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
+                {
+                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 70)
+                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
+                                                                              .Value.Take(60).Aggregate("", (x,y) => x + y) + " ...";
+                    else
+                    {
+                        (e.Item.FindControl("lblDescription") as Label).Text =
+                            (e.Item.FindControl("hfSKU") as HiddenField).Value;
+                    }
+                }
+            }
         }
     }
 }

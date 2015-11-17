@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
@@ -10,6 +11,7 @@ namespace AspDotNetStorefront
         protected int OrderNumber;
         private IDataReader reader;
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.CacheControl = "private";
@@ -21,8 +23,8 @@ namespace AspDotNetStorefront
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
 
-            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal) Context.User).ThisCustomer;
-                // who is logged in now viewing this page:
+            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
+            // who is logged in now viewing this page:
 
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
@@ -35,7 +37,7 @@ namespace AspDotNetStorefront
             // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
             if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
             {
-                Response.Redirect(SE.MakeDriverLink("ordernotfound"));
+                Response.Redirect("OrderNotFound.aspx");
             }
 
             //For multi store checking
@@ -43,7 +45,7 @@ namespace AspDotNetStorefront
             if (!ThisCustomer.IsAdminUser && AppLogic.StoreID() != AppLogic.GetOrdersStoreID(OrderNumber) &&
                 AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true)
             {
-                Response.Redirect(SE.MakeDriverLink("ordernotfound"));
+                Response.Redirect("OrderNotFound.aspx");
             }
             if (!Page.IsPostBack)
             {
@@ -74,7 +76,7 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
-        void GetOrderInfo()
+        private void GetOrderInfo()
         {
             try
             {
@@ -122,10 +124,10 @@ namespace AspDotNetStorefront
                                                    reader["CardExpirationYear"].ToString();
                             lblPMCountry.Text = reader["BillingCountry"].ToString();
                             //Billing Amounts
-                            lblSubTotal.Text = reader["OrderSubtotal"].ToString();
-                            lblTax.Text = reader["OrderTax"].ToString();
-                            lblShippingCost.Text = reader["OrderShippingCosts"].ToString();
-                            lblTotalAmount.Text = reader["OrderTotal"].ToString();
+                            lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
+                            lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
+                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
+                            lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
                         }
                         conn.Close();
                     }
@@ -133,9 +135,14 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(
+                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
+                    System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message +
+                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
+                        ? " :: " + ex.InnerException.Message
+                        : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 
@@ -159,9 +166,27 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
-                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                SysLog.LogMessage(
+                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
+                    System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message +
+                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
+                        ? " :: " + ex.InnerException.Message
+                        : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+                {
+                    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                                                                          (e.Item.FindControl("hfSKU") as HiddenField)
+                                                                              .Value;
+                }
             }
         }
     }

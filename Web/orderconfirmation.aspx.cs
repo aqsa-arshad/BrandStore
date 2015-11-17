@@ -21,7 +21,7 @@ namespace AspDotNetStorefront
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
 
-            lnkreceipt.HRef = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + OrderCustomerID.ToString();
+            lnkreceipt.HRef = "OrderReceipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + OrderCustomerID.ToString();
 
             Customer ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
             // who is logged in now viewing this page:
@@ -104,10 +104,10 @@ namespace AspDotNetStorefront
                                                    reader["CardExpirationYear"].ToString();
                             lblPMCountry.Text = reader["BillingCountry"].ToString();
                             //Billing Amounts
-                            lblSubTotal.Text = reader["OrderSubtotal"].ToString();
-                            lblTax.Text = reader["OrderTax"].ToString();
-                            lblShippingCost.Text = reader["OrderShippingCosts"].ToString();
-                            lblTotalAmount.Text = reader["OrderTotal"].ToString();
+                            lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
+                            lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
+                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]),2).ToString();
+                            lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
                         }
                         conn.Close();
                     }

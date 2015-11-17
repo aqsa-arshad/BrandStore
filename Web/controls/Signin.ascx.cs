@@ -195,11 +195,13 @@ namespace AspDotNetStorefront
                 {
                     btnlogin.Visible = false;
                     btnSignInAndCheckout.Visible = true;
+                    CheckoutSteps.Visible = true;
                 }
                 else
                 {
                     btnlogin.Visible = true;
                     btnSignInAndCheckout.Visible = false;
+                    CheckoutSteps.Visible = false;
 
                 }
             }
@@ -207,6 +209,7 @@ namespace AspDotNetStorefront
             {
                 btnlogin.Visible = true;
                 btnSignInAndCheckout.Visible = false;
+                CheckoutSteps.Visible = false;
                
             }
         }

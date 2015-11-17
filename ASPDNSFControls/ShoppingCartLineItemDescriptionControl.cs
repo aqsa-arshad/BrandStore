@@ -113,10 +113,10 @@ namespace AspDotNetStorefrontControls
                 //SKU
                 if (!cItem.IsSystem)
                 {
-                    Controls.Add(new LiteralControl("     <span class='normal-heading blue-color'>"));
-                   // Controls.Add(lblSKUCaption);
-                    Controls.Add(lblSKU);
-                    Controls.Add(new LiteralControl("      </span>"));
+                   // Controls.Add(new LiteralControl("     <span class='normal-heading blue-color'>"));
+                   //// Controls.Add(lblSKUCaption);
+                   // Controls.Add(lblSKU);
+                   // Controls.Add(new LiteralControl("      </span>"));
                 }
 
                 //GiftRegistry
@@ -229,9 +229,9 @@ namespace AspDotNetStorefrontControls
                 //Controls.Add(lblShipping);
                 //Controls.Add(new LiteralControl("    </div>"));
 
-                if (cItem.ProductDescription.Length > 100)
+                if (cItem.ProductDescription.Length > 180)
                 {
-                    cItem.ProductDescription = cItem.ProductDescription.Substring(0, 100)+ "...";
+                    cItem.ProductDescription = cItem.ProductDescription.Substring(0, 180) + "...";
                 }
                 lblProductDescription.Text = cItem.ProductDescription;                
                 Controls.Add(new LiteralControl("     <p>"));

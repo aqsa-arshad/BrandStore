@@ -28,27 +28,6 @@
                     <td class="td-40-percent">
                         <span class="normal-heading black-color">Shipped to</span>
                         <p>
-                            <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBACompany" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBAAddress1" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBAAddress2" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBASuite" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBACityStateZip" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBACountry" runat="server"></asp:Label>
-
-                            <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
-                        </p>
-                    </td>
-
-                    <td class="td-30-percent">
-                        <span class="normal-heading black-color">Billed to</span>
-                        <p>
                             <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
 
                             <asp:Label class="block-text" ID="lblSACompany" runat="server"></asp:Label>
@@ -64,6 +43,27 @@
                             <asp:Label class="block-text" ID="lblSACountry" runat="server"></asp:Label>
 
                             <asp:Label class="block-text" ID="lblSAPhone" runat="server"></asp:Label>
+                        </p>
+
+                    </td>
+                    <td class="td-30-percent">
+                        <span class="normal-heading black-color">Billed to</span>
+                        <p>
+                            <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBACompany" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBAAddress1" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBAAddress2" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBASuite" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBACityStateZip" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBACountry" runat="server"></asp:Label>
+
+                            <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
                         </p>
                     </td>
                     <td class="td-30-percent">
@@ -84,7 +84,7 @@
         <div>
             <table class="table margin-none">
                 <tbody>
-                    <asp:Repeater ID="rptOrderItemsDetail" runat="server">
+                    <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
                                 <td class="td-40-percent">
@@ -96,11 +96,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
+                                            <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
                                             <span class="normal-heading blue-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
                                             <span>
-                                                <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
+                                                <asp:Label ID="lblProductSKU" runat="server"></asp:Label>
                                             </span>
                                             <p>
                                                 <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description").ToString().Take(100).Aggregate("", (x,y) => x + y) %>'></asp:Label>
@@ -114,10 +115,11 @@
                                         <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
                                     </span>
                                 </td>
+                                
                                 <td class="td-30-percent">
                                     <span class="normal-heading black-color">Price</span>
-                                    <span>Price:    $<%# Eval("OrderedProductRegularPrice") %></span>
-                                    <span>Ext. Price:    $<%# Eval("OrderedProductPrice") %></span>
+                                    <span>Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductRegularPrice")), 2).ToString() %></span>
+                                    <span>Ext. Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
                                     <%--TODO: Commented due to unavailablity Blu Bucks--%>
                                     <%--<span>Price with Sales Fund credit: $Y,YYY.YY</span>
                                     <span>GL Code: (GL CODE)</span>--%>
@@ -139,7 +141,8 @@
                     <td class="td-30-percent border-none">
                         <p class="label-text">
                             <span>
-                                <font>Subtotal: $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                                <font>Subtotal: $</font>
+                                <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                             </span>
                         </p>
                         <%--TODO: Commented due to unavailablity Blu Bucks--%>
@@ -157,7 +160,7 @@
                         </p>
 
                         <p class="label-text">
-                            <span><font>Total:</font> $<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                            <span><font>Total:</font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
                         </p>
                     </td>
                 </tr>

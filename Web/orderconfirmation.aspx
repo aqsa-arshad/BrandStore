@@ -14,7 +14,7 @@
                             Thank you! Your order was successfully completed.Your Order Number is
                             <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
                             
-                           <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" runat="server" class="underline-link">click here</a></asp:Label>
+                           <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" target="_blank" runat="server" class="underline-link">click here</a></asp:Label>
                         </p>
                 <p class="frut-roman-font">
                  Tracking numbers will be on your ORDER HISTORY page when your items are ready to ship.                       
@@ -62,7 +62,7 @@
                                 </td>                                
                                 <td class="td-30-percent">
                                     <span class="normal-heading black-color">Payment</span>                                  
-                                    <span>Price with (FUND) credit:    $<%# Eval("OrderedProductPrice") %></span>                                    
+                                    <span>Price:    $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>                                    
                                 </td>
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">Quantity</span>
@@ -81,7 +81,7 @@
         <%--Billing Amounts--%>
         <div class="top-row-adjsut">
              <div class="td-45-percent pull-left ">
-                <span class="normal-heading black-color">Shipped to</span>
+                <span class="normal-heading black-color">Billed to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
 
@@ -101,7 +101,7 @@
                 </p>
             </div>
             <div class="td-30-percent pull-left">
-                <span class="normal-heading black-color">Billed to</span>
+                <span class="normal-heading black-color">Shipped to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
 

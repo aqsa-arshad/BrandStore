@@ -57,13 +57,21 @@ namespace AspDotNetStorefront
             string fromshoppingcart = Request.QueryString["Checkout"];
             if (fromshoppingcart != null)
             {
-                if (fromshoppingcart == "True")
+                if (fromshoppingcart.ToLower() == "true")
                 {
                     btnBack.Visible = false;
-                    btnContinueCheckOut.Visible = true;
+                    btnContinueCheckOut.Visible = rptAddresses.Items.Count > 0; //true;
                 }
                 else
                 {
+                    btnBack.Visible = true;
+                    btnContinueCheckOut.Visible = false;
+
+                }
+            }
+            else
+            {
+             {
                     btnBack.Visible = true;
                     btnContinueCheckOut.Visible = false;
 
@@ -291,10 +299,12 @@ namespace AspDotNetStorefront
         {
             Response.Redirect("JWMyAccount.aspx");
         }
+        
         protected void btnContinueCheckOut_Click(object sender, EventArgs e)
         {
-            string paymentmethod = Request.QueryString["paymentmethod"];
-            Response.Redirect("checkoutreview.aspx?paymentmethod=" + paymentmethod);
+            string returnURL = Request.QueryString["returnURL"];
+            //string paymentmethod = Request.QueryString["paymentmethod"];
+            Response.Redirect(returnURL);
         }
 
     }

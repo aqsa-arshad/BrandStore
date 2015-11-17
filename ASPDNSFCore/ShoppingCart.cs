@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using AspDotNetStorefront.Promotions;
+using AspDotNetStorefrontCore.CanadaPost;
 using AspDotNetStorefrontCore.ShippingCalculation;
 
 namespace AspDotNetStorefrontCore
@@ -8464,7 +8465,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("</div>");
             }
 
-            tmpS.Append("<div>");
+            tmpS.Append("<div class=\"item-controls\">");
             if (CustomerEntersPrice)
             {
 				tmpS.Append("<label class=\"customer-enters-price-label\" for=\"Price_{0}_{1}\">");
@@ -8474,56 +8475,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
             }
 
-//<<<<<<< HEAD
-//=======
-//            tmpS.Append("<Span class=\"select-quantity\">");
-//            if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
-//            {
-//                if (RestrictedQuantities.Length == 0)
-//                {
-//                    int InitialQ = 1;
-//                    if (MinimumQuantity > 0)
-//                    {
-//                        InitialQ = MinimumQuantity;
-//                    }
-//                    else if (AppLogic.AppConfig("DefaultAddToCartQuantity").Length != 0)
-//                    {
-//                        InitialQ = AppLogic.AppConfigUSInt("DefaultAddToCartQuantity");
-//                    }
-//                    if (QuantityForEdit != 0)
-//                    {
-//                        InitialQ = QuantityForEdit;
-//                    }
-//                    tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
-//                    tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
-//                }
-//                else
-//                {
-//                    tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
-//                    tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
-//                    foreach (String s in RestrictedQuantities.Split(','))
-//                    {
-//                        if (s.Trim().Length != 0)
-//                        {
-//                            int Q = Localization.ParseUSInt(s.Trim());
-//                            tmpS.Append("<option value=\"" + Q.ToString() + "\" " + CommonLogic.IIF(QuantityForEdit == Q, " selected ", "") + ">" + Q.ToString() + "</option>");
-//                        }
-//                    }
-//                    tmpS.Append("</select> ");
-//                }
-//            }
-//            else
-//            {
-//                tmpS.AppendFormat("<input name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" type=\"hidden\" value=\"1\">", ProductID, VariantID);
-//            }
-//            Decimal M = 1.0M;
-//            String MM = ThisCustomer.CurrencyString(M).Substring(0, 1); // get currency symbol
-//            if (CommonLogic.IsInteger(MM))
-//            {
-//                MM = String.Empty; // something international happened, so just leave empty, we only want currency symbol, not any digits
-//            }
-//            tmpS.Append("</span>");
-//>>>>>>> feature/JW-Store-DEV
+            //Colors Alternative
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
             {
                 if (SizesMaster.Length != 0)
@@ -8602,7 +8554,10 @@ namespace AspDotNetStorefrontCore
             //    tmpS.Append("<p><span class=\"black-blu-label\"><font>In stock: </font>" + inv + "</span></p>");
             //}
 
-            tmpS.Append("<Span class=\"select-quantity\">");
+ 
+
+            //Quantity DropDown
+            tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
             {
                 if (RestrictedQuantities.Length == 0)
@@ -8620,12 +8575,12 @@ namespace AspDotNetStorefrontCore
                     {
                         InitialQ = QuantityForEdit;
                     }
-                    tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
+                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
                     tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
                 }
                 else
                 {
-                    tmpS.AppendFormat("<font for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
+                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
                     tmpS.AppendFormat("<select class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
                     foreach (String s in RestrictedQuantities.Split(','))
                     {

@@ -3,12 +3,13 @@ using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
 {
-    public partial class JWAboutTrueBlu : SkinBase
+    public partial class OrderNotFound : SkinBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
+
         protected override string OverrideTemplate()
         {
             String MasterHome = AppLogic.HomeTemplate();
@@ -29,7 +30,9 @@ namespace AspDotNetStorefront
                 MasterHome = MasterHome + ".master";
             }
 
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            if (
+                !CommonLogic.FileExists(
+                    CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
             {
                 MasterHome = "JeldWenTemplate";
             }
