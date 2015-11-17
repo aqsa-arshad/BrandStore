@@ -1223,7 +1223,7 @@ namespace AspDotNetStorefrontControls
                     else
                     {
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
-                        lblSubTotal.Text = "<span>Price with (FUND) credit: " + lblSubTotal.Text + "</span>";
+                        lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>";
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
                     }
