@@ -62,7 +62,7 @@
                                 </td>                                
                                 <td class="td-30-percent">
                                     <span class="normal-heading black-color">Payment</span>                                  
-                                    <span>Price with (FUND) credit:    $<%# Eval("OrderedProductPrice") %></span>                                    
+                                    <span>Price:    $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>                                    
                                 </td>
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">Quantity</span>

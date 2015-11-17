@@ -615,6 +615,7 @@ namespace AspDotNetStorefrontControls
             _txtCCName.ID = "txtCCName";
             _txtCCNumber.ID = "txtCCNumber";
             _txtCCVerCd.ID = "txtCCVerCd";
+            _txtCCVerCd.MaxLength = 4;
             _txtCCIssueNum.ID = "txtCCIssueNum";
 
             _ddlCCType.ID = "ddlCCType";
@@ -729,7 +730,7 @@ namespace AspDotNetStorefrontControls
         {
             _txtCCName.MaxLength = 100;
             _txtCCNumber.MaxLength = 20;
-            _txtCCVerCd.MaxLength = 10;
+            _txtCCVerCd.MaxLength = 4;
 
             _rfvCCName.ControlToValidate = _txtCCName.ID;
             _rfvCCNumber.ControlToValidate = _txtCCNumber.ID;

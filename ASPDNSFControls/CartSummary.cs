@@ -306,7 +306,7 @@ namespace AspDotNetStorefrontControls
 
             //Tax
             lblTaxCaption.ID = "lblTaxCaption";
-            lblTaxCaption.Text = TaxCaption;
+            lblTaxCaption.Text = TaxCaption+ " ";
 
             lblTax.ID = "lblTax";
             if (DesignMode)
