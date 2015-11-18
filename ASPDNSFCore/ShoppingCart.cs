@@ -8549,11 +8549,12 @@ namespace AspDotNetStorefrontCore
                 }
             }
 
-            //Stock Status
-            if (inv > 4)
-            {
-                tmpS.Append("<span class=\"black-blu-label\"><font>In stock: </font>" + inv + "</span>");
-            }
+            //if (inv > 4)
+            //{
+            //    tmpS.Append("<p><span class=\"black-blu-label\"><font>In stock: </font>" + inv + "</span></p>");
+            //}
+
+ 
 
             //Quantity DropDown
             tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
@@ -9107,14 +9108,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
                 tmpS.Append("    }\n");
-            }
-
-            //Stock Status checking
-            if (inv > 0)
-            {
-                tmpS.Append("<span><font>In stock: </font> "+ inv +"</span>");
-            }
-
+            }                        
 
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes && ProtectInventory && AppLogic.AppConfigBool("ShowQuantityOnProductPage"))
             {

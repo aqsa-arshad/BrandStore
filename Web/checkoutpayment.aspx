@@ -7,10 +7,11 @@
 <%@ Register TagPrefix="aspdnsf" TagName="BuySafeKicker" Src="~/controls/BuySafeKicker.ascx" %>
 <%@ Register Src="CIM/WalletSelector.ascx" TagName="WalletSelector" TagPrefix="uc1" %>
 <%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
-       <asp:Label Id="btnreqfrom" CssClass="hide-element" runat="server" ></asp:Label>
+        <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">            
              <h2 class="black-color">BILLING</h2>
@@ -43,13 +44,13 @@
                     <aspdnsf:Topic runat="server" ID="CheckoutPaymentPageHeader" TopicName="CheckoutPaymentPageHeader" />
                     <asp:Literal ID="XmlPackage_CheckoutPaymentPageHeader" runat="server" Mode="PassThrough"></asp:Literal>
 
-                    <asp:Panel ID="pnlNoPaymentRequired" runat="server" Visible="false">                                           
-                            <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" />
-                            <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>                                 
-                           <div class="clearfix"></div>
-                             <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
-                      
-                      
+                    <asp:Panel ID="pnlNoPaymentRequired" runat="server" Visible="false">
+                        <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" />
+                        <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
+                        <div class="clearfix"></div>
+                        <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
+
+
                     </asp:Panel>
 
                     <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" Visible="true">
@@ -106,6 +107,7 @@
 
                             <%-- CIM End --%>
 
+
                             <%-- <asp:Panel ID="pnlCCPane" runat="server" Visible="false" CssClass="page-row">--%>
                             <aspdnsfc:CreditCardPanel ID="ctrlCreditCardPanel" runat="server"
                                 CreditCardExpDtCaption="<%$ Tokens:StringResource, address.cs.33 %>"
@@ -126,6 +128,26 @@
                                 ShowCCVerCdReqVal="<%$ Tokens:AppConfigBool, CardExtraCodeIsOptional %>"
                                 CimSaveCardCaption="<%$ Tokens:StringResource, address.cs.72 %>" />
                             <%-- </asp:Panel>--%>
+
+
+
+                            <%--Whats this POP UP Start here --%>
+                            <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: none">
+                                <div class="modal-dialog modal-checkout" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
+                                                <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
+                                            <h4>“What’s this”</h4>
+                                                <p><asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label></p>
+                                             <p><asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.2 %>"></asp:Label></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--Whats this POP UP Start here --%>
+
+
                             <asp:Panel ID="pnlEcheckPane" runat="server" Visible="false" CssClass="page-row">
                                 <aspdnsfc:Echeck ID="ctrlEcheck" runat="server"
                                     ECheckBankABACodeLabel1="<%$ Tokens:StringResource, address.cs.41 %>"
@@ -294,12 +316,12 @@
                 Visible="false" OnRequestEstimateButtonClicked="EstimateAddressControl_RequestEstimateButtonClicked" />
         </asp:Panel>
     </div>
-  <asp:Panel ID="pnlContCheckout" runat="server"  Visible="true" CssClass="row" ChildrenAsTriggers ="true">
-     
+    <asp:Panel ID="pnlContCheckout" runat="server" Visible="true" CssClass="row" ChildrenAsTriggers="true">
+
         <div class="col-md-4"></div>
         <div class="col-md-4 col-md-4 checkout-field-adjust">
-            
-            <asp:button type="button" id="btnback" class="btn btn-primary btn-block" runat="server" onclick="btnback_Click" Text="Back"></asp:button>
+
+            <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block" runat="server" OnClick="btnback_Click" Text="Back"></asp:Button>
             <div class="clearfix"></div>
             <asp:Button ID="btnContCheckout" runat="server" CssClass="btn btn-primary btn-block"
                 OnClick="btnContCheckout_Click"
@@ -318,6 +340,18 @@
 
             $("#divccpane1").unwrap();
             $("#divccpane2").unwrap();
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var lnkWatsThisClientId = '<%= ctrlCreditCardPanel.WhatsThisClientID %>';
+            $("#" + lnkWatsThisClientId).click(function () {              
+                document.getElementById('myModal').style.display = 'block';
+            });
+            $("#Closebtn").click(function () {
+                document.getElementById('myModal').style.display = 'none';
+            });
 
         });
     </script>

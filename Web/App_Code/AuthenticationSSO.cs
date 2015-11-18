@@ -170,8 +170,11 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@LastName", profile.lastName),
                                         new SqlParameter("@Phone", profile.primaryPhone),
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
-                                        new SqlParameter("@BillingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID == null ? 0 : ThisCustomer.PrimaryBillingAddressID)),
-                                        new SqlParameter("@ShippingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryShippingAddressID == null ? 0 : ThisCustomer.PrimaryShippingAddressID)),
+                                        new SqlParameter("@BillingAddressID", 0),
+                                        new SqlParameter("@ShippingAddressID", 0),
+                                        // Address will be syncedd with user salesforce account
+                                        //new SqlParameter("@BillingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID == null ? 0 : ThisCustomer.PrimaryBillingAddressID)),
+                                        //new SqlParameter("@ShippingAddressID", AddUpdateAddress(profile, ThisCustomer.CustomerID, ThisCustomer.PrimaryShippingAddressID == null ? 0 : ThisCustomer.PrimaryShippingAddressID)),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
