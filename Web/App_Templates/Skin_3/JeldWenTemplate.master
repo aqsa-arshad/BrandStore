@@ -343,7 +343,7 @@
         function ShowControlsForSalesRepAndInternalLogin() {
             $("#InternalHomePageTopic").removeClass("hide-element");
             $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
-            $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+            //$("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
             $("#controlHeadingforPromotionalItems").text("Our brand is their brand");
             $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
