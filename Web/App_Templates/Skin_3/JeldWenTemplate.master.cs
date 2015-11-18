@@ -59,7 +59,14 @@ namespace AspDotNetStorefront
             if (Shoppingcart != null)
             {
                 if (Shoppingcart.CartItems.Count > 0)
-                    shopping_cart.InnerText = "SHOPPING CART - " + Shoppingcart.CartItems.Count.ToString() + " -";
+                {
+                    int quantity = 0;
+                    foreach(CartItem citem in Shoppingcart.CartItems)
+                    {
+                        quantity = quantity + citem.Quantity;
+                    }
+                    shopping_cart.InnerText = "SHOPPING CART - " + quantity.ToString() + " -";
+                }
                 else
                     shopping_cart.InnerText = "SHOPPING CART";
             }

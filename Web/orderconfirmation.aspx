@@ -15,7 +15,8 @@
                             <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
                             
                            <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" target="_blank" runat="server" class="underline-link">click here</a>.</asp:Label>
-                        </p>
+                         <asp:Label runat="server" ID="Label1" class="block-text">The title of this order will be shown as “CMD” in your credit card transaction history.</asp:Label>
+                             </p>
                 <p class="frut-roman-font">
                  Tracking numbers will be on your order history page when your items are ready to ship.                       
                 </p>
