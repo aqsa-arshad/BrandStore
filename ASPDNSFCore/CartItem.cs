@@ -1197,15 +1197,19 @@ namespace AspDotNetStorefrontCore
 			
             if (ThePic.Length == 0 || ThePic.IndexOf("nopicture") != -1)
             {
-               
-                    if (ChosenColor == "")
+
+                if (ChosenColor == "")
+                {
+                    ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                }
+                else
+                {
+                    ThePic = AppLogic.LookupProductImageByNumberAndColor(ProductID, ThisCustomer.SkinID, m_ImageFileNameOverride, SKU, ThisCustomer.LocaleSetting, 1, AppLogic.RemoveAttributePriceModifier(ChosenColor), "icon");
+                    if (ThePic.Contains("nopictureicon"))
                     {
                         ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                     }
-                    else
-                    {
-                        ThePic = AppLogic.LookupProductImageByNumberAndColor(ProductID, ThisCustomer.SkinID, m_ImageFileNameOverride, SKU, ThisCustomer.LocaleSetting, 1, AppLogic.RemoveAttributePriceModifier(ChosenColor), "icon");
-                    }
+                }
             }
             if (ProductID == AppLogic.MicropayProductID)
             {
