@@ -18,6 +18,9 @@
                         <font>Date</font>
                         <asp:Label runat="server" ID="lblOrderDate"></asp:Label>
                     </span>
+
+                    <asp:Label runat="server" ID="Label1">The title of this order will be shown as “CMD” in your credit card transaction history.</asp:Label>
+
                 </p>
             </div>
         </div>
@@ -96,15 +99,16 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
+                                            <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                             <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
-                                            <span class="normal-heading blue-color">
+                                            <span class="normal-heading black-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
                                             <span>
                                                 <asp:Label ID="lblProductSKU" runat="server"></asp:Label>
                                             </span>
                                             <p>
-                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description").ToString().Take(100).Aggregate("", (x,y) => x + y) %>'></asp:Label>
+                                                <asp:Label ID="lblDescription" runat="server"></asp:Label>
                                             </p>
                                         </div>
                                     </div>
@@ -115,7 +119,7 @@
                                         <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
                                     </span>
                                 </td>
-                                
+
                                 <td class="td-30-percent">
                                     <span class="normal-heading black-color">Price</span>
                                     <span>Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductRegularPrice")), 2).ToString() %></span>

@@ -135,8 +135,12 @@ namespace AspDotNetStorefront
             {
                 ShippingStatus += string.Format("<div><a href=\"downloads.aspx\">{0}</a></div>", AppLogic.GetString("download.aspx.1", SkinID, ThisCustomer.LocaleSetting));
             }
-            if (ShippingStatus.Contains("downloads.aspx"))
+            if (ShippingStatus.Contains("downloads.aspx") && ShippingStatus.Contains("Not Yet Shipped"))
+                ShippingStatus = "Not Yet Shipped Downloadable";
+            else if (ShippingStatus.Contains("downloads.aspx"))
+            {
                 ShippingStatus = "Downloadable";
+            }
             return ShippingStatus;
         }
 

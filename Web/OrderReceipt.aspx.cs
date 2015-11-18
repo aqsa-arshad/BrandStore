@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 
@@ -186,6 +187,17 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
                                                                           (e.Item.FindControl("hfSKU") as HiddenField)
                                                                               .Value;
+                }
+                if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
+                {
+                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 100)
+                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
+                                                                              .Value.Take(100).Aggregate("", (x, y) => x + y) + " ...";
+                    else
+                    {
+                        (e.Item.FindControl("lblDescription") as Label).Text =
+                            (e.Item.FindControl("hfSKU") as HiddenField).Value;
+                    }
                 }
             }
         }

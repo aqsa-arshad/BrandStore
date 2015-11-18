@@ -147,7 +147,7 @@
 
         <xsl:choose>
           <xsl:when test="$CurrentPage &gt; 1 and  $DisplayNextAndPreviousPageButtons = true()">
-            <span class="pageArrowWrap">
+            <span class="pageArrowWrap page-previous">
               <xsl:if test="$DisplayFirstAndLastPageButtons = true()">
               </xsl:if>
               <xsl:if test="$DisplayNextAndPreviousPageButtons = true()">
@@ -159,7 +159,7 @@
           </xsl:when>
 
           <xsl:otherwise>
-            <span class="pageArrowWrap">
+            <span class="pageArrowWrap page-previous">
               <xsl:value-of select="$PreviousPageButtonContent" />
             </span>
           </xsl:otherwise>
@@ -170,7 +170,7 @@
 
         <xsl:choose>
           <xsl:when test="($CurrentPage &lt; $PageCount) and $DisplayNextAndPreviousPageButtons = true()">
-            <span class="pageArrowWrap">
+            <span class="pageArrowWrap page-next">
               <xsl:if test="$DisplayNextAndPreviousPageButtons = true()">
                 <a class="pagelink nextLink" href="javascript:void(0);" onclick="setParam('pagenum', '{$CurrentPage + 1}');">
                   <xsl:value-of select="$NextPageButtonContent" />
@@ -183,7 +183,7 @@
           </xsl:when>
 
           <xsl:otherwise>
-            <span class="pageArrowWrap">
+            <span class="pageArrowWrap page-next">
               <xsl:value-of select="$NextPageButtonContent" />
             </span>
           </xsl:otherwise>

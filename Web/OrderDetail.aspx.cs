@@ -197,7 +197,7 @@ namespace AspDotNetStorefront
                 }
                 if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
                 {
-                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 70)
+                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
                         (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
                                                                               .Value.Take(60).Aggregate("", (x,y) => x + y) + " ...";
                     else

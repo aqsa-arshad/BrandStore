@@ -3477,12 +3477,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-right: 0;
   }
 }
-@media (min-width: 768px) and screen and (min-width: 800px) {
+@media (min-width: 768px) and screen and (min-width: 992px) {
   .navbar-left {
     float: left !important ;
   }
 }
-@media (min-width: 768px) and screen and (min-width: 800px) {
+@media (min-width: 768px) and screen and (min-width: 992px) {
   .navbar-right {
     float: right !important ;
   }
@@ -5178,6 +5178,8 @@ a:hover.mb-login-btn {
 .modal-dialog {
   font-size: 14px;
   text-align: left;
+  margin-left: auto;
+  margin-rigt: auto;
 }
 .modal-dialog a {
   color: #6f9abb;
@@ -5332,8 +5334,7 @@ a:hover.mb-login-btn {
 }
 .content-box-03 ul {
   padding: 0;
-  float: left;
-  word-break: break-all;
+  float: left; 
 }
 .thumbnail {
   background-color: #e0e0e0;
@@ -5370,6 +5371,7 @@ a:hover.mb-login-btn {
 @media screen and (min-width: 800px) {
   .address ul {
     height: 138px;
+     word-break: break-all;
   }
 }
 .form-group {
@@ -5401,6 +5403,12 @@ a:hover.mb-login-btn {
 .pagerArea {
   text-align: center;
   border: none !important;
+}
+.page-previous {
+    padding-right: 10px;
+}
+.page-next {
+    padding-left: 10px;
 }
 .checkout-two-fields .form-control {
   display: inline-block;
@@ -5644,47 +5652,47 @@ table.order-detail tbody tr td {
 .td-15-percent {
   min-height: 1px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-55-percent {
     width: 55%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-50-percent {
     width: 50%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-45-percent {
     width: 45%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-40-percent {
     width: 40%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-35-percent {
     width: 35%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-30-percent {
     width: 30%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-25-percent {
     width: 25%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-20-percent {
     width: 20%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .td-15-percent {
     width: 15%;
   }
@@ -6194,7 +6202,7 @@ a:hover.underline-link {
 .pull-left {
   float: none !important;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .pull-left {
     float: left !important ;
   }
@@ -6202,7 +6210,7 @@ a:hover.underline-link {
 .pull-right {
   float: none !important;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   .pull-right {
     float: right !important ;
   }
@@ -6220,4 +6228,10 @@ a:hover.underline-link {
 }
 .underline-no:hover {
   text-decoration: none;
+}
+.bottom-space-border tr:last-child {
+    border: none;
+}
+.bottom-space-border tr:last-child td{
+    padding-bottom: 0;
 }
