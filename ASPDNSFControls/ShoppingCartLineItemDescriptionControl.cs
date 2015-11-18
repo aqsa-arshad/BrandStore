@@ -234,7 +234,7 @@ namespace AspDotNetStorefrontControls
                     cItem.ProductDescription = cItem.ProductDescription.Substring(0, 180) + "...";
                 }
                 lblProductDescription.Text = cItem.ProductDescription;                
-                Controls.Add(new LiteralControl("     <p>"));
+                Controls.Add(new LiteralControl("     <p style='word-wrap:break-word'"));
                 Controls.Add(lblProductDescription);
                 Controls.Add(new LiteralControl("     </p>"));
                 Controls.Add(new LiteralControl("     </div></div>"));

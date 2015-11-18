@@ -71,7 +71,7 @@ namespace AspDotNetStorefront
                         reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
-                            lblOrderNumber.Text = reader["OrderNumber"].ToString();
+                            lblOrderNumber.Text = reader["OrderNumber"].ToString() + ".";
                             //lblOrderDate.Text = reader["OrderDate"].ToString();
                            // lblCustomerID.Text = reader["CustomerID"].ToString();
 

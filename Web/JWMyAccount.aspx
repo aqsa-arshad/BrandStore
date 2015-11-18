@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <h5>Downloads</h5>
                 <ul>
-                    <li><a href="#" class="underline-link">View Your Downloads</a> </li>
+                    <li><a href="MyDownloads.aspx" class="underline-link">View Your Downloads</a> </li>
                 </ul>
             </div>
         </div>

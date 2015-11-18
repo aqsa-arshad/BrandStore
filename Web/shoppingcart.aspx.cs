@@ -234,10 +234,12 @@ namespace AspDotNetStorefront
             {
                 btnUpdateShoppingCart.CssClass = "hide-element";
             }
+         
 		}
 
 		void btnContinueShoppingTop_Click(object sender, EventArgs e)
 		{
+            UpdateCartQuantity();
 			ContinueShopping();
 		}
 		void btnContinueShoppingBottom_Click(object sender, EventArgs e)

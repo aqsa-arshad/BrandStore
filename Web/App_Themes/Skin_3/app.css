@@ -5334,8 +5334,7 @@ a:hover.mb-login-btn {
 }
 .content-box-03 ul {
   padding: 0;
-  float: left;
-  word-break: break-all;
+  float: left; 
 }
 .thumbnail {
   background-color: #e0e0e0;
@@ -5372,6 +5371,7 @@ a:hover.mb-login-btn {
 @media screen and (min-width: 800px) {
   .address ul {
     height: 138px;
+     word-break: break-all;
   }
 }
 .form-group {
@@ -5403,6 +5403,12 @@ a:hover.mb-login-btn {
 .pagerArea {
   text-align: center;
   border: none !important;
+}
+.page-previous {
+    padding-right: 10px;
+}
+.page-next {
+    padding-left: 10px;
 }
 .checkout-two-fields .form-control {
   display: inline-block;
@@ -6222,4 +6228,10 @@ a:hover.underline-link {
 }
 .underline-no:hover {
   text-decoration: none;
+}
+.bottom-space-border tr:last-child {
+    border: none;
+}
+.bottom-space-border tr:last-child td{
+    padding-bottom: 0;
 }

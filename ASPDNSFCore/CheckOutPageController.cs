@@ -83,6 +83,13 @@ namespace AspDotNetStorefrontCore
 		/// <returns>The checkout page to send the customer to based on checkout rules.</returns>
 		public virtual string GetStandardCheckoutPage()
 		{
+
+            //if (!this.Customer.IsRegistered || this.Customer.EMail.Length == 0)
+            //{
+            //    return "createaccount.aspx?checkout=true"; 
+            //}
+
+
 			if ((this.Customer.IsRegistered || this.Customer.EMail.Length != 0) &&
 				(this.Customer.Password.Length == 0 || this.Customer.PrimaryBillingAddressID == 0 ||
 				this.Customer.PrimaryShippingAddressID == 0 || !this.Customer.HasAtLeastOneAddress()))

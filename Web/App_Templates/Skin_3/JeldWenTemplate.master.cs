@@ -1,13 +1,9 @@
 ﻿using AspDotNetStorefrontCore;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using AspDotNetStorefrontCore;
+
 namespace AspDotNetStorefront
 {
     /// <summary>
@@ -55,11 +51,18 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShoppingCart Shoppingcart = new ShoppingCart(3,ThisCustomer,0,0,false);
+            ShoppingCart Shoppingcart = new ShoppingCart(3, ThisCustomer, 0, 0, false);
             if (Shoppingcart != null)
             {
                 if (Shoppingcart.CartItems.Count > 0)
-                    shopping_cart.InnerText = "SHOPPING CART - " + Shoppingcart.CartItems.Count.ToString() + " -";
+                {
+                    int quantity = 0;
+                    foreach(CartItem citem in Shoppingcart.CartItems)
+                    {
+                        quantity = quantity + citem.Quantity;
+                    }
+                    shopping_cart.InnerText = "SHOPPING CART - " + quantity.ToString() + " -";
+                }
                 else
                     shopping_cart.InnerText = "SHOPPING CART";
             }
@@ -268,8 +271,6 @@ namespace AspDotNetStorefront
                     JWBPublicUserAfterLoginControl.Attributes.Add("class", newClassValue);
                     JWBUserInfoAfterLoginControl.Visible = false;
                 }
-
-
             }
             else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
             {
@@ -324,7 +325,11 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "ABOUT True BLU™";
                 pnlPageHeading.Visible = true;
-
+            }
+            else if (currentURL.ToUpper().Contains("DOWNLOADS"))
+            {
+                lblPageHeading.Text = AppLogic.GetString("download.aspx.1", 3, ThisCustomer.LocaleSetting);
+                pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
             {
@@ -345,7 +350,6 @@ namespace AspDotNetStorefront
                 lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
-
             else if (currentURL.ToUpper().Contains("ORDERDETAIL"))
             {
                 if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
@@ -369,7 +373,6 @@ namespace AspDotNetStorefront
                 divSideBarAfterLogin.Visible = false;
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
-
             }
             else if (currentURL.ToUpper().Contains("CHECKOUTSHIPPING"))
             {

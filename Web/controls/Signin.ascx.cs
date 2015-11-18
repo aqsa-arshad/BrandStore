@@ -458,11 +458,11 @@ namespace AspDotNetStorefront
                         {
                             sReturnURL = lblReturnURL.Text;
                         }
-                        if (sReturnURL.Length == 0 || sReturnURL == "signin.aspx")
+                        if (sReturnURL.Length == 0 || sReturnURL == "signin.aspx" || sReturnURL == "/default.aspx")
                         {
                             if (cbDoingCheckout.Checked)
                             {
-                                sReturnURL = "~/shoppingcart.aspx";
+                                sReturnURL = "~/checkoutshipping.aspx";
                             }
                             else
                             {
@@ -470,7 +470,7 @@ namespace AspDotNetStorefront
                             }
                         }
                         Customer c = new Customer(EMailField, true);
-                        if (!AppLogic.AppConfigBool("Checkout.RedirectToCartOnSignin"))
+                        if (AppLogic.AppConfigBool("Checkout.RedirectToCartOnSignin"))
                         {
                             ShoppingCart newCart = new ShoppingCart(3, c, CartTypeEnum.ShoppingCart, 0, false);
                             sReturnURL = newCart.PageToBeginCheckout(false, false);
