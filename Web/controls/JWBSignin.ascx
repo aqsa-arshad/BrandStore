@@ -1,10 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="JWBSignin.ascx.cs" Inherits="controls_JWBSignin" %>
+<%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
         <asp:Panel runat="server" DefaultButton="LoginButton">
             <div id="LoginPanel" runat="server">
                 <h4></h4>
+                <asp:Label class="blue-color" runat="server"> <aspdnsf:Topic ID="SignInInstructions" runat="server" TopicName="signinheading"  Visible="false" /></asp:Label>
+               
                 <label>
                     <asp:Label runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                 <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"

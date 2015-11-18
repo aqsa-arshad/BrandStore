@@ -148,7 +148,9 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         if (currentURL.ToUpper().Contains("CREATEACCOUNT"))
         {
+
             createAccountLink.Visible = false;
+            SignInInstructions.Visible = true;
         }
         string HiddenFieldText = HiddenLabel.Text;
         if (HiddenFieldText.Equals("true"))
