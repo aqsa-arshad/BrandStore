@@ -75,7 +75,7 @@
                  <p>
                     <asp:Literal ID="Literal1" Text="<span class='block-text'>Please enter your contact </span> information. *Required Fields." runat="server" />
                 </p>
-                <aspdnsf:Account ID="ctrlAccount" runat="server"
+                <aspdnsf:Accounttab ID="ctrlAccount" runat="server"
                     EmailCaption="<%$ Tokens:StringResource, account.aspx.15 %>"
                     EmailReenterCaption="<%$ Tokens:StringResource, createaccount.aspx.91 %>"
                     FirstNameCaption="<%$ Tokens:StringResource, account.aspx.13 %>"
