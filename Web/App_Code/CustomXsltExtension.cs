@@ -213,9 +213,11 @@ public class CustomXsltExtension : XSLTExtensionBase
                     var imageUrl = "<img id=\"CategoryPic" + catId + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(name), name, "ProductPic" + catId) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageLocalPath + "\">";          
 
                     output.Append("<div class=\"col-md-6\"> <div class=\"thumbnail\">");
-                    
+
+                    output.Append("<div class=\"fix-list-head-height1\">");
                     output.Append("<a href=\"" + url + "\" \">");
                     output.Append("<h4>" + name + "</h4></a>");
+                    output.Append("</div>");
 
                     output.Append("<a class=\"product-img-box\" href=\"" + url + "\" \">");
                     output.Append(imageUrl + "</a>");
