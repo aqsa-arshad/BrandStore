@@ -289,6 +289,12 @@ namespace AspDotNetStorefront
             {
                 divlogin.Visible = false;
                 separatorafterlogin.Visible = false;
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
+                //divcontentarea.Attributes["class"] = "col-md-12";
             }
 
             else if (currentURL.ToUpper().Contains("CREATEACCOUNT"))
@@ -403,6 +409,15 @@ namespace AspDotNetStorefront
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
             else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION"))
+            {
+                pnlPageHeading.Attributes["class"] = "hide-element";
+                pnlPageHeading.Visible = true;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                lnkShoppingCart.Attributes.Add("class", "active shopping-link");
+                divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("ACCOUNT"))
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;

@@ -462,7 +462,7 @@ namespace AspDotNetStorefront
                         {
                             if (cbDoingCheckout.Checked)
                             {
-                                sReturnURL = "~/checkoutshipping.aspx";
+                                sReturnURL = "~/account.aspx?checkout=true";//checkoutshipping
                             }
                             else
                             {

@@ -6833,15 +6833,14 @@ table.order-detail tbody tr td {
     }
 
 .checkout-field-adjust {
-    margin-right: 0;
-    margin-left: 0;
+  margin-right: 0;
+  margin-left: 0;
 }
-
-@media screen and (min-width: 800px) {
-    .checkout-field-adjust {
-        margin-right: 4%;
-        margin-left: 4%;
-    }
+@media screen and (min-width: 768px) {
+  .checkout-field-adjust {
+    margin-right: 4%;
+    margin-left: 4%;
+  }
 }
 /******************* Side Bar ***********************/
 .pre-login-pannel {

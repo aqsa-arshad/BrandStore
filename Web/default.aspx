@@ -15,15 +15,13 @@
     </head>
     <body>
         <%--<div class="left-side">--%>
-            <%--Calling topic defind through admin console.--%>
-            <aspdnsf:Topic ID="Topic2" runat="server" TopicName="LandingPageTopic" />
-            <div class="content-box-02">
-                <div class="row">
-                    <%--calling xml package thst bringd featured products--%>
-                   <%-- <asp:Literal ID="FeaturedProducts" runat="server" Text='<%$ Tokens:XMLPACKAGE, featuredproducts.xml.config, featuredentityid=11&featuredentitytype=category&headertext=Featured Products&numberofitems=4&columns=4&showprice=true %>' />--%>
-                    <aspdnsf:Topic ID="FeaturedProductTopic" runat="server" TopicName="Default.FeaturedProducts" />
-                </div>
-            </div>
+        <%--Calling topic defind through admin console.--%>
+        <aspdnsf:Topic ID="Topic2" runat="server" TopicName="LandingPageTopic" />
+        <div class="content-box-02">
+            <%--calling xml package thst bringd featured products--%>
+            <%-- <asp:Literal ID="FeaturedProducts" runat="server" Text='<%$ Tokens:XMLPACKAGE, featuredproducts.xml.config, featuredentityid=11&featuredentitytype=category&headertext=Featured Products&numberofitems=4&columns=4&showprice=true %>' />--%>
+            <aspdnsf:Topic ID="FeaturedProductTopic" runat="server" TopicName="Default.FeaturedProducts" />
+        </div>
         <%--</div>--%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../../dist/js/bootstrap.min.js"></script>

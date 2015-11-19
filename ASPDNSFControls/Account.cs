@@ -1312,7 +1312,7 @@ namespace AspDotNetStorefrontControls
             #region "First Column"
            
 
-            this.Controls.Add(new LiteralControl("<div class='col-md-5'>"));
+       //     this.Controls.Add(new LiteralControl("<div class='col-md-5'>"));
 
             // [Start] - First Name
             this.Controls.Add(new LiteralControl("<div class='form-group'>"));
@@ -1361,13 +1361,6 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(new LiteralControl("</div>"));
             // [End] - Email
 
-            this.Controls.Add(new LiteralControl("</div>"));
-
-            #endregion
-
-            #region "Second Column"
-            this.Controls.Add(new LiteralControl("<div class='col-md-5 pull-right'>"));
-
             // [Start] - Phone
             this.Controls.Add(new LiteralControl("<div class='form-group'>"));
             this.Controls.Add(new LiteralControl("<label>"));
@@ -1383,6 +1376,29 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(_revPhone);
             this.Controls.Add(new LiteralControl("</div>"));
             // [End] - Phone
+
+           // this.Controls.Add(new LiteralControl("</div>"));
+
+            #endregion
+
+            #region "Second Column"
+            this.Controls.Add(new LiteralControl("<div class='col-md-5 pull-right'>"));
+
+            //// [Start] - Phone
+            //this.Controls.Add(new LiteralControl("<div class='form-group'>"));
+            //this.Controls.Add(new LiteralControl("<label>"));
+            //this.Controls.Add(_lblPhone);
+            //this.Controls.Add(new LiteralControl("</label>"));
+            //this.Controls.Add(_txtPhone);
+            //if (!_ShowValidatorsInline)
+            //{
+            //    _rfvPhone.Display = ValidatorDisplay.None;
+            //    _revPhone.Display = ValidatorDisplay.None;
+            //}
+            //this.Controls.Add(_rfvPhone);
+            //this.Controls.Add(_revPhone);
+            //this.Controls.Add(new LiteralControl("</div>"));
+            //// [End] - Phone
 
             if (_ShowPassword)
             {
