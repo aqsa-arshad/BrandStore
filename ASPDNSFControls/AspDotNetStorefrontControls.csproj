@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounttab.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="AddressControl.cs" />
     <Compile Include="AlphaPaging.cs" />
