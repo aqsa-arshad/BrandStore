@@ -196,6 +196,7 @@ namespace AspDotNetStorefront
 
 		public void btnContinueToCheckOut_Click(object sender, EventArgs e)
 		{
+            btnUpdateAccount_Click(null,null);
 			Response.Redirect(CheckOutPageControllerFactory.CreateCheckOutPageController().GetContinueCheckoutPage());
 		}
 
@@ -502,13 +503,13 @@ namespace AspDotNetStorefront
             {
                 pnlShipping.Visible = false;
             }
-            lnkChangeBilling.NavigateUrl = "javascript:self.location='address.aspx?Checkout=" + Checkout.ToString() + "&AddressType=billing&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
-            lnkChangeShipping.NavigateUrl = "javascript:self.location='address.aspx?Checkout=" + Checkout.ToString() + "&AddressType=shipping&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
+            lnkChangeBilling.NavigateUrl = "javascript:self.location='JWMyAddresses.aspx?Checkout=" + Checkout.ToString() + "&AddressType=1&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
+            lnkChangeShipping.NavigateUrl = "javascript:self.location='JWMyAddresses.aspx?Checkout=" + Checkout.ToString() + "&AddressType=2&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
 
-            lnkAddBillingAddress.NavigateUrl = "address.aspx?add=true&addressType=Billing&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
-            lnkAddBillingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.63", SkinID, ThisCustomer.LocaleSetting) + "</div>";
-            lnkAddShippingAddress.NavigateUrl = "address.aspx?add=true&addressType=Shipping&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
-            lnkAddShippingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.62", SkinID, ThisCustomer.LocaleSetting) + "</div>";
+            //lnkAddBillingAddress.NavigateUrl = "JWMyAddresses.aspx?add=true&addressType=1&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
+            //lnkAddBillingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.63", SkinID, ThisCustomer.LocaleSetting) + "</div>";
+            //lnkAddShippingAddress.NavigateUrl = "JWMyAddresses.aspx?add=true&addressType=2&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
+            //lnkAddShippingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.62", SkinID, ThisCustomer.LocaleSetting) + "</div>";
 
             litBillingAddress.Text = BillingAddress.DisplayHTML(true);
             if (BillingAddress.PaymentMethodLastUsed.Length != 0)

@@ -10,7 +10,7 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server">
         <asp:Literal ID="JSPopupRoutines" runat="server"></asp:Literal>
-        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
+        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />        
         <div class="content-box-03">
             <h2>
                 <asp:Literal ID="Literal2" Text="<%$ Tokens:StringResource,checkoutreview.aspx.1 %>" runat="server" />
@@ -125,7 +125,7 @@
                                 LineItemDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.200 %>" OrderDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.201 %>" />
                         <%--</div>--%>
                          </asp:Panel>
-                    <button type="submit" id="btnback" class="btn btn-primary btn-block" runat="server" onclick="btnBack_Click">Back</button>
+                    <asp:button type="submit" id="btnback" class="btn btn-primary btn-block" runat="server" onclick="btnBack_Click" Text="Back"></asp:button>
                                         <div class="clearfix"></div>
         <asp:Button ID="btnContinueCheckout2" Text="<%$ Tokens:StringResource,checkoutreview.aspx.777 %>" CssClass="btn btn-primary btn-block" runat="server" OnClick="btnContinueCheckout2_Click" />
                 </div>

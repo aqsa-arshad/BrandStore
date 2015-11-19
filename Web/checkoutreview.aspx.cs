@@ -36,6 +36,27 @@ namespace AspDotNetStorefront
                 cart.SetCoupon(CouponName, true);
             }
 
+            if (!this.IsPostBack)
+            {
+                if (Request.UrlReferrer != null)
+                {
+                    if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutpayment"))
+                    {
+
+                        Session["hdnreferalurl"] = "checkoutpayment.aspx";
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
+                    {
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx";
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("shoppingcart"))
+                    {
+                        Session["hdnreferalurl"] = "shoppingcart.aspx";
+                    }
+                }
+            }
+               
+
             Response.CacheControl = "private";
             Response.Expires = -1;
             Response.AddHeader("pragma", "no-cache");
@@ -714,7 +735,8 @@ namespace AspDotNetStorefront
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("checkoutpayment.aspx");
+            if (Session["hdnreferalurl"] != "")
+                Response.Redirect(Session["hdnreferalurl"].ToString());
         }
 
     }

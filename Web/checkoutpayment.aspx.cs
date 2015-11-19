@@ -61,12 +61,13 @@ namespace AspDotNetStorefront
                 {
                     if (Request.UrlReferrer.ToString().ToLower().Contains("shoppingcart"))
                     {
-                        btnreqfrom.Text = "ShoppingCart.aspx";
+                        Session["hdnreferalurl"] = "ShoppingCart.aspx";
+                       
                     }
                     else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
                     {
 
-                        btnreqfrom.Text = "checkoutshipping.aspx";
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx";
                     }
                 }
             }
@@ -2269,9 +2270,9 @@ namespace AspDotNetStorefront
 
         protected void btnback_Click(object sender, EventArgs e)
         {
-            if (btnreqfrom.Text.Length>=2)
+            if (Session["hdnreferalurl"]!="")
             {
-            Response.Redirect(btnreqfrom.Text);
+                Response.Redirect(Session["hdnreferalurl"].ToString());
             }
         }
 

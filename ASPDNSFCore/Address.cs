@@ -846,7 +846,9 @@ namespace AspDotNetStorefrontCore
             }
             if (PMCleaned == AppLogic.ro_PMCreditCard)
             {
-                return String.Format("{0} - {1}: {2} {3}/{4}", AppLogic.GetString("address.cs.54", m_SkinID, m_LocaleSetting), m_CardType, AppLogic.SafeDisplayCardNumber(CardNumber, "Address", m_AddressID), CardExpirationMonth, CardExpirationYear);
+                String info = "";
+                info = " " + AppLogic.GetString("address.cs.54", m_SkinID, m_LocaleSetting).ToString() + Environment.NewLine + "</br>" + m_CardType.ToString() + " " + AppLogic.SafeDisplayCardNumber(CardNumber, "Address", m_AddressID).ToString() + " - " + CardExpirationMonth.ToString() + "/" + CardExpirationYear.ToString();
+                return info;
             }
             return String.Empty;
         }
