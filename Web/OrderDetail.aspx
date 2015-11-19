@@ -147,8 +147,7 @@
             <div class="col-md-6">
                 <p>
                     <span class="black-blu-label">
-                        <font>Subtotal: $</font>
-                        <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                        <font>Subtotal: $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                     </span>
                 </p>
                 <%--TODO: Commented due to unavailablity Blu Bucks--%>
@@ -166,7 +165,7 @@
                 </p>
 
                 <p>
-                    <span class="black-blu-label"><font>Total:</font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                    <span class="black-blu-label"><font>TOTAL: </font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
                 </p>
 
                 <div class="form-group">
