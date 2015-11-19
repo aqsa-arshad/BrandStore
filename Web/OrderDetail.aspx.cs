@@ -153,7 +153,7 @@ namespace AspDotNetStorefront
                 using (var conn = DB.dbConn())
                 {
                     conn.Open();
-                    var query = "select FirstName + ', ' + LastName as CustomerName from Customer where CustomerID = " +
+                    var query = "select FirstName + ' ' + LastName as CustomerName from Customer where CustomerID = " +
                                 customerId;
                     using (var cmd = new SqlCommand(query, conn))
                     {
