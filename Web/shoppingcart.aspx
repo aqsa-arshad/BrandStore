@@ -175,7 +175,7 @@
                                 CalculateTaxDuringCheckoutText='<%$Tokens:StringResource, shoppingcart.aspx.15 %>'
                                 SubTotalCaption='<%$Tokens:StringResource, shoppingcart.cs.96 %>' SubTotalWithDiscountCaption='<%$Tokens:StringResource, shoppingcart.cs.97 %>'
                                 ShippingCaption='<%$Tokens:StringResource, shoppingcart.aspx.12 %>' SkipShippingOnCheckout='<%$Tokens:AppConfigBool, SkipShippingOnCheckout %>'
-                                TaxCaption='<%$Tokens:StringResource, shoppingcart.aspx.14 %>' ShowTotal="true" TotalCaption='<%$Tokens:StringResource, admin.common.Total %>'
+                                TaxCaption='<%$Tokens:StringResource, shoppingcart.aspx.14 %>' ShowTotal="true" TotalCaption='<%$Tokens:StringResource, shoppingcart.cs.61 %>'
                                 LineItemDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.200 %>" OrderDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.201 %>"
                                 IncludeTaxInSubtotal="False" />
                         </div>
