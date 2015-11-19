@@ -122,8 +122,8 @@
 
                                 <td class="td-30-percent">
                                     <span class="normal-heading black-color">Price</span>
-                                    <span>Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductRegularPrice")), 2).ToString() %></span>
-                                    <span>Ext. Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
+                                    <span>Unit Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductRegularPrice")), 2).ToString() %></span>
+                                    <span>Total Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
                                     <%--TODO: Commented due to unavailablity Blu Bucks--%>
                                     <%--<span>Price with Sales Fund credit: $Y,YYY.YY</span>
                                     <span>GL Code: (GL CODE)</span>--%>

@@ -118,7 +118,8 @@
 
                                 <td class="td-50-percent">
                                     <span class="normal-heading black-color">Payment </span>
-                                    <span>Price: $<%# Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
+                                    <span>Unit Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductRegularPrice")), 2).ToString() %></span>
+                                    <span>Total Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
                                 </td>
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">Delivery </span>

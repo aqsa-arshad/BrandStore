@@ -61,8 +61,8 @@
   <xsl:param name="DisplayNextAndPreviousPageButtons" select="true()" />
   <xsl:param name="FirstPageButtonContent">&lt;&lt;</xsl:param>
   <xsl:param name="LastPageButtonContent">&gt;&gt;</xsl:param>
-  <xsl:param name="PreviousPageButtonContent">Previous</xsl:param>
-  <xsl:param name="NextPageButtonContent">Next</xsl:param>
+  <xsl:param name="PreviousPageButtonContent">&lt; Previous</xsl:param>
+  <xsl:param name="NextPageButtonContent">Next &gt;</xsl:param>
 
   <!-- End values to override -->
 
