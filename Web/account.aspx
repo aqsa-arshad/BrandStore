@@ -33,7 +33,7 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="pnlNotCheckOutButtons" runat="server" HorizontalAlign="left">
+            <asp:Panel ID="pnlNotCheckOutButtons" runat="server" HorizontalAlign="left" CssClass="hide-element">
                 <div class="page-row page-links">
                     <asp:HyperLink runat="server" ID="accountaspx4" NavigateUrl="#OrderHistory" Text="<%$ Tokens:StringResource,account.aspx.4 %>"></asp:HyperLink>
                     <asp:Panel ID="pnlShowWishButton" runat="server">

@@ -124,7 +124,7 @@ namespace AspDotNetStorefrontCore
 				}
 				else
 				{
-					return "checkoutshipping.aspx";
+                    return "checkoutshipping.aspx";
 				}
 			}
 		}

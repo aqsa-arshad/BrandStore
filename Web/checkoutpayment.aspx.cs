@@ -50,6 +50,7 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             // Set up CIM
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             PanelWallet.Visible = authorizeNet.IsCimEnabled;
@@ -288,6 +289,7 @@ namespace AspDotNetStorefront
         {
             ProcessPayment("CREDITCARD");
         }
+        
 
         /// <summary>
         /// Initializes the content of the page.
@@ -596,11 +598,13 @@ namespace AspDotNetStorefront
                                     }
                                     if (ctrlCreditCardPanel.CreditCardNumber == "")
                                     {
-                                        ctrlCreditCardPanel.CreditCardNumber = AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
+                                        //need commented line in future
+                                        ctrlCreditCardPanel.CreditCardNumber = "";// AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
                                     }
                                     if (ctrlCreditCardPanel.CreditCardVerCd == "")
                                     {
-                                        ctrlCreditCardPanel.CreditCardVerCd = AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
+                                        //need commented line in future
+                                        ctrlCreditCardPanel.CreditCardVerCd = "";// AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
                                     }
                                     if (ctrlCreditCardPanel.CreditCardType == AppLogic.GetString("address.cs.32", SkinID, ThisCustomer.LocaleSetting))
                                     {
@@ -958,7 +962,7 @@ namespace AspDotNetStorefront
             }
             if (ctrlPaymentMethod.CARDINALMYECHECKChecked == true)
             {
-                pnlCardinaleCheckTopic.Visible = true;
+              //  pnlCardinaleCheckTopic.Visible = true;
             }
             else
             {
