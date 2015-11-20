@@ -57,7 +57,7 @@ namespace AspDotNetStorefront
                 if (Shoppingcart.CartItems.Count > 0)
                 {
                     int quantity = 0;
-                    foreach(CartItem citem in Shoppingcart.CartItems)
+                    foreach (CartItem citem in Shoppingcart.CartItems)
                     {
                         quantity = quantity + citem.Quantity;
                     }
