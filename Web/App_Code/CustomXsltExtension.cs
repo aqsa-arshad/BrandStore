@@ -214,7 +214,7 @@ public class CustomXsltExtension : XSLTExtensionBase
 
                     output.Append("<div class=\"col-md-6\"> <div class=\"thumbnail\">");
 
-                    output.Append("<div class=\"fix-list-head-height1\">");
+                    output.Append("<div class=\"category-head-height\">");
                     output.Append("<a href=\"" + url + "\" \">");
                     output.Append("<h4>" + name + "</h4></a>");
                     output.Append("</div>");
