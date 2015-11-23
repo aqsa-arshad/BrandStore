@@ -9,9 +9,9 @@
             <div class="col-md-6">
                 <h5>Current Order Status</h5>
                 <ul>
-                    <li>Order Number: <b>xxxxx</b></li>
-                    <li>Status: <b>Shipped 8/6/2015</b></li>
-                    <li><a href="#" class="underline-link">Track Current Order</a> </li>
+                    <li>Order Number: <b runat="server" id="bOrderNumber"></b></li>
+                    <li>Status: <b id="bStatus" runat="server"></b></li>
+                    <li><a class="underline-link">Track Current Order</a> </li>
                 </ul>
             </div>
 

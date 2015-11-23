@@ -1,4 +1,7 @@
-﻿using AspDotNetStorefrontCore;
+﻿using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
+using AspDotNetStorefrontCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +54,7 @@ namespace AspDotNetStorefront
             if (!Page.IsPostBack)
             {
                 LoadAddresses();
+                CurrentOrderStatus();
             }
         }
 
@@ -138,6 +142,73 @@ namespace AspDotNetStorefront
         protected void btnChangeShippingAddress_Click(object sender, EventArgs e)
         {
             Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Shipping);
+        }
+
+        void CurrentOrderStatus()
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select * from Orders order by OrderDate DESC";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        bOrderNumber.InnerText = reader["OrderNumber"].ToString();
+                        bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
+                    }
+                }
+            }
+        }
+
+        private string GetShippingStatus(int OrderNumber, string ShippedOn, string ShippedVIA, string ShippingTrackingNumber, string TransactionState, string DownloadEMailSentOn)
+        {
+            var shippingStatus = String.Empty;
+            if (AppLogic.OrderHasShippableComponents(OrderNumber))
+            {
+                if (ShippedOn != "")
+                {
+                    shippingStatus = AppLogic.GetString("account.aspx.48", SkinID, ThisCustomer.LocaleSetting);
+                    if (ShippedVIA.Length != 0)
+                    {
+                        shippingStatus += " " + AppLogic.GetString("account.aspx.49", SkinID, ThisCustomer.LocaleSetting) + " " + ShippedVIA;
+                    }
+
+                    shippingStatus += " " + AppLogic.GetString("account.aspx.50", SkinID, ThisCustomer.LocaleSetting) + " " + Localization.ParseNativeDateTime(ShippedOn).ToString(new CultureInfo(ThisCustomer.LocaleSetting));
+                    if (ShippingTrackingNumber.Length != 0)
+                    {
+                        shippingStatus += " " + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
+
+                        var trackUrl = Shipping.GetTrackingURL(ShippingTrackingNumber);
+                        if (trackUrl.Length != 0)
+                        {
+                            shippingStatus += "<a href=\"" + trackUrl + "\" target=\"_blank\">" + ShippingTrackingNumber + "</a>";
+                        }
+                        else
+                        {
+                            shippingStatus += ShippingTrackingNumber;
+                        }
+                    }
+                }
+                else
+                {
+                    shippingStatus = AppLogic.GetString("account.aspx.52", SkinID, ThisCustomer.LocaleSetting);
+                }
+            }
+            if (AppLogic.OrderHasDownloadComponents(OrderNumber, true))
+            {
+                shippingStatus += string.Format("<div><a href=\"downloads.aspx\">{0}</a></div>", AppLogic.GetString("download.aspx.1", SkinID, ThisCustomer.LocaleSetting));
+            }
+            if (shippingStatus.Contains("downloads.aspx") && shippingStatus.Contains("Not Yet Shipped"))
+                shippingStatus = "Not Yet Shipped Downloadable";
+            else if (shippingStatus.Contains("downloads.aspx"))
+            {
+                shippingStatus = "Downloadable";
+            }
+            return shippingStatus;
         }
     }
 }

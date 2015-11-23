@@ -130,7 +130,7 @@
                                 </td>
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
-                                    <a href="#" class="underline-link">Track item &gt;</a>
+                                    <a class="underline-link">Track item &gt;</a>
                                 </td>
                             </tr>
                         </ItemTemplate>
