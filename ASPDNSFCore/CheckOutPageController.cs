@@ -94,7 +94,8 @@ namespace AspDotNetStorefrontCore
 				(this.Customer.Password.Length == 0 || this.Customer.PrimaryBillingAddressID == 0 ||
 				this.Customer.PrimaryShippingAddressID == 0 || !this.Customer.HasAtLeastOneAddress()))
 			{
-                return "jwmyaddresses.aspx?checkout=true&addresstype=2&returnurl=checkoutshipping.aspx";
+                //return "jwmyaddresses.aspx?checkout=true&addresstype=2&returnurl=checkoutshipping.aspx";
+                return "account.aspx?checkout=true&addresstype=1&returnurl=checkoutshipping.aspx";
 			}
 
 			if (!this.Customer.IsRegistered || this.Customer.PrimaryBillingAddressID == 0 ||

@@ -70,19 +70,19 @@ namespace AspDotNetStorefrontCore
         Boolean HasFreeItems;
         int PackageQuantity;
 
-		static private bool IsDomesticCountryCode(String CountryCode)
-		{
-			CountryCode = CountryCode.Trim().ToUpperInvariant();
-			String[] DomesticCountries = {"US", "PR", "VI", "AS", "GU", "MP", "PW", "MH"};
+        static private bool IsDomesticCountryCode(String CountryCode)
+        {
+            CountryCode = CountryCode.Trim().ToUpperInvariant();
+            String[] DomesticCountries = { "US", "PR", "VI", "AS", "GU", "MP", "PW", "MH" };
             foreach (String s in DomesticCountries)
-			{
-				if(s == CountryCode)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
+            {
+                if (s == CountryCode)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         static private String MapPickupType(String s)
         {
@@ -377,11 +377,12 @@ namespace AspDotNetStorefrontCore
             OriginZipPostalCode = AppLogic.AppConfig("RTShipping.OriginZip");
             OriginCountry = AppLogic.AppConfig("RTShipping.OriginCountry");
 
-            if (OriginCountry.Equals("US",StringComparison.InvariantCultureIgnoreCase))
+            if (OriginCountry.Equals("US", StringComparison.InvariantCultureIgnoreCase))
             {
                 try
                 {
-                    OriginZipPostalCode = OriginZipPostalCode.Substring(0, 5);
+                    if (OriginZipPostalCode.ToString().Length > 5)
+                        OriginZipPostalCode = OriginZipPostalCode.Substring(0, 5);
                 }
                 catch
                 {
@@ -442,7 +443,7 @@ namespace AspDotNetStorefrontCore
                     case "UPS2":
                         UPS2GetRates(Shipment, out RTShipRequest, out RTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
                         break;
-                    
+
                     case "USPS":
                         if (USPSServer.Length != 0)
                         {
@@ -609,72 +610,72 @@ namespace AspDotNetStorefrontCore
             {
                 switch (carrier.Trim().ToUpperInvariant())
                 {
-                case "UPS":
-                    string UPSRTShipRequest;
-                    string UPSRTShipResponse;
+                    case "UPS":
+                        string UPSRTShipRequest;
+                        string UPSRTShipResponse;
 
-                    UPSGetRates(AllShipments, out UPSRTShipRequest, out UPSRTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
+                        UPSGetRates(AllShipments, out UPSRTShipRequest, out UPSRTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
 
-                    RTShipRequest += "<UPSRequest>" + UPSRTShipRequest.Replace("<?xml version=\"1.0\"?>", "") + "</UPSRequest>";
-                    RTShipResponse += "<UPSResponse>" + UPSRTShipResponse.Replace("<?xml version=\"1.0\"?>", "") + "</UPSResponse>";
+                        RTShipRequest += "<UPSRequest>" + UPSRTShipRequest.Replace("<?xml version=\"1.0\"?>", "") + "</UPSRequest>";
+                        RTShipResponse += "<UPSResponse>" + UPSRTShipResponse.Replace("<?xml version=\"1.0\"?>", "") + "</UPSResponse>";
 
-                    break;
+                        break;
 
-                case "UPS2":
-                    string UPS2RTShipRequest;
-                    string UPS2RTShipResponse;
+                    case "UPS2":
+                        string UPS2RTShipRequest;
+                        string UPS2RTShipResponse;
 
-                    UPS2GetRates(AllShipments, out UPS2RTShipRequest, out UPS2RTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
+                        UPS2GetRates(AllShipments, out UPS2RTShipRequest, out UPS2RTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
 
-                    RTShipRequest += "<UPS2Request>" + UPS2RTShipRequest.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", "") + "</UPS2Request>";
-                    RTShipResponse += "<UPS2Response>" + UPS2RTShipResponse.Replace("<?xml version=\"1.0\"?>", "") + "</UPS2Response>";
+                        RTShipRequest += "<UPS2Request>" + UPS2RTShipRequest.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", "") + "</UPS2Request>";
+                        RTShipResponse += "<UPS2Response>" + UPS2RTShipResponse.Replace("<?xml version=\"1.0\"?>", "") + "</UPS2Response>";
 
-                    break;
-                
-                case "USPS":
-                    string USPSRTShipRequest = string.Empty;
-                    string USPSRTShipResponse = string.Empty;
-                    Shipments USPSDomesticShipments = new Shipments();
-                    Shipments USPSIntlShipments = new Shipments();
+                        break;
 
-                    foreach (Packages Shipment in AllShipments)
-                    {
-                        if (IsDomesticCountryCode(Shipment.DestinationCountryCode))
+                    case "USPS":
+                        string USPSRTShipRequest = string.Empty;
+                        string USPSRTShipResponse = string.Empty;
+                        Shipments USPSDomesticShipments = new Shipments();
+                        Shipments USPSIntlShipments = new Shipments();
+
+                        foreach (Packages Shipment in AllShipments)
                         {
-                            USPSDomesticShipments.AddPackages(Shipment);
-                            foreach (Package p in Shipment)
+                            if (IsDomesticCountryCode(Shipment.DestinationCountryCode))
                             {
-                                if (p.IsFreeShipping)
+                                USPSDomesticShipments.AddPackages(Shipment);
+                                foreach (Package p in Shipment)
                                 {
-                                    USPSDomesticShipments.HasFreeItems = true;
+                                    if (p.IsFreeShipping)
+                                    {
+                                        USPSDomesticShipments.HasFreeItems = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                USPSIntlShipments.AddPackages(Shipment);
+                                foreach (Package p in Shipment)
+                                {
+                                    if (p.IsFreeShipping)
+                                    {
+                                        USPSIntlShipments.HasFreeItems = true;
+                                    }
                                 }
                             }
                         }
-                        else
+                        if (USPSDomesticShipments.Count > 0)
                         {
-                            USPSIntlShipments.AddPackages(Shipment);
-                            foreach (Package p in Shipment)
-                            {
-                                if (p.IsFreeShipping)
-                                {
-                                    USPSIntlShipments.HasFreeItems = true;
-                                }
-                            }
+                            USPSGetRates(USPSDomesticShipments, out USPSRTShipRequest, out USPSRTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
                         }
-                    }
-                    if (USPSDomesticShipments.Count > 0)
-                    {
-                        USPSGetRates(USPSDomesticShipments, out USPSRTShipRequest, out USPSRTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
-                    }
-                    if (USPSIntlShipments.Count > 0)
-                    {
-                        USPSIntlGetRates(USPSIntlShipments, out USPSRTShipRequest, out USPSRTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
-                    }
+                        if (USPSIntlShipments.Count > 0)
+                        {
+                            USPSIntlGetRates(USPSIntlShipments, out USPSRTShipRequest, out USPSRTShipResponse, ExtraFee, MarkupPercent, ShipmentValue, ShippingTaxRate);
+                        }
 
-                    RTShipRequest += "<USPSRequest>" + USPSRTShipRequest.Replace("API=RateV2&Xml=", "") + "</USPSRequest>";
-                    RTShipResponse += "<USPSResponse>" + USPSRTShipResponse.Replace("<?xml version=\"1.0\"?>", "") + "</USPSResponse>";
+                        RTShipRequest += "<USPSRequest>" + USPSRTShipRequest.Replace("API=RateV2&Xml=", "") + "</USPSRequest>";
+                        RTShipResponse += "<USPSResponse>" + USPSRTShipResponse.Replace("<?xml version=\"1.0\"?>", "") + "</USPSResponse>";
 
-                    break;
+                        break;
 
                     case "FEDEX":
                         string FedExRTShipRequest = string.Empty;
@@ -751,25 +752,25 @@ namespace AspDotNetStorefrontCore
                 SM.Sort(rtsComparer);
             }
 
-			//Apply shipping method display names
-			string sql = "select Name, DisplayName from ShippingMethod where DisplayName <> ''";
-			using(SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
-			{
-				dbconn.Open();
-				using(IDataReader rs = DB.GetRS(sql, dbconn))
-				{
-					while(rs.Read())
-					{
-						var displayName = DB.RSField(rs, "DisplayName");
-						var methodName = DB.RSField(rs, "Name");
-						foreach(ShipMethod method in SM)
-						{
-							if(method.ServiceName == methodName)
-								method.DisplayName = displayName;
-						}
-					}
-				}
-			}
+            //Apply shipping method display names
+            string sql = "select Name, DisplayName from ShippingMethod where DisplayName <> ''";
+            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+            {
+                dbconn.Open();
+                using (IDataReader rs = DB.GetRS(sql, dbconn))
+                {
+                    while (rs.Read())
+                    {
+                        var displayName = DB.RSField(rs, "DisplayName");
+                        var methodName = DB.RSField(rs, "Name");
+                        foreach (ShipMethod method in SM)
+                        {
+                            if (method.ServiceName == methodName)
+                                method.DisplayName = displayName;
+                        }
+                    }
+                }
+            }
 
             // Check list format type, and setup appropriate 
             StringBuilder output = new StringBuilder(1024);
@@ -1009,7 +1010,7 @@ namespace AspDotNetStorefrontCore
             // loop through the packages
             foreach (Package p in Shipment)
             {
-                
+
                 //Check for invalid weights and assign a new value if necessary
                 if (p.Weight < AppLogic.AppConfigUSDecimal("UPS.MinimumPackageWeight"))
                 {
@@ -1098,40 +1099,40 @@ namespace AspDotNetStorefrontCore
             XmlNodeList UPSResponseCode = UPSResponse.GetElementsByTagName("ResponseStatusCode");
 
             if (UPSResponseCode[0].InnerText == "1") // Success
+            {
+                // Loop through elements & get rates
+                XmlNodeList ratedShipments = UPSResponse.GetElementsByTagName("RatedShipment");
+                string tempService = string.Empty;
+                Decimal tempRate = 0.0M;
+                for (int i = 0; i < ratedShipments.Count; i++)
+                {
+                    XmlNode shipmentX = ratedShipments.Item(i);
+                    tempService = UPSServiceCodeDescription(shipmentX["Service"]["Code"].InnerText);
+
+                    if (ShippingMethodIsAllowed(tempService, "UPS"))
                     {
-                        // Loop through elements & get rates
-                        XmlNodeList ratedShipments = UPSResponse.GetElementsByTagName("RatedShipment");
-                        string tempService = string.Empty;
-                        Decimal tempRate = 0.0M;
-                        for (int i = 0; i < ratedShipments.Count; i++)
+                        tempRate = Localization.ParseUSDecimal(shipmentX["TotalCharges"]["MonetaryValue"].InnerText);
+
+                        if (MarkupPercent != System.Decimal.Zero)
                         {
-                            XmlNode shipmentX = ratedShipments.Item(i);
-                            tempService = UPSServiceCodeDescription(shipmentX["Service"]["Code"].InnerText);
-
-                            if (ShippingMethodIsAllowed(tempService, "UPS"))
-                            {
-                                tempRate = Localization.ParseUSDecimal(shipmentX["TotalCharges"]["MonetaryValue"].InnerText);
-
-                                if (MarkupPercent != System.Decimal.Zero)
-                                {
-                                    tempRate = Decimal.Round(tempRate * (1.00M + (MarkupPercent / 100.0M)), 2, MidpointRounding.AwayFromZero);
-                                }
-                                tempRate += ExtraFee;
-
-
-                                decimal vat = Decimal.Round(tempRate * ShippingTaxRate, 2, MidpointRounding.AwayFromZero);
-
-                                ShipMethod s_method = new ShipMethod();
-
-                                s_method.Carrier = "UPS";
-                                s_method.ServiceName = tempService;
-                                s_method.ServiceRate = tempRate;
-                                s_method.VatRate = vat;
-                                SM.AddMethod(s_method);
-                                
-                            }
+                            tempRate = Decimal.Round(tempRate * (1.00M + (MarkupPercent / 100.0M)), 2, MidpointRounding.AwayFromZero);
                         }
+                        tempRate += ExtraFee;
+
+
+                        decimal vat = Decimal.Round(tempRate * ShippingTaxRate, 2, MidpointRounding.AwayFromZero);
+
+                        ShipMethod s_method = new ShipMethod();
+
+                        s_method.Carrier = "UPS";
+                        s_method.ServiceName = tempService;
+                        s_method.ServiceRate = tempRate;
+                        s_method.VatRate = vat;
+                        SM.AddMethod(s_method);
+
                     }
+                }
+            }
             else // Error
             {
                 XmlNodeList UPSError = UPSResponse.GetElementsByTagName("ErrorDescription");
@@ -1168,7 +1169,7 @@ namespace AspDotNetStorefrontCore
                     return;
                 }
             }
-            
+
             // Check for test mode
             if (m_TestMode)
             {
@@ -1206,7 +1207,7 @@ namespace AspDotNetStorefrontCore
             StringBuilder shipmentRequest = new StringBuilder(1024);
 
             Boolean MultiDistributorEnabled = AppLogic.AppConfigBool("RTShipping.MultiDistributorCalculation") && AllShipments.HasDistributorItems;
-                
+
             HasFreeItems = false;
             PackageQuantity = 1;
 
@@ -1256,13 +1257,13 @@ namespace AspDotNetStorefrontCore
                     shipmentRequest.Append(m_OriginStateProvince.ToUpperInvariant());
                 shipmentRequest.Append("</StateProvinceCode>");
                 shipmentRequest.Append("<PostalCode>");
-                if(!MultiDistributorEnabled || Shipment.OriginZipPostalCode == "")
+                if (!MultiDistributorEnabled || Shipment.OriginZipPostalCode == "")
                     shipmentRequest.Append(m_OriginZipPostalCode);
                 else
                     shipmentRequest.Append(Shipment.OriginZipPostalCode);
                 shipmentRequest.Append("</PostalCode>");
                 shipmentRequest.Append("<CountryCode>");
-                if(MultiDistributorEnabled)
+                if (MultiDistributorEnabled)
                     shipmentRequest.Append(CommonLogic.IIF(Shipment.OriginCountryCode == "", m_OriginCountry.ToUpperInvariant(), Shipment.OriginCountryCode.ToUpperInvariant()));
                 else
                     shipmentRequest.Append(m_OriginCountry.ToUpperInvariant());
@@ -1413,7 +1414,7 @@ namespace AspDotNetStorefrontCore
                     {
                         XmlNode shipmentX = ratedShipments.Item(i);
                         tempService = UPSServiceCodeDescription(shipmentX["Service"]["Code"].InnerText);
-                            
+
                         if (ShippingMethodIsAllowed(tempService, "UPS"))
                         {
                             tempRate = Localization.ParseUSDecimal(shipmentX["TotalCharges"]["MonetaryValue"].InnerText);
@@ -1448,7 +1449,7 @@ namespace AspDotNetStorefrontCore
                             {
                                 int IndexOf = SM.GetIndex(tempService);
                                 ShipMethod s_method = SM[IndexOf];
-                                    
+
                                 s_method.ServiceRate += tempRate;
                                 s_method.VatRate += vat;
                                 if (HasFreeItems)
@@ -1569,13 +1570,13 @@ namespace AspDotNetStorefrontCore
                         PackageQuantity = p.Quantity;
                     }
 
-                    uspsReqLoop.Append("<Package ID=\""+ p.PackageId + "\">");
+                    uspsReqLoop.Append("<Package ID=\"" + p.PackageId + "\">");
                     uspsReqLoop.Append("<Pounds>" + w.pounds + "</Pounds>");
                     uspsReqLoop.Append("<Ounces>" + w.ounces + "</Ounces>");
                     uspsReqLoop.Append("<Machinable>True</Machinable>");
                     uspsReqLoop.Append("<MailType>Package</MailType>");
                     uspsReqLoop.Append("<ValueOfContents>" + p.InsuredValue + "</ValueOfContents>");
-                    
+
                     if (Shipment.DestinationCountryCode.Equals("GB", StringComparison.InvariantCultureIgnoreCase))
                     {
                         uspsReqLoop.Append("<Country>United Kingdom (Great Britain)</Country>");
@@ -1586,7 +1587,7 @@ namespace AspDotNetStorefrontCore
                         uspsReqLoop.Append(AppLogic.GetCountryName(Shipment.DestinationCountryCode));
                         uspsReqLoop.Append("</Country>");
                     }
-                    
+
                     uspsReqLoop.Append("<Container>RECTANGULAR</Container>");
                     uspsReqLoop.Append(USPSGetSize(p.Length, p.Width, p.Height));
                     uspsReqLoop.Append("</Package>");
@@ -1658,7 +1659,7 @@ namespace AspDotNetStorefrontCore
                                     s_method.ServiceRate = totalCharges;
                                     s_method.VatRate = vat;
                                     if (HasFreeItems)
-                                    {s_method.FreeItemsRate = totalCharges;}
+                                    { s_method.FreeItemsRate = totalCharges; }
                                     SM.AddMethod(s_method);
                                 }
                                 else
@@ -1705,7 +1706,7 @@ namespace AspDotNetStorefrontCore
             RTShipRequest = String.Empty;
             RTShipResponse = String.Empty;
 
-            
+
 
             // check all required info
             if (USPSLogin == string.Empty || USPSUsername == string.Empty)
@@ -1866,7 +1867,7 @@ namespace AspDotNetStorefrontCore
                         {
                             tempRate = Decimal.Round(tempRate * (1.00M + (MarkupPercent / 100.0M)), 2, MidpointRounding.AwayFromZero);
                         }
-                        
+
                         //strip out html encoded characters sent back from USPS
                         tempService = StripHtmlAndRemoveSpecialCharacters(HttpUtility.HtmlDecode(tempService));
 
@@ -1930,7 +1931,7 @@ namespace AspDotNetStorefrontCore
             RTShipResponse = String.Empty;
 
             Encoding utf8 = new UTF8Encoding(false);
-            string[] FedExCarrierCodes = { "" }; 
+            string[] FedExCarrierCodes = { "" };
             Hashtable htRates = new Hashtable();
 
             Decimal maxWeight = AppLogic.AppConfigUSDecimal("RTShipping.Fedex.MaxWeight");
@@ -2120,7 +2121,7 @@ namespace AspDotNetStorefrontCore
                                 {
                                     totalCharges = Decimal.Round(totalCharges * (1.00M + (MarkupPercent / 100.0M)), 2, MidpointRounding.AwayFromZero);
                                 }
-                                
+
                                 decimal vat = Decimal.Round(totalCharges * ShippingTaxRate, 2, MidpointRounding.AwayFromZero);
 
                                 if (!SM.MethodExists(rateName))
@@ -2657,7 +2658,7 @@ namespace AspDotNetStorefrontCore
             }
             else
             {
-                
+
                 Output = "<Size>Regular</Size>";
                 Output += "<Width>" + width.ToString() + "</Width>";
                 Output += "<Length>" + length.ToString() + "</Length>";
@@ -2667,7 +2668,7 @@ namespace AspDotNetStorefrontCore
             return Output;
         }
 
-        
+
 
 
 
@@ -2892,7 +2893,7 @@ namespace AspDotNetStorefrontCore
             ratesText.Clear();
             ratesValues.Clear();
         }
-       
+
         public enum Shipper	// Enum Shipper: The currently available shipping companies
         {
             Unknown = 0,
@@ -2914,9 +2915,9 @@ namespace AspDotNetStorefrontCore
             RawDelimited = 5,	// ResultType.RawDelimited: Specifes the resulting output to be a delimited string. Rates are delimited with a pipe character (|), rate names &amp; prices are delimited with a comma (,)
             DropDownListControl = 6,	// ResultType.DropDownListControl: Specifes the resulting output to be a System.Web.UI.WebControls.DropDownList control.
             RadioButtonListControl = 7,	// ResultType.RadioButtonListControl: Specifes the resulting output to be a System.Web.UI.WebControls.RadioButtonList control.
-            
+
             CollectionList = 8  // ResultType.CollectionList: Returns the ShippingMethod Collection
-           
+
         }
 
 

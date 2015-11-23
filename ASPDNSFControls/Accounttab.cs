@@ -1319,11 +1319,13 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(new LiteralControl("<label>"));
             this.Controls.Add(_lblFirstName);
             this.Controls.Add(new LiteralControl("</label>"));
+            _txtFirstName.Enabled = false;
             this.Controls.Add(_txtFirstName);
             if (!_ShowValidatorsInline)
             {
                 _rfvFirstName.Display = ValidatorDisplay.None;
             }
+            
             this.Controls.Add(_rfvFirstName);
             this.Controls.Add(new LiteralControl("</div>"));
             // [End] - First Name
@@ -1333,6 +1335,7 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(new LiteralControl("<label>"));
             this.Controls.Add(_lblLastName);
             this.Controls.Add(new LiteralControl("</label>"));
+            _txtLastName.Enabled = false;
             this.Controls.Add(_txtLastName);
             if (!_ShowValidatorsInline)
             {
@@ -1347,7 +1350,7 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(new LiteralControl("<label>"));
             this.Controls.Add(_lblEmail);
             this.Controls.Add(new LiteralControl("</label>"));
-
+            _txtEmail.Enabled = false;
             this.Controls.Add(_txtEmail);
             _rfvEmail.Display = ValidatorDisplay.Dynamic;
             _revEmail.Display = ValidatorDisplay.Dynamic;
@@ -1366,6 +1369,7 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(new LiteralControl("<label>"));
             this.Controls.Add(_lblPhone);
             this.Controls.Add(new LiteralControl("</label>"));
+            _txtPhone.Enabled = false;
             this.Controls.Add(_txtPhone);
             if (!_ShowValidatorsInline)
             {

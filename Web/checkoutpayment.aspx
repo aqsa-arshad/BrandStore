@@ -327,11 +327,13 @@
                 OnClick="btnContCheckout_Click"
                 Text="<%$ Tokens:StringResource, checkoutpayment.aspx.18 %>" />
         </div>
+      
     </asp:Panel>
-    </div>
+  <%--  </div>--%>
 
         </div>
     </asp:Panel>
+    
     <script type="text/javascript">
         function open_win() {
             window.history.back();
