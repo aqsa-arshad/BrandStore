@@ -70,6 +70,11 @@ namespace AspDotNetStorefront
 
                         Session["hdnreferalurl"] = "checkoutshipping.aspx";
                     }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutreview"))
+                    {
+
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx";
+                    }
                 }
             }
 
@@ -1015,7 +1020,7 @@ namespace AspDotNetStorefront
 
                 if (!boolAllowAnon)
                 {
-                    Response.Redirect("createaccount.aspx?checkout=true");
+                    Response.Redirect("signin.aspx?checkout=true");//createaccount
                 }
             }
 
