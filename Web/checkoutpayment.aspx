@@ -1,4 +1,4 @@
-<%@ Page Language="c#" AutoEventWireup="true" Inherits="AspDotNetStorefront.checkoutpayment" CodeFile="checkoutpayment.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
+<%@ Page Language="c#"  AutoEventWireup="true" Inherits="AspDotNetStorefront.checkoutpayment" CodeFile="checkoutpayment.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
 
 <%@ Register TagPrefix="aspdnsfc" Namespace="AspDotNetStorefrontControls" Assembly="AspDotNetStorefrontControls" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
@@ -185,7 +185,7 @@
                                 <asp:Literal ID="litPayPalEmbeddedCheckoutFrame" runat="server" />
                             </asp:Panel>
 
-                            <asp:Panel ID="pnlCardinaleCheckTopic" runat="server" CssClass="page-row">
+                            <asp:Panel ID="pnlCardinaleCheckTopic" runat="server" CssClass="page-row hide-element">
                                 <aspdnsf:Topic runat="server" ID="CardinaleCheckTopic" TopicName="CardinalMyECheckPageHeader" />
                             </asp:Panel>
 
@@ -327,11 +327,13 @@
                 OnClick="btnContCheckout_Click"
                 Text="<%$ Tokens:StringResource, checkoutpayment.aspx.18 %>" />
         </div>
+      
     </asp:Panel>
-    </div>
+  <%--  </div>--%>
 
         </div>
     </asp:Panel>
+    
     <script type="text/javascript">
         function open_win() {
             window.history.back();

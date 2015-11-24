@@ -5685,7 +5685,7 @@ select {
     margin: auto;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .header-part {
         padding: 61px 20px 62px;
         width: 100%;
@@ -5698,7 +5698,7 @@ select {
     text-align: center;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .header-part .logo {
         float: left;
     }
@@ -5708,7 +5708,7 @@ select {
     position: relative;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .header-part {
         border-bottom: solid 1px #c0c0c0;
     }
@@ -5728,7 +5728,7 @@ select {
     letter-spacing: 2.6px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .header-part .head-tagline {
         border-left: 1px solid #c0c0c0;
         border-top: 0;
@@ -5749,7 +5749,7 @@ select {
     border-top: 1px solid #c0c0c0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .user-grid {
         height: 53px;
         padding: 13px 20px;
@@ -5758,11 +5758,17 @@ select {
     }
 }
 
+@media screen and (min-width: 992px) {
+    .user-grid {
+        width: auto;
+    }
+}
+
 .user-grid .form-group {
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .user-grid > div {
         float: left;
     }
@@ -5778,7 +5784,14 @@ select {
     border-color: #d1d1d1;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .user-grid .search-feild {
+        width: 165px;
+        margin-top: 0;
+    }
+}
+
+@media screen and (min-width: 992px) {
     .user-grid .search-feild {
         width: 200px;
         margin-top: 0;
@@ -5797,12 +5810,13 @@ select {
     height: 54px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .profile-links {
         font-size: 12px;
         display: inline-block;
         float: left;
         margin-right: 5px;
+        height: auto;
         border-bottom: 0;
     }
 }
@@ -5815,158 +5829,174 @@ select {
     border-right: 1px solid #c0c0c0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .profile-links > li {
         width: auto;
         border-right: 0;
     }
 }
 
-.profile-links > li > a {
+.profile-links a {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     height: 54px;
     display: block;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li > a {
+@media screen and (min-width: 768px) {
+    .profile-links a {
         background-position: 0 0;
         margin: 0 25px;
         float: left;
         padding-left: 38px;
-        height: auto;
         color: #b4b7b0;
         line-height: 29px;
         text-transform: uppercase;
+        height: auto;
     }
 }
 
-.profile-links > li a:hover {
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .profile-links a {
+        margin: 0 20px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .profile-links a {
+        margin: 0 25px;
+    }
+}
+
+.profile-links li:nth-child(1) a {
+    margin-left: 0;
+}
+
+.profile-links a:hover {
     color: #1d446b;
 }
 
-.profile-links > li a.active {
+.profile-links a.active {
     color: #1d446b;
 }
 
-.profile-links > li .alerts-link {
+.profile-links .alerts-link {
     background-image: url(images/alerts-icon.png);
     background-position: center 12px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .alerts-link {
+@media screen and (min-width: 768px) {
+    .profile-links .alerts-link {
         background-position: 0 top;
     }
 }
 
-.profile-links > li .alerts-link:hover {
+.profile-links .alerts-link:hover {
     background-position: center -31px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .alerts-link:hover {
+@media screen and (min-width: 768px) {
+    .profile-links .alerts-link:hover {
         background-position: 0 -43px;
     }
 }
 
-.profile-links > li .new-alerts {
+.profile-links .new-alerts {
     background-image: url(images/alerts-icon.png);
     color: #88421b;
     background-position: center -74px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .new-alerts {
+@media screen and (min-width: 768px) {
+    .profile-links .new-alerts {
         background-position: 0 -86px;
     }
 }
 
-.profile-links > li .new-alerts:hover {
+.profile-links .new-alerts:hover {
     color: #88421b;
     background-position: center -74px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .new-alerts:hover {
+@media screen and (min-width: 768px) {
+    .profile-links .new-alerts:hover {
         background-position: 0 bottom;
     }
 }
 
-.profile-links > li .account-link {
+.profile-links .account-link {
     background-image: url(images/account-icon.png);
     background-position: center 12px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .account-link {
+@media screen and (min-width: 768px) {
+    .profile-links .account-link {
         background-position: 0 top;
     }
 }
 
-.profile-links > li .account-link:hover,
-.profile-links > li .account-link.active {
+.profile-links .account-link:hover,
+.profile-links .account-link.active {
     background-position: center -31px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .account-link:hover,
-    .profile-links > li .account-link.active {
+@media screen and (min-width: 768px) {
+    .profile-links .account-link:hover,
+    .profile-links .account-link.active {
         background-position: 0 bottom;
     }
 }
 
-.profile-links > li .shopping-link {
+.profile-links .shopping-link {
     background-image: url(images/shopping-icon.png);
     background-position: center 12px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .shopping-link {
+@media screen and (min-width: 768px) {
+    .profile-links .shopping-link {
         background-position: 0 top;
     }
 }
 
-.profile-links > li .shopping-link:hover,
-.profile-links > li .shopping-link.active {
+.profile-links .shopping-link:hover,
+.profile-links .shopping-link.active {
     background-position: center -31px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .shopping-link:hover,
-    .profile-links > li .shopping-link.active {
+@media screen and (min-width: 768px) {
+    .profile-links .shopping-link:hover,
+    .profile-links .shopping-link.active {
         background-position: 0 bottom;
     }
 }
 
-.profile-links > li .logout-link {
+.profile-links .logout-link {
     background-image: url(images/logout-icon.png);
     background-position: center 12px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .logout-link {
+@media screen and (min-width: 768px) {
+    .profile-links .logout-link {
         background-position: 0 top;
     }
 }
 
-.profile-links > li .logout-link:hover {
+.profile-links .logout-link:hover {
     background-position: center -31px;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li .logout-link:hover {
+@media screen and (min-width: 768px) {
+    .profile-links .logout-link:hover {
         background-position: 0 bottom;
     }
 }
 
-.profile-links > li span {
+.profile-links span {
     display: none;
 }
 
-@media screen and (min-width: 800px) {
-    .profile-links > li span {
+@media screen and (min-width: 768px) {
+    .profile-links span {
         display: inline-block;
     }
 }
@@ -5984,7 +6014,7 @@ select {
     border-radius: 0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .mb-login-btn {
         display: none;
     }
@@ -6024,7 +6054,7 @@ a:hover.mb-login-btn {
 
 .nav > li > a {
     color: #b4b7b0;
-    padding: 14px 20px;
+    padding: 13px 20px;
     font-family: 'FrutigerLTStd-Roman';
     letter-spacing: 2;
     line-height: 18px;
@@ -6032,7 +6062,7 @@ a:hover.mb-login-btn {
     margin: 0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .nav > li > a {
         display: inline-block;
         padding: 13px 0;
@@ -6053,11 +6083,11 @@ a:hover.mb-login-btn {
     color: #1d446b;
 }
 
-.nav li:nth-last-child(1) {
+.nav > li:nth-last-child(1) {
     border: 0;
 }
 
-.nav li:last-child .dropdown-menu {
+.nav > li:last-child .dropdown-menu {
     right: -1px !important;
     left: auto;
 }
@@ -6266,44 +6296,44 @@ a:hover.mb-login-btn {
         height: auto;
     }
 
-    .header-img-box .header-text {
+.header-text {
+    color: #1d446b;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    left: 15px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.75);
+}
+
+    .header-text h1 {
+        font-size: 18px;
         color: #1d446b;
-        position: absolute;
-        bottom: 20px;
-        right: 0;
-        left: 15px;
-        padding: 10px 15px;
-        background: rgba(255, 255, 255, 0.75);
+        font-weight: bold;
+        margin-bottom: 0;
+        margin-top: 5px;
     }
 
-        .header-img-box .header-text h1 {
-            font-size: 18px;
-            color: #1d446b;
-            font-weight: bold;
-            margin-bottom: 0;
-            margin-top: 5px;
-        }
-
-@media screen and (min-width: 800px) {
-    .header-img-box .header-text h1 {
+@media screen and (min-width: 768px) {
+    .header-text h1 {
         font-size: 40px;
         margin-top: 10px;
         letter-spacing: 1.25px;
     }
 }
 
-.header-img-box .header-text .help-text {
+.header-text .help-text {
     font-size: 14px;
 }
 
-@media screen and (min-width: 800px) {
-    .header-img-box .header-text {
+@media screen and (min-width: 768px) {
+    .header-text {
         bottom: 35px;
         left: 35px;
         padding: 22px 40px;
     }
 
-        .header-img-box .header-text .help-text {
+        .header-text .help-text {
             font-size: 20px;
             letter-spacing: 0.72px;
         }
@@ -6382,10 +6412,13 @@ a:hover.mb-login-btn {
             margin-top: 0;
         }
 
-@media screen and (min-width: 800px) {
+    .address ul {
+        word-break: break-all;
+    }
+
+@media screen and (min-width: 768px) {
     .address ul {
         height: 138px;
-        word-break: break-all;
     }
 }
 
@@ -6414,7 +6447,7 @@ a:hover.mb-login-btn {
         margin-bottom: 10px;
     }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .search-filters select {
         width: auto;
         margin-bottom: 0;
@@ -6428,13 +6461,13 @@ a:hover.mb-login-btn {
     margin: 0;
 }
 
-.page-previous {
-    padding-right: 10px;
-}
+    .pagerArea .page-previous {
+        padding-right: 10px;
+    }
 
-.page-next {
-    padding-left: 10px;
-}
+    .pagerArea .page-next {
+        padding-left: 10px;
+    }
 
 .checkout-two-fields .form-control {
     display: inline-block;
@@ -6833,21 +6866,28 @@ table.order-detail tbody tr td {
     }
 
 .checkout-field-adjust {
-  margin-right: 0;
-  margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
 }
+
 @media screen and (min-width: 768px) {
-  .checkout-field-adjust {
-    margin-right: 4%;
-    margin-left: 4%;
-  }
+    .checkout-field-adjust {
+        margin-right: 4%;
+        margin-left: 4%;
+    }
 }
 /******************* Side Bar ***********************/
 .pre-login-pannel {
     margin-bottom: 30px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
+    .pre-login-pannel {
+        float: none;
+    }
+}
+
+@media screen and (min-width: 992px) {
     .pre-login-pannel {
         margin-bottom: 0;
         float: right;
@@ -6921,7 +6961,7 @@ table.order-detail tbody tr td {
         margin-bottom: 5px;
     }
 
-.side-bar .login-box h4 {
+.login-box h4 {
     text-align: center;
     font-size: 18px;
     margin-top: -13px;
@@ -6929,18 +6969,20 @@ table.order-detail tbody tr td {
     margin-bottom: 12px;
 }
 
-.side-bar .login-box input[type=text] {
+.login-box input[type=text],
+.login-box input[type="password"],
+.login-box .form-control {
     width: 100%;
     height: 22px;
 }
 
-.side-bar .login-box > label {
+.login-box > label {
     margin-top: 10px;
     margin-bottom: 0;
     display: block;
 }
 
-.side-bar .login-box .checkbox {
+.login-box .checkbox {
     font-size: 12px;
     width: 100%;
     float: left;
@@ -6948,23 +6990,23 @@ table.order-detail tbody tr td {
     padding: 0;
 }
 
-    .side-bar .login-box .checkbox label {
+    .login-box .checkbox label {
         margin-top: 0;
     }
 
-    .side-bar .login-box .checkbox a {
+    .login-box .checkbox a {
         display: block;
         margin-bottom: 8px;
     }
 
 @media screen and (min-width: 800px) {
-    .side-bar .login-box .checkbox a {
+    .login-box .checkbox a {
         position: absolute;
         right: 0;
     }
 }
 
-.side-bar .login-box .account-link {
+.login-box .account-link {
     font-size: 12px;
     margin: 10px 0 5px;
     display: inline-block;
@@ -7345,7 +7387,7 @@ a:hover.underline-link {
     padding: 15px 0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .fix-list-head {
         height: 96px;
         display: table-cell;
@@ -7353,14 +7395,37 @@ a:hover.underline-link {
     }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
+    .category-head-height {
+        height: 45px;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .product-head-height {
+        height: 85px;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .fix-landing-head {
+        height: 40px;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 1200px) {
     .fix-landing-head {
         height: 20px;
         overflow: hidden;
     }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .fix-landing-content {
         height: 105px;
         overflow: hidden;

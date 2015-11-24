@@ -4,8 +4,13 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <div class="content-box-03 padding-top-none">
         <div>
-            <table class="table margin-none bottom-space-border">
+            <table id="tblDownload" class="table margin-none bottom-space-border">
                 <tbody>
+                    <tr>
+                        <td>
+                            <asp:Label ID="noDownloadProductsFound" runat="server" Text="<%$ Tokens:StringResource,admin.common.NoDownloadProductsFound %>"></asp:Label>
+                        </td>
+                    </tr>
                     <asp:Repeater ID="rptDownloadableItems" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
@@ -49,6 +54,7 @@
                     </asp:Repeater>
                 </tbody>
             </table>
+
         </div>
     </div>
 </asp:Content>

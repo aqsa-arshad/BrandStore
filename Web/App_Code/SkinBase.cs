@@ -1149,9 +1149,10 @@ namespace AspDotNetStorefront
 
         public void RequiresLogin(String ReturnURL)
         {
+            bool Checkout = CommonLogic.QueryStringBool("checkout");
             if (!m_ThisCustomer.IsRegistered)
             {
-                Response.Redirect("signin.aspx?returnurl=" + Server.UrlEncode(ReturnURL));
+                Response.Redirect("signin.aspx?checkout=" + Checkout.ToString().ToLower() +"&returnurl=" + Server.UrlEncode(ReturnURL));
             }
         }
 

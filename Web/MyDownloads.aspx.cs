@@ -14,6 +14,7 @@ namespace AspDotNetStorefront
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            RequireSecurePage();
             if (!Page.IsPostBack)
             {
                 LoadDownloadItems();
@@ -67,6 +68,7 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
+            noDownloadProductsFound.Visible = (rptDownloadableItems.Items.Count == 0);
         }
 
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)

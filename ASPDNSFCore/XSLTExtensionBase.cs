@@ -3194,20 +3194,22 @@ function popupzoom(url,alturl)
         public string NotifyMeButton(String sProductID, String sVariantID)
         {
             StringBuilder result = new StringBuilder(3000);
-            result.Append("<div class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
-            result.Append("<div class=\"buttons-group\">");
-            result.Append(" <button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa2\">Notify Me</button>");
-            result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
-            result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
-            result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
-            result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
-            result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
-            result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
-            result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
-            result.Append("<input class=\"form-control\" type=\"text\"> </div>");
-            result.Append("<div class=\"buttons-group\"> <button type=\"button\" class=\"btn btn-primary\">Submit</button> ");
-            result.Append("<button type=\"button\" data-dismiss=\"modal\" class=\"btn btn-primary\">Cancel</button> </div>");
-            result.Append("</div> </div> </div> </div>");
+            result.Append("<span class=\"notify\">Out of Stock</span>");
+            //TODO: Commented as Noify me feature is not in the current release
+            //result.Append("<div class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
+            //result.Append("<div class=\"buttons-group\">");
+            //result.Append(" <button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa2\">Notify Me</button>");
+            //result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
+            //result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
+            //result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
+            //result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
+            //result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
+            //result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
+            //result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
+            //result.Append("<input class=\"form-control\" type=\"text\"> </div>");
+            //result.Append("<div class=\"buttons-group\"> <button type=\"button\" class=\"btn btn-primary\">Submit</button> ");
+            //result.Append("<button type=\"button\" data-dismiss=\"modal\" class=\"btn btn-primary\">Cancel</button> </div>");
+            //result.Append("</div> </div> </div> </div>");
             return result.ToString();
         }
 

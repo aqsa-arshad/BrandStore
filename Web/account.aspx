@@ -33,7 +33,7 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="pnlNotCheckOutButtons" runat="server" HorizontalAlign="left">
+            <asp:Panel ID="pnlNotCheckOutButtons" runat="server" HorizontalAlign="left" CssClass="hide-element">
                 <div class="page-row page-links">
                     <asp:HyperLink runat="server" ID="accountaspx4" NavigateUrl="#OrderHistory" Text="<%$ Tokens:StringResource,account.aspx.4 %>"></asp:HyperLink>
                     <asp:Panel ID="pnlShowWishButton" runat="server">
@@ -75,7 +75,7 @@
                  <p>
                     <asp:Literal ID="Literal1" Text="<span class='block-text'>Please enter your contact </span> information. *Required Fields." runat="server" />
                 </p>
-                <aspdnsf:Account ID="ctrlAccount" runat="server"
+                <aspdnsf:Accounttab ID="ctrlAccount" runat="server"
                     EmailCaption="<%$ Tokens:StringResource, account.aspx.15 %>"
                     EmailReenterCaption="<%$ Tokens:StringResource, createaccount.aspx.91 %>"
                     FirstNameCaption="<%$ Tokens:StringResource, account.aspx.13 %>"

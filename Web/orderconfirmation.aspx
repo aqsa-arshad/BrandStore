@@ -135,7 +135,7 @@
                 </p>
 
                 <p>
-                    <span class="black-blu-label"><font>Total:</font> $<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                    <span class="black-blu-label"><font>TOTAL:</font> $<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
                 </p>
             </div>
             <div class="clearfix"></div>
