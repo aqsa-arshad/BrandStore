@@ -37,7 +37,9 @@ namespace AspDotNetStorefront
             {
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblSperator")).Text = ">>";
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = ">> " + SEDescription;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Style.Add("text-decoration", "none");
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Visible = false;
             }
             if (entityPageAd.Show)
             {
