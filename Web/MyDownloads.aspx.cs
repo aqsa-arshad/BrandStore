@@ -69,21 +69,21 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             noDownloadProductsFound.Visible = (rptDownloadableItems.Items.Count == 0);
+            trnoDownloadProductsFound.Visible = (rptDownloadableItems.Items.Count == 0);
         }
 
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                (e.Item.FindControl("hlDownload") as HyperLink).NavigateUrl = "~/images/Product/icon/" +
-                    (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                (e.Item.FindControl("hlDownload") as HyperLink).NavigateUrl = "~/images/Product/icon/" + (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                 (e.Item.FindControl("hlDownload") as HyperLink).Text = "Download";
-                if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
-                {
-                    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
-                                                                          (e.Item.FindControl("hfSKU") as HiddenField)
-                                                                              .Value;
-                }
+                //if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+                //{
+                //    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                //                                                          (e.Item.FindControl("hfSKU") as HiddenField)
+                //                                                              .Value;
+                //}
                 if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
                 {
                     if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
@@ -92,7 +92,7 @@ namespace AspDotNetStorefront
                     else
                     {
                         (e.Item.FindControl("lblDescription") as Label).Text =
-                            (e.Item.FindControl("hfSKU") as HiddenField).Value;
+                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
                     }
                 }
             }

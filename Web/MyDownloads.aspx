@@ -6,7 +6,7 @@
         <div>
             <table id="tblDownload" class="table margin-none bottom-space-border">
                 <tbody>
-                    <tr>
+                    <tr id="trnoDownloadProductsFound" runat="server">
                         <td>
                             <asp:Label ID="noDownloadProductsFound" runat="server" Text="<%$ Tokens:StringResource,admin.common.NoDownloadProductsFound %>"></asp:Label>
                         </td>
@@ -23,15 +23,15 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
+                                            <%--<asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />--%>
                                             <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                             <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                             <span class="normal-heading black-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
                                             </span>
-                                            <span>
+                                           <%-- <span>
                                                 <asp:Label ID="lblProductSKU" runat="server"></asp:Label>
-                                            </span>
+                                            </span>--%>
                                             <p>
                                                 <asp:Label ID="lblDescription" runat="server"></asp:Label>
                                             </p>

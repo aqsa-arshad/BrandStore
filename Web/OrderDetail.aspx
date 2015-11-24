@@ -94,15 +94,15 @@
                                         </div>
                                         <div class="col-md-5">
                                             <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
-                                            <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
+                                            <%--<asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />--%>
                                             <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                             <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                             <span class="normal-heading black-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
-                                            <span>
+                                            <%--<span>
                                                 <asp:Label ID="lblProductSKU" runat="server"></asp:Label>
-                                            </span>
+                                            </span>--%>
                                             <p>
                                                 <asp:Label ID="lblDescription" runat="server"></asp:Label>
                                             </p>
