@@ -40,9 +40,9 @@ public partial class controls_BrandMerchandiseExample : System.Web.UI.UserContro
             PromotionalItemsTopicForDealers.Visible = false;
            
         }
-        else if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6")
+        else if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6" || CustomerLevel == "9")
         {
-            //dealer login
+            //dealer and subdealers login
             PromotionalItemsTopicForInternalusers.Visible = false;
             PromotionalItemsTopicForDealers.Visible = true;
         }
