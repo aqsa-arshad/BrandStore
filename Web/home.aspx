@@ -29,7 +29,7 @@
             </div>
             <%--End Calling topic defind through admin console.--%>
             <!-- Contect Box 02  -->
-            <div class="row tablet-view">
+            <div class="row tablet-view" id="DealersbottemControls">
                 <div class="col-md-6 pull-left-md pull-sm-no">
                     <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
                 </div>
@@ -67,7 +67,6 @@
             if (CustomerLevel == "3") {
                 $("#rep-seeAllBtn").hide();
             }
-
         });
 
 </script>
