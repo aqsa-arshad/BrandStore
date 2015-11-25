@@ -146,21 +146,47 @@ namespace AspDotNetStorefront
 
         void CurrentOrderStatus()
         {
-            using (var conn = DB.dbConn())
+            string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
+            try
             {
-                conn.Open();
-                var query = "select * from Orders order by OrderDate DESC";
-                using (var cmd = new SqlCommand(query, conn))
+                using (var conn = DB.dbConn())
                 {
-                    cmd.CommandType = CommandType.Text;
-
-                    IDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetAllOrders", conn))
                     {
-                        bOrderNumber.InnerText = reader["OrderNumber"].ToString();
-                        bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@PageIndex", 1);
+                        cmd.Parameters.AddWithValue("@PageSize", 4);
+                        cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
+                        cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
+                        cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
+                        cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                        cmd.Parameters.AddWithValue("@AllowCustomerFiltering",
+                            CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0));
+                        cmd.Parameters.AddWithValue("@StoreID", AppLogic.StoreID());
+
+                        IDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            accountaspx55.Visible = false;
+                            bOrderNumber.InnerText = reader["OrderNumber"].ToString();
+                            bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());                            
+                        }
+                        else
+                        {
+                            ulLatestOrderStatus.Visible = false;
+                            accountaspx55.Visible = true;
+                        }
+                        reader.Close();
+                        conn.Close();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
 

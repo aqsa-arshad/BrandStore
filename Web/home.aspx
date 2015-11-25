@@ -29,11 +29,11 @@
             </div>
             <%--End Calling topic defind through admin console.--%>
             <!-- Contect Box 02  -->
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row tablet-view">
+                <div class="col-md-6 pull-left-md pull-sm-no">
                     <aspdnsf:JWBBrandAssetExample runat="server" ID="JWBBrandAssetExample" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 pull-left-md pull-sm-no">
                     <aspdnsf:JWBBrandMerchandiseExampleExample runat="server" ID="JWBBrandMerchandiseExampleExample" />
                 </div>
             </div>

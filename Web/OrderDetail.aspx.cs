@@ -184,17 +184,16 @@ namespace AspDotNetStorefront
             {
                 if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
                 {
-                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = "~/images/Product/icon/" +
-                        (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
-                if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
-                {
-                    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
-                                                                          (e.Item.FindControl("hfSKU") as HiddenField)
-                                                                              .Value;
-                }
+                //if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+                //{
+                //    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                //                                                          (e.Item.FindControl("hfSKU") as HiddenField)
+                //                                                              .Value;
+                //}
                 if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
                 {
                     if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
@@ -203,7 +202,7 @@ namespace AspDotNetStorefront
                     else
                     {
                         (e.Item.FindControl("lblDescription") as Label).Text =
-                            (e.Item.FindControl("hfSKU") as HiddenField).Value;
+                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
                     }
                 }
             }

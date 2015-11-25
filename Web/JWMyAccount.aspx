@@ -5,10 +5,11 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 
     <div class="content-box-03">
-        <div class="row">
-            <div class="col-md-6">
+         <div class="row tablet-view">
+            <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Current Order Status</h5>
-                <ul>
+                <asp:Label ID="accountaspx55" runat="server" Text="<%$ Tokens:StringResource,account.aspx.55 %>"></asp:Label>
+                <ul id="ulLatestOrderStatus" runat="server">
                     <li>Order Number: <b runat="server" id="bOrderNumber"></b></li>
                     <li>Status: <b id="bStatus" runat="server"></b></li>
                     <li><a class="underline-link">Track Current Order</a> </li>
@@ -16,7 +17,7 @@
             </div>
 
 
-            <div class="col-md-6">
+            <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Downloads</h5>
                 <ul>
                     <li><a href="MyDownloads.aspx" class="underline-link">View Your Downloads</a> </li>
@@ -33,8 +34,8 @@
     </div>--%>
 
     <div class="content-box-03">
-        <div class="row address">
-            <div class="col-md-6">
+        <div class="row address tablet-view">
+            <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Primary Billing Address</h5>
                 <ul style="overflow: hidden;">
                     <li><asp:Label ID="lblBANA" runat="server"></asp:Label></li>
@@ -50,7 +51,7 @@
                 <asp:Button ID="btnChangeBillingAddress" runat="server" CssClass="btn btn-md btn-primary" Text="Change Billing Address" OnClick="btnChangeBillingAddress_Click" />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Primary Shipping Address</h5>
                 <ul style="overflow: hidden;">
                     <li><asp:Label ID="lblSANA" runat="server"></asp:Label></li>

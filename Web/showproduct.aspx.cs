@@ -296,19 +296,7 @@ namespace AspDotNetStorefront
 
             SourceEntity = Profile.LastViewedEntityName;
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
-            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
-            GetParentCategory();
-
-            if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
-            {
-                parentCategoryName = CategoryHelper.GetEntityName(Convert.ToInt32(parentCategoryID), ThisCustomer.LocaleSetting);
-
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = SourceEntityInstanceName;
-                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblSperator")).Text = ">>";
-            }
+            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));                       
 
             // validate that source entity id is actually valid for this product:
             if (SourceEntityID != 0)
@@ -436,6 +424,15 @@ namespace AspDotNetStorefront
             }
             litOutput.Text = m_PageOutput;
             GetParentCategory();
+            if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
+            {
+                parentCategoryName = CategoryHelper.GetEntityName(Convert.ToInt32(parentCategoryID), ThisCustomer.LocaleSetting);
+
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = ">> " + SourceEntityInstanceName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
+            }
         }
 
         /// <summary>
@@ -622,18 +619,40 @@ namespace AspDotNetStorefront
             using (var conn = DB.dbConn())
             {
                 conn.Open();
-                var query = "select ParentCategoryID from Category where CategoryID = '" + SourceEntityID + "'";
-                using (var cmd = new SqlCommand(query, conn))
+                if (VerifySubCategoryExist())
                 {
-                    cmd.CommandType = CommandType.Text;
-
-                    IDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
+                    var query = "select ParentCategoryID from Category where CategoryID = '" + SourceEntityID + "'";
+                    using (var cmd = new SqlCommand(query, conn))
                     {
-                        parentCategoryID = reader["ParentCategoryID"].ToString();
+                        cmd.CommandType = CommandType.Text;
+
+                        IDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            parentCategoryID = reader["ParentCategoryID"].ToString();
+                        }
                     }
                 }
             }
+        }
+
+        private bool VerifySubCategoryExist()
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select * from ProductCategory where CategoryID = '" + SourceEntityID + "' and ProductID = '" + ProductID + "'";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
     }

@@ -107,7 +107,7 @@
   <xsl:template name="sortby">
     <xsl:param name="uniqueID" />
 
-    <div class="col-md-6" id="catSortBy{$uniqueID}">
+    <div class="col-md-6 pull-left-md pull-sm-no" id="catSortBy{$uniqueID}">
       <label >
         <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.SortBy')" disable-output-escaping="yes" />
         <xsl:text>&#32;</xsl:text>
@@ -222,7 +222,7 @@
   <xsl:template name="ProductsPerPage">
     <xsl:param name="uniqueID" />
     <xsl:if test="$ProductCount > 0">      
-      <div class="col-md-6">
+      <div class="col-md-6 pull-left-md pull-sm-no">
         <label>
           <xsl:value-of select="aspdnsf:StringResource('GuidedNavigation.PageSizeLabel')" disable-output-escaping="yes" />
           <xsl:text>&#32;</xsl:text>

@@ -121,9 +121,9 @@ namespace AspDotNetStorefront
 
 			if (!this.IsPostBack)
 			{
-				SetAccountFields();
 				RefreshPage();
 			}
+            SetAccountFields();
 		}
 
 		private void SetAccountFields()
