@@ -530,7 +530,7 @@ namespace AspDotNetStorefront
             {
                 if (ShippingAddress.AddressID != 0)
                 {
-                    litShippingAddress.Text = BillingAddress.DisplayHTML(true);
+                    litShippingAddress.Text = ShippingAddress.DisplayHTML(true);
                 }
             }
                

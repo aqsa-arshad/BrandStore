@@ -67,7 +67,6 @@
             if (CustomerLevel == "3") {
                 $("#rep-seeAllBtn").hide();
             }
-
         });
 
 </script>

@@ -34,7 +34,8 @@ namespace AspDotNetStorefront
             GetParentCategory(ref parentCategoryName, ref parentCategoryID);
 
             if (!string.IsNullOrEmpty(parentCategoryName))
-            {
+            {                
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Attributes.Add("class","back-link");
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = ">> " + SEDescription;

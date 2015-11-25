@@ -143,7 +143,7 @@
                     <div class="body-heading">
                         <h2>
                             <asp:HyperLink ID="lnkCategory" runat="server"></asp:HyperLink>
-                            <asp:HyperLink ID="lnkSubCategory" runat="server" CssClass="back-link"></asp:HyperLink>
+                            <asp:HyperLink ID="lnkSubCategory" runat="server"></asp:HyperLink>
                             <asp:Label ID="lblPageHeading" runat="server"></asp:Label>
                         </h2>
                     </div>

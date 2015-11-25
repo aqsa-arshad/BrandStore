@@ -29,8 +29,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         ForgotPaswwordSuccessMessage.Text = String.Empty;
     }
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
-    {
-        
+    {        
         HiddenLabel.Text = "true";
         string EMail = ForgotPasswordEmailTextField.Text.ToString();
         if (EMail.Length == 0)
