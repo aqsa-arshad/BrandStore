@@ -4649,15 +4649,15 @@ namespace AspDotNetStorefrontCore
         STOREADMINISTRATOR = 1,
         BUDGETADMINISTRATOR = 2,
         SALESREPS = 3,
-        BLUElite = 4,
-        BLUPremier = 5,
-        BLUAuthorized = 6,
+        BLUELITE = 4,
+        BLUPREMIER = 5,
+        BLUAUTHORIZED = 6,
         INTERNAL = 7,
         PUBLIC = 8,
-        Potential = 9,
-        HomeDepot = 10,
-        Lowes = 11,
-        Menards = 12
+        POTENTIAL = 9,
+        HOMEDEPOT = 10,
+        LOWES = 11,
+        MENARDS = 12
     }
     #endregion
 }
