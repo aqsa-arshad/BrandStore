@@ -38,7 +38,7 @@ namespace AspDotNetStorefront
         string AllowedPaymentMethods = String.Empty;
         decimal CartTotal = Decimal.Zero;
         decimal NetTotal = Decimal.Zero;
-       
+
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -50,7 +50,7 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
             // Set up CIM
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             PanelWallet.Visible = authorizeNet.IsCimEnabled;
@@ -63,7 +63,7 @@ namespace AspDotNetStorefront
                     if (Request.UrlReferrer.ToString().ToLower().Contains("shoppingcart"))
                     {
                         Session["hdnreferalurl"] = "ShoppingCart.aspx";
-                       
+
                     }
                     else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
                     {
@@ -216,13 +216,13 @@ namespace AspDotNetStorefront
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
             {
-                ctrlPaymentMethod.Visible =                                pnlCCPaneInfo.Visible = false;                PanelWallet.Visible = false;
+                ctrlPaymentMethod.Visible = pnlCCPaneInfo.Visible = false; PanelWallet.Visible = false;
             }
 
             AppLogic.eventHandler("CheckoutPayment").CallEvent("&CheckoutPayment=true");
-           // btnRequestEstimates_Click(null, null);
+            // btnRequestEstimates_Click(null, null);
 
-         
+
         }
 
 
@@ -294,7 +294,7 @@ namespace AspDotNetStorefront
         {
             ProcessPayment("CREDITCARD");
         }
-        
+
 
         /// <summary>
         /// Initializes the content of the page.
@@ -458,7 +458,7 @@ namespace AspDotNetStorefront
         {
             if (!IsVisible)
             {
-               // pnlCCPane.Visible = CCPaneInfo.Visible = false;
+                // pnlCCPane.Visible = CCPaneInfo.Visible = false;
                 return;
             }
 
@@ -468,7 +468,7 @@ namespace AspDotNetStorefront
                 return;
             }
 
-           // pnlCCPane.Visible = true;
+            // pnlCCPane.Visible = true;
             pnlCCPaneInfo.Visible = false;
 
             string ccPaneData = GWActual == null ? null : GWActual.CreditCardPaneInfo(SkinID, ThisCustomer);
@@ -481,7 +481,7 @@ namespace AspDotNetStorefront
                 //Make sure we don't hide the continue checkout button when checking out with amazon.  
                 //CCPane might be selected because that was the last payment used by this customer.
                 btnContCheckout.Visible = GWActual.ShowCheckoutButton || checkoutByAmazon.IsCheckingOut;
-               // pnlCCPane.Visible = false;
+                // pnlCCPane.Visible = false;
                 pnlCCPaneInfo.Visible = true;
             }
             else
@@ -489,7 +489,7 @@ namespace AspDotNetStorefront
                 pnlCCPaneInfo.Visible = false;
                 if (GW != Gateway.ro_GWNETAXEPT)
                 {
-                   // pnlCCPane.Visible = true;
+                    // pnlCCPane.Visible = true;
                 }
             }
         }
@@ -967,7 +967,7 @@ namespace AspDotNetStorefront
             }
             if (ctrlPaymentMethod.CARDINALMYECHECKChecked == true)
             {
-              //  pnlCardinaleCheckTopic.Visible = true;
+                //  pnlCardinaleCheckTopic.Visible = true;
             }
             else
             {
@@ -2247,7 +2247,7 @@ namespace AspDotNetStorefront
                     ShippingAndTaxEstimateTableControl ctrlEstimate = new ShippingAndTaxEstimateTableControl();
                     SetupShippingAndEstimateControl(ctrlEstimate, ThisCustomer);
 
-                   // pnlShippingAndTaxEstimator.Controls.Add(ctrlEstimate);
+                    // pnlShippingAndTaxEstimator.Controls.Add(ctrlEstimate);
                 }
                 // hide the estimate button
                 ToggleShowHideEstimate();
@@ -2264,26 +2264,35 @@ namespace AspDotNetStorefront
                 bool estimateShown = ThisCustomer.ThisCustomerSession.SessionBool("ShowEstimateSelected");
 
                 //btnRequestEstimates.Visible = !estimateShown;
-               // btnRemoveEstimator.Visible = estimateShown;
+                // btnRemoveEstimator.Visible = estimateShown;
 
                 ctrlCartSummary.ShowShipping = !estimateShown;
                 ctrlCartSummary.ShowTax = !estimateShown;
             }
             else
             {
-              //  btnRequestEstimates.Visible = false;
-               // btnRemoveEstimator.Visible = false;
+                //  btnRequestEstimates.Visible = false;
+                // btnRemoveEstimator.Visible = false;
             }
         }
         #endregion
 
         protected void btnback_Click(object sender, EventArgs e)
         {
-            if (Session["hdnreferalurl"]!="")
+            if (Session["hdnreferalurl"] != "")
             {
                 Response.Redirect(Session["hdnreferalurl"].ToString());
             }
         }
+
+        private void _txtCCNumber_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs evtargs)
+        {
+
+            evtargs.Handled = (!char.IsDigit(evtargs.KeyChar)) && (!char.IsControl(evtargs.KeyChar));
+
+        }
+
+
 
     }
 }
