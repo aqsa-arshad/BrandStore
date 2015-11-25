@@ -351,7 +351,6 @@
             $("#DealerHomePageTopic").removeClass("hide-element");
             $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
             $("#JWBMarketingServicesControl").removeClass("hide-element");
-            $("#TrueBlu").addClass("hide-element");
             $(".hide-element").css("display", "none");
             $("#headerlogo").attr("href", "home.aspx");
         }
