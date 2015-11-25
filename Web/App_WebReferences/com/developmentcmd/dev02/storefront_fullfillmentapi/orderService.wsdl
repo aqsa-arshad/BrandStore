@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php?wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php?wsdl">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="Credentials">
+        <xsd:all>
+          <xsd:element name="Username" type="xsd:string" />
+          <xsd:element name="Token" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="BillingAddress">
+        <xsd:all>
+          <xsd:element name="Name1" type="xsd:string" />
+          <xsd:element name="Name2" type="xsd:string" />
+          <xsd:element name="Address1" type="xsd:string" />
+          <xsd:element name="Address2" type="xsd:string" />
+          <xsd:element name="City" type="xsd:string" />
+          <xsd:element name="Locale" type="xsd:string" />
+          <xsd:element name="PostalCode" type="xsd:string" />
+          <xsd:element name="Country" type="xsd:string" />
+          <xsd:element name="Email" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ShippingAddress">
+        <xsd:all>
+          <xsd:element name="Name1" type="xsd:string" />
+          <xsd:element name="Name2" type="xsd:string" />
+          <xsd:element name="Address1" type="xsd:string" />
+          <xsd:element name="Address2" type="xsd:string" />
+          <xsd:element name="City" type="xsd:string" />
+          <xsd:element name="Locale" type="xsd:string" />
+          <xsd:element name="PostalCode" type="xsd:string" />
+          <xsd:element name="Country" type="xsd:string" />
+          <xsd:element name="Email" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Product">
+        <xsd:all>
+          <xsd:element name="ID" type="xsd:string" />
+          <xsd:element name="SKU" type="xsd:string" />
+          <xsd:element name="Description" type="xsd:string" />
+          <xsd:element name="Quantity" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Products">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:Product[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ReturnStatus">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:integer" />
+          <xsd:element name="message" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="processOrderRequest">
+    <wsdl:part name="Credentials" type="tns:Credentials" />
+    <wsdl:part name="OrderNumber" type="xsd:string" />
+    <wsdl:part name="ReferenceNumber" type="xsd:string" />
+    <wsdl:part name="BillingAddress" type="tns:BillingAddress" />
+    <wsdl:part name="ShippingAddress" type="tns:ShippingAddress" />
+    <wsdl:part name="OrderDate" type="xsd:date" />
+    <wsdl:part name="Products" type="tns:Products" />
+    <wsdl:part name="FullfillmentVendor" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="processOrderResponse">
+    <wsdl:part name="return" type="tns:ReturnStatus" />
+  </wsdl:message>
+  <wsdl:portType name="orderServicePortType">
+    <wsdl:operation name="processOrder">
+      <documentation>Send Order for processing</documentation>
+      <wsdl:input message="tns:processOrderRequest" />
+      <wsdl:output message="tns:processOrderResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="orderServiceBinding" type="tns:orderServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="processOrder">
+      <soap:operation soapAction="urn:orderService#processOrders" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:orderService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:orderService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="orderService">
+    <wsdl:port name="orderServicePort" binding="tns:orderServiceBinding">
+      <soap:address location="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

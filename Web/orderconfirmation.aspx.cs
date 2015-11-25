@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using AspDotNetStorefrontCore;
+using System.Net;
+using System.Configuration;
 
 namespace AspDotNetStorefront
 {
@@ -9,6 +11,7 @@ namespace AspDotNetStorefront
     {
         protected int OrderNumber;
         private IDataReader reader;
+        private IDataReader reader2;
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,10 +54,13 @@ namespace AspDotNetStorefront
             {
                 GetOrderInfo();
                 GetOrderItemsDetail();
+                SendOrderinfotoRRD();
             }
+
+           
         }
 
-       
+
 
         void GetOrderInfo()
         {
@@ -73,7 +79,7 @@ namespace AspDotNetStorefront
                         {
                             lblOrderNumber.Text = reader["OrderNumber"].ToString() + ".";
                             //lblOrderDate.Text = reader["OrderDate"].ToString();
-                           // lblCustomerID.Text = reader["CustomerID"].ToString();
+                            // lblCustomerID.Text = reader["CustomerID"].ToString();
 
                             //Billing Address
                             lblBAFullName.Text = reader["BillingFirstName"].ToString() + ' ' +
@@ -106,7 +112,7 @@ namespace AspDotNetStorefront
                             //Billing Amounts
                             lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
                             lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
-                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]),2).ToString();
+                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
                             lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
                         }
                         conn.Close();
@@ -146,7 +152,7 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
-             
+
         protected override string OverrideTemplate()
         {
             String MasterHome = AppLogic.HomeTemplate();
@@ -178,7 +184,116 @@ namespace AspDotNetStorefront
 
         private void lblreceipt_click()
         {
-           // String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
+            // String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
         }
+        #region "Send order to RRD"
+        private void SendOrderinfotoRRD()
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderItemsDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader2 = cmd.ExecuteReader();
+                        int totalRRDRow = 0;
+                        while (reader2.Read())
+                        {
+                            if (reader2["DistributorName"].ToString() == "RR Donnelley")
+                                totalRRDRow++;
+                        }
+                        reader2.Close();
+                        reader = cmd.ExecuteReader();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.orderService os = new com.developmentcmd.dev02.storefront_fullfillmentapi.orderService();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.Credentials c = new com.developmentcmd.dev02.storefront_fullfillmentapi.Credentials();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress Ba = new com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress Sa = new com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.Product p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.Product[] pa = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product[totalRRDRow];
+
+                        // Set the authentication
+                        c.Username = AppLogic.AppConfig("fullfillmentapi_username");
+                        c.Token = AppLogic.AppConfig("fullfillmentapi_password");
+
+                        while (reader.Read())
+                        {                            
+                            if (reader["DistributorName"].ToString() == "RR Donnelley")
+                            {
+                                SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
+                                // set the product
+                                p.ID = reader["ProductID"].ToString(); 
+                                p.Quantity = reader["Quantity"].ToString();
+                                p.SKU = reader["SKU"].ToString();
+                                p.Description = reader["Description"].ToString();                          
+                                
+                                // call the service
+                                com.developmentcmd.dev02.storefront_fullfillmentapi.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, "RRD");
+
+                                bool isok = rs.status.Equals(0) ? false : true;                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        private void SetBillingAndShippingAddresses(ref com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress Ba, ref com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress Sa, int OrderNumber)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader2 = cmd.ExecuteReader();
+                        if (reader2.Read())
+                        {
+                            //Set Billing address
+                            Ba.Name1 = reader2["BillingFirstName"].ToString() + ' ';
+                            Ba.Name2 = reader2["BillingLastName"].ToString();
+                            Ba.Email = reader2["Email"].ToString();
+                            Ba.Address1 = reader2["BillingAddress1"].ToString();
+                            Ba.City = reader2["BillingCity"].ToString();
+                            Ba.Locale = "";//to do
+                            Ba.Country = reader2["BillingCountry"].ToString();
+                            Ba.PostalCode = reader2["BillingZip"].ToString();
+
+                            //Set Shipping Address                         
+                            Sa.Name1 = reader2["ShippingFirstName"].ToString();
+                            Sa.Name2 = reader2["ShippingLastName"].ToString();
+                            Sa.Email = reader2["Email"].ToString();
+                            Sa.Address1 = reader2["ShippingAddress1"].ToString();
+                            Sa.City = reader2["ShippingCity"].ToString();
+                            Sa.Locale = "";//
+                            Sa.Country = reader2["ShippingCountry"].ToString();
+                            Sa.PostalCode = reader2["ShippingZip"].ToString();
+
+                        }
+                        conn.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+        #endregion
+
+
     }
 }
