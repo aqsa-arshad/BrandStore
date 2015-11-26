@@ -10,7 +10,6 @@
 
     <script type="text/javascript">        
         $(document).ready(function () {
-            $("#ctl00_lnkSubCategory").addClass("back-link");
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
             }

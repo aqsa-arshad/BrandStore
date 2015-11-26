@@ -142,9 +142,11 @@
                 <asp:Panel ID="pnlPageHeading" runat="server" Visible="false">
                     <div class="body-heading">
                         <h2>
-                            <asp:HyperLink ID="lnkCategory" runat="server"></asp:HyperLink>
-                            <asp:HyperLink ID="lnkSubCategory" runat="server"></asp:HyperLink>
                             <asp:Label ID="lblPageHeading" runat="server"></asp:Label>
+                            <asp:HyperLink ID="lnkCategory" runat="server" CssClass="back-link"></asp:HyperLink>
+                            <asp:Label ID="lblSperator" runat="server" CssClass="back-link"></asp:Label>
+                            <asp:HyperLink ID="lnkSubCategory" runat="server" CssClass="back-link"></asp:HyperLink>
+                            
                         </h2>
                     </div>
                 </asp:Panel>
