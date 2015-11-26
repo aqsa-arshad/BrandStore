@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using AspDotNetStorefrontCore;
 using System.Net;
 using System.Configuration;
+using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
@@ -40,7 +41,7 @@ namespace AspDotNetStorefront
             // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
             if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
             {
-                Response.Redirect(SE.MakeDriverLink("ordernotfound"));
+                Response.Redirect("OrderNotFound.aspx");
             }
 
             //For multi store checking
@@ -48,7 +49,7 @@ namespace AspDotNetStorefront
             if (!ThisCustomer.IsAdminUser && AppLogic.StoreID() != AppLogic.GetOrdersStoreID(OrderNumber) &&
                 AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true)
             {
-                Response.Redirect(SE.MakeDriverLink("ordernotfound"));
+                Response.Redirect("OrderNotFound.aspx");
             }
             if (!Page.IsPostBack)
             {
@@ -211,29 +212,36 @@ namespace AspDotNetStorefront
                         com.developmentcmd.dev02.storefront_fullfillmentapi.Credentials c = new com.developmentcmd.dev02.storefront_fullfillmentapi.Credentials();
                         com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress Ba = new com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress();
                         com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress Sa = new com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress();
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.Product p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();
+                        com.developmentcmd.dev02.storefront_fullfillmentapi.Product p;
                         com.developmentcmd.dev02.storefront_fullfillmentapi.Product[] pa = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product[totalRRDRow];
 
                         // Set the authentication
                         c.Username = AppLogic.AppConfig("fullfillmentapi_username");
                         c.Token = AppLogic.AppConfig("fullfillmentapi_password");
-
+                        int index = 0;
+                        bool hasproducts = false;
                         while (reader.Read())
                         {                            
-                            if (reader["DistributorName"].ToString() == "RR Donnelley")
+                            if (reader["DistributorName"].ToString() ==AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
                             {
+                                p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();
                                 SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
                                 // set the product
                                 p.ID = reader["ProductID"].ToString(); 
                                 p.Quantity = reader["Quantity"].ToString();
                                 p.SKU = reader["SKU"].ToString();
-                                p.Description = reader["Description"].ToString();                          
-                                
-                                // call the service
-                                com.developmentcmd.dev02.storefront_fullfillmentapi.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, "RRD");
-
-                                bool isok = rs.status.Equals(0) ? false : true;                                
+                                p.Description = reader["Description"].ToString();
+                                pa[index] = p;
+                                index++;
+                                hasproducts = true;                            
                             }
+                        }
+
+                        // call the service
+                        if (hasproducts)
+                        {
+                            com.developmentcmd.dev02.storefront_fullfillmentapi.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting));
+                            bool isok = rs.status.Equals(0) ? false : true;
                         }
                     }
                 }
@@ -294,6 +302,23 @@ namespace AspDotNetStorefront
         }
         #endregion
 
+        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
+                {
+                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                    (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                }
+                else {
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                
+                }
+                
+            }
+        }
 
     }
 }

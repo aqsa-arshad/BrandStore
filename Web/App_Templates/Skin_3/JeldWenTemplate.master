@@ -84,7 +84,8 @@
                                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
                                     <h4 class="modal-title" id="myModalLabel">Alerts</h4>
                                     <ul class="modal-list" id="ulCustomerAlertNotification" runat="server" visible="false">
-                                        <li class="unread"> <asp:Label runat="server" ID="lblAlertNotification" Font-Bold="true" Text="You have 0 alerts at this time."></asp:Label></li>
+                                        <li class="unread">
+                                            <asp:Label runat="server" ID="lblAlertNotification" Font-Bold="true" Text="You have 0 alerts at this time."></asp:Label></li>
                                     </ul>
                                     <ul class="modal-list">
                                         <asp:Repeater ID="rptCustomerAlerts" runat="server" OnItemCommand="rptCustomerAlerts_ItemCommand">
@@ -117,9 +118,12 @@
                 <div class="user-grid">
                     <ul class="profile-links">
 
-                        <li><asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click"><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
-                        <li><asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="lnkMyAccount"><span>My Account</span></asp:LinkButton></li>
-                        <li><asp:LinkButton href="shoppingcart.aspx" runat="server" class="shopping-link" ID="lnkShoppingCart"><span id="shopping_cart" runat="server">Shopping Cart</span></asp:LinkButton></li>
+                        <li>
+                            <asp:LinkButton ID="lnkAlertDesktop" runat="server" class="alerts-link prelogin hide-element" OnClick="ServerButton_Click"><span id="lblAlertCount" runat="server">Alerts</span></asp:LinkButton></li>
+                        <li>
+                            <asp:LinkButton href="JWMyAccount.aspx" runat="server" class="account-link prelogin hide-element" ID="lnkMyAccount"><span>My Account</span></asp:LinkButton></li>
+                        <li>
+                            <asp:LinkButton href="shoppingcart.aspx" runat="server" class="shopping-link" ID="lnkShoppingCart"><span id="shopping_cart" runat="server">Shopping Cart</span></asp:LinkButton></li>
                         <li><a href="signout.aspx" class="logout-link lnkLogout prelogin hide-element"><span>Logout</span></a></li>
                     </ul>
                     <custom:Search ID="Search1" runat="server" />
@@ -237,8 +241,8 @@
     <script type="text/javascript">
         function CloseDialog() {
             var dialog = '<%= popuppanel.ClientID %>'
-             $("#" + dialog).hide();
-             var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
+            $("#" + dialog).hide();
+            var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
              $("#" + alertLnk).removeClass("new-alerts");
              $("#" + alertLnk).addClass("alerts-link");
              var alertCount = '<%=  lblAlertCount.ClientID %>'
@@ -382,6 +386,19 @@
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
             $("#headerlogo").attr("href", "home.aspx");
         }
+
+
+        //Google tracking code from client
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function ()
+            { (i[r].q = i[r].q || []).push(arguments) }
+    , i[r].l = 1 * new Date(); a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-1834476-29', 'auto');
+        ga('send', 'pageview');
+        //End Google tracking code
+
         function ShowControlsForSubDealersLogin() {
             $(".prelogin").hide();
             $("#PublicHomePageTopic").removeClass("hide-element");
@@ -400,6 +417,7 @@
             $("#headerlogo").attr("href", "home.aspx");
 
         }
+
     </script>
 </body>
 
