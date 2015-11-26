@@ -10,13 +10,10 @@
     </asp:Panel>
 
     <script type="text/javascript">
-        $(document).ready(function () {            
+        $(document).ready(function () {
             if ('<%=CategoryTypeFlag%>' == "true") {
                 $("#ctl00_divbeforelogin").addClass("sub-category-right");
                 $("#ctl00_divafterlogin").addClass("sub-category-right");
-            } else {
-                $("#ctl00_divbeforelogin").addClass("category-right");
-                $("#ctl00_divafterlogin").addClass("category-right");
             }
             $("#beforelogindiv").hide();
             $(".beforelogin").hide();

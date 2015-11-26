@@ -5,13 +5,7 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
-using System.Web;
-using System.Globalization;
 using AspDotNetStorefrontCore;
-using AspDotNetStorefrontCommon;
-using AspDotNetStorefrontControls;
-using System.Data.SqlClient;
-using System.Configuration;
 
 namespace AspDotNetStorefront
 {
@@ -22,8 +16,7 @@ namespace AspDotNetStorefront
     public partial class _home : SkinBase
     {
         protected void Page_Load(object sender, System.EventArgs e)
-        {
-           
+        {           
             if (CommonLogic.ServerVariables("HTTP_HOST").IndexOf(AppLogic.LiveServer(), StringComparison.InvariantCultureIgnoreCase) != -1 &&
                 CommonLogic.ServerVariables("HTTP_HOST").IndexOf("WWW", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
@@ -32,15 +25,13 @@ namespace AspDotNetStorefront
                     Response.Redirect("http://www." + AppLogic.LiveServer().ToLowerInvariant());
                 }
             }
-
             if (AppLogic.AppConfigBool("GoNonSecureAgain"))
             {
                 GoNonSecureAgain();
             }
-
              //this may be overwridden by the XmlPackage below!
-            SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
-
+            SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting),
+                AppLogic.AppConfig("StoreName"));
             if (!ThisCustomer.IsRegistered)
             {
                 Response.Redirect("default.aspx");
@@ -49,31 +40,25 @@ namespace AspDotNetStorefront
 
         protected override string OverrideTemplate()
         {
-            String MasterHome = AppLogic.HomeTemplate();
+            var masterHome = AppLogic.HomeTemplate();
 
-            if (MasterHome.Trim().Length == 0)
+            if (masterHome.Trim().Length == 0)
             {
-
-                MasterHome = "JeldWenTemplate";// "template";
+                masterHome = "JeldWenTemplate";// "template";
             }
-
-            if (MasterHome.EndsWith(".ascx"))
+            if (masterHome.EndsWith(".ascx"))
             {
-                MasterHome = MasterHome.Replace(".ascx", ".master");
+                masterHome = masterHome.Replace(".ascx", ".master");
             }
-
-            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
             {
-                MasterHome = MasterHome + ".master";
+                masterHome = masterHome + ".master";
             }
-
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + masterHome)))
             {
-                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "JeldWenTemplate";// "template.master";
+                masterHome = "JeldWenTemplate";
             }
-
-            return MasterHome;
+            return masterHome;
         }
     }
 }

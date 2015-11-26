@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 
-
 namespace AspDotNetStorefront
 {
     public partial class OrderDetail : SkinBase
@@ -20,7 +19,7 @@ namespace AspDotNetStorefront
             RequireSecurePage();
             if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 || ThisCustomer.CustomerLevelID == 6)
             {
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAILS FOR " + GetDealerName(ThisCustomer.CustomerID);
+                ((Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAILS FOR " + GetDealerName(ThisCustomer.CustomerID);
             }
 
             if (!Page.IsPostBack)
@@ -187,6 +186,19 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                }
+                else
+                {
+                    if ((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains("|"))
+                    {
+                        var firstOccuranceOfPipeSign = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.IndexOf("|", StringComparison.Ordinal);
+                        (e.Item.FindControl("lblDelivery") as Label).Text = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Substring(0, firstOccuranceOfPipeSign);
+                    }
+                    else
+                    {
+                        (e.Item.FindControl("lblDelivery") as Label).Text =
+                            (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
+                    }
                 }
                 //if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
                 //{

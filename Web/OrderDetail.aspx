@@ -96,6 +96,7 @@
                                             <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
                                             <%--<asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />--%>
                                             <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
+                                            <asp:HiddenField ID="hfShippingMethod" runat="server" Value='<%# Eval("ShippingMethod") %>' />
                                             <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                             <span class="normal-heading black-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
@@ -125,7 +126,7 @@
                                     <span class="normal-heading black-color">Delivery </span>
                                     <span>
                                         <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
-                                        <asp:Label ID="lblDelivery" runat="server" Text='<%# Eval("ShippingMethod") %>'></asp:Label>
+                                        <asp:Label ID="lblDelivery" runat="server"></asp:Label>
                                     </span>
                                 </td>
                                 <td class="td-25-percent">
