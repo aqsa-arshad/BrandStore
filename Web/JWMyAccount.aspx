@@ -12,7 +12,7 @@
                 <ul id="ulLatestOrderStatus" runat="server">
                     <li>Order Number: <b runat="server" id="bOrderNumber"></b></li>
                     <li>Status: <b id="bStatus" runat="server"></b></li>
-                    <li><a class="underline-link">Track Current Order</a> </li>
+                    <li><asp:HyperLink ID="hlTrackItem" class="underline-link" runat="server">Track Current Order</asp:HyperLink> </li>
                 </ul>
             </div>
 

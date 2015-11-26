@@ -96,6 +96,7 @@
                                             <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
                                             <%--<asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />--%>
                                             <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
+                                             <asp:HiddenField ID="hfShippingTrackingNumber" runat="server" Value='<%# Eval("ShippingTrackingNumber") %>' />
                                             <asp:HiddenField ID="hfShippingMethod" runat="server" Value='<%# Eval("ShippingMethod") %>' />
                                             <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                             <span class="normal-heading black-color">
@@ -131,7 +132,7 @@
                                 </td>
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
-                                    <a class="underline-link">Track item &gt;</a>
+                                    <asp:HyperLink ID="hlTrackItem" class="underline-link" runat="server">Track item &gt;</asp:HyperLink>
                                 </td>
                             </tr>
                         </ItemTemplate>

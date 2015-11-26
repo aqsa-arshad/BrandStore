@@ -179,6 +179,15 @@ namespace AspDotNetStorefront
 
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
+            {
+                var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains(listItem)))
+                {
+                    (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
+                        string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem), (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
+                }
+            }
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
                 if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
@@ -210,7 +219,7 @@ namespace AspDotNetStorefront
                 {
                     if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
                         (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
-                                                                              .Value.Take(60).Aggregate("", (x,y) => x + y) + " ...";
+                                                                              .Value.Take(60).Aggregate("", (x, y) => x + y) + " ...";
                     else
                     {
                         (e.Item.FindControl("lblDescription") as Label).Text =

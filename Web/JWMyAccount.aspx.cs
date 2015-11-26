@@ -170,7 +170,8 @@ namespace AspDotNetStorefront
                         {
                             accountaspx55.Visible = false;
                             bOrderNumber.InnerText = reader["OrderNumber"].ToString();
-                            bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());                            
+                            bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
+                            hlTrackItem.NavigateUrl = SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()));
                         }
                         else
                         {
@@ -188,6 +189,34 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
+        }
+
+        static string SetTrackingPath(int orderNumber)
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand("aspdnsf_GetOrderItemsDetail", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ORDERNUMBER", orderNumber);
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
+                        {
+                            var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().Contains(listItem))))
+                            {
+                                 return
+                                    string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem), reader["ShippingTrackingNumber"]);
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            return string.Empty;
         }
 
         private string GetShippingStatus(int OrderNumber, string ShippedOn, string ShippedVIA, string ShippingTrackingNumber, string TransactionState, string DownloadEMailSentOn)
