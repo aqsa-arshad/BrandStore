@@ -1205,10 +1205,10 @@ namespace AspDotNetStorefrontCore
                 else
                 {
                     ThePic = AppLogic.LookupProductImageByNumberAndColor(ProductID, ThisCustomer.SkinID, m_ImageFileNameOverride, SKU, ThisCustomer.LocaleSetting, 1, AppLogic.RemoveAttributePriceModifier(ChosenColor), "icon");
-                    if (ThePic.Contains("nopictureicon"))
-                    {
-                        ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-                    }
+                    //if (ThePic.Contains("nopictureicon"))
+                    //{
+                    //    ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    //}
                 }
             }
             if (ProductID == AppLogic.MicropayProductID)

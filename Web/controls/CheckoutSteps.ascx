@@ -19,7 +19,7 @@
             <asp:HyperLink ID="lnkReview" NavigateUrl="~/checkoutreview.aspx" runat="server" Text='<%$ Tokens:StringResource,Checkout.Progress.Review %>'></asp:HyperLink>
         </li>
         <li ID="liComplete" runat="server">
-            <asp:HyperLink ID="lnkComplete" NavigateUrl="~/orderconfirmation.aspx" runat="server" Text='<%$ Tokens:StringResource,Checkout.Progress.Complete %>'></asp:HyperLink>
+            <asp:HyperLink ID="lnkComplete"   NavigateUrl="~/orderconfirmation.aspx" runat="server" Text='<%$ Tokens:StringResource,Checkout.Progress.Complete %>'></asp:HyperLink>
         </li>
     </ul>
 </div>
