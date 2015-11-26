@@ -62,6 +62,7 @@ namespace AspDotNetStorefront
                     lnkShipping.Enabled = false;
                     lnkPayment.Enabled = false;
                     lnkReview.Enabled = false;
+                    lnkComplete.Enabled = false;
                     break;
                 default:
                     break;
