@@ -63,6 +63,7 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+           
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
@@ -144,6 +145,12 @@ namespace AspDotNetStorefront
                 ctrlAccount.txtPasswordConfirm.Attributes.Add("value", ctrlAccount.txtPasswordConfirm.Text);
                 GetJavaScriptFunctions();
             }
+
+
+            if (ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("home.aspx");
+            } 
         }
 
         #region EventHandlers
