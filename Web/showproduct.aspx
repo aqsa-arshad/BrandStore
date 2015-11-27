@@ -8,7 +8,8 @@
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
 
-    <script type="text/javascript">        
+    <script type="text/javascript">
+        debugger;
         $(document).ready(function () {
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");

@@ -248,17 +248,17 @@ namespace AspDotNetStorefront
         private void SetPageHeading()
         {
             var currentURL = Request.Url.AbsolutePath;
-            if (currentURL.ToUpper().Contains("HOME"))
+            if (currentURL.ToUpper().Contains("HOME.ASPX"))
             {
                 lblPageHeading.Text = string.Empty;
                 pnlPageHeading.Visible = false;
             }
-            else if (currentURL.ToUpper().Contains("SEARCH"))
+            else if (currentURL.ToUpper().Contains("SEARCH.ASPX"))
             {
                 lblPageHeading.Text = "SEARCH RESULTS";
                 pnlPageHeading.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("JWMYACCOUNT"))
+            else if (currentURL.ToUpper().Contains("JWMYACCOUNT.ASPX"))
             {
                 lblPageHeading.Text = "MY ACCOUNT: " + ThisCustomer.FullName();
                 pnlPageHeading.Visible = true;
@@ -272,20 +272,20 @@ namespace AspDotNetStorefront
                     JWBUserInfoAfterLoginControl.Visible = false;
                 }
             }
-            else if (currentURL.ToUpper().Contains("JWMYADDRESSES"))
+            else if (currentURL.ToUpper().Contains("JWMYADDRESSES.ASPX"))
             {
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
                 pnlPageHeading.Visible = true;
                 lnkMyAccount.Attributes.Add("class", "active account-link");
             }
-            else if (currentURL.ToUpper().Contains("JWADDADDRESSES"))
+            else if (currentURL.ToUpper().Contains("JWADDADDRESSES.ASPX"))
             {
                 lblPageHeading.Text = "ADD/EDIT ADDRESS";
                 pnlPageHeading.Visible = true;
                 lnkMyAccount.Attributes.Add("class", "active account-link");
             }
 
-            else if (currentURL.ToUpper().Contains("SIGNIN"))
+            else if (currentURL.ToUpper().Contains("SIGNIN.ASPX"))
             {
                 divlogin.Visible = false;
                 separatorafterlogin.Visible = false;
@@ -297,29 +297,19 @@ namespace AspDotNetStorefront
                 //divcontentarea.Attributes["class"] = "col-md-12";
             }
 
-            else if (currentURL.ToUpper().Contains("CREATEACCOUNT"))
+            else if (currentURL.ToUpper().Contains("CREATEACCOUNT.ASPX"))
             {
                 lblPageHeading.Text = "CREATE MY ACCOUNT";
                 pnlPageHeading.Visible = true;
                 //divSideBarBeforeLogin.Visible = false;
                 //divSideBarAfterLogin.Visible = false;
             }
-            else if (currentURL.ToUpper().Contains("MARKETINGSERVICESDETAIL"))
+            else if (currentURL.ToUpper().Contains("MARKETINGSERVICESDETAIL.ASPX"))
             {
                 lblPageHeading.Text = "About Marketing Services";
                 pnlPageHeading.Visible = true;
-            }
-            else if (currentURL.ToUpper().Contains("C-"))
-            {
-                // Label & Back Link will be loaded from Content Page w.r.t Category in QueryString
-                pnlPageHeading.Visible = true;
-            }
-            else if (currentURL.ToUpper().Contains("P-"))
-            {
-                // Label & Back Link will be loaded from Content Page w.r.t Category &  Sub-Category in QueryString
-                pnlPageHeading.Visible = true;
-            }
-            else if (currentURL.ToUpper().Contains("JWSUPPORT"))
+            }           
+            else if (currentURL.ToUpper().Contains("JWSUPPORT.ASPX"))
             {
                 lblPageHeading.Text = "Support";
                 pnlPageHeading.Visible = true;
@@ -329,22 +319,22 @@ namespace AspDotNetStorefront
                 divSideBarAfterLogin.Visible = false;
                 divJWsupport.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU"))
+            else if (currentURL.ToUpper().Contains("JWABOUTTRUEBLU.ASPX"))
             {
                 lblPageHeading.Text = "ABOUT True BLU™";
                 pnlPageHeading.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("DOWNLOADS"))
+            else if (currentURL.ToUpper().Contains("DOWNLOADS.ASPX"))
             {
                 lblPageHeading.Text = AppLogic.GetString("download.aspx.1", 3, ThisCustomer.LocaleSetting);
                 pnlPageHeading.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS"))
+            else if (currentURL.ToUpper().Contains("JWTERMSANDCONDITIONS.ASPX"))
             {
                 lblPageHeading.Text = "Terms and Privacy Policy";
                 pnlPageHeading.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("ORDERHISTORY"))
+            else if (currentURL.ToUpper().Contains("ORDERHISTORY.ASPX"))
             {
                 if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
                     ThisCustomer.CustomerLevelID == 6)
@@ -358,7 +348,7 @@ namespace AspDotNetStorefront
                 lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("ORDERDETAIL"))
+            else if (currentURL.ToUpper().Contains("ORDERDETAIL.ASPX"))
             {
                 if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
                     ThisCustomer.CustomerLevelID == 6)
@@ -372,7 +362,7 @@ namespace AspDotNetStorefront
                 lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
-            else if (currentURL.ToUpper().Contains("SHOPPINGCART"))
+            else if (currentURL.ToUpper().Contains("SHOPPINGCART.ASPX"))
             {
                 lblPageHeading.Text = "SHOPPING CART";
 
@@ -382,7 +372,7 @@ namespace AspDotNetStorefront
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
-            else if (currentURL.ToUpper().Contains("CHECKOUTSHIPPING"))
+            else if (currentURL.ToUpper().Contains("CHECKOUTSHIPPING.ASPX"))
             {
                 lblPageHeading.Text = "SHIPPING OPTIONS";
                 pnlPageHeading.Attributes["class"] = "hide-element";
@@ -392,7 +382,7 @@ namespace AspDotNetStorefront
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
-            else if (currentURL.ToUpper().Contains("CHECKOUTPAYMENT"))
+            else if (currentURL.ToUpper().Contains("CHECKOUTPAYMENT.ASPX"))
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;
@@ -401,7 +391,7 @@ namespace AspDotNetStorefront
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
-            else if (currentURL.ToUpper().Contains("CHECKOUTREVIEW"))
+            else if (currentURL.ToUpper().Contains("CHECKOUTREVIEW.ASPX"))
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;
@@ -410,7 +400,7 @@ namespace AspDotNetStorefront
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
-            else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION"))
+            else if (currentURL.ToUpper().Contains("ORDERCONFIRMATION.ASPX"))
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;
@@ -419,7 +409,7 @@ namespace AspDotNetStorefront
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
             }
-            else if (currentURL.ToUpper().Contains("ACCOUNT"))
+            else if (currentURL.ToUpper().Contains("ACCOUNT.ASPX"))
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;
@@ -427,6 +417,16 @@ namespace AspDotNetStorefront
                 divSideBarAfterLogin.Visible = false;
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 divcontentarea.Attributes["class"] = "col-md-12";
+            }
+            else if (currentURL.ToUpper().Contains("C-"))
+            {
+                // Label & Back Link will be loaded from Content Page w.r.t Category in QueryString
+                pnlPageHeading.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("P-"))
+            {
+                // Label & Back Link will be loaded from Content Page w.r.t Category &  Sub-Category in QueryString
+                pnlPageHeading.Visible = true;
             }
             else
             {
