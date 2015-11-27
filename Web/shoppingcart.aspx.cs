@@ -1040,6 +1040,7 @@ namespace AspDotNetStorefront
 
                 if (validated)
                 {
+                    
                     Response.Redirect(cart.PageToBeginCheckout(ForceOnePageCheckout, InternationalCheckout));
                 }
                 InitializePageContent(CheckOutPageControllerFactory.CreateCheckOutPageController(ThisCustomer, cart).GetCheckoutType());

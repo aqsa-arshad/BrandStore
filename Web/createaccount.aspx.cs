@@ -783,6 +783,7 @@ namespace AspDotNetStorefront
                             }
                             else
                             {
+                               
                                 Response.Redirect("account.aspx?checkout=true");//checkoutshipping
                             }
                         }

@@ -36,6 +36,7 @@ namespace AspDotNetStorefront
 
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
+            
             if (ThisCustomer.IsAdminUser || AppLogic.AppConfigBool("UseStrongPwd"))
 				ctrlAccount.PasswordNote = AppLogic.GetString("account.strongPassword", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
 			RequireSecurePage();
@@ -122,8 +123,19 @@ namespace AspDotNetStorefront
 			if (!this.IsPostBack)
 			{
 				RefreshPage();
+                SetAccountFields();
+                if (ThisCustomer.IsRegistered)
+                {
+                
+                    this.hdnCustomerLevel1.Text = ThisCustomer.CustomerLevelID.ToString();
+                }
+                else
+                {
+          
+                    hdnCustomerLevel1.Text = "-1";
+                }
 			}
-            SetAccountFields();
+           
 		}
 
 		private void SetAccountFields()
