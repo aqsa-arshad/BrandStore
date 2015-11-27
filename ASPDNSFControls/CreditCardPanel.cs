@@ -41,7 +41,7 @@ namespace AspDotNetStorefrontControls
         private Label _lblCCIssueNumNote = new Label();
 		private Label _lblCimSaveCard = new Label();
 
-
+        private RegularExpressionValidator _rg = new RegularExpressionValidator();
 
         private TextBox _txtCCName = new TextBox();
         private TextBox _txtCCNumber = new TextBox();
@@ -334,6 +334,12 @@ namespace AspDotNetStorefrontControls
         {
             get { return _txtCCNumber.Text; }
             set { _txtCCNumber.Text = value; }
+        }
+
+         public RegularExpressionValidator rg
+        {
+            get { return _rg; }
+            set { _rg = value; }
         }
 
         /// <summary>
@@ -654,10 +660,16 @@ namespace AspDotNetStorefrontControls
             _txtCCVerCd.Attributes["autocomplete"] = "off";
             _txtCCIssueNum.Attributes["autocomplete"] = "off";
 
+            _txtCCNumber.CausesValidation = true;
+           
+            rg.ID = "rg1";
+            rg.ControlToValidate = _txtCCNumber;
+            rg.ValidationExpression = @"[\d]";
+            rg.ErrorMessage="enter a valid number";
           
         }
 
-       
+      
         
 
         /// <summary>
@@ -787,6 +799,7 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(_lblCCNumber);
             this.Controls.Add(new LiteralControl("</label>"));
             this.Controls.Add(_txtCCNumber);
+             this.Controls.Add(_rg);
             this.Controls.Add(new LiteralControl("<div class='form-text'>"));
             this.Controls.Add(_lblNoSpaces);
             this.Controls.Add(new LiteralControl("</div>"));
