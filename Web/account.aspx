@@ -9,6 +9,9 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server">
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
+         <%--Hidden Variables Regions--%>
+        <asp:Label ID="hdnCustomerLevel1" name="hdnCustomerLevel1" runat="server" ClientIDMode="Static" Style="display: none" />
+        <%--End Hidden Variables Region--%>
         <div class="content-box-03">
 
             <%--<h1 class="account-page-header">
@@ -68,7 +71,7 @@
             <asp:ValidationSummary DisplayMode="List" ID="ValSummary" ShowMessageBox="false" runat="server" ShowSummary="true" CssClass="error-wrap validation-summary" ValidationGroup="account" />
 
             <div class="row">
-            <div class="col-md-4">               
+            <div class="col-md-4" id="divAccountInfo">               
                 <h4 class="normal-heading black-color">
                     <asp:Label ID="accountaspx12" runat="server" Text="CONTACT"></asp:Label>
                 </h4>
@@ -273,5 +276,33 @@
             </asp:Panel>
         </div>
     </asp:Panel>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var CustomerLevel = GetCustomerLevel();
+            if (CustomerLevel == "8") {
+                $("#divAccountInfo").removeClass("hide-element");
+            }
+            else {
+                $("#divAccountInfo").addClass("hide-element");
+            }
+           
+
+            function GetCustomerLevel() {
+                var CustomerLevelElemment;
+                if (document.getElementById('hdnCustomerLevel1')) {
+                    CustomerLevelElemment = document.getElementById('hdnCustomerLevel1');
+                }
+                else if (document.all) {
+                    CustomerLevelElemment = document.all['hdnCustomerLevel1'];
+                }
+                else {
+                    CustomerLevelElemment = document.layers['hdnCustomerLevel1'];
+                }
+
+                return CustomerLevelElemment.innerHTML;
+            }
+        });
+
+    </script>
 </asp:Content>
 

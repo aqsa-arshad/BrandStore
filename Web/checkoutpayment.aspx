@@ -15,7 +15,7 @@
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">            
              <h2 class="black-color">BILLING</h2>
-            <div class="row" id="divmainrow">
+            <div id="divmainrow">
                 <div>
                     <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
                     <%-- <h1>
@@ -45,7 +45,7 @@
                     <asp:Literal ID="XmlPackage_CheckoutPaymentPageHeader" runat="server" Mode="PassThrough"></asp:Literal>
 
                     <asp:Panel ID="pnlNoPaymentRequired" runat="server" Visible="false">
-                        <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" />
+                        <p></p><asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>
                         <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
                         <div class="clearfix"></div>
                         <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
@@ -329,8 +329,7 @@
         </div>
       
     </asp:Panel>
-  <%--  </div>--%>
-
+ </div>
         </div>
     </asp:Panel>
     

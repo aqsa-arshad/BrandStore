@@ -114,7 +114,7 @@ namespace AspDotNetStorefront
                         lblSACityStateZip.Text.Replace(" ", "");
                         lblSACityStateZip.Text.Replace(",", ", ");
                     }
-                   
+
                     lblSACountry.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryShippingAddress.Country) ? "" : ThisCustomer.PrimaryShippingAddress.Country;
                     lblSAPhone.Text = string.IsNullOrEmpty(ThisCustomer.PrimaryShippingAddress.Phone) ? "" : ThisCustomer.PrimaryShippingAddress.Phone;
                 }
@@ -201,14 +201,14 @@ namespace AspDotNetStorefront
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ORDERNUMBER", orderNumber);
                     var reader = cmd.ExecuteReader();
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
                         {
                             var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().Contains(listItem))))
+                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().Contains(listItem) && reader["IsDownload"].ToString() != "1" )))
                             {
-                                 return
+                                return
                                     string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem), reader["ShippingTrackingNumber"]);
                             }
                         }
@@ -262,6 +262,7 @@ namespace AspDotNetStorefront
             else if (shippingStatus.Contains("downloads.aspx"))
             {
                 shippingStatus = "Downloadable";
+                hlTrackItem.Visible = false;
             }
             return shippingStatus;
         }
