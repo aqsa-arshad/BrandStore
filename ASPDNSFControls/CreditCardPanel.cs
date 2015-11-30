@@ -660,12 +660,9 @@ namespace AspDotNetStorefrontControls
             _txtCCVerCd.Attributes["autocomplete"] = "off";
             _txtCCIssueNum.Attributes["autocomplete"] = "off";
 
-            _txtCCNumber.CausesValidation = true;
+            
            
-            rg.ID = "rg1";
-            rg.ControlToValidate = _txtCCNumber;
-            rg.ValidationExpression = @"[\d]";
-            rg.ErrorMessage="enter a valid number";
+          
           
         }
 
