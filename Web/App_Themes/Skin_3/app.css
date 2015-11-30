@@ -4775,6 +4775,12 @@ select {
   border: solid 1px #c0c0c0;
   width: 100%;
 }
+a {
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: none;
+}
 .header-part {
   padding-top: 40px;
   width: 260px;
@@ -4835,26 +4841,40 @@ select {
   padding-bottom: 20px;
   text-align: center;
   border-top: 1px solid #c0c0c0;
+  width: 100%;
+  height: auto;
 }
 @media screen and (min-width: 768px) {
   .user-grid {
-    height: 53px;
-    padding: 13px 20px;
+    padding-right: 20px;
+    padding-left: 20px;
     border-top: 0;
     float: right;
   }
 }
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .user-grid {
+    padding: 0 20px;
+  }
+}
 @media screen and (min-width: 992px) {
   .user-grid {
+    padding: 13px 20px;
     width: auto;
   }
 }
 .user-grid .form-group {
   margin-bottom: 0;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .user-grid > div {
     float: left;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .user-grid > div {
+    float: right;
+    width: 28%;
   }
 }
 .user-grid .search-feild {
@@ -4866,10 +4886,10 @@ select {
   margin-top: 20px;
   border-color: #d1d1d1;
 }
-@media screen and (min-width: 768px) and (max-width: 992px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .user-grid .search-feild {
-    width: 165px;
-    margin-top: 0;
+    width: 100%;
+    margin-top: 13px;
   }
 }
 @media screen and (min-width: 992px) {
@@ -4882,11 +4902,11 @@ select {
   background: url('images/search-img.png') no-repeat 5px -17px;
 }
 .profile-links {
-  padding: 0;
   border-bottom: 1px solid #c0c0c0;
   display: block;
   margin-bottom: 0;
   height: 54px;
+  padding: 0;
 }
 @media screen and (min-width: 768px) {
   .profile-links {
@@ -4894,8 +4914,19 @@ select {
     display: inline-block;
     float: left;
     margin-right: 5px;
-    height: auto;
     border-bottom: 0;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .profile-links {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 70%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .profile-links {
+    height: auto;
   }
 }
 .profile-links > li {
@@ -4905,7 +4936,13 @@ select {
   width: 25%;
   border-right: 1px solid #c0c0c0;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .profile-links > li {
+    border-right: 0;
+    width: 25%;
+  }
+}
+@media screen and (min-width: 992px) {
   .profile-links > li {
     width: auto;
     border-right: 0;
@@ -4917,7 +4954,7 @@ select {
   height: 54px;
   display: block;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links a {
     background-position: 0 0;
     margin: 0 25px;
@@ -4929,7 +4966,7 @@ select {
     height: auto;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 992px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .profile-links a {
     margin: 0 20px;
   }
@@ -4952,7 +4989,7 @@ select {
   background-image: url(images/alerts-icon.png);
   background-position: center 12px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .alerts-link {
     background-position: 0 top;
   }
@@ -4960,7 +4997,7 @@ select {
 .profile-links .alerts-link:hover {
   background-position: center -31px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .alerts-link:hover {
     background-position: 0 -43px;
   }
@@ -4970,7 +5007,7 @@ select {
   color: #88421b;
   background-position: center -74px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .new-alerts {
     background-position: 0 -86px;
   }
@@ -4979,7 +5016,7 @@ select {
   color: #88421b;
   background-position: center -74px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .new-alerts:hover {
     background-position: 0 bottom;
   }
@@ -4988,7 +5025,7 @@ select {
   background-image: url(images/account-icon.png);
   background-position: center 12px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .account-link {
     background-position: 0 top;
   }
@@ -4997,7 +5034,7 @@ select {
 .profile-links .account-link.active {
   background-position: center -31px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .account-link:hover,
   .profile-links .account-link.active {
     background-position: 0 bottom;
@@ -5007,7 +5044,7 @@ select {
   background-image: url(images/shopping-icon.png);
   background-position: center 12px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .shopping-link {
     background-position: 0 top;
   }
@@ -5016,7 +5053,7 @@ select {
 .profile-links .shopping-link.active {
   background-position: center -31px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .shopping-link:hover,
   .profile-links .shopping-link.active {
     background-position: 0 bottom;
@@ -5026,7 +5063,7 @@ select {
   background-image: url(images/logout-icon.png);
   background-position: center 12px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .logout-link {
     background-position: 0 top;
   }
@@ -5034,7 +5071,7 @@ select {
 .profile-links .logout-link:hover {
   background-position: center -31px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links .logout-link:hover {
     background-position: 0 bottom;
   }
@@ -5042,7 +5079,7 @@ select {
 .profile-links span {
   display: none;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .profile-links span {
     display: inline-block;
   }
@@ -5069,6 +5106,9 @@ a:hover.mb-login-btn {
 }
 .nav {
   border-bottom: solid 1px #c0c0c0;
+}
+.nav a {
+  text-decoration: none;
 }
 .nav > li {
   border-bottom: solid 1px #c0c0c0;
@@ -5477,6 +5517,9 @@ a:hover.mb-login-btn {
   line-height: 23px;
   margin-bottom: 12px;
 }
+.item-detail-box h5 {
+  margin-top: 0;
+}
 .select-quantity {
   float: left;
   margin: 5px 0 20px;
@@ -5547,7 +5590,7 @@ table tbody tr {
   padding: 10px 0;
   float: left;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table tbody tr {
     float: none;
   }
@@ -5557,7 +5600,7 @@ table tbody tr td {
   display: block;
   padding: 10px 0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table tbody tr td {
     display: table-cell;
     padding: 30px 5px 30px 0;
@@ -5575,12 +5618,12 @@ table tbody tr td .underline-link {
 table tbody tr td .primary-img-box {
   margin-top: 5px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table tbody tr .col-md-5:nth-child(1) {
     padding-right: 0;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table tbody tr .col-md-4:nth-child(1) {
     padding-right: 0;
   }
@@ -5594,7 +5637,7 @@ table tbody tr td .primary-img-box {
   padding: 10px 0;
   float: left;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .table tbody tr {
     float: none;
   }
@@ -5604,7 +5647,7 @@ table tbody tr td .primary-img-box {
   display: block;
   padding: 10px 0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .table tbody tr td {
     display: table-cell;
     padding: 30px 5px 30px 0;
@@ -5686,47 +5729,47 @@ table.order-detail tbody tr td {
 .td-15-percent {
   min-height: 1px;
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-55-percent {
     width: 55%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-50-percent {
     width: 50%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-45-percent {
     width: 45%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-40-percent {
     width: 40%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-35-percent {
     width: 35%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-30-percent {
     width: 30%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-25-percent {
     width: 25%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-20-percent {
     width: 20%;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   .td-15-percent {
     width: 15%;
   }
@@ -5823,8 +5866,6 @@ table.order-detail tbody tr td {
   }
 }
 .side-bar .btn-primary {
-  margin: 12px 0;
-  display: inline-block;
   -webkit-appearance: none;
 }
 .side-bar h3 {
@@ -5949,6 +5990,10 @@ footer {
 }
 .footer-nav a {
   color: #545759;
+  text-decoration: none;
+}
+.footer-nav a:hover {
+  text-decoration: underline;
 }
 .footer-nav:nth-child(2) {
   display: none;
@@ -5972,7 +6017,7 @@ footer {
   margin-top: 5px;
   float: left;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .footer-privacy-link {
     margin-top: 40px;
   }
@@ -5982,6 +6027,10 @@ footer {
 }
 .footer-privacy-link a {
   color: #b4b7b0;
+  text-decoration: none;
+}
+.footer-privacy-link a:hover {
+  text-decoration: underline;
 }
 .social-links {
   padding-top: 10px;
@@ -6011,6 +6060,7 @@ footer {
   width: 40px;
   display: inline-block;
   margin-right: 15px;
+  text-decoration: none;
 }
 @media screen and (min-width: 800px) {
   .social-links ul li a {
@@ -6140,6 +6190,9 @@ a:hover.mb-link {
   text-transform: none;
   color: #b4b7b0;
 }
+.body-heading .back-link:hover {
+  text-decoration: underline;
+}
 .thumbnail,
 .img-thumbnail {
   box-shadow: none;
@@ -6229,7 +6282,7 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 768px) {
   .fix-landing-content {
-    height: 105px;
+    height: 95px;
     overflow: hidden;
   }
 }
@@ -6329,6 +6382,7 @@ a:hover.underline-link {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+    display: block;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
