@@ -9,6 +9,10 @@ using Newtonsoft.Json;
 using System.Web;
 using System.Text;
 using System.Data.SqlClient;
+using Salesforce.Common;
+using Salesforce.Force;
+using Newtonsoft.Json.Linq;
+using System.Runtime;
 
 namespace AspDotNetStorefront
 {
@@ -153,6 +157,14 @@ namespace AspDotNetStorefront
         {
             try
             {
+                SFDCDealerUser dealerUser = new SFDCDealerUser();
+                SFDCInternalUser internalUser = new SFDCInternalUser();
+
+                if (!string.IsNullOrEmpty(profile.sfid))
+                    GetSFDCDealerUser(profile, profile.sfid);
+                else
+                    GetSFDCInternalUser(profile, userName);
+
                 Password p = new Password(password);
                 int customerLevelID = GetCustomerLevelID(profile.userType);
 
@@ -320,5 +332,140 @@ namespace AspDotNetStorefront
             }
         }
 
+        public static void GetSFDCDealerUser(Profile profile, string sfid)
+        {
+            SFDCDealerUser _dealerUser = new SFDCDealerUser();
+            try
+            {
+                var dealerUserQuery = ConfigurationManager.AppSettings["SFDCDealerUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], sfid);
+                var consumerkey = ConfigurationManager.AppSettings["SFDCConsumerkey"];
+                var consumersecret = ConfigurationManager.AppSettings["SFDCConsumersecret"];
+                var username = ConfigurationManager.AppSettings["SFDCUsername"];
+                var password = ConfigurationManager.AppSettings["SFDCPassword"];
+                var endPointURL = ConfigurationManager.AppSettings["SFDCEndPointURL"];
+
+                //create auth client to retrieve token
+                var auth = new AuthenticationClient();
+
+                //get back URL and token
+                auth.UsernamePasswordAsync(consumerkey, consumersecret, username, password, endPointURL).Wait();
+
+                var instanceUrl = auth.InstanceUrl;
+                var accessToken = auth.AccessToken;
+                var apiVersion = auth.ApiVersion;
+
+                var client = new ForceClient(instanceUrl, accessToken, apiVersion);
+                var dealerUser = client.QueryAsync<dynamic>(dealerUserQuery);
+                List<string> lstDealerUser = new List<string>();
+
+                foreach (JProperty item in dealerUser.Result.Records.FirstOrDefault())
+                {
+                    if (item.Name.ToString().ToLower() == "attributes")
+                        continue;
+
+                    if (item.Name.ToString().ToLower() == "account")
+                    {
+                        foreach (JProperty itemaccount in item.Value)
+                        {
+                            if (itemaccount.Name.ToString().ToLower() == "attributes")
+                                continue;
+
+                            lstDealerUser.Add(itemaccount.Value.ToString());
+                        }
+                    }
+                    else
+                    {
+                        lstDealerUser.Add(item.Value.ToString());
+                    }
+                }
+
+                _dealerUser.Customer_Number__c = string.IsNullOrEmpty(lstDealerUser[0]) ? string.Empty : lstDealerUser[0];
+                _dealerUser.TrueBLUStatus__c = string.IsNullOrEmpty(lstDealerUser[1]) ? string.Empty : lstDealerUser[1];
+                _dealerUser.Region__c = string.IsNullOrEmpty(lstDealerUser[2]) ? string.Empty : lstDealerUser[2];
+                _dealerUser.Co_op_budget__c = string.IsNullOrEmpty(lstDealerUser[3]) ? string.Empty : lstDealerUser[3];
+                _dealerUser.Display_Funds__c = string.IsNullOrEmpty(lstDealerUser[4]) ? string.Empty : lstDealerUser[4];
+                _dealerUser.Literature_Funds__c = string.IsNullOrEmpty(lstDealerUser[5]) ? string.Empty : lstDealerUser[5];
+                _dealerUser.POP_Funds__c = string.IsNullOrEmpty(lstDealerUser[6]) ? string.Empty : lstDealerUser[6];
+                _dealerUser.Direct_Marketing_Funds__c = string.IsNullOrEmpty(lstDealerUser[7]) ? string.Empty : lstDealerUser[7];
+                _dealerUser.ID = string.IsNullOrEmpty(lstDealerUser[8]) ? string.Empty : lstDealerUser[8];
+                _dealerUser.Name = string.IsNullOrEmpty(lstDealerUser[9]) ? string.Empty : lstDealerUser[9];
+                _dealerUser.FirstName = string.IsNullOrEmpty(lstDealerUser[10]) ? string.Empty : lstDealerUser[10];
+                _dealerUser.LastName = string.IsNullOrEmpty(lstDealerUser[11]) ? string.Empty : lstDealerUser[11];
+                _dealerUser.Email = string.IsNullOrEmpty(lstDealerUser[12]) ? string.Empty : lstDealerUser[12];
+                _dealerUser.Contact_Roles__c = string.IsNullOrEmpty(lstDealerUser[13]) ? string.Empty : lstDealerUser[13];
+
+                profile.firstName = _dealerUser.FirstName;
+                profile.lastName = _dealerUser.LastName;
+
+                if (_dealerUser.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
+                        _dealerUser.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
+                        _dealerUser.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase))
+                    profile.userType = "BLU" + _dealerUser.TrueBLUStatus__c;
+                else
+                    profile.userType = _dealerUser.TrueBLUStatus__c;
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        public static void GetSFDCInternalUser(Profile profile, string email)
+        {
+            SFDCInternalUser _internalUser = new SFDCInternalUser();
+            try
+            {
+                var dealerUserQuery = ConfigurationManager.AppSettings["SFDCInternalUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], email);
+                var consumerkey = ConfigurationManager.AppSettings["SFDCConsumerkey"];
+                var consumersecret = ConfigurationManager.AppSettings["SFDCConsumersecret"];
+                var username = ConfigurationManager.AppSettings["SFDCUsername"];
+                var password = ConfigurationManager.AppSettings["SFDCPassword"];
+                var endPointURL = ConfigurationManager.AppSettings["SFDCEndPointURL"];
+
+                //create auth client to retrieve token
+                var auth = new AuthenticationClient();
+
+                //get back URL and token
+                auth.UsernamePasswordAsync(consumerkey, consumersecret, username, password, endPointURL).Wait();
+
+                var instanceUrl = auth.InstanceUrl;
+                var accessToken = auth.AccessToken;
+                var apiVersion = auth.ApiVersion;
+
+                var client = new ForceClient(instanceUrl, accessToken, apiVersion);
+                var internalUser = client.QueryAsync<dynamic>(dealerUserQuery);
+                List<string> lstInternalUser = new List<string>();
+
+                foreach (JProperty item in internalUser.Result.Records.FirstOrDefault())
+                {
+                    if (item.Name.ToString().ToLower() == "attributes")
+                        continue;
+
+                    lstInternalUser.Add(item.Value.ToString());
+                }
+
+                _internalUser.Id = string.IsNullOrEmpty(lstInternalUser[0]) ? string.Empty : lstInternalUser[0];
+                _internalUser.Name = string.IsNullOrEmpty(lstInternalUser[1]) ? string.Empty : lstInternalUser[1];
+                _internalUser.FirstName = string.IsNullOrEmpty(lstInternalUser[2]) ? string.Empty : lstInternalUser[2];
+                _internalUser.LastName = string.IsNullOrEmpty(lstInternalUser[3]) ? string.Empty : lstInternalUser[3];
+                _internalUser.Email = string.IsNullOrEmpty(lstInternalUser[4]) ? string.Empty : lstInternalUser[4];
+                _internalUser.IsActive = string.IsNullOrEmpty(lstInternalUser[5]) ? string.Empty : lstInternalUser[5];
+                _internalUser.Sales_Rep_ID__c = string.IsNullOrEmpty(lstInternalUser[6]) ? string.Empty : lstInternalUser[6];
+                _internalUser.SOF__c = string.IsNullOrEmpty(lstInternalUser[7]) ? string.Empty : lstInternalUser[7];
+                _internalUser.Billing_GL__c = string.IsNullOrEmpty(lstInternalUser[8]) ? string.Empty : lstInternalUser[8];
+
+                profile.firstName = _internalUser.FirstName;
+                profile.lastName = _internalUser.LastName;
+                profile.userType = UserType.SALESREPS.ToString();
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
     }
 }

@@ -194,6 +194,7 @@ namespace AspDotNetStorefront
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                    (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
                 else
