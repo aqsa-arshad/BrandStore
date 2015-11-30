@@ -4,7 +4,7 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 
     <div class="content-box-03">
-        <div class="row address">
+        <div class="row address tablet-view">
 
             <asp:Repeater ID="rptAddresses" runat="server" OnItemCommand="rptAddresses_ItemCommand" OnItemDataBound="rptAddresses_ItemDataBound">
                 <ItemTemplate>
