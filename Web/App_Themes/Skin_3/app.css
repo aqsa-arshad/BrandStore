@@ -4775,12 +4775,12 @@ select {
   border: solid 1px #c0c0c0;
   width: 100%;
 }
-a {
+/*a {
   text-decoration: underline;
 }
 a:hover {
   text-decoration: none;
-}
+}*/
 .header-part {
   padding-top: 40px;
   width: 260px;
@@ -5516,6 +5516,9 @@ a:hover.mb-login-btn {
 .item-detail-box p {
   line-height: 23px;
   margin-bottom: 12px;
+}
+.item-detail-box p a{
+    text-decoration: underline;
 }
 .item-detail-box h5 {
   margin-top: 0;
