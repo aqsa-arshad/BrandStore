@@ -149,7 +149,7 @@ namespace AspDotNetStorefrontCore.ShippingCalculation
             bool shippingMethodToStateMapIsEmpty = Shipping.ShippingMethodToStateMapIsEmpty();
             bool shippingMethodToCountryMapIsEmpty = Shipping.ShippingMethodToCountryMapIsEmpty();
             //JH shipping estimator fix - check stateid rather than is registered
-            int customerStateID = AppLogic.GetStateID(this.ShippingAddress.State);
+            int customerStateID = AppLogic.GetStateIDByName(this.ShippingAddress.State);
             int customerCountryID = AppLogic.GetCountryID(this.ShippingAddress.Country);
             //end JH
             if (customerCountryID < 1 && this.ShippingAddress.Country.Length == 2)

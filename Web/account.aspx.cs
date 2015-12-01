@@ -530,8 +530,9 @@ namespace AspDotNetStorefront
             }
             if (BillingAddress.PaymentMethodLastUsed.Length != 0)
             {
-                litBillingAddress.Text += "<div>" + AppLogic.GetString("account.aspx.31", SkinID, ThisCustomer.LocaleSetting);
-                litBillingAddress.Text += BillingAddress.DisplayPaymentMethodInfo(ThisCustomer, BillingAddress.PaymentMethodLastUsed) + "</div>";
+                //need for future use
+                //litBillingAddress.Text += "<div>" + AppLogic.GetString("account.aspx.31", SkinID, ThisCustomer.LocaleSetting);
+              //  litBillingAddress.Text += "<div>" + BillingAddress.DisplayPaymentMethodInfo(ThisCustomer, BillingAddress.PaymentMethodLastUsed) + "</div>";
             }
 
             if (!(new POBoxAddressValidator()).IsValid(ShippingAddress))
