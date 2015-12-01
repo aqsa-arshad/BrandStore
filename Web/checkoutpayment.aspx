@@ -11,7 +11,7 @@
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
-        <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>
+        <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>       
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">            
              <h2 class="black-color">BILLING</h2>

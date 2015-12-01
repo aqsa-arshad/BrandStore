@@ -257,9 +257,16 @@ namespace AspDotNetStorefront
             if (!this.IsPostBack)
             {
                 if (!AppLogic.AppConfigBool("AllowMultipleShippingAddressPerOrder") && CommonLogic.QueryStringCanBeDangerousContent("dontupdateid").Length == 0)
-                {
+                {                   
                     // force primary shipping address id to be active on all cart items (safety check):
                     DB.ExecuteSQL("update ShoppingCart set ShippingAddressID=(select ShippingAddressID from customer where CustomerID=" + ThisCustomer.CustomerID.ToString() + ") where CustomerID=" + ThisCustomer.CustomerID.ToString() + " and CartType=" + ((int)CartTypeEnum.ShoppingCart).ToString());
+                  String QS=Request.QueryString["fillcontrols"];
+
+                  if (QS == "true" || QS == "True")
+                   {
+                       Response.Redirect("checkoutshipping.aspx?dontupdateid=true&fillcontrols=true");
+                   }
+                  else
                     Response.Redirect("checkoutshipping.aspx?dontupdateid=true");
                 }
                 InitializePageContent();

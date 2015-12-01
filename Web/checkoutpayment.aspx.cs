@@ -38,6 +38,7 @@ namespace AspDotNetStorefront
         string AllowedPaymentMethods = String.Empty;
         decimal CartTotal = Decimal.Zero;
         decimal NetTotal = Decimal.Zero;
+        bool FillControl=false;
 
 
         protected void Page_Init(object sender, EventArgs e)
@@ -46,14 +47,17 @@ namespace AspDotNetStorefront
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             // Need to set this here so it persists across loading viewstate
             ctrlCreditCardPanel.ShowCimSaveCard = authorizeNet.IsCimEnabled;
-        }
 
-        protected void Page_Load(object sender, EventArgs e)
+                   }
+
+               protected void Page_Load(object sender, EventArgs e)
         {
 
             // Set up CIM
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             PanelWallet.Visible = authorizeNet.IsCimEnabled;
+
+           
 
             if (!this.IsPostBack)
             {
@@ -68,12 +72,12 @@ namespace AspDotNetStorefront
                     else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
                     {
 
-                        Session["hdnreferalurl"] = "checkoutshipping.aspx";
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx?fillcontrols=true";
                     }
                     else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutreview"))
                     {
 
-                        Session["hdnreferalurl"] = "checkoutshipping.aspx";
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx?fillcontrols=true";
                     }
                 }
             }
@@ -206,10 +210,13 @@ namespace AspDotNetStorefront
             CartTotal = cart.Total(true);
             NetTotal = CartTotal - CommonLogic.IIF(cart.Coupon.CouponType == CouponTypeEnum.GiftCard, CommonLogic.IIF(CartTotal < cart.Coupon.DiscountAmount, CartTotal, cart.Coupon.DiscountAmount), 0);
 
+
             if (!this.IsPostBack)
             {
                 InitializePageContent();
+               
             }
+           
 
             ibAmazonSimplePay.ImageUrl = AppLogic.AppConfig("AMAZON.ButtonURL");
 
@@ -589,7 +596,27 @@ namespace AspDotNetStorefront
                         }
                         else
                         {
-                            if (!IsPostBack)
+                            bool fillcontrol = false;
+                            if (Request.UrlReferrer!=null)
+                            {
+                            String FromPage = Request.UrlReferrer.AbsolutePath;
+                            String fill = Request.QueryString["fillcontrols"];
+                           
+                            if (FromPage.Contains("checkoutshipping"))
+                            {
+
+                                if (Request.UrlReferrer.ToString().Contains("fillcontrols"))
+                                {
+                                    fillcontrol = true;
+                                }
+                                else
+                                fillcontrol = false;
+                            }                           
+                            else
+                                fillcontrol = true;   
+                            }
+
+                            if (!IsPostBack & fillcontrol)
                             {
                                 ctrlPaymentMethod.CREDITCARDChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0 || check));
                                 SetCreditCardPanelVisibility(((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0)));
@@ -599,28 +626,32 @@ namespace AspDotNetStorefront
                                 {
                                     if (ctrlCreditCardPanel.CreditCardName == "")
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CreditCardName = BillingAddress.CardName;
                                     }
                                     if (ctrlCreditCardPanel.CreditCardNumber == "")
                                     {
                                         //need commented line in future
-                                        ctrlCreditCardPanel.CreditCardNumber = "";// AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
+                                        ctrlCreditCardPanel.CreditCardNumber =  AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
                                     }
                                     if (ctrlCreditCardPanel.CreditCardVerCd == "")
                                     {
                                         //need commented line in future
-                                        ctrlCreditCardPanel.CreditCardVerCd = "";// AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
+                                        ctrlCreditCardPanel.CreditCardVerCd =  AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
                                     }
                                     if (ctrlCreditCardPanel.CreditCardType == AppLogic.GetString("address.cs.32", SkinID, ThisCustomer.LocaleSetting))
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CreditCardType = BillingAddress.CardType;
                                     }
                                     if (ctrlCreditCardPanel.CardExpMonth == AppLogic.GetString("address.cs.34", SkinID, ThisCustomer.LocaleSetting))
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CardExpMonth = BillingAddress.CardExpirationMonth;
                                     }
                                     if (ctrlCreditCardPanel.CardExpYr == AppLogic.GetString("address.cs.35", SkinID, ThisCustomer.LocaleSetting))
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CardExpYr = BillingAddress.CardExpirationYear;
                                     }
                                     if (!CommonLogic.IsStringNullOrEmpty(BillingAddress.CardStartDate))
@@ -2279,7 +2310,140 @@ namespace AspDotNetStorefront
 
         protected void btnback_Click(object sender, EventArgs e)
         {
-            if (Session["hdnreferalurl"] != "")
+              ErrorMessage err;
+            Address BillingAddress = new Address();
+            BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
+            String PM = AppLogic.CleanPaymentMethod(AppLogic.ro_PMCreditCard);           
+            if (PM.StartsWith(AppLogic.ro_PMCreditCard))
+            {
+                String CardName = ctrlCreditCardPanel.CreditCardName.Trim();
+                String CardNumber = ctrlCreditCardPanel.CreditCardNumber.Trim().Replace(" ", "");
+                String CardExtraCode = ctrlCreditCardPanel.CreditCardVerCd.Trim().Replace(" ", "");
+                String strCardType = ctrlCreditCardPanel.CreditCardType.Trim();
+                String CardExpirationMonth = ctrlCreditCardPanel.CardExpMonth.Trim().Replace(" ", "");
+                String CardExpirationYear = ctrlCreditCardPanel.CardExpYr.Trim().Replace(" ", "");
+
+                String CardStartDate = ctrlCreditCardPanel.CardStartMonth.Replace(" ", "").PadLeft(2, '0') + ctrlCreditCardPanel.CardStartYear.Trim().Replace(" ", "");
+                String CardIssueNumber = ctrlCreditCardPanel.CreditCardIssueNumber.Trim().Replace(" ", "");
+
+                // Save CIM payment profile id
+                if (CimWalletSelector.SelectedPaymentProfileId > 0)
+                {
+                    NetTotal = 1.0m;
+                    var paymentProfile = GatewayAuthorizeNet.DataUtility.GetPaymentProfileWrapper(ThisCustomer.CustomerID, ThisCustomer.EMail, CimWalletSelector.SelectedPaymentProfileId);
+                    CardNumber = paymentProfile.CreditCardNumberMasked;
+                    CardExpirationYear = paymentProfile.ExpirationYear;
+                    CardExpirationMonth = paymentProfile.ExpirationMonth;
+                    strCardType = paymentProfile.CardType;
+                    CardExtraCode = "NA";
+                }
+
+                //to do
+                //if (CardNumber.StartsWith("*") && CimWalletSelector.SelectedPaymentProfileId <= 0)
+                //{
+                //    // Still obscured in the form so use the original
+                //    //CardNumber = BillingAddress.CardNumber;
+                //}
+
+                //if (CardExtraCode.StartsWith("*"))
+                //{
+                //    // Still obscured in the form so use the original
+                //    CardExtraCode = AppLogic.GetCardExtraCodeFromSession(ThisCustomer);
+                //}
+
+                if (AppLogic.AppConfigBool("ValidateCreditCardNumbers"))
+                {
+                    BillingAddress.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+                    BillingAddress.CardName = CardName;
+                    BillingAddress.CardExpirationMonth = CardExpirationMonth;
+                    BillingAddress.CardExpirationYear = CardExpirationYear;
+                    BillingAddress.CardStartDate = CommonLogic.IIF((CardStartDate == "00" || !CommonLogic.IsNumber(CardStartDate)), String.Empty, CardStartDate);
+                    BillingAddress.CardIssueNumber = CardIssueNumber;
+
+                    CardType Type = CardType.Parse(strCardType);
+                    CreditCardValidator validator = new CreditCardValidator(CardNumber, Type);
+                    bool isValid = validator.Validate();
+
+                    BillingAddress.CardType = strCardType;
+                    if (!isValid)
+                    {
+                        CardNumber = string.Empty;
+                        // clear the card extra code
+                        AppLogic.StoreCardExtraCodeInSession(ThisCustomer, string.Empty);
+                    }
+                    BillingAddress.CardNumber = CardNumber;
+                    BillingAddress.UpdateDB();
+
+                    if (!isValid)
+                    {
+                        if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                        {
+                            //NOTE: Suppress error and allow zero amount to checkout
+                        }
+                        else
+                        {
+                            err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.3", 1, Localization.GetDefaultLocale())));
+                            Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                        }
+                    }
+
+                }
+
+                // store in appropriate session, encrypted, so it can be used when the order is actually "entered"
+                AppLogic.StoreCardExtraCodeInSession(ThisCustomer, CardExtraCode);
+
+
+                if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                {
+                    // remember their info:
+                    BillingAddress.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+                    BillingAddress.ClearCCInfo();
+                    BillingAddress.UpdateDB();
+                }
+                else
+                {
+                    // remember their info:                    
+                    BillingAddress.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+                    BillingAddress.CardName = CardName;
+                    BillingAddress.CardType = strCardType;
+                    BillingAddress.CardNumber = CardNumber;
+                    BillingAddress.CardExpirationMonth = CardExpirationMonth;
+                    BillingAddress.CardExpirationYear = CardExpirationYear;
+                    BillingAddress.CardStartDate = CommonLogic.IIF((CardStartDate == "00" || !CommonLogic.IsNumber(CardStartDate)), String.Empty, CardStartDate);
+                    BillingAddress.CardIssueNumber = CardIssueNumber;
+                    BillingAddress.UpdateDB();
+
+                    if (CardNumber.Length == 0)
+                    {
+                        err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.1", 1, Localization.GetDefaultLocale())));
+                        Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                    }
+                    if ((!AppLogic.AppConfigBool("CardExtraCodeIsOptional") && CardExtraCode.Length == 0))
+                    {
+                        err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.5", 1, Localization.GetDefaultLocale())));
+                        Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                    }
+
+                    // Save card to CIM if selected
+                    if (ctrlCreditCardPanel.CimSaveCard)
+                    {
+                        string errorMessage, errorCode;
+                        Int64 saveCardProfileId = 0;
+
+                        saveCardProfileId = GatewayAuthorizeNet.ProcessTools.SaveProfileAndPaymentProfile(
+                            ThisCustomer.CustomerID, ThisCustomer.EMail, AspDotNetStorefrontCore.AppLogic.AppConfig("StoreName"),
+                            saveCardProfileId, BillingAddress.AddressID, CardNumber, CardExtraCode, CardExpirationMonth, CardExpirationYear,
+                            out errorMessage, out errorCode);
+
+                        if (saveCardProfileId <= 0 && errorCode != "E00039")
+                        {
+                            err = new ErrorMessage(Server.HtmlEncode(errorMessage));
+                            Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                        }
+                    }
+                }
+            }
+            if (Session["hdnreferalurl"] != "" & Session["hdnreferalurl"] != null)
             {
                 Response.Redirect(Session["hdnreferalurl"].ToString());
             }
