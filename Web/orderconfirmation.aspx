@@ -41,7 +41,7 @@
                     <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
-                                <td class="td-50-percent">
+                                <td class="td-45-percent">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="primary-img-box">
@@ -66,18 +66,18 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="td-20-percent">
+                                <td class="td-30-percent">
                                     <span class="normal-heading black-color">Payment</span>
                                     <span>Price:    $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
                                 </td>
-                                <td class="td-20-percent">
+                                <td class="td-15-percent">
                                     <span class="normal-heading black-color">Quantity</span>
                                     <span>
                                         <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
                                     </span>
                                 </td>
                                 <td class="td-10-percent">
-                                    <span class="normal-heading black-color"></span>
+                                    <span class="normal-heading black-color">&nbsp</span>
                                     <span>
                                         <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
                                         <asp:Label ID="lblDelivery" runat="server" Text='<%# Eval("ShippingMethod") %>'></asp:Label>

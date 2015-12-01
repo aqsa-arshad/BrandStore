@@ -33,6 +33,13 @@ namespace AspDotNetStorefront
             if (shippingMethods.Count > 0)
             {
                 AnyShippingMethodsFound = true;
+                Label1.Visible = true;
+                btnContinueCheckout.Enabled = true;
+            }
+            else
+            {
+                Label1.Visible = false;
+                btnContinueCheckout.Enabled = false;
             }
             InitializeShippingMethodDisplayFormat(shippingMethods);
             ctrlShippingMethods.DataSource = shippingMethods;

@@ -70,5 +70,37 @@ namespace AspDotNetStorefrontCore
         public string department { get; set; }
         public string managerId { get; set; }
         public string manager { get; set; }
+        public string sfid { get; set; }
+    }
+
+    public class SFDCDealerUser
+    {
+        public string Customer_Number__c { get; set; }
+        public string TrueBLUStatus__c { get; set; }
+        public string Region__c { get; set; }
+        public string Co_op_budget__c { get; set; }
+        public string Display_Funds__c { get; set; }
+        public string Literature_Funds__c { get; set; }
+        public string POP_Funds__c { get; set; }
+        public string Direct_Marketing_Funds__c { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Contact_Roles__c { get; set; }
+    }
+
+    public class SFDCInternalUser
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string IsActive { get; set; }
+        public string Sales_Rep_ID__c { get; set; }
+        public string SOF__c { get; set; }
+        public string Billing_GL__c { get; set; }
     }
 }

@@ -8,7 +8,7 @@
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
 
-    <script type="text/javascript">        
+    <script type="text/javascript">
         $(document).ready(function () {
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
@@ -24,8 +24,8 @@
             }
             else if ('<%=parentCategoryID%>' == "5") {
                 $("#MCCategory5").addClass("active");
-            } 
-            else{
+            }
+            else {
                 $("#MCCategory6").addClass("active");
             }
         });
