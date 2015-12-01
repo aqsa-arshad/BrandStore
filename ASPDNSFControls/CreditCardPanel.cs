@@ -796,7 +796,6 @@ namespace AspDotNetStorefrontControls
             this.Controls.Add(_lblCCNumber);
             this.Controls.Add(new LiteralControl("</label>"));
             this.Controls.Add(_txtCCNumber);
-             this.Controls.Add(_rg);
             this.Controls.Add(new LiteralControl("<div class='form-text'>"));
             this.Controls.Add(_lblNoSpaces);
             this.Controls.Add(new LiteralControl("</div>"));
