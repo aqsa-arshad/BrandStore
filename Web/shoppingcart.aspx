@@ -44,8 +44,8 @@
 				</div>--%>
 
             <div>
-                <div class="td-45-percent pull-left"></div>
-                <div class="td-30-percent cart-btn-adjust pull-left">
+                <div class="td-40-percent pull-left"></div>
+                <div class="td-35-percent cart-btn-adjust pull-left">
                     <asp:Button ID="btnContinueShoppingTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
                         CssClass="btn btn-primary btn-block margin-none" runat="server" />
                 </div>
@@ -200,6 +200,7 @@
                         <asp:ValidationSummary ID="vsQuantity" runat="server" ValidationGroup="val" DisplayMode="List" ShowMessageBox="true" ShowSummary="false" />
                         <asp:Button ID="btnUpdateShoppingCart" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>"
                             runat="server" ValidationGroup="val" />
+                        <div class="clearfix"></div>
                         <%--<asp:Button ID="btnContinueShoppingBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
 					CssClass="button button-continue-shopping" runat="server" />--%>
                         <asp:Button ID="btnCheckOutNowBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.111 %>"

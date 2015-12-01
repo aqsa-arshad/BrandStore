@@ -2223,8 +2223,8 @@ table {
   background-color: transparent;
 }
 caption {
-  padding-top: 30px 5px 30px 0;
-  padding-bottom: 30px 5px 30px 0;
+  padding-top: 20px 5px 20px 0;
+  padding-bottom: 20px 5px 20px 0;
   color: #777777;
   text-align: left;
 }
@@ -2242,7 +2242,7 @@ th {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 30px 5px 30px 0;
+  padding: 20px 5px 20px 0;
   line-height: 1.52857143;
   vertical-align: top;
   border-top: 1px solid #c6c6c6;
@@ -4775,12 +4775,6 @@ select {
   border: solid 1px #c0c0c0;
   width: 100%;
 }
-/*a {
-  text-decoration: underline;
-}
-a:hover {
-  text-decoration: none;
-}*/
 .header-part {
   padding-top: 40px;
   width: 260px;
@@ -5517,11 +5511,11 @@ a:hover.mb-login-btn {
   line-height: 23px;
   margin-bottom: 12px;
 }
-.item-detail-box p a{
-    text-decoration: underline;
-}
 .item-detail-box h5 {
   margin-top: 0;
+}
+.item-detail-box a {
+  text-decoration: underline;
 }
 .select-quantity {
   float: left;
@@ -5587,50 +5581,6 @@ a:hover.mb-login-btn {
   line-height: 18px;
   padding-left: 10px;
 }
-table tbody tr {
-  border-bottom: solid 1px #c6c6c6;
-  width: 100%;
-  padding: 10px 0;
-  float: left;
-}
-@media screen and (min-width: 768px) {
-  table tbody tr {
-    float: none;
-  }
-}
-table tbody tr td {
-  border-top: none;
-  display: block;
-  padding: 10px 0;
-}
-@media screen and (min-width: 768px) {
-  table tbody tr td {
-    display: table-cell;
-    padding: 30px 5px 30px 0;
-    float: none;
-  }
-}
-table tbody tr td span {
-  border-top: none !important;
-  display: block;
-}
-table tbody tr td .underline-link {
-  display: table;
-  margin-top: 5px;
-}
-table tbody tr td .primary-img-box {
-  margin-top: 5px;
-}
-@media screen and (min-width: 768px) {
-  table tbody tr .col-md-5:nth-child(1) {
-    padding-right: 0;
-  }
-}
-@media screen and (min-width: 768px) {
-  table tbody tr .col-md-4:nth-child(1) {
-    padding-right: 0;
-  }
-}
 .table {
   border-collapse: collapse;
 }
@@ -5638,12 +5588,6 @@ table tbody tr td .primary-img-box {
   border-bottom: solid 1px #c6c6c6;
   width: 100%;
   padding: 10px 0;
-  float: left;
-}
-@media screen and (min-width: 768px) {
-  .table tbody tr {
-    float: none;
-  }
 }
 .table tbody tr td {
   border-top: none;
@@ -5653,8 +5597,7 @@ table tbody tr td .primary-img-box {
 @media screen and (min-width: 768px) {
   .table tbody tr td {
     display: table-cell;
-    padding: 30px 5px 30px 0;
-    float: none;
+    padding: 20px 5px 20px 0;
   }
 }
 .table tbody tr td span {
@@ -5664,6 +5607,33 @@ table tbody tr td .primary-img-box {
 .table tbody tr td .underline-link {
   display: table;
   margin-top: 5px;
+}
+@media screen and (min-width: 768px) {
+  .table tbody tr .col-md-5:nth-child(1) {
+    padding-right: 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .table tbody tr .col-md-4:nth-child(1) {
+    padding-right: 0;
+  }
+}
+.table tbody td .primary-img-box {
+  margin-bottom: 15px;
+}
+@media screen and (min-width: 768px) {
+  .table tbody td .primary-img-box {
+    margin-top: 4px;
+    margin-bottom: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+  .table tbody td .primary-img-box .img-responsive {
+    height: 160px;
+  }
+}
+.order-history tbody tr {
+  float: none;
 }
 .normal-heading {
   font-family: 'FrutigerLTStd-Roman';
@@ -5719,7 +5689,12 @@ table.shopping-cart tbody tr td {
   }
 }
 table.order-detail tbody tr td {
-  display: inline-block;
+  display: block;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  table.order-detail tbody tr td {
+    display: inline-block;
+  }
 }
 .td-55-percent,
 .td-50-percent,
@@ -5731,6 +5706,55 @@ table.order-detail tbody tr td {
 .td-20-percent,
 .td-15-percent {
   min-height: 1px;
+}
+@media screen and (min-width: 768px) {
+  .td-55-percent,
+  .td-50-percent,
+  .td-45-percent,
+  .td-40-percent,
+  .td-35-percent,
+  .td-30-percent,
+  .td-25-percent,
+  .td-20-percent,
+  .td-15-percent {
+    float: left;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .td-55-percent .row,
+  .td-50-percent .row,
+  .td-45-percent .row,
+  .td-40-percent .row,
+  .td-35-percent .row,
+  .td-30-percent .row,
+  .td-25-percent .row,
+  .td-20-percent .row,
+  .td-15-percent .row {
+    margin-right: 0;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .td-55-percent .col-md-5,
+  .td-50-percent .col-md-5,
+  .td-45-percent .col-md-5,
+  .td-40-percent .col-md-5,
+  .td-35-percent .col-md-5,
+  .td-30-percent .col-md-5,
+  .td-25-percent .col-md-5,
+  .td-20-percent .col-md-5,
+  .td-15-percent .col-md-5,
+  .td-55-percent .col-md-6,
+  .td-50-percent .col-md-6,
+  .td-45-percent .col-md-6,
+  .td-40-percent .col-md-6,
+  .td-35-percent .col-md-6,
+  .td-30-percent .col-md-6,
+  .td-25-percent .col-md-6,
+  .td-20-percent .col-md-6,
+  .td-15-percent .col-md-6 {
+    float: left;
+    width: 50%;
+  }
 }
 @media screen and (min-width: 768px) {
   .td-55-percent {
@@ -6348,7 +6372,7 @@ a:hover.underline-link {
 .cart-btn-adjust {
   padding-right: 0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .cart-btn-adjust {
     padding-right: 5%;
   }
