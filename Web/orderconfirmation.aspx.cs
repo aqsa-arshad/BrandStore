@@ -58,7 +58,7 @@ namespace AspDotNetStorefront
                 SendOrderinfotoRRD();
             }
 
-           
+
         }
 
 
@@ -203,7 +203,9 @@ namespace AspDotNetStorefront
                         int totalRRDRow = 0;
                         while (reader2.Read())
                         {
-                            if (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                            if ((reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                                 totalRRDRow++;
                         }
                         reader2.Close();
@@ -223,17 +225,19 @@ namespace AspDotNetStorefront
                         bool hasproducts = false;
                         while (reader.Read())
                         {
-                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
+                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                             {
-                                p = new orderService.brandstore.ws.Product();                               
+                                p = new orderService.brandstore.ws.Product();
                                 // set the product
-                                p.ID = reader["ProductID"].ToString(); 
+                                p.ID = reader["ProductID"].ToString();
                                 p.Quantity = reader["Quantity"].ToString();
                                 p.SKU = reader["SKU"].ToString();
                                 p.Description = reader["OrderedProductName"].ToString();
                                 pa[index] = p;
                                 index++;
-                                hasproducts = true;                            
+                                hasproducts = true;
                             }
                         }
 
@@ -280,11 +284,11 @@ namespace AspDotNetStorefront
                             Ba.PostalCode = reader2["BillingZip"].ToString();
 
                             //Set Shipping Address                         
-                            Sa.Name1 = reader2["ShippingFirstName"].ToString() +" " + reader2["ShippingLastName"].ToString();
+                            Sa.Name1 = reader2["ShippingFirstName"].ToString() + " " + reader2["ShippingLastName"].ToString();
                             Sa.Name2 = "";
                             Sa.Email = reader2["Email"].ToString();
                             Sa.Address1 = reader2["ShippingAddress1"].ToString();
-                            Sa.Address2 = reader2["ShippingAddress2"].ToString() + " " + reader2["ShippingSuit"] ;
+                            Sa.Address2 = reader2["ShippingAddress2"].ToString() + " " + reader2["ShippingSuit"];
                             Sa.City = reader2["ShippingCity"].ToString();
                             Sa.Locale = reader2["ShippingState"].ToString();
                             Sa.Country = reader2["ShippingCountryCode"].ToString();
@@ -314,11 +318,12 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
-                else {
+                else
+                {
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                
+
                 }
-                
+
             }
         }
 
