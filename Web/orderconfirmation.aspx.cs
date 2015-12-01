@@ -203,7 +203,7 @@ namespace AspDotNetStorefront
                         int totalRRDRow = 0;
                         while (reader2.Read())
                         {
-                            if (reader2["DistributorName"].ToString() == "RR Donnelley")
+                            if (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
                                 totalRRDRow++;
                         }
                         reader2.Close();
@@ -218,19 +218,19 @@ namespace AspDotNetStorefront
                         // Set the authentication
                         c.Username = AppLogic.AppConfig("fullfillmentapi_username");
                         c.Token = AppLogic.AppConfig("fullfillmentapi_password");
+                        SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
                         int index = 0;
                         bool hasproducts = false;
                         while (reader.Read())
                         {                            
                             if (reader["DistributorName"].ToString() ==AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
                             {
-                                p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();
-                                SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
+                                p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();                               
                                 // set the product
                                 p.ID = reader["ProductID"].ToString(); 
                                 p.Quantity = reader["Quantity"].ToString();
                                 p.SKU = reader["SKU"].ToString();
-                                p.Description = reader["Description"].ToString();
+                                p.Description = reader["OrderedProductName"].ToString();
                                 pa[index] = p;
                                 index++;
                                 hasproducts = true;                            
@@ -240,7 +240,7 @@ namespace AspDotNetStorefront
                         // call the service
                         if (hasproducts)
                         {
-                            com.developmentcmd.dev02.storefront_fullfillmentapi.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting));
+                            com.developmentcmd.dev02.storefront_fullfillmentapi.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, "RRD");
                             bool isok = rs.status.Equals(0) ? false : true;
                         }
                     }
@@ -269,23 +269,25 @@ namespace AspDotNetStorefront
                         if (reader2.Read())
                         {
                             //Set Billing address
-                            Ba.Name1 = reader2["BillingFirstName"].ToString() + ' ';
-                            Ba.Name2 = reader2["BillingLastName"].ToString();
+                            Ba.Name1 = reader2["BillingFirstName"].ToString() + ' ' + reader2["BillingLastName"].ToString();
+                            Ba.Name2 = "";
                             Ba.Email = reader2["Email"].ToString();
                             Ba.Address1 = reader2["BillingAddress1"].ToString();
+                            Ba.Address2 = reader2["BillingAddress2"].ToString() + " " + reader2["BillingSuit"];
                             Ba.City = reader2["BillingCity"].ToString();
-                            Ba.Locale = "";//to do
-                            Ba.Country = reader2["BillingCountry"].ToString();
+                            Ba.Locale = reader2["BillingState"].ToString();
+                            Ba.Country = reader2["BillingCountryCode"].ToString();
                             Ba.PostalCode = reader2["BillingZip"].ToString();
 
                             //Set Shipping Address                         
-                            Sa.Name1 = reader2["ShippingFirstName"].ToString();
-                            Sa.Name2 = reader2["ShippingLastName"].ToString();
+                            Sa.Name1 = reader2["ShippingFirstName"].ToString() +" " + reader2["ShippingLastName"].ToString();
+                            Sa.Name2 = "";
                             Sa.Email = reader2["Email"].ToString();
                             Sa.Address1 = reader2["ShippingAddress1"].ToString();
+                            Sa.Address2 = reader2["ShippingAddress2"].ToString() + " " + reader2["ShippingSuit"] ;
                             Sa.City = reader2["ShippingCity"].ToString();
-                            Sa.Locale = "";//
-                            Sa.Country = reader2["ShippingCountry"].ToString();
+                            Sa.Locale = reader2["ShippingState"].ToString();
+                            Sa.Country = reader2["ShippingCountryCode"].ToString();
                             Sa.PostalCode = reader2["ShippingZip"].ToString();
 
                         }

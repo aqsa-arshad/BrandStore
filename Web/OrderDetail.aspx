@@ -21,7 +21,7 @@
         <div class="top-row-adjsut border-line">
             <div >
                 <%--Bill to Address--%>
-                <div class="td-50-percent pull-left">
+                <div class="td-55-percent">
                     <span class="normal-heading black-color">Shipped to</span>
                     <p>
                         <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
@@ -42,7 +42,7 @@
                     </p>
                 </div>
                 <%--Ship to Address--%>
-                <div class="td-50-percent pull-left ">
+                <div class="td-45-percent">
                     <span class="normal-heading black-color">Billed to</span>
                     <p>
                         <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
@@ -62,7 +62,7 @@
                         <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
                     </p>
                 </div>
-                <div class="td-50-percent pull-left">
+                <div class="td-55-percent">
                     <span class="normal-heading black-color">Payment Method</span>
                     <p>
                         <asp:Label class="block-text" ID="lblPMCardInfo" runat="server"></asp:Label>
@@ -84,7 +84,7 @@
                     <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
-                                <td class="td-50-percent">
+                                <td class="td-55-percent">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="primary-img-box">
@@ -111,26 +111,26 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="td-50-percent">
+                                <td class="td-45-percent">
                                     <span class="normal-heading black-color">Quantity</span>
                                     <span>
                                         <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label>
                                     </span>
                                 </td>
 
-                                <td class="td-50-percent">
+                                <td class="td-55-percent">
                                     <span class="normal-heading black-color">Payment </span>
                                     <span>Unit Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductRegularPrice")), 2).ToString() %></span>
                                     <span>Total Price:     $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
                                 </td>
-                                <td class="td-25-percent">
+                                <td class="td-30-percent">
                                     <span class="normal-heading black-color">Delivery </span>
                                     <span>
                                         <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
                                         <asp:Label ID="lblDelivery" runat="server"></asp:Label>
                                     </span>
                                 </td>
-                                <td class="td-25-percent">
+                                <td class="td-15-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
                                     <asp:HyperLink ID="hlTrackItem" class="underline-link" runat="server">Track item &gt;</asp:HyperLink>
                                 </td>
@@ -143,10 +143,10 @@
         </div>
 
         <%--Billing Amounts--%>
-        <div class="row">
-            <div class="col-md-6">
+        <div>
+            <div class="td-55-percent">
             </div>
-            <div class="col-md-6">
+            <div class="td-45-percent">
                 <p>
                     <span class="black-blu-label">
                         <font>Subtotal: $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
@@ -175,6 +175,7 @@
                     <asp:HyperLink ID="hplReOrder" runat="server" class="btn btn-primary btn-half" role="button" Text="Reorder"></asp:HyperLink>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 </asp:Content>
