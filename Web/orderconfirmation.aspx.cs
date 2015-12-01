@@ -222,8 +222,8 @@ namespace AspDotNetStorefront
                         int index = 0;
                         bool hasproducts = false;
                         while (reader.Read())
-                        {                            
-                            if (reader["DistributorName"].ToString() ==AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                        {
+                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                             {
                                 p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();                               
                                 // set the product
