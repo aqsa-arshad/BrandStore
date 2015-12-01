@@ -4,8 +4,8 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <div class="content-box-03 body-forms">
         <p>Update your address by editing the fields below. Cannot ship to P.O boxes. <label>*Required field</label></p>
-        <div class="row">
-            <div class="col-md-5">
+        <div class="row tablet-view">
+            <div class="col-md-5 pull-left-md pull-sm-no">
                 <div class="form-group">
                     <asp:HiddenField ID="hfAddressID" runat="server" />
                     <asp:HiddenField ID="hfPreviousURL" runat="server" />
@@ -37,7 +37,7 @@
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtCompany" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.94 %>" ValidationExpression="^[a-zA-Z][0-9a-zA-Z .,'-]*$" />
                 </div>
             </div>
-            <div class="col-md-5 pull-right">
+            <div class="col-md-5 pull-right pull-sm-no">
                 <div class="form-group">
                     <label><asp:Label ID="lblAddress1" runat="server" Text='<%$ Tokens:StringResource, address.cs.6 %>'></asp:Label></label>
                     <asp:TextBox ID="txtAddress1" CssClass="form-control" runat="server" MaxLength="100"></asp:TextBox>
