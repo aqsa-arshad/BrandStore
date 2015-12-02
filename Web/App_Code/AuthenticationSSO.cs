@@ -9,10 +9,11 @@ using Newtonsoft.Json;
 using System.Web;
 using System.Text;
 using System.Data.SqlClient;
-using Salesforce.Common;
-using Salesforce.Force;
 using Newtonsoft.Json.Linq;
 using System.Runtime;
+using SFDCSoapClient;
+using System.ServiceModel;
+
 
 namespace AspDotNetStorefront
 {
@@ -61,8 +62,8 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             finally
-            { 
-             
+            {
+
             }
             return new Customer(userName, true);
         }
@@ -153,7 +154,7 @@ namespace AspDotNetStorefront
         /// <param name="profile">profile</param>
         /// <param name="userName">userName</param>
         /// <param name="password">password</param>
-        private static void UpdateCustomer(Profile profile, string userName, string password, bool IsCustomerAvailable)
+        private static void UpdateCustomer(AspDotNetStorefrontCore.Profile profile, string userName, string password, bool IsCustomerAvailable)
         {
             try
             {
@@ -236,7 +237,7 @@ namespace AspDotNetStorefront
         /// <param name="CustomerID">CustomerID</param>
         /// <param name="AddressID">AddressID</param>
         /// <returns></returns>
-        private static int AddUpdateAddress(Profile profile, int CustomerID, int AddressID)
+        private static int AddUpdateAddress(AspDotNetStorefrontCore.Profile profile, int CustomerID, int AddressID)
         {
 
             Address anyAddress = new Address();
@@ -330,18 +331,68 @@ namespace AspDotNetStorefront
             }
         }
 
-        public static void GetSFDCDealerUser(Profile profile, string sfid)
+        public static void GetSFDCDealerUser(AspDotNetStorefrontCore.Profile profile, string sfid)
         {
-            SFDCDealerUser _dealerUser = new SFDCDealerUser();
             try
             {
                 var dealerUserQuery = ConfigurationManager.AppSettings["SFDCDealerUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], sfid);
-                var consumerkey = ConfigurationManager.AppSettings["SFDCConsumerkey"];
-                var consumersecret = ConfigurationManager.AppSettings["SFDCConsumersecret"];
                 var username = ConfigurationManager.AppSettings["SFDCUsername"];
                 var password = ConfigurationManager.AppSettings["SFDCPassword"];
-                var endPointURL = ConfigurationManager.AppSettings["SFDCEndPointURL"];
+                var securityToken = ConfigurationManager.AppSettings["SFDCSecurityToken"];
 
+                SoapClient loginClient; // for login endpoint
+                SoapClient client; // for API endpoint
+                SessionHeader header;
+                EndpointAddress endpoint;
+                SFDCDealerUser _dealerUser = new SFDCDealerUser();
+
+                // Create a SoapClient specifically for logging in
+                loginClient = new SoapClient();
+
+                // SFDC Login
+                LoginResult lr = loginClient.login(null, username, password + securityToken);
+
+                if (lr.passwordExpired)
+                {
+                    //////return false;
+                }
+
+                endpoint = new EndpointAddress(lr.serverUrl);
+                header = new SessionHeader();
+                header.sessionId = lr.sessionId;
+
+                // Create and cache an API endpoint client
+                client = new SoapClient("Soap", endpoint);
+
+
+                QueryResult qr = new QueryResult();
+                client.query(header,null, null, null, dealerUserQuery, out qr);
+
+                if (qr.size > 0)
+                {
+                    Contact contact = (Contact)qr.records.FirstOrDefault();
+
+                    _dealerUser.FirstName = contact.FirstName;
+                    _dealerUser.LastName = contact.LastName;
+                    _dealerUser.TrueBLUStatus__c = contact.Account.TrueBLUStatus__c;
+                }
+
+                profile.firstName = _dealerUser.FirstName;
+                profile.lastName = _dealerUser.LastName;
+
+                if (_dealerUser.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
+                        _dealerUser.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
+                        _dealerUser.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase))
+                    profile.userType = "BLU" + _dealerUser.TrueBLUStatus__c;
+                else
+                    profile.userType = _dealerUser.TrueBLUStatus__c;
+
+                // SFDC Logout
+                client.logout(header);
+
+                #region "OLD - SFDC RESTAPI Code using Developer.Force "
+
+                /*
                 //create auth client to retrieve token
                 var auth = new AuthenticationClient();
 
@@ -401,6 +452,9 @@ namespace AspDotNetStorefront
                     profile.userType = "BLU" + _dealerUser.TrueBLUStatus__c;
                 else
                     profile.userType = _dealerUser.TrueBLUStatus__c;
+                */
+
+                #endregion
             }
             catch (Exception ex)
             {
@@ -410,18 +464,61 @@ namespace AspDotNetStorefront
             }
         }
 
-        public static void GetSFDCInternalUser(Profile profile, string email)
-        {
-            SFDCInternalUser _internalUser = new SFDCInternalUser();
+        public static void GetSFDCInternalUser(AspDotNetStorefrontCore.Profile profile, string email)
+        {            
             try
             {
-                var dealerUserQuery = ConfigurationManager.AppSettings["SFDCInternalUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], email);
-                var consumerkey = ConfigurationManager.AppSettings["SFDCConsumerkey"];
-                var consumersecret = ConfigurationManager.AppSettings["SFDCConsumersecret"];
+                var internalUserQuery = ConfigurationManager.AppSettings["SFDCInternalUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], email);
                 var username = ConfigurationManager.AppSettings["SFDCUsername"];
                 var password = ConfigurationManager.AppSettings["SFDCPassword"];
-                var endPointURL = ConfigurationManager.AppSettings["SFDCEndPointURL"];
+                var securityToken = ConfigurationManager.AppSettings["SFDCSecurityToken"];
 
+                SoapClient loginClient; // for login endpoint
+                SoapClient client; // for API endpoint
+                SessionHeader header;
+                EndpointAddress endpoint;
+                SFDCInternalUser _internalUser = new SFDCInternalUser();
+
+                // Create a SoapClient specifically for logging in
+                loginClient = new SoapClient();
+
+                // SFDC Login
+                LoginResult lr = loginClient.login(null, username, password + securityToken);
+
+                if (lr.passwordExpired)
+                {
+                    //////return false;
+                }
+
+                endpoint = new EndpointAddress(lr.serverUrl);
+                header = new SessionHeader();
+                header.sessionId = lr.sessionId;
+
+                // Create and cache an API endpoint client
+                client = new SoapClient("Soap", endpoint);
+
+
+                QueryResult qr = new QueryResult();
+                client.query(header, null, null, null, internalUserQuery, out qr);
+
+                if (qr.size > 0)
+                {
+                    User user = (User)qr.records.FirstOrDefault();
+
+                    _internalUser.FirstName = user.FirstName;
+                    _internalUser.LastName = user.LastName;
+                }
+
+                profile.firstName = _internalUser.FirstName;
+                profile.lastName = _internalUser.LastName;
+                profile.userType = UserType.SALESREPS.ToString();
+
+                // SFDC Logout
+                client.logout(header);
+
+                #region "OLD - SFDC RESTAPI Code using Developer.Force "
+
+                /*
                 //create auth client to retrieve token
                 var auth = new AuthenticationClient();
 
@@ -457,6 +554,9 @@ namespace AspDotNetStorefront
                 profile.firstName = _internalUser.FirstName;
                 profile.lastName = _internalUser.LastName;
                 profile.userType = UserType.SALESREPS.ToString();
+                */
+
+                #endregion
             }
             catch (Exception ex)
             {
