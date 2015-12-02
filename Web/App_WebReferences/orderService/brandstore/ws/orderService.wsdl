@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php?wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="on://ws.brandstore.jeld-wen.com/storefront_fullfillment/orderService.php?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="on://ws.brandstore.jeld-wen.com/storefront_fullfillment/orderService.php?wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <xsd:schema targetNamespace="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php?wsdl">
+    <xsd:schema targetNamespace="on://ws.brandstore.jeld-wen.com/storefront_fullfillment/orderService.php?wsdl">
       <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
       <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
       <xsd:complexType name="Credentials">
@@ -93,7 +93,7 @@
   </wsdl:binding>
   <wsdl:service name="orderService">
     <wsdl:port name="orderServicePort" binding="tns:orderServiceBinding">
-      <soap:address location="http://storefront_fullfillmentapi.dev02.developmentcmd.com/orderService.php" />
+      <soap:address location="https://ws.brandstore.jeld-wen.com:443/storefront_fullfillment/orderService.php" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

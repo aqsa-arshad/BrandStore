@@ -58,7 +58,7 @@ namespace AspDotNetStorefront
                 SendOrderinfotoRRD();
             }
 
-           
+
         }
 
 
@@ -203,17 +203,19 @@ namespace AspDotNetStorefront
                         int totalRRDRow = 0;
                         while (reader2.Read())
                         {
-                            if (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                            if ((reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                                 totalRRDRow++;
                         }
                         reader2.Close();
                         reader = cmd.ExecuteReader();
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.orderService os = new com.developmentcmd.dev02.storefront_fullfillmentapi.orderService();
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.Credentials c = new com.developmentcmd.dev02.storefront_fullfillmentapi.Credentials();
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress Ba = new com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress();
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress Sa = new com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress();
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.Product p;
-                        com.developmentcmd.dev02.storefront_fullfillmentapi.Product[] pa = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product[totalRRDRow];
+                        orderService.brandstore.ws.orderService os = new orderService.brandstore.ws.orderService();
+                        orderService.brandstore.ws.Credentials c = new orderService.brandstore.ws.Credentials();
+                        orderService.brandstore.ws.BillingAddress Ba = new orderService.brandstore.ws.BillingAddress();
+                        orderService.brandstore.ws.ShippingAddress Sa = new orderService.brandstore.ws.ShippingAddress();
+                        orderService.brandstore.ws.Product p;
+                        orderService.brandstore.ws.Product[] pa = new orderService.brandstore.ws.Product[totalRRDRow];
 
                         // Set the authentication
                         c.Username = AppLogic.AppConfig("fullfillmentapi_username");
@@ -223,24 +225,26 @@ namespace AspDotNetStorefront
                         bool hasproducts = false;
                         while (reader.Read())
                         {
-                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
+                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                             {
-                                p = new com.developmentcmd.dev02.storefront_fullfillmentapi.Product();                               
+                                p = new orderService.brandstore.ws.Product();
                                 // set the product
-                                p.ID = reader["ProductID"].ToString(); 
+                                p.ID = reader["ProductID"].ToString();
                                 p.Quantity = reader["Quantity"].ToString();
                                 p.SKU = reader["SKU"].ToString();
                                 p.Description = reader["OrderedProductName"].ToString();
                                 pa[index] = p;
                                 index++;
-                                hasproducts = true;                            
+                                hasproducts = true;
                             }
                         }
 
                         // call the service
                         if (hasproducts)
                         {
-                            com.developmentcmd.dev02.storefront_fullfillmentapi.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, "RRD");
+                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, "RRD");
                             bool isok = rs.status.Equals(0) ? false : true;
                         }
                     }
@@ -254,7 +258,7 @@ namespace AspDotNetStorefront
             }
         }
 
-        private void SetBillingAndShippingAddresses(ref com.developmentcmd.dev02.storefront_fullfillmentapi.BillingAddress Ba, ref com.developmentcmd.dev02.storefront_fullfillmentapi.ShippingAddress Sa, int OrderNumber)
+        private void SetBillingAndShippingAddresses(ref orderService.brandstore.ws.BillingAddress Ba, ref orderService.brandstore.ws.ShippingAddress Sa, int OrderNumber)
         {
             try
             {
@@ -279,7 +283,8 @@ namespace AspDotNetStorefront
                             Ba.Country = String.IsNullOrEmpty(reader2["BillingCountryCode"].ToString()) ? String.Empty : reader2["BillingCountryCode"].ToString();
                             Ba.PostalCode = String.IsNullOrEmpty(reader2["BillingZip"].ToString()) ? String.Empty : reader2["BillingZip"].ToString();
                                                        
-                            //Set Shipping Address                         
+                            //Set Shipping Address                       
+
                             Sa.Name1 = reader2["ShippingFirstName"].ToString() + ' ' + reader2["ShippingLastName"].ToString();
                             Sa.Name2 = "";
                             Sa.Email = String.IsNullOrEmpty(reader2["Email"].ToString()) ? String.Empty : reader2["Email"].ToString();
@@ -289,6 +294,7 @@ namespace AspDotNetStorefront
                             Sa.Locale = String.IsNullOrEmpty(reader2["ShippingState"].ToString()) ? String.Empty : reader2["ShippingState"].ToString();
                             Sa.Country = String.IsNullOrEmpty(reader2["ShippingCountryCode"].ToString()) ? String.Empty : reader2["ShippingCountryCode"].ToString();
                             Sa.PostalCode = String.IsNullOrEmpty(reader2["ShippingZip"].ToString()) ? String.Empty : reader2["ShippingZip"].ToString();
+
 
 
                         }
@@ -315,11 +321,12 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
-                else {
+                else
+                {
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                
+
                 }
-                
+
             }
         }
 
