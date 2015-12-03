@@ -6194,6 +6194,8 @@ a:hover.mb-link {
   background-image: none;
   letter-spacing: 1.4px;
   font-size: 12px;
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 @media screen and (min-width: 800px) {
   .btn-primary {
@@ -6203,6 +6205,17 @@ a:hover.mb-link {
 }
 .btn-primary[disabled] {
   background-color: #66715f;
+}
+.btn-center {
+  text-align: center;
+}
+.btn-center .btn-primary {
+  min-width: 100%;
+}
+@media screen and (min-width: 800px) {
+  .btn-center .btn-primary {
+    min-width: 250px;
+  }
 }
 .body-heading {
   padding-bottom: 36px;
@@ -6234,17 +6247,6 @@ a.underline-link {
 }
 a:hover.underline-link {
   text-decoration: none;
-}
-.btn-center {
-  text-align: center;
-}
-.btn-center .btn-primary {
-  min-width: 100%;
-}
-@media screen and (min-width: 800px) {
-  .btn-center .btn-primary {
-    min-width: 250px;
-  }
 }
 .btn-half {
   width: 49%;
@@ -6391,6 +6393,9 @@ a:hover.underline-link {
 }
 .link-unclickable a:nth-child(2) {
   pointer-events: none;
+}
+.disc-style {
+  list-style: disc;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .checkout-tablet-main .checkout-tablet-view {
