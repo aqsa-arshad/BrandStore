@@ -4722,6 +4722,7 @@ input[type="text"],
 input[type="password"],
 .form-control {
   border: 1px solid #c6c6c6;
+  border-radius: 0;
   padding: 4px 12px;
   height: 26px;
   color: #1d446b;
@@ -6189,6 +6190,9 @@ a:hover.mb-link {
   text-decoration: none;
   color: #ffffff;
 }
+.btn {
+  border-radius: 0;
+}
 .btn-primary {
   border: 0;
   background-image: none;
@@ -6212,7 +6216,7 @@ a:hover.mb-link {
 .btn-center .btn-primary {
   min-width: 100%;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .btn-center .btn-primary {
     min-width: 250px;
   }
@@ -6418,6 +6422,11 @@ a:hover.underline-link {
   }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
+  .tablet-view .col-md-4 {
+    width: 35%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .tablet-view .col-md-5 {
     width: 42%;
   }
@@ -6425,5 +6434,10 @@ a:hover.underline-link {
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .tablet-view .col-md-6 {
     width: 50%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .tablet-view .col-md-8 {
+    width: 65%;
   }
 }
