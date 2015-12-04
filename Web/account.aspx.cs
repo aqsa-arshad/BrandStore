@@ -543,7 +543,7 @@ namespace AspDotNetStorefront
             {
                 if (ShippingAddress.AddressID != 0)
                 {
-                    litShippingAddress.Text = ShippingAddress.DisplayHTML(true);
+                    litShippingAddress.Text = "Cannot ship to P.O boxes"+ ShippingAddress.DisplayHTML(true);
                 }
             }
                
