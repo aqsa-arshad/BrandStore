@@ -244,7 +244,7 @@ namespace AspDotNetStorefront
                         // call the service
                         if (hasproducts)
                         {
-                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, "RRD");
+                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting));
                             bool isok = rs.status.Equals(0) ? false : true;
                         }
                     }
