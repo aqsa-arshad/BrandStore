@@ -320,10 +320,13 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                    (e.Item.FindControl("hlLearnmore") as LinkButton).Text = "Learn More";
+                    
                 }
                 else
                 {
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                    (e.Item.FindControl("hlLearnmore") as LinkButton).Visible = false;
 
                 }
 
