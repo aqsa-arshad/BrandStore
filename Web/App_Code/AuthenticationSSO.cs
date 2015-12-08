@@ -19,6 +19,7 @@ namespace AspDotNetStorefront
 {
     public static class AuthenticationSSO
     {
+        
         /// <summary>
         /// Initialize Customer Object after OKTA Authentication
         /// </summary>
@@ -82,11 +83,11 @@ namespace AspDotNetStorefront
 
             using (var client = new HttpClient())
             {
-                var url = ConfigurationManager.AppSettings["SessionURL"];
+                var url = AppLogic.AppConfig("OKTASessionURL");
                 try
                 {
-                    var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
-                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                    var authorization = AppLogic.AppConfig("OKTAAuthorization") + " " + AppLogic.AppConfig("OKTAAccessToken");
+                    client.BaseAddress = new Uri(AppLogic.AppConfig("OKTADefaultURL"));
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Add("Authorization", authorization);
@@ -116,15 +117,15 @@ namespace AspDotNetStorefront
 
             using (var client = new HttpClient())
             {
-                var url = ConfigurationManager.AppSettings["UserURL"] + userName;
+                var url = AppLogic.AppConfig("OKTAUserURL") + userName;
                 try
                 {
 
-                    var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
-                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                    var authorization = AppLogic.AppConfig("OKTAAuthorization") + " " + AppLogic.AppConfig("OKTAAccessToken");
+                    client.BaseAddress = new Uri(AppLogic.AppConfig("OKTADefaultURL"));
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Add("Authorization", authorization);
+                    client.DefaultRequestHeaders.Add("Authorization", authorization); 
 
                 }
                 catch (Exception ex)
@@ -311,11 +312,11 @@ namespace AspDotNetStorefront
         {
             using (var client = new HttpClient())
             {
-                var url = ConfigurationManager.AppSettings["UserURL"] + UserModelID + ConfigurationManager.AppSettings["ResetPassword"];
+                var url = AppLogic.AppConfig("OKTAUserURL") + UserModelID + AppLogic.AppConfig("OKTAResetPasswordURL"); //ConfigurationManager.AppSettings["ResetPassword"];
                 try
                 {
-                    var authorization = ConfigurationManager.AppSettings["Authorization"] + " " + ConfigurationManager.AppSettings["AccessToken"];
-                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["DefaultURL"]);
+                    var authorization = AppLogic.AppConfig("OKTAAuthorization") + " " + AppLogic.AppConfig("OKTAAccessToken");
+                    client.BaseAddress = new Uri(AppLogic.AppConfig("OKTADefaultURL"));
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Add("Authorization", authorization);
@@ -335,10 +336,10 @@ namespace AspDotNetStorefront
         {
             try
             {
-                var dealerUserQuery = ConfigurationManager.AppSettings["SFDCDealerUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], sfid);
-                var username = ConfigurationManager.AppSettings["SFDCUsername"];
-                var password = ConfigurationManager.AppSettings["SFDCPassword"];
-                var securityToken = ConfigurationManager.AppSettings["SFDCSecurityToken"];
+                var dealerUserQuery = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), sfid);
+                var username = AppLogic.AppConfig("SFDCUsername");
+                var password = AppLogic.AppConfig("SFDCPassword");
+                var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
 
                 SoapClient loginClient; // for login endpoint
                 SoapClient client; // for API endpoint
@@ -468,10 +469,10 @@ namespace AspDotNetStorefront
         {            
             try
             {
-                var internalUserQuery = ConfigurationManager.AppSettings["SFDCInternalUserQuery"].Replace(ConfigurationManager.AppSettings["SFDCQueryParam"], email);
-                var username = ConfigurationManager.AppSettings["SFDCUsername"];
-                var password = ConfigurationManager.AppSettings["SFDCPassword"];
-                var securityToken = ConfigurationManager.AppSettings["SFDCSecurityToken"];
+                var internalUserQuery = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
+                var username = AppLogic.AppConfig("SFDCUsername");
+                var password = AppLogic.AppConfig("SFDCPassword");
+                var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
 
                 SoapClient loginClient; // for login endpoint
                 SoapClient client; // for API endpoint
