@@ -15,6 +15,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.XPath;
 using System.Text.RegularExpressions;
+using AspDotNetStorefrontCore.dhl;
 
 namespace AspDotNetStorefrontCore
 {
@@ -637,7 +638,7 @@ function popupzoom(url,alturl)
         }
 
         public virtual string EntityLink(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
-        {
+        {            
             InputValidator IV = new InputValidator("EntityLink");
             String SEName = IV.ValidateString("SEName", sSEName);
             String EntityName = IV.ValidateString("EntityName", sEntityName);
@@ -651,7 +652,56 @@ function popupzoom(url,alturl)
             }
             return result;
         }
+        /*Added by Tayyab to show immages with categories in menue*/
+        public virtual string ImmageEntityLink(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            InputValidator IV = new InputValidator("EntityLink");
+            String SEName = IV.ValidateString("SEName", sSEName);
+            String EntityName = IV.ValidateString("EntityName", sEntityName);
+            int EntityID = IV.ValidateInt("EntityID", sEntityID);
+            bool IncludeATag = IV.ValidateBool("IncludeATag", sIncludeATag);
+            string result = String.Empty;
+            result = SE.MakeEntityLink(EntityName, EntityID, SEName);
 
+            result = "images/category/icon/" + sEntityID + ".png";
+
+            return result;
+        }
+
+        public virtual string ImmageEntityLinkActive(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            InputValidator IV = new InputValidator("EntityLink");
+            String SEName = IV.ValidateString("SEName", sSEName);
+            String EntityName = IV.ValidateString("EntityName", sEntityName);
+            int EntityID = IV.ValidateInt("EntityID", sEntityID);
+            bool IncludeATag = IV.ValidateBool("IncludeATag", sIncludeATag);
+            string result = String.Empty;
+            result = SE.MakeEntityLink(EntityName, EntityID, SEName);
+
+            result = "images/category/icon/" + sEntityID + "_active.png";
+
+            return result;
+        }
+
+        public virtual string GetCategoryID(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            String result = "";
+            result = "Category" + sEntityID;
+
+
+
+            return result;
+        }
+      
+        public virtual string GetCategoryIDForMobile(String sEntityID, String sSEName, String sEntityName, String sIncludeATag)
+        {
+            String result = "";
+            result = "MobileCategory" + sEntityID;
+
+
+
+            return result;
+        }
         public virtual string ObjectLink(String sObjectID, String sSEName, String sObjectName, String sIncludeATag)
         {
             InputValidator IV = new InputValidator("ObjectLink");
@@ -1510,7 +1560,7 @@ function popupzoom(url,alturl)
                     StringBuilder tmpS = new StringBuilder(4096);
                     tmpS.Append("<div class=\"image-wrap medium-image-wrap\">");
                     String ProductPicture = String.Empty;
-					ProductPicture = AppLogic.LookupImage("Product", ID, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    ProductPicture = AppLogic.LookupImage("Product", ID, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                     String LargePic = AppLogic.LookupImage("Product", ID, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                     bool HasLargePic = (LargePic.Length != 0);
                     String LargePicForPopup = LargePic;
@@ -1629,7 +1679,7 @@ function popupzoom(url,alturl)
                 }
                 else
                 {
-					result = AppLogic.LookupImage("Product", ID, IFO, sku, DesiredSize.ToLowerInvariant(), ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    result = AppLogic.LookupImage("Product", ID, IFO, sku, DesiredSize.ToLowerInvariant(), ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
 
                     // we must ALWAYS return an image here back to Xsl (this is a little different than the prior version logic, where large did not have a "no picture" returned!)
                     if (result.Length == 0)
@@ -1745,8 +1795,8 @@ function popupzoom(url,alturl)
             string seName = AppLogic.GetProductSEName(ProductID, ThisCustomer.LocaleSetting);
 
             if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
-            {				
-				result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+            {
+                result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 result = "<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + result + "\" />";
                 if (IncludeATag)
                 {
@@ -1758,7 +1808,7 @@ function popupzoom(url,alturl)
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
                 String ProductPicture = String.Empty;
-				ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 bool HasLargePic = (LargePic.Length != 0);
                 String LargePicForPopup = LargePic;
@@ -1971,8 +2021,8 @@ function popupzoom(url,alturl)
 
 
             if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
-            {			
-				result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+            {
+                result = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 result = "<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + result + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />";
                 if (IncludeATag)
                 {
@@ -1983,8 +2033,9 @@ function popupzoom(url,alturl)
             {
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div class=\"image-wrap product-image-wrap\">");
+                
                 String ProductPicture = String.Empty;
-				ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ProductPicture = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 bool HasLargePic = (LargePic.Length != 0);
                 String LargePicForPopup = LargePic;
@@ -2051,6 +2102,7 @@ function popupzoom(url,alturl)
                     tmpS.Append("<div id=\"divProductPicZ" + ProductID.ToString() + "\" style=\"display:none\">\n");
                     tmpS.Append("</div>\n");
                     tmpS.Append("<div class=\"medium-image-wrap\" id=\"divProductPic" + ProductID.ToString() + "\">\n");
+                    tmpS.Append("<div id=\"divProductPic" + ProductID.ToString() + "\">\n");
                 }
 
                 if (ZoomifyLarge)
@@ -2061,7 +2113,7 @@ function popupzoom(url,alturl)
                 }
                 else if (HasLargePic)
                 {
-                    tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + "\" title=\"" + AppLogic.GetString("showproduct.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                    tmpS.Append("<img id=\"ProductPic" + ProductID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image medium-image img-responsive\" onClick=\"" + CommonLogic.IIF(ImgGal.HasSomeLarge, "popuplarge" + "_" + sProductID + "()", "popupimg('" + LargePicForPopup + "')") + "\" title=\"" + AppLogic.GetString("showproduct.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "\" src=\"" + ProductPicture + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");		
                     tmpS.AppendFormat("<input type='hidden' id='popupImageURL' value='{0}' />", LargePicForPopup);
                 }
                 else
@@ -2102,6 +2154,30 @@ function popupzoom(url,alturl)
             return result;
         }
 
+        public virtual string LookupProductImageForDetail(string sProductID, String sImageFileNameOverride, String sSKU, String sDesiredSize, String sIncludeATag, string sAltText)
+        {
+            InputValidator IV = new InputValidator("LookupProductImage");
+            int ProductID = IV.ValidateInt("ProductID", sProductID);
+            String DesiredSize = IV.ValidateString("DesiredSize", sDesiredSize);
+            String ImageFileNameOverride = IV.ValidateString("ImageFileNameOverride", sImageFileNameOverride);
+            String SKU = IV.ValidateString("SKU", sSKU);
+            IV.ValidateBool("IncludeATag", sIncludeATag);
+            String AltText = IV.ValidateString("AltText", sAltText);
+            string imageURL = String.Empty;
+            StringBuilder result = new StringBuilder(4096);
+            string seName = AppLogic.GetProductSEName(ProductID, ThisCustomer.LocaleSetting);
+
+
+            if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
+            {
+			    result.Append("<a class=\"product-img-box\">");
+                imageURL = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                result.Append("<img id=\"productImage\" \"name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + ProductID.ToString()) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageURL + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />");
+                result.Append("</a>");
+            }            
+            return result.ToString();
+        }
+
         [Obsolete("Depricated. Please include another parameter, AltText.")]
         public virtual string LookupVariantImage(string sProductID, string sVariantID, String sImageFileNameOverride, String sSKU, String sDesiredSize, String sIncludeATag)
         {
@@ -2123,7 +2199,7 @@ function popupzoom(url,alturl)
 
             if (DesiredSize.Equals("ICON", StringComparison.InvariantCultureIgnoreCase))
             {
-				result = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                result = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 result = "<img id=\"ProductPic" + VariantID.ToString() + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(seName), seName, "ProductPic" + VariantID.ToString()) + "\" class=\"actionelement\" src=\"" + result + "\" alt=\"" + AltText.Replace("\"", "&quot;") + "\" />";
             }
             else
@@ -2131,7 +2207,7 @@ function popupzoom(url,alturl)
                 StringBuilder tmpS = new StringBuilder(4096);
                 tmpS.Append("<div align=\"center\">");
                 String ProductPicture = String.Empty;
-				ProductPicture = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ProductPicture = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "medium", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 String LargePic = AppLogic.LookupImage("VARIANT", VariantID, ImageFileNameOverride, SKU, "large", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 bool HasLargePic = (LargePic.Length != 0);
                 String LargePicForPopup = LargePic;
@@ -2200,7 +2276,7 @@ function popupzoom(url,alturl)
             String ProdPic = String.Empty;
 
             string results = "";
-			ProdPic = ProductImageUrl(intProductID, sImageFileNameOverride, sSKU, "icon", "false");
+            ProdPic = ProductImageUrl(intProductID, sImageFileNameOverride, sSKU, "icon", "false");
 
             int MaxWidth = AppLogic.AppConfigNativeInt("MiniCartMaxIconWidth");
             if (MaxWidth == 0)
@@ -2268,17 +2344,17 @@ function popupzoom(url,alturl)
             string ImgPath = String.Empty;
             string sURL = CommonLogic.IIF(FullUrl, AppLogic.GetStoreHTTPLocation(false), "");
             sURL = sURL.Replace(AppLogic.AdminDir() + "/", "");
-            
-			if (!sURL.EndsWith("/"))
-			{
-				sURL += "/";
-			}
-			ImgPath = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, DesiredSize, ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("..", "");
+
+            if (!sURL.EndsWith("/"))
+            {
+                sURL += "/";
+            }
+            ImgPath = AppLogic.LookupImage("Product", ProductID, ImageFileNameOverride, SKU, DesiredSize, ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("..", "");
 
             if (FullUrl && ImgPath.StartsWithIgnoreCase(HttpContext.Current.Request.ApplicationPath))
-			{
-				ImgPath = ImgPath.Substring(HttpContext.Current.Request.ApplicationPath.Length);
-			}                
+            {
+                ImgPath = ImgPath.Substring(HttpContext.Current.Request.ApplicationPath.Length);
+            }
 
             ImgPath = ImgPath.TrimStart('/');
             result = sURL + ImgPath;
@@ -3095,7 +3171,46 @@ function popupzoom(url,alturl)
                 //results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, ThisCustomer.IsAdminUser, ThisCustomer.SkinID, true, false));
                 results.Append(AppLogic.GetInventoryTable(ProductID, VariantID, true, ThisCustomer.SkinID, true, false));
             }
+
             return results.ToString();
+        }
+
+        public string ShowProductStockStatus(String sProductID, String sVariantID)
+        {
+            var result = ShowInventoryTable(sProductID, sVariantID);
+            var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
+            var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
+            return result.Substring(startIndex, lastIndex - startIndex);
+        }
+
+        public int IsShowProductStockStatus(String sProductID, String sVariantID)
+        {
+            var result = ShowInventoryTable(sProductID, sVariantID);
+            var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
+            var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
+            return result.Substring(startIndex, lastIndex - startIndex).ToUpper().Contains("OUT OF STOCK") ? 1 : 0;
+        }
+
+        public string NotifyMeButton(String sProductID, String sVariantID)
+        {
+            StringBuilder result = new StringBuilder(3000);
+            result.Append("<span class=\"notify\">Out of Stock</span>");
+            //TODO: Commented as Noify me feature is not in the current release
+            //result.Append("<div class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
+            //result.Append("<div class=\"buttons-group\">");
+            //result.Append(" <button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa2\">Notify Me</button>");
+            //result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
+            //result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
+            //result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
+            //result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
+            //result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
+            //result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
+            //result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
+            //result.Append("<input class=\"form-control\" type=\"text\"> </div>");
+            //result.Append("<div class=\"buttons-group\"> <button type=\"button\" class=\"btn btn-primary\">Submit</button> ");
+            //result.Append("<button type=\"button\" data-dismiss=\"modal\" class=\"btn btn-primary\">Cancel</button> </div>");
+            //result.Append("</div> </div> </div> </div>");
+            return result.ToString();
         }
 
         public virtual string GetJSPopupRoutines()
@@ -3574,7 +3689,7 @@ function popupzoom(url,alturl)
 
             // instantiate return variable
             StringBuilder results = new StringBuilder(1024);
-            results.Append("<div class=\"price-wrap\">");
+
             // short-circuit this procedure if the price will be hidden
             if (hidePriceUntilCart)
             {
@@ -3652,23 +3767,23 @@ function popupzoom(url,alturl)
                 {
                     if (includeHTMLMarkup)
                     {
-                        results.Append("<div class=\"variant-price\"><span>" + genericPriceLabel + "</span> " + regularPriceFormatted + "</div>");
+                        results.Append("<p>" + genericPriceLabel + " " + regularPriceFormatted);
                     }
                     else
                     {
-                        results.Append(genericPriceLabel + regularPriceFormatted);
+                        results.Append("<p>" + genericPriceLabel + " " + regularPriceFormatted);
                     }
                     schemaPrice = regularPrice;
                 }
                 else if (includeHTMLMarkup)
                 {
-                    results.Append("<div class=\"price regular-price\"><span>" + regularPriceLabel + "</span> " + regularPriceFormatted + "</div>");
-                    results.Append("<div class=\"price sale-price\"><span>" + salePriceLabel + "</span> " + discountedPriceFormatted + "</div>");
+                    results.Append("<p>" + regularPriceLabel + " " + regularPriceFormatted);
+                    results.Append("<br>" + salePriceLabel + " " + discountedPriceFormatted);
                     schemaPrice = discountedPrice;
                 }
                 else
                 {
-                    results.Append(" " + regularPriceLabel + regularPriceFormatted + " " + salePriceLabel + discountedPriceFormatted);
+                    results.Append("<p>" + regularPriceLabel + " " + regularPriceFormatted + "<br>" + salePriceLabel + " " + discountedPriceFormatted);
                     schemaPrice = discountedPrice;
                 }
 
@@ -3738,7 +3853,6 @@ function popupzoom(url,alturl)
                 results.AppendFormat("<meta itemprop=\"priceCurrency\" content=\"{0}\"/>", schemaRegionInfo.ISOCurrencySymbol);
             }
 
-            results.Append("</div>");
             return results.ToString();
         }
 
@@ -3795,6 +3909,148 @@ function popupzoom(url,alturl)
             }
         }
 
+        public virtual string GetVariantPriceForItem(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, string sTaxClassID)
+        {
+            return GetVariantPriceForItem(sVariantID, sHidePriceUntilCart, sPrice, sSalePrice, sExtPrice, sPoints, sSalesPromptName, "True", sTaxClassID, "0.00", "true");
+        }
+
+        public virtual string GetVariantPriceForItem(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, String sShowpricelabel, string sTaxClassID, String sChosenAttributesPriceDelta, String sIncludeHTMLMarkup)
+        {
+            InputValidator IV = new InputValidator("GetVariantPrice");
+            int variantID = IV.ValidateInt("VariantID", sVariantID);
+            bool hidePriceUntilCart = IV.ValidateBool("HidePriceUntilCart", sHidePriceUntilCart);
+            decimal regularPrice = IV.ValidateDecimal("Price", sPrice);
+            decimal salePrice = IV.ValidateDecimal("SalePrice", sSalePrice);
+            decimal extPrice = IV.ValidateDecimal("ExtPrice", sExtPrice);
+            int points = IV.ValidateInt("Points", sPoints);
+            string salesPromptName = IV.ValidateString("SalesPromptName", sSalesPromptName);
+            bool showPriceLabel = IV.ValidateBool("Showpricelabel", sShowpricelabel);
+            int taxClassID = IV.ValidateInt("TaxClassID", sTaxClassID);
+            decimal attributesPriceDelta = IV.ValidateDecimal("AttributesPriceDelta", sChosenAttributesPriceDelta);
+            bool includeHTMLMarkup = IV.ValidateBool("IncludeHTMLMarkup", sIncludeHTMLMarkup);
+            decimal discountedPrice = System.Decimal.Zero;
+            decimal schemaPrice = 0;
+
+            // instantiate return variable
+            StringBuilder results = new StringBuilder(1024);
+
+            // short-circuit this procedure if the price will be hidden
+            if (hidePriceUntilCart)
+            {
+                return string.Empty;
+            }
+
+            string taxSuffix = string.Empty;
+
+            bool taxable = false;
+
+            if (m_VATOn)
+            {
+                taxable = Prices.IsTaxable(variantID);
+
+                // get suffix to display after pricing             
+                if (m_VATEnabled)
+                {
+                    // put another validation stuff here if the product variant is taxable or not 
+                    // set tax suffix to an empty string when the item is non-taxable regardless if the VAT Setting is either
+                    // Inclusive or Exclusive
+                    if (m_VATOn && !taxable)
+                    {
+                        taxSuffix = String.Empty;
+                    }
+                    else if (m_VATOn && taxable)
+                    {
+                        taxSuffix = AppLogic.GetString("setvatsetting.aspx.6", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    }
+                    else if (!m_VATOn && taxable)
+                    {
+                        taxSuffix = AppLogic.GetString("setvatsetting.aspx.7", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    }
+                }
+            }
+
+            Decimal origRegularPrice = regularPrice;
+
+            // add inclusive tax, convert all pricing to ThisCustomer's currency, and round
+            regularPrice = Prices.VariantPrice(ThisCustomer, variantID, origRegularPrice, salePrice, extPrice, attributesPriceDelta, false, taxClassID);
+            discountedPrice = Prices.VariantPrice(ThisCustomer, variantID, origRegularPrice, salePrice, extPrice, attributesPriceDelta, true, taxClassID);
+
+            // format pricing
+            string regularPriceFormatted = Localization.CurrencyStringForDisplayWithExchangeRate(regularPrice, ThisCustomer.CurrencySetting);
+            string discountedPriceFormatted = Localization.CurrencyStringForDisplayWithExchangeRate(discountedPrice, ThisCustomer.CurrencySetting);
+
+            // get pricing labels
+            string genericPriceLabel = string.Empty;
+            string regularPriceLabel = string.Empty;
+            string salePriceLabel = string.Empty;
+            string customerLevelName = string.Empty;
+
+            if (showPriceLabel)
+            {
+                genericPriceLabel = AppLogic.GetString("showproduct.aspx.26", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                regularPriceLabel = AppLogic.GetString("showproduct.aspx.27", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                salePriceLabel = salesPromptName + ":";
+                customerLevelName = ThisCustomer.CustomerLevelName;
+            }
+
+            // format micropay points
+            string pointsFormatted = string.Empty;
+            if (AppLogic.AppConfigBool("MicroPay.ShowPointsWithPrices"))
+            {
+                pointsFormatted = "(" + points.ToString() + " Points)";
+            }
+
+            // create results string
+            if (AppLogic.HideForWholesaleSite(ThisCustomer.CustomerLevelID))  // wholesale site with default customerLevel
+            {
+
+            }
+            else  // show Level 0 Pricing
+            {
+                if (salePrice == 0 || ThisCustomer.CustomerLevelID > 0)
+                {
+                    if (includeHTMLMarkup)
+                    {
+                        results.Append("<p> <span class=\"black-blu-label\"> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    }
+                    else
+                    {
+                        results.Append("<p> <span class=\"black-blu-label\"> <font>" + genericPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    }
+                    schemaPrice = regularPrice;
+                }
+                else if (includeHTMLMarkup)
+                {
+                    results.Append("<p> <span class=\"black-blu-label\"> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>");
+                    results.Append("<span class=\"black-blu-label\"> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");
+                    schemaPrice = discountedPrice;
+                }
+                else
+                {
+                    results.Append("<p> <class=\"black-blu-label\"span> <font>" + regularPriceLabel + " " + "</font>" + regularPriceFormatted + "</span>" + "<span class=\"black-blu-label\"> <font>" + salePriceLabel + " " + "</font>" + discountedPriceFormatted + "</span>");                    
+                    schemaPrice = discountedPrice;
+                }
+                //TODO: Will be uncommented when true blue point implemented
+                //results.Append("<span><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
+                results.Append(" ");
+
+                results.Append(taxSuffix);
+            }
+
+            
+            if (schemaPrice > 0)
+            {
+                var storeDefaultCultureInfo = CultureInfo.GetCultureInfo(Localization.GetDefaultLocale());
+                var formattedSchemaPrice = String.Format(storeDefaultCultureInfo, "{0:C}", schemaPrice);
+                var schemaRegionInfo = new RegionInfo(storeDefaultCultureInfo.Name);
+
+                results.AppendFormat("<meta itemprop=\"price\" content=\"{0}\"/>", formattedSchemaPrice);
+                results.AppendFormat("<meta itemprop=\"priceCurrency\" content=\"{0}\"/>", schemaRegionInfo.ISOCurrencySymbol);
+            }
+
+            return results.ToString();
+        }
+        
         public virtual string GetUpsellVariantPrice(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, String sShowpricelabel, string sTaxClassID, string decUpSelldiscountPct)
         {
             return Prices.GetUpsellVariantPrice(ThisCustomer, sVariantID, sHidePriceUntilCart, sPrice, sSalePrice, sExtPrice, sPoints, sSalesPromptName, sShowpricelabel, sTaxClassID, decUpSelldiscountPct);
@@ -4509,6 +4765,12 @@ function popupzoom(url,alturl)
 
         // returns capitalize of string, invariant culture
         public virtual string StrCapitalize(String sS)
+        {
+            InputValidator IV = new InputValidator("StrCapitalize");
+            String S = IV.ValidateString("S", sS);
+            return CommonLogic.Capitalize(S);
+        }
+        public virtual string PageIdGet(String sS)
         {
             InputValidator IV = new InputValidator("StrCapitalize");
             String S = IV.ValidateString("S", sS);
@@ -5283,7 +5545,7 @@ function popupzoom(url,alturl)
             Used = 1,
             Refurbished = 2
         }
-        
+
         /// <summary>
         /// Gets the in stock/out of stock text
         /// </summary>
@@ -5311,7 +5573,7 @@ function popupzoom(url,alturl)
                     {
                         stockText = "InStock|In Stock";
                     }
-                }                
+                }
             }
             return stockText;
         }
@@ -5333,10 +5595,10 @@ function popupzoom(url,alturl)
             else
             {
                 ISODateTimeOutput = string.Empty;
-            }      
+            }
             return ISODateTimeOutput;
         }
 
-        #endregion        
+        #endregion
     }
 }

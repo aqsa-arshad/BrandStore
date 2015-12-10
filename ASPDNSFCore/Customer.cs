@@ -4642,4 +4642,22 @@ namespace AspDotNetStorefrontCore
         } 
         #endregion
     }
+
+    #region Public Enums for Customer Level
+    public enum UserType
+    {
+        STOREADMINISTRATOR = 1,
+        BUDGETADMINISTRATOR = 2,
+        SALESREPS = 3,
+        BLUELITE = 4,
+        BLUPREMIER = 5,
+        BLUAUTHORIZED = 6,
+        INTERNAL = 7,
+        PUBLIC = 8,
+        POTENTIAL = 9,
+        HOMEDEPOT = 10,
+        LOWES = 11,
+        MENARDS = 12
+    }
+    #endregion
 }

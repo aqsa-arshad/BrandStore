@@ -36,6 +36,27 @@ namespace AspDotNetStorefront
                 cart.SetCoupon(CouponName, true);
             }
 
+            if (!this.IsPostBack)
+            {
+                if (Request.UrlReferrer != null)
+                {
+                    if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutpayment"))
+                    {
+
+                        Session["hdnreferalurl"] = "checkoutpayment.aspx";
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
+                    {
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx";
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("shoppingcart"))
+                    {
+                        Session["hdnreferalurl"] = "shoppingcart.aspx";
+                    }
+                }
+            }
+               
+
             Response.CacheControl = "private";
             Response.Expires = -1;
             Response.AddHeader("pragma", "no-cache");
@@ -74,7 +95,7 @@ namespace AspDotNetStorefront
 
                 if (!boolAllowAnon)
                 {
-                    Response.Redirect("createaccount.aspx?checkout=true");
+                    Response.Redirect("signin.aspx?checkout=true");//createaccount
                 }
             }
             if (ThisCustomer.PrimaryBillingAddressID == 0 || (ThisCustomer.PrimaryShippingAddressID == 0 && !AppLogic.AppConfigBool("SkipShippingOnCheckout") && !cart.IsAllDownloadComponents() && !cart.IsAllSystemComponents()))
@@ -129,8 +150,8 @@ namespace AspDotNetStorefront
             AppLogic.eventHandler("CheckoutReview").CallEvent("&CheckoutReview=true");
 
             //add edit links here
-            HyperLink1.NavigateUrl = String.Format("~/address.aspx?Checkout=True&AddressType=billing&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
-            HyperLink3.NavigateUrl = String.Format("~/address.aspx?Checkout=True&AddressType=shipping&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
+            HyperLink1.NavigateUrl = String.Format("~/JWMyAddresses.aspx?Checkout=True&AddressType=1&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
+            HyperLink3.NavigateUrl = String.Format("~/JWMyAddresses.aspx?Checkout=True&AddressType=2&returnURL=checkoutreview.aspx%3fpaymentmethod%3d{0}", Request.QueryString["paymentmethod"]);
         }
 
         #region Web Form Designer generated code
@@ -192,7 +213,7 @@ namespace AspDotNetStorefront
         /// </summary>
         private void InitializeComponent()
         {
-            btnContinueCheckout1.Click += new EventHandler(btnContinueCheckout1_Click);
+            //btnContinueCheckout1.Click += new EventHandler(btnContinueCheckout1_Click);
             btnContinueCheckout2.Click += new EventHandler(btnContinueCheckout2_Click);
         }
 
@@ -206,7 +227,7 @@ namespace AspDotNetStorefront
 
         protected void btnContinueCheckout2_Click(object sender, EventArgs e)
         {
-            btnContinueCheckout1.Enabled = false;
+           // btnContinueCheckout1.Enabled = false;
             ContinueCheckout();
         }
 
@@ -248,6 +269,7 @@ namespace AspDotNetStorefront
             else if (AppLogic.AppConfigBool("SkipShippingOnCheckout") || cart.IsAllDownloadComponents() || cart.IsAllSystemComponents())
             {
                 ordercs57.Visible = false;
+                spn3.Visible = false;
             }
             else
             {
@@ -262,10 +284,10 @@ namespace AspDotNetStorefront
                 XmlPackage_CheckoutReviewPageFooter.Text = "" + AppLogic.RunXmlPackage(XmlPackageName2, base.GetParser, ThisCustomer, SkinID, String.Empty, String.Empty, true, true);
             }
 
-            AppLogic.GetButtonDisable(btnContinueCheckout1);
+          //  AppLogic.GetButtonDisable(btnContinueCheckout1);
             AppLogic.GetButtonDisable(btnContinueCheckout2);
-            btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
-            btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
+          //  btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
+           // btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
@@ -688,6 +710,33 @@ namespace AspDotNetStorefront
                 }
             }
             Response.Redirect("orderconfirmation.aspx?ordernumber=" + OrderNumber.ToString() + "&paymentmethod=" + Server.UrlEncode(PaymentMethod));
+        }
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            if (Session["hdnreferalurl"] != "")
+                Response.Redirect(Session["hdnreferalurl"].ToString());
         }
 
     }

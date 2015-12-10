@@ -31,15 +31,45 @@ namespace AspDotNetStorefront
         Address ShippingAddress = new AspDotNetStorefrontCore.Address(); // qualification needed for vb.net (not sure why)
         Address StandardizedAddress = new AspDotNetStorefrontCore.Address();
 
+        /// <summary>
+        /// Override JeldWen Master Template
+        /// </summary>
+        protected override string OverrideTemplate()
+        {
+            String MasterHome = AppLogic.HomeTemplate();
+
+            if (MasterHome.Trim().Length == 0)
+            {
+                MasterHome = "JeldWenTemplate";
+            }
+
+            if (MasterHome.EndsWith(".ascx"))
+            {
+                MasterHome = MasterHome.Replace(".ascx", ".master");
+            }
+
+            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                MasterHome = MasterHome + ".master";
+            }
+
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            {
+                MasterHome = "JeldWenTemplate";
+            }
+
+            return MasterHome;
+        }
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
+           
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
 
             RequireSecurePage();
-            ThisCustomer.RequireCustomerRecord();
-
+           
             SectionTitle = AppLogic.GetString("createaccount.aspx.1", SkinID, ThisCustomer.LocaleSetting);
             Checkout = CommonLogic.QueryStringBool("checkout");
             SkipRegistration = CommonLogic.QueryStringBool("skipreg");
@@ -115,8 +145,13 @@ namespace AspDotNetStorefront
                 ctrlAccount.txtPasswordConfirm.Attributes.Add("value", ctrlAccount.txtPasswordConfirm.Text);
                 GetJavaScriptFunctions();
             }
-        }
 
+
+            if (ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("home.aspx");
+            } 
+        }
 
         #region EventHandlers
 
@@ -164,7 +199,7 @@ namespace AspDotNetStorefront
             if (CommonLogic.QueryStringNativeInt("errormsg") > 0)
             {
                 ErrorMessage e = new ErrorMessage(CommonLogic.QueryStringNativeInt("errormsg"));
-				lblErrorMessage.Text = string.Format("<div class='error-large'>{0}</div>", e.Message);
+                lblErrorMessage.Text = string.Format("<div class='error-large'>{0}</div>", e.Message);
                 pnlErrorMsg.Visible = true;
             }
 
@@ -282,12 +317,16 @@ namespace AspDotNetStorefront
                     ctrlShippingAddress.ShowZip = AppLogic.GetCountryPostalCodeRequired(AppLogic.GetCountryID(ctrlShippingAddress.Country));
                 }
 
-                if (!Checkout)
-                {
-                    //hide billing and shipping inputs
-                    pnlBillingInfo.Visible = false;
-                    pnlShippingInfo.Visible = false;
-                }
+                //if (!Checkout)
+                //{
+                //    //hide billing and shipping inputs in case of Checkout
+                //    pnlBillingInfo.Visible = false;
+                //    pnlShippingInfo.Visible = false;
+                //}
+
+                // Hide billing and shipping inputs w.r.t mock-ups
+                pnlBillingInfo.Visible = false;
+                pnlShippingInfo.Visible = false;
             }
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
@@ -354,6 +393,7 @@ namespace AspDotNetStorefront
         }
         private void CreateAccount()
         {
+            ThisCustomer.RequireCustomerRecord();
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
 
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut && checkoutByAmazon.GetDefaultShippingAddress() == null)
@@ -501,7 +541,7 @@ namespace AspDotNetStorefront
                         strDOB = (strDOB.Equals("0/0/0", StringComparison.Ordinal)) ? null : strDOB;
                     }
 
-                    var defaultCustomerLevel_Public = 4;
+                    var defaultCustomerLevel_Public = (int)UserType.PUBLIC;
 
                     ThisCustomer.UpdateCustomer(
                         /*CustomerLevelID*/ defaultCustomerLevel_Public,
@@ -543,7 +583,7 @@ namespace AspDotNetStorefront
                         /*ExtensionData*/ null,
                         /*FinalizationData*/ null,
                         /*Deleted*/ null,
-                        /*Over13Checked*/ CommonLogic.IIF(ctrlAccount.Over13 || SkipRegOver13.Checked, 1, 0),
+                        /*Over13Checked*/ 1, //CommonLogic.IIF(ctrlAccount.Over13 || SkipRegOver13.Checked, 1, 0),
                         /*CurrencySetting*/ null,
                         /*VATSetting*/ null,
                         /*VATRegistrationID*/ null,
@@ -743,7 +783,8 @@ namespace AspDotNetStorefront
                             }
                             else
                             {
-                                Response.Redirect("checkoutshipping.aspx");
+                               
+                                Response.Redirect("account.aspx?checkout=true");//checkoutshipping
                             }
                         }
                     }
@@ -797,28 +838,21 @@ namespace AspDotNetStorefront
                         }
                         else
                         {
-                            Response.Redirect("account.aspx?newaccount=true");
+                            Response.Redirect("JWMyAccount.aspx");
                         }
                     }
                 }
             }
             else
             {
-				lblErrorMessage.Text += String.Format("<div class='error-header'>{0}</div>", AppLogic.GetString("createaccount.aspx.84", 1, Localization.GetDefaultLocale()));
-				lblErrorMessage.Text += "<ul class='error-list'>";
-                if (AccountName.Length == 0)
-                {
-                    lblErrorMessage.Text += String.Format("<li>{0}</li>", AppLogic.GetString("createaccount.aspx.5", 1, Localization.GetDefaultLocale()));
-                }
                 foreach (IValidator aValidator in this.Validators)
                 {
                     if (!aValidator.IsValid)
                     {
-                        lblErrorMessage.Text += String.Format("<li>{0}</li>", aValidator.ErrorMessage);
+                        lblErrorMessage.Text = aValidator.ErrorMessage;
+                        break;
                     }
                 }
-				lblErrorMessage.Text += "</ul>";
-                lblErrorMessage.Text += "";
                 ResetScrollPosition();
             }
 

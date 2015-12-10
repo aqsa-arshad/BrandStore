@@ -36,12 +36,14 @@ namespace AspDotNetStorefront
 
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
+            
             if (ThisCustomer.IsAdminUser || AppLogic.AppConfigBool("UseStrongPwd"))
 				ctrlAccount.PasswordNote = AppLogic.GetString("account.strongPassword", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
 			RequireSecurePage();
+            Checkout = CommonLogic.QueryStringBool("checkout");
 			RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
 			SectionTitle = AppLogic.GetString("account.aspx.56", SkinID, ThisCustomer.LocaleSetting);
-			Checkout = CommonLogic.QueryStringBool("checkout");
+            ctrlAccount.Attributes.Add("Disabled", "");
 			if (Checkout)
 			{
 				GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
@@ -120,9 +122,20 @@ namespace AspDotNetStorefront
 
 			if (!this.IsPostBack)
 			{
-				SetAccountFields();
 				RefreshPage();
+                SetAccountFields();
+                if (ThisCustomer.IsRegistered)
+                {
+                
+                    this.hdnCustomerLevel1.Text = ThisCustomer.CustomerLevelID.ToString();
+                }
+                else
+                {
+          
+                    hdnCustomerLevel1.Text = "-1";
+                }
 			}
+           
 		}
 
 		private void SetAccountFields()
@@ -196,6 +209,7 @@ namespace AspDotNetStorefront
 
 		public void btnContinueToCheckOut_Click(object sender, EventArgs e)
 		{
+            btnUpdateAccount_Click(null,null);
 			Response.Redirect(CheckOutPageControllerFactory.CreateCheckOutPageController().GetContinueCheckoutPage());
 		}
 
@@ -496,32 +510,43 @@ namespace AspDotNetStorefront
 
             if (ThisCustomer.PrimaryBillingAddressID == 0 || checkoutByAmazon.IsAmazonAddress(ThisCustomer.PrimaryBillingAddress))
             {
-                pnlBilling.Visible = false;
+              //  pnlBilling.Visible = false;
             }
             if (ThisCustomer.PrimaryShippingAddressID == 0 || checkoutByAmazon.IsAmazonAddress(ThisCustomer.PrimaryShippingAddress))
             {
-                pnlShipping.Visible = false;
+                //pnlShipping.Visible = false;
             }
-            lnkChangeBilling.NavigateUrl = "javascript:self.location='address.aspx?Checkout=" + Checkout.ToString() + "&AddressType=billing&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
-            lnkChangeShipping.NavigateUrl = "javascript:self.location='address.aspx?Checkout=" + Checkout.ToString() + "&AddressType=shipping&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
+            lnkChangeBilling.NavigateUrl = "javascript:self.location='JWMyAddresses.aspx?Checkout=" + Checkout.ToString() + "&AddressType=1&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
+            lnkChangeShipping.NavigateUrl = "javascript:self.location='JWMyAddresses.aspx?Checkout=" + Checkout.ToString() + "&AddressType=2&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString()) + "'";
 
-            lnkAddBillingAddress.NavigateUrl = "address.aspx?add=true&addressType=Billing&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
-            lnkAddBillingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.63", SkinID, ThisCustomer.LocaleSetting) + "</div>";
-            lnkAddShippingAddress.NavigateUrl = "address.aspx?add=true&addressType=Shipping&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
-            lnkAddShippingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.62", SkinID, ThisCustomer.LocaleSetting) + "</div>";
+            //lnkAddBillingAddress.NavigateUrl = "JWMyAddresses.aspx?add=true&addressType=1&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
+            //lnkAddBillingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.63", SkinID, ThisCustomer.LocaleSetting) + "</div>";
+            //lnkAddShippingAddress.NavigateUrl = "JWMyAddresses.aspx?add=true&addressType=2&Checkout=" + Checkout.ToString() + "&returnURL=" + Server.UrlEncode("account.aspx?checkout=" + Checkout.ToString());
+            //lnkAddShippingAddress.Text = "<div>" + AppLogic.GetString("account.aspx.62", SkinID, ThisCustomer.LocaleSetting) + "</div>";
 
-            litBillingAddress.Text = BillingAddress.DisplayHTML(true);
+            if (BillingAddress.AddressID != 0)
+            {
+                litBillingAddress.Text = BillingAddress.DisplayHTML(true);
+            }
             if (BillingAddress.PaymentMethodLastUsed.Length != 0)
             {
-                litBillingAddress.Text += "<div>" + AppLogic.GetString("account.aspx.31", SkinID, ThisCustomer.LocaleSetting);
-                litBillingAddress.Text += BillingAddress.DisplayPaymentMethodInfo(ThisCustomer, BillingAddress.PaymentMethodLastUsed) + "</div>";
+                //need for future use
+                //litBillingAddress.Text += "<div>" + AppLogic.GetString("account.aspx.31", SkinID, ThisCustomer.LocaleSetting);
+              //  litBillingAddress.Text += "<div>" + BillingAddress.DisplayPaymentMethodInfo(ThisCustomer, BillingAddress.PaymentMethodLastUsed) + "</div>";
             }
 
             if (!(new POBoxAddressValidator()).IsValid(ShippingAddress))
             {
                 litShippingAddress.Text = "<div class='error-wrap'>" + "createaccount_process.aspx.3".StringResource() + "</div>"; //PO box not allowed
             }
-            else litShippingAddress.Text = ShippingAddress.DisplayHTML(true);
+            else
+            {
+                if (ShippingAddress.AddressID != 0)
+                {
+                    litShippingAddress.Text = "Cannot ship to P.O boxes"+ ShippingAddress.DisplayHTML(true);
+                }
+            }
+               
 
             pnlOrderHistory.Visible = !Checkout;
 
@@ -607,6 +632,28 @@ namespace AspDotNetStorefront
            
             ctrlAccount.Password = String.Empty;
             ctrlAccount.PasswordConfirm = String.Empty;
+        }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
         }
 	}
 

@@ -5,43 +5,57 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
-using System.Web.UI;
+using System.Reflection.Emit;
 using AspDotNetStorefrontCore;
+using System.Data.SqlClient;
+using System.Data;
+
 
 namespace AspDotNetStorefront
 {
-	/// <summary>
-	/// Summary description for showcategory.
-	/// </summary>
-	[PageType("category")]
-	public partial class showcategory : SkinBase
-	{
+    /// <summary>
+    /// Summary description for showcategory.
+    /// </summary>
+    [PageType("category")]
+    public partial class showcategory : SkinBase
+    {
         ShowEntityPage m_EP;
-
+        protected string CategoryTypeFlag = string.Empty;
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            ScriptManager scrptMgr = Page.Master.FindControl<ScriptManager>("scrptMgr");
-            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
-
-            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart"))
-            {
-                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-            }
-
-            
             m_EP = new ShowEntityPage(EntityDefinitions.readonly_CategoryEntitySpecs, this);
             m_EP.Page_Load(sender, e);
 
-			PayPalAd entityPageAd = new PayPalAd(PayPalAd.TargetPage.Entity);
-			if (entityPageAd.Show)
-			{
-				ltPayPalAd.Text = entityPageAd.ImageScript;
-			}
+            PayPalAd entityPageAd = new PayPalAd(PayPalAd.TargetPage.Entity);
+            ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = SEDescription;
+
+            string parentCategoryName = string.Empty;
+            string parentCategoryID = string.Empty;
+            GetParentCategory(ref parentCategoryName, ref parentCategoryID);
+
+            if (!string.IsNullOrEmpty(parentCategoryName))
+            {                
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
+                
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblSperator")).Text = ">>";
+                
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = SEDescription;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Style.Add("text-decoration", "none");
+                
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Visible = false;
+            }
+            if (entityPageAd.Show)
+            {
+                ltPayPalAd.Text = entityPageAd.ImageScript;
+            }
 
             litOutput.Text = m_EP.GetOutput();
 
+            CategoryTypeFlag = litOutput.Text.Contains("entity.guidednavigationgrid.xml.config") ? "true" : "false";
+
             // check if the postback was caused by an addtocart button
-            if (this.IsPostBack && m_EP.IsAddToCartPostBack)
+            if (IsPostBack && m_EP.IsAddToCartPostBack)
             {
                 HandleAddToCart();
                 return;
@@ -87,18 +101,6 @@ namespace AspDotNetStorefront
             return;
         }
 
-        protected override string OverrideTemplate()
-        {
-            String HT = "template";
-
-            if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
-            {
-                HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
-            }
-
-            return HT;
-        }
-
         public override bool IsEntityPage
         {
             get
@@ -123,5 +125,46 @@ namespace AspDotNetStorefront
             }
         }
 
-	}
+        private void GetParentCategory(ref string parentCategoryName, ref string parentCategoryID)
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select Name, CategoryID from Category where CategoryID = (select ParentCategoryID from Category where CategoryID = " + PageID + ")";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        parentCategoryName = reader["Name"].ToString();
+                        parentCategoryID = reader["CategoryID"].ToString();
+                    }
+                }
+            }
+        }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
+        }
+    }
 }

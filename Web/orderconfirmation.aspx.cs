@@ -1,287 +1,336 @@
-// --------------------------------------------------------------------------------
-// Copyright AspDotNetStorefront.com. All Rights Reserved.
-// http://www.aspdotnetstorefront.com
-// For details on this license please visit the product homepage at the URL above.
-// THE ABOVE NOTICE MUST REMAIN INTACT. 
-// --------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
-using System.Web.Security;
 using AspDotNetStorefrontCore;
-using AspDotNetStorefrontGateways;
+using System.Net;
+using System.Configuration;
+using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
-    /// <summary>
-    /// Summary description for orderconfirmation.
-    /// </summary>
-	[PageType("orderconfirmation")]
     public partial class orderconfirmation : SkinBase
     {
-        protected void Page_Load(object sender, System.EventArgs e)
+        protected int OrderNumber;
+        private IDataReader reader;
+        private IDataReader reader2;
+        protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
+        protected void Page_Load(object sender, EventArgs e)
         {
-
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
 
-            RequireSecurePage();
+            SkinBase.RequireSecurePage();
 
-            Address BillingAddress = new Address();
+            OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
+            int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
 
+            lnkreceipt.HRef = "OrderReceipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + OrderCustomerID.ToString();
+
+            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
+            // who is logged in now viewing this page:
+
+            // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
             {
-                bool boolAllowAnon = AppLogic.AppConfigBool("PasswordIsOptionalDuringCheckout");
-                if (!boolAllowAnon && ThisCustomer.PrimaryBillingAddressID > 0)
-                {
-                    BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
-                    if (BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPayPalExpress || BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPayPalExpressMark)
-                    {
-                        boolAllowAnon = AppLogic.AppConfigBool("PayPal.Express.AllowAnonCheckout");
-                    }
-                }
-
-                if (!boolAllowAnon)
-                {
-                    RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
-                }
+                Response.Redirect("signin.aspx?returnurl=receipt.aspx?" +
+                                  Server.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING")));
             }
 
-            // this may be overwridden by the XmlPackage below!
-            SectionTitle = AppLogic.GetString("orderconfirmation.aspx.1", SkinID, ThisCustomer.LocaleSetting);
-
-            // clear anything that should not be stored except for immediate usage:
-            BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
-            BillingAddress.PONumber = String.Empty;
-            if (!ThisCustomer.MasterShouldWeStoreCreditCardInfo)
+            // are we allowed to view?
+            // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
+            if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
             {
-                BillingAddress.ClearCCInfo();
+                Response.Redirect("OrderNotFound.aspx");
             }
-            BillingAddress.UpdateDB();
-            AppLogic.ClearCardExtraCodeInSession(ThisCustomer);
+
+            //For multi store checking
+            //Determine if customer is allowed to view orders from other store.
+            if (!ThisCustomer.IsAdminUser && AppLogic.StoreID() != AppLogic.GetOrdersStoreID(OrderNumber) &&
+                AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true)
+            {
+                Response.Redirect("OrderNotFound.aspx");
+            }
+            if (!Page.IsPostBack)
+            {
+                GetOrderInfo();
+                GetOrderItemsDetail();
+                SendOrderinfotoRRD();
+            }
+
+
         }
 
-        protected override void OnInit(EventArgs e)
+
+
+        void GetOrderInfo()
         {
-            int CustomerID = ThisCustomer.CustomerID;
-            int OrderNumber = CommonLogic.QueryStringUSInt("OrderNumber");
-
-            StringBuilder output = new StringBuilder();
-
-            if (CustomerID != 0 && OrderNumber != 0)
+            try
             {
-                Order ord = new Order(OrderNumber, ThisCustomer.LocaleSetting);
-
-                if (ThisCustomer.CustomerID != ord.CustomerID)
-                {
-                    Response.Redirect(SE.MakeDriverLink("ordernotfound"));
-                }
-
-                if (ThisCustomer.ThisCustomerSession["3DSecure.LookupResult"].Length > 0)
-                {
-                    DB.ExecuteSQL("update orders set CardinalLookupResult=" + DB.SQuote(ThisCustomer.ThisCustomerSession["3DSecure.LookupResult"]) + " where OrderNumber=" + OrderNumber.ToString());
-                }
-                ThisCustomer.ThisCustomerSession.Clear();
-
-                String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
-
-                bool orderexists;
-                using (SqlConnection conn = DB.dbConn())
+                using (var conn = DB.dbConn())
                 {
                     conn.Open();
-                    using (IDataReader rs = DB.GetRS("select * from dbo.orders where customerid=" + CustomerID.ToString() + " and ordernumber=" + OrderNumber.ToString(), conn))
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
                     {
-                        orderexists = rs.Read();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+
+                        reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            lblOrderNumber.Text = reader["OrderNumber"].ToString() + ".";
+                            //lblOrderDate.Text = reader["OrderDate"].ToString();
+                            // lblCustomerID.Text = reader["CustomerID"].ToString();
+
+                            //Billing Address
+                            lblBAFullName.Text = reader["BillingFirstName"].ToString() + ' ' +
+                                                 reader["BillingLastName"].ToString();
+                            lblBACompany.Text = reader["BillingCompany"].ToString();
+                            lblBAAddress1.Text = reader["BillingAddress1"].ToString();
+                            lblBAAddress2.Text = reader["BillingAddress2"].ToString();
+                            lblBASuite.Text = reader["BillingSuite"].ToString();
+                            lblBACityStateZip.Text = reader["BillingCity"] + ", " + reader["BillingState"] + ' ' +
+                                                     reader["BillingZip"];
+                            lblBACountry.Text = reader["BillingCountry"].ToString();
+                            lblBAPhone.Text = reader["BillingPhone"].ToString();
+                            //Shipping Address
+                            lblSAFullName.Text = reader["ShippingFirstName"].ToString() + ' ' +
+                                                 reader["ShippingLastName"].ToString();
+                            lblSACompany.Text = reader["ShippingCompany"].ToString();
+                            lblSAAddress1.Text = reader["ShippingAddress1"].ToString();
+                            lblSAAddress2.Text = reader["ShippingAddress2"].ToString();
+                            lblSASuite.Text = reader["ShippingSuite"].ToString();
+                            lblSACityStateZip.Text = reader["ShippingCity"] + ", " + reader["ShippingState"] + ' ' +
+                                                     reader["ShippingZip"];
+                            lblSACountry.Text = reader["ShippingCountry"].ToString();
+                            lblSAPhone.Text = reader["ShippingPhone"].ToString();
+                            //Payment Methods
+                            lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
+                                                 (string.Concat("*********", reader["CardNumber"].ToString()));
+                            lblPMExpireDate.Text = "Expires: " + reader["CardExpirationMonth"].ToString() + '/' +
+                                                   reader["CardExpirationYear"].ToString();
+                            lblPMCountry.Text = reader["BillingCountry"].ToString();
+                            //Billing Amounts
+                            lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
+                            lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
+                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
+                            lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
+                        }
+                        conn.Close();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
 
-                if (orderexists)
+        private void GetOrderItemsDetail()
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
                 {
-
-                    String PM = AppLogic.CleanPaymentMethod(ord.PaymentMethod);
-                    String StoreName = AppLogic.AppConfig("StoreName");
-                    bool UseLiveTransactions = AppLogic.AppConfigBool("UseLiveTransactions");
-
-                    if (!ord.AlreadyConfirmed)
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderItemsDetail", conn))
                     {
-                        // check to see if this was an "admin edit order" and if so, cleanup the old order, as it was being replaced by this new order:
-                        int EditingOrderNumber = base.EditingOrderImpersonation;
-                        if (base.IsInImpersonation && EditingOrderNumber != 0)
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader = cmd.ExecuteReader();
+                        rptOrderItemsDetail.DataSource = reader;
+                        rptOrderItemsDetail.DataBind();
+                        conn.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        protected override string OverrideTemplate()
+        {
+            String MasterHome = AppLogic.HomeTemplate();
+
+            if (MasterHome.Trim().Length == 0)
+            {
+
+                MasterHome = "JeldWenTemplate";// "template";
+            }
+
+            if (MasterHome.EndsWith(".ascx"))
+            {
+                MasterHome = MasterHome.Replace(".ascx", ".master");
+            }
+
+            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                MasterHome = MasterHome + ".master";
+            }
+
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            {
+                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
+                MasterHome = "JeldWenTemplate";// "template.master";
+            }
+
+            return MasterHome;
+        }
+
+        private void lblreceipt_click()
+        {
+            // String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
+        }
+        #region "Send order to RRD"
+        private void SendOrderinfotoRRD()
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderItemsDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader2 = cmd.ExecuteReader();
+                        int totalRRDRow = 0;
+                        while (reader2.Read())
                         {
-                            Order editedOrder = new Order(EditingOrderNumber, Localization.GetDefaultLocale());
-                            if (!editedOrder.HasBeenEdited && editedOrder.TransactionState == AppLogic.ro_TXStateAuthorized || editedOrder.TransactionState == AppLogic.ro_TXStateCaptured)
+                            if ((reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
+                                totalRRDRow++;
+                        }
+                        reader2.Close();
+                        reader = cmd.ExecuteReader();
+                        orderService.brandstore.ws.orderService os = new orderService.brandstore.ws.orderService();
+                        orderService.brandstore.ws.Credentials c = new orderService.brandstore.ws.Credentials();
+                        orderService.brandstore.ws.BillingAddress Ba = new orderService.brandstore.ws.BillingAddress();
+                        orderService.brandstore.ws.ShippingAddress Sa = new orderService.brandstore.ws.ShippingAddress();
+                        orderService.brandstore.ws.Product p;
+                        orderService.brandstore.ws.Product[] pa = new orderService.brandstore.ws.Product[totalRRDRow];
+
+                        // Set the authentication
+                        c.Username = AppLogic.AppConfig("fullfillmentapi_username");
+                        c.Token = AppLogic.AppConfig("fullfillmentapi_password");
+                        SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
+                        int index = 0;
+                        bool hasproducts = false;
+                        while (reader.Read())
+                        {
+                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                             {
-                                editedOrder.EditedOn = System.DateTime.Now;
-                                editedOrder.RelatedOrderNumber = OrderNumber;
-                                // try void first, or refund if that doesn't work
-                                if (Gateway.OrderManagement_DoVoid(editedOrder, Localization.GetDefaultLocale()) != AppLogic.ro_OK)
-                                {
-                                    Gateway.OrderManagement_DoFullRefund(editedOrder, Localization.GetDefaultLocale(), "Order Was Edited, New Order #: " + OrderNumber.ToString());
-                                }
-                            }
-                            base.AdminImpersonatingCustomer.ThisCustomerSession.ClearVal("IGD_EDITINGORDER");
-                        }
-
-                        DB.ExecuteSQL("update Customer set OrderOptions=NULL, OrderNotes=NULL, FinalizationData=NULL where CustomerID=" + CustomerID.ToString());
-
-
-                        if (PM.ToUpper() != "CHECKOUTBYAMAZON")
-                            AppLogic.SendOrderEMail(ThisCustomer, OrderNumber, false, PM, true, base.EntityHelpers, base.GetParser);
-                    }
-
-                    String XmlPackageName = AppLogic.AppConfig("XmlPackage.OrderConfirmationPage");
-                    if (XmlPackageName.Length == 0)
-                    {
-                        XmlPackageName = "page.orderconfirmation.xml.config";
-                    }
-
-                    if (XmlPackageName.Length != 0)
-                    {
-                        output.Append(AppLogic.RunXmlPackage(XmlPackageName, base.GetParser, ThisCustomer, SkinID, String.Empty, "OrderNumber=" + OrderNumber.ToString(), true, true));
-                    }
-
-                    Order order = new Order(OrderNumber);
-
-                    if (order.PaymentMethod.ToLower() == GatewayCheckoutByAmazon.CheckoutByAmazon.CBA_Gateway_Identifier.ToLower())
-                    {
-                        GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
-                        output.Append("");
-                        output.Append(checkoutByAmazon.RenderOrderDetailWidget(OrderNumber));
-                    }
-
-                    if (!ord.AlreadyConfirmed)
-                    {
-                        if (AppLogic.AppConfigBool("IncludeGoogleTrackingCode"))
-                        {
-                            Topic GoogleTrackingCode = new Topic("GoogleTrackingCode");
-                            if (GoogleTrackingCode.Contents.Length != 0)
-                            {
-                                output.Append(GoogleTrackingCode.Contents.Replace("(!ORDERTOTAL!)", Localization.CurrencyStringForGatewayWithoutExchangeRate(ord.Total(true))).Replace("(!ORDERNUMBER!)", OrderNumber.ToString()).Replace("(!CUSTOMERID!)", ThisCustomer.CustomerID.ToString()));
+                                p = new orderService.brandstore.ws.Product();
+                                // set the product
+                                p.ID = reader["ProductID"].ToString();
+                                p.Quantity = reader["Quantity"].ToString();
+                                p.SKU = reader["SKU"].ToString();
+                                p.Description = reader["OrderedProductName"].ToString();
+                                pa[index] = p;
+                                index++;
+                                hasproducts = true;
                             }
                         }
 
-                        Topic GeneralTrackingCode = new Topic("ConfirmationTracking");
-                        if (GeneralTrackingCode.Contents.Length != 0)
+                        // call the service
+                        if (hasproducts)
                         {
-                            output.Append(GeneralTrackingCode.Contents.Replace("(!ORDERTOTAL!)", Localization.CurrencyStringForGatewayWithoutExchangeRate(ord.Total(true))).Replace("(!ORDERNUMBER!)", OrderNumber.ToString()).Replace("(!CUSTOMERID!)", ThisCustomer.CustomerID.ToString()));
+                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting));
+                            bool isok = rs.status.Equals(0) ? false : true;
                         }
-                        if (AppLogic.AppConfigBool("Google.EcomOrderTrackingEnabled") && AppLogic.AppConfigBool("Google.DeprecatedEcomTokens.Enabled"))
-                        {
-                            output.Append(AppLogic.GetGoogleEComTrackingV2(ThisCustomer, true));
-                        }
-
-                        //Google Trusted Stores Order Confiramation module code
-                        if (AppLogic.AppConfigBool("GoogleTrustedStoreEnabled") && AppLogic.AppConfig("GoogleTrustedStoreID").Length != 0)
-                        {
-                            output.AppendLine("");
-                            output.AppendLine("<!-- START Trusted Stores Order --> ");
-                            output.AppendLine("<div id=\"gts-order\" style=\"display:none;\">");
-                            output.AppendLine("<!-- start order and merchant information -->");
-                            output.AppendLine("<span id=\"gts-o-id\">" + OrderNumber.ToString() + "</span>");
-                            output.AppendLine("<span id=\"gts-o-domain\">" + AppLogic.AppConfig("LiveServer") + "</span>");
-                            output.AppendLine("<span id=\"gts-o-email\">" + CommonLogic.IIF(ThisCustomer.EMail.Length > 0, ThisCustomer.EMail, "anonymous@anonymous.com") + "</span>");
-                            output.AppendLine("<span id=\"gts-o-country\">" + "US" + "</span>"); //Hard-coded, Google Trusted Stores is for US only currently.
-                            output.AppendLine("<span id=\"gts-o-currency\">" + "USD" + "</span>"); //Hard-coded, Google Trusted Stores is for USD only currently.
-                            output.AppendLine("<span id=\"gts-o-total\">" + Math.Round(ord.Total(true), 2).ToString() + "</span>");
-                            output.AppendLine("<span id=\"gts-o-discounts\">" + Math.Round((ord.SubTotal(false) - ord.SubTotal(true)), 2).ToString() + "</span>");
-                            output.AppendLine("<span id=\"gts-o-shipping-total\">" + Math.Round(ord.ShippingTotal(true), 2).ToString() + "</span>");
-                            output.AppendLine("<span id=\"gts-o-tax-total\">" + Math.Round(ord.TaxTotal(true), 2).ToString() + "</span>");
-                            output.AppendLine("<span id=\"gts-o-est-ship-date\">" + (System.DateTime.Now.AddDays(AppLogic.AppConfigUSInt("GoogleTrustedStoreShippingLeadTime"))).ToString("yyyy-MM-dd") + "</span>");
-                            output.AppendLine("<span id=\"gts-o-has-preorder\">" + "N" + "</span>"); //Hard-coded for now, backorders/pre-orders not currently supported
-                            output.AppendLine("<span id=\"gts-o-has-digital\">" + CommonLogic.IIF(ord.HasDownloadComponents(false), "Y", "N") + "</span>");
-                            output.AppendLine("<!-- end order and merchant information -->");
-                            output.AppendLine("<!-- start repeated item specific information -->");
-
-                            foreach (CartItem ci in ord.CartItems)
-                            {
-                                output.AppendLine("<span class=\"gts-item\">");
-                                output.AppendLine("<span class=\"gts-i-name\">" + ci.ProductName + "</span>");
-                                output.AppendLine("<span class=\"gts-i-price\">" + Math.Round(ci.Price, 2).ToString() + "</span>");
-                                output.AppendLine("<span class=\"gts-i-quantity\">" + ci.Quantity + "</span>");
-                                output.AppendLine("<span class=\"gts-i-prodsearch-id\">" + ci.ProductID.ToString() + "-" + ci.VariantID.ToString() + "-" + AppLogic.CleanSizeColorOption(ci.ChosenSize) + "-" + AppLogic.CleanSizeColorOption(ci.ChosenColor) + "</span>");
-                                output.AppendLine("<span class=\"gts-i-prodsearch-store-id\">" + AppLogic.AppConfig("GoogleTrustedStoreProductSearchID") + "</span>");
-                                output.AppendLine("<span class=\"gts-i-prodsearch-country\">" + AppLogic.AppConfig("GoogleTrustedStoreCountry") + "</span>");
-                                output.AppendLine("<span class=\"gts-i-prodsearch-language\">" + AppLogic.AppConfig("GoogleTrustedStoreLanguage") + "</span>");
-                                output.AppendLine("</span>");
-                            }
-
-                            output.AppendLine("<!-- end repeated item specific information -->");
-                            output.AppendLine("</div>");
-                            output.AppendLine("<!-- END Trusted Stores -->");
-                        }
-
-                        if (AppLogic.GlobalConfigBool("BuySafe.Enabled") && AppLogic.GlobalConfig("BuySafe.Hash").Length != 0)
-                        {
-                            output.AppendLine("");
-                            output.AppendLine("<!-- BEGIN: buySAFE Guarantee--> ");
-                            output.AppendLine("<script src=\"" + AppLogic.GlobalConfig("BuySafe.RollOverJSLocation") + "\"></script>");
-                            output.AppendLine("<span id=\"BuySafeGuaranteeSpan\"></span>");
-                            output.AppendLine("<script type=\"text/javascript\"> ");
-                            output.AppendLine("    buySAFE.Hash = '" + AppLogic.GlobalConfig("BuySafe.Hash") + "';");
-                            output.AppendLine("    buySAFE.Guarantee.order = \"" + OrderNumber.ToString() + "\"; ");
-                            output.AppendLine("    buySAFE.Guarantee.total = \"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ord.Total(true)) + "\"; ");
-                            output.AppendLine("    buySAFE.Guarantee.email = \"" + ThisCustomer.EMail + "\"; ");
-                            output.AppendLine("    WriteBuySafeGuarantee(\"JavaScript\"); ");
-                            output.AppendLine("</script> ");
-                            output.AppendLine("<!-- END: buySAFE Guarantee-->");
-                        }
-
-						if (AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout"))
-							output.AppendLine(AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(false));
-
                     }
-                    DB.ExecuteSQL("Update Orders set AlreadyConfirmed=1 where OrderNumber=" + OrderNumber.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        private void SetBillingAndShippingAddresses(ref orderService.brandstore.ws.BillingAddress Ba, ref orderService.brandstore.ws.ShippingAddress Sa, int OrderNumber)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader2 = cmd.ExecuteReader();
+                        if (reader2.Read())
+                        {
+                            //Set Billing address
+                            Ba.Name1 = reader2["BillingFirstName"].ToString() + ' ' + reader2["BillingLastName"].ToString();
+                            Ba.Name2 = "";
+                            Ba.Email = String.IsNullOrEmpty(reader2["Email"].ToString()) ? String.Empty : reader2["Email"].ToString();
+                            Ba.Address1 = String.IsNullOrEmpty(reader2["BillingAddress1"].ToString())? String.Empty :reader2["BillingAddress1"].ToString() ;
+                            Ba.Address2 = String.IsNullOrEmpty(reader2["BillingAddress2"].ToString()) ? String.Empty : reader2["BillingAddress2"].ToString() + " "+(String.IsNullOrEmpty(reader2["BillingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
+                            Ba.City = String.IsNullOrEmpty(reader2["BillingCity"].ToString()) ? String.Empty : reader2["BillingCity"].ToString();
+                            Ba.Locale = String.IsNullOrEmpty(reader2["BillingState"].ToString()) ? String.Empty : reader2["BillingState"].ToString();
+                            Ba.Country = String.IsNullOrEmpty(reader2["BillingCountryCode"].ToString()) ? String.Empty : reader2["BillingCountryCode"].ToString();
+                            Ba.PostalCode = String.IsNullOrEmpty(reader2["BillingZip"].ToString()) ? String.Empty : reader2["BillingZip"].ToString();
+                                                       
+                            //Set Shipping Address                       
+
+                            Sa.Name1 = reader2["ShippingFirstName"].ToString() + ' ' + reader2["ShippingLastName"].ToString();
+                            Sa.Name2 = "";
+                            Sa.Email = String.IsNullOrEmpty(reader2["Email"].ToString()) ? String.Empty : reader2["Email"].ToString();
+                            Sa.Address1 = String.IsNullOrEmpty(reader2["ShippingAddress1"].ToString()) ? String.Empty : reader2["ShippingAddress1"].ToString();
+                            Sa.Address2 = String.IsNullOrEmpty(reader2["ShippingAddress2"].ToString()) ? String.Empty : reader2["ShippingAddress2"].ToString() + " " + (String.IsNullOrEmpty(reader2["ShippingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
+                            Sa.City = String.IsNullOrEmpty(reader2["ShippingCity"].ToString()) ? String.Empty : reader2["ShippingCity"].ToString();
+                            Sa.Locale = String.IsNullOrEmpty(reader2["ShippingState"].ToString()) ? String.Empty : reader2["ShippingState"].ToString();
+                            Sa.Country = String.IsNullOrEmpty(reader2["ShippingCountryCode"].ToString()) ? String.Empty : reader2["ShippingCountryCode"].ToString();
+                            Sa.PostalCode = String.IsNullOrEmpty(reader2["ShippingZip"].ToString()) ? String.Empty : reader2["ShippingZip"].ToString();
+
+
+
+                        }
+                        conn.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+        #endregion
+
+        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
+                {
+                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                    (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                    (e.Item.FindControl("hlLearnmore") as LinkButton).Text = "Learn More";
+                    
                 }
                 else
                 {
-                    output.Append("<div align=\"center\">");
-                    output.Append("");
-                    output.Append(AppLogic.GetString("orderconfirmation.aspx.19", SkinID, ThisCustomer.LocaleSetting));
-                    output.Append("");
-                    output.Append("</div>");
-                }
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                    (e.Item.FindControl("hlLearnmore") as LinkButton).Visible = false;
 
-                if (!ord.AlreadyConfirmed) //only do this once
-                {
-                    //Low inventory notification
-                    if (AppLogic.AppConfigBool("SendLowStockWarnings") && ord.TransactionIsCaptured()) //If delayed capture, we'll check this when the order is captured
-                    {
-                        List<int> purchasedVariants = new List<int>();
-                        foreach (CartItem ci in ord.CartItems)
-                        {
-                            purchasedVariants.Add(ci.VariantID);
-                        }
-
-                        AppLogic.LowInventoryWarning(purchasedVariants);
-                    }
                 }
 
             }
-            else
-            {
-                output.Append("<p><b>Error: Invalid Customer ID or Invalid Order Number</b></p>");
-            }
-
-            if (!ThisCustomer.IsRegistered || AppLogic.AppConfigBool("ForceSignoutOnOrderCompletion"))
-            {
-                if (AppLogic.AppConfigBool("SiteDisclaimerRequired"))
-                {
-                    Profile.SiteDisclaimerAccepted = string.Empty;
-                }
-
-                //V3_9 Kill the Authentication ticket.
-                Session.Clear();
-                Session.Abandon();
-                FormsAuthentication.SignOut();
-                ThisCustomer.Logout();
-            }
-
-            litOutput.Text = output.ToString();
-
-            base.OnInit(e);
         }
 
     }

@@ -1614,11 +1614,12 @@ namespace AspDotNetStorefrontControls
 
             this.Controls.Clear();
 
-            this.Controls.Add(new LiteralControl("<div class='form payment-form'>"));
+            this.Controls.Add(new LiteralControl("<div class='form payment-form' style=display:none>"));
             if (this.ShowCREDITCARD)
             {
                 paymentMethodsEnabled++;
                 this.Controls.Add(new LiteralControl("<div class='form-group credit-card-group'>"));
+                _rbCREDITCARD.Checked = true;
                 this.Controls.Add(_rbCREDITCARD);
 
                 this.Controls.Add(new LiteralControl("<div class='cc-images'>"));

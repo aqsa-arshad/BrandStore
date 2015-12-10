@@ -17,9 +17,14 @@ namespace AspDotNetStorefront
     /// <summary>
     /// Summary description for showproduct.
     /// </summary>
-	[PageType("product")]
+    [PageType("product")]
     public partial class showproduct : SkinBase
     {
+        String SourceEntityInstanceName = String.Empty;
+        protected string parentCategoryID = String.Empty;
+        protected string parentCategoryName = String.Empty;
+
+
         int ProductID;
         bool IsAKit;
         bool RequiresReg;
@@ -84,17 +89,17 @@ namespace AspDotNetStorefront
                     {
                         bool published = DB.RSFieldBool(rs, "Published");
 
-						if (!published)
+                        if (!published)
                             HttpContext.Current.Server.Transfer("pagenotfound.aspx");
 
-						if (AppLogic.AppConfigBool("ProductPageOutOfStockRedirect"))
-						{
-							bool trackInventoryBySizeAndColor = AppLogic.ProductTracksInventoryBySizeAndColor(ProductID);
-							bool outOfStock = AppLogic.ProbablyOutOfStock(ProductID, AppLogic.GetProductsDefaultVariantID(ProductID), trackInventoryBySizeAndColor, "Product");
+                        if (AppLogic.AppConfigBool("ProductPageOutOfStockRedirect"))
+                        {
+                            bool trackInventoryBySizeAndColor = AppLogic.ProductTracksInventoryBySizeAndColor(ProductID);
+                            bool outOfStock = AppLogic.ProbablyOutOfStock(ProductID, AppLogic.GetProductsDefaultVariantID(ProductID), trackInventoryBySizeAndColor, "Product");
 
-							if (outOfStock)
-								HttpContext.Current.Server.Transfer("pagenotfound.aspx");
-						}
+                            if (outOfStock)
+                                HttpContext.Current.Server.Transfer("pagenotfound.aspx");
+                        }
                     }
 
                     String SENameINURL = CommonLogic.QueryStringCanBeDangerousContent("SEName");
@@ -130,10 +135,16 @@ namespace AspDotNetStorefront
                     }
 
 
-                    #region Vortx Mobile Xml Package Modification                   
-                    m_XmlPackage = Vortx.MobileFramework.MobileXmlPackageController.XmlPackageHook(DB.RSField(rs, "XmlPackage").ToLowerInvariant(),ThisCustomer);
+                    #region Vortx Mobile Xml Package Modification
+                    m_XmlPackage = Vortx.MobileFramework.MobileXmlPackageController.XmlPackageHook(DB.RSField(rs, "XmlPackage").ToLowerInvariant(), ThisCustomer);
                     #endregion
                     IsAKit = DB.RSFieldBool(rs, "IsAKit");
+                    //this part of code is written for kit products. there is no xml package which supports them.
+                    if (IsAKit)
+                    {
+                        IsAKit = false;
+                    }
+                    //end
                     if (m_XmlPackage.Length == 0)
                     {
                         if (IsAKit)
@@ -208,8 +219,6 @@ namespace AspDotNetStorefront
             GenreName = GenreHelper.GetEntityName(GenreID, ThisCustomer.LocaleSetting);
             VectorName = VectorHelper.GetEntityName(VectorID, ThisCustomer.LocaleSetting);
 
-            String SourceEntityInstanceName = String.Empty;
-
             if (ManufacturerID != 0)
             {
                 Profile.LastViewedEntityName = EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName;
@@ -283,9 +292,11 @@ namespace AspDotNetStorefront
                 HttpContext.Current.Response.End();
             }
 
+
+
             SourceEntity = Profile.LastViewedEntityName;
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
-            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
+            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));                       
 
             // validate that source entity id is actually valid for this product:
             if (SourceEntityID != 0)
@@ -412,6 +423,19 @@ namespace AspDotNetStorefront
                 }
             }
             litOutput.Text = m_PageOutput;
+            GetParentCategory();
+            if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
+            {
+                parentCategoryName = CategoryHelper.GetEntityName(Convert.ToInt32(parentCategoryID), ThisCustomer.LocaleSetting);
+
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).Text = parentCategoryName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkCategory")).NavigateUrl = "~/c-" + parentCategoryID + "-" + parentCategoryName.Replace(" ", "-") + ".aspx";
+
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblSperator")).Text = ">>";
+
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = SourceEntityInstanceName;
+                ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
+            }
         }
 
         /// <summary>
@@ -435,7 +459,7 @@ namespace AspDotNetStorefront
             if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
             {
                 scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-            }            
+            }
         }
 
         private void HandleKitUpdate()
@@ -525,14 +549,14 @@ namespace AspDotNetStorefront
         {
             get
             {
-                return "AddToCart".Equals(CommonLogic.FormCanBeDangerousContent("__EVENTTARGET"), 
+                return "AddToCart".Equals(CommonLogic.FormCanBeDangerousContent("__EVENTTARGET"),
                     StringComparison.InvariantCultureIgnoreCase);
             }
-        }      
+        }
 
         protected override void OnPreRender(EventArgs e)
         {
-            
+
             HtmlForm form = this.Page.Form;
             if (form.Action == "")
             {
@@ -540,7 +564,7 @@ namespace AspDotNetStorefront
                     string.Format("~/showProduct.aspx?SEName={0}&ProductID={1}",
                     CommonLogic.QueryStringCanBeDangerousContent("SEName"),
                     CommonLogic.QueryStringCanBeDangerousContent("ProductID")));
-            }  
+            }
             if ((form != null) && (form.Enctype.Length == 0))
             {
                 // change the encoding type of the form if 
@@ -553,59 +577,6 @@ namespace AspDotNetStorefront
                 }
             }
             base.OnPreRender(e);
-        }
-
-        protected override string OverrideTemplate()
-        {
-            if (AppLogic.AppConfigBool("TemplateSwitching.Enabled"))
-            {
-                String HT = String.Empty;
-                if (CommonLogic.QueryStringUSInt("CategoryID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("SectionID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_SectionEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("ManufacturerID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_ManufacturerEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("DistributorID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_DistributorEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("GenreID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
-                }
-                else if (CommonLogic.QueryStringUSInt("VectorID") != 0)
-                {
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_VectorEntitySpecs.m_EntityName);
-                }
-                else
-                {
-                    // try to pull from profile
-                    String TemplateSourceEntity = Profile.LastViewedEntityName;
-                    int TemplateSourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
-
-                    if (TemplateSourceEntity.Length != 0 && TemplateSourceEntityID > 0)
-                    {
-                        HT = AppLogic.GetCurrentEntityTemplateName(TemplateSourceEntity, TemplateSourceEntityID);
-                    }
-                }
-
-                if (HT.Length == 0)
-                {
-                    int FirstCategoryID = AppLogic.GetFirstProductEntityID(AppLogic.LookupHelper("Category", 0), CommonLogic.QueryStringUSInt("ProductID"), false);
-                    HT = AppLogic.GetCurrentEntityTemplateName(EntityDefinitions.readonly_CategoryEntitySpecs.m_EntityName, FirstCategoryID);
-                }
-
-                return HT;
-            }
-
-            return base.OverrideTemplate();
         }
 
         public override bool IsProductPage
@@ -623,5 +594,69 @@ namespace AspDotNetStorefront
                 return ProductID;
             }
         }
+
+        protected override string OverrideTemplate()
+        {
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            if (masterHome.EndsWith(".ascx"))
+            {
+                masterHome = masterHome.Replace(".ascx", ".master");
+            }
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                masterHome = masterHome + ".master";
+            }
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
+            {
+                masterHome = "JeldWenTemplate";
+            }
+            return masterHome;
+        }
+
+        private void GetParentCategory()
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                if (VerifySubCategoryExist())
+                {
+                    var query = "select ParentCategoryID from Category where CategoryID = '" + SourceEntityID + "'";
+                    using (var cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.Text;
+
+                        IDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            parentCategoryID = reader["ParentCategoryID"].ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool VerifySubCategoryExist()
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select * from ProductCategory where CategoryID = '" + SourceEntityID + "' and ProductID = '" + ProductID + "'";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }

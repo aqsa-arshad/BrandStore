@@ -36,6 +36,7 @@ namespace AspDotNetStorefrontCore
         private bool m_IsAKit;
         private int m_GiftRegistryForCustomerID;
         private String m_ProductName;
+        private String m_ProductDescription;
         private String m_VariantName;
         private String m_SKU;
         private String m_ManufacturerPartNumber;
@@ -191,6 +192,7 @@ namespace AspDotNetStorefrontCore
             m_ThisCustomer = ci.ThisCustomer;
             m_ThisShoppingCart = ci.ThisShoppingCart;
             m_IsGift = ci.IsGift;
+            m_ProductDescription = ci.ProductDescription;
         }
 
         #endregion
@@ -240,6 +242,12 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_RecurringSubscriptionID; }
             set { m_RecurringSubscriptionID = value; }
+        }
+
+        public String ProductDescription
+        {
+            get { return m_ProductDescription; }
+            set { m_ProductDescription = value; }
         }
 
         /// <summary>
@@ -1189,15 +1197,19 @@ namespace AspDotNetStorefrontCore
 			
             if (ThePic.Length == 0 || ThePic.IndexOf("nopicture") != -1)
             {
-               
-                    if (ChosenColor == "")
-                    {
-                        ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-                    }
-                    else
-                    {
-                        ThePic = AppLogic.LookupProductImageByNumberAndColor(ProductID, ThisCustomer.SkinID, m_ImageFileNameOverride, SKU, ThisCustomer.LocaleSetting, 1, AppLogic.RemoveAttributePriceModifier(ChosenColor), "icon");
-                    }
+
+                if (ChosenColor == "")
+                {
+                    ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                }
+                else
+                {
+                    ThePic = AppLogic.LookupProductImageByNumberAndColor(ProductID, ThisCustomer.SkinID, m_ImageFileNameOverride, SKU, ThisCustomer.LocaleSetting, 1, AppLogic.RemoveAttributePriceModifier(ChosenColor), "icon");
+                    //if (ThePic.Contains("nopictureicon"))
+                    //{
+                    //    ThePic = AppLogic.LookupImage("Product", ProductID, m_ImageFileNameOverride, SKU, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    //}
+                }
             }
             if (ProductID == AppLogic.MicropayProductID)
             {

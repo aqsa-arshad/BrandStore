@@ -143,6 +143,45 @@ public class CustomXsltExtension : XSLTExtensionBase
         return "<div id=\"staticCategoryList\"><h3>Categories</h3>" + result + "</div>";
     }
 
+    public virtual string GetSubCategoryListByCategory(string categoryId)
+                                
+    {        
+        var output = new StringBuilder();
+        output.Append("<ul class='dropdown-menu'>");
+        using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["DBConn"]))
+        {
+            string query = "EXEC custom_GetSubCategoryListByCategory @CategoryID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@CategoryID", categoryId);
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            try
+            {
+                while (reader.Read())
+                {
+                    var name = reader["Name"];
+                    var url = String.Format("c-{0}-{1}.aspx", reader["CategoryID"], reader["SEName"]);                  
+                    var isSelected = false;
+                    var selectedClass = isSelected ? " selected" : "";
+                    var arrow = isSelected ? "<span class=\"arrow\">&#9658;</span>" : "";
+                    output.Append(String.Format("<li class=\"{0}{1}\"><a href=\"{2}\">{3}</a></li>", "", selectedClass, url, name));
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
+        }
+
+        output.Append("</ul>");
+
+        var result = output.ToString();
+        if (result == "<ul></ul>")
+            return "";
+
+        return result;
+    }
     public virtual string GetCategoryRootLevelList(int categoryId)
     {
         var output = new StringBuilder();
@@ -165,21 +204,28 @@ public class CustomXsltExtension : XSLTExtensionBase
                     if (tier == 1)
                         continue;
 
-                    var name = reader["Name"];
+                    string name = reader["Name"].ToString();
+                    string imageFilenameOverride = reader["ImageFilenameOverride"].ToString();
+
                     var url = String.Format("c-{0}-{1}.aspx", reader["CategoryID"], reader["SEName"]);
-                    var total = reader["Total"];
 
-                    var products = GetProductListByCategory(catId);
+                    var imageLocalPath = AppLogic.LookupImage("Category", catId, imageFilenameOverride, string.Empty, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    var imageUrl = "<img id=\"CategoryPic" + catId + "\" name=\"" + CommonLogic.IIF(AppLogic.AppConfigBool("NameImagesBySEName") && !String.IsNullOrEmpty(name), name, "ProductPic" + catId) + "\" class=\"product-image icon-image img-responsive\" src=\"" + imageLocalPath + "\">";          
 
-                    output.Append("<div class=\"top-category-container\">");
-                    output.Append("<div class=\"title-container\"><h3>" + name + " <span>(" + total + ")</span></h3>");
-                    output.Append("<a href=\"" + url + "\" class=\"btn call-to-action\">View All " + name + "</a></div>");
-                    output.Append("<table border=\"0\" cellpadding=\"0\" id=\"ProductTable\" cellspacing=\"4\" width=\"100%\">");
-                    output.Append("<tr>");
-                    output.Append(products);
-                    output.Append("</tr>");
-                    output.Append("</table>");
+                    output.Append("<div class=\"col-md-6\"> <div class=\"thumbnail\">");
+
+                    output.Append("<div class=\"category-head-height\">");
+                    output.Append("<a href=\"" + url + "\" \">");
+                    output.Append("<h4>" + name + "</h4></a>");
                     output.Append("</div>");
+
+                    output.Append("<a class=\"product-img-box\" href=\"" + url + "\" \">");
+                    output.Append(imageUrl + "</a>");
+
+                    output.Append("<a class=\"btn btn-primary btn-block\" role=\"button\" href=\"" + url + "\" \">");
+                    output.Append("VIEW All" + "</a>");
+
+                    output.Append("</div></div>");
                 }
             }
             finally

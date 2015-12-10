@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+WARNING: DO NOT MODIFY this file, it is used for the web publish process.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{896cb118-d6f9-413d-8339-d13e0d4b92f5}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/Web</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SourceWebProject>http://localhost:51822</SourceWebProject>
+    <SourceWebMetabasePath>/IISExpress/7.5/LM/W3SVC/7/ROOT</SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASPDNSFCommon\AspDotNetStorefrontCommon.csproj">
+      <Project>{65E8266F-BD0A-4C2A-B7DE-13AEE9DF0FAE}</Project>
+      <Name>AspDotNetStorefrontCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFControls\AspDotNetStorefrontControls.csproj">
+      <Project>{0249CF6E-1CD6-4F6F-953F-5EF1A3BC71F9}</Project>
+      <Name>AspDotNetStorefrontControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFCore\AspDotNetStorefrontCore.csproj">
+      <Project>{06ED156E-CA02-4A2B-80C4-EEED5A84E9F9}</Project>
+      <Name>AspDotNetStorefrontCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\Gateway1stPay\Gateway1stPay.csproj">
+      <Project>{CFF7C6C9-1001-49A3-89D3-5F1BDF2347AA}</Project>
+      <Name>Gateway1stPay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayAuthorizeNet\GatewayAuthorizeNet.csproj">
+      <Project>{BE725EBC-0882-4F04-B56C-BB1B2BE740B7}</Project>
+      <Name>GatewayAuthorizeNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayCheckoutByAmazon\GatewayCheckoutByAmazon.csproj">
+      <Project>{07A638FF-BC0B-43BB-A191-E609508327BC}</Project>
+      <Name>GatewayCheckoutByAmazon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayCybersource\GatewayCybersource.csproj">
+      <Project>{9B14DA79-A1B6-4928-97E7-D2C5672B646B}</Project>
+      <Name>GatewayCybersource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayEProcessingNetwork\GatewayEProcessingNetwork.csproj">
+      <Project>{2690D00B-9920-4C4F-BD4E-D6A09295F34F}</Project>
+      <Name>GatewayEProcessingNetwork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayEWay\GatewayEWay.csproj">
+      <Project>{8FBCECE4-807C-4B58-B227-E1718259A7A4}</Project>
+      <Name>GatewayEWay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayHSBC\GatewayHSBC.csproj">
+      <Project>{B1B6569D-70A9-4761-97FF-EDC0DED5D243}</Project>
+      <Name>GatewayHSBC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayIDeposit\GatewayIDeposit.csproj">
+      <Project>{7AE1DD1D-125C-454D-BA68-830E6BE62D27}</Project>
+      <Name>GatewayIDeposit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayITransact\GatewayITransact.csproj">
+      <Project>{1924022E-5441-4420-995F-B2760084A70E}</Project>
+      <Name>GatewayITransact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayJetPay\GatewayJetPay.csproj">
+      <Project>{0CFF113C-086B-4391-8E31-0398858A341F}</Project>
+      <Name>GatewayJetPay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayManual\GatewayManual.csproj">
+      <Project>{11D773B1-7C8C-4B5D-B6AE-FDDAFD5024D8}</Project>
+      <Name>GatewayManual</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayMicropay\GatewayMicropay.csproj">
+      <Project>{2366E8A8-0049-41ED-8CC7-36B65C6CE257}</Project>
+      <Name>GatewayMicropay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayMoneris\GatewayMoneris.csproj">
+      <Project>{72F189A2-6ADD-4931-AD67-E340A6EEB825}</Project>
+      <Name>GatewayMoneris</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayMoneybookers\GatewayMoneybookers.csproj">
+      <Project>{DBE043EF-7ED1-4186-B4ED-8C3F4C28F8F3}</Project>
+      <Name>GatewayMoneybookers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayNetaxept\GatewayNetaxept.csproj">
+      <Project>{027E33F8-76BB-4389-8755-82851CD0403A}</Project>
+      <Name>GatewayNetaxept</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayNetBilling\GatewayNetBilling.csproj">
+      <Project>{48886FB9-8D39-46C7-8EF3-3A0D58AB110C}</Project>
+      <Name>GatewayNetBilling</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayOgone\GatewayOgone.csproj">
+      <Project>{6F6C799E-2DA7-4CB4-8363-3B569783B5AF}</Project>
+      <Name>GatewayOgone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPayFlowPro\GatewayPayFlowPro.csproj">
+      <Project>{024FB35B-D83E-463E-90C5-8DBB6A786E09}</Project>
+      <Name>GatewayPayFlowPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPayfuse\GatewayPayfuse.csproj">
+      <Project>{C0883610-4A9D-498E-AAEE-7F9516C0DCF2}</Project>
+      <Name>GatewayPayfuse</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPayJunction\GatewayPayJunction.csproj">
+      <Project>{F29DC9E0-B320-4485-9304-B2548970B015}</Project>
+      <Name>GatewayPayJunction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPayLeap\GatewayPayLeap.csproj">
+      <Project>{6A6B67C2-1478-40FE-95EE-783B0AFF203B}</Project>
+      <Name>GatewayPayLeap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPaymentech\GatewayPaymentech.csproj">
+      <Project>{B538B947-34CC-4118-B869-FF64C7D5ECCC}</Project>
+      <Name>GatewayPaymentech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPaymentExpress\GatewayPaymentExpress.csproj">
+      <Project>{197F8F9D-070D-4A8E-ADDE-1F4E178D321A}</Project>
+      <Name>GatewayPaymentExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPayPal\GatewayPayPal.csproj">
+      <Project>{384A5A6B-1965-43C4-8AAB-8A3F990D3E1D}</Project>
+      <Name>GatewayPayPal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPinnaclePayments\GatewayPinnaclePayments.csproj">
+      <Project>{7E31C255-B14B-4818-AED4-901843C3CE06}</Project>
+      <Name>GatewayPinnaclePayments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayPlugNPay\GatewayPlugNPay.csproj">
+      <Project>{A34B5B2D-0A32-4835-B463-BE8F0B3962C9}</Project>
+      <Name>GatewayPlugNPay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayQBMerchantServices\GatewayQBMerchantServices.csproj">
+      <Project>{0AA1E189-58F8-497B-AC47-2334D8506D4D}</Project>
+      <Name>GatewayQBMerchantServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewaySagePayments\GatewaySagePayments.csproj">
+      <Project>{EDC547AC-A027-4E93-B6D0-E45DD7899825}</Project>
+      <Name>GatewaySagePayments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewaySagePayUK\GatewaySagePayUK.csproj">
+      <Project>{F047BCEF-A69B-49F6-B9C9-219640C6BBD7}</Project>
+      <Name>GatewaySagePayUK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewaySecureNetV4\GatewaySecureNetv4.csproj">
+      <Project>{590B3AA4-D9A6-445D-85A4-81EC5816472E}</Project>
+      <Name>GatewaySecureNetv4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewaySecureNet\GatewaySecureNet.csproj">
+      <Project>{8E360311-0B92-48B0-8F11-275B2D9E194E}</Project>
+      <Name>GatewaySecureNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewaySkipjack\GatewaySkipjack.csproj">
+      <Project>{31C2F0B6-EF4F-40B3-81EF-D2320E18075A}</Project>
+      <Name>GatewaySkipjack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayTransactionCentral\GatewayTransactionCentral.csproj">
+      <Project>{0C9BABA5-96B5-49D0-A2BE-36356C0AE35E}</Project>
+      <Name>GatewayTransactionCentral</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayTwoCheckout\GatewayTwoCheckout.csproj">
+      <Project>{83A9C9A4-899C-4013-8685-3B4F419A2B36}</Project>
+      <Name>GatewayTwoCheckout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayUSAePay\GatewayUSAePay.csproj">
+      <Project>{92484B4B-3107-4BEE-B313-225D65DFC172}</Project>
+      <Name>GatewayUSAePay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayVerisign\GatewayVerisign.csproj">
+      <Project>{12A904C9-581C-47CB-82AA-BAE4FA7B179A}</Project>
+      <Name>GatewayVerisign</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGatewayProcessors\GatewayWorldPay\GatewayWorldPay.csproj">
+      <Project>{839E51A8-02EE-4E28-A9A4-5FD4062FE1BF}</Project>
+      <Name>GatewayWorldPay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFGateways\AspDotNetStorefrontGateways.csproj">
+      <Project>{63E62D25-0D49-4414-836E-85481A039C06}</Project>
+      <Name>AspDotNetStorefrontGateways</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFLayout\AspDotNetStorefrontLayout.csproj">
+      <Project>{CD77AC66-1D24-4A26-98DA-1E8C8D6A6D43}</Project>
+      <Name>AspDotNetStorefrontLayout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ASPDNSFWSI\AspDotNetStorefrontWSI.csproj">
+      <Project>{9900E6FD-B97F-4DAA-9DF9-3E1CE78F48C8}</Project>
+      <Name>AspDotNetStorefrontWSI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontAdmin\AspDotNetStorefrontAdmin.csproj">
+      <Project>{95BAAED0-49ED-4190-8D4F-783694A8F3CB}</Project>
+      <Name>AspDotNetStorefrontAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontBuySafe\AspDotNetStorefrontBuySafe.csproj">
+      <Project>{DE0E2BB7-ADFA-4140-826C-92778FB9D8C6}</Project>
+      <Name>AspDotNetStorefrontBuySafe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontEvents\AspDotNetStorefrontEventHandlers.csproj">
+      <Project>{EB4333E4-C278-4D42-8370-42F3052B9AF5}</Project>
+      <Name>AspDotNetStorefrontEventHandlers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AspDotNetStorefrontPromotions\AspDotNetStorefrontPromotions.csproj">
+      <Project>{0D9EB42C-B770-4F86-961F-9D1DE341BFCE}</Project>
+      <Name>AspDotNetStorefrontPromotions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vortx.Mobile\Vortx.Mobile.csproj">
+      <Project>{BF150EE6-0DE2-488E-9C71-1CBC88FFF661}</Project>
+      <Name>Vortx.Mobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XsltObjects\XsltObjects.csproj">
+      <Project>{5487D70A-C4DC-4062-82CD-3F2EF1DB1A1B}</Project>
+      <Name>XsltObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>

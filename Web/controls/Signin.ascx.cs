@@ -19,14 +19,15 @@ namespace AspDotNetStorefront
 {
     public partial class Signin : System.Web.UI.UserControl
     {
+        ShoppingCart cart;
         Customer ThisCustomer;
         int m_SkinID;
         private TextBox tbSecurityCode;
         private Image imgSecurityImage;
         private Label lblSecurityLabel;
         private Label lblReturnURL;
-		private Panel pnlPasswordChangeError;
-		private Label lblPwdChgErr;
+        private Panel pnlPasswordChangeError;
+        private Label lblPwdChgErr;
         private RequiredFieldValidator rfvSecurity;
         private CheckBox cbDoingCheckout;
         private HyperLink hlSignUpLink;
@@ -61,8 +62,8 @@ namespace AspDotNetStorefront
             imgSecurityImage = GetControl("SecurityImage") as Image;
             lblSecurityLabel = GetControl("Label1") as Label;
             lblReturnURL = GetControl("ReturnURL") as Label;
-			lblPwdChgErr = GetControl("lblPwdChgErr") as Label;
-			pnlPasswordChangeError = GetControl("pnlPasswordChangeError") as Panel;
+            lblPwdChgErr = GetControl("lblPwdChgErr") as Label;
+            pnlPasswordChangeError = GetControl("pnlPasswordChangeError") as Panel;
             rfvSecurity = GetControl("RequiredFieldValidator4") as RequiredFieldValidator;
             cbDoingCheckout = GetControl("DoingCheckout") as CheckBox;
             hlSignUpLink = GetControl("SignUpLink") as HyperLink;
@@ -73,9 +74,37 @@ namespace AspDotNetStorefront
             tbNewPassword = GetControl("NewPassword") as TextBox;
             tbNewPassword2 = GetControl("NewPassword2") as TextBox;
         }
+        protected void forgotpasswordLink_Click(object sender, EventArgs e)
+        {
+            HiddenLabel.Text = "true";
+            ForgotPasswordPanel.Visible = true;
+            LoginPanel.Visible = false;
 
+        }
+        protected void GoBackToLoginLink_Click(object sender, EventArgs e)
+        {
+            HiddenLabel.Text = "false";
+            ForgotPasswordPanel.Visible = false;
+            LoginPanel.Visible = true;
+        }
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            string HiddenFieldText = HiddenLabel.Text;
+
+            if (HiddenFieldText.Equals("true"))
+            {
+                ForgotPasswordPanel.Visible = true;
+                ForgotPasswordExecutepanel1.Visible = false;
+                LoginPanel.Visible = false;
+                ForgotPasswordErrorPanel1.Visible = false; // that is where the status msg goes, in all cases in this routine
+                ForgotPasswordErrorMsgLabel1.Text = String.Empty;
+            }
+            else
+            {
+                ForgotPasswordPanel.Visible = false;
+                LoginPanel.Visible = true;
+            }
+            HiddenLabel.Text = "false";
             if (DisablePasswordAutocomplete)
             {
                 TextBox tbPassword = ctrlLogin.FindControl("Password") as TextBox;
@@ -109,14 +138,14 @@ namespace AspDotNetStorefront
             {
                 ErrorMessage err = new ErrorMessage(CommonLogic.QueryStringNativeInt("ErrorMsg"));
                 ErrorMsgLabel.Text = err.Message;
-				ErrorPanel.Visible = true;
+                ErrorPanel.Visible = true;
             }
             else
             {
                 ErrorMsgLabel.Text = string.Empty;
-				ErrorPanel.Visible = false;
+                ErrorPanel.Visible = false;
             }
-            
+            cart = new ShoppingCart(3, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
 
             AppLogic.CheckForScriptTag(lblReturnURL.Text);
             if (AppLogic.IsAdminSite || CommonLogic.GetThisPageName(true).ToLowerInvariant().IndexOf(AppLogic.AdminDir().ToLowerInvariant() + "/") != -1 || lblReturnURL.Text.ToLowerInvariant().IndexOf(AppLogic.AdminDir().ToLowerInvariant() + "/") != -1)
@@ -135,6 +164,7 @@ namespace AspDotNetStorefront
                 {
                     if (CommonLogic.QueryStringBool("checkout"))
                     {
+                        (ctrlLogin.FindControl("SignInInstructions") as Label).Text = "<p>If you already have an account, please log in to complete your purchase.</p>";
                         lblReturnURL.Text = "~/shoppingcart.aspx?checkout=true";
                     }
                     else
@@ -154,12 +184,40 @@ namespace AspDotNetStorefront
                 lblSecurityLabel.Visible = true;
                 rfvSecurity.Enabled = true;
             }
+
+            string fromshoppingcart = Request.QueryString["Checkout"];
+            Button btnlogin = (Button)ctrlLogin.FindControl("LoginButton");
+            Button btnSignInAndCheckout = (Button)ctrlLogin.FindControl("btnSignInAndCheckout");
+            if (fromshoppingcart != null)
+            {
+                (ctrlLogin.FindControl("SignInInstructions") as Label).Text = "<p>If you already have an account, please log in to complete your purchase.</p>";
+                if (fromshoppingcart.ToLower() == "true")
+                {
+                    btnlogin.Visible = false;
+                    btnSignInAndCheckout.Visible = true;
+                    CheckoutSteps.Visible = true;
+                }
+                else
+                {
+                    btnlogin.Visible = true;
+                    btnSignInAndCheckout.Visible = false;
+                    CheckoutSteps.Visible = false;
+
+                }
+            }
+            else
+            {
+                btnlogin.Visible = true;
+                btnSignInAndCheckout.Visible = false;
+                CheckoutSteps.Visible = false;
+               
+            }
         }
 
 
         protected void ctrlLogin_LoggingIn(object sender, LoginCancelEventArgs e)
         {
-            int CurrentCustomerID = ThisCustomer.CustomerID;                       
+            int CurrentCustomerID = ThisCustomer.CustomerID;
             e.Cancel = true;
             String EMailField = ctrlLogin.UserName.ToLowerInvariant().Trim();
             String PasswordField = ctrlLogin.Password;
@@ -221,7 +279,7 @@ namespace AspDotNetStorefront
                             pnlForm.Visible = false;
                             ExecutePanel.Visible = true;
                             String CustomerGUID = ThisCustomer.CustomerGUID.Replace("{", "").Replace("}", "");
-							ExecutePanel.Visible = true;
+                            ExecutePanel.Visible = true;
                             SignInExecuteLabel.Text = AppLogic.GetString("signin.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
                             string sReturnURL = FormsAuthentication.GetRedirectUrl(CustomerGUID, ctrlLogin.RememberMeSet);
                             FormsAuthentication.SetAuthCookie(CustomerGUID, ctrlLogin.RememberMeSet);
@@ -241,7 +299,7 @@ namespace AspDotNetStorefront
                                     sReturnURL = "default.aspx";
                                 }
                             }
-                            Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
+                            Response.Redirect(sReturnURL);
                         }
                         else
                         {
@@ -252,7 +310,10 @@ namespace AspDotNetStorefront
             }
             else //normal login
             {
-                ThisCustomer = new Customer(EMailField, true);
+                /*            
+             * Initialize Customer Object after OKTA Authentication
+             */
+                ThisCustomer = AuthenticationSSO.InitializeCustomerObject(EMailField, PasswordField);
 
                 if (ThisCustomer.IsRegistered)
                 {
@@ -378,7 +439,7 @@ namespace AspDotNetStorefront
 
                         String CustomerGUID = ThisCustomer.CustomerGUID.Replace("{", "").Replace("}", "");
 
-						ExecutePanel.Visible = true;
+                        ExecutePanel.Visible = true;
                         SignInExecuteLabel.Text = AppLogic.GetString("signin.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
 
                         string cookieUserName = CustomerGUID.ToString();
@@ -397,20 +458,33 @@ namespace AspDotNetStorefront
                         {
                             sReturnURL = lblReturnURL.Text;
                         }
-                        if (sReturnURL.Length == 0 || sReturnURL == "signin.aspx")
+                        if (sReturnURL.Length == 0 || sReturnURL == "signin.aspx" || sReturnURL == "/default.aspx")
                         {
                             if (cbDoingCheckout.Checked)
                             {
-                                sReturnURL = "~/shoppingcart.aspx";
+                                sReturnURL = "~/account.aspx?checkout=true";//checkoutshipping
                             }
                             else
                             {
                                 sReturnURL = "~/default.aspx";
                             }
                         }
-                        Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
-
+                        Customer c = new Customer(EMailField, true);
+                        if (AppLogic.AppConfigBool("Checkout.RedirectToCartOnSignin"))
+                        {
+                            ShoppingCart newCart = new ShoppingCart(3, c, CartTypeEnum.ShoppingCart, 0, false);
+                            sReturnURL = newCart.PageToBeginCheckout(false, false);
+                            if (newCart.Total(true) != cart.Total(true))
+                            {
+                                ErrorMessage em = new ErrorMessage("checkoutshipping.aspx.25".StringResource());
+                                sReturnURL = sReturnURL.AppendQueryString("errormsg=" + em.MessageId);
+                            }
+                            Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode(sReturnURL));
+                        }
+                        else
+                            Response.AddHeader("REFRESH", "1; URL=" + Server.UrlDecode("shoppingcart.aspx"));
                         ctrlRecoverPassword.Visible = false;
+                        Response.Redirect(sReturnURL);
                     }
                     else
                     {
@@ -505,53 +579,88 @@ namespace AspDotNetStorefront
                 }
             }
         }
+        protected void errorMessageNotification()
+        {
+            ForgotPaswwordSuccessMessage1.Text = String.Empty;
+            ForgotPasswordExecutepanel1.Visible = false;
+            ForgotPasswordErrorPanel1.Visible = true;
+            ForgotPasswordErrorMsgLabel1.Text = String.Empty;
+        }
+        protected void successMessageNotification()
+        {
+            ForgotPasswordErrorPanel1.Visible = false;
+            ForgotPasswordErrorMsgLabel1.Text = String.Empty;
+            ForgotPasswordExecutepanel1.Visible = true;
+            ForgotPaswwordSuccessMessage1.Text = String.Empty;
+        }
 
         protected void ctrlRecoverPassword_VerifyingUser(object sender, LoginCancelEventArgs e)
         {
             e.Cancel = true;
+            HiddenLabel.Text = "true";
             ErrorPanel.Visible = true; // that is where the status msg goes, in all cases in this routine
             ErrorMsgLabel.Text = String.Empty;
             string EMail = ctrlRecoverPassword.UserName;
 
             if (EMail.Length == 0)
             {
-                ErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
+                errorMessageNotification();
+                ForgotPasswordErrorMsgLabel1.Text = AppLogic.GetString("lostpassword.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
                 return;
             }
 
             ErrorMsgLabel.Text = "Email: " + EMail;
-            Customer c = new Customer(EMail);
-            if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
+            bool SendWasOk = false;
+            UserModel userModel = AuthenticationSSO.GetUserModel(EMail);
+
+            if (userModel != null) // If Okta User
             {
-                ErrorMsgLabel.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-                return;
+                SendWasOk = AuthenticationSSO.ForgotPasswordRequest(userModel.id);
             }
             else
             {
-                bool SendWasOk = false;
-                try
+                Customer c = new Customer(EMail);
+                if (!c.IsRegistered || c.IsAdminUser || c.IsAdminSuperUser)
                 {
-                    MembershipUser user = System.Web.Security.Membership.GetUser(EMail);
-                    string newPassword = user.ResetPassword();
-                    while (newPassword.Contains('*')) // *'s in passwords fail because of replacement - keep generating new passwords until no *'s
-                    {
-                        newPassword = user.ResetPassword();
-                    }
-                    String FromEMail = AppLogic.AppConfig("MailMe_FromAddress");
-                    String PackageName = AppLogic.AppConfig("XmlPackage.LostPassword");
-                    AppLogic.SendMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("lostpassword.aspx.6", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, m_SkinID, string.Empty, "newpwd=" + newPassword + "&thiscustomerid=" + ThisCustomer.CustomerID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
-                    SendWasOk = true;
-                }
-                catch { }
-                if (!SendWasOk)
-                {
-                    ErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                    errorMessageNotification();
+                    ForgotPasswordErrorMsgLabel1.Text = AppLogic.GetString("signin.aspx.25", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                    return;
                 }
                 else
                 {
-                    ErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+
+                    try
+                    {
+                        MembershipUser user = System.Web.Security.Membership.GetUser(EMail);
+                        string newPassword = user.ResetPassword();
+                        while (newPassword.Contains('*')) // *'s in passwords fail because of replacement - keep generating new passwords until no *'s
+                        {
+                            newPassword = user.ResetPassword();
+                        }
+                        String FromEMail = AppLogic.AppConfig("MailMe_FromAddress");
+                        String PackageName = AppLogic.AppConfig("XmlPackage.LostPassword");
+                        AppLogic.SendMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("lostpassword.aspx.6", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, m_SkinID, string.Empty, "newpwd=" + newPassword + "&thiscustomerid=" + ThisCustomer.CustomerID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
+                        SendWasOk = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                        MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                    }
+                    if (!SendWasOk)
+                    {
+                        errorMessageNotification();
+                        ForgotPasswordErrorMsgLabel1.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                    }
+                    else
+                    {
+                        successMessageNotification();
+                        ForgotPaswwordSuccessMessage1.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+                    }
                 }
             }
+
         }
 
         protected void btnChgPwd_Click(object sender, EventArgs e)
@@ -684,7 +793,7 @@ namespace AspDotNetStorefront
             else
             {
                 lblPwdChgErr.Text = "" + AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return;
             }
 
@@ -699,35 +808,35 @@ namespace AspDotNetStorefront
             if (PasswordField == newPassword)
             {
                 lblPwdChgErr.Text = AppLogic.GetString("signin.aspx.30", m_SkinID, ThisCustomer.LocaleSetting);
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return false;
             }
 
             if (newPassword != confirmpwd)
             {
                 lblPwdChgErr.Text = AppLogic.GetString("signin.aspx.32", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return false;
             }
 
             if ((ThisCustomer.IsAdminUser || ThisCustomer.IsAdminSuperUser) && ThisCustomer.PwdPreviouslyUsed(newPassword))
             {
                 lblPwdChgErr.Text = String.Format(AppLogic.GetString("signin.aspx.31", m_SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("NumPreviouslyUsedPwds"));
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return false;
             }
 
             if (ThisCustomer.BadLoginCount >= AppLogic.AppConfigNativeInt("MaxBadLogins"))
             {
                 lblPwdChgErr.Text = "" + AppLogic.GetString("lat_signin_process.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return false;
             }
 
             if (!ThisCustomer.Active)
             {
                 lblPwdChgErr.Text = "" + AppLogic.GetString("lat_signin_process.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return false;
             }
 
@@ -736,14 +845,14 @@ namespace AspDotNetStorefront
                 if (!Regex.IsMatch(newPassword, AppLogic.AppConfig("CustomerPwdValidator"), RegexOptions.Compiled))
                 {
                     lblPwdChgErr.Text = AppLogic.GetString("signin.aspx.26", m_SkinID, ThisCustomer.LocaleSetting);
-					lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                    lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                     return false;
                 }
             }
 
             if (!ThisCustomer.IsAdminUser && !ValidateNewPassword())
             {
-				lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
+                lblPwdChgErr.Visible = pnlPasswordChangeError.Visible = true;
                 return false;
             }
 
@@ -775,8 +884,11 @@ namespace AspDotNetStorefront
                         lblPwdChgErr.Text = "" + AppLogic.GetString("account.aspx.7", m_SkinID, ThisCustomer.LocaleSetting);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
                     AppLogic.SendMail("Invalid Password Validation Pattern", "", false, AppLogic.AppConfig("MailMe_ToAddress"), AppLogic.AppConfig("MailMe_ToAddress"), AppLogic.AppConfig("MailMe_ToAddress"), AppLogic.AppConfig("MailMe_ToAddress"), "", "", AppLogic.MailServer());
                     throw new Exception("Password validation expression is invalid, please notify site administrator");
                 }

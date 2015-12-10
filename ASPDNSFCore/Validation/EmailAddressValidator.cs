@@ -25,7 +25,7 @@ namespace AspDotNetStorefrontCore.Validation
 
     public class PhoneValidator
     {
-        private const string ValidationRegularExpression = @"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
+        private const string ValidationRegularExpression = @"\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})";
 
         public string GetValidationRegExString()
         {

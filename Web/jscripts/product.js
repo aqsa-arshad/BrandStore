@@ -38,7 +38,6 @@
     }
     aspdnsf.Controls.AddToCartForm.registerClass('aspdnsf.Controls.AddToCartForm');
     aspdnsf.Controls.AddToCartForm.prototype = {
-
         getProductId: function () {
             return this.productId;
         },
@@ -216,7 +215,7 @@
                     }
                 }
             }
-            
+
             //if (cartType == 1 || (this.validationRoutine && this.validationRoutine())) {
             if (this.validationRoutine && this.validationRoutine()) {
                 var useAjax = this.getUseAjaxBehavior();

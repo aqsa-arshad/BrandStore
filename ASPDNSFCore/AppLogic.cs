@@ -9186,7 +9186,7 @@ namespace AspDotNetStorefrontCore
 			}
 
             return Image1URL;
-        }
+        }        
 
         // Color string MUST be in master store LocaleSetting!
 		public static string LookupProductImageByNumberAndColor(int ProductID, int SkinID, string LocaleSetting, int ImageNumber, string Color, string ImgSize)
@@ -9289,9 +9289,13 @@ namespace AspDotNetStorefrontCore
 			bool useWatermarks = AppLogic.AppConfigBool("Watermark.Enabled") && !AppLogic.IsAdminSite;
 			string fileName = string.Empty;
 
-            if (ImageFileNameOverride.Trim().Length > 0)
+            if (ImageFileNameOverride.Trim().Length > 0 && ImageFileNameOverride.Contains("."))
             {
-				fileName = ImageFileNameOverride.Substring(0, ImageFileNameOverride.IndexOf("."));
+                fileName = ImageFileNameOverride.Substring(0, ImageFileNameOverride.IndexOf("."));
+            }
+            else
+            {
+                fileName = ImageFileNameOverride.Substring(0, (ImageFileNameOverride.Length));
             }
 			string EntityOrObjectName = "Product";
 			string SafeColor = CommonLogic.MakeSafeFilesystemName(Color);

@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounttab.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="AddressControl.cs" />
     <Compile Include="AlphaPaging.cs" />
@@ -162,9 +163,8 @@
       <Name>AspDotNetStorefrontCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\ASPDNSFCore\AspDotNetStorefrontCore.csproj">
-      <Project>{06ED156E-CA02-4A2B-80C4-EEED5A84E9F9}</Project>
+      <Project>{06ed156e-ca02-4a2b-80c4-eeed5a84e9f9}</Project>
       <Name>AspDotNetStorefrontCore</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AspDotNetStorefrontAdmin\AspDotNetStorefrontAdmin.csproj">
       <Project>{95BAAED0-49ED-4190-8D4F-783694A8F3CB}</Project>

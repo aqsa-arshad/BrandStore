@@ -16,6 +16,9 @@ using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 using AspDotNetStorefrontGateways;
 using AspDotNetStorefrontGateways.Processors;
+//
+using AspDotNetStorefrontControls;
+using AspDotNetStorefrontCore.ShippingCalculation;
 
 namespace AspDotNetStorefront
 {
@@ -35,6 +38,8 @@ namespace AspDotNetStorefront
         string AllowedPaymentMethods = String.Empty;
         decimal CartTotal = Decimal.Zero;
         decimal NetTotal = Decimal.Zero;
+        bool FillControl=false;
+
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -42,17 +47,39 @@ namespace AspDotNetStorefront
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             // Need to set this here so it persists across loading viewstate
             ctrlCreditCardPanel.ShowCimSaveCard = authorizeNet.IsCimEnabled;
-        }
 
-        protected void Page_Load(object sender, EventArgs e)
+                   }
+
+               protected void Page_Load(object sender, EventArgs e)
         {
+
             // Set up CIM
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             PanelWallet.Visible = authorizeNet.IsCimEnabled;
 
+           
+
             if (!this.IsPostBack)
             {
                 AspDotNetStorefrontCore.Customer.Current.ThisCustomerSession["ActivePaymentProfileId"] = String.Empty;
+                if (Request.UrlReferrer != null)
+                {
+                    if (Request.UrlReferrer.ToString().ToLower().Contains("shoppingcart"))
+                    {
+                        Session["hdnreferalurl"] = "ShoppingCart.aspx";
+
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutshipping"))
+                    {
+
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx?fillcontrols=true";
+                    }
+                    else if (Request.UrlReferrer.ToString().ToLower().Contains("checkoutreview"))
+                    {
+
+                        Session["hdnreferalurl"] = "checkoutshipping.aspx?fillcontrols=true";
+                    }
+                }
             }
 
             CimWalletSelector.PaymentProfileSelected += (o, l) =>
@@ -183,23 +210,26 @@ namespace AspDotNetStorefront
             CartTotal = cart.Total(true);
             NetTotal = CartTotal - CommonLogic.IIF(cart.Coupon.CouponType == CouponTypeEnum.GiftCard, CommonLogic.IIF(CartTotal < cart.Coupon.DiscountAmount, CartTotal, cart.Coupon.DiscountAmount), 0);
 
+
             if (!this.IsPostBack)
             {
                 InitializePageContent();
+               
             }
+           
 
             ibAmazonSimplePay.ImageUrl = AppLogic.AppConfig("AMAZON.ButtonURL");
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
             {
-                ctrlPaymentMethod.Visible =
-                    pnlCCPane.Visible =
-                    pnlCCPaneInfo.Visible = false;
-                PanelWallet.Visible = false;
+                ctrlPaymentMethod.Visible = pnlCCPaneInfo.Visible = false; PanelWallet.Visible = false;
             }
 
             AppLogic.eventHandler("CheckoutPayment").CallEvent("&CheckoutPayment=true");
+            // btnRequestEstimates_Click(null, null);
+
+
         }
 
 
@@ -271,6 +301,7 @@ namespace AspDotNetStorefront
         {
             ProcessPayment("CREDITCARD");
         }
+
 
         /// <summary>
         /// Initializes the content of the page.
@@ -434,7 +465,7 @@ namespace AspDotNetStorefront
         {
             if (!IsVisible)
             {
-                pnlCCPane.Visible = CCPaneInfo.Visible = false;
+                // pnlCCPane.Visible = CCPaneInfo.Visible = false;
                 return;
             }
 
@@ -444,7 +475,7 @@ namespace AspDotNetStorefront
                 return;
             }
 
-            pnlCCPane.Visible = true;
+            // pnlCCPane.Visible = true;
             pnlCCPaneInfo.Visible = false;
 
             string ccPaneData = GWActual == null ? null : GWActual.CreditCardPaneInfo(SkinID, ThisCustomer);
@@ -457,7 +488,7 @@ namespace AspDotNetStorefront
                 //Make sure we don't hide the continue checkout button when checking out with amazon.  
                 //CCPane might be selected because that was the last payment used by this customer.
                 btnContCheckout.Visible = GWActual.ShowCheckoutButton || checkoutByAmazon.IsCheckingOut;
-                pnlCCPane.Visible = false;
+                // pnlCCPane.Visible = false;
                 pnlCCPaneInfo.Visible = true;
             }
             else
@@ -465,7 +496,7 @@ namespace AspDotNetStorefront
                 pnlCCPaneInfo.Visible = false;
                 if (GW != Gateway.ro_GWNETAXEPT)
                 {
-                    pnlCCPane.Visible = true;
+                    // pnlCCPane.Visible = true;
                 }
             }
         }
@@ -565,7 +596,27 @@ namespace AspDotNetStorefront
                         }
                         else
                         {
-                            if (!IsPostBack)
+                            bool fillcontrol = false;
+                            if (Request.UrlReferrer!=null)
+                            {
+                            String FromPage = Request.UrlReferrer.AbsolutePath;
+                            String fill = Request.QueryString["fillcontrols"];
+                           
+                            if (FromPage.Contains("checkoutshipping"))
+                            {
+
+                                if (Request.UrlReferrer.ToString().Contains("fillcontrols"))
+                                {
+                                    fillcontrol = true;
+                                }
+                                else
+                                fillcontrol = false;
+                            }                           
+                            else
+                                fillcontrol = true;   
+                            }
+
+                            if (!IsPostBack & fillcontrol)
                             {
                                 ctrlPaymentMethod.CREDITCARDChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0 || check));
                                 SetCreditCardPanelVisibility(((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0)));
@@ -575,26 +626,32 @@ namespace AspDotNetStorefront
                                 {
                                     if (ctrlCreditCardPanel.CreditCardName == "")
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CreditCardName = BillingAddress.CardName;
                                     }
                                     if (ctrlCreditCardPanel.CreditCardNumber == "")
                                     {
-                                        ctrlCreditCardPanel.CreditCardNumber = AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
+                                        //need commented line in future
+                                        ctrlCreditCardPanel.CreditCardNumber =  AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
                                     }
                                     if (ctrlCreditCardPanel.CreditCardVerCd == "")
                                     {
-                                        ctrlCreditCardPanel.CreditCardVerCd = AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
+                                        //need commented line in future
+                                        ctrlCreditCardPanel.CreditCardVerCd =  AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
                                     }
                                     if (ctrlCreditCardPanel.CreditCardType == AppLogic.GetString("address.cs.32", SkinID, ThisCustomer.LocaleSetting))
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CreditCardType = BillingAddress.CardType;
                                     }
                                     if (ctrlCreditCardPanel.CardExpMonth == AppLogic.GetString("address.cs.34", SkinID, ThisCustomer.LocaleSetting))
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CardExpMonth = BillingAddress.CardExpirationMonth;
                                     }
                                     if (ctrlCreditCardPanel.CardExpYr == AppLogic.GetString("address.cs.35", SkinID, ThisCustomer.LocaleSetting))
                                     {
+                                        //need commented line in future
                                         ctrlCreditCardPanel.CardExpYr = BillingAddress.CardExpirationYear;
                                     }
                                     if (!CommonLogic.IsStringNullOrEmpty(BillingAddress.CardStartDate))
@@ -941,7 +998,7 @@ namespace AspDotNetStorefront
             }
             if (ctrlPaymentMethod.CARDINALMYECHECKChecked == true)
             {
-                pnlCardinaleCheckTopic.Visible = true;
+                //  pnlCardinaleCheckTopic.Visible = true;
             }
             else
             {
@@ -994,7 +1051,7 @@ namespace AspDotNetStorefront
 
                 if (!boolAllowAnon)
                 {
-                    Response.Redirect("createaccount.aspx?checkout=true");
+                    Response.Redirect("signin.aspx?checkout=true");//createaccount
                 }
             }
 
@@ -1143,7 +1200,7 @@ namespace AspDotNetStorefront
                     if (!isValid)
                     {
                         if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
-                        { 
+                        {
                             //NOTE: Suppress error and allow zero amount to checkout
                         }
                         else
@@ -1635,5 +1692,771 @@ namespace AspDotNetStorefront
                 ProcessPayment(AppLogic.ro_PMSecureNetVault);
             }
         }
+
+        protected override string OverrideTemplate()
+        {
+            String MasterHome = AppLogic.HomeTemplate();
+
+            if (MasterHome.Trim().Length == 0)
+            {
+
+                MasterHome = "JeldWenTemplate";// "template";
+            }
+
+            if (MasterHome.EndsWith(".ascx"))
+            {
+                MasterHome = MasterHome.Replace(".ascx", ".master");
+            }
+
+            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            {
+                MasterHome = MasterHome + ".master";
+            }
+
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            {
+                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
+                MasterHome = "JeldWenTemplate";// "template.master";
+            }
+
+            return MasterHome;
+        }
+
+
+        #region "Estimates"
+        protected void btnRequestEstimates_Click(object sender, EventArgs e)
+        {
+            if (ThisCustomer.IsRegistered && ThisCustomer.PrimaryShippingAddressID > 0)
+            {
+                SetupShippingAndEstimateControl(ctrlEstimate, ThisCustomer);
+                ctrlEstimate.Visible = true;
+            }
+            else
+            {
+                IShippingCalculation activeShippingCalculation = cart.GetActiveShippingCalculation();
+
+                // check whether the current shipping calculation logic requires zip code
+                ctrlEstimateAddress.RequirePostalCode = activeShippingCalculation.RequirePostalCode;
+                ctrlEstimateAddress.GetEstimateCaption = AppLogic.GetString("checkoutshipping.AddressControl.GetEstimateCaption", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                ctrlEstimateAddress.Visible = true;
+                if (!ThisCustomer.IsRegistered && AppLogic.AppConfigBool("AvalaraTax.Enabled"))
+                {
+                    EstimateAddressControl_RequestEstimateButtonClicked(sender, e);
+                }
+            }
+
+            ThisCustomer.ThisCustomerSession.SetVal("ShowEstimateSelected", true.ToString(), DateTime.MaxValue);
+
+            pnlShippingAndTaxEstimator.Visible = true;
+            ToggleShowHideEstimate();
+
+        }
+
+        private void SetupShippingAndEstimateControl(ShippingAndTaxEstimateTableControl ctrlEstimate, Customer thisCustomer)
+        {
+            try
+            {
+                //Appconfig that need to look for
+                bool skipShippingOnCheckout = AppLogic.AppConfigBool("SkipShippingOnCheckout");
+                bool freeShippingAllowsRateSelection = AppLogic.AppConfigBool("FreeShippingAllowsRateSelection");
+                bool vatEnable = AppLogic.AppConfigBool("VAT.Enabled");
+
+                ShoppingCart cart = new ShoppingCart(1, thisCustomer, CartTypeEnum.ShoppingCart, 0, false);
+                //Collect the available shipping method
+                ShippingMethodCollection availableShippingMethods = cart.GetShippingMethods(thisCustomer.PrimaryShippingAddress, AppLogic.AppConfigBool("ShowInStorePickupInShippingEstimator"));
+
+                //Initialize the caption of the control
+                string shippingEstimateCaption = AppLogic.GetString("checkoutshipping.ShippingEstimateCaption", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.HeaderCaption = AppLogic.GetString("checkoutshipping.estimator.control.header", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.ShippingEstimateCaption = shippingEstimateCaption;
+                ctrlEstimate.TaxEstimateCaption = AppLogic.GetString("checkoutshipping.TaxEstimateCaption", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.TotalEstimateCaption = AppLogic.GetString("checkoutshipping.TotalEstimateCaption", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.CaptionWidth = Unit.Percentage(50);
+                ctrlEstimate.ValueWidth = Unit.Percentage(50);
+
+                string inc = string.Empty;
+                string lowestfreightName = string.Empty;
+                decimal shippingTaxAmount = decimal.Zero;
+                decimal SubTotal = cart.SubTotal(true, false, true, true, true, false);
+
+                // Promotions: Line Item and Shipping discounts happen in the individual calculations so all that's left is to apply order level discounts.
+                var orderDiscount = 0.00M;
+                if (cart.CartItems.HasDiscountResults)
+                    orderDiscount = cart.CartItems.DiscountResults.Sum(dr => dr.OrderTotal);
+
+                SubTotal = SubTotal + orderDiscount;
+
+                // Promotions: Because multiple promotions can be applied, it's possible to get a negative value, which should be caught and zeroed out.
+                if (SubTotal < 0)
+                    SubTotal = 0;
+
+                decimal estimatedTax = decimal.Zero;
+                decimal estimatedTotal = decimal.Zero;
+                decimal estimatedShippingtotalWithTax = decimal.Zero;
+                decimal lowestFreight = decimal.Zero;
+                decimal result = decimal.Zero;
+                bool lowestFreightMethodShippingIsFree = false;
+                //If the vat is inclusive or exclusive
+                bool vatInclusive = AppLogic.VATIsEnabled() && thisCustomer.VATSettingReconciled == VATSettingEnum.ShowPricesInclusiveOfVAT;
+
+                //The lowest shipping method cost
+                ShippingMethod lowestFreightMethod = availableShippingMethods.LowestFreight;
+
+                if (vatEnable)
+                {
+                    //if VAT.Enabled is true remove the ':' at the end
+                    //to have format like this 'Shipping (ex vat):' instead of 'Shipping: (ex vat)'
+                    int count = shippingEstimateCaption.Length - 1;
+                    ctrlEstimate.ShippingEstimateCaption = shippingEstimateCaption.Remove(count);
+                }
+
+                bool isAllFreeShippingComponents = cart.IsAllFreeShippingComponents();
+                bool isAllDownloadComponents = cart.IsAllDownloadComponents();
+                bool isAllEmailGiftCards = cart.IsAllEmailGiftCards();
+                decimal freeShippingThreshold = AppLogic.AppConfigNativeDecimal("FreeShippingThreshold");
+                bool isQualifiedForFreeShippingThreshold = freeShippingThreshold > 0 && freeShippingThreshold <= SubTotal;
+
+                //Set the value for lowest freight and name
+                if (!isAllFreeShippingComponents && !cart.ShippingIsFree && !skipShippingOnCheckout
+                    || freeShippingAllowsRateSelection)
+                {
+                    if (availableShippingMethods.Count == 0)
+                    { lowestFreight = 0; }
+                    else
+                    {
+                        lowestFreight = lowestFreightMethod.Freight;
+                        lowestFreightMethodShippingIsFree = lowestFreightMethod.ShippingIsFree;
+                        lowestfreightName = lowestFreightMethod.GetNameForDisplay();
+                    }
+
+                    if (lowestFreight < 0)
+                    { lowestFreight = 0; }
+
+                    if (isQualifiedForFreeShippingThreshold && lowestFreightMethodShippingIsFree)
+                    {
+                        lowestFreight = 0;
+                    }
+                }
+
+
+                //Computation of tax and shipping cost for non register customer
+                if (!thisCustomer.IsRegistered || ThisCustomer.PrimaryShippingAddressID <= 0)
+                {
+                    decimal totalProduct = decimal.Zero;
+                    decimal TaxShippingTotal = decimal.Zero;
+
+                    //taxes for shipping
+                    Decimal CountryShippingTaxRate = AppLogic.GetCountryTaxRate(thisCustomer.PrimaryShippingAddress.Country, AppLogic.AppConfigUSInt("ShippingTaxClassID"));
+                    Decimal ZipShippingTaxRate = AppLogic.ZipTaxRatesTable.GetTaxRate(thisCustomer.PrimaryShippingAddress.Zip, AppLogic.AppConfigUSInt("ShippingTaxClassID"));
+                    Decimal StateShippingTaxRate = AppLogic.GetStateTaxRate(thisCustomer.PrimaryShippingAddress.State, AppLogic.AppConfigUSInt("ShippingTaxClassID"));
+
+                    foreach (CartItem ci in cart.CartItems)
+                    {
+                        Decimal StateTaxRate = AppLogic.GetStateTaxRate(thisCustomer.PrimaryShippingAddress.State, ci.TaxClassID);
+                        Decimal CountryTaxRate = AppLogic.GetCountryTaxRate(thisCustomer.PrimaryShippingAddress.Country, ci.TaxClassID);
+                        Decimal ZipTaxRate = AppLogic.ZipTaxRatesTable.GetTaxRate(thisCustomer.PrimaryShippingAddress.Zip, ci.TaxClassID);
+                        Decimal DIDPercent = 0.0M;
+                        Decimal DiscountedItemPrice = ci.Price * ci.Quantity;
+                        QuantityDiscount.QuantityDiscountType fixedPriceDID = QuantityDiscount.QuantityDiscountType.Percentage;
+
+                        //Handle the quantity discount
+                        DIDPercent = QuantityDiscount.GetQuantityDiscountTablePercentageForLineItem(ci, out fixedPriceDID);
+                        if (DIDPercent != 0.0M)
+                        {
+                            if (fixedPriceDID == QuantityDiscount.QuantityDiscountType.FixedAmount)
+                            {
+                                if (Currency.GetDefaultCurrency() == thisCustomer.CurrencySetting)
+                                {
+                                    DiscountedItemPrice = (ci.Price - DIDPercent) * ci.Quantity;
+
+                                }
+                                else
+                                {
+                                    DIDPercent = Decimal.Round(Currency.Convert(DIDPercent, Localization.StoreCurrency(), thisCustomer.CurrencySetting), 2, MidpointRounding.AwayFromZero);
+                                    DiscountedItemPrice = (ci.Price - DIDPercent) * ci.Quantity;
+
+                                }
+                            }
+                            else
+                            {
+                                DiscountedItemPrice = ((100.0M - DIDPercent) / 100.0M) * (ci.Price * ci.Quantity);
+                            }
+                        }
+
+                        //Handle the coupon
+                        if ((cart.GetCoupon().CouponType == CouponTypeEnum.OrderCoupon)
+                            || (cart.GetCoupon().CouponType == CouponTypeEnum.ProductCoupon))
+                        {
+                            decimal discountPercent = cart.GetCoupon().DiscountPercent;
+                            decimal discountAmount = cart.GetCoupon().DiscountAmount;
+
+                            discountPercent = DiscountedItemPrice * (discountPercent / 100);
+                            DiscountedItemPrice = DiscountedItemPrice - discountPercent;
+                            DiscountedItemPrice = DiscountedItemPrice - (discountAmount / cart.CartItems.Count);
+
+                        }
+
+                        //Handle Gift Card
+                        if (cart.Coupon.CouponType == CouponTypeEnum.GiftCard)
+                        {
+                            decimal giftCardAmount = cart.Coupon.DiscountAmount;
+                            if (estimatedTotal > giftCardAmount)
+                            {
+                                estimatedTotal -= giftCardAmount;
+                            }
+                            else
+                            {
+                                giftCardAmount = estimatedTotal;
+                                estimatedTotal = decimal.Zero;
+                            }
+                            ctrlEstimate.ShowGiftCardApplied = true;
+                            ctrlEstimate.GiftCardAppliedCaption = AppLogic.GetString("checkoutshipping.estimator.control.GiftCardApplied", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                            ctrlEstimate.GiftCardAppliedEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(giftCardAmount, thisCustomer.CurrencySetting);
+                        }
+
+                        //Making sure to set it zero if DiscountedItemPrice becomes less than zero
+                        if (DiscountedItemPrice < 0)
+                        {
+                            DiscountedItemPrice = 0;
+                        }
+                        if (ci.IsTaxable)
+                        {
+                            totalProduct = ZipTaxRate + CountryTaxRate + StateTaxRate;
+                            totalProduct = (totalProduct / 100) * DiscountedItemPrice;
+                            result += totalProduct;
+                            estimatedTax = result;
+                        }
+                        //This will handle the order option
+                        if (cart.OrderOptions.Count > 0)
+                        {
+                            //Then add it to the estimated tax
+                            //JH - removed the following addtion as it doesn't make sense. Estimate tax should not have order option totals included
+                            //estimatedTax += Prices.OrderOptionTotal(ThisCustomer, cart.OrderOptions);
+
+                            int orderOptionTaxClassID = 0;
+                            decimal estimatedTaxOnOrderOption = decimal.Zero;
+                            decimal StateTaxRateForOrderOption = decimal.Zero;
+                            decimal CountryTaxRateForOrderOption = decimal.Zero;
+                            decimal ZipTaxRateForOrderOption = decimal.Zero;
+                            decimal orderOptioncost = decimal.Zero;
+
+                            foreach (int s_optionId in cart.OrderOptions.Select(o => o.ID))
+                            {
+                                //Check if it selected then apply the tax
+                                if (cart.OptionIsSelected(s_optionId, cart.OrderOptions))
+                                {
+                                    //We need to get the cost per order option so we can compute
+                                    //the tax base on taxclass id
+                                    using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
+                                    {
+                                        conn.Open();
+                                        string query = string.Format("Select TaxClassID,Cost from OrderOption WHERE OrderOptionID = {0}", s_optionId.ToString());
+
+                                        using (IDataReader orderOptionreader = DB.GetRS(query, conn))
+                                        {
+                                            if (orderOptionreader.Read())
+                                            {
+                                                orderOptionTaxClassID = DB.RSFieldInt(orderOptionreader, "TaxClassID");
+                                                orderOptioncost = DB.RSFieldDecimal(orderOptionreader, "Cost");
+                                            }
+                                        }
+
+                                    }
+                                    //Base on the taxclass id and address
+                                    //JH - updated state tax rate to newer function calls
+                                    //StateTaxRateForOrderOption = AppLogic.GetStateTaxRate(orderOptionTaxClassID, thisCustomer.PrimaryShippingAddress.State);
+                                    StateTaxRateForOrderOption = AppLogic.GetStateTaxRate(thisCustomer.PrimaryShippingAddress.State, orderOptionTaxClassID);
+                                    CountryTaxRateForOrderOption = AppLogic.GetCountryTaxRate(thisCustomer.PrimaryShippingAddress.Country, orderOptionTaxClassID);
+                                    ZipTaxRateForOrderOption = AppLogic.ZipTaxRatesTable.GetTaxRate(thisCustomer.PrimaryShippingAddress.Zip, orderOptionTaxClassID);
+
+                                    //Total first the tax base on the address 
+                                    estimatedTaxOnOrderOption = StateTaxRateForOrderOption + CountryTaxRateForOrderOption + ZipTaxRateForOrderOption;
+                                    //Then apply it to orderoption cost
+                                    estimatedTaxOnOrderOption = (estimatedTaxOnOrderOption / 100) * orderOptioncost;
+                                    //Then add it to the estimated tax
+                                    estimatedTax += estimatedTaxOnOrderOption;
+                                }
+                            }
+                        }
+
+                        //Set it to zero if customerlevel has no tax
+                        if (AppLogic.CustomerLevelHasNoTax(thisCustomer.CustomerLevelID))
+                        {
+                            estimatedTax = decimal.Zero;
+                        }
+                    }
+
+                    if (!thisCustomer.IsRegistered && AppLogic.AppConfigBool("AvalaraTax.Enabled"))
+                    {
+                        estimatedTax = Prices.TaxTotal(ThisCustomer, cart.CartItems, estimatedShippingtotalWithTax, cart.OrderOptions);
+                    }
+
+                    TaxShippingTotal = lowestFreight;
+                    if (StateShippingTaxRate != System.Decimal.Zero
+                        || CountryShippingTaxRate != System.Decimal.Zero
+                        || ZipShippingTaxRate != System.Decimal.Zero)
+                    {
+                        if (thisCustomer.CurrencySetting != Localization.GetPrimaryCurrency())
+                        {
+                            TaxShippingTotal = decimal.Round(Currency.Convert(TaxShippingTotal, Localization.StoreCurrency(), thisCustomer.CurrencySetting), 2, MidpointRounding.AwayFromZero);
+                        }
+                        estimatedTax += ((StateShippingTaxRate + CountryShippingTaxRate + ZipShippingTaxRate) / 100.0M) * TaxShippingTotal;//st;
+
+                    }
+
+                    estimatedTotal = estimatedTax + lowestFreight + SubTotal;
+
+                }
+                //Register Customer
+                else
+                {
+                    if (isAllFreeShippingComponents &&
+                        !freeShippingAllowsRateSelection &&
+                        !skipShippingOnCheckout ||
+                        isAllDownloadComponents ||
+                        skipShippingOnCheckout ||
+                        isAllEmailGiftCards)
+                    {
+                        estimatedTax = cart.TaxTotal();
+
+                        if (vatInclusive)
+                        {
+                            estimatedTotal = SubTotal;
+                        }
+                        else
+                        {
+                            estimatedTotal = SubTotal + estimatedTax;
+                        }
+
+                        // apply gift card if any
+                        if (cart.Coupon.CouponType == CouponTypeEnum.GiftCard)
+                        {
+                            decimal giftCardAmount = cart.Coupon.DiscountAmount;
+                            if (estimatedTotal > giftCardAmount)
+                            {
+                                estimatedTotal -= giftCardAmount;
+                            }
+                            else
+                            {
+                                giftCardAmount = estimatedTotal;
+                                estimatedTotal = decimal.Zero;
+                            }
+                            ctrlEstimate.ShowGiftCardApplied = true;
+                            ctrlEstimate.GiftCardAppliedCaption = AppLogic.GetString("checkoutshipping.estimator.control.GiftCardApplied", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                            ctrlEstimate.GiftCardAppliedEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(giftCardAmount, thisCustomer.CurrencySetting);
+                        }
+                        else
+                        {
+                            //always set it false, in case user update it
+                            ctrlEstimate.ShowGiftCardApplied = false;
+                        }
+                    }
+                    else
+                    {
+                        decimal taxTotal;
+
+                        if (AppLogic.CustomerLevelHasNoTax(thisCustomer.CustomerLevelID))
+                        {
+                            estimatedTax = decimal.Zero;
+                            taxTotal = decimal.Zero;
+                            shippingTaxAmount = decimal.Zero;
+                            estimatedTotal = SubTotal + lowestFreight;
+                        }
+                        else if (vatInclusive)
+                        {
+                            // zero out the shipping total for now so that we can get the breakdown
+                            decimal subTotalTaxAmount = Prices.TaxTotal(cart.ThisCustomer, cart.CartItems, System.Decimal.Zero, cart.OrderOptions);
+
+                            int shippingTaxID = AppLogic.AppConfigUSInt("ShippingTaxClassID");
+                            decimal shippingTaxRate = thisCustomer.TaxRate(shippingTaxID);
+                            shippingTaxAmount = decimal.Round(lowestFreight * (shippingTaxRate / 100.0M), 2, MidpointRounding.AwayFromZero);
+
+                            taxTotal = subTotalTaxAmount + shippingTaxAmount;
+                            estimatedTax = taxTotal;
+                            estimatedTotal = SubTotal + lowestFreight + shippingTaxAmount;
+                        }
+                        else
+                        {
+                            taxTotal = Prices.TaxTotal(cart.ThisCustomer, cart.CartItems, lowestFreight, cart.OrderOptions);
+                            estimatedTax = taxTotal;
+                            estimatedTotal = SubTotal + lowestFreight + taxTotal;
+                        }
+
+                        // apply gift card if any
+                        if (cart.Coupon.CouponType == CouponTypeEnum.GiftCard)
+                        {
+                            decimal giftCardAmount = cart.Coupon.DiscountAmount;
+                            if (estimatedTotal > giftCardAmount)
+                            {
+                                estimatedTotal -= giftCardAmount;
+                            }
+                            else
+                            {
+                                giftCardAmount = estimatedTotal;
+                                estimatedTotal = decimal.Zero;
+                            }
+                            ctrlEstimate.ShowGiftCardApplied = true;
+                            ctrlEstimate.GiftCardAppliedCaption = AppLogic.GetString("checkoutshipping.estimator.control.GiftCardApplied", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                            ctrlEstimate.GiftCardAppliedEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(giftCardAmount, thisCustomer.CurrencySetting);
+                        }
+                        else
+                        {
+                            //always set it false, in case user update it
+                            ctrlEstimate.ShowGiftCardApplied = false;
+                        }
+                    }
+
+                }
+
+
+                //Assigning of value to the control
+                if (isAllDownloadComponents
+                  || availableShippingMethods.Count == 0
+                  || skipShippingOnCheckout
+                  || lowestFreightMethodShippingIsFree)
+                {
+                    string NoShippingRequire = string.Empty;
+                    string shippingName = string.Empty;
+                    if (cart.ShippingIsFree && !isAllDownloadComponents && !isAllEmailGiftCards && !cart.NoShippingRequiredComponents())
+                    {
+                        NoShippingRequire = AppLogic.GetString("checkoutshipping.estimator.control.FreeShipping", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                    }
+                    else if (string.IsNullOrEmpty(lowestfreightName))
+                    {
+                        NoShippingRequire = "N/A";
+                    }
+                    else
+                    {
+                        NoShippingRequire = AppLogic.GetString("checkoutshipping.estimator.control.Shipping", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                    }
+
+                    if (lowestFreightMethodShippingIsFree)
+                    {
+                        shippingName = " (" + lowestfreightName + ")";
+                    }
+
+                    if (!vatInclusive || !thisCustomer.IsRegistered)
+                    {
+                        if (vatEnable && !vatInclusive)
+                        {
+                            inc = " (" + AppLogic.GetString("setvatsetting.aspx.7", thisCustomer.SkinID, thisCustomer.LocaleSetting) + "):";
+
+                        }
+
+                        ctrlEstimate.ShippingEstimateCaption += inc + shippingName;
+
+                        if (ctrlEstimate.ShippingEstimateCaption.LastIndexOf(":").Equals(-1))
+                        {
+                            ctrlEstimate.ShippingEstimateCaption += ":";
+                        }
+
+                        ctrlEstimate.ShippingEstimate = NoShippingRequire;
+                        ctrlEstimate.TaxEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedTax, thisCustomer.CurrencySetting);
+
+                    }
+                    else
+                    {
+                        if (vatEnable)
+                        {
+                            inc = " (" + AppLogic.GetString("setvatsetting.aspx.6", thisCustomer.SkinID, thisCustomer.LocaleSetting) + "):";
+                        }
+                        ctrlEstimate.ShowTax = false;
+                        ctrlEstimate.ShippingEstimateCaption += inc + shippingName;
+                        ctrlEstimate.ShippingEstimate = NoShippingRequire;
+                    }
+                }
+                else if (lowestfreightName == "FREE SHIPPING (All Orders Have Free Shipping)"
+                     || isAllFreeShippingComponents && !freeShippingAllowsRateSelection
+                     || cart.ShippingIsFree && !freeShippingAllowsRateSelection
+                     || isQualifiedForFreeShippingThreshold && lowestFreightMethodShippingIsFree)
+                {
+                    string Free = AppLogic.GetString("checkoutshipping.estimator.control.FreeShipping", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+
+                    if (thisCustomer.IsRegistered && vatInclusive)
+                    {
+                        if (vatEnable)
+                        {
+                            inc = " (" + AppLogic.GetString("setvatsetting.aspx.6", thisCustomer.SkinID, thisCustomer.LocaleSetting) + "):";
+                        }
+                        ctrlEstimate.ShippingEstimate = Free;
+                        ctrlEstimate.ShippingEstimateCaption += inc;
+                        ctrlEstimate.ShowTax = false;
+                        ctrlEstimate.TaxEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedTax, thisCustomer.CurrencySetting);
+                    }
+                    else
+                    {
+                        //Seperate tax and shipping cost even it is inclusive mode
+                        //if non register so user will not be confused on the total computation
+                        if (vatEnable && !vatInclusive)
+                        {
+                            inc = " (" + AppLogic.GetString("setvatsetting.aspx.7", thisCustomer.SkinID, thisCustomer.LocaleSetting) + "):";
+
+                        }
+
+                        ctrlEstimate.ShippingEstimateCaption += inc;
+
+                        if (ctrlEstimate.ShippingEstimateCaption.LastIndexOf(":").Equals(-1))
+                        {
+                            ctrlEstimate.ShippingEstimateCaption += ":";
+                        }
+
+                        ctrlEstimate.ShippingEstimate = Free;
+                        ctrlEstimate.ShowTax = true;
+                        ctrlEstimate.TaxEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedTax, thisCustomer.CurrencySetting);
+                    }
+                }
+                else
+                {
+                    if (!vatInclusive)
+                    {
+                        if (vatEnable)
+                        {
+                            inc = "(" + AppLogic.GetString("setvatsetting.aspx.7", thisCustomer.SkinID, thisCustomer.LocaleSetting) + "):";
+
+                        }
+                        string shippingText = string.Format(" {0} ({1})", inc, lowestfreightName);
+                        ctrlEstimate.ShippingEstimateCaption += shippingText;
+                        ctrlEstimate.ShippingEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(lowestFreight, thisCustomer.CurrencySetting);
+                        ctrlEstimate.TaxEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedTax, thisCustomer.CurrencySetting);
+                        ctrlEstimate.TotalEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedTotal, thisCustomer.CurrencySetting);
+                    }
+                    else
+                    {
+                        if (vatEnable)
+                        {
+                            inc = "(" + AppLogic.GetString("setvatsetting.aspx.6", thisCustomer.SkinID, thisCustomer.LocaleSetting) + "):";
+                        }
+
+                        if (thisCustomer.IsRegistered)
+                        {
+                            estimatedShippingtotalWithTax = (lowestFreight + shippingTaxAmount);
+                        }
+                        else
+                        {
+                            estimatedShippingtotalWithTax = (lowestFreight + shippingTaxAmount + estimatedTax);
+                        }
+
+                        string shippingText = string.Format(" {0} ({1})", inc, lowestfreightName);
+                        ctrlEstimate.ShippingEstimateCaption += shippingText;
+                        ctrlEstimate.ShippingEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedShippingtotalWithTax, thisCustomer.CurrencySetting);
+                        ctrlEstimate.ShowTax = false;
+                    }
+                }
+                ctrlEstimate.TotalEstimate = Localization.CurrencyStringForDisplayWithExchangeRate(estimatedTotal, thisCustomer.CurrencySetting);
+            }
+            catch
+            {
+                ctrlEstimate.ShippingEstimate = "--";
+                ctrlEstimate.TaxEstimate = "--";
+                ctrlEstimate.TotalEstimate = "--";
+                ctrlEstimate.HeaderCaption = AppLogic.GetString("checkoutshipping.estimator.control.header", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.ShippingEstimateCaption = AppLogic.GetString("checkoutshipping.ShippingEstimateCaption", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.TaxEstimateCaption = AppLogic.GetString("checkoutshipping.TaxEstimateCaption", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+                ctrlEstimate.TotalEstimateCaption = AppLogic.GetString("checkoutshipping.TotalEstimateCaption", thisCustomer.SkinID, thisCustomer.LocaleSetting);
+            }
+        }
+        protected void EstimateAddressControl_RequestEstimateButtonClicked(object sender, EventArgs e)
+        {
+            ShippingAndTaxEstimatorAddressControl addressControl = sender as ShippingAndTaxEstimatorAddressControl;
+
+            if (addressControl != null)
+            {
+                // anonymous customer, extract address info from the post args
+                Address NewAddress = new Address();
+                NewAddress.Country = addressControl.Country;
+                NewAddress.City = addressControl.City;
+                NewAddress.State = addressControl.State;
+                NewAddress.Zip = addressControl.Zip;
+                NewAddress.InsertDB(ThisCustomer.CustomerID);
+                ThisCustomer.PrimaryShippingAddressID = NewAddress.AddressID;
+
+                IShippingCalculation activeShippingCalculation = cart.GetActiveShippingCalculation();
+
+                if ((activeShippingCalculation.RequirePostalCode == false) ||
+                    activeShippingCalculation.RequirePostalCode && addressControl.ValidateZipCode())
+                {
+                    ShippingAndTaxEstimateTableControl ctrlEstimate = new ShippingAndTaxEstimateTableControl();
+                    SetupShippingAndEstimateControl(ctrlEstimate, ThisCustomer);
+
+                    // pnlShippingAndTaxEstimator.Controls.Add(ctrlEstimate);
+                }
+                // hide the estimate button
+                ToggleShowHideEstimate();
+
+                //Clean up the partial address that was added to get the estimate
+                Address.DeleteFromDB(ThisCustomer.PrimaryShippingAddressID, ThisCustomer.CustomerID);
+            }
+        }
+
+        private void ToggleShowHideEstimate()
+        {
+            if (AppLogic.AppConfigBool("ShowShippingAndTaxEstimate"))
+            {
+                bool estimateShown = ThisCustomer.ThisCustomerSession.SessionBool("ShowEstimateSelected");
+
+                //btnRequestEstimates.Visible = !estimateShown;
+                // btnRemoveEstimator.Visible = estimateShown;
+
+                ctrlCartSummary.ShowShipping = !estimateShown;
+                ctrlCartSummary.ShowTax = !estimateShown;
+            }
+            else
+            {
+                //  btnRequestEstimates.Visible = false;
+                // btnRemoveEstimator.Visible = false;
+            }
+        }
+        #endregion
+
+        protected void btnback_Click(object sender, EventArgs e)
+        {
+              ErrorMessage err;
+            Address BillingAddress = new Address();
+            BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
+            String PM = AppLogic.CleanPaymentMethod(AppLogic.ro_PMCreditCard);           
+            if (PM.StartsWith(AppLogic.ro_PMCreditCard))
+            {
+                String CardName = ctrlCreditCardPanel.CreditCardName.Trim();
+                String CardNumber = ctrlCreditCardPanel.CreditCardNumber.Trim().Replace(" ", "");
+                String CardExtraCode = ctrlCreditCardPanel.CreditCardVerCd.Trim().Replace(" ", "");
+                String strCardType = ctrlCreditCardPanel.CreditCardType.Trim();
+                String CardExpirationMonth = ctrlCreditCardPanel.CardExpMonth.Trim().Replace(" ", "");
+                String CardExpirationYear = ctrlCreditCardPanel.CardExpYr.Trim().Replace(" ", "");
+
+                String CardStartDate = ctrlCreditCardPanel.CardStartMonth.Replace(" ", "").PadLeft(2, '0') + ctrlCreditCardPanel.CardStartYear.Trim().Replace(" ", "");
+                String CardIssueNumber = ctrlCreditCardPanel.CreditCardIssueNumber.Trim().Replace(" ", "");
+
+                // Save CIM payment profile id
+                if (CimWalletSelector.SelectedPaymentProfileId > 0)
+                {
+                    NetTotal = 1.0m;
+                    var paymentProfile = GatewayAuthorizeNet.DataUtility.GetPaymentProfileWrapper(ThisCustomer.CustomerID, ThisCustomer.EMail, CimWalletSelector.SelectedPaymentProfileId);
+                    CardNumber = paymentProfile.CreditCardNumberMasked;
+                    CardExpirationYear = paymentProfile.ExpirationYear;
+                    CardExpirationMonth = paymentProfile.ExpirationMonth;
+                    strCardType = paymentProfile.CardType;
+                    CardExtraCode = "NA";
+                }
+
+                //to do
+                //if (CardNumber.StartsWith("*") && CimWalletSelector.SelectedPaymentProfileId <= 0)
+                //{
+                //    // Still obscured in the form so use the original
+                //    //CardNumber = BillingAddress.CardNumber;
+                //}
+
+                //if (CardExtraCode.StartsWith("*"))
+                //{
+                //    // Still obscured in the form so use the original
+                //    CardExtraCode = AppLogic.GetCardExtraCodeFromSession(ThisCustomer);
+                //}
+
+                if (AppLogic.AppConfigBool("ValidateCreditCardNumbers"))
+                {
+                    BillingAddress.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+                    BillingAddress.CardName = CardName;
+                    BillingAddress.CardExpirationMonth = CardExpirationMonth;
+                    BillingAddress.CardExpirationYear = CardExpirationYear;
+                    BillingAddress.CardStartDate = CommonLogic.IIF((CardStartDate == "00" || !CommonLogic.IsNumber(CardStartDate)), String.Empty, CardStartDate);
+                    BillingAddress.CardIssueNumber = CardIssueNumber;
+
+                    CardType Type = CardType.Parse(strCardType);
+                    CreditCardValidator validator = new CreditCardValidator(CardNumber, Type);
+                    bool isValid = validator.Validate();
+
+                    BillingAddress.CardType = strCardType;
+                    if (!isValid)
+                    {
+                        CardNumber = string.Empty;
+                        // clear the card extra code
+                        AppLogic.StoreCardExtraCodeInSession(ThisCustomer, string.Empty);
+                    }
+                    BillingAddress.CardNumber = CardNumber;
+                    BillingAddress.UpdateDB();
+
+                    if (!isValid)
+                    {
+                        if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                        {
+                            //NOTE: Suppress error and allow zero amount to checkout
+                        }
+                        else
+                        {
+                            err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.3", 1, Localization.GetDefaultLocale())));
+                            Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                        }
+                    }
+
+                }
+
+                // store in appropriate session, encrypted, so it can be used when the order is actually "entered"
+                AppLogic.StoreCardExtraCodeInSession(ThisCustomer, CardExtraCode);
+
+
+                if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                {
+                    // remember their info:
+                    BillingAddress.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+                    BillingAddress.ClearCCInfo();
+                    BillingAddress.UpdateDB();
+                }
+                else
+                {
+                    // remember their info:                    
+                    BillingAddress.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+                    BillingAddress.CardName = CardName;
+                    BillingAddress.CardType = strCardType;
+                    BillingAddress.CardNumber = CardNumber;
+                    BillingAddress.CardExpirationMonth = CardExpirationMonth;
+                    BillingAddress.CardExpirationYear = CardExpirationYear;
+                    BillingAddress.CardStartDate = CommonLogic.IIF((CardStartDate == "00" || !CommonLogic.IsNumber(CardStartDate)), String.Empty, CardStartDate);
+                    BillingAddress.CardIssueNumber = CardIssueNumber;
+                    BillingAddress.UpdateDB();
+
+                    if (CardNumber.Length == 0)
+                    {
+                        err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.1", 1, Localization.GetDefaultLocale())));
+                        Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                    }
+                    if ((!AppLogic.AppConfigBool("CardExtraCodeIsOptional") && CardExtraCode.Length == 0))
+                    {
+                        err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.5", 1, Localization.GetDefaultLocale())));
+                        Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                    }
+
+                    // Save card to CIM if selected
+                    if (ctrlCreditCardPanel.CimSaveCard)
+                    {
+                        string errorMessage, errorCode;
+                        Int64 saveCardProfileId = 0;
+
+                        saveCardProfileId = GatewayAuthorizeNet.ProcessTools.SaveProfileAndPaymentProfile(
+                            ThisCustomer.CustomerID, ThisCustomer.EMail, AspDotNetStorefrontCore.AppLogic.AppConfig("StoreName"),
+                            saveCardProfileId, BillingAddress.AddressID, CardNumber, CardExtraCode, CardExpirationMonth, CardExpirationYear,
+                            out errorMessage, out errorCode);
+
+                        if (saveCardProfileId <= 0 && errorCode != "E00039")
+                        {
+                            err = new ErrorMessage(Server.HtmlEncode(errorMessage));
+                            Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                        }
+                    }
+                }
+            }
+            if (Session["hdnreferalurl"] != "" & Session["hdnreferalurl"] != null)
+            {
+                Response.Redirect(Session["hdnreferalurl"].ToString());
+            }
+        }
+
+        private void _txtCCNumber_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs evtargs)
+        {
+
+            evtargs.Handled = (!char.IsDigit(evtargs.KeyChar)) && (!char.IsControl(evtargs.KeyChar));
+
+        }
+
+
+
     }
 }

@@ -1,5 +1,0 @@
-C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontPromotions\bin\Debug\AspDotNetStorefrontPromotions.dll
-C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontPromotions\bin\Debug\AspDotNetStorefrontPromotions.pdb
-C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontPromotions\obj\Debug\AspDotNetStorefrontPromotions.csprojResolveAssemblyReference.cache
-C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontPromotions\obj\Debug\AspDotNetStorefrontPromotions.dll
-C:\Business\Xerratus\Projects\CMD\Jeld-Wen eCommerce 9.4.2\AspDotNetStorefrontPromotions\obj\Debug\AspDotNetStorefrontPromotions.pdb

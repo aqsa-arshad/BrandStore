@@ -1,4 +1,4 @@
-<%@ Page Language="c#" Inherits="AspDotNetStorefront.checkoutshipping" CodeFile="checkoutshipping.aspx.cs" MasterPageFile="~/App_Templates/skin_1/template.master" %>
+<%@ Page Language="c#" Inherits="AspDotNetStorefront.checkoutshipping" CodeFile="checkoutshipping.aspx.cs" MasterPageFile="~/App_Templates/skin_3/JeldWenTemplate.master" %>
 
 <%@ Register Assembly="AspDotNetStorefrontControls" Namespace="AspDotNetStorefrontControls" TagPrefix="aspdnsfc" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
@@ -6,16 +6,17 @@
 <%@ Register TagPrefix="aspdnsf" TagName="OrderOption" Src="~/controls/OrderOption.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="BuySafeKicker" Src="~/controls/BuySafeKicker.ascx" %>
 
-<%@ Register src="controls/CheckoutSteps.ascx" tagname="CheckoutSteps" tagprefix="checkout" %>
+<%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
+    <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server">
-        <div class="page-wrap checkout-shipping-page">
-            <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
+        <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
+        <div class="content-box-03">
 
-            <h1>
+            <%-- <h1>
                 <asp:Literal ID="ltShippingOptions" Text="<%$ Tokens:StringResource,Header.ShippingOptions %>" runat="server" />
-            </h1>
+            </h1>--%>
             <asp:Literal ID="CheckoutValidationScript" runat="server" Mode="PassThrough"></asp:Literal>
             <asp:Literal ID="JSPopupRoutines" runat="server"></asp:Literal>
 
@@ -36,6 +37,7 @@
 
 
             <asp:Panel runat="server" ID="pnlSelectShipping">
+               
                 <div class="page-row row-shipping-address">
                     <div class="form login-form">
                         <div class="group-header form-header signin-header">
@@ -132,26 +134,33 @@
                 <asp:Label ID="FreeShippingMsg" Visible="false" runat="server"></asp:Label>
             </asp:Panel>
 
-            <asp:Panel ID="pnlCartAllowsShippingMethodSelection" runat="server">
-                <div class="page-row row-shipping-options">
+            <asp:Panel ID="pnlCartAllowsShippingMethodSelection" runat="server" CssClass="row">
+                <div class="col-md-4 checkout-shipping">
                     <asp:Label ID="ShipSelectionMsg" runat="server"></asp:Label>
                     <asp:Label ID="lblMultiShipPrompt" runat="server" Visible="false" />
+                      <label id="Label1" runat="server">Select Shipping Method</label>
                     <aspdnsfc:ShippingMethodControl ID="ctrlShippingMethods" runat="server" />
-                </div>
+                
                 <div class="page-row row-buysafe">
                     <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="shippingKicker" runat="server" />
                 </div>
+                  <asp:Button ID="btnContinueCheckout" runat="server"
+                    Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
+                    CssClass="btn btn-primary btn-block" Visible="false"
+                    OnClick="btnContinueCheckout_Click" />
+                    </div>
             </asp:Panel>
-            <asp:Button ID="btnContinueCheckout" runat="server"
-                Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
-                CssClass="button call-to-action button-continue-checkout" Visible="false"
-                OnClick="btnContinueCheckout_Click" />
+        
+              <%--  <asp:Button ID="btnContinueCheckout" runat="server"
+                    Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
+                    CssClass="btn btn-primary" Visible="false"
+                    OnClick="btnContinueCheckout_Click" />--%>
+        
 
-
-            <div class="group-header checkout-header">
+            <div class="group-header checkout-header" style="display: none">
                 <asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
             </div>
-            <div class="page-row row-shopping-cart">
+            <div class="page-row row-shopping-cart" style="display: none">
 
                 <%--Shopping cart control--%>
                 <aspdnsfc:ShoppingCartControl ID="ctrlShoppingCart"
@@ -195,5 +204,6 @@
 
             <asp:Literal ID="ltPayPalIntegratedCheckout" runat="server" />
         </div>
+
     </asp:Panel>
 </asp:Content>

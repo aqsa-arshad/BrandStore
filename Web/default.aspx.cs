@@ -5,11 +5,7 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
-using System.Web;
-using System.Globalization;
 using AspDotNetStorefrontCore;
-using AspDotNetStorefrontCommon;
-using AspDotNetStorefrontControls;
 
 namespace AspDotNetStorefront
 {
@@ -17,7 +13,7 @@ namespace AspDotNetStorefront
     /// Summary description for _default.
     /// </summary>
     [PageType("home")]
-	public partial class _default : SkinBase
+    public partial class _default : SkinBase
     {
         protected void Page_Load(object sender, System.EventArgs e)
         {
@@ -29,53 +25,43 @@ namespace AspDotNetStorefront
                     Response.Redirect("http://www." + AppLogic.LiveServer().ToLowerInvariant());
                 }
             }
-
             if (AppLogic.AppConfigBool("GoNonSecureAgain"))
             {
                 GoNonSecureAgain();
             }
-
+            if (ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("home.aspx");
+            }
             // this may be overwridden by the XmlPackage below!
             SectionTitle = String.Format(AppLogic.GetString("default.aspx.1", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName"));
-
-            Package1.PackageName = "page.default.xml.config";
-
-            // set the Customer context, and set the SkinBase context, so meta tags to be set if they are not blank in the XmlPackage results
-            Package1.SetContext = this;
-
-            // unsupported feature:
-            //System.Diagnostics.Trace.WriteLineIf(Config.TraceLevel.TraceVerbose, "Welcome to AspDotNetStorefront");
-
-			PayPalAd homePageAd = new PayPalAd(PayPalAd.TargetPage.Home);
-			if (homePageAd.Show)
-				ltPayPalAd.Text = homePageAd.ImageScript;
         }
 
         protected override string OverrideTemplate()
         {
-            String MasterHome = AppLogic.HomeTemplate();
-
-            if (MasterHome.Trim().Length == 0)
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
             {
-                MasterHome = "template";
+                masterHome = "JeldWenTemplate";// "template";
             }
-
-            if (MasterHome.EndsWith(".ascx"))
+            if (masterHome.EndsWith(".ascx"))
             {
-                MasterHome = MasterHome.Replace(".ascx", ".master");
+                masterHome = masterHome.Replace(".ascx", ".master");
             }
-
-            if(!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
             {
-                MasterHome = MasterHome + ".master";
+                masterHome = masterHome + ".master";
             }
-
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
-            {
-                MasterHome = "template.master";
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + masterHome)))
+            {                
+                masterHome = "JeldWenTemplate";
             }
+            return masterHome;
+        }
 
-            return MasterHome;
+        protected void FeaturePrdSeeAll_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("c-1-promotional-items.aspx");
         }
     }
 }

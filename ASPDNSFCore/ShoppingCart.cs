@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using AspDotNetStorefront.Promotions;
+using AspDotNetStorefrontCore.CanadaPost;
 using AspDotNetStorefrontCore.ShippingCalculation;
 
 namespace AspDotNetStorefrontCore
@@ -1346,7 +1347,7 @@ namespace AspDotNetStorefrontCore
                         newItem.SEName = DB.RSField(rs, "SEName");
                         newItem.IsAuctionItem = (DB.RSFieldTinyInt(rs, "Deleted") == 2);
                         newItem.ImageFileNameOverride = DB.RSField(rs, "ImageFileNameOverride");
-
+                        newItem.ProductDescription = DB.RSField(rs, "Description");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
@@ -7961,7 +7962,7 @@ namespace AspDotNetStorefrontCore
         {
             return GetAddToCartForm(ThisCustomer, forPack, forKit, showWishListButton, showGiftRegistryButton, ProductID, VariantID, SkinID, DisplayFormat, LocaleSetting, ColorChangeProductImage, VariantStyle, false);
         }
-
+      
         // ERPFlag = 0 means to use our normal variant with attributes
         // ERPFlag = 1 means to use ERP variant structure but recompute variants into size/color drop down lists
         // ERPFlag = 2 means to use ERP variant structure, with each variant in a dropdown list to select
@@ -8464,7 +8465,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("</div>");
             }
 
-            tmpS.Append("<div class=\"form-group add-to-cart-group\">");
+            tmpS.Append("<div class=\"item-controls\">");
             if (CustomerEntersPrice)
             {
 				tmpS.Append("<label class=\"customer-enters-price-label\" for=\"Price_{0}_{1}\">");
@@ -8473,54 +8474,8 @@ namespace AspDotNetStorefrontCore
                 tmpS.AppendFormat(" <input maxLength=\"10\" class=\"form-control price-field\" name=\"Price_{0}_{1}\" id=\"Price_{0}_{1}\" value=\"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ProductPriceForEdit) + "\">", ProductID, VariantID);
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
             }
-			tmpS.Append("	<span class=\"add-to-cart-quantity\">");
-            if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
-            {
-                if (RestrictedQuantities.Length == 0)
-                {
-                    int InitialQ = 1;
-                    if (MinimumQuantity > 0)
-                    {
-                        InitialQ = MinimumQuantity;
-                    }
-                    else if (AppLogic.AppConfig("DefaultAddToCartQuantity").Length != 0)
-                    {
-                        InitialQ = AppLogic.AppConfigUSInt("DefaultAddToCartQuantity");
-                    }
-                    if (QuantityForEdit != 0)
-                    {
-                        InitialQ = QuantityForEdit;
-                    }
-                    tmpS.AppendFormat("<label class=\"quantity-label\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</label> <input type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" class=\"form-control quantity-field\" maxlength=\"4\">", ProductID, VariantID);
-                    tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
-                }
-                else
-                {
-                    tmpS.AppendFormat("<label class=\"quantity-label\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</label>", ProductID, VariantID);
-                    tmpS.AppendFormat("<select name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" class=\"form-control quantity-select\">", ProductID, VariantID);
-                    foreach (String s in RestrictedQuantities.Split(','))
-                    {
-                        if (s.Trim().Length != 0)
-                        {
-                            int Q = Localization.ParseUSInt(s.Trim());
-                            tmpS.Append("<option value=\"" + Q.ToString() + "\" " + CommonLogic.IIF(QuantityForEdit == Q, " selected ", "") + ">" + Q.ToString() + "</option>");
-                        }
-                    }
-                    tmpS.Append("</select> ");
-                }
-            }
-            else
-            {
-                tmpS.AppendFormat("<input name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" type=\"hidden\" value=\"1\">", ProductID, VariantID);
-            }
-            Decimal M = 1.0M;
-            String MM = ThisCustomer.CurrencyString(M).Substring(0, 1); // get currency symbol
-            if (CommonLogic.IsInteger(MM))
-            {
-                MM = String.Empty; // something international happened, so just leave empty, we only want currency symbol, not any digits
-            }
-			tmpS.Append("	</span>");
-			tmpS.Append("	<span class=\"add-to-cart-selectors\">");
+
+            //Colors Alternative
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
             {
                 if (SizesMaster.Length != 0)
@@ -8593,14 +8548,71 @@ namespace AspDotNetStorefrontCore
                     tmpS.Append("</select>");
                 }
             }
-			tmpS.Append("	</span>");
+
+            //if (inv > 4)
+            //{
+            //    tmpS.Append("<p><span class=\"black-blu-label\"><font>In stock: </font>" + inv + "</span></p>");
+            //}
+
+ 
+
+            //Quantity DropDown
+            tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
+            if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
+            {
+                if (RestrictedQuantities.Length == 0)
+                {
+                    int InitialQ = 1;
+                    if (MinimumQuantity > 0)
+                    {
+                        InitialQ = MinimumQuantity;
+                    }
+                    else if (AppLogic.AppConfig("DefaultAddToCartQuantity").Length != 0)
+                    {
+                        InitialQ = AppLogic.AppConfigUSInt("DefaultAddToCartQuantity");
+                    }
+                    if (QuantityForEdit != 0)
+                    {
+                        InitialQ = QuantityForEdit;
+                    }
+                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
+                    tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
+                }
+                else
+                {
+                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
+                    tmpS.AppendFormat("<select class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
+                    foreach (String s in RestrictedQuantities.Split(','))
+                    {
+                        if (s.Trim().Length != 0)
+                        {
+                            int Q = Localization.ParseUSInt(s.Trim());
+                            tmpS.Append("<option value=\"" + Q.ToString() + "\" " + CommonLogic.IIF(QuantityForEdit == Q, " selected ", "") + ">" + Q.ToString() + "</option>");
+                        }
+                    }
+                    tmpS.Append("</select> ");
+                }
+            }
+            else
+            {
+                tmpS.AppendFormat("<input class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" type=\"hidden\" value=\"1\">", ProductID, VariantID);
+            }
+            Decimal M = 1.0M;
+            String MM = ThisCustomer.CurrencyString(M).Substring(0, 1); // get currency symbol
+            if (CommonLogic.IsInteger(MM))
+            {
+                MM = String.Empty; // something international happened, so just leave empty, we only want currency symbol, not any digits
+            }
+            tmpS.Append("</span>");
+            
+			tmpS.Append("	</span></div>");
 
             bool showAddToCartButton = true;
             bool showAddToWishListButton = false;
             bool showAddGiftRegistryButton = false;
 
             showAddToCartButton = true;
-			tmpS.Append("	<span class=\"add-to-cart-buttons\">");
+            
             if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToCartButton") != "")
             {
                 // render image button
@@ -8629,81 +8641,79 @@ namespace AspDotNetStorefrontCore
             else
             {
                 // render normal html button
-                tmpS.AppendFormat(" <input type=\"button\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"button call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+                tmpS.AppendFormat(" <input type=\"button\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
             }
 
-            if (AppLogic.AppConfigBool("ShowWishButtons") && showWishListButton)
-            {
-                showAddToWishListButton = true;
+            // TODO: Commented for the Wishlist and Gift button functionality 
+            //if (AppLogic.AppConfigBool("ShowWishButtons") && showWishListButton)
+            //{
+            //    showAddToWishListButton = true;
 
-                if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToWishButton") != "")
-                {
-                    // render image button
-                    var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToWishButton"));
-                    tmpS.AppendFormat("<input type=\"image\" id=\"AddToWishButton_{0}_{1}\" name=\"AddToWishButton_{0}_{1}\" class=\"button add-to-wishlist-button\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.WishButtonPrompt", SkinID, LocaleSetting));
+            //    if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToWishButton") != "")
+            //    {
+            //        // render image button
+            //        var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToWishButton"));
+            //        tmpS.AppendFormat("<input type=\"image\" id=\"AddToWishButton_{0}_{1}\" name=\"AddToWishButton_{0}_{1}\" class=\"button add-to-wishlist-button\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.WishButtonPrompt", SkinID, LocaleSetting));
 
-                    var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToWishButton_MouseOver");
-                    if (!string.IsNullOrEmpty(mouseOverImage))
-                    {
-                        var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
-                        tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
+            //        var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToWishButton_MouseOver");
+            //        if (!string.IsNullOrEmpty(mouseOverImage))
+            //        {
+            //            var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
+            //            tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
 
-                        // attach the mouseout event automatically to switch back to the original image
-                        tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
-                    }
+            //            // attach the mouseout event automatically to switch back to the original image
+            //            tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
+            //        }
 
-                    var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToWishButton_MouseDown");
-                    if (!string.IsNullOrEmpty(mouseDownImage))
-                    {
-                        var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
-                        tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
-                    }
-                }
-                else
-                {
-                    // Render normal html button
-                    tmpS.AppendFormat("<input type=\"button\" id=\"AddToWishButton_{0}_{1}\" name=\"AddToWishButton_{0}_{1}\" class=\"button add-to-wishlist-button\" value=\"" + AppLogic.GetString("AppConfig.WishButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
-                }
-            }
+            //        var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToWishButton_MouseDown");
+            //        if (!string.IsNullOrEmpty(mouseDownImage))
+            //        {
+            //            var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
+            //            tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // Render normal html button
+            //        tmpS.AppendFormat("<input type=\"button\" id=\"AddToWishButton_{0}_{1}\" name=\"AddToWishButton_{0}_{1}\" class=\"button add-to-wishlist-button\" value=\"" + AppLogic.GetString("AppConfig.WishButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
+            //    }
+            //}
 
-            if (AppLogic.AppConfigBool("ShowGiftRegistryButtons") && showGiftRegistryButton && !IsRecurring && !IsDownload)
-            {
-                showAddGiftRegistryButton = true;
+            //if (AppLogic.AppConfigBool("ShowGiftRegistryButtons") && showGiftRegistryButton && !IsRecurring && !IsDownload)
+            //{
+            //    showAddGiftRegistryButton = true;
 
-                tmpS.AppendFormat(" ");
+            //    tmpS.AppendFormat(" ");
 
-                if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton") != "")
-                {
-                    // render image button
-                    var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton"));
-                    tmpS.AppendFormat("<input type=\"image\" id=\"AddToGiftButton_{0}_{1}\" name=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting));
+            //    if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton") != "")
+            //    {
+            //        // render image button
+            //        var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton"));
+            //        tmpS.AppendFormat("<input type=\"image\" id=\"AddToGiftButton_{0}_{1}\" name=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting));
 
-                    var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton_MouseOver");
-                    if (!string.IsNullOrEmpty(mouseOverImage))
-                    {
-                        var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
-                        tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
+            //        var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton_MouseOver");
+            //        if (!string.IsNullOrEmpty(mouseOverImage))
+            //        {
+            //            var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
+            //            tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
 
-                        // attach the mouseout event automatically to switch back to the original image
-                        tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
-                    }
+            //            // attach the mouseout event automatically to switch back to the original image
+            //            tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
+            //        }
 
-                    var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton_MouseDown");
-                    if (!string.IsNullOrEmpty(mouseDownImage))
-                    {
-                        var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
-                        tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
-                    }
-                }
-                else
-                {
-                    // render normal html button
-                    tmpS.AppendFormat("<input type=\"button\" id=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" value=\"" + AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
-                }
-            }
-            
-			tmpS.Append("	</span>");
-            tmpS.Append("</div>");
+            //        var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton_MouseDown");
+            //        if (!string.IsNullOrEmpty(mouseDownImage))
+            //        {
+            //            var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
+            //            tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // render normal html button
+            //        tmpS.AppendFormat("<input type=\"button\" id=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" value=\"" + AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
+            //    }
+            //}                       
 
             if (AppLogic.GetNextVariant(ProductID, VariantID) == VariantID) // single variant product
             {
@@ -9098,7 +9108,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
                 tmpS.Append("    }\n");
-            }
+            }                        
 
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes && ProtectInventory && AppLogic.AppConfigBool("ShowQuantityOnProductPage"))
             {

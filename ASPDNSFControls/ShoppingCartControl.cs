@@ -317,7 +317,7 @@ namespace AspDotNetStorefrontControls
                         pnlItems.Controls.Add(new LiteralControl("</div>"));
                     }
 
-                    pnlItems.Controls.Add(new LiteralControl("<div class='cart-row row-separator'></div>"));
+                 //   pnlItems.Controls.Add(new LiteralControl("<div class='cart-row row-separator'></div>"));
 
                 }
 
@@ -1086,7 +1086,7 @@ namespace AspDotNetStorefrontControls
 
                 if (this.AllowEdit)
                 {
-                    (txtQuantity as TextBox).CssClass = "form-control quantity-box";
+                    (txtQuantity as TextBox).CssClass = "form-control item-quantity";
                     (txtQuantity as TextBox).MaxLength = 4;
                     if (this.DisplayMode == CartDisplayMode.MiniCart &&
                         cItem.CartType == CartTypeEnum.Deleted)
@@ -1151,8 +1151,12 @@ namespace AspDotNetStorefrontControls
                     lblQtyDiscount.Text = String.Empty;
                 }
 
-                Controls.Add(new LiteralControl("<div class='cart-row'>"));
-
+                Controls.Add(new LiteralControl("<tr>"));
+                Controls.Add(new LiteralControl("<td class='td-45-percent'>"));//<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblProductHeader'>Item</span>
+                //Controls.Add(new LiteralControl("<td class='cart-column cart-column-subtotal'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span></td>"));
+                //Controls.Add(new LiteralControl("<td class='cart-column cart-column-edit'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblQuantityHeader'>Quantity</span></td>"));
+                //Controls.Add(new LiteralControl("</tr>"));
+                //Controls.Add(new LiteralControl("<tr>"));
                 //NOTE: Added hidden field for js to check for overstock; display message, but allow user to proceed as per business rules
                 var inventory = AppLogic.GetInventory(cItem.ProductID, cItem.VariantID, cItem.ChosenSize, cItem.ChosenColor);
                 HiddenField hiddenInventory = new HiddenField
@@ -1162,24 +1166,83 @@ namespace AspDotNetStorefrontControls
                 };
                 Controls.Add(hiddenInventory);
                 //END
-
+              
                 if (this.DisplayMode != CartDisplayMode.MiniCart)
                 {
                     //LineItemDescription
-                    Controls.Add(new LiteralControl("    <div class='cart-column cart-column-description'>"));
+                   // Controls.Add(new LiteralControl("    <td class='cart-column cart-column-description'>"));
                     Controls.Add(lineItemDescription);
-                    Controls.Add(new LiteralControl("    </div>")); 
+                    Controls.Add(new LiteralControl("    </td>")); 
+                    //payment sub total here
+                    Controls.Add(new LiteralControl("<td class='td-30-percent'>"));//<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>
+                  //  Controls.Add(new LiteralControl("<td class='cart-column cart-column-subtotal'>"));
 
-                    Controls.Add(new LiteralControl("    <div class='cart-column cart-column-edit'>"));
-                    if (this.AllowEdit)
+                   // Controls.Add(new LiteralControl("   <td class='cart-row'>"));
+
+                    if (this.DisplayMode == CartDisplayMode.MiniCart &&
+                        CartItem.CartType == CartTypeEnum.Deleted)
                     {
-                        Controls.Add(new LiteralControl("     <div class='edit-wrap'>"));
+                       // Controls.Add(new LiteralControl("     <td class='cart-column cart-price cart-column-price opacity-twenty'>"));
                     }
                     else
                     {
-                        Controls.Add(new LiteralControl("      <div>")); 
+                      //  Controls.Add(new LiteralControl("     <td class=''>"));
                     }
 
+                    if (this.DisplayMode == CartDisplayMode.WishList || this.DisplayMode == CartDisplayMode.GiftRegistry)
+                    {
+                        int itemInventory = AppLogic.GetInventory(cItem.ProductID, cItem.VariantID, cItem.ChosenSize, cItem.ChosenColor);
+
+                        //if (itemInventory > 0)
+                        //{
+                        Button btnMoveToCart = new Button();
+
+                        if (this.DisplayMode == CartDisplayMode.WishList)
+                        {
+                            btnMoveToCart.Text = LineItemSetting.MoveFromWishListText;
+                        }
+                        else
+                        {
+                            btnMoveToCart.Text = LineItemSetting.MoveFromGiftRegistryText;
+                        }
+
+                        btnMoveToCart.ID = "btnMoveToCart";
+                        btnMoveToCart.CssClass = "button call-to-action button-move-to-cart";
+                        btnMoveToCart.CommandName = "MoveToShoppingCart";
+                        btnMoveToCart.CommandArgument = cItem.ShoppingCartRecordID.ToString();
+                        Controls.Add(btnMoveToCart);
+                        //}
+                        //else
+                        //{
+                        //    Literal ltUnavailableMessage = new Literal();
+                        //    ltUnavailableMessage.ID = "ltUnavailableMessage";
+                        //    ltUnavailableMessage.Text = AppLogic.GetString("shoppingcart.outofstock", Customer.Current.LocaleSetting);
+                        //    Controls.Add(ltUnavailableMessage);
+                        //}
+                    }
+                    else
+                    {
+                        Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
+                        lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>";
+                        Controls.Add(lblSubTotal);
+                        Controls.Add(new LiteralControl("        </td>"));
+                    }
+                    Controls.Add(new LiteralControl("                 </td>"));
+                    Controls.Add(new LiteralControl("             </td>"));
+                    Controls.Add(new LiteralControl("        </td>"));
+                    Controls.Add(new LiteralControl("</td>"));  
+                    //end payment sub total 
+                    Controls.Add(new LiteralControl("<td class='td-25-percent'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblQuantityHeader'>Quantity</span>"));
+                    //Controls.Add(new LiteralControl("    <td class='cart-column cart-column-edit'>"));
+                    if (this.AllowEdit)
+                    {
+                     //   Controls.Add(new LiteralControl("     <td class='edit-wrap'>"));
+                    }
+                    else
+                    {
+                      //  Controls.Add(new LiteralControl("      <td>")); 
+                    }
+                    
                     //check for restricted quantity
                     if (this.CartItem.RestrictedQuantities.Count == 0 || !this.AllowEdit)
                     {
@@ -1197,44 +1260,45 @@ namespace AspDotNetStorefrontControls
                     }
 
 
-                    Controls.Add(new LiteralControl("    </div>")); 
+                 //   Controls.Add(new LiteralControl("    </td>")); 
 
                     if (this.DisplayMode != CartDisplayMode.MiniCart && this.DisplayMode != CartDisplayMode.GiftRegistry)
                     {
                         if (this.AllowEdit && this.CartItem.RestrictedQuantities.Count == 0)
                         {
-                            Controls.Add(new LiteralControl("  <div class='delete-wrap'>"));
+                          //  Controls.Add(new LiteralControl("  <td class='delete-wrap'>"));
+                            lnkDelete.CssClass = "underline-link";
                             Controls.Add(lnkDelete);
-                            Controls.Add(new LiteralControl("  </div>")); 
+                            //Controls.Add(new LiteralControl("  </td>")); 
                         }
                     }
 
-                    Controls.Add(new LiteralControl("  </div>")); 
+                    Controls.Add(new LiteralControl("  </td>")); 
                 }
                 else
                 {
-                    Controls.Add(new LiteralControl(" <div class='cart-column cart-column-quantity'>"));
+                    Controls.Add(new LiteralControl(" <td class='td-25-percent'>"));
                     if (this.AllowEdit)
                     {
                         if (this.DisplayMode == CartDisplayMode.MiniCart &&
                             CartItem.CartType == CartTypeEnum.Deleted)
                         {
-                            Controls.Add(new LiteralControl("   <div class='left opacity-twenty'>"));
+                            Controls.Add(new LiteralControl("   <td class='left opacity-twenty'>"));
                         }
                         else
                         {
-                            Controls.Add(new LiteralControl("   <div class='left'>"));
+                            Controls.Add(new LiteralControl("   <td class='left'>"));
                         }
                     }
                     else
                     {
-                        Controls.Add(new LiteralControl("        <div>"));
+                        Controls.Add(new LiteralControl("        <td>"));
                     }
 
                     if (txtQuantity is TextBox)
                     {
                         TextBox txt = txtQuantity as TextBox;
-                        txt.CssClass = "form-control quantity-box";
+                        txt.CssClass = "form-control item-quantity";
                         txt.MaxLength = 3;
                     }
 
@@ -1243,110 +1307,110 @@ namespace AspDotNetStorefrontControls
                     {
                         Controls.Add(vreQuantity);
                     }
-                    Controls.Add(new LiteralControl("            </div>")); 
+                    Controls.Add(new LiteralControl("            </td>")); 
 
                     if (this.DisplayMode != CartDisplayMode.MiniCart)
                     {
                         if (this.AllowEdit)
                         {
-                            Controls.Add(new LiteralControl("            <div class='delete-wrap'>"));
+                            Controls.Add(new LiteralControl("            <td class='delete-wrap'>"));
                             Controls.Add(lnkDelete);
-                            Controls.Add(new LiteralControl("            </div>")); 
+                            Controls.Add(new LiteralControl("            </td>")); 
                         }
                     }
-                    Controls.Add(new LiteralControl("          </div>")); 
+                    Controls.Add(new LiteralControl("          </td>")); 
 
                     if (this.DisplayMode == CartDisplayMode.MiniCart &&
                         CartItem.CartType == CartTypeEnum.Deleted)
                     {
-                        Controls.Add(new LiteralControl("          <div class='cart-column cart-column-description opacity-twenty'>"));
+                        Controls.Add(new LiteralControl("          <td class='cart-column cart-column-description opacity-twenty'>"));
                     }
                     else
                     {
-                        Controls.Add(new LiteralControl("          <div class='cart-column cart-column-description'>"));
+                        Controls.Add(new LiteralControl("          <td class='cart-column cart-column-description'>"));
                     }
                     Controls.Add(lineItemDescription);
-                    Controls.Add(new LiteralControl("          </div>")); 
+                    Controls.Add(new LiteralControl("          </td>")); 
                 }
 
-                Controls.Add(new LiteralControl("<div class='cart-column cart-column-subtotal'>"));
+                //Controls.Add(new LiteralControl("<div class='cart-column cart-column-subtotal'>"));
 
-                Controls.Add(new LiteralControl("   <div class='cart-row'>"));
+                //Controls.Add(new LiteralControl("   <div class='cart-row'>"));
 
-                if (this.DisplayMode == CartDisplayMode.MiniCart &&
-                    CartItem.CartType == CartTypeEnum.Deleted)
-                {
-                    Controls.Add(new LiteralControl("     <div class='cart-column cart-price cart-column-price opacity-twenty'>"));
-                }
-                else
-                {
-                    Controls.Add(new LiteralControl("     <div class='cart-column cart-price cart-column-price'>"));
-                }
+                //if (this.DisplayMode == CartDisplayMode.MiniCart &&
+                //    CartItem.CartType == CartTypeEnum.Deleted)
+                //{
+                //    Controls.Add(new LiteralControl("     <div class='cart-column cart-price cart-column-price opacity-twenty'>"));
+                //}
+                //else
+                //{
+                //    Controls.Add(new LiteralControl("     <div class='cart-column cart-price cart-column-price'>"));
+                //}
 
-                if (this.DisplayMode == CartDisplayMode.WishList || this.DisplayMode == CartDisplayMode.GiftRegistry)
-                {
-                    int itemInventory = AppLogic.GetInventory(cItem.ProductID, cItem.VariantID, cItem.ChosenSize, cItem.ChosenColor);
+                //if (this.DisplayMode == CartDisplayMode.WishList || this.DisplayMode == CartDisplayMode.GiftRegistry)
+                //{
+                //    int itemInventory = AppLogic.GetInventory(cItem.ProductID, cItem.VariantID, cItem.ChosenSize, cItem.ChosenColor);
 
-                    //if (itemInventory > 0)
-                    //{
-                    Button btnMoveToCart = new Button();
+                //    //if (itemInventory > 0)
+                //    //{
+                //    Button btnMoveToCart = new Button();
 
-                    if (this.DisplayMode == CartDisplayMode.WishList)
-                    {
-                        btnMoveToCart.Text = LineItemSetting.MoveFromWishListText;
-                    }
-                    else
-                    {
-                        btnMoveToCart.Text = LineItemSetting.MoveFromGiftRegistryText;
-                    }
+                //    if (this.DisplayMode == CartDisplayMode.WishList)
+                //    {
+                //        btnMoveToCart.Text = LineItemSetting.MoveFromWishListText;
+                //    }
+                //    else
+                //    {
+                //        btnMoveToCart.Text = LineItemSetting.MoveFromGiftRegistryText;
+                //    }
 
-                    btnMoveToCart.ID = "btnMoveToCart";
-                    btnMoveToCart.CssClass = "button call-to-action button-move-to-cart";
-                    btnMoveToCart.CommandName = "MoveToShoppingCart";
-                    btnMoveToCart.CommandArgument = cItem.ShoppingCartRecordID.ToString();
-                    Controls.Add(btnMoveToCart);
-                    //}
-                    //else
-                    //{
-                    //    Literal ltUnavailableMessage = new Literal();
-                    //    ltUnavailableMessage.ID = "ltUnavailableMessage";
-                    //    ltUnavailableMessage.Text = AppLogic.GetString("shoppingcart.outofstock", Customer.Current.LocaleSetting);
-                    //    Controls.Add(ltUnavailableMessage);
-                    //}
-                }
-                else
-                {
-                    Controls.Add(lblSubTotal);
-                }
+                //    btnMoveToCart.ID = "btnMoveToCart";
+                //    btnMoveToCart.CssClass = "button call-to-action button-move-to-cart";
+                //    btnMoveToCart.CommandName = "MoveToShoppingCart";
+                //    btnMoveToCart.CommandArgument = cItem.ShoppingCartRecordID.ToString();
+                //    Controls.Add(btnMoveToCart);
+                //    //}
+                //    //else
+                //    //{
+                //    //    Literal ltUnavailableMessage = new Literal();
+                //    //    ltUnavailableMessage.ID = "ltUnavailableMessage";
+                //    //    ltUnavailableMessage.Text = AppLogic.GetString("shoppingcart.outofstock", Customer.Current.LocaleSetting);
+                //    //    Controls.Add(ltUnavailableMessage);
+                //    //}
+                //}
+                //else
+                //{
+                //    Controls.Add(lblSubTotal);
+                //}
 
 
                 if (this.DisplayMode == CartDisplayMode.MiniCart)
                 {
-                    Controls.Add(new LiteralControl("              <div class='delete-wrap'>"));
+                    Controls.Add(new LiteralControl("              <td class='delete-wrap'>"));
                     Controls.Add(lnkDelete);
-                    Controls.Add(new LiteralControl("              </div>"));  
+                    Controls.Add(new LiteralControl("              </td>"));  
                 }
 
                 if (this.DisplayMode != CartDisplayMode.MiniCart)
                 {
                     if (cItem.ThisShoppingCart.VatEnabled && !(cItem.ThisShoppingCart.VatIsInclusive))
                     {
-                        Controls.Add(new LiteralControl("               <div class='vat-wrap'>"));
+                        Controls.Add(new LiteralControl("               <td class='vat-wrap'>"));
                         Controls.Add(lblVatDisplay);
-                        Controls.Add(new LiteralControl("              </div>"));
+                        Controls.Add(new LiteralControl("              </td>"));
                     }
 
                     if (QuantityDiscount.CustomerLevelAllowsQuantityDiscounts(cItem.ThisCustomer.CustomerLevelID))
                     {
-                        Controls.Add(new LiteralControl("               <div class='cart-small quantity-discount-wrap'>"));
+                        Controls.Add(new LiteralControl("               <td class='cart-small quantity-discount-wrap'>"));
                         Controls.Add(lblQtyDiscount);
-                        Controls.Add(new LiteralControl("              </div>")); 
+                        Controls.Add(new LiteralControl("              </td>")); 
                     }
                 }
-                Controls.Add(new LiteralControl("                 </div>"));
-                Controls.Add(new LiteralControl("             </div>"));
-                Controls.Add(new LiteralControl("        </div>")); 
-                Controls.Add(new LiteralControl("</div>"));  
+                //Controls.Add(new LiteralControl("                 </div>"));
+                //Controls.Add(new LiteralControl("             </div>"));
+                //Controls.Add(new LiteralControl("        </div>")); 
+                //Controls.Add(new LiteralControl("</div>"));  
                 //Recurring frequency editor
                 List<ProductVariant> cItemVariants = new List<ProductVariant>(ProductVariant.GetVariants(this.cItem.ProductID, false));
 
@@ -1371,16 +1435,16 @@ namespace AspDotNetStorefrontControls
                     recurringFrequencyLabel.Text = AppLogic.GetString("shoppingcart.recurring.label", Customer.Current.LocaleSetting);
                     recurringFrequencyLabel.ID = "lblRecurringFrequency";
 
-                    Controls.Add(new LiteralControl("<div class='recurring-manager'>"));
-                    Controls.Add(new LiteralControl("<div class='recurring-manager-row'>"));
-                    Controls.Add(new LiteralControl("<div class='recurring-manager-label'>"));
+                    Controls.Add(new LiteralControl("<td class='recurring-manager'>"));
+                    Controls.Add(new LiteralControl("<td class='recurring-manager-row'>"));
+                    Controls.Add(new LiteralControl("<td class='recurring-manager-label'>"));
                     Controls.Add(recurringFrequencyLabel);
-                    Controls.Add(new LiteralControl("</div"));
-                    Controls.Add(new LiteralControl("<div class='recurring-manager-variant'>"));
+                    Controls.Add(new LiteralControl("</td"));
+                    Controls.Add(new LiteralControl("<td class='recurring-manager-variant'>"));
                     Controls.Add(variantList);
-                    Controls.Add(new LiteralControl("</div"));
-                    Controls.Add(new LiteralControl("</div>"));
-                    Controls.Add(new LiteralControl("</div>"));
+                    Controls.Add(new LiteralControl("</td"));
+                    Controls.Add(new LiteralControl("</td>"));
+                    Controls.Add(new LiteralControl("</td>"));
                 }
             }
         }
@@ -2131,13 +2195,15 @@ namespace AspDotNetStorefrontControls
                 container.Controls.Add(lblProductHeader);
                 container.Controls.Add(new LiteralControl("          </div>"));
 
+                container.Controls.Add(new LiteralControl("          <div class='cart-column cart-column-subtotal'>"));
+                container.Controls.Add(lblSubtotalHeader);
+                container.Controls.Add(new LiteralControl("          </div>"));
+
                 container.Controls.Add(new LiteralControl("          <div class='cart-column cart-column-edit'>"));
                 container.Controls.Add(lblQuantityHeader);
                 container.Controls.Add(new LiteralControl("          </div>"));
 
-                container.Controls.Add(new LiteralControl("          <div class='cart-column cart-column-subtotal'>"));
-                container.Controls.Add(lblSubtotalHeader);
-                container.Controls.Add(new LiteralControl("          </div>"));
+                
                 container.Controls.Add(new LiteralControl("        </div>"));
             }
             else
@@ -2149,6 +2215,8 @@ namespace AspDotNetStorefrontControls
                 container.Controls.Add(new LiteralControl("        <div class='cart-row cart-empty'>"));
                 container.Controls.Add(lblCartMessage);
                 container.Controls.Add(new LiteralControl("        </div>"));
+                
+
             }
         }
         #endregion
