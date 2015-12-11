@@ -26,13 +26,15 @@
                                     <div class="col-md-6">
                                         <h5>SIGN IN</h5>
                                         <asp:Label runat="server" ID="SignInInstructions" Text="<p>If you already have an account, please sign in using your email address and password</p>"></asp:Label>
-                                        
+
                                         <label>
                                             <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox ID="UserName" CssClass="form-control" runat="server" ValidationGroup="Group1" MaxLength="100"
                                             CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator3" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="UserName"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="UserName" Display="Dynamic"
+                                            ValidationGroup="Group1" ErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>" ValidationExpression="^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$" />
                                         <br />
                                         <label>
                                             <asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
@@ -50,7 +52,7 @@
                                             Enabled="False"></asp:RequiredFieldValidator>
                                         <asp:Image ID="SecurityImage" runat="server" Visible="False"></asp:Image>
                                         <div>
-                                            <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="pull-right" Font-Underline="true"  CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                                            <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="pull-right" Font-Underline="true" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
                                             <label>
                                                 <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>&nbsp;Remember me
                                             </label>
@@ -61,8 +63,9 @@
                                         </div>--%>
                                     </div>
                                     <div class="col-md-6">
-                                       <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
-                                       <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
+                                        <h5>
+                                            <asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>
+                                        <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
 
                                         <asp:HyperLink ID="SignUpLink" Font-Underline="true" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.7 %>'></asp:HyperLink>
                                     </div>
@@ -75,7 +78,7 @@
                                             ValidationGroup="Group1"></asp:Button>
                                         <asp:Button ID="btnSignInAndCheckout" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="CONTINUE CHECKOUT"
                                             ValidationGroup="Group1"></asp:Button>
-                                       
+
                                     </div>
                                 </div>
                             </asp:Panel>

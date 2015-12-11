@@ -13,13 +13,15 @@
 
                 <p class="frut-roman-font" style="word-wrap: break-word">
                     Thank you! Your order was successfully completed. Your Order Number is
-                            <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
+                           
+                    <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
 
                     <asp:Label runat="server" ID="lblreceipt" class="block-text">For a printable receipt, <a id="lnkreceipt" target="_blank" runat="server" class="underline-link">click here</a>.</asp:Label>
                     <asp:Label runat="server" ID="Label1" class="block-text">The title of this order will be shown as “CMD” in your credit card transaction history.</asp:Label>
                 </p>
                 <p class="frut-roman-font">
                     Tracking numbers will be on your order history page when your items are ready to ship.                       
+               
                 </p>
             </div>
         </div>
@@ -51,10 +53,10 @@
                                         </div>
                                         <div class="col-md-6">
                                             <span class="normal-heading blue-color">
-                                            <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
-                                            <%--<asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />--%>
-                                            <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
-                                            <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
+                                                <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
+                                                <%--<asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />--%>
+                                                <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
+                                                <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
                                             <span>
@@ -81,6 +83,8 @@
                                     <span>
                                         <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
                                         <asp:Label ID="lblDelivery" runat="server" Text='<%# Eval("ShippingMethod") %>'></asp:Label>
+                                        <br />
+                                        <asp:LinkButton runat="server" ID="hlLearnmore" OnClientClick="return showPopUp();" ClientIDMode="Static"></asp:LinkButton>
                                     </span>
                                 </td>
                             </tr>
@@ -90,6 +94,25 @@
                 </tbody>
             </table>
         </div>
+
+        <%--learn more POP UP Start here --%>
+        <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: none">
+            <div class="modal-dialog modal-checkout" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
+                            <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
+                        <p>
+                            <asp:Label runat="server" Text="<%$ Tokens:StringResource, learnMore.aspx.1 %>"></asp:Label>
+                        </p>
+                        <p>
+                            <asp:Label runat="server" Text="<%$ Tokens:StringResource, learnMore.aspx.2 %>"></asp:Label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--learn more POP UP ends here --%>
 
         <%--Billing Amounts--%>
         <div class="top-row-adjsut">
@@ -154,4 +177,13 @@
             <div class="clearfix"></div>
         </div>
     </div>
+    <script type="text/javascript">
+        $("#Closebtn").click(function () {
+            document.getElementById('myModal').style.display = 'none';
+        });
+        function showPopUp(e) {
+            document.getElementById('myModal').style.display = 'block';
+            return false;
+        }
+    </script>
 </asp:Content>
