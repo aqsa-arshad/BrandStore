@@ -3909,7 +3909,7 @@ function popupzoom(url,alturl)
             }
         }
 
-        public virtual string GetVariantPriceForItem(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, string sTaxClassID)
+        public virtual string GetVariantPriceForItem(String sVariantID, String sHidePriceUntilCart, string sPrice, string sSalePrice, string sExtPrice, String sPoints, string sSalesPromptName, string sTaxClassID = "1")
         {
             return GetVariantPriceForItem(sVariantID, sHidePriceUntilCart, sPrice, sSalePrice, sExtPrice, sPoints, sSalesPromptName, "True", sTaxClassID, "0.00", "true");
         }

@@ -182,12 +182,12 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                //if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
-                //{
-                //    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
-                //                                                          (e.Item.FindControl("hfSKU") as HiddenField)
-                //                                                              .Value;
-                //}
+                if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+                {
+                    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                                                                          (e.Item.FindControl("hfSKU") as HiddenField)
+                                                                              .Value;
+                }
                 if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
                 {
                     if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 100)

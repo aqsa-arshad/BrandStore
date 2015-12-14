@@ -3,6 +3,8 @@ using System.Data;
 using System.Data.SqlClient;
 using AspDotNetStorefrontCore;
 using System.Net;
+using System.Linq;
+using System.Web.UI;
 using System.Configuration;
 using System.Web.UI.WebControls;
 
@@ -203,8 +205,8 @@ namespace AspDotNetStorefront
                         int totalRRDRow = 0;
                         while (reader2.Read())
                         {
-                            if ((reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
-                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                            if ((reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting))
                                     || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                                 totalRRDRow++;
                         }
@@ -225,8 +227,8 @@ namespace AspDotNetStorefront
                         bool hasproducts = false;
                         while (reader.Read())
                         {
-                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
-                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting)) 
+                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting))
                                     || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
                             {
                                 p = new orderService.brandstore.ws.Product();
@@ -276,13 +278,13 @@ namespace AspDotNetStorefront
                             Ba.Name1 = reader2["BillingFirstName"].ToString() + ' ' + reader2["BillingLastName"].ToString();
                             Ba.Name2 = "";
                             Ba.Email = String.IsNullOrEmpty(reader2["Email"].ToString()) ? String.Empty : reader2["Email"].ToString();
-                            Ba.Address1 = String.IsNullOrEmpty(reader2["BillingAddress1"].ToString())? String.Empty :reader2["BillingAddress1"].ToString() ;
-                            Ba.Address2 = String.IsNullOrEmpty(reader2["BillingAddress2"].ToString()) ? String.Empty : reader2["BillingAddress2"].ToString() + " "+(String.IsNullOrEmpty(reader2["BillingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
+                            Ba.Address1 = String.IsNullOrEmpty(reader2["BillingAddress1"].ToString()) ? String.Empty : reader2["BillingAddress1"].ToString();
+                            Ba.Address2 = String.IsNullOrEmpty(reader2["BillingAddress2"].ToString()) ? String.Empty : reader2["BillingAddress2"].ToString() + " " + (String.IsNullOrEmpty(reader2["BillingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
                             Ba.City = String.IsNullOrEmpty(reader2["BillingCity"].ToString()) ? String.Empty : reader2["BillingCity"].ToString();
                             Ba.Locale = String.IsNullOrEmpty(reader2["BillingState"].ToString()) ? String.Empty : reader2["BillingState"].ToString();
                             Ba.Country = String.IsNullOrEmpty(reader2["BillingCountryCode"].ToString()) ? String.Empty : reader2["BillingCountryCode"].ToString();
                             Ba.PostalCode = String.IsNullOrEmpty(reader2["BillingZip"].ToString()) ? String.Empty : reader2["BillingZip"].ToString();
-                                                       
+
                             //Set Shipping Address                       
 
                             Sa.Name1 = reader2["ShippingFirstName"].ToString() + ' ' + reader2["ShippingLastName"].ToString();
@@ -321,13 +323,23 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                     (e.Item.FindControl("hlLearnmore") as LinkButton).Text = "Learn More";
-                    
+
                 }
                 else
                 {
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                     (e.Item.FindControl("hlLearnmore") as LinkButton).Visible = false;
+                }
 
+                if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
+                {
+                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 100)
+                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField).Value.Take(100).Aggregate("", (x, y) => x + y) + " ...";
+                    else
+                    {
+                        (e.Item.FindControl("lblDescription") as Label).Text =
+                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
+                    }
                 }
 
             }

@@ -18,7 +18,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-
+    
     <%--This xmlpackage can be used to add dynamic data to javascripts such as tracking scripts that should run before the closing head tag--%>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -49,6 +49,8 @@
     <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/jquery.html5-placeholder-shim.js" type="text/javascript"></script>
     <!-- Bootstrap core CSS -->
 
+    <link rel="shortcut icon" href="/App_Themes/skin_3/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/App_Themes/skin_3/images/favicon.ico" type="image/x-icon" />
     <link href="../../App_Themes/Skin_3/app.css" rel="stylesheet" />
     <aspdnsf:XmlPackage ID="XmlPackage2" runat="server" PackageName="script.headclose" />
 </head>
