@@ -57,6 +57,7 @@ namespace AspDotNetStorefrontCore.ShippingCalculation
 		public bool ShippingIsFree { get; set; }
 		public bool IsRealTime { get; set; }
 		public decimal VatRate { get; set; }
+        public int DisplayOrder { get; set; }
         public string DisplayFormat
         {
             get 

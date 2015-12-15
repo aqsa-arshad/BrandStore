@@ -28,8 +28,29 @@ namespace AspDotNetStorefront
         protected override void OnInit(EventArgs e)
         {
             cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
-
+            
             ShippingMethodCollection shippingMethods = cart.GetShippingMethods(ThisCustomer.PrimaryShippingAddress);
+           //Sort the shipping methids according to display order            
+            string sql = "select Name, ShippingMethodID,DisplayOrder from ShippingMethod";
+            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+            {
+                dbconn.Open();
+                using (IDataReader rs = DB.GetRS(sql, dbconn))
+                {
+                    while (rs.Read())
+                    {
+                        int DisplayOrder = Convert.ToInt32(DB.RSFieldInt(rs, "DisplayOrder"));
+                        int ShippingMethodID = DB.RSFieldInt(rs, "ShippingMethodID");
+                        foreach (ShippingMethod method in shippingMethods)
+                        {
+                            if (method.Id == ShippingMethodID)
+                                method.DisplayOrder =DisplayOrder;
+                        }
+                    }
+                }
+            }
+            //end sorting
+            shippingMethods.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
             if (shippingMethods.Count > 0)
             {
                 AnyShippingMethodsFound = true;
