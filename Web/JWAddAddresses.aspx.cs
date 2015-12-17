@@ -8,6 +8,9 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// Add/Edit User Address - code behind cs file
+    /// </summary>
     public partial class JWAddAddresses : SkinBase
     {
         /// <summary>

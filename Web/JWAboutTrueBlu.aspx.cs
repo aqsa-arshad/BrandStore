@@ -3,12 +3,22 @@ using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// About TrueBlu Static Page - code behind cs file
+    /// </summary>
     public partial class JWAboutTrueBlu : SkinBase
     {
+        /// <summary>
+        /// Page Load Event
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
             
         }
+        
+        /// <summary>
+        /// Override JeldWen Master Template
+        /// </summary>
         protected override string OverrideTemplate()
         {
             String MasterHome = AppLogic.HomeTemplate();
