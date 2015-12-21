@@ -113,7 +113,6 @@ namespace AspDotNetStorefrontControls
                 //SKU
                 if (!cItem.IsSystem)
                 {
-                    //Controls.Add(new LiteralControl("     <span class='normal-heading blue-color'>"));
                     Controls.Add(new LiteralControl("     <span>"));
                     Controls.Add(lblSKUCaption);
                     Controls.Add(lblSKU);
