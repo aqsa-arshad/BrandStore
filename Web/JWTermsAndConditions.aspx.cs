@@ -10,12 +10,22 @@ using AspDotNetStorefrontCommon;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// Terms And Conditions Static Page - code behind cs file
+    /// </summary>
     public partial class JWTermsAndConditions : SkinBase
     {
+        /// <summary>
+        /// Page Load Event
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
+        
+        /// <summary>
+        /// Override JeldWen Master Template
+        /// </summary>
         protected override string OverrideTemplate()
         {
             String MasterHome = AppLogic.HomeTemplate();
