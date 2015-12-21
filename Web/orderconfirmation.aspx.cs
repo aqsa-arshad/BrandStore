@@ -10,12 +10,32 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// Handle the Order confirmation
+    /// </summary>
     public partial class orderconfirmation : SkinBase
     {
+        /// <summary>
+        /// The order number
+        /// </summary>
         protected int OrderNumber;
+        /// <summary>
+        /// The Data reader for reading Data from SQL
+        /// </summary>
         private IDataReader reader;
+        /// <summary>
+        /// The reader2
+        /// </summary>
         private IDataReader reader2;
+        /// <summary>
+        /// The m_ store loc
+        /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.CacheControl = "private";
@@ -59,12 +79,11 @@ namespace AspDotNetStorefront
                 GetOrderItemsDetail();
                 SendOrderinfotoRRD();
             }
-
-
         }
 
-
-
+        /// <summary>
+        /// Gets the order information.
+        /// </summary>
         void GetOrderInfo()
         {
             try
@@ -130,6 +149,9 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Gets the order items detail.
+        /// </summary>
         private void GetOrderItemsDetail()
         {
             try
@@ -156,40 +178,46 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Used to set the master page when using template switching or page-based templates
+        /// </summary>
+        /// <returns>
+        /// The name of the template to use.  To utilize this you must override OverrideTemplate
+        /// in a page that inherits from SkinBase where you're trying to change the master page
+        /// </returns>
         protected override string OverrideTemplate()
         {
-            String MasterHome = AppLogic.HomeTemplate();
-
-            if (MasterHome.Trim().Length == 0)
+            var masterHome = AppLogic.HomeTemplate();
+            if (masterHome.Trim().Length == 0)
             {
-
-                MasterHome = "JeldWenTemplate";// "template";
+                masterHome = "JeldWenTemplate";
             }
-
-            if (MasterHome.EndsWith(".ascx"))
+            if (masterHome.EndsWith(".ascx"))
             {
-                MasterHome = MasterHome.Replace(".ascx", ".master");
+                masterHome = masterHome.Replace(".ascx", ".master");
             }
-
-            if (!MasterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+            if (!masterHome.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
             {
-                MasterHome = MasterHome + ".master";
+                masterHome = masterHome + ".master";
             }
-
-            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + MasterHome)))
+            if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + base.SkinID.ToString() + "/" + masterHome)))
             {
-                //Change template name to JELD-WEN template by Tayyab on 07-09-2015
-                MasterHome = "JeldWenTemplate";// "template.master";
+                masterHome = "JeldWenTemplate";
             }
-
-            return MasterHome;
+            return masterHome;
         }
 
+        /// <summary>
+        /// Lblreceipt_clicks this instance.
+        /// </summary>
         private void lblreceipt_click()
         {
             // String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
         }
         #region "Send order to RRD"
+        /// <summary>
+        /// Sends the orderinfoto RRD.
+        /// </summary>
         private void SendOrderinfotoRRD()
         {
             try
@@ -260,6 +288,12 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Sets the billing and shipping addresses.
+        /// </summary>
+        /// <param name="Ba">The ba.</param>
+        /// <param name="Sa">The sa.</param>
+        /// <param name="OrderNumber">The order number.</param>
         private void SetBillingAndShippingAddresses(ref orderService.brandstore.ws.BillingAddress Ba, ref orderService.brandstore.ws.ShippingAddress Sa, int OrderNumber)
         {
             try
@@ -313,37 +347,50 @@ namespace AspDotNetStorefront
         }
         #endregion
 
+        /// <summary>
+        /// Handles the ItemDataBound event of the rptAddresses control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            if ((e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)) return;
+            if ((e.Item.FindControl("hfChosenColor") as HiddenField).Value != null)
             {
-                if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
-                {
-                    (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
-                    (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
-                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                    (e.Item.FindControl("hlLearnmore") as LinkButton).Text = "Learn More";
-
-                }
+                (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon");
+            }
+            else
+            {
+                (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+            }
+            if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
+            {
+                (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
+                (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
+                (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                (e.Item.FindControl("hlLearnmore") as LinkButton).Text = "Learn More";
+            }
+            else
+            {
+                (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                (e.Item.FindControl("hlLearnmore") as LinkButton).Visible = false;
+            }
+            if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+            {
+                (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                                                                      (e.Item.FindControl("hfSKU") as HiddenField)
+                                                                          .Value;
+            }
+            if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
+            {
+                if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 100)
+                    (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField).Value.Take(100).Aggregate("", (x, y) => x + y) + " ...";
                 else
                 {
-                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                    (e.Item.FindControl("hlLearnmore") as LinkButton).Visible = false;
+                    (e.Item.FindControl("lblDescription") as Label).Text =
+                        (e.Item.FindControl("hfDescription") as HiddenField).Value;
                 }
-
-                if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
-                {
-                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 100)
-                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField).Value.Take(100).Aggregate("", (x, y) => x + y) + " ...";
-                    else
-                    {
-                        (e.Item.FindControl("lblDescription") as Label).Text =
-                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
-                    }
-                }
-
             }
         }
-
     }
 }

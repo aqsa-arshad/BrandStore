@@ -8,12 +8,29 @@ using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// Handle the Order Detail 
+    /// </summary>
     public partial class OrderDetail : SkinBase
     {
+        /// <summary>
+        /// The order number
+        /// </summary>
         protected int OrderNumber;
+        /// <summary>
+        /// The Data reader for reading Data from SQL
+        /// </summary>
         private IDataReader reader;
+        /// <summary>
+        /// The m_ store loc
+        /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
 
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             RequireSecurePage();
@@ -33,6 +50,9 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Gets the order information.
+        /// </summary>
         void GetOrderInfo()
         {
             try
@@ -49,7 +69,7 @@ namespace AspDotNetStorefront
                         if (reader.Read())
                         {
                             lblOrderNumber.Text = reader["OrderNumber"].ToString();
-                            lblOrderDate.Text = reader["OrderDate"].ToString();
+                            lblOrderDate.Text = Localization.ConvertLocaleDate(reader["OrderDate"].ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting);
                             //Billing Address
                             lblBAFullName.Text = reader["BillingFirstName"].ToString() + ' ' +
                                                  reader["BillingLastName"].ToString();
@@ -96,6 +116,9 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Gets the order items detail.
+        /// </summary>
         private void GetOrderItemsDetail()
         {
             try
@@ -122,6 +145,13 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Used to set the master page when using template switching or page-based templates
+        /// </summary>
+        /// <returns>
+        /// The name of the template to use.  To utilize this you must override OverrideTemplate
+        /// in a page that inherits from SkinBase where you're trying to change the master page
+        /// </returns>
         protected override string OverrideTemplate()
         {
             var masterHome = AppLogic.HomeTemplate();
@@ -144,6 +174,11 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
+        /// <summary>
+        /// Gets the name of the dealer.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns></returns>
         private static string GetDealerName(int customerId)
         {
             var customerName = string.Empty;
@@ -177,6 +212,11 @@ namespace AspDotNetStorefront
             return customerName;
         }
 
+        /// <summary>
+        /// Handles the ItemDataBound event of the rptAddresses control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
@@ -190,6 +230,14 @@ namespace AspDotNetStorefront
             }
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                if ((e.Item.FindControl("hfChosenColor") as HiddenField).Value != null)
+                {
+                    (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon");
+                }
+                else
+                {
+                    (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                }
                 if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;

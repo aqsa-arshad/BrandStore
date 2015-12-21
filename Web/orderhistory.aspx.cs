@@ -19,9 +19,20 @@ namespace AspDotNetStorefront
     /// </summary>
     public partial class orderhistory : SkinBase
     {
+        /// <summary>
+        /// The m_ store loc
+        /// </summary>
         public string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
+        /// <summary>
+        /// The number of item shown on the Order history page
+        /// </summary>
         private const int PageSize = 4;
 
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
             if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 || ThisCustomer.CustomerLevelID == 6)
@@ -34,6 +45,10 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Gets the orders.
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
         public void GetOrders(int pageIndex)
         {
             string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
@@ -76,6 +91,14 @@ namespace AspDotNetStorefront
             accountaspx55.Visible = (rptOrderhistory.Items.Count == 0);
         }
 
+        /// <summary>
+        /// Gets the payment status.
+        /// </summary>
+        /// <param name="PaymentMethod">The payment method.</param>
+        /// <param name="CardNumber">The card number.</param>
+        /// <param name="TransactionState">State of the transaction.</param>
+        /// <param name="decOrderTotal">The decimal order total.</param>
+        /// <returns></returns>
         public string GetPaymentStatus(string PaymentMethod, string CardNumber, string TransactionState, object decOrderTotal)
         {
             decimal OrderTotal = Convert.ToDecimal(decOrderTotal);
@@ -96,6 +119,16 @@ namespace AspDotNetStorefront
             return PaymentStatus;
         }
 
+        /// <summary>
+        /// Gets the shipping status.
+        /// </summary>
+        /// <param name="OrderNumber">The order number.</param>
+        /// <param name="ShippedOn">The shipped on.</param>
+        /// <param name="ShippedVIA">The shipped via.</param>
+        /// <param name="ShippingTrackingNumber">The shipping tracking number.</param>
+        /// <param name="TransactionState">State of the transaction.</param>
+        /// <param name="DownloadEMailSentOn">The download e mail sent on.</param>
+        /// <returns></returns>
         public string GetShippingStatus(int OrderNumber, string ShippedOn, string ShippedVIA, string ShippingTrackingNumber, string TransactionState, string DownloadEMailSentOn)
         {
             String ShippingStatus = String.Empty;
@@ -143,6 +176,13 @@ namespace AspDotNetStorefront
             return ShippingStatus;
         }
 
+        /// <summary>
+        /// Used to set the master page when using template switching or page-based templates
+        /// </summary>
+        /// <returns>
+        /// The name of the template to use.  To utilize this you must override OverrideTemplate
+        /// in a page that inherits from SkinBase where you're trying to change the master page
+        /// </returns>
         protected override string OverrideTemplate()
         {
             var masterHome = AppLogic.HomeTemplate();
@@ -165,6 +205,11 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
+        /// <summary>
+        /// Populates the pager.
+        /// </summary>
+        /// <param name="recordCount">The record count.</param>
+        /// <param name="currentPage">The current page.</param>
         private void PopulatePager(int recordCount, int currentPage)
         {
             var dblPageCount = (double)((decimal)recordCount / Convert.ToDecimal(PageSize));
@@ -187,12 +232,22 @@ namespace AspDotNetStorefront
             rptPager.DataBind();
         }
 
+        /// <summary>
+        /// Handles the Changed event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Changed(object sender, EventArgs e)
         {
             var pageIndex = int.Parse((sender as LinkButton).CommandArgument);
             GetOrders(pageIndex);
         }
 
+        /// <summary>
+        /// Gets the name of the dealer.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns></returns>
         private static string GetDealerName(int customerId)
         {
             var customerName = string.Empty;

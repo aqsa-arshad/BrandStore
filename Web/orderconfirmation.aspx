@@ -42,24 +42,28 @@
                     <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
+                                <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
+                                <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
+                                <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
+                                <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
+                                <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
+                                <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
+                                <asp:HiddenField ID="hfChosenColor" runat="server" Value='<%# Eval("ChosenColor") %>' />
+                                <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
+                                <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
                                 <td class="td-45-percent">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="primary-img-box">
-                                                <asp:Image ID="Image1" runat="server" class="img-responsive"
-                                                    ImageUrl='<%# AspDotNetStorefrontCore.AppLogic.LookupImage("Product", int.Parse(Eval("ProductID").ToString()), Eval("ImageFileNameOverride").ToString(), Eval("SKU").ToString(), "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)%>' />
+                                                <asp:Image ID="ImgProduct" runat="server" class="img-responsive"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <span class="normal-heading blue-color">
-                                                <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
-                                                <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
-                                                <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
-                                                <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
                                             <span>
-                                                <asp:Label ID="lblProductSKU" runat="server" Text='<%# Eval("SKU") %>'/>
+                                                <asp:Label ID="lblProductSKU" runat="server" />
                                             </span>
                                             <p>
                                                 <asp:Label ID="lblDescription" runat="server"></asp:Label>

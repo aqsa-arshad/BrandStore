@@ -7,12 +7,29 @@ using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// Handle the Order Receipt
+    /// </summary>
     public partial class OrderReceipt : SkinBase
     {
+        /// <summary>
+        /// The order number
+        /// </summary>
         protected int OrderNumber;
+        /// <summary>
+        /// The Data reader for reading Data from SQL
+        /// </summary>
         private IDataReader reader;
+        /// <summary>
+        /// The m_ store loc
+        /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
 
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.CacheControl = "private";
@@ -55,6 +72,13 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Used to set the master page when using template switching or page-based templates
+        /// </summary>
+        /// <returns>
+        /// The name of the template to use.  To utilize this you must override OverrideTemplate
+        /// in a page that inherits from SkinBase where you're trying to change the master page
+        /// </returns>
         protected override string OverrideTemplate()
         {
             var masterHome = AppLogic.HomeTemplate();
@@ -77,6 +101,9 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
+        /// <summary>
+        /// Gets the order information.
+        /// </summary>
         private void GetOrderInfo()
         {
             try
@@ -93,7 +120,7 @@ namespace AspDotNetStorefront
                         if (reader.Read())
                         {
                             lblOrderNumber.Text = reader["OrderNumber"].ToString();
-                            lblOrderDate.Text = reader["OrderDate"].ToString();
+                            lblOrderDate.Text = Localization.ConvertLocaleDate(reader["OrderDate"].ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting);
                             lblCustomerID.Text = reader["CustomerID"].ToString();
 
                             //Billing Address
@@ -147,6 +174,9 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Gets the order items detail.
+        /// </summary>
         private void GetOrderItemsDetail()
         {
             try
@@ -178,10 +208,24 @@ namespace AspDotNetStorefront
             }
         }
 
-        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        /// <summary>
+        /// Handles the ItemDataBound event of the rptOrderItemsDetail control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RepeaterItemEventArgs" /> instance containing the event data.</param>
+        protected void rptOrderItemsDetail_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                
+                if ((e.Item.FindControl("hfChosenColor") as HiddenField).Value != null)
+                {
+                    (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value,ThisCustomer.LocaleSetting, 1,(e.Item.FindControl("hfChosenColor") as HiddenField).Value,"icon");
+                }
+                else
+                {
+                    (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
+                }
                 if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
                 {
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
@@ -199,6 +243,28 @@ namespace AspDotNetStorefront
                             (e.Item.FindControl("hfDescription") as HiddenField).Value;
                     }
                 }
+                if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                {
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                }
+                else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                {
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                }
+
+                else if(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                }
+                else 
+                {
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
+                }
+
             }
         }
     }
