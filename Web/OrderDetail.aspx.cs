@@ -230,7 +230,7 @@ namespace AspDotNetStorefront
             }
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                if ((e.Item.FindControl("hfChosenColor") as HiddenField).Value != null)
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value))
                 {
                     (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon");
                 }
@@ -258,13 +258,13 @@ namespace AspDotNetStorefront
                             (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
                     }
                 }
-                if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
                                                                           (e.Item.FindControl("hfSKU") as HiddenField)
                                                                               .Value;
                 }
-                if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfDescription") as HiddenField).Value))
                 {
                     if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
                         (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
@@ -274,6 +274,26 @@ namespace AspDotNetStorefront
                         (e.Item.FindControl("lblDescription") as Label).Text =
                             (e.Item.FindControl("hfDescription") as HiddenField).Value;
                     }
+                }
+                if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                {
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                }
+                else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                {
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                }
+                else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                }
+                else
+                {
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
                 }
             }
         }

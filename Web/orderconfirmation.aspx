@@ -55,7 +55,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="primary-img-box">
-                                                <asp:Image ID="ImgProduct" runat="server" class="img-responsive"/>
+                                                <asp:Image ID="ImgProduct" runat="server" class="img-responsive" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -71,10 +71,18 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="td-30-percent">
+                                <td class="td-30-percent label-text">
                                     <span class="normal-heading black-color">
                                         <asp:Label ID="lblPaymentCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.payment %>' /></span>
-                                    <span>Price:    $<%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %></span>
+                                    <span>
+                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
+                                    </span>
+                                    <span>
+                                        <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
+                                    </span>
+                                    <span>
+                                        <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %>
+                                    </span>
                                 </td>
                                 <td class="td-15-percent">
                                     <span class="normal-heading black-color">
