@@ -1454,6 +1454,28 @@ function popupzoom(url,alturl)
             }
             return result;
         }
+        public virtual string AddtoCartFormCustom(string sProductID, string sVariantID, String sColorChangeProductImage)
+                    {
+            InputValidator IV = new InputValidator("AddtoCartForm");
+            int ProductID = IV.ValidateInt("ProductID", sProductID);
+            int VariantID = IV.ValidateInt("VariantID", sVariantID);
+            bool ColorChangeProductImage = IV.ValidateBool("ColorChangeProductImage", sColorChangeProductImage);
+            string result = String.Empty;
+            if (VariantID == 0)
+            {
+                VariantID = AppLogic.GetDefaultProductVariant(ProductID);
+            }
+            if (ProductID != 0 &&
+                VariantID != 0)
+            {
+                result = ShoppingCart.GetAddToCartFormCustom(ThisCustomer, false, AppLogic.AppConfigBool("ShowWishButtons"), AppLogic.AppConfigBool("ShowGiftRegistryButtons"), ProductID, VariantID, ThisCustomer.SkinID, 0, ThisCustomer.LocaleSetting, ColorChangeProductImage, VariantStyleEnum.RegularVariantsWithAttributes);
+            }
+            else
+            {
+                result = String.Empty;
+            }
+            return result;
+        }
 
         public virtual string AddtoCartForm(string sProductID, string sVariantID, String sColorChangeProductImage, string sDisplayFormat)
         {

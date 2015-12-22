@@ -56,6 +56,7 @@ namespace AspDotNetStorefront
         int SourceEntityID = 0;
 
         private string m_PageOutput = string.Empty;
+        private string m_PageOutputCustom = string.Empty;
         private const string ADDTOCART_ACTION_PREFIX = "AddToCart_";
 
         protected void Page_Load(object sender, System.EventArgs e)
@@ -73,6 +74,7 @@ namespace AspDotNetStorefront
             GenreID = CommonLogic.QueryStringUSInt("GenreID");
             VectorID = CommonLogic.QueryStringUSInt("VectorID");
 
+            
             String ActualSEName = string.Empty;
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
@@ -375,6 +377,8 @@ namespace AspDotNetStorefront
             if (RequiresReg && !ThisCustomer.IsRegistered)
             {
                 m_PageOutput += "<b>" + AppLogic.GetString("showproduct.aspx.1", SkinID, ThisCustomer.LocaleSetting) + "</b><a href=\"signin.aspx?returnurl=" + CommonLogic.GetThisPageName(false) + "?ProductID=" + ProductID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").Trim().Length > 0, "&" + Security.HtmlEncode(Security.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING"))), String.Empty) + "\">" + AppLogic.GetString("showproduct.aspx.2", SkinID, ThisCustomer.LocaleSetting) + "</a> " + AppLogic.GetString("showproduct.aspx.3", SkinID, ThisCustomer.LocaleSetting);
+                m_PageOutputCustom += "<b>" + AppLogic.GetString("showproduct.aspx.1", SkinID, ThisCustomer.LocaleSetting) + "</b><a href=\"signin.aspx?returnurl=" + CommonLogic.GetThisPageName(false) + "?ProductID=" + ProductID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").Trim().Length > 0, "&" + Security.HtmlEncode(Security.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING"))), String.Empty) + "\">" + AppLogic.GetString("showproduct.aspx.2", SkinID, ThisCustomer.LocaleSetting) + "</a> " + AppLogic.GetString("showproduct.aspx.3", SkinID, ThisCustomer.LocaleSetting);
+            
             }
             else
             {
@@ -390,15 +394,18 @@ namespace AspDotNetStorefront
                 DB.ExecuteSQL("update product set Looks=Looks+1 where ProductID=" + ProductID.ToString());
 
                 m_PageOutput = "<!-- XmlPackage: " + m_XmlPackage + " -->\n";
+                m_PageOutputCustom = "<!-- XmlPackage: " + m_XmlPackage + " -->\n";
                 if (m_XmlPackage.Length == 0)
                 {
                     m_PageOutput += "<p><b><font color=red>XmlPackage format was chosen, but no XmlPackage was specified!</font></b></p>";
+                    m_PageOutputCustom += "<p><b><font color=red>XmlPackage format was chosen, but no XmlPackage was specified!</font></b></p>";
                 }
                 else
                 {
                     using (XmlPackage2 p = new XmlPackage2(m_XmlPackage, ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
                         m_PageOutput += AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                      
                         if (p.SectionTitle != "")
                         {
                             SectionTitle = p.SectionTitle;
@@ -419,6 +426,13 @@ namespace AspDotNetStorefront
                         {
                             SENoScript = p.SENoScript;
                         }
+                    }
+                    //Get add to cart button for popup
+                    using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
+                    {
+                      //HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                      m_PageOutputCustom  =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                      LiteralCustom.Text = m_PageOutputCustom;
                     }
                 }
             }
@@ -448,7 +462,11 @@ namespace AspDotNetStorefront
                 return true;
             }
         }
-
+        protected void ServerButton_Click(object sender, EventArgs e)
+        {
+            HandleAddToCart();
+        }
+       
         /// <summary>
         /// Registers the required scripts and webservice references
         /// </summary>
@@ -485,9 +503,13 @@ namespace AspDotNetStorefront
 
         private void HandleAddToCart()
         {
+           
+                   
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
-
+            formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
+            formInput.CategoryFundUsed = Convert.ToDecimal(10);
+            
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
@@ -512,8 +534,8 @@ namespace AspDotNetStorefront
                         Response.Redirect("signin.aspx?ErrorMsg=" + er.MessageId + "&ReturnUrl=" + Security.UrlEncode(returnUrl));
                     }
                 }
-
-
+             
+                
                 bool success = ShoppingCart.AddToCart(ThisCustomer, formInput);
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
@@ -658,5 +680,14 @@ namespace AspDotNetStorefront
             return false;
         }
 
-    }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void btnaddtocart_Click(object sender, EventArgs e)
+        {
+          
+           
+        }
+}
 }

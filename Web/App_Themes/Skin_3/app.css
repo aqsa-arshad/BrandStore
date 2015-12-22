@@ -6442,3 +6442,27 @@ a:hover.underline-link {
     width: 65%;
   }
 }
+
+ .trueblue-popup .content-box-03 {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    float: left;
+    width: 114px;
+}
+ .trueblue-popup .content-box-03 .row {
+     margin:0;
+ }
+  .trueblue-popup .content-box-03 .row .col-md-5 {
+      display: none;
+ }
+ .trueblue-popup .content-box-03 .row .col-md-6 {
+    float: left !important;
+    padding: 0;
+   }
+.trueblue-popup .content-box-03 .row .col-md-6 .call-to-action {
+    width: 112px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+ }
