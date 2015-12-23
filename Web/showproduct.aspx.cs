@@ -74,6 +74,9 @@ namespace AspDotNetStorefront
             GenreID = CommonLogic.QueryStringUSInt("GenreID");
             VectorID = CommonLogic.QueryStringUSInt("VectorID");
 
+            //Set BluBuks Point
+            String BluBuksPoints="10";
+            ppointscount.InnerText = "You have " + BluBuksPoints + " BLU Bucks you can use to purchase your items.";
             
             String ActualSEName = string.Empty;
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
@@ -509,6 +512,7 @@ namespace AspDotNetStorefront
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
             formInput.CategoryFundUsed = Convert.ToDecimal(10);
+            
             
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {

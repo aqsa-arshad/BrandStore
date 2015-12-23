@@ -11755,20 +11755,20 @@ namespace AspDotNetStorefrontCore
 
             nfo.VariantId = variantId;
             nfo.CartType = cartType;
-            nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", productId, variantId));
+            nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", "1", "1"));//productId, variantId
 
             if (nfo.Quantity == 0)
             {
                 SqlCommand sc = new SqlCommand(string.Format("select variantid from dbo.ProductVariant where isDefault=1 and productid={0}", productId));
                 variantId = DB.Scalar<int>.ExecuteScalar(sc);
-                nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", productId, variantId));
+                nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", "1", "1"));//productId, variantId
             }
 
-            nfo.ParseValidShippingAddressId(CommonLogic.FormCanBeDangerousContent(string.Format("ShippingAddressID_{0}_{1}", productId, variantId)));
-            nfo.ParseValidCustomerEnteredPrice(CommonLogic.FormCanBeDangerousContent(string.Format("Price_{0}_{1}", productId, variantId)));
+            nfo.ParseValidShippingAddressId(CommonLogic.FormCanBeDangerousContent(string.Format("ShippingAddressID_{0}_{1}", productId, variantId)));//productId, variantId
+            nfo.ParseValidCustomerEnteredPrice(CommonLogic.FormCanBeDangerousContent(string.Format("Price_{0}_{1}", productId, variantId)));//productId, variantId
 
-            nfo.ParseColorOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Color_{0}_{1}", productId, variantId))));
-            nfo.ParseSizeOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Size_{0}_{1}", productId, variantId))));
+            nfo.ParseColorOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Color_{0}_{1}", "1", "1"))));//productId, variantId
+            nfo.ParseSizeOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Size_{0}_{1}", "1", "1"))));//productId, variantId
 
             nfo.TextOption = CommonLogic.FormCanBeDangerousContent(string.Format("TextOption_{0}_{1}", productId, variantId));
             nfo.VariantStyle = (VariantStyleEnum)CommonLogic.FormNativeInt(string.Format("VariantStyle_{0}_{1}", productId, variantId));

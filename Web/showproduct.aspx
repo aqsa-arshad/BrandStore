@@ -8,21 +8,21 @@
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
-   <%-- Region Open Pop Up for bucckts--%>
+    <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <h5 class="text-uppercase-no">TrueBLU</h5>
-                    <p>You have XXXXXX BLU Bucks you can use to purchase your items.</p>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
                     <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
 
                     <div class="form-group">
                         <div class="col-xs-6 padding-none">
-                            <label class="roman-black">BLU Bucks used:</label></div>
+                            <label class="roman-black">BLU Bucks used:</label>
+                        </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" class="form-control" runat="server" Text="0"></asp:TextBox> 
-                            <%--<input id="txkBluBuksUsed" class="form-control" type="text" value="YYY" runat="server" />--%>
+                            <asp:TextBox ID="txtBluBuksUsed" class="form-control" runat="server" Text="0"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -33,12 +33,11 @@
                         $X,XXX.XX
                     </p>
                     <div class="buttons-group trueblue-popup">
-                    <div>
-                       <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Update cart</button>--%>
-                         <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
-                        <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                        <div>
+                            <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                        </div>
                     </div>
-                   </div>
                 </div>
             </div>
         </div>
@@ -65,15 +64,12 @@
                 $("#MCCategory6").addClass("active");
             }
             $("#btnaddtocart").click(function (e) {
-                if (ApplyValidation(theForm)) {
-                  //  window.open("ApplyFundAndBuckts.aspx", "", "dialogWidth:800px;dialogHeight:500px;Center:yes");
+                if (ApplyValidation(theForm)) {                   
                     $("#btnaddtocart").attr("data-toggle", "modal");
                     $("#btnaddtocart").attr("data-target", "#myModa2");
                 }
-                
+
             });
-
-
 
             function ApplyValidation(theForm) {
                 debugger;
