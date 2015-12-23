@@ -36,10 +36,10 @@ namespace AspDotNetStorefrontAdmin
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
 
-                if (AppLogic.MaxProductsExceeded())
-                {
-                    ltError.Text = "<font class=\"errorMsg\">WARNING: Maximum number of allowed products exceeded. To add additional products, please delete some products or upgrade to AspDotNetStoreFront ML </font>&nbsp;&nbsp;&nbsp;";
-                }
+            if (AppLogic.MaxProductsExceeded())
+            {
+                ltError.Text = "<font class=\"errorMsg\">WARNING: Maximum number of allowed products exceeded. To add additional products, please delete some products or upgrade to AspDotNetStoreFront ML </font>&nbsp;&nbsp;&nbsp;";
+            }
 
             if (!IsPostBack)
             {
@@ -152,6 +152,7 @@ namespace AspDotNetStorefrontAdmin
             ddManufacturer.Items.Clear();
             ddOnSalePrompt.Items.Clear();
             ddXmlPackage.Items.Clear();
+            ddFund.Items.Clear();
             ddType.Items.Clear();
             ddTaxClass.Items.Clear();
 
@@ -282,8 +283,23 @@ namespace AspDotNetStorefrontAdmin
                     ArrayList xmlPackages = AppLogic.ReadXmlPackages("product", currentSkinID);
                     foreach (String s in xmlPackages)
                     {
-                                ddXmlPackage.Items.Add(new ListItem(s, s));
+                        ddXmlPackage.Items.Add(new ListItem(s, s));
+                    }
+
+                    //Load Funds
+                    ddFund.Items.Add(new ListItem("None", "0"));
+
+                    using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
+                    {
+                        conn.Open();
+                        using (IDataReader rsst = DB.GetRS("SELECT FundID, FundName FROM Fund WITH (NOLOCK) WHERE FundID NOT IN (1, 2) AND IsActive = 1", conn))
+                        {
+                            while (rsst.Read())
+                            {
+                                ddFund.Items.Add(new ListItem(DB.RSFieldByLocale(rsst, "FundName", ThisCustomer.LocaleSetting), DB.RSFieldInt(rsst, "FundID").ToString()));
                             }
+                        }
+                    }
 
                     //load Discount Tables
                     ddDiscountTable.Items.Add(new ListItem("None", "0"));
@@ -347,7 +363,7 @@ namespace AspDotNetStorefrontAdmin
                     cblVectors.Items.Clear();
                     cblDepartment.Items.Clear();
 
-                    EntityHelper eTemp = new EntityHelper(0, EntityDefinitions.LookupSpecs("Category"), false, 0); 
+                    EntityHelper eTemp = new EntityHelper(0, EntityDefinitions.LookupSpecs("Category"), false, 0);
                     ArrayList al = eTemp.GetEntityArrayList(0, "", 0, ThisCustomer.LocaleSetting, false);
                     for (int i = 0; i < al.Count; i++)
                     {
@@ -369,27 +385,27 @@ namespace AspDotNetStorefrontAdmin
                         cblDepartment.Items.Add(new ListItem(name, value));
                     }
 
-                        eTemp = new EntityHelper(EntityDefinitions.readonly_AffiliateEntitySpecs, 0);
-                        al = eTemp.GetEntityArrayList(0, "", 0, ThisCustomer.LocaleSetting, false);
-                        for (int i = 0; i < al.Count; i++)
-                        {
-                            ListItemClass lic = (ListItemClass)al[i];
-                            string value = lic.Value.ToString();
-                            string name = lic.Item;
+                    eTemp = new EntityHelper(EntityDefinitions.readonly_AffiliateEntitySpecs, 0);
+                    al = eTemp.GetEntityArrayList(0, "", 0, ThisCustomer.LocaleSetting, false);
+                    for (int i = 0; i < al.Count; i++)
+                    {
+                        ListItemClass lic = (ListItemClass)al[i];
+                        string value = lic.Value.ToString();
+                        string name = lic.Item;
 
-                            cblAffiliates.Items.Add(new ListItem(name, value));
-                        }
+                        cblAffiliates.Items.Add(new ListItem(name, value));
+                    }
 
-                        eTemp = new EntityHelper(EntityDefinitions.readonly_CustomerLevelEntitySpecs, 0);
-                        al = eTemp.GetEntityArrayList(0, "", 0, ThisCustomer.LocaleSetting, false);
-                        for (int i = 0; i < al.Count; i++)
-                        {
-                            ListItemClass lic = (ListItemClass)al[i];
-                            string value = lic.Value.ToString();
-                            string name = lic.Item;
+                    eTemp = new EntityHelper(EntityDefinitions.readonly_CustomerLevelEntitySpecs, 0);
+                    al = eTemp.GetEntityArrayList(0, "", 0, ThisCustomer.LocaleSetting, false);
+                    for (int i = 0; i < al.Count; i++)
+                    {
+                        ListItemClass lic = (ListItemClass)al[i];
+                        string value = lic.Value.ToString();
+                        string name = lic.Item;
 
-                            cblCustomerLevels.Items.Add(new ListItem(name, value));
-                        }
+                        cblCustomerLevels.Items.Add(new ListItem(name, value));
+                    }
 
                     eTemp = new EntityHelper(0, EntityDefinitions.LookupSpecs("Genre"), false, 0);
                     al = eTemp.GetEntityArrayList(0, "", 0, ThisCustomer.LocaleSetting, false);
@@ -482,6 +498,16 @@ namespace AspDotNetStorefrontAdmin
                             if (li.Value.Equals(DB.RSField(rs, "XmlPackage").ToLowerInvariant()))
                             {
                                 ddXmlPackage.SelectedValue = DB.RSField(rs, "XmlPackage").ToLowerInvariant();
+                            }
+                        }
+
+                        // Match Funds
+                        ddFund.ClearSelection();
+                        foreach (ListItem li in ddFund.Items)
+                        {
+                            if (li.Value.Equals(DB.RSFieldInt(rs, "FundID").ToString()))
+                            {
+                                ddFund.SelectedValue = DB.RSFieldInt(rs, "FundID").ToString();
                             }
                         }
 
@@ -634,26 +660,26 @@ namespace AspDotNetStorefrontAdmin
                             }
                         }
 
-                            //Affiliate
-                            alE = EntityHelper.GetProductEntityList(pID, EntityDefinitions.readonly_AffiliateEntitySpecs.m_EntityName);
-                            foreach (ListItem li in cblAffiliates.Items)
+                        //Affiliate
+                        alE = EntityHelper.GetProductEntityList(pID, EntityDefinitions.readonly_AffiliateEntitySpecs.m_EntityName);
+                        foreach (ListItem li in cblAffiliates.Items)
+                        {
+                            if (alE.IndexOf(Localization.ParseNativeInt(li.Value)) > -1)
                             {
-                                if (alE.IndexOf(Localization.ParseNativeInt(li.Value)) > -1)
-                                {
-                                    li.Selected = true;
-                                }
+                                li.Selected = true;
                             }
+                        }
 
 
-                            //Customer Level
-                            alE = EntityHelper.GetProductEntityList(pID, EntityDefinitions.readonly_CustomerLevelEntitySpecs.m_EntityName);
-                            foreach (ListItem li in cblCustomerLevels.Items)
+                        //Customer Level
+                        alE = EntityHelper.GetProductEntityList(pID, EntityDefinitions.readonly_CustomerLevelEntitySpecs.m_EntityName);
+                        foreach (ListItem li in cblCustomerLevels.Items)
+                        {
+                            if (alE.IndexOf(Localization.ParseNativeInt(li.Value)) > -1)
                             {
-                                if (alE.IndexOf(Localization.ParseNativeInt(li.Value)) > -1)
-                                {
-                                    li.Selected = true;
-                                }
+                                li.Selected = true;
                             }
+                        }
 
                         //Genre
                         alE = EntityHelper.GetProductEntityList(pID, EntityDefinitions.readonly_GenreEntitySpecs.m_EntityName);
@@ -729,7 +755,7 @@ namespace AspDotNetStorefrontAdmin
                                     ltIcon.Text = ("<a href=\"javascript:void(0);\" onClick=\"DeleteImage('" + Image1URL + "','Pic1');\">Click here</a> to delete the current image <br/>\n");
                                 }
                                 ltIcon.Text += "<img align=\"absmiddle\" style=\"margin-top: 3px; margin-bottom: 5px;\" id=\"Pic1\" name=\"Pic1\" border=\"0\" src=\"" + Image1URL + "?" + CommonLogic.GetRandomNumber(1, 1000000).ToString() + "\" />\n";
-								if (AppLogic.GetProductsDefaultVariantID(pID) != 0)
+                                if (AppLogic.GetProductsDefaultVariantID(pID) != 0)
                                 {
                                     ltIcon.Text += ("&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"window.open('EntityProductImageMgr.aspx?size=icon&productid=" + pID.ToString() + "','Images','height=450, width=780,  scrollbars=yes, resizable=yes, toolbar=no, status=yes, location=no, directories=no, menubar=no, alwaysRaised=yes');\">Icon Multi-Image Manager</a>");
                                 }
@@ -755,7 +781,7 @@ namespace AspDotNetStorefrontAdmin
                                     ltMedium.Text = ("<a href=\"javascript:void(0);\" onClick=\"DeleteImage('" + Image2URL + "','Pic2');\">Click here</a> to delete the current image <br/>\n");
                                 }
                                 ltMedium.Text += "<img align=\"absmiddle\" style=\"margin-top: 3px; margin-bottom: 5px;\" id=\"Pic2\" name=\"Pic2\" border=\"0\" src=\"" + Image2URL + "?" + CommonLogic.GetRandomNumber(1, 1000000).ToString() + "\" />\n";
-								if (AppLogic.GetProductsDefaultVariantID(pID) != 0)
+                                if (AppLogic.GetProductsDefaultVariantID(pID) != 0)
                                 {
                                     ltMedium.Text += ("&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"window.open('EntityProductImageMgr.aspx?size=medium&productid=" + pID.ToString() + "','Images','height=550, width=780,  scrollbars=yes, resizable=yes, toolbar=no, status=yes, location=no, directories=no, menubar=no, alwaysRaised=yes');\">Medium Multi-Image Manager</a>");
                                 }
@@ -781,7 +807,7 @@ namespace AspDotNetStorefrontAdmin
                                     ltLarge.Text = ("<a href=\"javascript:void(0);\" onClick=\"DeleteImage('" + Image3URL + "','Pic3');\">Click here</a> to delete the current image <br/>\n");
                                 }
                                 ltLarge.Text += "<img align=\"absmiddle\" style=\"margin-top: 3px; margin-bottom: 5px;\" id=\"Pic3\" name=\"Pic3\" border=\"0\" src=\"" + Image3URL + "?" + CommonLogic.GetRandomNumber(1, 1000000).ToString() + "\" />\n";
-								if (AppLogic.GetProductsDefaultVariantID(pID) != 0)
+                                if (AppLogic.GetProductsDefaultVariantID(pID) != 0)
                                 {
                                     ltLarge.Text += ("&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"window.open('EntityProductImageMgr.aspx?size=large&productid=" + pID.ToString() + "','Images','height=650, width=780,  scrollbars=yes, resizable=yes, toolbar=no, status=yes, location=no, directories=no, menubar=no, alwaysRaised=yes');\">Large Multi-Image Manager</a>");
                                 }
@@ -944,19 +970,19 @@ namespace AspDotNetStorefrontAdmin
                                 }
                             }
 
-                                //Affiliate
-                                if (eName.Equals("AFFILIATE", StringComparison.InvariantCultureIgnoreCase))
+                            //Affiliate
+                            if (eName.Equals("AFFILIATE", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                foreach (ListItem li in cblAffiliates.Items)
                                 {
-                                    foreach (ListItem li in cblAffiliates.Items)
+                                    if (li.Value.Equals(eID.ToString()))
                                     {
-                                        if (li.Value.Equals(eID.ToString()))
-                                        {
-                                            li.Selected = true;
-                                        }
+                                        li.Selected = true;
                                     }
                                 }
                             }
                         }
+                    }
 
                     ltScript2.Text = ("<script type=\"text/javascript\">\n");
                     ltScript2.Text += ("function DeleteImage(imgurl,name)\n");
@@ -1026,7 +1052,7 @@ namespace AspDotNetStorefrontAdmin
             {
                 // ok to ADD them:
                 String NewGUID = DB.GetNewGUID();
-                sql.Append("insert into product(ProductGUID,Name,SEName,ContentsBGColor,PageBGColor,GraphicsColor,ImageFilenameOverride,ProductTypeID,Summary,Description,ExtensionData,ColorOptionPrompt,SizeOptionPrompt,RequiresTextOption,TextOptionPrompt,TextOptionMaxLength,FroogleDescription,RelatedProducts,UpsellProducts,UpsellProductDiscountPercentage,RequiresProducts,SEKeywords,SEDescription,SETitle,SENoScript,SEAltText,SKU,PageSize,ColWidth,XmlPackage,ManufacturerPartNumber,SalesPromptID,SpecTitle,SpecCall,Published,ShowBuyButton,IsCallToOrder,HidePriceUntilCart,ExcludeFromPriceFeeds,IsAKit" + CommonLogic.IIF(AppLogic.AppConfigBool("ShowPopularity"), ",Popularity", "") + ",TrackInventoryBySizeAndColor,TrackInventoryBySize,TrackInventoryByColor,RequiresRegistration,SpecsInline,MiscText,SwatchImageMap,QuantityDiscountID,TaxClassID,AvailableStartDate,AvailableStopDate) values(");
+                sql.Append("insert into product(ProductGUID,Name,SEName,ContentsBGColor,PageBGColor,GraphicsColor,ImageFilenameOverride,ProductTypeID,Summary,Description,ExtensionData,ColorOptionPrompt,SizeOptionPrompt,RequiresTextOption,TextOptionPrompt,TextOptionMaxLength,FroogleDescription,RelatedProducts,UpsellProducts,UpsellProductDiscountPercentage,RequiresProducts,SEKeywords,SEDescription,SETitle,SENoScript,SEAltText,SKU,PageSize,ColWidth,XmlPackage,FundID,ManufacturerPartNumber,SalesPromptID,SpecTitle,SpecCall,Published,ShowBuyButton,IsCallToOrder,HidePriceUntilCart,ExcludeFromPriceFeeds,IsAKit" + CommonLogic.IIF(AppLogic.AppConfigBool("ShowPopularity"), ",Popularity", "") + ",TrackInventoryBySizeAndColor,TrackInventoryBySize,TrackInventoryByColor,RequiresRegistration,SpecsInline,MiscText,SwatchImageMap,QuantityDiscountID,TaxClassID,AvailableStartDate,AvailableStopDate) values(");
                 sql.Append(DB.SQuote(NewGUID) + ",");
                 sql.Append(DB.SQuote(AppLogic.FormLocaleXml("Name", txtName.Text, locale, "Product", pID)) + ",");
                 sql.Append(DB.SQuote(SE.MungeName(AppLogic.GetFormsDefaultLocale("Name", txtName.Text, locale, "Product", pID))) + ",");
@@ -1151,6 +1177,14 @@ namespace AspDotNetStorefrontAdmin
                         sql.Append(DB.SQuote(AppLogic.ro_DefaultProductXmlPackage) + ","); // force a default!
                     }
                 }
+                if (ddFund.SelectedValue != "0")
+                {
+                    sql.Append(DB.SQuote(ddFund.SelectedValue.ToLowerInvariant()) + ",");
+                }
+                else
+                {
+                    sql.Append("NULL,");
+                }
                 sql.Append(DB.SQuote(txtManufacturePartNumber.Text) + ",");
                 sql.Append(ddOnSalePrompt.SelectedValue + ",");
                 sql.Append(DB.SQuote(AppLogic.FormLocaleXml("SpecTitle", txtSpecTitle.Text, locale, "Product", pID)) + ",");
@@ -1235,7 +1269,7 @@ namespace AspDotNetStorefrontAdmin
                         pID = DB.RSFieldInt(rs, "ProductID");
                         ViewState.Add("ProductEdit", true);
                         ViewState.Add("ProductEditID", pID);
-						etsMapper.ObjectID = pID;
+                        etsMapper.ObjectID = pID;
                     }
                 }
                 // ARE WE ADDING A SIMPLE PRODUCT, IF SO, CREATE THE DEFAULT VARIANT
@@ -1358,6 +1392,14 @@ namespace AspDotNetStorefrontAdmin
                     }
                 }
 
+                if (ddFund.SelectedValue != "0")
+                {
+                    sql.Append("FundID=" + DB.SQuote(ddFund.SelectedValue.ToLowerInvariant()) + ",");
+                }
+                else
+                {
+                    sql.Append("FundID=NULL,");
+                }
                 sql.Append("ManufacturerPartNumber=" + DB.SQuote(txtManufacturePartNumber.Text) + ",");
                 sql.Append("SalesPromptID=" + Localization.ParseNativeInt(ddOnSalePrompt.SelectedValue).ToString() + ",");
                 sql.Append("SpecTitle=" + DB.SQuote(AppLogic.FormLocaleXml("SpecTitle", txtSpecTitle.Text, locale, "Product", pID)) + ",");
@@ -1445,7 +1487,7 @@ namespace AspDotNetStorefrontAdmin
                 resetError("Product Updated.", false);
             }
 
-           // UPDATE 1:1 ENTITY MAPPINGS:
+            // UPDATE 1:1 ENTITY MAPPINGS:
             {
                 String[] Entities = { "Manufacturer", "Distributor" };
                 foreach (String en in Entities)

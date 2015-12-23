@@ -210,7 +210,7 @@ namespace AspDotNetStorefront
                 btnlogin.Visible = true;
                 btnSignInAndCheckout.Visible = false;
                 CheckoutSteps.Visible = false;
-               
+
             }
         }
 
@@ -314,6 +314,21 @@ namespace AspDotNetStorefront
              * Initialize Customer Object after OKTA Authentication
              */
                 ThisCustomer = AuthenticationSSO.InitializeCustomerObject(EMailField, PasswordField);
+
+                // TODO: FOR TESTING CustomerFund Functions - to be removed later.
+                //////if (ThisCustomer.HasCustomerRecord)
+                //////{
+                //////    CustomerFund customerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, 8);
+                //////    AuthenticationSSO.UpdateCustomerFund(customerFund.CustomerID, customerFund.FundID, 1000);
+
+                //////    System.Collections.Generic.List<CustomerFund> lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
+                //////    if (lstCustomerFund.Count > 1)
+                //////    {
+                //////        foreach (CustomerFund fund in lstCustomerFund)
+                //////            fund.Amount = 1000;
+                //////        AuthenticationSSO.UpdateCustomerFund(lstCustomerFund);
+                //////    }
+                //////}
 
                 if (ThisCustomer.IsRegistered)
                 {

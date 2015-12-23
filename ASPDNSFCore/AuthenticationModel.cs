@@ -103,4 +103,11 @@ namespace AspDotNetStorefrontCore
         public string SOF__c { get; set; }
         public string Billing_GL__c { get; set; }
     }
+
+    public class CustomerFund
+    {
+        public int CustomerID { get; set; }
+        public int FundID { get; set; }
+        public decimal Amount { get; set; }
+    }
 }
