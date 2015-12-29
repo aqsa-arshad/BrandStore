@@ -223,6 +223,7 @@ namespace AspDotNetStorefront
                         SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
                         int index = 0;
                         bool hasproducts = false;
+                        string shippingMethodCode = string.Empty;
                         while (reader.Read())
                         {
                             if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting)) 
@@ -238,13 +239,14 @@ namespace AspDotNetStorefront
                                 pa[index] = p;
                                 index++;
                                 hasproducts = true;
+                                shippingMethodCode = reader["ShippingMethodCode"].ToString();
                             }
                         }
 
                         // call the service
                         if (hasproducts)
                         {
-                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting));
+                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting), shippingMethodCode);
                             bool isok = rs.status.Equals(0) ? false : true;
                         }
                     }

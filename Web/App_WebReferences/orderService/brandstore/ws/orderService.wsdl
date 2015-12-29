@@ -68,6 +68,7 @@
     <wsdl:part name="OrderDate" type="xsd:date" />
     <wsdl:part name="Products" type="tns:Products" />
     <wsdl:part name="FullfillmentVendor" type="xsd:string" />
+    <wsdl:part name="CarrierCode" type="xsd:string" />
   </wsdl:message>
   <wsdl:message name="processOrderResponse">
     <wsdl:part name="return" type="tns:ReturnStatus" />
