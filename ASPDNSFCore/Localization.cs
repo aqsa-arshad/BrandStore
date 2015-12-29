@@ -659,7 +659,19 @@ namespace AspDotNetStorefrontCore
                 return System.DateTime.MinValue.ToString(new CultureInfo(DestLocaleSetting));
             }
         }
-        
+
+        static public string ConvertLocaleDate(String theval, String SourceLocaleSetting, String DestLocaleSetting)
+        {
+            try
+            {
+                return System.DateTime.Parse(theval, new CultureInfo(SourceLocaleSetting)).ToString("MM/dd/yyyy hh:mm tt");
+                
+            }
+            catch
+            {
+                return System.DateTime.MinValue.ToString(new CultureInfo(DestLocaleSetting));
+            }
+        }
 
 
         // ----------------------------------------------------------------------------------------------

@@ -113,10 +113,11 @@ namespace AspDotNetStorefrontControls
                 //SKU
                 if (!cItem.IsSystem)
                 {
-                   // Controls.Add(new LiteralControl("     <span class='normal-heading blue-color'>"));
-                   //// Controls.Add(lblSKUCaption);
-                   // Controls.Add(lblSKU);
-                   // Controls.Add(new LiteralControl("      </span>"));
+                    Controls.Add(new LiteralControl("     <span>"));
+                    Controls.Add(lblSKUCaption);
+                    Controls.Add(lblSKU);
+                    Controls.Add(new LiteralControl("      </span>"));
+                    Controls.Add(new LiteralControl("      </span>"));                    
                 }
 
                 //GiftRegistry
@@ -278,8 +279,9 @@ namespace AspDotNetStorefrontControls
             //SKU
             lblSKUCaption.ID = "lblSKUCaption";
             lblSKUCaption.Text = "showproduct.aspx.21";
-            lblSKUCaption.CssClass = "cart-label";
+            lblSKUCaption.CssClass = "inline-text";
             lblSKU.ID = "lblSKU";
+            lblSKU.CssClass = "inline-text";
         
             //gift registry
             lblGiftRegistryCaption.ID = "lblGiftRegistryCaption";

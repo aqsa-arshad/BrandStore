@@ -49,6 +49,11 @@
     <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/jquery.html5-placeholder-shim.js" type="text/javascript"></script>
     <!-- Bootstrap core CSS -->
 
+    <link rel="icon" type="image/png" href="/App_Themes/skin_3/images/favicon-16x16.png" sizes="16x16"/>
+    <link rel="icon" type="image/png" href="/App_Themes/skin_3/images/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="/App_Themes/skin_3/images/favicon-96x96.png" sizes="96x96"/>
+    <%--<link rel="shortcut icon" href="/App_Themes/skin_3/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/App_Themes/skin_3/images/favicon.ico" type="image/x-icon" />--%>
     <link href="../../App_Themes/Skin_3/app.css" rel="stylesheet" />
     <aspdnsf:XmlPackage ID="XmlPackage2" runat="server" PackageName="script.headclose" />
 </head>
@@ -150,7 +155,7 @@
                             <asp:HyperLink ID="lnkCategory" runat="server" CssClass="back-link"></asp:HyperLink>
                             <asp:Label ID="lblSperator" runat="server" CssClass="back-link"></asp:Label>
                             <asp:HyperLink ID="lnkSubCategory" runat="server" CssClass="back-link"></asp:HyperLink>
-                            
+
                         </h2>
                     </div>
                 </asp:Panel>
@@ -243,9 +248,9 @@
             var dialog = '<%= popuppanel.ClientID %>'
             $("#" + dialog).hide();
             var alertLnk = '<%= lnkAlertDesktop.ClientID %>'
-             $("#" + alertLnk).removeClass("new-alerts");
-             $("#" + alertLnk).addClass("alerts-link");
-             var alertCount = '<%=  lblAlertCount.ClientID %>'
+            $("#" + alertLnk).removeClass("new-alerts");
+            $("#" + alertLnk).addClass("alerts-link");
+            var alertCount = '<%=  lblAlertCount.ClientID %>'
              $("#" + alertCount).text("ALERTS");
          }
 
@@ -290,7 +295,7 @@
                     //Dealer Login
                     ShowControlsForDealerLogin()
                 }
-               else if (CustomerLevel == "9") {
+                else if (CustomerLevel == "9") {
                     //potential Login
                     ShowControlsForPotentialLogin()
                 }
@@ -302,7 +307,7 @@
                     //HomeDepot, Lowes and Menards                  
                     ShowControlsForSubDealersLogin();
                 }
-              
+
             }
         }
 

@@ -9,6 +9,9 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// View User Addresses Information - code behind cs file
+    /// </summary>
     public partial class JWMyAddresses : SkinBase
     {
         /// <summary>
@@ -300,6 +303,9 @@ namespace AspDotNetStorefront
             Response.Redirect("JWMyAccount.aspx");
         }
         
+        /// <summary>
+        /// Continue Button Event
+        /// </summary>
         protected void btnContinueCheckOut_Click(object sender, EventArgs e)
         {
             string returnURL = Request.QueryString["returnURL"];

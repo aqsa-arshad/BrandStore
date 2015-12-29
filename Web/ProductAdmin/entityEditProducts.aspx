@@ -227,6 +227,18 @@
                                                             </tr>
                                                             <tr>
                                                                 <td align="right" valign="middle">
+                                                                    Fund Category:
+                                                                </td>
+                                                                <td align="left" valign="middle">
+                                                                    <asp:DropDownList CssClass="comboBox" ID="ddFund" runat="Server">
+                                                                    </asp:DropDownList>
+                                                                    <asp:Image runat="server" ID="imgFund" ImageUrl="~/App_Themes/Admin_Default/images/info.gif"
+                                                                        border="0" ToolTip="<%$ Tokens:StringResource, admin.entityeditproduct.ToolTip.Fund %>"
+                                                                        Style="cursor: normal;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="right" valign="middle">
                                                                     Page Size:
                                                                 </td>
                                                                 <td align="left" valign="middle">

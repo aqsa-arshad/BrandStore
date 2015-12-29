@@ -11,6 +11,9 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
+    /// <summary>
+    /// View User Account Information - code behind cs file
+    /// </summary>
     public partial class JWMyAccount : SkinBase
     {
         /// <summary>
@@ -144,6 +147,9 @@ namespace AspDotNetStorefront
             Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Shipping);
         }
 
+        /// <summary>
+        /// Set latest Order Status
+        /// </summary>
         void CurrentOrderStatus()
         {
             string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
@@ -191,6 +197,11 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Set Tracking Path against Order
+        /// </summary>
+        /// <param name="orderNumber">orderNumber</param>
+        /// <returns></returns>
         static string SetTrackingPath(int orderNumber)
         {
             using (var conn = DB.dbConn())
@@ -219,6 +230,16 @@ namespace AspDotNetStorefront
             return string.Empty;
         }
 
+        /// <summary>
+        /// Get Order Shipping Status
+        /// </summary>
+        /// <param name="OrderNumber">OrderNumber</param>
+        /// <param name="ShippedOn">ShippedOn</param>
+        /// <param name="ShippedVIA">ShippedVIA</param>
+        /// <param name="ShippingTrackingNumber">ShippingTrackingNumber</param>
+        /// <param name="TransactionState">TransactionState</param>
+        /// <param name="DownloadEMailSentOn">DownloadEMailSentOn</param>
+        /// <returns>shippingStatus</returns>
         private string GetShippingStatus(int OrderNumber, string ShippedOn, string ShippedVIA, string ShippingTrackingNumber, string TransactionState, string DownloadEMailSentOn)
         {
             var shippingStatus = String.Empty;

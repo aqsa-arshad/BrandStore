@@ -77,6 +77,13 @@ namespace AspDotNetStorefrontAdmin
 						string displayName = Request.Form[Request.Form.Keys[i]];
 						DB.ExecuteSQL(String.Format("update ShippingMethod set DisplayName={0} where ShippingMethodID={1}", DB.SQuote(displayName), shippingMethodID));
 					}
+                    if (Request.Form.Keys[i].IndexOf("ShippingMethodCode") != -1)
+                    {
+                        String[] keys = Request.Form.Keys[i].Split('_');
+                        int shippingMethodID = Localization.ParseUSInt(keys[1]);
+                        string shippingMethodCode = Request.Form[Request.Form.Keys[i]];
+                        DB.ExecuteSQL(String.Format("update ShippingMethod set ShippingMethodCode={0} where ShippingMethodID={1}", DB.SQuote(shippingMethodCode), shippingMethodID));
+                    }
 				}
 
 				// for the store mapping
@@ -211,6 +218,7 @@ namespace AspDotNetStorefrontAdmin
 				html.Append("<td align=\"left\" valign=\"middle\">ShipRush Template</td>\n");
 			}
 			html.Append("<td align=\"left\" valign=\"middle\">Display Order</td>\n");
+            html.Append("<td align=\"left\" valign=\"middle\">Method Code</td>\n");
 			html.Append("<td align=\"left\" valign=\"middle\">Edit</td>\n");
 			html.Append("<td align=\"left\" valign=\"middle\">Allowed States</td>\n");
 			html.Append("<td align=\"left\" valign=\"middle\">Allowed Countries</td>\n");
@@ -252,6 +260,7 @@ namespace AspDotNetStorefrontAdmin
 
 						html.Append("<td align=\"left\" valign=\"middle\"><a href=\"" + AppLogic.AdminLinkUrl("editShippingMethod.aspx") + "?ShippingMethodID=" + ThisID.ToString() + "&StoreId=" + StoreFilter.ToString() + "\">" + DB.RSFieldByLocale(rs, "Name", LocaleSetting) + "</a></td>\n");
 						html.Append("<td align=\"left\" valign=\"middle\"><input size=\"2\" type=\"text\" name=\"DisplayOrder_" + ThisID.ToString() + "\" value=\"" + DB.RSFieldInt(rs, "DisplayOrder").ToString() + "\"></td>\n");
+                        html.Append("<td align=\"left\" valign=\"middle\"><input size=\"10\" type=\"text\" name=\"ShippingMethodCode_" + ThisID.ToString() + "\" value=\"" + DB.RSField(rs, "ShippingMethodCode").ToString() + "\"></td>\n");
 						if(AppLogic.AppConfigBool("ShipRush.Enabled"))
 						{
 							html.Append("<td align=\"left\">" + DB.RSField(rs, "ShipRushTemplate") + "</td>\n");
@@ -315,6 +324,7 @@ namespace AspDotNetStorefrontAdmin
 				html.Append("      <td align=\"left\" valign=\"middle\">Edit</td>\n");
 			}
 			html.Append("      <td align=\"left\" valign=\"middle\">Display Name</td>\n");
+            html.Append("      <td align=\"left\" valign=\"middle\">Method Code</td>\n");
 			html.Append("      <td align=\"left\" valign=\"middle\">Delete</td>\n");
 			html.Append("    </tr>\n");
 			string sqlRTShipping = string.Format("exec aspdnsf_GetStoreShippingMethodMapping @StoreId={0}, @IsRTShipping = 1", StoreFilter);
@@ -329,7 +339,8 @@ namespace AspDotNetStorefrontAdmin
 					{
 						int ThisID = DB.RSFieldInt(rs, "ShippingMethodID");
 						string displayName = DB.RSFieldByLocale(rs, "DisplayName", LocaleSetting);
-
+                        string shippingMethodCode = DB.RSFieldByLocale(rs, "ShippingMethodCode", LocaleSetting);
+                        
 						if(i % 2 == 0)
 						{
 							html.Append("    <tr class=\"table-row2\">\n");
@@ -346,6 +357,7 @@ namespace AspDotNetStorefrontAdmin
 							html.Append("      <td align=\"left\" valign=\"middle\"><input class=\"class=\"normalButtons\"\" type=\"button\" value=\"Edit\" name=\"Edit_" + ThisID.ToString() + "\" onClick=\"self.location='" + AppLogic.AdminLinkUrl("editShippingMethod.aspx") + "?ShippingMethodID=" + ThisID.ToString() + "'\"></td>\n");
 						}
 						html.AppendFormat("      <td align=\"left\" valign=\"middle\"><input type=\"text\" name=\"displayName_{0}\" id=\"displayName_{0}\" value=\"{1}\" /></td>\n", ThisID, displayName);
+                        html.AppendFormat("      <td align=\"left\" valign=\"middle\"><input type=\"text\" name=\"ShippingMethodCode_{0}\" id=\"ShippingMethodCode_{0}\" value=\"{1}\" /></td>\n", ThisID, shippingMethodCode);
 						html.Append("      <td align=\"left\" valign=\"middle\"><input class=\"normalButtons\" type=\"button\" value=\"Delete\" name=\"Delete_" + ThisID.ToString() + "\" onClick=\"DeleteShippingMethod(" + ThisID.ToString() + ")\"></td>\n");
 						html.Append("    </tr>\n");
 

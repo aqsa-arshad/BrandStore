@@ -4717,6 +4717,7 @@ body {
   color: #545759;
   font-family: 'FrutigerLTStd-Light';
   margin: 0;
+  letter-spacing: 0.5px;
 }
 input[type="text"],
 input[type="password"],
@@ -4727,6 +4728,7 @@ input[type="password"],
   height: 26px;
   color: #1d446b;
   width: 100%;
+  -webkit-appearance: none;
 }
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -5237,8 +5239,6 @@ a:hover.mb-login-btn {
 .modal-dialog {
   font-size: 14px;
   text-align: left;
-  margin-left: auto;
-  margin-rigt: auto;
 }
 .modal-dialog a {
   color: #6f9abb;
@@ -5250,7 +5250,7 @@ a:hover.mb-login-btn {
 }
 @media (min-width: 768px) {
   .modal-dialog {
-    margin-top: 170px;
+    margin: 170px auto 0;
   }
 }
 @media (min-width: 992px) {
@@ -5309,6 +5309,9 @@ a:hover.mb-login-btn {
 .buttons-group .btn-primary {
   display: table-cell;
   width: 49.7%;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
 }
 .buttons-group .btn-primary:nth-child(2) {
   margin-left: 1px;
@@ -6333,6 +6336,9 @@ a:hover.underline-link {
 .block-text {
   display: block;
 }
+.inline-text {
+  display: inline !important;
+}
 .border-line {
   border-top: solid 1px #c0c0c0;
 }
@@ -6345,6 +6351,10 @@ a:hover.underline-link {
 .roman-blue {
   font-family: 'FrutigerLTStd-Roman';
   padding-bottom: 8px;
+}
+.roman-black {
+  font-family: 'FrutigerLTStd-Roman';
+  color: #545759;
 }
 @media screen and (min-width: 992px) {
   .pull-left {
