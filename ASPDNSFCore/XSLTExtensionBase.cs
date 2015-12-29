@@ -3693,7 +3693,9 @@ function popupzoom(url,alturl)
             // short-circuit this procedure if the price will be hidden
             if (hidePriceUntilCart)
             {
-                return string.Empty;
+                results.Append("<p><br>");
+                return results.ToString();
+                //return string.Empty;
             }
 
             string taxSuffix = string.Empty;
