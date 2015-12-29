@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.Runtime;
 using SFDCSoapClient;
 using System.ServiceModel;
+using System.Data;
 
 
 namespace AspDotNetStorefront
@@ -22,7 +23,7 @@ namespace AspDotNetStorefront
     /// </summary>
     public static class AuthenticationSSO
     {
-        
+
         /// <summary>
         /// Initialize Customer Object after OKTA Authentication
         /// </summary>
@@ -124,7 +125,7 @@ namespace AspDotNetStorefront
                     client.BaseAddress = new Uri(AppLogic.AppConfig("OKTADefaultURL"));
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Add("Authorization", authorization); 
+                    client.DefaultRequestHeaders.Add("Authorization", authorization);
 
                 }
                 catch (Exception ex)
@@ -371,7 +372,7 @@ namespace AspDotNetStorefront
 
 
                 QueryResult qr = new QueryResult();
-                client.query(header,null, null, null, dealerUserQuery, out qr);
+                client.query(header, null, null, null, dealerUserQuery, out qr);
 
                 if (qr.size > 0)
                 {
@@ -409,7 +410,7 @@ namespace AspDotNetStorefront
         /// <param name="profile">profile</param>
         /// <param name="email">email</param>
         public static void GetSFDCInternalUser(AspDotNetStorefrontCore.Profile profile, string email)
-        {            
+        {
             try
             {
                 var internalUserQuery = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
@@ -465,6 +466,134 @@ namespace AspDotNetStorefront
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                     MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Get Customer Fund
+        /// </summary>
+        /// <param name="CustomerID">CustomerID</param>
+        /// <returns>lstCustomerFund</returns>
+        public static List<CustomerFund> GetCustomerFund(int CustomerID)
+        {
+            List<CustomerFund> lstCustomerFund = new List<CustomerFund>();
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundSelectByCustomerID", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
+
+                        IDataReader idr = cmd.ExecuteReader();
+
+                        while (idr.Read())
+                        {
+                            lstCustomerFund.Add(new CustomerFund()
+                            {
+                                CustomerID = idr.GetInt32(idr.GetOrdinal("CustomerID")),
+                                FundID = idr.GetInt32(idr.GetOrdinal("FundID")),
+                                Amount = idr.GetDecimal(idr.GetOrdinal("Amount"))
+                            });
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+
+            return lstCustomerFund;
+        }
+
+        /// <summary>
+        /// Get Customer Fund
+        /// </summary>
+        /// <param name="CustomerID">CustomerID</param>
+        /// <param name="FundID">FundID</param>
+        /// <returns>customerFund</returns>
+        public static CustomerFund GetCustomerFund(int CustomerID, int FundID)
+        {
+            CustomerFund customerFund = new CustomerFund();
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundSelectByCustomerIDFundID", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
+                        cmd.Parameters.AddWithValue("@FundID", FundID);
+
+                        IDataReader idr = cmd.ExecuteReader();
+
+                        if (idr.Read())
+                        {
+                            customerFund.CustomerID = idr.GetInt32(idr.GetOrdinal("CustomerID"));
+                            customerFund.FundID = idr.GetInt32(idr.GetOrdinal("FundID"));
+                            customerFund.Amount = idr.GetDecimal(idr.GetOrdinal("Amount"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+
+            return customerFund;
+        }
+
+        /// <summary>
+        /// Update Customer Fund
+        /// </summary>
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        public static void UpdateCustomerFund(List<CustomerFund> lstCustomerFund)
+        {
+            if (lstCustomerFund == null || lstCustomerFund.Count == 0)
+                return;
+
+            foreach (CustomerFund customerFund in lstCustomerFund)
+                UpdateCustomerFund(customerFund.CustomerID, customerFund.FundID, customerFund.Amount);
+        }
+
+        /// <summary>
+        /// Update Customer Fund
+        /// </summary>
+        /// <param name="CustomerID">CustomerID</param>
+        /// <param name="FundID">FundID</param>
+        /// <param name="Amount">Amount</param>
+        public static void UpdateCustomerFund(int CustomerID, int FundID, decimal Amount)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundUpdate", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
+                        cmd.Parameters.AddWithValue("@FundID", FundID);
+                        cmd.Parameters.AddWithValue("@Amount", Amount);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
     }
