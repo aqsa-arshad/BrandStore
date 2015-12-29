@@ -8,6 +8,9 @@
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
+    <%--Hidden Variables Regions--%>
+        <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" />
+        <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
@@ -73,7 +76,11 @@
 
             function ApplyValidation(theForm) {
                 debugger;
+                if ($("#theForm.Quantity_1_1").length <= 0) {
+                    submitenabled(theForm);
+                    return (true);
 
+                }
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
                     alert("Please specify the quantity you want to add to your cart");

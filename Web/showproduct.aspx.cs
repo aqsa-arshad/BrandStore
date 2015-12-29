@@ -29,6 +29,7 @@ namespace AspDotNetStorefront
         bool IsAKit;
         bool RequiresReg;
         String ProductName;
+        String FundID;
         private String m_XmlPackage;
 
         String CategoryName;
@@ -163,7 +164,8 @@ namespace AspDotNetStorefront
                     }
                     RequiresReg = DB.RSFieldBool(rs, "RequiresRegistration");
                     ProductName = DB.RSFieldByLocale(rs, "Name", ThisCustomer.LocaleSetting);
-
+                    FundID = DB.RSFieldByLocale(rs, "FundID", ThisCustomer.LocaleSetting);
+                    hdnProductFundID.Text = FundID;
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
                     SectionHelper = AppLogic.LookupHelper("Section", 0);
                     ManufacturerHelper = AppLogic.LookupHelper("Manufacturer", 0);
@@ -512,7 +514,7 @@ namespace AspDotNetStorefront
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
             formInput.CategoryFundUsed = Convert.ToDecimal(10);
-            
+            formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {

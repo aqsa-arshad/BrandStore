@@ -1186,7 +1186,7 @@ namespace AspDotNetStorefrontControls
                     }
                     else
                     {
-                      //  Controls.Add(new LiteralControl("     <td class=''>"));
+                    // Controls.Add(new LiteralControl("     <td class=''>"));
                     }
 
                     if (this.DisplayMode == CartDisplayMode.WishList || this.DisplayMode == CartDisplayMode.GiftRegistry)

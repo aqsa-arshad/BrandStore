@@ -6851,7 +6851,7 @@ namespace AspDotNetStorefrontCore
             return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null,BluBuksUsed, CategoryFundUsed);
         }
 
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
         {
             return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false,BluBuksUsed, CategoryFundUsed);
         }
@@ -6877,7 +6877,7 @@ namespace AspDotNetStorefrontCore
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <param name="preferredComposition">The preferred composition.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
         {
             if (null != preferredComposition)
             {
@@ -6964,7 +6964,8 @@ namespace AspDotNetStorefrontCore
                                           DB.CreateSQLParameter("@StoreID", SqlDbType.Int, 4, AppLogic.StoreID(), ParameterDirection.Input),
                                           DB.CreateSQLParameter("@IsAGift", SqlDbType.Bit, 1, isAGift, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@BluBuksUsed", SqlDbType.Money, 4, BluBuksUsed, ParameterDirection.Input),
-                                          DB.CreateSQLParameter("@CategoryFundUsed", SqlDbType.Money, 4, CategoryFundUsed, ParameterDirection.Input)
+                                          DB.CreateSQLParameter("@CategoryFundUsed", SqlDbType.Money, 4, CategoryFundUsed, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@FundID", SqlDbType.Int, 4, FundID, ParameterDirection.Input),
                                          };
 
                         NewRecID = DB.ExecuteStoredProcInt("dbo.aspdnsf_AddItemToCart", spa, m_DBTrans);
@@ -11108,6 +11109,7 @@ namespace AspDotNetStorefrontCore
                                     preferredComposition,
                                     addCartInfo.BluBucksUsed,
                                     addCartInfo.CategoryFundUsed
+                                   // addCartInfo.FundID
                                     );
                 }
                 else
@@ -11129,6 +11131,7 @@ namespace AspDotNetStorefrontCore
                         addCartInfo.CustomerEnteredPrice,
                         addCartInfo.BluBucksUsed,
                         addCartInfo.CategoryFundUsed
+                        //addCartInfo.FundID
                        );
                 }
 
@@ -11505,6 +11508,16 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_CategoryFundUsed; }
             set { m_CategoryFundUsed = value; }
+        }
+
+        private int m_FundID;
+        /// <summary>
+        /// Gets or sets the shipping address id
+        /// </summary>
+        public int FundID
+        {
+            get { return m_FundID; }
+            set { m_FundID = value; }
         }
 
         private string m_chosencolor;
