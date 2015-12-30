@@ -44,8 +44,8 @@
 				</div>--%>
 
             <div>
-                <div class="td-40-percent pull-left"></div>
-                <div class="td-35-percent cart-btn-adjust pull-left">
+                <div class="td-45-percent pull-left"></div>
+                <div class="td-30-percent cart-btn-adjust pull-left">
                     <asp:Button ID="btnContinueShoppingTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
                         CssClass="btn btn-primary btn-block margin-none" runat="server" />
                 </div>

@@ -47,6 +47,7 @@
                     <asp:Panel ID="pnlNoPaymentRequired" runat="server" Visible="false">
                         <p></p>
                         <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>
+                       
                         <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
                         <div class="clearfix"></div>
                         <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
@@ -141,11 +142,9 @@
                                                 <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
                                             <h4>“What’s this”</h4>
                                             <p>
-                                                <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label>
-                                            </p>
+                                                <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label></p>
                                             <p>
-                                                <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.2 %>"></asp:Label>
-                                            </p>
+                                                <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.2 %>"></asp:Label></p>
                                         </div>
                                     </div>
                                 </div>
@@ -261,10 +260,7 @@
                                     </div>
                                 </asp:Panel>--%>
                         </div>
-                    </asp:Panel>
                 </div>
-            </div>
-        </div>
     </asp:Panel>
     <asp:Panel ID="pnlOrderSummary" runat="server">
         <%--Style="display: none"--%>
@@ -337,7 +333,11 @@
         </div>
 
     </asp:Panel>
-
+    </div>
+        </div>
+    </asp:Panel>
+    
+   
 
     <script type="text/javascript">
         function open_win() {

@@ -5477,17 +5477,6 @@ a:hover.mb-login-btn {
 .pagerArea .page-next {
   padding-left: 10px;
 }
-.disabled-pageArea [disabled] {
-    text-decoration: none;
-    color: #545759;
-}
-.disabled-pageArea a:nth-child(2) {
-    padding: 0 10px;
-}
-.disabled-pageArea a:hover:nth-child(2) {
-    text-decoration: none;
-    color: #545759;
-}
 .checkout-two-fields .form-control {
   display: inline-block;
 }
@@ -5507,6 +5496,17 @@ a:hover.mb-login-btn {
   .checkout-two-fields .form-control:nth-last-child(2) {
     width: 25%;
   }
+}
+.disabled-pageArea [disabled] {
+  text-decoration: none;
+  color: #545759;
+}
+.disabled-pageArea a:nth-child(2) {
+  padding: 0 10px;
+}
+.disabled-pageArea a:hover:nth-child(2) {
+  text-decoration: none;
+  color: #545759;
 }
 .item-detail-box {
   margin-top: 20px;
@@ -5863,6 +5863,14 @@ table.order-detail tbody tr td {
   .checkout-field-adjust {
     margin-right: 4%;
     margin-left: 4%;
+  }
+}
+.account-field-adjust {
+  margin-right: 0;
+}
+@media screen and (min-width: 992px) {
+  .account-field-adjust {
+    margin-right: 4%;
   }
 }
 /******************* Side Bar ***********************/
@@ -6387,7 +6395,7 @@ a:hover.underline-link {
     float: right !important;
   }
 }
-@media screen and (min-width: 991px) {
+@media screen and (max-width: 991px) {
   .pull-md-no {
     float: none !important;
   }
@@ -6423,6 +6431,14 @@ a:hover.underline-link {
 .disc-style {
   list-style: disc;
 }
+.text-center {
+  display: block;
+}
+@media screen and (min-width: 768px) {
+  .text-center .btn {
+    width: 45%;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .checkout-tablet-main .checkout-tablet-view {
     float: left;
@@ -6439,7 +6455,7 @@ a:hover.underline-link {
   .tablet-btn {
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 45%;
     display: block;
   }
 }

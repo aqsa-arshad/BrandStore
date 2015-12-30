@@ -229,8 +229,11 @@ namespace AspDotNetStorefront
         /// </summary>
         private void ShowPostLoginControls()
         {
+            
             divbeforelogin.Visible = false;
             divafterlogin.Visible = true;
+            //divSideBarAfterLogin.Visible = true;
+            //divSideBarBeforeLogin.Visible = false;
         }
 
         /// <summary>
@@ -240,6 +243,8 @@ namespace AspDotNetStorefront
         {
             divbeforelogin.Visible = true;
             divafterlogin.Visible = false;
+            //divSideBarAfterLogin.Visible = false;
+            //divSideBarBeforeLogin.Visible = true;
         }
 
         /// <summary>
@@ -413,6 +418,8 @@ namespace AspDotNetStorefront
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;
+                divbeforelogin.Visible = false;
+                divafterlogin.Visible = false;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");
