@@ -342,7 +342,7 @@ namespace AspDotNetStorefrontCore
         /// <param name="UseDBDataOnly">if set to <c>true</c> [use DB data only].</param>
         public Customer(SqlTransaction DBTrans, string email, bool SuppressCookies, bool UseDBDataOnly)
             : this(DBTrans, email, SuppressCookies, UseDBDataOnly, false)
-        {}
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Customer"/> class.
@@ -1927,7 +1927,7 @@ namespace AspDotNetStorefrontCore
 
                 }
             }
-            
+
             if (AppLogic.IsAdminSite)
             {
                 m_SkinID = 1; // forced!!
@@ -2759,7 +2759,7 @@ namespace AspDotNetStorefrontCore
             }
             if (!m_SuppressCookies && !AppLogic.IsAdminSite)
             {
-                HttpContext.Current.Profile.SetPropertyValue(CommonLogic.IIF(AppLogic.IsAdminSite, "Admin", "") + ro_CurrencySettingCookieName, CurrencySetting);                
+                HttpContext.Current.Profile.SetPropertyValue(CommonLogic.IIF(AppLogic.IsAdminSite, "Admin", "") + ro_CurrencySettingCookieName, CurrencySetting);
             }
             if (m_HasCustomerRecord)
             {
@@ -2888,7 +2888,7 @@ namespace AspDotNetStorefrontCore
             if (HttpContext.Current.Profile != null)
             {
                 HttpContext.Current.Profile.SetPropertyValue("SiteDisclaimerAccepted", String.Empty);
-            }          
+            }
 
             String[] ClearCookieNames = {"StatsView","ViewStatsSelectedIndex","SelectedChartsView","CompareStatsBy","ChartType", 
                                           "YearCompareSelectedYear1","YearCompareSelectedYear2","MonthCompareSelectedYear1","MonthCompareSelectedYear2", 
@@ -2897,7 +2897,7 @@ namespace AspDotNetStorefrontCore
                                           "CategoryFilterID","SectionFilterID","ManufacturerFilterID","DistributorFilterID","GenreFilterID","VectorFilterID", 
                                           "Master","SkinID","Toolbars","AffiliateID","VATSettingID","LocaleSetting","CurrencySetting","LastViewedEntityName", 
                                           "LastViewedEntityInstanceID","LastViewedEntityInstanceName","LATAffiliateID","SiteDisclaimerAccepted", 
-                                          "AdminVATSettingID","AdminLocaleSetting","AdminCurrencySetting","Referrer" }; 
+                                          "AdminVATSettingID","AdminLocaleSetting","AdminCurrencySetting","Referrer" };
             foreach (String s in ClearCookieNames)
             {
                 if (HttpContext.Current.Profile.GetPropertyValue(s).ToString() != string.Empty)
@@ -3014,7 +3014,7 @@ namespace AspDotNetStorefrontCore
                 }
 
                 string sql = String.Format("UPDATE Customer SET {0} = {1} WHERE CustomerID = {2}", addressField, addressID.ToString(), m_CustomerID.ToString());
-    
+
                 using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
                 {
                     conn.Open();
@@ -3420,14 +3420,14 @@ namespace AspDotNetStorefrontCore
                 }
                 else if (HttpContext.Current.Profile != null)
                 {
-                    if (HttpContext.Current.Profile.GetPropertyValue(ro_AffiliateCookieName).ToString() != "") 
-                          { 
-                          return int.Parse(HttpContext.Current.Profile.GetPropertyValue(ro_AffiliateCookieName).ToString()); 
-                          } 
-                          else 
-                          { 
-                          return 0; 
-                          }          
+                    if (HttpContext.Current.Profile.GetPropertyValue(ro_AffiliateCookieName).ToString() != "")
+                    {
+                        return int.Parse(HttpContext.Current.Profile.GetPropertyValue(ro_AffiliateCookieName).ToString());
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
                 else
                 {
@@ -3450,7 +3450,7 @@ namespace AspDotNetStorefrontCore
                 {
                     if (HttpContext.Current.Profile != null)
                     {
-                        HttpContext.Current.Profile.SetPropertyValue(Customer.ro_AffiliateCookieName, value.ToString());                    
+                        HttpContext.Current.Profile.SetPropertyValue(Customer.ro_AffiliateCookieName, value.ToString());
                     }
                 }
             }
@@ -3554,7 +3554,7 @@ namespace AspDotNetStorefrontCore
         /// <param name="ProductID">The product id of the recently viewed product</param>
         public void LogProductView(int productID)
         {
-            if (m_IsRegistered ||                 
+            if (m_IsRegistered ||
                 HttpContext.Current.Items["OriginalSessionID"] != null)
             {
                 string viewingCustomerID = "";
@@ -3604,7 +3604,7 @@ namespace AspDotNetStorefrontCore
         public void ReplaceProductViewFromAnonymous()
         {
             if (HttpContext.Current.Items["OriginalSessionID"] != null)
-            {                
+            {
                 DB.ExecuteSQL(string.Format("aspdnsf_updProductView {0}, {1}", DB.SQuote(HttpContext.Current.Items["OriginalSessionID"].ToString()), DB.SQuote(this.CustomerID.ToString())));
             }
         }
@@ -3757,14 +3757,14 @@ namespace AspDotNetStorefrontCore
                 }
                 else if (HttpContext.Current.Profile != null)
                 {
-                    if (HttpContext.Current.Profile.GetPropertyValue(ro_LocaleSettingCookieName).ToString() != "") 
-                      { 
-                      return HttpContext.Current.Profile.GetPropertyValue(ro_LocaleSettingCookieName).ToString(); 
-                      } 
-                      else 
-                      { 
-                      return Localization.GetDefaultLocale(); 
-                      } 
+                    if (HttpContext.Current.Profile.GetPropertyValue(ro_LocaleSettingCookieName).ToString() != "")
+                    {
+                        return HttpContext.Current.Profile.GetPropertyValue(ro_LocaleSettingCookieName).ToString();
+                    }
+                    else
+                    {
+                        return Localization.GetDefaultLocale();
+                    }
                 }
                 else
                 {
@@ -3834,14 +3834,14 @@ namespace AspDotNetStorefrontCore
                 }
                 else if (HttpContext.Current.Profile != null)
                 {
-                    if (HttpContext.Current.Profile.GetPropertyValue(ro_CurrencySettingCookieName).ToString() != "") 
-                      { 
-                      return HttpContext.Current.Profile.GetPropertyValue(ro_CurrencySettingCookieName).ToString(); 
-                      } 
-                      else 
-                      { 
-                      return Localization.GetPrimaryCurrency(false); 
-                      } 
+                    if (HttpContext.Current.Profile.GetPropertyValue(ro_CurrencySettingCookieName).ToString() != "")
+                    {
+                        return HttpContext.Current.Profile.GetPropertyValue(ro_CurrencySettingCookieName).ToString();
+                    }
+                    else
+                    {
+                        return Localization.GetPrimaryCurrency(false);
+                    }
                 }
                 else
                 {
@@ -4351,19 +4351,19 @@ namespace AspDotNetStorefrontCore
             }
 
         }
-        
+
         public bool IsRegistered
         {
             get { return m_isregistered; }
             set { m_isregistered = false; }
         }
-        
+
         public DateTime LockedUntil
         {
             get { return m_lockeduntil; }
             set { m_lockeduntil = value; }
         }
-        
+
         public bool Active
         {
             get { return m_active; }
@@ -4478,7 +4478,7 @@ namespace AspDotNetStorefrontCore
 
         public String SearchTerm { get; set; }
 
-        public CustomerAlphaFilter AlphaFilter { get; set; } 
+        public CustomerAlphaFilter AlphaFilter { get; set; }
         #endregion
         #region Constructors
         public CustomerSearch()
@@ -4625,7 +4625,7 @@ namespace AspDotNetStorefrontCore
             Int32 searchId;
             string idsearchstring = CommonLogic.IIF(Int32.TryParse(search, out searchId), " or customerid = " + searchId, "");
             return String.Format(" (firstname like {0} or lastname like {0} or email like {0}" + idsearchstring + ") ", liketerm);
-        } 
+        }
         #endregion
         #region Public Enums for Search Preferences
         public enum CustomerSortField
@@ -4639,7 +4639,7 @@ namespace AspDotNetStorefrontCore
         public enum CustomerAlphaFilter
         {
             NONE, NUMBERS, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
-        } 
+        }
         #endregion
     }
 
@@ -4657,7 +4657,8 @@ namespace AspDotNetStorefrontCore
         POTENTIAL = 9,
         HOMEDEPOT = 10,
         LOWES = 11,
-        MENARDS = 12
+        MENARDS = 12,
+        BLUUnlimited = 13
     }
     #endregion
 }

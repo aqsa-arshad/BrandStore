@@ -5477,6 +5477,17 @@ a:hover.mb-login-btn {
 .pagerArea .page-next {
   padding-left: 10px;
 }
+.disabled-pageArea [disabled] {
+    text-decoration: none;
+    color: #545759;
+}
+.disabled-pageArea a:nth-child(2) {
+    padding: 0 10px;
+}
+.disabled-pageArea a:hover:nth-child(2) {
+    text-decoration: none;
+    color: #545759;
+}
 .checkout-two-fields .form-control {
   display: inline-block;
 }

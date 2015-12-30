@@ -19,6 +19,8 @@ namespace AspDotNetStorefront
     /// </summary>
     public partial class orderhistory : SkinBase
     {
+        protected static int PageCount;
+        protected static int CurrentPageNumber;
         /// <summary>
         /// The m_ store loc
         /// </summary>
@@ -88,7 +90,7 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-            accountaspx55.Visible = (rptOrderhistory.Items.Count == 0);
+            lblOrderNotFound.Visible = (rptOrderhistory.Items.Count == 0);
         }
 
         /// <summary>
@@ -182,7 +184,7 @@ namespace AspDotNetStorefront
         /// <returns>
         /// The name of the template to use.  To utilize this you must override OverrideTemplate
         /// in a page that inherits from SkinBase where you're trying to change the master page
-        /// </returns>
+        /// </returns> 
         protected override string OverrideTemplate()
         {
             var masterHome = AppLogic.HomeTemplate();
@@ -213,20 +215,31 @@ namespace AspDotNetStorefront
         private void PopulatePager(int recordCount, int currentPage)
         {
             var dblPageCount = (double)((decimal)recordCount / Convert.ToDecimal(PageSize));
-            var pageCount = (int)Math.Ceiling(dblPageCount);
+            PageCount = (int)Math.Ceiling(dblPageCount);
             var pages = new List<ListItem>();
-            if (pageCount > 0)
+            if (PageCount > 0)
             {
-                for (int i = 1; i <= pageCount; i++)
+                if (CurrentPageNumber < currentPage)
                 {
-                    if (i == currentPage)
-                    {
-                        //pages.Add(new ListItem("<b>" + i.ToString() + "</b>", i.ToString(), false));
-                        pages.Add(new ListItem("<b>" + i.ToString() + "</b>", i.ToString(), false));
-                    }
-                    else
-                        pages.Add(new ListItem(i.ToString(), i.ToString(), true));
+                    pages.Add(currentPage > 1
+                        ? new ListItem("< " + "Previous", (currentPage - 1).ToString(), true)
+                        : new ListItem("< " + "Previous", (currentPage - 1).ToString(), false));
+                    pages.Add(new ListItem(currentPage + " of " + PageCount, string.Empty, false));
+                    pages.Add(currentPage + 1 <= PageCount
+                        ? new ListItem("Next" + " >", (currentPage + 1).ToString(), true)
+                        : new ListItem("Next" + " >", string.Empty, false));
                 }
+                else
+                {
+                    pages.Add(currentPage - 1 < 1
+                        ? new ListItem("< " + "Previous", (currentPage - 1).ToString(), false)
+                        : new ListItem("< " + "Previous", (currentPage - 1).ToString(), true));
+                    pages.Add(new ListItem(currentPage + " of " + PageCount, string.Empty, false));
+                    pages.Add(currentPage + 1 <= PageCount
+                        ? new ListItem("Next" + " >", (currentPage + 1).ToString(), true)
+                        : new ListItem("Next" + " >", (currentPage + 1).ToString(), false));
+                }
+                CurrentPageNumber = currentPage;
             }
             rptPager.DataSource = pages;
             rptPager.DataBind();
@@ -239,6 +252,7 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Changed(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty((sender as LinkButton).CommandArgument)) return;
             var pageIndex = int.Parse((sender as LinkButton).CommandArgument);
             GetOrders(pageIndex);
         }

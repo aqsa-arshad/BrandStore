@@ -251,6 +251,20 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                         return;
                     }
 
+                    // Disable Admin Pwd Change Feature 
+                    //if (((ThisCustomer.IsAdminSuperUser || ThisCustomer.IsAdminUser) && ThisCustomer.PwdChanged.AddDays(AppLogic.AppConfigUSDouble("AdminPwdChangeDays")) < DateTime.Now) || ThisCustomer.PwdChangeRequired)
+                    //{
+                    //    ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.4", m_SkinID, ThisCustomer.LocaleSetting);
+                    //    tbCustomerEmail.Text = ctrlLogin.UserName;
+                    //    ExecutePanel.Visible = false;
+                    //    pnlForm.Visible = false;
+                    //    pnlChangePwd.Visible = true;
+                    //    pnlPasswordChangeError.Visible = false;
+                    //    ctrlRecoverPassword.Visible = false;
+                    //    tbOldPassword.Focus();
+                    //    return;
+                    //}
+
                     int NewCustomerID = ThisCustomer.CustomerID;
 
                     if (AppLogic.AppConfigBool("DynamicRelatedProducts.Enabled") || AppLogic.AppConfigBool("RecentlyViewedProducts.Enabled"))

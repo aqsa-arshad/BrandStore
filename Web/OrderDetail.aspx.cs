@@ -224,8 +224,12 @@ namespace AspDotNetStorefront
                 var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains(listItem)))
                 {
-                    (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
-                        string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem), (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
+                    if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
+                    {
+                        (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
+                            string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
+                                (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
+                    }
                 }
             }
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))

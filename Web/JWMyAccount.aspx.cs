@@ -177,7 +177,14 @@ namespace AspDotNetStorefront
                             accountaspx55.Visible = false;
                             bOrderNumber.InnerText = reader["OrderNumber"].ToString();
                             bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
-                            hlTrackItem.NavigateUrl = SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()));
+                            if (string.IsNullOrEmpty(SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()))))
+                            {
+                                hlTrackItem.Visible = false;
+                            }
+                            else
+                            {
+                                hlTrackItem.NavigateUrl = SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()));
+                            }
                         }
                         else
                         {
@@ -217,10 +224,14 @@ namespace AspDotNetStorefront
                         if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
                         {
                             var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().Contains(listItem) && reader["IsDownload"].ToString() != "1" )))
+                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().Contains(listItem) && reader["IsDownload"].ToString() != "1")))
                             {
-                                return
-                                    string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem), reader["ShippingTrackingNumber"]);
+                                if (!string.IsNullOrEmpty(reader["ShippingTrackingNumber"].ToString()))
+                                {
+                                    return
+                                        string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
+                                            reader["ShippingTrackingNumber"]);
+                                }
                             }
                         }
                     }

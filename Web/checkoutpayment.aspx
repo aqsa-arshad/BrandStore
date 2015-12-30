@@ -1,4 +1,4 @@
-<%@ Page Language="c#"  AutoEventWireup="true" Inherits="AspDotNetStorefront.checkoutpayment" CodeFile="checkoutpayment.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
+<%@ Page Language="c#" AutoEventWireup="true" Inherits="AspDotNetStorefront.checkoutpayment" CodeFile="checkoutpayment.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" %>
 
 <%@ Register TagPrefix="aspdnsfc" Namespace="AspDotNetStorefrontControls" Assembly="AspDotNetStorefrontControls" %>
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
@@ -11,11 +11,11 @@
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
-        <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>       
+        <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
-        <div class="content-box-03">            
-             <h2 class="black-color">BILLING</h2>
-            <div id="divmainrow">
+        <div class="content-box-03">
+            <h2 class="black-color">BILLING</h2>
+            <div id="divmainrow" class="row">
                 <div>
                     <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
                     <%-- <h1>
@@ -45,7 +45,8 @@
                     <asp:Literal ID="XmlPackage_CheckoutPaymentPageHeader" runat="server" Mode="PassThrough"></asp:Literal>
 
                     <asp:Panel ID="pnlNoPaymentRequired" runat="server" Visible="false">
-                        <p></p><asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>
+                        <p></p>
+                        <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>
                         <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
                         <div class="clearfix"></div>
                         <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
@@ -139,8 +140,12 @@
                                             <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
                                                 <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
                                             <h4>“What’s this”</h4>
-                                                <p><asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label></p>
-                                             <p><asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.2 %>"></asp:Label></p>
+                                            <p>
+                                                <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label>
+                                            </p>
+                                            <p>
+                                                <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.2 %>"></asp:Label>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +261,10 @@
                                     </div>
                                 </asp:Panel>--%>
                         </div>
+                    </asp:Panel>
                 </div>
+            </div>
+        </div>
     </asp:Panel>
     <asp:Panel ID="pnlOrderSummary" runat="server">
         <%--Style="display: none"--%>
@@ -327,12 +335,10 @@
                 OnClick="btnContCheckout_Click"
                 Text="<%$ Tokens:StringResource, checkoutpayment.aspx.18 %>" />
         </div>
-      
+
     </asp:Panel>
- </div>
-        </div>
-    </asp:Panel>
-    
+
+
     <script type="text/javascript">
         function open_win() {
             window.history.back();
@@ -347,7 +353,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var lnkWatsThisClientId = '<%= ctrlCreditCardPanel.WhatsThisClientID %>';
-            $("#" + lnkWatsThisClientId).click(function () {              
+            $("#" + lnkWatsThisClientId).click(function () {
                 document.getElementById('myModal').style.display = 'block';
             });
             $("#Closebtn").click(function () {

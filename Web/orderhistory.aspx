@@ -43,15 +43,19 @@
                         </asp:Repeater>
                     </tbody>
                 </table>
-                <asp:Label ID="accountaspx55" runat="server" Text="<%$ Tokens:StringResource,account.aspx.55 %>"></asp:Label>
+                <asp:Label ID="lblOrderNotFound" runat="server" Text="<%$ Tokens:StringResource,account.aspx.55 %>"></asp:Label>
             </div>
+            <div class="pagerArea bottomPagerArea disabled-pageArea padding-none">
+                <asp:Repeater ID="rptPager" runat="server">
+                    <ItemTemplate>
 
-            <asp:Repeater ID="rptPager" runat="server">
-                <ItemTemplate>
-                    <asp:LinkButton ID="lnkPage" runat="server" Text='<%#Eval("Text") %>' CommandArgument='<%# Eval("Value") %>'
-                        OnClick="Page_Changed" OnClientClick='<%# !Convert.ToBoolean(Eval("Enabled")) ? "return false;" : "" %>'></asp:LinkButton>
-                </ItemTemplate>
-            </asp:Repeater>
+                        <asp:LinkButton ID="lnkPage" runat="server" Text='<%#Eval("Text") %>' CommandArgument='<%# Eval("Value") %>' Enabled='<%# Convert.ToBoolean(Eval("Enabled")) %>'
+                            OnClick="Page_Changed" />
+
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
         </div>
     </asp:Panel>
+
 </asp:Content>
