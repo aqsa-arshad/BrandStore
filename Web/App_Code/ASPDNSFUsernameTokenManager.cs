@@ -4,6 +4,7 @@
 // For details on this license please visit the product homepage at the URL above.
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
+#define WSE3
 #if WSE3
 using System;
 using System.Web;
