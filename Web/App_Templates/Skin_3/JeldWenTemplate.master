@@ -293,7 +293,7 @@
                 //user is logged inn
                 ShowMenueCategories();
                 ShowControlsForAfterLoginPage();
-                if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6") {
+                if (CustomerLevel == "4" || CustomerLevel == "5" || CustomerLevel == "6" || CustomerLevel == "13") {
                     //Dealer Login
                     ShowControlsForDealerLogin()
                 }
