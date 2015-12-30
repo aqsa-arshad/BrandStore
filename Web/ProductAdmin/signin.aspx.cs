@@ -165,16 +165,17 @@ public partial class signin : System.Web.UI.Page
                     ltError.Text = "<font color=\"#FF0000\"><b>" + AppLogic.GetString("lat_signin_process.aspx.2", SkinID, c.LocaleSetting)+ "</font><b>";
                     return;
                 }
-                else if (c.PwdChanged.AddDays(AppLogic.AppConfigUSDouble("AdminPwdChangeDays")) < DateTime.Now || c.PwdChangeRequired)
-                {
-                    lblPwdChgErrMsg.Text = AppLogic.GetString("lat_signin_process.aspx.4", SkinID, c.LocaleSetting);
-                    lblPwdChgErrMsg.Visible = true;
-                    pnlChangePwd.Visible = true;
-                    pnlSignIn.Visible = false;
-                    txtEmailNewPwd.Text = c.EMail;
-                    txtOldPwd.Focus();
-                    return;
-                }
+                // Disable Admin Pwd Change Feature 
+                //else if (c.PwdChanged.AddDays(AppLogic.AppConfigUSDouble("AdminPwdChangeDays")) < DateTime.Now || c.PwdChangeRequired)
+                //{
+                //    lblPwdChgErrMsg.Text = AppLogic.GetString("lat_signin_process.aspx.4", SkinID, c.LocaleSetting);
+                //    lblPwdChgErrMsg.Visible = true;
+                //    pnlChangePwd.Visible = true;
+                //    pnlSignIn.Visible = false;
+                //    txtEmailNewPwd.Text = c.EMail;
+                //    txtOldPwd.Focus();
+                //    return;
+                //}
             }
             else
             {

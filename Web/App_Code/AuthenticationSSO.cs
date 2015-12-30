@@ -498,7 +498,6 @@ namespace AspDotNetStorefront
                                 Amount = idr.GetDecimal(idr.GetOrdinal("Amount"))
                             });
                         }
-
                     }
                 }
             }
@@ -508,7 +507,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
             return lstCustomerFund;
         }
 
@@ -549,7 +547,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
             return customerFund;
         }
 
@@ -595,6 +592,86 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
+        }
+
+        /// <summary>
+        /// Gets the budget percentage ratio by using CustomerLevelID.
+        /// </summary>
+        /// <param name="CustomerLevelID">The customer level identifier.</param>
+        /// <returns></returns>
+        public static List<BudgetPercentageRatio> GetBudgetPercentageRatio(int CustomerLevelID)
+        {
+            var lstBudgetPercentageRatio = new List<BudgetPercentageRatio>();
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_BudgetPercentageRatioSelectByCustomerLevelID", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerLevelID", CustomerLevelID);
+                        IDataReader idr = cmd.ExecuteReader();
+                        while (idr.Read())
+                        {
+                            lstBudgetPercentageRatio.Add(new BudgetPercentageRatio()
+                            {
+                                CustomerLevelID = idr.GetInt32(idr.GetOrdinal("CustomerLevelID")),
+                                CategoryID = idr.GetInt32(idr.GetOrdinal("CategoryID")),
+                                BudgetPercentageValue = idr.GetInt32(idr.GetOrdinal("BudgetPercentageValue")),
+                                IsActive = idr.GetBoolean(idr.GetOrdinal("isActive"))
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            return lstBudgetPercentageRatio;
+        }
+
+        /// <summary>
+        /// Gets the budget percentage ratio by using CustomerLevelID and CategoryID.
+        /// </summary>
+        /// <param name="CustomerLevelID">The customer level identifier.</param>
+        /// <param name="CategoryID">The category identifier.</param>
+        /// <returns></returns>
+        public static BudgetPercentageRatio GetBudgetPercentageRatio(int CustomerLevelID, int CategoryID)
+        {
+            var budgetPercentageRatio = new BudgetPercentageRatio();
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_BudgetPercentageRatioSelectByCustomerLevelIDCategoryID", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerLevelID", CustomerLevelID);
+                        cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+                        IDataReader idr = cmd.ExecuteReader();
+                        if (idr.Read())
+                        {
+                            budgetPercentageRatio.CustomerLevelID = idr.GetInt32(idr.GetOrdinal("CustomerLevelID"));
+                            budgetPercentageRatio.CategoryID = idr.GetInt32(idr.GetOrdinal("CategoryID"));
+                            budgetPercentageRatio.BudgetPercentageValue =
+                                idr.GetInt32(idr.GetOrdinal("BudgetPercentageValue"));
+                            budgetPercentageRatio.IsActive = idr.GetBoolean(idr.GetOrdinal("isActive"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            return budgetPercentageRatio;
         }
     }
 }

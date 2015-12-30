@@ -15,7 +15,7 @@
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">
             <h2 class="black-color">BILLING</h2>
-            <div id="divmainrow" class="row">
+            <div id="divmainrow">
                 <div>
                     <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
                     <%-- <h1>
