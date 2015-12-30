@@ -232,8 +232,7 @@ namespace AspDotNetStorefront
             
             divbeforelogin.Visible = false;
             divafterlogin.Visible = true;
-            //divSideBarAfterLogin.Visible = true;
-            //divSideBarBeforeLogin.Visible = false;
+        
         }
 
         /// <summary>
@@ -243,8 +242,7 @@ namespace AspDotNetStorefront
         {
             divbeforelogin.Visible = true;
             divafterlogin.Visible = false;
-            //divSideBarAfterLogin.Visible = false;
-            //divSideBarBeforeLogin.Visible = true;
+      
         }
 
         /// <summary>
@@ -306,8 +304,6 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "CREATE MY ACCOUNT";
                 pnlPageHeading.Visible = true;
-                //divSideBarBeforeLogin.Visible = false;
-                //divSideBarAfterLogin.Visible = false;
             }
             else if (currentURL.ToUpper().Contains("MARKETINGSERVICESDETAIL.ASPX"))
             {
