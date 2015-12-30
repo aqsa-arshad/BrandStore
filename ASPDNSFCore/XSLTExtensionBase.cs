@@ -4053,7 +4053,7 @@ function popupzoom(url,alturl)
                     schemaPrice = discountedPrice;
                 }
                 //TODO: Will be uncommented when true blue point implemented
-                //results.Append("<span><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
+                results.Append("<span id='sppricewithfund' class=\"black-blu-label\"><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
                 results.Append(" ");
 
                 results.Append(taxSuffix);

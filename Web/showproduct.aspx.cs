@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
+using System.Collections.Generic;
 
 namespace AspDotNetStorefront
 {
@@ -29,7 +30,8 @@ namespace AspDotNetStorefront
         bool IsAKit;
         bool RequiresReg;
         String ProductName;
-        String FundID;
+        int FundID;
+        String BluBuksPoints;
         private String m_XmlPackage;
 
         String CategoryName;
@@ -38,6 +40,7 @@ namespace AspDotNetStorefront
         String DistributorName;
         String GenreName;
         String VectorName;
+        List<CustomerFund> CustomerFunds = new List<CustomerFund>();
 
         int CategoryID;
         int SectionID;
@@ -75,9 +78,7 @@ namespace AspDotNetStorefront
             GenreID = CommonLogic.QueryStringUSInt("GenreID");
             VectorID = CommonLogic.QueryStringUSInt("VectorID");
 
-            //Set BluBuks Point
-            String BluBuksPoints="10";
-            ppointscount.InnerText = "You have " + BluBuksPoints + " BLU Bucks you can use to purchase your items.";
+            
             
             String ActualSEName = string.Empty;
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
@@ -164,8 +165,18 @@ namespace AspDotNetStorefront
                     }
                     RequiresReg = DB.RSFieldBool(rs, "RequiresRegistration");
                     ProductName = DB.RSFieldByLocale(rs, "Name", ThisCustomer.LocaleSetting);
-                    FundID = DB.RSFieldByLocale(rs, "FundID", ThisCustomer.LocaleSetting);
-                    hdnProductFundID.Text = FundID;
+                    //Get Customer Funds/Blue BuksPoint and Set BluBuks Point on popup.1 is id for BluBuks
+                    CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
+                    BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
+                    hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
+                    ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
+                    hdnProductFundID.Text =Convert.ToString(DB.RSFieldInt(rs, "FundID"));
+                    if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
+                        hdnProductFundAmount.Text = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text)).Amount.ToString();
+                    else
+                        hdnProductFundAmount.Text = "0";
+                    //spprice.InnerText = "34";
+                    //End
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
                     SectionHelper = AppLogic.LookupHelper("Section", 0);
                     ManufacturerHelper = AppLogic.LookupHelper("Manufacturer", 0);
@@ -457,6 +468,7 @@ namespace AspDotNetStorefront
             }
         }
 
+       
         /// <summary>
         /// Sets that this page requires a scriptmanager
         /// </summary>
@@ -508,14 +520,16 @@ namespace AspDotNetStorefront
 
         private void HandleAddToCart()
         {
-           
-                   
+
+            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text))
+                txtBluBuksUsed.Text = "0";
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
-            formInput.CategoryFundUsed = Convert.ToDecimal(10);
+            formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmount.Text);
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
-            
+           
+          
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
@@ -546,6 +560,10 @@ namespace AspDotNetStorefront
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
                 {
+                    //update fund/blubukts amount related to product for current customer
+                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text));
+                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToInt32(txtBluBuksUsed.Text)));
+
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
                     {
@@ -567,9 +585,12 @@ namespace AspDotNetStorefront
                         // default
                         Response.Redirect(ResolveClientUrl("~/ShoppingCart.aspx?add=true&ReturnUrl=" + Security.UrlEncode(returnUrl)));
                     }
+
+                 
                 }
             }
 
+          
             return;
         }
 

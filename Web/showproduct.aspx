@@ -10,6 +10,8 @@
     </asp:Panel>
     <%--Hidden Variables Regions--%>
         <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" />
+        <asp:Label ID="hdnProductFundAmount" name="hdnProductFund" runat="server" ClientIDMode="Static" Style="display: none" />
+        <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" />
         <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -25,7 +27,7 @@
                             <label class="roman-black">BLU Bucks used:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" class="form-control" runat="server" Text="0"></asp:TextBox>
+                            <asp:TextBox id="txtBluBuksUsed" ClientIDMode="Static" placeholder="0"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>                          
 
                         </div>
                         <div class="clearfix"></div>
@@ -33,7 +35,7 @@
 
                     <p class="label-text">
                         <span class="roman-black">Total price using BLU Bucks:</span>
-                        $X,XXX.XX
+                       <span id="spprice" runat="server" ClientIDMode="Static"> $X,XXX.XX </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                         <div>
@@ -74,6 +76,64 @@
 
             });
 
+            //Set product price  to show on pupup
+            applyproductcategoryfund();
+          //  $("#spprice").text($("meta[itemprop=price]").attr("content"));
+            //Adjust product price based on value entered in blu buckts text box
+            $("#txtBluBuksUsed").focusout(function () {
+               
+                if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val()))
+                {                   
+                    return;
+                }
+                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", "")))
+                {
+                    alert("BLU BUKS cannot be greater than product price");
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""))
+                    return;
+                }
+                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
+                    alert("You exceed available BLU BUKS");
+                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text())
+                    return;
+                }
+                
+                var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
+                $("#spprice").text("$" + updatedprice.toFixed(2));
+            });
+
+            $("#txtBluBuksUsed").keypress(function (evt) {
+
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+
+                return true;
+            });          
+
+
+            function applyproductcategoryfund()
+            {
+                debugger;
+                var productcategoryfund = Number.parseInt($("#hdnProductFundAmount").text());                
+                var productprice = Number.parseFloat($("meta[itemprop=price]").attr("content").replace("$", ""));
+                if (Number.parseInt(productcategoryfund) < Number.parseFloat(productprice)) {
+                    productprice = productprice - productcategoryfund;
+                    productcategoryfund = 0;
+                   
+                }
+                else {
+                    productprice = 0;
+                    $("#txtBluBuksUsed").attr("disabled", "disabled");
+                    $("#txtBluBuksUsed").val(0);
+                    productcategoryfund = productcategoryfund - productprice;
+
+                }
+                
+                $("#hdnProductFundAmount").text(productcategoryfund);
+                $("#spprice").text("$" + productprice);
+                $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + productprice);
+            }
             function ApplyValidation(theForm) {
                 debugger;
                 if ($("#theForm.Quantity_1_1").length <= 0) {
