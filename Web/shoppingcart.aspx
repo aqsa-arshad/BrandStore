@@ -45,13 +45,13 @@
 
             <div>
                 <div class="td-45-percent pull-left"></div>
-                <div class="td-30-percent cart-btn-adjust pull-left">
+                <div class="td-30-percent cart-btn-adjust pull-left pull-sm-no">
                     <asp:Button ID="btnContinueShoppingTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
                         CssClass="btn btn-primary btn-block margin-none" runat="server" />
                 </div>
-                <div class="td-25-percent pull-left">
+                <div class="td-25-percent pull-left pull-sm-no">
                     <asp:Button ID="btnCheckOutNowTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.111 %>"
-                        runat="server" CssClass="btn btn-primary btn-block margin-none" />
+                        runat="server" CssClass="btn btn-primary btn-block margin-none margin-top-sm" />
                     <asp:Button ID="btnQuickCheckoutTop" Text="<%$ Tokens:StringResource,shoppingcart.cs.111a %>"
                         Visible="false" runat="server" CssClass="button call-to-action button-checkout-now" />
                     <asp:Button ID="btnInternationalCheckOutNowTop" Visible="false" Text="<%$ Tokens:StringResource,shoppingcart.cs.111b %>"
