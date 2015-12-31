@@ -214,6 +214,7 @@ namespace AspDotNetStorefront
                     else
                     {
                         hdnpricewithfund.Text = productprice.ToString();
+                        hdnBluBucktsPoints.Text = "0";
                         ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU Bucks you can use to purchase your items.";
 
                     }
@@ -494,7 +495,7 @@ namespace AspDotNetStorefront
                     {
                         //HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
                         m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        LiteralCustom.Text = m_PageOutputCustom;
+                        LiteralCustom.Text = m_PageOutputCustom+"<div>";
                     }
                 }
             }

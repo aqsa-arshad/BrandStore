@@ -9,14 +9,14 @@
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
     <%--Hidden Variables Regions--%>
-        <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-        <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static"  Style="display: none" Text="0" />
-     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static"  Style="display: none" Text="0" />
-        <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-     <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-     <asp:Label ID="hdnpricewithfund" name="hdnpricewithfund" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-     <asp:Label ID="hdnproductprice" name="hdnprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-        <%--End Hidden Variables Region--%>
+    <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnpricewithfund" name="hdnpricewithfund" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnproductprice" name="hdnprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
@@ -31,7 +31,7 @@
                             <label class="roman-black">BLU Bucks used:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox id="txtBluBuksUsed" ClientIDMode="Static" placeholder="0"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>                          
+                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -39,7 +39,7 @@
 
                     <p class="label-text">
                         <span class="roman-black">Total price using BLU Bucks:</span>
-                       <span id="spprice" runat="server" ClientIDMode="Static"> $X,XXX.XX </span>
+                        <span id="spprice" runat="server" clientidmode="Static">$X,XXX.XX </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                         <div>
@@ -73,7 +73,7 @@
                 $("#MCCategory6").addClass("active");
             }
             $("#btnaddtocart").click(function (e) {
-                if (ApplyValidation(theForm)) {                   
+                if (ApplyValidation(theForm)) {
                     $("#btnaddtocart").attr("data-toggle", "modal");
                     $("#btnaddtocart").attr("data-target", "#myModa2");
                 }
@@ -82,11 +82,11 @@
 
             //Set product price  to show on pupup
             applyproductcategoryfund();
-          //  $("#spprice").text($("meta[itemprop=price]").attr("content"));
+            //  $("#spprice").text($("meta[itemprop=price]").attr("content"));
             //Adjust product price based on value entered in blu buckts text box
             $("#txtBluBuksUsed").focusout(function () {
                 debugger;
-               
+
                 if (applyblubuksvalidation()) {
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -100,10 +100,9 @@
                     return false;
 
                 return true;
-            });          
+            });
 
-            function applyblubuksvalidation()
-            {
+            function applyblubuksvalidation() {
                 var maxfundlimit = $("#spprice").text().replace("$", "") * (Number.parseFloat($("#hdnBudgetPercentValue").text()) / 100)
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
@@ -115,7 +114,7 @@
                 }
                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
-                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text().toFixed(2))
+                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text()).toFixed(2)
                     return false;
                 }
                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
@@ -127,32 +126,31 @@
                     return true;
 
             }
-            function applyproductcategoryfund()
-            {
-               
+            function applyproductcategoryfund() {
+
                 //debugger;
                 //var productcategoryfund = Number.parseInt($("#hdnProductFundAmount").text());                
                 //var productprice = Number.parseFloat($("meta[itemprop=price]").attr("content").replace("$", ""));
                 //if (Number.parseInt(productcategoryfund) < Number.parseFloat(productprice)) {
-                   
+
                 //    productprice = productprice - productcategoryfund;
                 //    productcategoryfund = 0;
-                   
+
                 //}
                 //else {
-                  
+
                 //    productcategoryfund = productcategoryfund - productprice;
                 //    productprice = 0;
                 //   // $("#txtBluBuksUsed").attr("disabled", "disabled");
                 //    $("#txtBluBuksUsed").val(productprice);
-                  
+
 
                 //}
-                
-               // $("#hdnProductFundAmountUsed").text(Number.parseInt($("#hdnProductFundAmount").text()) - productcategoryfund.toFixed(2));
+
+                // $("#hdnProductFundAmountUsed").text(Number.parseInt($("#hdnProductFundAmount").text()) - productcategoryfund.toFixed(2));
                 $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-              
+
             }
             function ApplyValidation(theForm) {
                 debugger;
