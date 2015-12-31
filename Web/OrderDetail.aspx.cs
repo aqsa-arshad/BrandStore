@@ -231,6 +231,11 @@ namespace AspDotNetStorefront
                                 (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
                     }
                 }
+                if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
+                {
+                    (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
+                }
             }
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
@@ -281,8 +286,8 @@ namespace AspDotNetStorefront
                 }
                 if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
                 {
-                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
                 else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
                 {
@@ -292,12 +297,12 @@ namespace AspDotNetStorefront
                 else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
                 else
                 {
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
                 }
             }
         }
