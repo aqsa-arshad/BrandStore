@@ -1368,7 +1368,7 @@ namespace AspDotNetStorefrontControls
             #endregion
 
             #region "Second Column"
-            this.Controls.Add(new LiteralControl("<div class='col-md-5 pull-right'>"));
+            this.Controls.Add(new LiteralControl("<div class='col-md-5 pull-right pull-md-no'>"));
 
             // [Start] - Phone
             this.Controls.Add(new LiteralControl("<div class='form-group'>"));

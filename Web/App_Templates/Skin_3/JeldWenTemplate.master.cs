@@ -229,8 +229,10 @@ namespace AspDotNetStorefront
         /// </summary>
         private void ShowPostLoginControls()
         {
+            
             divbeforelogin.Visible = false;
             divafterlogin.Visible = true;
+        
         }
 
         /// <summary>
@@ -240,6 +242,7 @@ namespace AspDotNetStorefront
         {
             divbeforelogin.Visible = true;
             divafterlogin.Visible = false;
+      
         }
 
         /// <summary>
@@ -301,8 +304,6 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "CREATE MY ACCOUNT";
                 pnlPageHeading.Visible = true;
-                //divSideBarBeforeLogin.Visible = false;
-                //divSideBarAfterLogin.Visible = false;
             }
             else if (currentURL.ToUpper().Contains("MARKETINGSERVICESDETAIL.ASPX"))
             {
@@ -413,6 +414,8 @@ namespace AspDotNetStorefront
             {
                 pnlPageHeading.Attributes["class"] = "hide-element";
                 pnlPageHeading.Visible = true;
+                divbeforelogin.Visible = false;
+                divafterlogin.Visible = false;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
                 lnkShoppingCart.Attributes.Add("class", "active shopping-link");

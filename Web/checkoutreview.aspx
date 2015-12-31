@@ -99,11 +99,11 @@
                             <asp:Literal ID="litPaymentMethod" runat="server" Mode="PassThrough"></asp:Literal>
                         </div>
                 <div class="td-30-percent pull-left"> 
-                        <div class="one-third">
+                       
                             <asp:Label ID="ordercs57" CssClass="frut-roman-font black-color" Text="<%$ Tokens:StringResource,order.cs.57 %>" runat="server"></asp:Label>
                             <span class="review-edit-link" runat="server" id="spn3">[<asp:HyperLink ID="HyperLink3" runat="server" Text="edit" />]</span>
                             <p><asp:Literal ID="litShippingAddress" runat="server" Mode="PassThrough"></asp:Literal></p>
-                        </div>
+                      
                     </div>
                 <%-- <div class="col-md-4">
                 </div>--%>

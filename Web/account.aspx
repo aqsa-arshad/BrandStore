@@ -71,7 +71,7 @@
             <asp:ValidationSummary DisplayMode="List" ID="ValSummary" ShowMessageBox="false" runat="server" ShowSummary="true" CssClass="error-wrap validation-summary" ValidationGroup="account" />
 
             <div class="row">
-            <div class="col-md-4" id="divAccountInfo">               
+            <div class="col-md-4 account-field-adjust" id="divAccountInfo">               
                 <h4 class="normal-heading black-color">
                     <asp:Label ID="accountaspx12" runat="server" Text="CONTACT"></asp:Label>
                 </h4>
@@ -136,7 +136,7 @@
                 <%--<div class="page-row form-text address-text">
 					<asp:Label ID="accountaspx29" runat="server" Text="<%$ Tokens:StringResource,account.aspx.29 %>"></asp:Label>
 				</div>--%>
-                <div class="col-md-4 checkout-field-adjust"> 
+                <div class="col-md-4 account-field-adjust"> 
                    <h4 class="normal-heading black-color">
                      <asp:Label ID="Label1" runat="server" Text="PRIMARY BILLING ADDRESS"></asp:Label>
                    </h4>

@@ -212,7 +212,7 @@
             </asp:Panel>
 
             <div class="clearfix"></div>
-            <div class="col-md-5 pull-right">
+            <div class="col-md-5 pull-right pull-md-no">
                 <div class="form-group">
                     <asp:Button runat="server" ID="btnContinueCheckout"
                         CssClass="btn btn-md btn-primary btn-block" Text="<%$ Tokens:StringResource,createaccount.aspx.76 %>"
