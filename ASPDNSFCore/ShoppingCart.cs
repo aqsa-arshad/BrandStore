@@ -6846,9 +6846,9 @@ namespace AspDotNetStorefrontCore
         /// <param name="GiftRegistryForCustomerID">The gift registry for CustomerID.</param>
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0)
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null,BluBuksUsed, CategoryFundUsed);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null,BluBuksUsed, CategoryFundUsed,FundID);
         }
 
         public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
@@ -11108,8 +11108,8 @@ namespace AspDotNetStorefrontCore
                                     System.Decimal.Zero,
                                     preferredComposition,
                                     addCartInfo.BluBucksUsed,
-                                    addCartInfo.CategoryFundUsed
-                                   // addCartInfo.FundID
+                                    addCartInfo.CategoryFundUsed,
+                                    addCartInfo.FundID
                                     );
                 }
                 else
@@ -11130,8 +11130,8 @@ namespace AspDotNetStorefrontCore
                         0,
                         addCartInfo.CustomerEnteredPrice,
                         addCartInfo.BluBucksUsed,
-                        addCartInfo.CategoryFundUsed
-                        //addCartInfo.FundID
+                        addCartInfo.CategoryFundUsed,
+                        addCartInfo.FundID
                        );
                 }
 

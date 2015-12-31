@@ -63,8 +63,10 @@ namespace AspDotNetStorefront
         private string m_PageOutputCustom = string.Empty;
         private const string ADDTOCART_ACTION_PREFIX = "AddToCart_";
 
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
             if (AppLogic.AppConfigBool("GoNonSecureAgain"))
             {
                 GoNonSecureAgain();
@@ -78,8 +80,6 @@ namespace AspDotNetStorefront
             GenreID = CommonLogic.QueryStringUSInt("GenreID");
             VectorID = CommonLogic.QueryStringUSInt("VectorID");
 
-            
-            
             String ActualSEName = string.Empty;
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
@@ -166,17 +166,63 @@ namespace AspDotNetStorefront
                     RequiresReg = DB.RSFieldBool(rs, "RequiresRegistration");
                     ProductName = DB.RSFieldByLocale(rs, "Name", ThisCustomer.LocaleSetting);
                     //Get Customer Funds/Blue BuksPoint and Set BluBuks Point on popup.1 is id for BluBuks
+
+                    //Apply fund
+                    int pvariantid = AppLogic.GetProductsDefaultVariantID(ProductID);
+                    decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
+
+
+                    Decimal productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                    Decimal productprice = Convert.ToDecimal(pvprice);
                     CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
-                    BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
-                    hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
-                    ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
-                    hdnProductFundID.Text =Convert.ToString(DB.RSFieldInt(rs, "FundID"));
-                    if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
-                        hdnProductFundAmount.Text = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text)).Amount.ToString();
+                    if (CustomerFunds.Count > 0)
+                    {
+                        BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
+                        hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
+                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
+                        hdnProductFundID.Text = Convert.ToString(DB.RSFieldInt(rs, "FundID"));
+                        if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
+                            hdnProductFundAmount.Text = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text)).Amount.ToString();
+                        else
+                            hdnProductFundAmount.Text = "0";
+
+
+                        hdnproductprice.Text = productprice.ToString();
+                        if (productcategoryfund < productprice)
+                        {
+
+                            productprice = productprice - productcategoryfund;
+                            productcategoryfund = 0;
+
+                        }
+                        else
+                        {
+
+                            productcategoryfund = productcategoryfund - productprice;
+                            productprice = 0;
+                            txtBluBuksUsed.Enabled = false;
+                            txtBluBuksUsed.Text = productprice.ToString();
+
+
+                        }
+
+                        hdnProductFundAmountUsed.Text = (Convert.ToDecimal(hdnProductFundAmount.Text) - productcategoryfund).ToString();
+                        hdnpricewithfund.Text = productprice.ToString();
+                        //End apply fund
+                        //End
+                    }
                     else
-                        hdnProductFundAmount.Text = "0";
-                    //spprice.InnerText = "34";
-                    //End
+                    {
+                        hdnpricewithfund.Text = productprice.ToString();
+                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU Bucks you can use to purchase your items.";
+
+                    }
+
+
+
+
+
+
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
                     SectionHelper = AppLogic.LookupHelper("Section", 0);
                     ManufacturerHelper = AppLogic.LookupHelper("Manufacturer", 0);
@@ -314,7 +360,7 @@ namespace AspDotNetStorefront
 
             SourceEntity = Profile.LastViewedEntityName;
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
-            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));                       
+            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
 
             // validate that source entity id is actually valid for this product:
             if (SourceEntityID != 0)
@@ -394,7 +440,7 @@ namespace AspDotNetStorefront
             {
                 m_PageOutput += "<b>" + AppLogic.GetString("showproduct.aspx.1", SkinID, ThisCustomer.LocaleSetting) + "</b><a href=\"signin.aspx?returnurl=" + CommonLogic.GetThisPageName(false) + "?ProductID=" + ProductID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").Trim().Length > 0, "&" + Security.HtmlEncode(Security.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING"))), String.Empty) + "\">" + AppLogic.GetString("showproduct.aspx.2", SkinID, ThisCustomer.LocaleSetting) + "</a> " + AppLogic.GetString("showproduct.aspx.3", SkinID, ThisCustomer.LocaleSetting);
                 m_PageOutputCustom += "<b>" + AppLogic.GetString("showproduct.aspx.1", SkinID, ThisCustomer.LocaleSetting) + "</b><a href=\"signin.aspx?returnurl=" + CommonLogic.GetThisPageName(false) + "?ProductID=" + ProductID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").Trim().Length > 0, "&" + Security.HtmlEncode(Security.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING"))), String.Empty) + "\">" + AppLogic.GetString("showproduct.aspx.2", SkinID, ThisCustomer.LocaleSetting) + "</a> " + AppLogic.GetString("showproduct.aspx.3", SkinID, ThisCustomer.LocaleSetting);
-            
+
             }
             else
             {
@@ -421,7 +467,7 @@ namespace AspDotNetStorefront
                     using (XmlPackage2 p = new XmlPackage2(m_XmlPackage, ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
                         m_PageOutput += AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                      
+
                         if (p.SectionTitle != "")
                         {
                             SectionTitle = p.SectionTitle;
@@ -446,9 +492,9 @@ namespace AspDotNetStorefront
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
-                      //HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                      m_PageOutputCustom  =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                      LiteralCustom.Text = m_PageOutputCustom;
+                        //HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        LiteralCustom.Text = m_PageOutputCustom;
                     }
                 }
             }
@@ -466,9 +512,13 @@ namespace AspDotNetStorefront
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = SourceEntityInstanceName;
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
             }
+
+            BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
+            hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
+
         }
 
-       
+
         /// <summary>
         /// Sets that this page requires a scriptmanager
         /// </summary>
@@ -483,7 +533,7 @@ namespace AspDotNetStorefront
         {
             HandleAddToCart();
         }
-       
+
         /// <summary>
         /// Registers the required scripts and webservice references
         /// </summary>
@@ -526,10 +576,10 @@ namespace AspDotNetStorefront
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
-            formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmount.Text);
+            formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
-           
-          
+
+
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
@@ -554,15 +604,15 @@ namespace AspDotNetStorefront
                         Response.Redirect("signin.aspx?ErrorMsg=" + er.MessageId + "&ReturnUrl=" + Security.UrlEncode(returnUrl));
                     }
                 }
-             
-                
+
+
                 bool success = ShoppingCart.AddToCart(ThisCustomer, formInput);
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
                 {
                     //update fund/blubukts amount related to product for current customer
-                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text));
-                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToInt32(txtBluBuksUsed.Text)));
+                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text) - Convert.ToDecimal(hdnProductFundAmountUsed.Text));
+                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToDecimal(txtBluBuksUsed.Text)));
 
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
@@ -586,11 +636,11 @@ namespace AspDotNetStorefront
                         Response.Redirect(ResolveClientUrl("~/ShoppingCart.aspx?add=true&ReturnUrl=" + Security.UrlEncode(returnUrl)));
                     }
 
-                 
+
                 }
             }
 
-          
+
             return;
         }
 
@@ -713,8 +763,8 @@ namespace AspDotNetStorefront
         }
         protected void btnaddtocart_Click(object sender, EventArgs e)
         {
-          
-           
+
+
         }
-}
+    }
 }
