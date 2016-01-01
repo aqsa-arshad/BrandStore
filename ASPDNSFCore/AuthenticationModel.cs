@@ -108,6 +108,7 @@ namespace AspDotNetStorefrontCore
     {
         public int CustomerID { get; set; }
         public int FundID { get; set; }
+        public string FundName { get; set; }
         public decimal Amount { get; set; }
     }
 
