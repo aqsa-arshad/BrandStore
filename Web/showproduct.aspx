@@ -94,6 +94,8 @@
                 debugger;
 
                 if (applyblubuksvalidation()) {
+                    var updatedprice = $("#hdnproductactualprice").text() * theForm.Quantity_1_1.value;
+                    $("#spprice").text("$" + updatedprice.toFixed(2));
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                 }
@@ -111,6 +113,8 @@
             });
 
             function applyblubuksvalidation() {
+                var updatedprice = $("#hdnproductactualprice").text() * theForm.Quantity_1_1.value;
+                $("#spprice").text("$" + updatedprice.toFixed(2));
                 var maxfundlimit = $("#spprice").text().replace("$", "") * (Number.parseFloat($("#hdnBudgetPercentValue").text()) / 100)
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
@@ -123,6 +127,7 @@
                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text()).toFixed(2)
+                   
                     return false;
                 }
                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
