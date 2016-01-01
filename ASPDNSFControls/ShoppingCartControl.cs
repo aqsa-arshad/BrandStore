@@ -845,6 +845,8 @@ namespace AspDotNetStorefrontControls
         RegularExpressionValidator vreQuantity = null;
         DropDownList cboQuantity = new DropDownList();
         Label lblSubTotal = new Label();
+        Label lblBluBucksUsed = new Label();
+        Label lblCategoryFundUsed = new Label();
         Label lblVatDisplay = new Label();
         Label lblQtyDiscount = new Label();
         Label recurringFrequencyLabel = new Label();
@@ -1143,6 +1145,8 @@ namespace AspDotNetStorefrontControls
                     lblSubTotal.Text = cItem.RegularPriceRateDisplayFormat.ToString(); //.ExtPriceRateDisplayFormat.ToString();
                     lblVatDisplay.Text = cItem.VatRateDisplayFormat;
                     lblQtyDiscount.Text = cItem.LineItemQuantityDiscount;
+                    lblBluBucksUsed.Text = "$" + Math.Round(cItem.BluBuksUsed, 2).ToString();
+                    lblCategoryFundUsed.Text = "$" + Math.Round(cItem.CategoryFundUsed * cItem.Quantity,2).ToString();
                 }
                 else
                 {
@@ -1223,7 +1227,8 @@ namespace AspDotNetStorefrontControls
                     else
                     {
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
-                        lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>";
+                       // lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>";
+                        lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>Price with (FUND) credit: " + lblCategoryFundUsed.Text + "<br>Price with BluBucks used: " + lblBluBucksUsed.Text + "";
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
                     }
