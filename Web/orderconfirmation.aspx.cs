@@ -357,14 +357,7 @@ namespace AspDotNetStorefront
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if ((e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)) return;
-            if (!string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value))
-            {
-                (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon");
-            }
-            else
-            {
-                (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
-            }
+            (e.Item.FindControl("ImgProduct") as Image).ImageUrl = !string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value) ? AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon") : AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
             if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
             {
                 (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
@@ -395,8 +388,8 @@ namespace AspDotNetStorefront
             }
             if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
             {
-                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value),2).ToString();
-                (e.Item.FindControl("lblBluBuck") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value),2).ToString();
+                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
+                (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
             }
             else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
             {
@@ -406,12 +399,12 @@ namespace AspDotNetStorefront
             else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
             {
                 (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                (e.Item.FindControl("lblBluBuck") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value),2).ToString();
+                (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
             }
             else
             {
                 (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
-                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value),2).ToString();
+                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
             }
         }
     }

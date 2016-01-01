@@ -224,7 +224,7 @@ namespace AspDotNetStorefront
                         if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
                         {
                             var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().Contains(listItem) && reader["IsDownload"].ToString() != "1")))
+                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().ToUpper().Contains(listItem.ToUpper()) && reader["IsDownload"].ToString() != "1")))
                             {
                                 if (!string.IsNullOrEmpty(reader["ShippingTrackingNumber"].ToString()))
                                 {

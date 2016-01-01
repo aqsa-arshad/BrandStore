@@ -5,7 +5,7 @@
     <div class="form-group">
         <asp:TextBox ID="SearchBox" runat="server"
             CssClass="search-feild" MaxLength="80" />
-        
+
         <asp:Button runat="server" CausesValidation="false"
             ID="SearchButton"
             OnClick="SearchButton_Click"
@@ -24,7 +24,6 @@
                 alert('Please provide legal input for search.');
                 document.getElementById(controlId).value = "";
                 e.preventDefault();
-
             }
         }
         function GetClientID(id, context) {

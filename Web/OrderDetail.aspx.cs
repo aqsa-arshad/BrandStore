@@ -222,7 +222,7 @@ namespace AspDotNetStorefront
             if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
             {
                 var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains(listItem)))
+                foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.ToUpper().Contains(listItem.ToUpper()) && (e.Item.FindControl("hfIsDownload") as HiddenField).Value != "1"))
                 {
                     if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
                     {
@@ -234,7 +234,6 @@ namespace AspDotNetStorefront
                 if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
                 {
                     (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
-                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
             }
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
@@ -258,8 +257,8 @@ namespace AspDotNetStorefront
                 {
                     if ((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains("|"))
                     {
-                        var firstOccuranceOfPipeSign = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.IndexOf("|", StringComparison.Ordinal);
-                        (e.Item.FindControl("lblDelivery") as Label).Text = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Substring(0, firstOccuranceOfPipeSign);
+                        var shippingMethodSplit = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Split('|');
+                        (e.Item.FindControl("lblDelivery") as Label).Text = shippingMethodSplit[0] + ": $" + shippingMethodSplit[1];
                     }
                     else
                     {

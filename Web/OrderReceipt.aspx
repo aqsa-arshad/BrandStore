@@ -161,8 +161,7 @@
                     <td class="td-30-percent border-none">
                         <p class="label-text">
                             <span>
-                                <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font>
-                                <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                                <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                             </span>
                         </p>
                         <%--TODO: Commented due to unavailablity Blu Bucks--%>
