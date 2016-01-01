@@ -300,7 +300,7 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-            return (int)UserType.PUBLIC;
+            return (int)UserType.SALESREPS;
         }
 
         /// <summary>
