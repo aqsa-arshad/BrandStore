@@ -25,13 +25,16 @@ public partial class controls_Search : System.Web.UI.UserControl
 	    var queryStringSearchTerm = CommonLogic.QueryStringCanBeDangerousContent("searchterm");
 		if (!IsPostBack)
 		{
-			if (queryStringSearchTerm.Length > 0)
-				SearchBox.Text = queryStringSearchTerm;
+		    if (queryStringSearchTerm.Length > 0)
+		    {
+                SearchBox.CssClass = SearchBox.CssClass + " search-feild-active";
+		        SearchBox.Text = queryStringSearchTerm;
+		    }
 		}		
 	}
     
 	protected void SearchButton_Click(object sender, EventArgs e)
-	{
+	{        
 		Response.Redirect(String.Format("~/search.aspx?searchterm={0}", Server.UrlEncode(SearchBox.Text)));
 	}
 
