@@ -1348,6 +1348,8 @@ namespace AspDotNetStorefrontCore
                         newItem.IsAuctionItem = (DB.RSFieldTinyInt(rs, "Deleted") == 2);
                         newItem.ImageFileNameOverride = DB.RSField(rs, "ImageFileNameOverride");
                         newItem.ProductDescription = DB.RSField(rs, "Description");
+                        newItem.BluBuksUsed = DB.RSFieldDecimal(rs, "BluBucksUsed");
+                        newItem.CategoryFundUsed = DB.RSFieldDecimal(rs, "CategoryFundUsed");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {

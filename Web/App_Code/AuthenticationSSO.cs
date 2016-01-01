@@ -300,7 +300,7 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-            return (int)UserType.PUBLIC;
+            return (int)UserType.SALESREPS;
         }
 
         /// <summary>
@@ -495,6 +495,7 @@ namespace AspDotNetStorefront
                             {
                                 CustomerID = idr.GetInt32(idr.GetOrdinal("CustomerID")),
                                 FundID = idr.GetInt32(idr.GetOrdinal("FundID")),
+                                FundName = idr.GetString(idr.GetOrdinal("FundName")),
                                 Amount = idr.GetDecimal(idr.GetOrdinal("Amount"))
                             });
                         }
@@ -536,6 +537,7 @@ namespace AspDotNetStorefront
                         {
                             customerFund.CustomerID = idr.GetInt32(idr.GetOrdinal("CustomerID"));
                             customerFund.FundID = idr.GetInt32(idr.GetOrdinal("FundID"));
+                            customerFund.FundName = idr.GetString(idr.GetOrdinal("FundName"));
                             customerFund.Amount = idr.GetDecimal(idr.GetOrdinal("Amount"));
                         }
                     }

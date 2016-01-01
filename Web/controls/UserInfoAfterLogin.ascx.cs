@@ -23,5 +23,12 @@ public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
         }
         WelcomeHeading = " Hi," + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
         WelcomeHeadingAfterUserLogin.InnerText = WelcomeHeading;
+        getCustomerfund();
+    }
+
+    private void getCustomerfund()
+    {
+        decimal SAFAmount = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, 2).Amount;
+        lblSOF.Text = "Sales Operations Funds = " + String.Format("{0:0.00}", SAFAmount); 
     }
 }

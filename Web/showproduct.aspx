@@ -16,6 +16,8 @@
     <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnpricewithfund" name="hdnpricewithfund" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnproductprice" name="hdnprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnButtonName" name="hdnButtonName" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnproductactualprice" name="hdnproductactualprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -74,6 +76,10 @@
             }
             $("#btnaddtocart").click(function (e) {
                 if (ApplyValidation(theForm)) {
+                   
+                    // $("#" + $("#hdnButtonName").text()).trigger("click");
+                    var updatedprice = $("#hdnproductactualprice").text() * theForm.Quantity_1_1.value;
+                    $("#spprice").text("$" + updatedprice.toFixed(2));
                     $("#btnaddtocart").attr("data-toggle", "modal");
                     $("#btnaddtocart").attr("data-target", "#myModa2");
                 }
@@ -96,9 +102,11 @@
             $("#txtBluBuksUsed").keypress(function (evt) {
 
                 var charCode = (evt.which) ? evt.which : event.keyCode
-                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                if (charCode == 46)
+                    return true;
+                else if (charCode > 31 && (charCode < 48 || charCode > 57))
                     return false;
-
+                else
                 return true;
             });
 
@@ -150,7 +158,7 @@
                 // $("#hdnProductFundAmountUsed").text(Number.parseInt($("#hdnProductFundAmount").text()) - productcategoryfund.toFixed(2));
                 $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-
+                $("#hdnproductactualprice").text(Number.parseFloat($("meta[itemprop=price]").attr("content").replace("$", "")));
             }
             function ApplyValidation(theForm) {
                 debugger;
