@@ -22,24 +22,21 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         if (ThisCustomer == null)
         {
             ThisCustomer = (Page as AspDotNetStorefront.SkinBase).ThisCustomer;
-            getCustomerfund();
         }
-        else
-        {
-            getCustomerfund();
-        }
+
         WelcomeHeading = " Hi," + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
         WelcomeHeadingAfterUserLogin.InnerText = WelcomeHeading;
-
+        getCustomerfund();
     }
+
     private void getCustomerfund()
     {
         string customerLevel = "BLU Unlimited";
         lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
-        lblCustomerLevelId.Text = "Level: "+ ((ThisCustomer.CustomerLevelName).Equals(customerLevel) ? "Partners" : ThisCustomer.CustomerLevelName);
+        lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelName).Equals(customerLevel) ? "Partners" : ThisCustomer.CustomerLevelName);
+        lblDealerLevel.Text = ((ThisCustomer.CustomerLevelName).Equals(customerLevel) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU",""));
         rptCustomerFunds.DataSource = lstCustomerFund;
         rptCustomerFunds.DataBind();
-
     }
     
 }
