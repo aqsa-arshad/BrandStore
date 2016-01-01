@@ -4658,7 +4658,7 @@ namespace AspDotNetStorefrontCore
         HOMEDEPOT = 10,
         LOWES = 11,
         MENARDS = 12,
-        BLUUnlimited = 13
+        BLUUNLIMITED = 13
     }
     #endregion
 }

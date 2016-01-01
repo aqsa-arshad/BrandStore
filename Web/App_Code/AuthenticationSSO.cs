@@ -388,7 +388,8 @@ namespace AspDotNetStorefront
 
                 if (_dealerUser.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
                         _dealerUser.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
-                        _dealerUser.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase))
+                        _dealerUser.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
+                        _dealerUser.TrueBLUStatus__c.Equals("UNLIMITED", StringComparison.InvariantCultureIgnoreCase))
                     profile.userType = "BLU" + _dealerUser.TrueBLUStatus__c;
                 else
                     profile.userType = _dealerUser.TrueBLUStatus__c;
