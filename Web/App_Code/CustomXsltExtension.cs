@@ -339,7 +339,7 @@ public class CustomXsltExtension : XSLTExtensionBase
                     output.Append("<div class=\"guidedNavPriceWrap\">");
                     output.Append("<div class=\"price-wrap\">");
                     output.Append("<div class=\"variant-price\">");
-                    output.Append("<span>Price:</span> " + price);
+                    output.Append("<span>Price:</span> " + price);                   
                     output.Append("<meta content=\"" + price + "\" itemprop=\"price\">");
                     output.Append("<meta content=\"USD\" itemprop=\"priceCurrency\">");
                     output.Append("</div>");

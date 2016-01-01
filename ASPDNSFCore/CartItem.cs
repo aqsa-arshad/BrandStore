@@ -91,6 +91,9 @@ namespace AspDotNetStorefrontCore
         private Customer m_ThisCustomer;
         private ShoppingCart m_ThisShoppingCart;
         private bool m_IsGift;
+        private Decimal m_BluBuksUsed;
+        private Decimal m_CategoryFundUsed;
+
 
         // computed fields
         private decimal m_computedTaxRate = System.Decimal.Zero;
@@ -193,6 +196,8 @@ namespace AspDotNetStorefrontCore
             m_ThisShoppingCart = ci.ThisShoppingCart;
             m_IsGift = ci.IsGift;
             m_ProductDescription = ci.ProductDescription;
+            m_BluBuksUsed=ci.BluBuksUsed;
+           m_CategoryFundUsed=ci.CategoryFundUsed;
         }
 
         #endregion
@@ -248,6 +253,18 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_ProductDescription; }
             set { m_ProductDescription = value; }
+        }
+
+        public Decimal BluBuksUsed
+        {
+            get { return m_BluBuksUsed; }
+            set { m_BluBuksUsed = value; }
+        }
+
+        public Decimal CategoryFundUsed
+        {
+            get { return m_CategoryFundUsed; }
+            set { m_CategoryFundUsed = value; }
         }
 
         /// <summary>

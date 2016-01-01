@@ -1,26 +1,39 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="AspDotNetStorefront.MasterPageBase" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    
+<head runat="server">
+
+    <%--This xmlpackage can be used to add dynamic data to javascripts such as tracking scripts that should run before the closing head tag--%>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta content="" name="description">
+    <meta content="" name="author">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
     <%-- Leave the title empty, it will get populated at runtime --%>
-    <title></title>    
-    
-    <asp:Literal ID="ltrCurrencyLocaleRobotsTag" runat="server" Text='<%$ Tokens:Currency_Locale_Robots_Tag %>' />
-    
+    <title></title>
     <%-- Leave the description and keyword content empty, it will get populated at runtime --%>
     <meta name="description" content="">
     <meta name="keywords" content="">
-    
     <%-- The skin ref will base on the current theme applied so we don't need to declare here which css file to use --%>
     <%--<link runat="server" rel="stylesheet" href="~/skins/skin_1/style.css" type="text/css">--%>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script type="text/javascript" src="jscripts/formvalidate.js"></script>
 
-    <script type="text/javascript" src="jscripts/core.js"></script>
+    <%-- jQuery is required in versions 9.4 and higher --%>
+    <script src="jscripts/jquery.min.js" type="text/javascript"></script>
+    <script src="js/modal.js"></script>
+    <script type="text/javascript">
+        adnsf$ = jQuery; <%-- to avoid conflicts with existing jQuery versions and other javascript frameworks, change this line to adnsf$ = jQuery.noConflict(); --%>
+    </script>
+    <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/slick.min.js" type="text/javascript"></script>
+    <script src="App_Templates/Skin_<asp:Literal runat='server' Text='<%$ Tokens:SkinId %>' />/js/jquery.html5-placeholder-shim.js" type="text/javascript"></script>
+    <!-- Bootstrap core CSS -->
 
+    <link href="../../App_Themes/Skin_3/app.css" rel="stylesheet" />
 </head>
 <body rightmargin="0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> <%--bgcolor="#ffffff"--%>
 <!-- PAGE INVOCATION: '(!INVOCATION!)' -->

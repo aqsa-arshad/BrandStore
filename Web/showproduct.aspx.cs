@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
+using System.Collections.Generic;
 
 namespace AspDotNetStorefront
 {
@@ -29,6 +30,8 @@ namespace AspDotNetStorefront
         bool IsAKit;
         bool RequiresReg;
         String ProductName;
+        int FundID;
+        String BluBuksPoints;
         private String m_XmlPackage;
 
         String CategoryName;
@@ -37,6 +40,7 @@ namespace AspDotNetStorefront
         String DistributorName;
         String GenreName;
         String VectorName;
+        List<CustomerFund> CustomerFunds = new List<CustomerFund>();
 
         int CategoryID;
         int SectionID;
@@ -56,10 +60,13 @@ namespace AspDotNetStorefront
         int SourceEntityID = 0;
 
         private string m_PageOutput = string.Empty;
+        private string m_PageOutputCustom = string.Empty;
         private const string ADDTOCART_ACTION_PREFIX = "AddToCart_";
+
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
             if (AppLogic.AppConfigBool("GoNonSecureAgain"))
             {
                 GoNonSecureAgain();
@@ -158,6 +165,64 @@ namespace AspDotNetStorefront
                     }
                     RequiresReg = DB.RSFieldBool(rs, "RequiresRegistration");
                     ProductName = DB.RSFieldByLocale(rs, "Name", ThisCustomer.LocaleSetting);
+                    //Get Customer Funds/Blue BuksPoint and Set BluBuks Point on popup.1 is id for BluBuks
+
+                    //Apply fund
+                    int pvariantid = AppLogic.GetProductsDefaultVariantID(ProductID);
+                    decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
+
+
+                    Decimal productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                    Decimal productprice = Convert.ToDecimal(pvprice);
+                    CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
+                    if (CustomerFunds.Count > 0)
+                    {
+                        BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
+                        hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
+                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
+                        hdnProductFundID.Text = Convert.ToString(DB.RSFieldInt(rs, "FundID"));
+                        if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
+                            hdnProductFundAmount.Text = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text)).Amount.ToString();
+                        else
+                            hdnProductFundAmount.Text = "0";
+
+
+                        hdnproductprice.Text = productprice.ToString();
+                        if (productcategoryfund < productprice)
+                        {
+
+                            productprice = productprice - productcategoryfund;
+                            productcategoryfund = 0;
+
+                        }
+                        else
+                        {
+
+                            productcategoryfund = productcategoryfund - productprice;
+                            productprice = 0;
+                            txtBluBuksUsed.Enabled = false;
+                            txtBluBuksUsed.Text = productprice.ToString();
+
+
+                        }
+
+                        hdnProductFundAmountUsed.Text = (Convert.ToDecimal(hdnProductFundAmount.Text) - productcategoryfund).ToString();
+                        hdnpricewithfund.Text = productprice.ToString();
+                        //End apply fund
+                        //End
+                    }
+                    else
+                    {
+                        hdnpricewithfund.Text = productprice.ToString();
+                        hdnBluBucktsPoints.Text = "0";
+                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU Bucks you can use to purchase your items.";
+
+                    }
+
+
+
+
+
 
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
                     SectionHelper = AppLogic.LookupHelper("Section", 0);
@@ -296,7 +361,7 @@ namespace AspDotNetStorefront
 
             SourceEntity = Profile.LastViewedEntityName;
             SourceEntityInstanceName = Profile.LastViewedEntityInstanceName;
-            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));                       
+            SourceEntityID = int.Parse(CommonLogic.IIF(CommonLogic.IsInteger(Profile.LastViewedEntityInstanceID), Profile.LastViewedEntityInstanceID, "0"));
 
             // validate that source entity id is actually valid for this product:
             if (SourceEntityID != 0)
@@ -375,6 +440,8 @@ namespace AspDotNetStorefront
             if (RequiresReg && !ThisCustomer.IsRegistered)
             {
                 m_PageOutput += "<b>" + AppLogic.GetString("showproduct.aspx.1", SkinID, ThisCustomer.LocaleSetting) + "</b><a href=\"signin.aspx?returnurl=" + CommonLogic.GetThisPageName(false) + "?ProductID=" + ProductID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").Trim().Length > 0, "&" + Security.HtmlEncode(Security.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING"))), String.Empty) + "\">" + AppLogic.GetString("showproduct.aspx.2", SkinID, ThisCustomer.LocaleSetting) + "</a> " + AppLogic.GetString("showproduct.aspx.3", SkinID, ThisCustomer.LocaleSetting);
+                m_PageOutputCustom += "<b>" + AppLogic.GetString("showproduct.aspx.1", SkinID, ThisCustomer.LocaleSetting) + "</b><a href=\"signin.aspx?returnurl=" + CommonLogic.GetThisPageName(false) + "?ProductID=" + ProductID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").Trim().Length > 0, "&" + Security.HtmlEncode(Security.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING"))), String.Empty) + "\">" + AppLogic.GetString("showproduct.aspx.2", SkinID, ThisCustomer.LocaleSetting) + "</a> " + AppLogic.GetString("showproduct.aspx.3", SkinID, ThisCustomer.LocaleSetting);
+
             }
             else
             {
@@ -390,15 +457,18 @@ namespace AspDotNetStorefront
                 DB.ExecuteSQL("update product set Looks=Looks+1 where ProductID=" + ProductID.ToString());
 
                 m_PageOutput = "<!-- XmlPackage: " + m_XmlPackage + " -->\n";
+                m_PageOutputCustom = "<!-- XmlPackage: " + m_XmlPackage + " -->\n";
                 if (m_XmlPackage.Length == 0)
                 {
                     m_PageOutput += "<p><b><font color=red>XmlPackage format was chosen, but no XmlPackage was specified!</font></b></p>";
+                    m_PageOutputCustom += "<p><b><font color=red>XmlPackage format was chosen, but no XmlPackage was specified!</font></b></p>";
                 }
                 else
                 {
                     using (XmlPackage2 p = new XmlPackage2(m_XmlPackage, ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
                         m_PageOutput += AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+
                         if (p.SectionTitle != "")
                         {
                             SectionTitle = p.SectionTitle;
@@ -420,6 +490,13 @@ namespace AspDotNetStorefront
                             SENoScript = p.SENoScript;
                         }
                     }
+                    //Get add to cart button for popup
+                    using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
+                    {
+                        //HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        LiteralCustom.Text = m_PageOutputCustom+"<div>";
+                    }
                 }
             }
             litOutput.Text = m_PageOutput;
@@ -436,7 +513,12 @@ namespace AspDotNetStorefront
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).Text = SourceEntityInstanceName;
                 ((System.Web.UI.WebControls.HyperLink)Master.FindControl("lnkSubCategory")).NavigateUrl = "~/c-" + SourceEntityID + "-" + SourceEntityInstanceName.Replace(" ", "-") + ".aspx";
             }
+
+            BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
+            hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
+
         }
+
 
         /// <summary>
         /// Sets that this page requires a scriptmanager
@@ -447,6 +529,10 @@ namespace AspDotNetStorefront
             {
                 return true;
             }
+        }
+        protected void ServerButton_Click(object sender, EventArgs e)
+        {
+            HandleAddToCart();
         }
 
         /// <summary>
@@ -485,8 +571,15 @@ namespace AspDotNetStorefront
 
         private void HandleAddToCart()
         {
+
+            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text))
+                txtBluBuksUsed.Text = "0";
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
+            formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
+            formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
+            formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
+
 
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
@@ -518,6 +611,10 @@ namespace AspDotNetStorefront
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
                 {
+                    //update fund/blubukts amount related to product for current customer
+                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text) - Convert.ToDecimal(hdnProductFundAmountUsed.Text));
+                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToDecimal(txtBluBuksUsed.Text)));
+
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
                     {
@@ -539,8 +636,11 @@ namespace AspDotNetStorefront
                         // default
                         Response.Redirect(ResolveClientUrl("~/ShoppingCart.aspx?add=true&ReturnUrl=" + Security.UrlEncode(returnUrl)));
                     }
+
+
                 }
             }
+
 
             return;
         }
@@ -658,5 +758,14 @@ namespace AspDotNetStorefront
             return false;
         }
 
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void btnaddtocart_Click(object sender, EventArgs e)
+        {
+
+
+        }
     }
 }

@@ -395,8 +395,8 @@ namespace AspDotNetStorefront
             }
             if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
             {
-                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
-                (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value),2).ToString();
+                (e.Item.FindControl("lblBluBuck") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value),2).ToString();
             }
             else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
             {
@@ -406,12 +406,12 @@ namespace AspDotNetStorefront
             else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
             {
                 (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                (e.Item.FindControl("lblBluBuck") as Label).Text = (e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value;
+                (e.Item.FindControl("lblBluBuck") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value),2).ToString();
             }
             else
             {
                 (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
-                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = (e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value;
+                (e.Item.FindControl("lblCategoryFundCredit") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value),2).ToString();
             }
         }
     }

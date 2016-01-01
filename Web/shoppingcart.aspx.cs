@@ -903,7 +903,7 @@ namespace AspDotNetStorefront
             if (itemToUpdate.VariantID != newVariantID) //If these 2 are different then the customer has actually chosen a different option.  Otherwise, skip it.
             {
                 //Re-add the same item with just a couple of differences
-                cart.AddItem(ThisCustomer, ThisCustomer.PrimaryShippingAddressID, itemToUpdate.ProductID, newVariantID, quantity, itemToUpdate.ChosenColor, itemToUpdate.ChosenColorSKUModifier, itemToUpdate.ChosenSize, itemToUpdate.ChosenSizeSKUModifier, itemToUpdate.TextOption, CartTypeEnum.ShoppingCart, true, false, 0, 0);
+                cart.AddItem(ThisCustomer, ThisCustomer.PrimaryShippingAddressID, itemToUpdate.ProductID, newVariantID, quantity, itemToUpdate.ChosenColor, itemToUpdate.ChosenColorSKUModifier, itemToUpdate.ChosenSize, itemToUpdate.ChosenSizeSKUModifier, itemToUpdate.TextOption, CartTypeEnum.ShoppingCart, true, false,0,0);
 
                 //Delete the old item
                 cart.SetItemQuantity(shoppingCartRecID, 0);
@@ -987,7 +987,7 @@ namespace AspDotNetStorefront
                             int VariantID = AppLogic.GetProductsDefaultVariantID(ProductID);
                             if (VariantID != 0)
                             {
-                                int NewRecID = cart.AddItem(ThisCustomer, ThisCustomer.PrimaryShippingAddressID, ProductID, VariantID, 1, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, CartTypeEnum.ShoppingCart, true, false, 0, System.Decimal.Zero);
+                                int NewRecID = cart.AddItem(ThisCustomer, ThisCustomer.PrimaryShippingAddressID, ProductID, VariantID, 1, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, CartTypeEnum.ShoppingCart, true, false, 0,0);
                                 Decimal PR = AppLogic.GetUpsellProductPrice(0, ProductID, ThisCustomer.CustomerLevelID);
                                 SqlParameter[] spa = { DB.CreateSQLParameter("@Price", SqlDbType.Decimal, 10, PR, ParameterDirection.Input), DB.CreateSQLParameter("@CartRecID", SqlDbType.Int, 4, NewRecID, ParameterDirection.Input) };
                                 DB.ExecuteSQL("update shoppingcart set IsUpsell=1, ProductPrice=@Price where ShoppingCartRecID=@CartRecID", spa);

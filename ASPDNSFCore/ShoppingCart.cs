@@ -1425,9 +1425,10 @@ namespace AspDotNetStorefrontCore
                             }
                             if (NewPR != newItem.Price)
                             {
-                                newItem.Price = NewPR;
-                                // remember to update the actual db record now!
-                                DB.ExecuteSQL("update shoppingcart set ProductPrice=" + Localization.CurrencyStringForDBWithoutExchangeRate(newItem.Price) + " where ShoppingCartRecID=" + newItem.ShoppingCartRecordID.ToString(), m_DBTrans);
+                                //I have commented bellow lines as I dont want to update price once added item to cart
+                               // newItem.Price = NewPR;
+                                // remember to update the actual db record now!                                
+                               // DB.ExecuteSQL("update shoppingcart set ProductPrice=" + Localization.CurrencyStringForDBWithoutExchangeRate(newItem.Price) + " where ShoppingCartRecID=" + newItem.ShoppingCartRecordID.ToString(), m_DBTrans);
                             }
                         }
 
@@ -6821,7 +6822,8 @@ namespace AspDotNetStorefrontCore
                             , 0
                             , 0
                             , null
-                            , true);
+                            , true
+                            );
 
         }
 
@@ -6844,14 +6846,14 @@ namespace AspDotNetStorefrontCore
         /// <param name="GiftRegistryForCustomerID">The gift registry for CustomerID.</param>
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0)
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null,BluBuksUsed, CategoryFundUsed,FundID);
         }
 
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false,BluBuksUsed, CategoryFundUsed);
         }
 
         // NOTE: ChosenColor and ChosenSize MUST ALWAYS be passed in here in the MASTER WEBCONFIG LOCALE, If in a ML situation!
@@ -6875,7 +6877,7 @@ namespace AspDotNetStorefrontCore
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <param name="preferredComposition">The preferred composition.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
         {
             if (null != preferredComposition)
             {
@@ -6960,7 +6962,10 @@ namespace AspDotNetStorefrontCore
                                           DB.CreateSQLParameter("@IsKit2", SqlDbType.TinyInt, 4, isKit2, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@NewShoppingCartRecID", SqlDbType.Int, 4, null, ParameterDirection.Output),
                                           DB.CreateSQLParameter("@StoreID", SqlDbType.Int, 4, AppLogic.StoreID(), ParameterDirection.Input),
-                                          DB.CreateSQLParameter("@IsAGift", SqlDbType.Bit, 1, isAGift, ParameterDirection.Input)
+                                          DB.CreateSQLParameter("@IsAGift", SqlDbType.Bit, 1, isAGift, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@BluBuksUsed", SqlDbType.Money, 4, BluBuksUsed, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@CategoryFundUsed", SqlDbType.Money, 4, CategoryFundUsed, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@FundID", SqlDbType.Int, 4, FundID, ParameterDirection.Input),
                                          };
 
                         NewRecID = DB.ExecuteStoredProcInt("dbo.aspdnsf_AddItemToCart", spa, m_DBTrans);
@@ -7935,7 +7940,10 @@ namespace AspDotNetStorefrontCore
         {
             return GetAddToCartForm(ThisCustomer, forPack, false, showWishListButton, showGiftRegistryButton, ProductID, VariantID, SkinID, DisplayFormat, LocaleSetting, ColorChangeProductImage, VariantStyle);
         }
-
+        static public String GetAddToCartFormCustom(Customer ThisCustomer, bool forPack, bool showWishListButton, bool showGiftRegistryButton, int ProductID, int VariantID, int SkinID, int DisplayFormat, String LocaleSetting, bool ColorChangeProductImage, VariantStyleEnum VariantStyle)
+        {
+            return GetAddToCartFormCustom(ThisCustomer, forPack, false, showWishListButton, showGiftRegistryButton, ProductID, VariantID, SkinID, DisplayFormat, LocaleSetting, ColorChangeProductImage, VariantStyle);
+        }
         // ERPFlag = 0 means to use our normal variant with attributes
         // ERPFlag = 1 means to use ERP variant structure but recompute variants into size/color drop down lists
         // ERPFlag = 2 means to use ERP variant structure, with each variant in a dropdown list to select
@@ -7961,6 +7969,10 @@ namespace AspDotNetStorefrontCore
         static public String GetAddToCartForm(Customer ThisCustomer, bool forPack, bool forKit, bool showWishListButton, bool showGiftRegistryButton, int ProductID, int VariantID, int SkinID, int DisplayFormat, String LocaleSetting, bool ColorChangeProductImage, VariantStyleEnum VariantStyle)
         {
             return GetAddToCartForm(ThisCustomer, forPack, forKit, showWishListButton, showGiftRegistryButton, ProductID, VariantID, SkinID, DisplayFormat, LocaleSetting, ColorChangeProductImage, VariantStyle, false);
+        }
+        static public String GetAddToCartFormCustom(Customer ThisCustomer, bool forPack, bool forKit, bool showWishListButton, bool showGiftRegistryButton, int ProductID, int VariantID, int SkinID, int DisplayFormat, String LocaleSetting, bool ColorChangeProductImage, VariantStyleEnum VariantStyle)
+        {
+            return GetAddToCartFormCustom(ThisCustomer, forPack, forKit, showWishListButton, showGiftRegistryButton, ProductID, VariantID, SkinID, DisplayFormat, LocaleSetting, ColorChangeProductImage, VariantStyle, false);
         }
       
         // ERPFlag = 0 means to use our normal variant with attributes
@@ -8221,7 +8233,7 @@ namespace AspDotNetStorefrontCore
             tmpS.Append("<div class='form add-to-cart-form' id='" + FormName + "'>\n");
             tmpS.Append("<script type=\"text/javascript\" Language=\"JavaScript\">\n<!--\n");
             tmpS.Append("var VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + " = " + MinimumQuantity.ToString() + ";\n");
-            tmpS.Append("var SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + " = " + inv.ToString() + ";\n");
+            tmpS.Append("var SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + " = " + inv.ToString() + ";\n");
 
 
             if (ProtectInventory && InventoryControlList.Length != 0)
@@ -8250,20 +8262,20 @@ namespace AspDotNetStorefrontCore
 
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
             {
-                tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < 1)\n", ProductID, VariantID); // convert form val to integer
+                tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < 1)\n", "1", "1"); // convert form val to integer
                 tmpS.Append("	{\n");
                 tmpS.Append("		alert(\"" + AppLogic.GetString("common.cs.84", SkinID, LocaleSetting) + "\");\n");
-                tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
+                tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", "1", "1");
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
                 tmpS.Append("    }\n");
 
                 if (RestrictedQuantities.Length == 0 && MinimumQuantity != 0)
                 {
-                    tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n", ProductID, VariantID); // convert form val to integer
+                    tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n", "1", "1"); // convert form val to integer
                     tmpS.Append("	{\n");
                     tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.85", SkinID, LocaleSetting), "\"+VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + " + \"") + "\");\n");
-                    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
+                    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", "1", "1");
                     tmpS.Append("		submitenabled(theForm);\n");
                     tmpS.Append("		return (false);\n");
                     tmpS.Append("    }\n");
@@ -8272,20 +8284,21 @@ namespace AspDotNetStorefrontCore
 
             if (SizesMaster.Length != 0 && !AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
             {
-                tmpS.AppendFormat("	if (theForm.Size_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
+              //  tmpS.AppendFormat("	if (theForm.Size_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
+                tmpS.AppendFormat("	if (theForm.Size_{0}_{1}.selectedIndex < 1)\n", "1", "1");
                 tmpS.Append("	{\n");
                 tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.71", SkinID, LocaleSetting), SizeOptionPrompt.ToLowerInvariant()) + "\");\n");
-                tmpS.AppendFormat("		theForm.Size_{0}_{1}.focus();\n", ProductID, VariantID);
+                tmpS.AppendFormat("		theForm.Size_{0}_{1}.focus();\n", "1", "1");
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
                 tmpS.Append("    }\n");
             }
             if (ColorsMaster.Length != 0 && !AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
             {
-                tmpS.AppendFormat("	if (theForm.Color_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
+                tmpS.AppendFormat("	if (theForm.Color_{0}_{1}.selectedIndex < 1)\n", "1", "1");
                 tmpS.Append("	{\n");
                 tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.71", SkinID, LocaleSetting), ColorOptionPrompt.ToLowerInvariant()) + "\");\n");
-                tmpS.AppendFormat("		theForm.Color_{0}_{1}.focus();\n", ProductID, VariantID);
+                tmpS.AppendFormat("		theForm.Color_{0}_{1}.focus();\n", "1", "1");
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
                 tmpS.Append("    }\n");
@@ -8305,11 +8318,11 @@ namespace AspDotNetStorefrontCore
             {
                 if (!TrackInventoryBySizeAndColor)
                 {
-                    tmpS.AppendFormat("	if (theForm.Quantity_{0}_{1}.value > SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n", ProductID, VariantID);
+                    tmpS.AppendFormat("	if (theForm.Quantity_{0}_{1}.value > SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n", "1", "1");
                     tmpS.Append("	{\n");
-                    tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.74", SkinID, LocaleSetting), "\"+SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + "+\"") + "\");\n");
-                    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.value = SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ";\n", ProductID, VariantID);
-                    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
+                    tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.74", SkinID, LocaleSetting), "\"+SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + "+\"") + "\");\n");
+                    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.value = SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + ";\n", "1", "1");
+                    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", "1", "1");
                     tmpS.Append("		submitenabled(theForm);\n");
                     tmpS.Append("		return (false);\n");
                     tmpS.Append("    }\n");
@@ -8318,7 +8331,7 @@ namespace AspDotNetStorefrontCore
                 {
                     if (SizesMaster.Length != 0)
                     {
-                        tmpS.AppendFormat("var sel_size = theForm.Size_{0}_{1}[theForm.Size_{0}_{1}.selectedIndex].value;\n", ProductID, VariantID);
+                        tmpS.AppendFormat("var sel_size = theForm.Size_{0}_{1}[theForm.Size_{0}_{1}.selectedIndex].value;\n", "1", "1");
                         //JH 10.21.2010 removed append parameters that did not match formatting. This also matches the js builder below
                         tmpS.Append("sel_size = sel_size.substring(0,sel_size.indexOf(',')).replace(new RegExp(\"'\", 'gi'), '');\n");
                     }
@@ -8329,7 +8342,7 @@ namespace AspDotNetStorefrontCore
 
                     if (ColorsMaster.Length != 0)
                     {
-                        tmpS.AppendFormat("var sel_color = theForm.Color_{0}_{1}[theForm.Color_{0}_{1}.selectedIndex].value;\n", ProductID, VariantID);
+                        tmpS.AppendFormat("var sel_color = theForm.Color_{0}_{1}[theForm.Color_{0}_{1}.selectedIndex].value;\n", "1", "1");
                         tmpS.Append("sel_color = sel_color.substring(0,sel_color.indexOf(',')).replace(new RegExp(\"'\", 'gi'), '');\n");
                     }
                     else
@@ -8371,7 +8384,7 @@ namespace AspDotNetStorefrontCore
                         tmpS.Append("var sel_color_master = '';\n");
                     }
 
-                    tmpS.AppendFormat("var sel_qty = theForm.Quantity_{0}_{1}.value;\n", ProductID, VariantID);
+                    tmpS.AppendFormat("var sel_qty = theForm.Quantity_{0}_{1}.value;\n", "1", "1");
                     tmpS.Append("var sizecolorfound = 0;\n");
                     tmpS.Append("for(i = 0; i < board" + boardSuffix + ".length; i++)\n");
                     tmpS.Append("{\n");
@@ -8483,7 +8496,8 @@ namespace AspDotNetStorefrontCore
                     String[] SizesMasterSplit = SizesMaster.Split(',');
                     String[] SizesDisplaySplit = SizesDisplay.Split(',');
                     String[] SizeSKUsSplit = SizeSKUModifiers.Split(',');
-                    tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", ProductID, VariantID);
+                   // tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", ProductID, VariantID);
+                    tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", "1", "1");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + SizeOptionPrompt + "</option>\n");
@@ -8517,7 +8531,7 @@ namespace AspDotNetStorefrontCore
                     String[] ColorsMasterSplit = ColorsMaster.Split(',');
                     String[] ColorsDisplaySplit = ColorsDisplay.Split(',');
                     String[] ColorSKUsSplit = ColorSKUModifiers.Split(',');
-                    tmpS.Append(String.Format(" <select class=\"form-control color-select\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", ProductID, VariantID));
+                    tmpS.Append(String.Format(" <select class=\"form-control color-select\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", "1", "1"));
 
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
@@ -8575,13 +8589,13 @@ namespace AspDotNetStorefrontCore
                     {
                         InitialQ = QuantityForEdit;
                     }
-                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
+                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", "1", "1");
                     tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
                 }
                 else
                 {
                     tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
-                    tmpS.AppendFormat("<select class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
+                    tmpS.AppendFormat("<select class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", "1", "1");
                     foreach (String s in RestrictedQuantities.Split(','))
                     {
                         if (s.Trim().Length != 0)
@@ -8641,8 +8655,10 @@ namespace AspDotNetStorefrontCore
             else
             {
                 // render normal html button
-                tmpS.AppendFormat(" <input type=\"button\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
-            }
+                //Disable add to cart functionality and creat a simple button that opens popup
+               // tmpS.AppendFormat(" <input type=\"button\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btnaddtocart  btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+                tmpS.AppendFormat(" <input type=\"button\"  id=\"btnaddtocart\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+            }//data-toggle=\"modal\" data-target=\"#myModa2\"
 
             // TODO: Commented for the Wishlist and Gift button functionality 
             //if (AppLogic.AppConfigBool("ShowWishButtons") && showWishListButton)
@@ -8782,7 +8798,808 @@ namespace AspDotNetStorefrontCore
 
             return tmpS.ToString();
         }
+        static public String GetAddToCartFormCustom(Customer ThisCustomer, bool forPack, bool forKit, bool showWishListButton, bool showGiftRegistryButton, int ProductID, int VariantID, int SkinID, int DisplayFormat, String LocaleSetting, bool ColorChangeProductImage, VariantStyleEnum VariantStyle, bool isKit2)
+        {
+            int CartRecID = CommonLogic.QueryStringUSInt("CartRecID");
+            String TextOptionForEdit = String.Empty;
+            int QuantityForEdit = 0;
+            String ChosenSizeForEdit = String.Empty;
+            String ChosenColorForEdit = String.Empty;
+            Decimal ProductPriceForEdit = System.Decimal.Zero;
+            if (CartRecID != 0)
+            {
+                using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
+                {
+                    con.Open();
+                    using (IDataReader rscart = DB.GetRS("select * from ShoppingCart where ShoppingCartRecID=" + CartRecID.ToString() + " and VariantID = " + VariantID.ToString(), con))
+                    {
+                        if (rscart.Read())
+                        {
+                            TextOptionForEdit = DB.RSField(rscart, "TextOption");
+                            QuantityForEdit = DB.RSFieldInt(rscart, "Quantity");
+                            ChosenSizeForEdit = DB.RSFieldByLocale(rscart, "ChosenSize", Localization.GetDefaultLocale());
+                            ChosenColorForEdit = DB.RSFieldByLocale(rscart, "ChosenColor", Localization.GetDefaultLocale());
+                            ProductPriceForEdit = DB.RSFieldDecimal(rscart, "ProductPrice");
+                        }
+                    }
+                }
+            }
 
+            string ProductSku = string.Empty;
+            string SkuSuffix = string.Empty;
+            bool CustomerEntersPrice = false;
+            String CustomerEntersPricePrompt = string.Empty;
+            String RestrictedQuantities = string.Empty;
+            int MinimumQuantity = 0;
+            bool TrackInventoryBySizeAndColor = false;
+            bool TrackInventoryByColor = false;
+            String ColorsMaster = string.Empty;
+            String ColorsDisplay = string.Empty;
+            String ColorSKUModifiers = string.Empty;
+            String ColorOptionPrompt = string.Empty;
+            bool TrackInventoryBySize = false;
+            String SizesMaster = string.Empty;
+            String SizesDisplay = string.Empty;
+            String SizeSKUModifiers = string.Empty;
+            String SizeOptionPrompt = string.Empty;
+            bool HasSizePriceModifiers = false;
+            bool HasColorPriceModifiers = false;
+            string boardSuffix = string.Empty;
+            String TextOptionPrompt = string.Empty;
+            int TextOptionMaxLength = 0;
+            int TaxClassID = 0;
+            String SKU = string.Empty;
+            String ExtensionData = string.Empty;
+            String ExtensionData2 = string.Empty;
+            bool IsRecurring = false;
+            bool IsDownload = false;
+            bool ShowTextOption = false;
+            bool RequiresTextOption = false;
+            String FormName = "AddToCartForm_" + ProductID.ToString() + "_" + VariantID.ToString();
+
+            using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
+            {
+                con.Open();
+                using (IDataReader rs = DB.GetRS("select PV.*,P.*, pv.Sizes MLSizes, pv.Colors MLColors, p.ColorOptionPrompt MLColorOptionPrompt, p.SizeOptionPrompt MLSizeOptionPrompt, p.TextOptionPrompt MLTextOptionPrompt, p.TextOptionMaxLength from Product P  with (NOLOCK)  left outer join productvariant PV  with (NOLOCK)  on p.productid=pv.productid where PV.ProductID=P.ProductID and pv.VariantID=" + VariantID.ToString(), con))
+                {
+                    if (!rs.Read())
+                    {
+                        rs.Close();
+                        return String.Empty;
+                    }
+                    if (!AppLogic.AppConfigBool("ShowBuyButtons") || !DB.RSFieldBool(rs, "showbuybutton") || AppLogic.HideForWholesaleSite(ThisCustomer.CustomerLevelID))
+                    {
+                        return string.Empty;
+                    }
+                    if (DB.RSFieldBool(rs, "IsCallToOrder"))
+                    {
+                        return "<div class='call-to-order-wrap' id='" + FormName + "'>" + AppLogic.GetString("common.cs.67", SkinID, LocaleSetting) + "</div>";
+                    }
+
+                    ProductSku = DB.RSField(rs, "SKU").Trim();
+                    SkuSuffix = DB.RSField(rs, "SkuSuffix").Trim();
+                    CustomerEntersPrice = DB.RSFieldBool(rs, "CustomerEntersPrice");
+                    CustomerEntersPricePrompt = DB.RSFieldByLocale(rs, "CustomerEntersPricePrompt", ThisCustomer.LocaleSetting);
+                    RestrictedQuantities = DB.RSField(rs, "RestrictedQuantities");
+                    MinimumQuantity = DB.RSFieldInt(rs, "MinimumQuantity");
+
+                    TrackInventoryBySizeAndColor = DB.RSFieldBool(rs, "TrackInventoryBySizeAndColor");
+
+                    TrackInventoryByColor = DB.RSFieldBool(rs, "TrackInventoryByColor");
+                    ColorsMaster = DB.RSFieldByLocale(rs, "MLColors", Localization.GetDefaultLocale()).Trim();
+                    ColorsDisplay = DB.RSFieldByLocale(rs, "MLColors", LocaleSetting).Trim();
+                    ColorSKUModifiers = DB.RSField(rs, "ColorSKUModifiers").Trim();
+                    ColorOptionPrompt = DB.RSFieldByLocale(rs, "MLColorOptionPrompt", LocaleSetting).Trim();
+
+                    TrackInventoryBySize = DB.RSFieldBool(rs, "TrackInventoryBySize");
+                    SizesMaster = DB.RSFieldByLocale(rs, "MLSizes", Localization.GetDefaultLocale()).Trim();
+                    SizesDisplay = DB.RSFieldByLocale(rs, "MLSizes", LocaleSetting).Trim();
+                    SizeSKUModifiers = DB.RSField(rs, "SizeSKUModifiers").Trim();
+                    SizeOptionPrompt = DB.RSFieldByLocale(rs, "MLSizeOptionPrompt", LocaleSetting).Trim();
+
+                    if (SizesDisplay.Length == 0)
+                    {
+                        SizesDisplay = SizesMaster;
+                    }
+
+                    if (ColorsDisplay.Length == 0)
+                    {
+                        ColorsDisplay = ColorsMaster;
+                    }
+
+                    HasSizePriceModifiers = SizesMaster.IndexOf('[') != -1;
+                    HasColorPriceModifiers = ColorsMaster.IndexOf('[') != -1;
+                    boardSuffix = string.Format("_{0}_{1}", ProductID.ToString(), VariantID.ToString());
+
+                    TextOptionPrompt = DB.RSFieldByLocale(rs, "MLTextOptionPrompt", LocaleSetting).Trim();
+                    TextOptionMaxLength = DB.RSFieldInt(rs, "TextOptionMaxLength");
+
+                    TaxClassID = DB.RSFieldInt(rs, "TaxClassID");
+
+                    SKU = DB.RSField(rs, "SKU");
+
+                    ExtensionData = DB.RSField(rs, "ExtensionData");
+                    ExtensionData2 = DB.RSField(rs, "ExtensionData2");
+
+                    IsRecurring = DB.RSFieldBool(rs, "IsRecurring");
+                    IsDownload = DB.RSFieldBool(rs, "IsDownload");
+
+                    if (VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
+                    {
+                        XmlDocument d = new XmlDocument();
+
+                        using (SqlConnection conn2 = new SqlConnection(DB.GetDBConn()))
+                        {
+                            conn2.Open();
+                            using (IDataReader rsx = DB.GetRS("select ExtensionData,ExtensionData2 from Product with (NOLOCK) where ProductID=" + DB.RSFieldInt(rs, "ProductID").ToString(), conn2))
+                            {
+                                rsx.Read();
+                                ColorSKUModifiers = String.Empty;
+                                SizeSKUModifiers = String.Empty;
+                                try
+                                {
+                                    d.LoadXml(DB.RSField(rsx, "ExtensionData2"));
+                                }
+                                catch { }
+                            }
+                        }
+
+                        foreach (XmlNode n in d.SelectNodes("GroupAttributes/GroupAttribute"))
+                        {
+                            String AttrName = XmlCommon.XmlAttribute(n, "Name");
+                            if (AttrName.Equals("ATTR1", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                SizeOptionPrompt = XmlCommon.XmlAttribute(n, "Prompt");
+                                String Separator = String.Empty;
+                                foreach (XmlNode nn in n.SelectNodes("Values/Value"))
+                                {
+                                    SizesMaster += Separator;
+                                    SizesMaster += nn.InnerText;
+                                    Separator = ",";
+                                }
+                            }
+                            else if (AttrName.Equals("ATTR2", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                ColorOptionPrompt = XmlCommon.XmlAttribute(n, "Prompt");
+                                String Separator = String.Empty;
+                                foreach (XmlNode nn in n.SelectNodes("Values/Value"))
+                                {
+                                    ColorsMaster += Separator;
+                                    ColorsMaster += nn.InnerText;
+                                    Separator = ",";
+                                }
+                            }
+                        }
+                        SizesDisplay = SizesMaster;
+                        ColorsDisplay = ColorsMaster;
+                    }
+
+                    if (TextOptionMaxLength == 0)
+                    {
+                        TextOptionMaxLength = 50;
+                    }
+                    if (ColorOptionPrompt.Length == 0)
+                    {
+                        ColorOptionPrompt = AppLogic.GetString("AppConfig.ColorOptionPrompt", SkinID, LocaleSetting);
+                    }
+                    if (ColorOptionPrompt.Length == 0)
+                    {
+                        ColorOptionPrompt = AppLogic.GetString("common.cs.68", SkinID, LocaleSetting);
+                    }
+                    if (SizeOptionPrompt.Length == 0)
+                    {
+                        SizeOptionPrompt = AppLogic.GetString("AppConfig.SizeOptionPrompt", SkinID, LocaleSetting);
+                    }
+                    if (SizeOptionPrompt.Length == 0)
+                    {
+                        SizeOptionPrompt = AppLogic.GetString("common.cs.69", SkinID, LocaleSetting);
+                    }
+                    if (TextOptionPrompt.Length == 0)
+                    {
+                        TextOptionPrompt = AppLogic.AppConfig("TextOptionPrompt");
+                    }
+                    if (TextOptionPrompt.Length == 0)
+                    {
+                        TextOptionPrompt = AppLogic.GetString("common.cs.70", SkinID, LocaleSetting);
+                    }
+                    ShowTextOption = false;
+                    RequiresTextOption = DB.RSFieldBool(rs, "RequiresTextOption");
+                    if (RequiresTextOption || DB.RSFieldByLocale(rs, "TextOptionPrompt", LocaleSetting).Trim().Length != 0)
+                    {
+                        ShowTextOption = true;
+                    }
+                }
+            }
+
+            if (ColorChangeProductImage)
+            {
+                ProductImageGallery ig = new ProductImageGallery(ProductID, ThisCustomer.SkinID, ThisCustomer.LocaleSetting, SKU);
+                ColorChangeProductImage = !ig.IsEmpty();
+            }
+
+            bool ProtectInventory = AppLogic.AppConfigBool("Inventory.LimitCartToQuantityOnHand");
+            int ProtectInventoryMinQuantity = AppLogic.AppConfigUSInt("Inventory.MinQuantity"); // if qty is below this, addtocart will not allow it
+            String InventoryControlList = String.Empty;
+            if (ProtectInventory)
+            {
+                InventoryControlList = AppLogic.GetInventoryList(ProductID, VariantID, TrackInventoryByColor, TrackInventoryBySize, ProductSku, SkuSuffix, SizesMaster, ColorsMaster);
+            }
+
+            int inv = AppLogic.GetInventory(ProductID, VariantID, "", "");
+
+            StringBuilder tmpS = new StringBuilder(10000);
+            tmpS.Append("<div class='form add-to-cart-form' id='" + FormName + "'>\n");
+            tmpS.Append("<script type=\"text/javascript\" Language=\"JavaScript\">\n<!--\n");
+            tmpS.Append("var VariantMinimumQty_" + "1".ToString() + "_" + "1".ToString() + " = " + MinimumQuantity.ToString() + ";\n");
+            tmpS.Append("var SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + " = " + inv.ToString() + ";\n");
+
+
+            if (ProtectInventory && InventoryControlList.Length != 0)
+            {
+                bool first = true;
+                foreach (String s in InventoryControlList.Split('|'))
+                {
+                    if (first)
+                    {
+                        tmpS.Append("var board" + boardSuffix + " = new Array(");
+                    }
+                    else
+                    {
+                        tmpS.Append(",");
+                    }
+                    String[] ivals = s.Split(',');
+                    tmpS.Append("new Array('" + ivals[0].Replace("'", "").Trim() + "','" + ivals[1].Replace("'", "").Trim() + "','" + ivals[2].Replace("'", "").Trim() + "')");
+                    first = false;
+                }
+                tmpS.Append(");\n");
+            }
+
+            tmpS.Append("function " + FormName + "_Validator(theForm)\n");
+            tmpS.Append("	{\n");
+            tmpS.Append("	submitonce(theForm);\n");
+
+            //if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
+            //{
+            //    tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < 1)\n", ProductID, VariantID); // convert form val to integer
+            //    tmpS.Append("	{\n");
+            //    tmpS.Append("		alert(\"" + AppLogic.GetString("common.cs.84", SkinID, LocaleSetting) + "\");\n");
+            //    tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
+            //    tmpS.Append("		submitenabled(theForm);\n");
+            //    tmpS.Append("		return (false);\n");
+            //    tmpS.Append("    }\n");
+
+            //    if (RestrictedQuantities.Length == 0 && MinimumQuantity != 0)
+            //    {
+            //        tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n", ProductID, VariantID); // convert form val to integer
+            //        tmpS.Append("	{\n");
+            //        tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.85", SkinID, LocaleSetting), "\"+VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + " + \"") + "\");\n");
+            //        tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
+            //        tmpS.Append("		submitenabled(theForm);\n");
+            //        tmpS.Append("		return (false);\n");
+            //        tmpS.Append("    }\n");
+            //    }
+            //}
+
+            //if (SizesMaster.Length != 0 && !AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
+            //{
+            //    tmpS.AppendFormat("	if (theForm.Size_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
+            //    tmpS.Append("	{\n");
+            //    tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.71", SkinID, LocaleSetting), SizeOptionPrompt.ToLowerInvariant()) + "\");\n");
+            //    tmpS.AppendFormat("		theForm.Size_{0}_{1}.focus();\n", ProductID, VariantID);
+            //    tmpS.Append("		submitenabled(theForm);\n");
+            //    tmpS.Append("		return (false);\n");
+            //    tmpS.Append("    }\n");
+            //}
+            //if (ColorsMaster.Length != 0 && !AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
+            //{
+            //    tmpS.AppendFormat("	if (theForm.Color_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
+            //    tmpS.Append("	{\n");
+            //    tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.71", SkinID, LocaleSetting), ColorOptionPrompt.ToLowerInvariant()) + "\");\n");
+            //    tmpS.AppendFormat("		theForm.Color_{0}_{1}.focus();\n", ProductID, VariantID);
+            //    tmpS.Append("		submitenabled(theForm);\n");
+            //    tmpS.Append("		return (false);\n");
+            //    tmpS.Append("    }\n");
+            //}
+            if (RequiresTextOption)
+            {
+                tmpS.AppendFormat("	if (theForm.TextOption_{0}_{1}.value.length == 0)\n", ProductID, VariantID);
+                tmpS.Append("	{\n");
+                tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.73", SkinID, LocaleSetting), TextOptionPrompt) + "\");\n");
+                tmpS.AppendFormat("		theForm.TextOption_{0}_{1}.focus();\n", ProductID, VariantID);
+                tmpS.AppendFormat("		submitenabled(theForm);\n");
+                tmpS.Append("		return (false);\n");
+                tmpS.Append("    }\n");
+            }
+
+            if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes && ProtectInventory && AppLogic.AppConfigBool("ShowQuantityOnProductPage"))
+            {
+                if (!TrackInventoryBySizeAndColor)
+                {
+                    //tmpS.AppendFormat("	if (theForm.Quantity_{0}_{1}.value > SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n", ProductID, VariantID);
+                    //tmpS.Append("	{\n");
+                    //tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.74", SkinID, LocaleSetting), "\"+SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + "+\"") + "\");\n");
+                    //tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.value = SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ";\n", ProductID, VariantID);
+                    //tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
+                    //tmpS.Append("		submitenabled(theForm);\n");
+                    //tmpS.Append("		return (false);\n");
+                    //tmpS.Append("    }\n");
+                }
+                else
+                {
+                    if (SizesMaster.Length != 0)
+                    {
+                        tmpS.AppendFormat("var sel_size = theForm.Size_{0}_{1}[theForm.Size_{0}_{1}.selectedIndex].value;\n", "1", "1");
+                        //JH 10.21.2010 removed append parameters that did not match formatting. This also matches the js builder below
+                        tmpS.Append("sel_size = sel_size.substring(0,sel_size.indexOf(',')).replace(new RegExp(\"'\", 'gi'), '');\n");
+                    }
+                    else
+                    {
+                        tmpS.Append("var sel_size = '';\n");
+                    }
+
+                    if (ColorsMaster.Length != 0)
+                    {
+                        tmpS.AppendFormat("var sel_color = theForm.Color_{0}_{1}[theForm.Color_{0}_{1}.selectedIndex].value;\n", "1", "1");
+                        tmpS.Append("sel_color = sel_color.substring(0,sel_color.indexOf(',')).replace(new RegExp(\"'\", 'gi'), '');\n");
+                    }
+                    else
+                    {
+                        tmpS.Append("var sel_color = '';\n");
+                    }
+
+                    tmpS.Append("if(typeof(sel_size) == 'undefined') sel_size = '';\n");
+                    tmpS.Append("if(typeof(sel_color) == 'undefined') sel_color = '';\n");
+
+                    // clean price delta options if any, so match will work on inventory control list:
+                    tmpS.Append("var j = sel_size.indexOf(\"[\");\n");
+                    tmpS.Append("if(j != -1)\n");
+                    tmpS.Append("{\n");
+                    tmpS.Append("	sel_size = Trim(sel_size.substring(0,j));\n");
+                    tmpS.Append("}\n");
+
+                    tmpS.Append("var i = sel_color.indexOf(\"[\");\n");
+                    tmpS.Append("if(i != -1)\n");
+                    tmpS.Append("{\n");
+                    tmpS.Append("	sel_color = Trim(sel_color.substring(0,i));\n");
+                    tmpS.Append("}\n");
+
+                    if (TrackInventoryBySize)
+                    {
+                        tmpS.Append("var sel_size_master = sel_size;\n");
+                    }
+                    else
+                    {
+                        tmpS.Append("var sel_size_master = '';\n");
+                    }
+
+                    if (TrackInventoryByColor)
+                    {
+                        tmpS.Append("var sel_color_master = sel_color;\n");
+                    }
+                    else
+                    {
+                        tmpS.Append("var sel_color_master = '';\n");
+                    }
+
+                    tmpS.AppendFormat("var sel_qty = theForm.Quantity_{0}_{1}.value;\n", "1", "1");
+                    tmpS.Append("var sizecolorfound = 0;\n");
+                    tmpS.Append("for(i = 0; i < board" + boardSuffix + ".length; i++)\n");
+                    tmpS.Append("{\n");
+                    tmpS.Append("	if(board" + boardSuffix + "[i][1] == sel_size_master && board" + boardSuffix + "[i][0] == sel_color_master)\n");
+                    tmpS.Append("	{\n");
+                    tmpS.Append("		sizecolorfound = 1;\n");
+                    tmpS.Append("		if(parseInt(sel_qty) > parseInt(board" + boardSuffix + "[i][2]))\n");
+                    tmpS.Append("		{\n");
+                    tmpS.Append("			if(parseInt(board" + boardSuffix + "[i][2]) == 0)\n");
+                    tmpS.Append("			{\n");
+                    tmpS.Append("               if(sel_color == '') sel_color = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
+                    tmpS.Append("               if(sel_size == '') sel_size = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
+                    tmpS.Append("				alert('" + String.Format(AppLogic.GetString("common.cs.75", SkinID, LocaleSetting), ColorOptionPrompt, SizeOptionPrompt, ColorOptionPrompt, SizeOptionPrompt).Replace(@"\\n", @"\n") + "');\n");
+                    tmpS.Append("			}\n");
+                    tmpS.Append("			else\n");
+                    tmpS.Append("			{\n");
+                    tmpS.Append("               if(sel_color == '') sel_color = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
+                    tmpS.Append("               if(sel_size == '') sel_size = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
+                    tmpS.Append("				alert('" + String.Format(AppLogic.GetString("common.cs.76", SkinID, LocaleSetting), ColorOptionPrompt, SizeOptionPrompt, ColorOptionPrompt, SizeOptionPrompt).Replace(@"\\n", @"\n").Replace("board", "board" + boardSuffix) + "');\n");
+                    tmpS.Append("			}\n");
+                    tmpS.Append("			submitenabled(theForm);\n");
+                    tmpS.Append("			return (false);\n");
+                    tmpS.Append("		}\n");
+                    tmpS.Append("	}\n");
+                    tmpS.Append("}\n");
+                    tmpS.Append("if(sizecolorfound == 0)\n");
+                    tmpS.Append("{\n");
+                    tmpS.Append("   if(sel_color == '') sel_color = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
+                    tmpS.Append("   if(sel_size == '') sel_size = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
+                    tmpS.Append("	alert('" + AppLogic.GetString("shoppingcart.cs.115", ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("'", "").Replace("{0}", "[' + sel_color + ']").Replace("{1}", "[' + sel_size + ']") + "');\n");
+                    tmpS.Append("	submitenabled(theForm);\n");
+                    tmpS.Append("	return (false);\n");
+                    tmpS.Append("}\n");
+                    tmpS.Append("submitenabled(theForm);\n");
+                }
+            }
+            tmpS.Append("	submitenabled(theForm);\n");
+            tmpS.Append("	return (true);\n");
+            tmpS.Append("	}\n//-->\n");
+            tmpS.Append("</script>\n");
+
+
+            // leave empty for now, let's make sure we set it's value when do a postback
+
+            //tmpS.AppendFormat("<input name=\"AddToCart_{0}_{1}\" id=\"AddToCart_{0}_{1}\" type=\"hidden\" value=\"\">", ProductID, VariantID);
+            tmpS.AppendFormat("<input name=\"VariantStyle_{0}_{1}\" id=\"VariantStyle_{0}_{1}\" type=\"hidden\" value=\"" + ((int)VariantStyle).ToString() + "\">", ProductID, VariantID);
+            tmpS.AppendFormat("<input name=\"IsWishList_{0}_{1}\" id=\"IsWishList_{0}_{1}\" type=\"hidden\" value=\"0\">", ProductID, VariantID);
+            tmpS.AppendFormat("<input name=\"IsGiftRegistry_{0}_{1}\" id=\"IsGiftRegistr_{0}_{1}\" type=\"hidden\" value=\"0\">", ProductID, VariantID);
+            tmpS.AppendFormat("<input type=\"hidden\" name=\"UpsellProducts_{0}_{1}\" id=\"UpsellProducts_{0}_{1}\" value=\"\" class=\"aspdnsf_UpsellProducts\" >\n", ProductID, VariantID);
+            tmpS.AppendFormat("<input type=\"hidden\" name=\"CartRecID_{0}_{1}\" id=\"CartRecID_{0}_{1}\" value=\"" + CartRecID.ToString() + "\">\n", ProductID, VariantID);
+            tmpS.AppendFormat("<input type=\"hidden\" name=\"ProductID_{0}_{1}\" id=\"ProductID_{0}_{1}\" value=\"" + ProductID.ToString() + "\">\n", ProductID, VariantID);
+            if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
+            {
+                tmpS.AppendFormat("<input type=\"hidden\" name=\"VariantID_{0}_{1}\" id=\"VariantID_{0}_{1}\" value=\"" + VariantID.ToString() + "\">\n", ProductID, VariantID);
+            }
+            if (forPack)
+            {
+                tmpS.AppendFormat("<input type=\"hidden\" name=\"IsSubmit_{0}_{1}\" id=\"IsSubmit_{0}_{1}t\" value=\"" + AppLogic.GetString("common.cs.77", SkinID, LocaleSetting) + "\">\n", ProductID, VariantID);
+                tmpS.AppendFormat("<input type=\"hidden\" name=\"ProductTypeID_{0}_{1}\" id=\"ProductTypeID_{0}_{1}\" value=\"0\">\n", ProductID, VariantID);
+                if (ColorsMaster.Length == 0)
+                {
+                    tmpS.AppendFormat("<input type=\"hidden\" name=\"Color_{0}_{1}\" id=\"Color_{0}_{1}\" value=\"\">\n", "1", "1");
+                }
+                if (SizesMaster.Length == 0)
+                {
+                    tmpS.AppendFormat("<input type=\"hidden\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" value=\"\">\n", ProductID, VariantID);
+                }
+            }
+            if (AppLogic.AppConfigBool("ShowPreviousPurchase") && AppLogic.Owns(ProductID, ThisCustomer.CustomerID))
+            {
+                tmpS.Append("<div class=\"form-text previous-purchase\">" + AppLogic.GetString("common.cs.86", SkinID, LocaleSetting) + "</div>");
+            }
+
+            if (RequiresTextOption || ShowTextOption)
+            {
+                tmpS.Append("<div class=\"form-group text-option-group\">");
+                if (TextOptionMaxLength < 50)
+                {
+                    tmpS.Append("<label>");
+                    tmpS.Append(TextOptionPrompt);
+                    tmpS.Append("</label>");
+                    tmpS.AppendFormat("<input type=\"text\" class=\"form-control text-option\" maxlength=\"" + TextOptionMaxLength.ToString() + "\"  name=\"TextOption_{0}_{1}\" id=\"TextOption{0}_{1}\" value=\"" + TextOptionForEdit + "\">", ProductID, VariantID);
+                }
+                else
+                {
+                    tmpS.Append("<label>");
+                    tmpS.Append(TextOptionPrompt);
+                    tmpS.Append("</label>");
+                    tmpS.AppendFormat("<textarea rows=\"4\" class=\"form-control text-option\" name=\"TextOption_{0}_{1}\" id=\"TextOption{0}_{1}\" onkeypress=\"if(this.value.length>=" + TextOptionMaxLength.ToString() + " && ((event.keyCode < 33 || event.keyCode > 40) && event.keyCode != 45 && event.keyCode != 46)) {{return false;}} \">" + TextOptionForEdit + "</textarea>", ProductID, VariantID);
+                }
+                tmpS.Append("</div>");
+            }
+
+            //tmpS.Append("<div class=\"item-controls\">");
+            //if (CustomerEntersPrice)
+            //{
+            //    tmpS.Append("<label class=\"customer-enters-price-label\" for=\"Price_{0}_{1}\">");
+            //    tmpS.Append(CustomerEntersPricePrompt);
+            //    tmpS.Append("</label>");
+            //    tmpS.AppendFormat(" <input maxLength=\"10\" class=\"form-control price-field\" name=\"Price_{0}_{1}\" id=\"Price_{0}_{1}\" value=\"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ProductPriceForEdit) + "\">", ProductID, VariantID);
+            //    tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
+            //}
+
+            //Colors Alternative
+            //if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
+            //{
+            //    if (SizesMaster.Length != 0)
+            //    {
+            //        String[] SizesMasterSplit = SizesMaster.Split(',');
+            //        String[] SizesDisplaySplit = SizesDisplay.Split(',');
+            //        String[] SizeSKUsSplit = SizeSKUModifiers.Split(',');
+            //        tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", ProductID, VariantID);
+            //        if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
+            //        {
+            //            tmpS.Append("<option value=\"-,-\">" + SizeOptionPrompt + "</option>\n");
+            //        }
+            //        for (int i = SizesMasterSplit.GetLowerBound(0); i <= SizesMasterSplit.GetUpperBound(0); i++)
+            //        {
+            //            string SizeString = SizesDisplaySplit[i].Trim();
+            //            string SizeStringValue = SizeString;
+            //            String Modifier = String.Empty;
+            //            try
+            //            {
+            //                Modifier = SizeSKUsSplit[i];
+            //            }
+            //            catch
+            //            { }
+            //            decimal SizePriceDeltaValue = AppLogic.GetColorAndSizePriceDelta("", SizesMasterSplit[i].Trim(), TaxClassID, ThisCustomer, true, false);
+            //            decimal SizePriceDelta = AppLogic.GetColorAndSizePriceDelta("", SizesMasterSplit[i].Trim(), TaxClassID, ThisCustomer, true, true);
+            //            if (SizeString.IndexOf("[") != -1)
+            //            {
+            //                SizeString = SizeString.Substring(0, SizeString.IndexOf("[")).Trim() + " [" + AppLogic.AppConfig("AjaxPricingPrompt") + CommonLogic.IIF(SizePriceDelta > 0, "+", "") + ThisCustomer.CurrencyString(SizePriceDelta) + "]";
+            //                SizeStringValue = SizeString.Substring(0, SizeString.IndexOf("[")).Trim() + " [" + CommonLogic.IIF(SizePriceDeltaValue > 0, "+", "") + Localization.CurrencyStringForGatewayWithoutExchangeRate(SizePriceDeltaValue) + "]";
+            //            }
+            //            tmpS.Append("<option value=\"" + AppLogic.CleanSizeColorOption(SizesMasterSplit[i]) + "," + Modifier + "\" " +
+            //                CommonLogic.IIF(ChosenSizeForEdit == SizeStringValue, " selected ", "") + ">" +
+            //                HttpContext.Current.Server.HtmlDecode(SizeString) + "</option>\n");
+            //        }
+            //        tmpS.Append("</select>");
+            //    }
+            //    if (ColorsMaster.Length != 0)
+            //    {
+            //        String[] ColorsMasterSplit = ColorsMaster.Split(',');
+            //        String[] ColorsDisplaySplit = ColorsDisplay.Split(',');
+            //        String[] ColorSKUsSplit = ColorSKUModifiers.Split(',');
+            //        tmpS.Append(String.Format(" <select class=\"form-control color-select\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", ProductID, VariantID));
+
+            //        if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
+            //        {
+            //            tmpS.Append("<option value=\"-,-\">" + ColorOptionPrompt + "</option>\n");
+            //        }
+            //        for (int i = ColorsMasterSplit.GetLowerBound(0); i <= ColorsMasterSplit.GetUpperBound(0); i++)
+            //        {
+            //            string ColorString = ColorsDisplaySplit[i].Trim();
+            //            string ColorStringValue = ColorString;
+            //            String Modifier = String.Empty;
+            //            try
+            //            {
+            //                Modifier = ColorSKUsSplit[i];
+            //            }
+            //            catch
+            //            { }
+            //            decimal ColorPriceDeltaValue = AppLogic.GetColorAndSizePriceDelta(ColorsMasterSplit[i].Trim(), "", TaxClassID, ThisCustomer, true, false);
+            //            decimal ColorPriceDelta = AppLogic.GetColorAndSizePriceDelta(ColorsMasterSplit[i].Trim(), "", TaxClassID, ThisCustomer, true, true);
+            //            if (ColorString.IndexOf("[") != -1)
+            //            {
+            //                ColorString = ColorString.Substring(0, ColorString.IndexOf("[")).Trim() + " [" + AppLogic.AppConfig("AjaxPricingPrompt") + CommonLogic.IIF(ColorPriceDelta > 0, "+", "") + ThisCustomer.CurrencyString(ColorPriceDelta) + "]";
+            //                ColorStringValue = ColorString.Substring(0, ColorString.IndexOf("[")).Trim() + " [" + CommonLogic.IIF(ColorPriceDeltaValue > 0, "+", "") + Localization.CurrencyStringForGatewayWithoutExchangeRate(ColorPriceDeltaValue) + "]";
+            //            }
+            //            tmpS.Append("<option value=\"" + AppLogic.CleanSizeColorOption(ColorsMasterSplit[i]) + "," + Modifier + "\" " +
+            //                CommonLogic.IIF(ChosenColorForEdit == ColorStringValue, " selected ", "") + ">" +
+            //                HttpContext.Current.Server.HtmlDecode(ColorString) + "</option>\n");
+            //        }
+            //        tmpS.Append("</select>");
+            //    }
+            //}
+
+            //if (inv > 4)
+            //{
+            //    tmpS.Append("<p><span class=\"black-blu-label\"><font>In stock: </font>" + inv + "</span></p>");
+            //}
+
+
+
+            //Quantity DropDown
+            //tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
+            //if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
+            //{
+            //    if (RestrictedQuantities.Length == 0)
+            //    {
+            //        int InitialQ = 1;
+            //        if (MinimumQuantity > 0)
+            //        {
+            //            InitialQ = MinimumQuantity;
+            //        }
+            //        else if (AppLogic.AppConfig("DefaultAddToCartQuantity").Length != 0)
+            //        {
+            //            InitialQ = AppLogic.AppConfigUSInt("DefaultAddToCartQuantity");
+            //        }
+            //        if (QuantityForEdit != 0)
+            //        {
+            //            InitialQ = QuantityForEdit;
+            //        }
+            //        tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", ProductID, VariantID);
+            //        tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
+            //    }
+            //    else
+            //    {
+            //        tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font>", ProductID, VariantID);
+            //        tmpS.AppendFormat("<select class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" >", ProductID, VariantID);
+            //        foreach (String s in RestrictedQuantities.Split(','))
+            //        {
+            //            if (s.Trim().Length != 0)
+            //            {
+            //                int Q = Localization.ParseUSInt(s.Trim());
+            //                tmpS.Append("<option value=\"" + Q.ToString() + "\" " + CommonLogic.IIF(QuantityForEdit == Q, " selected ", "") + ">" + Q.ToString() + "</option>");
+            //            }
+            //        }
+            //        tmpS.Append("</select> ");
+            //    }
+            //}
+            //else
+            //{
+            //    tmpS.AppendFormat("<input class=\"item-quantity\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" type=\"hidden\" value=\"1\">", ProductID, VariantID);
+            //}
+            Decimal M = 1.0M;
+            String MM = ThisCustomer.CurrencyString(M).Substring(0, 1); // get currency symbol
+            if (CommonLogic.IsInteger(MM))
+            {
+                MM = String.Empty; // something international happened, so just leave empty, we only want currency symbol, not any digits
+            }
+            tmpS.Append("</span>");
+
+            tmpS.Append("	</span></div>");
+
+            bool showAddToCartButton = true;
+            bool showAddToWishListButton = false;
+            bool showAddGiftRegistryButton = false;
+
+            showAddToCartButton = true;
+
+            if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToCartButton") != "")
+            {
+                // render image button
+                var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToCartButton"));
+                tmpS.AppendFormat(" <a href='JavaScript:void(0)'><img id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"AddToCartButton\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+
+                var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToCartButton_MouseOver");
+                if (!string.IsNullOrEmpty(mouseOverImage))
+                {
+                    var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
+                    tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
+
+                    // attach the mouseout event automatically to switch back to the original image
+                    tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
+                }
+
+                var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToCartButton_MouseDown");
+                if (!string.IsNullOrEmpty(mouseDownImage))
+                {
+                    var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
+                    tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
+                }
+
+                tmpS.AppendFormat(" /></a>");
+            }
+            else
+            {
+                // render normal html button
+                tmpS.AppendFormat(" <input type=\"button\" data-dismiss=\"modal\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+               
+            }
+
+            // TODO: Commented for the Wishlist and Gift button functionality 
+            //if (AppLogic.AppConfigBool("ShowWishButtons") && showWishListButton)
+            //{
+            //    showAddToWishListButton = true;
+
+            //    if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToWishButton") != "")
+            //    {
+            //        // render image button
+            //        var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToWishButton"));
+            //        tmpS.AppendFormat("<input type=\"image\" id=\"AddToWishButton_{0}_{1}\" name=\"AddToWishButton_{0}_{1}\" class=\"button add-to-wishlist-button\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.WishButtonPrompt", SkinID, LocaleSetting));
+
+            //        var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToWishButton_MouseOver");
+            //        if (!string.IsNullOrEmpty(mouseOverImage))
+            //        {
+            //            var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
+            //            tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
+
+            //            // attach the mouseout event automatically to switch back to the original image
+            //            tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
+            //        }
+
+            //        var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToWishButton_MouseDown");
+            //        if (!string.IsNullOrEmpty(mouseDownImage))
+            //        {
+            //            var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
+            //            tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // Render normal html button
+            //        tmpS.AppendFormat("<input type=\"button\" id=\"AddToWishButton_{0}_{1}\" name=\"AddToWishButton_{0}_{1}\" class=\"button add-to-wishlist-button\" value=\"" + AppLogic.GetString("AppConfig.WishButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
+            //    }
+            //}
+
+            //if (AppLogic.AppConfigBool("ShowGiftRegistryButtons") && showGiftRegistryButton && !IsRecurring && !IsDownload)
+            //{
+            //    showAddGiftRegistryButton = true;
+
+            //    tmpS.AppendFormat(" ");
+
+            //    if (AppLogic.AppConfigBool("AddToCart.UseImageButton") && AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton") != "")
+            //    {
+            //        // render image button
+            //        var src = AppLogic.SkinImage(AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton"));
+            //        tmpS.AppendFormat("<input type=\"image\" id=\"AddToGiftButton_{0}_{1}\" name=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" src=\"{2}\" alt=\"{3}\" ", ProductID, VariantID, src, AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting));
+
+            //        var mouseOverImage = AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton_MouseOver");
+            //        if (!string.IsNullOrEmpty(mouseOverImage))
+            //        {
+            //            var mouseOverSrc = AppLogic.SkinImage(mouseOverImage);
+            //            tmpS.AppendFormat("  onmouseover=\"this.src = '{0}'\" ", mouseOverSrc);
+
+            //            // attach the mouseout event automatically to switch back to the original image
+            //            tmpS.AppendFormat("  onmouseout=\"this.src = '{0}'\" ", src);
+            //        }
+
+            //        var mouseDownImage = AppLogic.AppConfig("AddToCart.AddToGiftRegistryButton_MouseDown");
+            //        if (!string.IsNullOrEmpty(mouseDownImage))
+            //        {
+            //            var mouseDownImageSrc = AppLogic.SkinImage(mouseDownImage);
+            //            tmpS.AppendFormat("  onmousedown=\"this.src = '{0}'\" ", mouseDownImageSrc);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // render normal html button
+            //        tmpS.AppendFormat("<input type=\"button\" id=\"AddToGiftButton_{0}_{1}\" class=\"button add-to-registry-button\" value=\"" + AppLogic.GetString("AppConfig.GiftButtonPrompt", SkinID, LocaleSetting) + "\" >", ProductID, VariantID);
+            //    }
+            //}                       
+
+            if (AppLogic.GetNextVariant(ProductID, VariantID) == VariantID) // single variant product
+            {
+                PayPalAd productPageAd = new PayPalAd(PayPalAd.TargetPage.Product);
+                if (productPageAd.Show)
+                    tmpS.AppendLine(productPageAd.ImageScript);
+            }
+
+            tmpS.AppendLine();
+            // For the move to using masterpages, the  primary prerequisite was to have the form on the master template
+            // we therefore stripped this extension of it's own form tag
+            // we resort to using javascript to do that
+            tmpS.Append("<script type=\"text/javascript\" language=\"Javascript\" >\n");
+            // attach a delegate function that get's called on browser DOM load            
+            tmpS.Append("    $window_addLoad(function(){ \n");
+           
+        
+             tmpS.Append("Type.registerNamespace('aspdnsf');");
+             tmpS.AppendLine();
+             tmpS.Append("Type.registerNamespace('aspdnsf.Controls');");
+
+             tmpS.AppendLine();
+       
+            // also defined here is the delAtcx function
+            // which is used on the addto-x button's onclick handler
+            // this function will then call the __doPostBack function which is an asp.net standard javascript function
+            // which has the following signature:
+            //          __doPostBack(eventTarget, eventArgument) 
+            // To simulate same-page postback through javascript
+            // we use the "AddToCart" as the eventTarget, which we'll try to interpret as a command later during postback
+            // and the the cartType, productid and variantid concantenated as the eventArgument
+            // this cause the current page(showproduct.aspx) to postback to itself
+            // which we will then try to interpret as addtocart postback 
+            // via the __EVENTTARGET and __EVENTARGUMENT form values....
+
+
+            tmpS.AppendFormat("        var ctrl_{0} = new aspdnsf.Controls.AddToCartForm({1}, {2}); \n", FormName, ProductID, VariantID);
+            tmpS.AppendFormat("        ctrl_{0}.setValidationRoutine( function(){{ return {0}_Validator(theForm) }} );\n", FormName);
+
+            bool useAjaxBehavior = AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !ThisCustomer.IsImpersonated && !AppLogic.CheckForMobileRequest();
+            if (forKit || forPack)
+            {
+                // ajax addtocart is not supported for kits and packs
+                useAjaxBehavior = false;
+            }
+
+            tmpS.AppendFormat("        ctrl_{0}.setUseAjaxBehavior({1});\n", FormName, useAjaxBehavior.ToString().ToLowerInvariant());
+
+            if (showAddToCartButton)
+            {
+                tmpS.AppendFormat("        ctrl_{0}.registerButton('AddToCartButton_{1}_{2}', {3});\n", FormName, ProductID, VariantID, (int)CartTypeEnum.ShoppingCart);
+            }
+            if (showAddToWishListButton)
+            {
+                tmpS.AppendFormat("        ctrl_{0}.registerButton('AddToWishButton_{1}_{2}', {3});\n", FormName, ProductID, VariantID, (int)CartTypeEnum.WishCart);
+            }
+            if (showAddGiftRegistryButton)
+            {
+                tmpS.AppendFormat("        ctrl_{0}.registerButton('AddToGiftButton_{1}_{2}', {3});\n", FormName, ProductID, VariantID, (int)CartTypeEnum.GiftRegistryCart);
+            }
+
+            tmpS.Append("    });");
+            tmpS.Append("</script>");
+            tmpS.AppendLine();
+
+            if (!AppLogic.AppConfigBool("BuySafe.DisableAddoToCartKicker") && AppLogic.GlobalConfigBool("BuySafe.Enabled") && AppLogic.GlobalConfig("BuySafe.Hash").Length != 0)
+            {
+                tmpS.AppendLine("<div class=\"form-text buysafe-kicker\" id=\"ProductBuySafeKicker\">");
+                tmpS.AppendLine("<span id=\"buySAFE_Kicker\" name=\"buySAFE_Kicker\" type=\"" + AppLogic.AppConfig("BuySafe.KickerType") + "\"></span>");
+                tmpS.AppendLine("</div>");
+            }
+            tmpS.Append("</div>");
+
+            return tmpS.ToString();
+        }
         /// <summary>
         /// Gets the add to cart form.
         /// </summary>
@@ -9029,8 +9846,8 @@ namespace AspDotNetStorefrontCore
             StringBuilder tmpS = new StringBuilder(10000);
             tmpS.Append("<div class='form add-to-cart-form' id='" + FormName + "'>\n");
             tmpS.Append("<script type=\"text/javascript\" Language=\"JavaScript\">\n<!--\n");
-            tmpS.Append("var VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + " = " + MinimumQuantity.ToString() + ";\n");
-            tmpS.Append("var SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + " = " + inv.ToString() + ";\n");
+            tmpS.Append("var VariantMinimumQty_" + "1".ToString() + "_" + "1".ToString() + " = " + MinimumQuantity.ToString() + ";\n");
+            tmpS.Append("var SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + " = " + inv.ToString() + ";\n");
 
 
             if (ProtectInventory && InventoryControlList.Length != 0)
@@ -9114,10 +9931,10 @@ namespace AspDotNetStorefrontCore
             {
                 if (!TrackInventoryBySizeAndColor)
                 {
-                    tmpS.Append("	if (theForm.Quantity.value > SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ")\n");
+                    tmpS.Append("	if (theForm.Quantity.value > SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + ")\n");
                     tmpS.Append("	{\n");
-                    tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.74", SkinID, LocaleSetting), "\"+SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + "+\"") + "\");\n");
-                    tmpS.Append("		theForm.Quantity.value = SelectedVariantInventory_" + ProductID.ToString() + "_" + VariantID.ToString() + ";\n");
+                    tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.74", SkinID, LocaleSetting), "\"+SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + "+\"") + "\");\n");
+                    tmpS.Append("		theForm.Quantity.value = SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + ";\n");
                     tmpS.Append("		theForm.Quantity.focus();\n");
                     tmpS.Append("		submitenabled(theForm);\n");
                     tmpS.Append("		return (false);\n");
@@ -10289,7 +11106,11 @@ namespace AspDotNetStorefrontCore
                                     false,
                                     0,
                                     System.Decimal.Zero,
-                                    preferredComposition);
+                                    preferredComposition,
+                                    addCartInfo.BluBucksUsed,
+                                    addCartInfo.CategoryFundUsed,
+                                    addCartInfo.FundID
+                                    );
                 }
                 else
                 {
@@ -10307,7 +11128,11 @@ namespace AspDotNetStorefrontCore
                         false,
                         false,
                         0,
-                        addCartInfo.CustomerEnteredPrice);
+                        addCartInfo.CustomerEnteredPrice,
+                        addCartInfo.BluBucksUsed,
+                        addCartInfo.CategoryFundUsed,
+                        addCartInfo.FundID
+                       );
                 }
 
                 success = true;
@@ -10371,7 +11196,8 @@ namespace AspDotNetStorefrontCore
                                         false,
                                         false,
                                         0,
-                                        System.Decimal.Zero);
+                                        System.Decimal.Zero
+                                        );
                                     Decimal PR = AppLogic.GetUpsellProductPrice(addCartInfo.ProductId, UpsellProductID, ThisCustomer.CustomerLevelID);
                                     DB.ExecuteSQL("update shoppingcart set IsUpsell=1, ProductPrice=" + Localization.CurrencyStringForDBWithoutExchangeRate(PR) + " where CartType=" + ((int)addCartInfo.CartType).ToString() + " and CustomerID=" + ThisCustomer.CustomerID.ToString() + " and ProductID=" + UpsellProductID.ToString() + " and VariantID=" + UpsellVariantID.ToString() + " and convert(nvarchar(1000),ChosenColor)='' and convert(nvarchar(1000),ChosenSize)='' and convert(nvarchar(1000),TextOption)=''");
                                 }
@@ -10664,6 +11490,36 @@ namespace AspDotNetStorefrontCore
             set { m_customerenteredprice = value; }
         }
 
+        private decimal m_BluBucksUsed;
+        /// <summary>
+        /// Gets or sets the customer entered price
+        /// </summary>
+        public decimal BluBucksUsed
+        {
+            get { return m_BluBucksUsed; }
+            set { m_BluBucksUsed = value; }
+        }
+
+        private decimal m_CategoryFundUsed;
+        /// <summary>
+        /// Gets or sets the customer entered price
+        /// </summary>
+        public decimal CategoryFundUsed
+        {
+            get { return m_CategoryFundUsed; }
+            set { m_CategoryFundUsed = value; }
+        }
+
+        private int m_FundID;
+        /// <summary>
+        /// Gets or sets the shipping address id
+        /// </summary>
+        public int FundID
+        {
+            get { return m_FundID; }
+            set { m_FundID = value; }
+        }
+
         private string m_chosencolor;
         /// <summary>
         /// Gets or sets the chosen color
@@ -10912,20 +11768,20 @@ namespace AspDotNetStorefrontCore
 
             nfo.VariantId = variantId;
             nfo.CartType = cartType;
-            nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", productId, variantId));
+            nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", "1", "1"));//productId, variantId
 
             if (nfo.Quantity == 0)
             {
                 SqlCommand sc = new SqlCommand(string.Format("select variantid from dbo.ProductVariant where isDefault=1 and productid={0}", productId));
                 variantId = DB.Scalar<int>.ExecuteScalar(sc);
-                nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", productId, variantId));
+                nfo.Quantity = CommonLogic.FormNativeInt(string.Format("Quantity_{0}_{1}", "1", "1"));//productId, variantId
             }
 
-            nfo.ParseValidShippingAddressId(CommonLogic.FormCanBeDangerousContent(string.Format("ShippingAddressID_{0}_{1}", productId, variantId)));
-            nfo.ParseValidCustomerEnteredPrice(CommonLogic.FormCanBeDangerousContent(string.Format("Price_{0}_{1}", productId, variantId)));
+            nfo.ParseValidShippingAddressId(CommonLogic.FormCanBeDangerousContent(string.Format("ShippingAddressID_{0}_{1}", productId, variantId)));//productId, variantId
+            nfo.ParseValidCustomerEnteredPrice(CommonLogic.FormCanBeDangerousContent(string.Format("Price_{0}_{1}", productId, variantId)));//productId, variantId
 
-            nfo.ParseColorOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Color_{0}_{1}", productId, variantId))));
-            nfo.ParseSizeOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Size_{0}_{1}", productId, variantId))));
+            nfo.ParseColorOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Color_{0}_{1}", "1", "1"))));//productId, variantId
+            nfo.ParseSizeOptions(HttpContext.Current.Server.HtmlDecode(CommonLogic.FormCanBeDangerousContent(string.Format("Size_{0}_{1}", "1", "1"))));//productId, variantId
 
             nfo.TextOption = CommonLogic.FormCanBeDangerousContent(string.Format("TextOption_{0}_{1}", productId, variantId));
             nfo.VariantStyle = (VariantStyleEnum)CommonLogic.FormNativeInt(string.Format("VariantStyle_{0}_{1}", productId, variantId));
