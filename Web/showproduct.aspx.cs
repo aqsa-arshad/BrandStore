@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------
 // Copyright AspDotNetStorefront.com. All Rights Reserved.
 // http://www.aspdotnetstorefront.com
 // For details on this license please visit the product homepage at the URL above.
@@ -12,6 +12,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
@@ -63,7 +64,10 @@ namespace AspDotNetStorefront
         private string m_PageOutputCustom = string.Empty;
         private const string ADDTOCART_ACTION_PREFIX = "AddToCart_";
 
-
+        protected void Page_Init(object sender, System.EventArgs e)
+        {
+            String aa = hdnquantity.Text;
+        }
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
@@ -224,27 +228,29 @@ namespace AspDotNetStorefront
                         }
 
 
-                        hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
+                      hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
+                        if(this.IsPostBack)
+                        {
+                            hdnquantity.Text= Request.Form["Quantity_1_1"];
+                        }
+                        else{
+                        hdnquantity.Text="1";
+                        }
+                      
+                      productprice = productprice * Convert.ToInt32(hdnquantity.Text);
                         if (productcategoryfund < productprice)
                         {
-
-                            productprice = productprice - productcategoryfund;
-                          //  productcategoryfund = productprice;
+                            productprice = productprice - productcategoryfund;                         
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productcategoryfund)).ToString();
                         }
                         else
                         {
-
                             productcategoryfund = productcategoryfund - productprice;
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productprice)).ToString();
-                            productprice = 0;
-                          //  txtBluBuksUsed.Enabled = false;
-                            txtBluBuksUsed.Text = productprice.ToString();
-                           
+                            productprice = 0;                        
+                            txtBluBuksUsed.Text = productprice.ToString();                          
 
-                        }
-
-                      //  hdnProductFundAmountUsed.Text = (Convert.ToDecimal(hdnProductFundAmount.Text) - productcategoryfund).ToString();
+                        }                    
                         hdnpricewithfund.Text = productprice.ToString();
                         //End apply fund
                         //End
@@ -256,11 +262,6 @@ namespace AspDotNetStorefront
                         ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU Bucks you can use to purchase your items.";
 
                     }
-
-
-
-
-
 
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
                     SectionHelper = AppLogic.LookupHelper("Section", 0);
@@ -537,7 +538,11 @@ namespace AspDotNetStorefront
                     }
                 }
             }
-            litOutput.Text = m_PageOutput;
+            if (!this.IsPostBack)
+            {
+                litOutput.Text = m_PageOutput;
+            }
+            
             GetParentCategory();
             if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
             {
