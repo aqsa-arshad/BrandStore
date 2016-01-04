@@ -93,6 +93,10 @@ namespace AspDotNetStorefrontCore
         private bool m_IsGift;
         private Decimal m_BluBuksUsed;
         private Decimal m_CategoryFundUsed;
+        private Decimal m_pricewithBluBuksUsed;
+        private Decimal m_pricewithCategoryFundUsed;
+
+
 
 
         // computed fields
@@ -198,6 +202,8 @@ namespace AspDotNetStorefrontCore
             m_ProductDescription = ci.ProductDescription;
             m_BluBuksUsed=ci.BluBuksUsed;
            m_CategoryFundUsed=ci.CategoryFundUsed;
+           m_pricewithBluBuksUsed = ci.pricewithBluBuksUsed;
+           m_pricewithCategoryFundUsed = ci.pricewithategoryFundUsed;
         }
 
         #endregion
@@ -262,6 +268,18 @@ namespace AspDotNetStorefrontCore
         }
 
         public Decimal CategoryFundUsed
+        {
+            get { return m_pricewithCategoryFundUsed; }
+            set { m_pricewithCategoryFundUsed = value; }
+        }
+
+        public Decimal pricewithBluBuksUsed
+        {
+            get { return m_pricewithBluBuksUsed; }
+            set { m_pricewithBluBuksUsed = value; }
+        }
+
+        public Decimal pricewithategoryFundUsed
         {
             get { return m_CategoryFundUsed; }
             set { m_CategoryFundUsed = value; }

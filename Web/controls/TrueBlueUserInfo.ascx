@@ -3,7 +3,7 @@
 <%--Todo: True Blu Funtionality in Phase-2--%>
 
 <div class="right-logo-box">
-    <img src="../App_Themes/Skin_3/images/true-blue-logo.png" />
+    <img src="App_Themes/Skin_3/images/true-blue-logo.png" />
     <span><asp:Label ID="lblDealerLevel" runat="server" />Dealer</span>
 </div>
 <h4>BLU Bucks</h4>

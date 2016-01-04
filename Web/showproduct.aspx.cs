@@ -170,16 +170,29 @@ namespace AspDotNetStorefront
                     //Apply fund
                     int pvariantid = AppLogic.GetProductsDefaultVariantID(ProductID);
                     decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
-                    hdnButtonName.Text = "btnaddtocart_" + ProductID + "_" + pvariantid;
-
+                    hdnButtonName.Text = "AddToCartButton_" + ProductID + "_" + pvariantid;
+                    hdncustomerlevel.Text = Convert.ToString(ThisCustomer.CustomerLevelID);
                     Decimal productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                     Decimal productprice = Convert.ToDecimal(pvprice);
                     CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
                     if (CustomerFunds.Count > 0)
                     {
-                        BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
-                        hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
-                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
+                        //BluBucks
+                        CustomerFund tempBluBucksfund = CustomerFunds.Find(x => x.FundID == 1);
+                        if (tempBluBucksfund != null)
+                        {
+                            BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
+                            hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
+                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
+                        }
+                        else
+                        {
+                            BluBuksPoints = "0".ToString();
+                            hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
+                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
+                        }
+
+                       //Category Fund
                         hdnProductFundID.Text = Convert.ToString(DB.RSFieldInt(rs, "FundID"));
                         if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
                         {
@@ -191,8 +204,17 @@ namespace AspDotNetStorefront
                             }
                             else
                             {
-                                hdnProductFundAmount.Text = "0";
-                                productcategoryfund = Convert.ToDecimal("0.00");
+                                 tempfund = CustomerFunds.Find(x => x.FundID == 2);//for sales rep
+                                 if (tempfund != null)
+                                 {
+                                     hdnProductFundAmount.Text = tempfund.Amount.ToString();
+                                     productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                                 }
+                                 else
+                                 {
+                                     hdnProductFundAmount.Text = "0";
+                                     productcategoryfund = Convert.ToDecimal("0.00");
+                                 }
                             }
                         }
                         else
@@ -202,7 +224,7 @@ namespace AspDotNetStorefront
                         }
 
 
-                        hdnproductprice.Text = productprice.ToString();
+                        hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
                         if (productcategoryfund < productprice)
                         {
 
@@ -216,7 +238,7 @@ namespace AspDotNetStorefront
                             productcategoryfund = productcategoryfund - productprice;
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productprice)).ToString();
                             productprice = 0;
-                            txtBluBuksUsed.Enabled = false;
+                          //  txtBluBuksUsed.Enabled = false;
                             txtBluBuksUsed.Text = productprice.ToString();
                            
 

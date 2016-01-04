@@ -1350,6 +1350,8 @@ namespace AspDotNetStorefrontCore
                         newItem.ProductDescription = DB.RSField(rs, "Description");
                         newItem.BluBuksUsed = DB.RSFieldDecimal(rs, "BluBucksUsed");
                         newItem.CategoryFundUsed = DB.RSFieldDecimal(rs, "CategoryFundUsed");
+                        newItem.pricewithBluBuksUsed = DB.RSFieldDecimal(rs, "pricewithBluBucksUsed");
+                        newItem.pricewithategoryFundUsed = DB.RSFieldDecimal(rs, "pricewithCategoryFundUsed");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {

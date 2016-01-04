@@ -81,9 +81,9 @@
                                     <span>
                                         <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
                                     </span>
-                                    <span>
+                                    <%--<span>
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %>
-                                    </span>
+                                    </span>--%>
                                 </td>
                                 <td class="td-15-percent">
                                     <span class="normal-heading black-color">

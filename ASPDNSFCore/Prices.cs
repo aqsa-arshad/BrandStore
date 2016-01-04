@@ -524,9 +524,9 @@ namespace AspDotNetStorefrontCore
                 }
             }
             else
-                price = price * ci.Quantity;
+                price = (price * ci.Quantity);
 
-            return price;
+            return price-(ci.BluBuksUsed + ci.CategoryFundUsed);
         }
         
         #endregion
