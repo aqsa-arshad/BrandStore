@@ -14,7 +14,7 @@ using AspDotNetStorefront;
 public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
 {
     Customer ThisCustomer;
-    String WelcomeHeading=String.Empty;
+    String WelcomeHeading = String.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (ThisCustomer == null)
@@ -28,7 +28,10 @@ public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
 
     private void getCustomerfund()
     {
-        decimal SAFAmount = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, 2).Amount;
-        lblSOF.Text = "Sales Operations Funds = " + String.Format("{0:0.00}", SAFAmount); 
+        if (ThisCustomer.CustomerLevelID == (int)UserType.BLUUNLIMITED)
+        {
+            decimal SAFAmount = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID,(int)FundType.SOFFunds).Amount;
+            lblSOF.Text = "Sales Operations Funds = " + String.Format("{0:0.00}", SAFAmount);
+        }
     }
 }

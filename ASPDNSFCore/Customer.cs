@@ -4661,4 +4661,16 @@ namespace AspDotNetStorefrontCore
         BLUUNLIMITED = 13
     }
     #endregion
+
+    #region Public Enums for Customer Funds
+    public enum FundType
+    {
+        BLUBucks = 1,
+        SOFFunds = 2,
+        DirectMailFunds = 3,
+        DisplayFunds = 4,
+        LiteratureFunds = 5,
+        POPFunds = 6
+    }
+     #endregion
 }
