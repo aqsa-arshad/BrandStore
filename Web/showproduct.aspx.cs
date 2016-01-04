@@ -219,6 +219,8 @@ namespace AspDotNetStorefront
                                      hdnProductFundAmount.Text = "0";
                                      productcategoryfund = Convert.ToDecimal("0.00");
                                  }
+                                 hdnProductFundID.Text = "2";
+
                             }
                         }
                         else
