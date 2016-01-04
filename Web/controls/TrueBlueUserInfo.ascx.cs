@@ -31,12 +31,12 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
 
     private void getCustomerfund()
     {
-        string customerLevel = "BLU Unlimited";
+        int customerLevelId = (int)UserType.BLUUNLIMITED;
         lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
-        lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelName).Equals(customerLevel) ? "Partners" : ThisCustomer.CustomerLevelName);
-        lblDealerLevel.Text = ((ThisCustomer.CustomerLevelName).Equals(customerLevel) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU",""));
+        lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName);
+        lblDealerLevel.Text = ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU", ""));
         rptCustomerFunds.DataSource = lstCustomerFund;
         rptCustomerFunds.DataBind();
     }
-    
+
 }
