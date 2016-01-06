@@ -94,7 +94,7 @@ namespace AspDotNetStorefrontControls
                 }
                 else
                 {
-                    Controls.Add(new LiteralControl("    <div class='row'><div class='col-md-5'><div class='primary-img-box'>"));
+                    Controls.Add(new LiteralControl("    <div class='row'><div class='col-md-4'><div class='primary-img-box'>"));
                 }
                 imgProductPic.Attributes["class"] = "img-responsive";
                 Controls.Add(imgProductPic);
@@ -103,7 +103,7 @@ namespace AspDotNetStorefrontControls
 
             //line item description quantity and subtotals
 
-            Controls.Add(new LiteralControl("     <div class='cart-title col-md-5'> <span class='normal-heading black-color'>"));
+            Controls.Add(new LiteralControl("     <div class='cart-title col-md-7'> <span class='normal-heading black-color'>"));
             Controls.Add(lnkProductName);
             Controls.Add(new LiteralControl("     </span>"));
          //   Controls.Add(new LiteralControl("     </div>"));
