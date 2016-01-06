@@ -211,10 +211,15 @@ namespace AspDotNetStorefront
             }
 
             //if the customer already has entered a password don't ask them for another one
-            // Password p = new Password("", ThisCustomer.SaltKey);
-
-            ctrlAccount.ShowPassword = true;
-            //ctrlAccount.ShowPassword = (ThisCustomer.Password == "" || ThisCustomer.Password == p.SaltedPassword);
+            Password p = new Password("", ThisCustomer.SaltKey);
+            ctrlAccount.ShowPassword = (ThisCustomer.Password == "" || ThisCustomer.Password == p.SaltedPassword);
+            if (ThisCustomer.IsAuthenticated)
+            {
+                ctrlAccount.ShowPassword = true;
+                string TempPassword = AppLogic.AppConfig("TempPassword");
+                ctrlAccount.txtPassword.Attributes.Add("value", TempPassword);
+                ctrlAccount.txtPasswordConfirm.Attributes.Add("value", TempPassword);
+            }
 
             ctrlAccount.Over13 = ThisCustomer.IsOver13;
             ctrlAccount.VATRegistrationID = ThisCustomer.VATRegistrationID;
@@ -258,18 +263,6 @@ namespace AspDotNetStorefront
                     ctrlAccount.OKToEmailYes = (ThisCustomer.EMail.Length != 0);
                     ctrlAccount.OKToEmailNo = !ctrlAccount.OKToEmailYes;
 
-                    //showing password fields for updation of fields
-
-                    string TempPassword = AppLogic.AppConfig("TempPassword");
-                    // System.Nullable<int> newsaltkey = p.Salt;
-
-                    ctrlAccount.txtPassword.Attributes.Add("value", TempPassword);
-                    ctrlAccount.txtPasswordConfirm.Attributes.Add("value", TempPassword);
-                    //GetJavaScriptFunctions();
-
-
-                    //ctrlAccount.txtPassword.TextMode = TextBoxMode.Password;
-                    //ctrlAccount.txtPasswordConfirm.TextMode = TextBoxMode.Password;
                 }
             }
             else
@@ -538,9 +531,9 @@ namespace AspDotNetStorefront
                 System.Nullable<int> newsaltkey = p.Salt;
 
                 Password blankpwd = new Password("", ThisCustomer.SaltKey);
-                string TempPassword = AppLogic.AppConfig("TempPassword"); 
-               // || ThisCustomer.Password == TempPassword
-                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("") ))
+                string TempPassword = AppLogic.AppConfig("TempPassword");
+                // || ThisCustomer.Password == TempPassword
+                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("")))
                 {
                     // do NOT allow passwords to be changed on this page. this is only for creating an account.
                     // if they want to change their password, they must use their account page
