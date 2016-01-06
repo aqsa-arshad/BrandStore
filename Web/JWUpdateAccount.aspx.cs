@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------
 // Copyright AspDotNetStorefront.com. All Rights Reserved.
 // http://www.aspdotnetstorefront.com
 // For details on this license please visit the product homepage at the URL above.
@@ -16,7 +16,7 @@ using AspDotNetStorefrontCore.Validation;
 
 namespace AspDotNetStorefront
 {
-    public partial class createaccount : SkinBase
+    public partial class JWUpdateAccount : SkinBase
     {
         bool Checkout = false;
         bool SkipRegistration = false;

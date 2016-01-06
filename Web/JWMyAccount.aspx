@@ -49,6 +49,23 @@
     <div class="content-box-03">
         <div class="row address tablet-view">
             <div class="col-md-6 pull-left-md pull-sm-no">
+                <h5>Contact Information</h5>
+                <ul style="overflow: hidden;">
+                    <li>
+                        <asp:Label ID="lblName" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblmailId" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblPhoneNumber" runat="server"></asp:Label></li>
+                    <li><br /></li>
+                    <li>
+                        <asp:LinkButton runat="server" CssClass="underline-link" ID="lnkEditAccountInfo" OnClick="UpdateAccountInfo_Click" Text="Update Contact Information" Visible="false"></asp:LinkButton>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row address tablet-view">
+            <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Primary Billing Address</h5>
                 <ul style="overflow: hidden;">
                     <li>

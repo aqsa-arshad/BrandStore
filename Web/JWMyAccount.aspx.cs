@@ -51,6 +51,7 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
+
             RequireSecurePage();
             RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
 
@@ -58,6 +59,21 @@ namespace AspDotNetStorefront
             {
                 LoadAddresses();
                 CurrentOrderStatus();
+                LoadAccountInformation();
+            }
+            if (ThisCustomer == null)
+                ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
+            if(ThisCustomer.CustomerLevelID==(int)UserType.PUBLIC)
+              lnkEditAccountInfo.Visible=true;
+            
+        }
+        private void LoadAccountInformation()
+        {
+            if (ThisCustomer != null)
+            {
+                lblName.Text = string.IsNullOrEmpty(ThisCustomer.FirstName) ? "" : ThisCustomer.FirstName + " " + ThisCustomer.LastName;
+                lblmailId.Text = string.IsNullOrEmpty(ThisCustomer.EMail) ? "" : ThisCustomer.EMail;
+                lblPhoneNumber.Text = string.IsNullOrEmpty(ThisCustomer.Phone) ? "" : ThisCustomer.Phone;
             }
         }
 
@@ -130,7 +146,12 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
-
+        protected void UpdateAccountInfo_Click(object sender, EventArgs e)
+        {
+            if (ThisCustomer == null)
+                ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
+            Response.Redirect("JWUpdateAccount.aspx?CustomerId=" + ThisCustomer.CustomerID);
+        }
         /// <summary>
         /// View All Billing Addresses
         /// </summary>
