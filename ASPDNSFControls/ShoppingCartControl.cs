@@ -1226,9 +1226,9 @@ namespace AspDotNetStorefrontControls
                     }
                     else
                     {
-                        Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
-                       // lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>";
-                        lblSubTotal.Text = "</span>Price with (FUND) credit: " + lblpricewithCategoryFundUsed.Text + "<br>Price with BluBucks used: " + lblpricewithBluBucksUsed.Text + "";
+                        Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));                       
+                        Double RegularPrices=Convert.ToDouble(lblSubTotal.Text.Replace("$","")) + Convert.ToDouble(lblpricewithCategoryFundUsed.Text.Replace("$","")) + Convert.ToDouble(lblpricewithBluBucksUsed.Text.Replace("$",""));
+                        lblSubTotal.Text = "<span><b>Regular Price: </b>$" + RegularPrices.ToString() + "</span>" + "(FUND) discount: " + lblpricewithCategoryFundUsed.Text + "<br>Blu Bucks used: " + lblpricewithBluBucksUsed.Text + "" + "<span><b>Your Price: </b>" + lblSubTotal.Text + "</span>";
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
                     }
