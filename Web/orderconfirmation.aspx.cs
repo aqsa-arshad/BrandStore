@@ -274,7 +274,7 @@ namespace AspDotNetStorefront
                         }
 
                         // call the service
-                        if (hasproducts)
+                        if (hasproducts && AppLogic.AppConfig("UseFulfillmentAPI").ToBool())
                         {
                             orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting), shippingMethodCode);
                             bool isok = rs.status.Equals(0) ? false : true;
