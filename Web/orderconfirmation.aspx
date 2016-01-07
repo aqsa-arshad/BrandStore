@@ -51,14 +51,14 @@
                                 <asp:HiddenField ID="hfChosenColor" runat="server" Value='<%# Eval("ChosenColor") %>' />
                                 <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
                                 <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
-                                <td class="td-45-percent">
+                                <td class="td-40-percent">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="primary-img-box">
                                                 <asp:Image ID="ImgProduct" runat="server" class="img-responsive" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             <span class="normal-heading blue-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
@@ -71,7 +71,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="td-30-percent label-text">
+                                <td class="td-35-percent label-text">
                                     <span class="normal-heading black-color">
                                         <asp:Label ID="lblPaymentCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.payment %>' />
                                     </span>
@@ -130,7 +130,7 @@
 
         <%--Billing Amounts--%>
         <div class="top-row-adjsut">
-            <div class="td-45-percent pull-left ">
+            <div class="td-40-percent pull-left ">
                 <span class="normal-heading black-color">Billed to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
@@ -150,7 +150,7 @@
                     <asp:Label class="block-text" ID="lblBAPhone" runat="server"></asp:Label>
                 </p>
             </div>
-            <div class="td-30-percent pull-left">
+            <div class="td-35-percent pull-left">
                 <span class="normal-heading black-color">Shipped to</span>
                 <p>
                     <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>

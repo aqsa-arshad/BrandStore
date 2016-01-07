@@ -86,7 +86,7 @@
                 <aspdnsf:OrderOption ID="ctrlOrderOption" runat="server" EditMode="false" />
             </div>
             <div>
-                <div class="td-45-percent pull-left">                    
+                <div class="td-40-percent pull-left">                    
                         <div class="one-third">
                             <asp:Label ID="checkoutreviewaspx8" CssClass="frut-roman-font black-color" Text="<%$ Tokens:StringResource,checkoutreview.aspx.8 %>" runat="server"></asp:Label>
                             <span class="review-edit-link">[<asp:HyperLink ID="HyperLink1" runat="server" Text="edit" />]</span>
@@ -98,7 +98,7 @@
                             <span class="review-edit-link">[<asp:HyperLink ID="HyperLink2" runat="server" Text="edit" NavigateUrl="~/checkoutpayment.aspx" />]</span>
                             <asp:Literal ID="litPaymentMethod" runat="server" Mode="PassThrough"></asp:Literal>
                         </div>
-                <div class="td-30-percent pull-left"> 
+                <div class="td-35-percent pull-left"> 
                        
                             <asp:Label ID="ordercs57" CssClass="frut-roman-font black-color" Text="<%$ Tokens:StringResource,order.cs.57 %>" runat="server"></asp:Label>
                             <span class="review-edit-link" runat="server" id="spn3">[<asp:HyperLink ID="HyperLink3" runat="server" Text="edit" />]</span>
