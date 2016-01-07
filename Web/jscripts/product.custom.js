@@ -15,5 +15,5 @@ $(".size-select").on("change", function () {
     var actual_price = $("#hdnproductactualprice").text();//parseFloat($("meta[itemprop=price]").attr("content").replace("$", ""));   
     var new_price = parseFloat(modifier + actual_price);   
     //  $(".price-wrap").find(".variant-price").html('<span>Price:</span> $' + new_price); this is original line of bellow line
-    $(".variant-price").html('<span class="black-blu-label"><font>Price:</font> $' + new_price.toFixed(2) + '</span><span id="sppricewithfund" class="black-blu-label">' + pricewithfund + "</span>");
+    $(".variant-price").html('<span class="black-blu-label"><font>Price:</font> $' + new_price.toFixed(2) + '</span><span id="sppricewithfund" class="black-blu-label hide-element">' + pricewithfund + "</span>");
 });

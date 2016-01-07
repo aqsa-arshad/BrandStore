@@ -1089,7 +1089,7 @@ namespace AspDotNetStorefrontControls
                 if (this.AllowEdit)
                 {
                     (txtQuantity as TextBox).CssClass = "form-control item-quantity";
-                    (txtQuantity as TextBox).MaxLength = 4;
+                    (txtQuantity as TextBox).MaxLength = 6;
                     if (this.DisplayMode == CartDisplayMode.MiniCart &&
                         cItem.CartType == CartTypeEnum.Deleted)
                     {
@@ -1227,8 +1227,8 @@ namespace AspDotNetStorefrontControls
                     else
                     {
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
-                       // lblSubTotal.Text = "<span>Price: " + lblSubTotal.Text + "</span>";
-                        lblSubTotal.Text = "</span>Price with (FUND) credit: " + lblpricewithCategoryFundUsed.Text + "<br>Price with BluBucks used: " + lblpricewithBluBucksUsed.Text + "";
+                        Decimal RegularPrices = Convert.ToDecimal(lblSubTotal.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", ""));
+                        lblSubTotal.Text = "<span id='spregularprice' class='hide-element'><b>Regular Price: </b>$" + Math.Round(RegularPrices, 2).ToString() + "</span>" + "<span id='funddiscountprice' class='hide-element'>(FUND) discount: " + lblpricewithCategoryFundUsed.Text + "</span><span id='blubucksprice' class='hide-element'>Blu Bucks used: " + lblpricewithBluBucksUsed.Text + "" + "</span><span id='creditprice'><b>Your Price: </b>" + lblSubTotal.Text + "</span>";
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
                     }
@@ -1304,7 +1304,7 @@ namespace AspDotNetStorefrontControls
                     {
                         TextBox txt = txtQuantity as TextBox;
                         txt.CssClass = "form-control item-quantity";
-                        txt.MaxLength = 3;
+                        txt.MaxLength = 6;
                     }
 
                     Controls.Add(txtQuantity as Control);

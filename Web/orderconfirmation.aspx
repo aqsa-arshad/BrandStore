@@ -52,13 +52,13 @@
                                 <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
                                 <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
                                 <td class="td-40-percent">
-                                    <div class="row">
+                                    <div class="row tablet-view">
                                         <div class="col-md-4">
-                                            <div class="primary-img-box">
+                                            <div class="primary-img-box pull-left-md">
                                                 <asp:Image ID="ImgProduct" runat="server" class="img-responsive" />
                                             </div>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-7 pull-left-md">
                                             <span class="normal-heading blue-color">
                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                             </span>
@@ -81,9 +81,9 @@
                                     <span>
                                         <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
                                     </span>
-                                    <%--<span>
+                                    <span>
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %>
-                                    </span>--%>
+                                    </span>
                                 </td>
                                 <td class="td-15-percent">
                                     <span class="normal-heading black-color">
