@@ -148,7 +148,7 @@
                                 </td>
                                 <td class="td-15-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
-                                    <asp:HyperLink ID="hlTrackItem" class="underline-link" runat="server">Track item &gt;</asp:HyperLink>
+                                    <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server">Track item &gt;</asp:HyperLink>
                                 </td>
                             </tr>
                         </ItemTemplate>

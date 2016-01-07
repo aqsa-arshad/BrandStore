@@ -6857,7 +6857,7 @@ namespace AspDotNetStorefrontCore
 
         public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false,BluBuksUsed, CategoryFundUsed);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false,BluBuksUsed, CategoryFundUsed,FundID);
         }
 
         // NOTE: ChosenColor and ChosenSize MUST ALWAYS be passed in here in the MASTER WEBCONFIG LOCALE, If in a ML situation!
@@ -7260,6 +7260,9 @@ namespace AspDotNetStorefrontCore
                 int RequiresCount = 0;
                 int ProductID = 0;
                 int VariantID = 0;
+                Decimal BluBucksUsed=0;
+                Decimal CategoryFundUsed = 0;
+                int FundID = 0;
                 string RequiresProducts = String.Empty;
                 string UpsellProducts = String.Empty;
                 CartTypeEnum CartType = CartTypeEnum.ShoppingCart;
@@ -7269,7 +7272,7 @@ namespace AspDotNetStorefrontCore
 
                 try
                 {
-                    string query = "Select sc.ProductID, sc.VariantID, sc.Quantity, sc.RequiresCount, sc.CartType, p.upsellproducts, p.RequiresProducts from dbo.ShoppingCart sc  with (NOLOCK)  join dbo.Product p  with (NOLOCK)  on sc.ProductID = p.ProductID where sc.ShoppingCartRecID=" + cartRecordID.ToString();
+                    string query = "Select sc.ProductID,sc.BluBucksUsed,sc.CategoryFundUsed,sc.FundID, sc.VariantID, sc.Quantity, sc.RequiresCount, sc.CartType, p.upsellproducts, p.RequiresProducts from dbo.ShoppingCart sc  with (NOLOCK)  join dbo.Product p  with (NOLOCK)  on sc.ProductID = p.ProductID where sc.ShoppingCartRecID=" + cartRecordID.ToString();
                     if (m_DBTrans != null)
                     {
                         // if a transaction was passed, we should use the transaction objects connection
@@ -7294,6 +7297,9 @@ namespace AspDotNetStorefrontCore
                             CartType = (CartTypeEnum)DB.RSFieldInt(rs, "CartType");
                             RequiresProducts = DB.RSField(rs, "RequiresProducts");
                             UpsellProducts = DB.RSField(rs, "UpsellProducts");
+                            BluBucksUsed = DB.RSFieldDecimal(rs, "BluBucksUsed");
+                            CategoryFundUsed = DB.RSFieldDecimal(rs, "CategoryFundUsed");
+                            FundID = DB.RSFieldInt(rs, "FundID");
                         }
                     }
                 }
@@ -7341,7 +7347,18 @@ namespace AspDotNetStorefrontCore
 
                 DB.ExecuteSQL("delete from kitcart where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString(), m_DBTrans);
                 String sql = "delete from ShoppingCart where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
+                
                 DB.ExecuteSQL(sql, m_DBTrans);
+              
+                //Update Customer Funds when item is deleted from shopping cart
+                StringBuilder sql1 = new StringBuilder(4096);
+                sql1.Append(String.Format("dbo.aspdnsf_CustomerFundUpdateOnItemDelete {0}, {1}, {2}", m_ThisCustomer.CustomerID, 1,BluBucksUsed));
+                DB.ExecuteSQL(sql1.ToString(), m_DBTrans);
+                sql1 = new StringBuilder(4096);
+                sql1.Append(String.Format("dbo.aspdnsf_CustomerFundUpdateOnItemDelete {0}, {1}, {2}", m_ThisCustomer.CustomerID, FundID, CategoryFundUsed));
+                DB.ExecuteSQL(sql1.ToString(), m_DBTrans);
+                //End
+
                 if (Recurse && RequiresProducts.Trim().Length > 0)
                 {
 

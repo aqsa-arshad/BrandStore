@@ -12,6 +12,7 @@
         <%--<h1>
 				<asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
 			</h1>--%>
+        <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Literal ID="ltValidationScript" runat="server"></asp:Literal>
         <asp:Literal ID="ltJsPopupRoutines" runat="server"></asp:Literal>
         <aspdnsf:Topic runat="server" ID="topicHeaderMessage" TopicName="CartPageHeader" />
@@ -362,4 +363,46 @@
     <asp:Literal ID="ltShoppingCartFooterXmlPackage" runat="server"></asp:Literal>
 
     <%--</asp:Panel> --%>
+
+     <script type="text/javascript">
+         $(document).ready(function () {             
+             showhidepricelabels();
+
+             function showhidepricelabels()
+             {
+                 var customerlevel = GetCustomerLevel();
+                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
+                     $("#spregularprice").removeClass("hide-element");
+                     $("#funddiscountprice").removeClass("hide-element");
+                     $("#blubucksprice").removeClass("hide-element");
+                 }
+                 else if (customerlevel == 8 || customerlevel == 1) {
+                    //all or hidden except price
+
+                 }
+                 else {
+                     $("#spregularprice").removeClass("hide-element");
+                     $("#funddiscountprice").removeClass("hide-element");
+
+                 }
+             }
+
+             function GetCustomerLevel() {
+                 var CustomerLevelElemment;
+                 if (document.getElementById('hdnCustomerLevel')) {
+                     CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
+                 }
+                 else if (document.all) {
+                     CustomerLevelElemment = document.all['hdnCustomerLevel'];
+                 }
+                 else {
+                     CustomerLevelElemment = document.layers['hdnCustomerLevel'];
+                 }
+
+                 return CustomerLevelElemment.innerHTML;
+             }
+
+         });
+
+         </script>
 </asp:Content>
