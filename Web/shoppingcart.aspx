@@ -167,7 +167,7 @@
                 </tbody>
             </table>
             <div>
-                <div class="td-25-percent pull-right">
+                <div class="td-25-percent pull-right pull-sm-no">
                     <asp:Panel ID="pnlSubTotals" runat="server">
                         <div class="page-row row-sub-totals">
                             <aspdnsf:CartSummary ID="ctrlCartSummary" runat="server" CalculateShippingDuringCheckout="false"
