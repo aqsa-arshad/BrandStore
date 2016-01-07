@@ -150,9 +150,7 @@ namespace AspDotNetStorefront
         {
             if (ThisCustomer == null)
                 ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
-            Response.Redirect("JWUpdateAccount.aspx?CustomerId=" + ThisCustomer.CustomerID);
-           // Response.Redirect("createaccount.aspx?CustomerId=" + ThisCustomer.CustomerID);
-
+            Response.Redirect("JWUpdateAccount.aspx");
         }
         /// <summary>
         /// View All Billing Addresses

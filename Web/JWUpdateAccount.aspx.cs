@@ -144,13 +144,16 @@ namespace AspDotNetStorefront
                 ctrlAccount.txtPasswordConfirm.Attributes.Add("value", ctrlAccount.txtPasswordConfirm.Text);
                 GetJavaScriptFunctions();
             }
-
-            if (ThisCustomer.CustomerLevelID != (int)UserType.PUBLIC)
+            if (ThisCustomer.IsRegistered)
             {
-                if (ThisCustomer.IsRegistered)
+                if (ThisCustomer.CustomerLevelID != (int)UserType.PUBLIC)
                 {
-                    Response.Redirect("home.aspx");
+                    Response.Redirect("JWMyAccount.aspx");
                 }
+            }
+            else
+            {
+                Response.Redirect("Default.aspx");
             }
 
         }
@@ -542,9 +545,9 @@ namespace AspDotNetStorefront
                 System.Nullable<int> newsaltkey = p.Salt;
 
                 Password blankpwd = new Password("", ThisCustomer.SaltKey);
-                string TempPassword = AppLogic.AppConfig("TempPassword"); 
-               // || ThisCustomer.Password == TempPassword
-                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("") ))
+                string TempPassword = AppLogic.AppConfig("TempPassword");
+                // || ThisCustomer.Password == TempPassword
+                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("")))
                 {
                     // do NOT allow passwords to be changed on this page. this is only for creating an account.
                     // if they want to change their password, they must use their account page
