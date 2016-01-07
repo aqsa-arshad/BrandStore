@@ -219,25 +219,27 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
-            {
-                var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.ToUpper().Contains(listItem.ToUpper()) && (e.Item.FindControl("hfIsDownload") as HiddenField).Value != "1"))
-                {
-                    if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
-                    {
-                        (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
-                            string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
-                                (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
-                    }
-                }
-                if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
-                {
-                    (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
-                }
-            }
+            
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
+                {
+                    var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.ToUpper().Contains(listItem.ToUpper()) && (e.Item.FindControl("hfIsDownload") as HiddenField).Value != "1"))
+                    {
+                        if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
+                        {
+                            (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
+                                string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
+                                    (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
+                        }
+                    }
+                    if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
+                    {
+                        (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value))
                 {
                     (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon");
