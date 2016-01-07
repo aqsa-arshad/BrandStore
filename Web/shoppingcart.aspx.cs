@@ -127,6 +127,8 @@ namespace AspDotNetStorefront
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
 
+            hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();
+
             RequireSecurePage();
             SectionTitle = AppLogic.GetString("AppConfig.CartPrompt", SkinID, ThisCustomer.LocaleSetting);
             ClearErrors();

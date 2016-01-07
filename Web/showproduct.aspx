@@ -19,7 +19,7 @@
     <asp:Label ID="hdnButtonName" name="hdnButtonName" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnproductactualprice" name="hdnproductactualprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-     <asp:Label ID="hdnquantity" name="hdnquantity" enableviewstate="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
+    <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -86,7 +86,7 @@
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
-                    }
+                    }                   
                     else {                      
                         $(btnname).trigger("click");
                     }
@@ -177,7 +177,30 @@
                 $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
+                    var customerlevel = $("#hdncustomerlevel").text();
+                   if (customerlevel == 1 || customerlevel == 3 ||  customerlevel == 8 )
+                    {
+                         $("#sppricewithfund").addClass("hide-element");
+                   
+                    }
+                    else
+                    {
+                         $("#sppricewithfund").removeClass("hide-element");
+                    }
             }
+
+           $("#Size_1_1").change(function () {
+                 var customerlevel = $("#hdncustomerlevel").text();
+                   if (customerlevel == 1 || customerlevel == 3 ||  customerlevel == 8 )
+                    {
+                         $("#sppricewithfund").addClass("hide-element");
+                   
+                    }
+                    else
+                    {
+                         $("#sppricewithfund").removeClass("hide-element");
+                    }
+            });
             function ApplyValidation(theForm) {
                 debugger;
                 if ($("#Quantity_1_1").length <= 0 || $("#Size_1_1").length <= 0 || $("#Color_1_1").length <= 0) {
