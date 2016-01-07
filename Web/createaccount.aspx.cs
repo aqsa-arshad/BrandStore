@@ -63,6 +63,7 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
@@ -145,14 +146,11 @@ namespace AspDotNetStorefront
                 GetJavaScriptFunctions();
             }
 
-            if (ThisCustomer.CustomerLevelID != (int)UserType.PUBLIC)
-            {
-                if (ThisCustomer.IsRegistered)
-                {
-                    Response.Redirect("home.aspx");
-                }
-            }
 
+            if (ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("home.aspx");
+            }
         }
 
         #region EventHandlers
@@ -212,14 +210,8 @@ namespace AspDotNetStorefront
 
             //if the customer already has entered a password don't ask them for another one
             Password p = new Password("", ThisCustomer.SaltKey);
+
             ctrlAccount.ShowPassword = (ThisCustomer.Password == "" || ThisCustomer.Password == p.SaltedPassword);
-            if (ThisCustomer.IsAuthenticated)
-            {
-                ctrlAccount.ShowPassword = true;
-                string TempPassword = AppLogic.AppConfig("TempPassword");
-                ctrlAccount.txtPassword.Attributes.Add("value", TempPassword);
-                ctrlAccount.txtPasswordConfirm.Attributes.Add("value", TempPassword);
-            }
 
             ctrlAccount.Over13 = ThisCustomer.IsOver13;
             ctrlAccount.VATRegistrationID = ThisCustomer.VATRegistrationID;
@@ -262,7 +254,6 @@ namespace AspDotNetStorefront
 
                     ctrlAccount.OKToEmailYes = (ThisCustomer.EMail.Length != 0);
                     ctrlAccount.OKToEmailNo = !ctrlAccount.OKToEmailYes;
-
                 }
             }
             else
@@ -439,12 +430,12 @@ namespace AspDotNetStorefront
             }
             else
             {
-                if (ctrlAccount.Password.Contains('\xFF') || ctrlAccount.Password.Length == 0 || ctrlAccount.Password.Equals(AppLogic.AppConfig("TempPassword")))
+                if (ctrlAccount.Password.Contains('\xFF') || ctrlAccount.Password.Length == 0)
                     ctrlAccount.PasswordValidate = ViewState["custpwd"].ToString();
                 else
                     ctrlAccount.PasswordValidate = ctrlAccount.Password;
 
-                if (ctrlAccount.PasswordConfirm.Contains('\xFF') || ctrlAccount.PasswordConfirm.Length == 0 || ctrlAccount.Password.Equals(AppLogic.AppConfig("TempPassword")))
+                if (ctrlAccount.PasswordConfirm.Contains('\xFF') || ctrlAccount.PasswordConfirm.Length == 0)
                     ctrlAccount.PasswordConfirmValidate = ViewState["custpwd2"].ToString();
                 else
                     ctrlAccount.PasswordConfirmValidate = ctrlAccount.PasswordConfirm;
@@ -531,9 +522,7 @@ namespace AspDotNetStorefront
                 System.Nullable<int> newsaltkey = p.Salt;
 
                 Password blankpwd = new Password("", ThisCustomer.SaltKey);
-                string TempPassword = AppLogic.AppConfig("TempPassword");
-                // || ThisCustomer.Password == TempPassword
-                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("")))
+                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword))
                 {
                     // do NOT allow passwords to be changed on this page. this is only for creating an account.
                     // if they want to change their password, they must use their account page
@@ -877,7 +866,8 @@ namespace AspDotNetStorefront
             {
                 ViewState["custpwd"] = "";
             }
-            if (ctrlAccount.Password.Trim() != AppLogic.AppConfig("TempPassword") && ctrlAccount.Password.Trim() != "" && Regex.IsMatch(ctrlAccount.Password.Trim(), "[^\xFF]", RegexOptions.Compiled))
+
+            if (ctrlAccount.Password.Trim() != "" && Regex.IsMatch(ctrlAccount.Password.Trim(), "[^\xFF]", RegexOptions.Compiled))
             {
                 ViewState["custpwd"] = ctrlAccount.Password;
 
@@ -892,7 +882,7 @@ namespace AspDotNetStorefront
             {
                 ViewState["custpwd2"] = "";
             }
-            if (ctrlAccount.PasswordConfirm.Trim() != AppLogic.AppConfig("TempPassword") && ctrlAccount.PasswordConfirm != "" && Regex.IsMatch(ctrlAccount.PasswordConfirm.Trim(), "[^\xFF]", RegexOptions.Compiled))
+            if (ctrlAccount.PasswordConfirm != "" && Regex.IsMatch(ctrlAccount.PasswordConfirm.Trim(), "[^\xFF]", RegexOptions.Compiled))
             {
                 ViewState["custpwd2"] = ctrlAccount.PasswordConfirm;
 
