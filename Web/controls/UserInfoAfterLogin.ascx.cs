@@ -28,7 +28,7 @@ public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
 
     private void getCustomerfund()
     {
-        if (ThisCustomer.CustomerLevelID == (int)UserType.BLUUNLIMITED)
+        if (ThisCustomer.CustomerLevelID == (int)UserType.SALESREPS)
         {
             decimal SAFAmount = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID,(int)FundType.SOFFunds).Amount;
             lblSOF.Text = "Sales Operations Funds = " + String.Format("{0:0.00}", SAFAmount);

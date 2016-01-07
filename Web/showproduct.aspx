@@ -19,6 +19,7 @@
     <asp:Label ID="hdnButtonName" name="hdnButtonName" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnproductactualprice" name="hdnproductactualprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+     <asp:Label ID="hdnquantity" name="hdnquantity" enableviewstate="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -86,24 +87,18 @@
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
                     }
-                    else {
-                      
+                    else {                      
                         $(btnname).trigger("click");
                     }
-
-
-
                 }
 
-            });
+            });           
+           
 
             //Set product price  to show on pupup
             applyproductcategoryfund();
-            //  $("#spprice").text($("meta[itemprop=price]").attr("content"));
-            //Adjust product price based on value entered in blu buckts text box
+            setpricewithquantitychange();
             $("#txtBluBuksUsed").focusout(function () {
-
-
                 if (applyblubuksvalidation()) {
                     var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -113,7 +108,6 @@
             });
 
             $("#txtBluBuksUsed").keypress(function (evt) {
-
                 var charCode = (evt.which) ? evt.which : event.keyCode
                 if (charCode == 46)
                     return true;
@@ -124,9 +118,32 @@
             });
 
             $("#Quantity_1_1").change(function () {
-
-
+                debugger;
+                $("#hdnquantity").text(theForm.Quantity_1_1.value);
+                setpricewithquantitychange();
+               
             });
+
+            function setpricewithquantitychange() {
+                debugger;
+                var updatedtotalprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value);
+                var productfundamount = $("#hdnProductFundAmount").text();
+
+                if (productfundamount < updatedtotalprice) {
+                    updatedtotalprice = updatedtotalprice - productfundamount;
+                    $("#hdnProductFundAmountUsed").text(productfundamount);
+                }
+                else {
+                    productfundamount = productfundamount - updatedtotalprice;
+                    $("#hdnProductFundAmountUsed").text(updatedtotalprice);
+                    updatedtotalprice = 0;
+                    $("#txtBluBuksUsed").text(updatedtotalprice);
+                }
+                $("#hdnpricewithfund").text(updatedtotalprice);
+                $("#spprice").text("$" + updatedtotalprice.toFixed(2));
+                $("#sppricewithfund").html("<font>Price with (FUND) credit: $</font>" + updatedtotalprice.toFixed(2));
+
+            }
 
             function applyblubuksvalidation() {
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
@@ -156,8 +173,6 @@
 
             }
             function applyproductcategoryfund() {
-
-
                 $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
@@ -168,7 +183,6 @@
                 if ($("#Quantity_1_1").length <= 0 || $("#Size_1_1").length <= 0 || $("#Color_1_1").length <= 0) {
                     submitenabled(theForm);
                     return (true);
-
                 }
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
@@ -210,10 +224,8 @@
                 else {
                     CustomerLevelElemment = document.layers[id];
                 }
-
                 return CustomerLevelElemment.innerHTML;
             }
-
         });
     </script>
 </asp:Content>
