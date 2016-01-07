@@ -273,7 +273,7 @@ namespace AspDotNetStorefront
                             }
                         }
 
-                        // call the service
+                        // call the service after verification if the shopping cart has RRD Product & UseFulfillmentAPI flag is true
                         if (hasproducts && AppLogic.AppConfig("UseFulfillmentAPI").ToBool())
                         {
                             orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting), shippingMethodCode);
