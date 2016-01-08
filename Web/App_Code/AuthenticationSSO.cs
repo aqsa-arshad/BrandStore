@@ -159,13 +159,18 @@ namespace AspDotNetStorefront
         {
             try
             {
-                SFDCDealerUser dealerUser = new SFDCDealerUser();
-                SFDCInternalUser internalUser = new SFDCInternalUser();
-
+                bool IsSFDCUser = false;
                 if (!string.IsNullOrEmpty(profile.sfid))
-                    GetSFDCDealerUser(profile, profile.sfid);
+                    IsSFDCUser = GetSFDCDealerUser(profile, profile.sfid);
                 else
-                    GetSFDCInternalUser(profile, userName);
+                    IsSFDCUser = GetSFDCInternalUser(profile, userName);
+
+                if (!IsSFDCUser)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    "User '" + userName + "' is not found in SFDC. Hence Application will treat this as in Internal User without any budget.", MessageTypeEnum.Informational, MessageSeverityEnum.Message);
+                    profile.userType = UserType.INTERNAL.ToString();
+                }
 
                 Password p = new Password(password);
                 int customerLevelID = GetCustomerLevelID(profile.userType);
@@ -337,137 +342,121 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="profile">profile</param>
         /// <param name="sfid">sfid</param>
-        public static void GetSFDCDealerUser(AspDotNetStorefrontCore.Profile profile, string sfid)
+        private static bool GetSFDCDealerUser(AspDotNetStorefrontCore.Profile profile, string sfid)
         {
-            try
-            {
-                var dealerUserQuery = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), sfid);
-                var username = AppLogic.AppConfig("SFDCUsername");
-                var password = AppLogic.AppConfig("SFDCPassword");
-                var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
+            var dealerUserQuery = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), sfid);
+            QueryResult queryResult = new QueryResult();
 
-                SoapClient loginClient; // for login endpoint
-                SoapClient client; // for API endpoint
-                SessionHeader header;
-                EndpointAddress endpoint;
-                SFDCDealerUser _dealerUser = new SFDCDealerUser();
+            if (QuerySFDC(dealerUserQuery, ref queryResult) == false)
+                return false;
 
-                // Create a SoapClient specifically for logging in
-                loginClient = new SoapClient();
+            Contact contact = (Contact)queryResult.records.FirstOrDefault();
 
-                // SFDC Login
-                LoginResult lr = loginClient.login(null, username, password + securityToken);
+            profile.firstName = contact.FirstName;
+            profile.lastName = contact.LastName;
 
-                if (lr.passwordExpired)
-                {
-                    //////return false;
-                }
+            if (contact.Account.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
+                    contact.Account.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
+                    contact.Account.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
+                    contact.Account.TrueBLUStatus__c.Equals("UNLIMITED", StringComparison.InvariantCultureIgnoreCase))
+                profile.userType = "BLU" + contact.Account.TrueBLUStatus__c;
+            else
+                profile.userType = contact.Account.TrueBLUStatus__c;
 
-                endpoint = new EndpointAddress(lr.serverUrl);
-                header = new SessionHeader();
-                header.sessionId = lr.sessionId;
-
-                // Create and cache an API endpoint client
-                client = new SoapClient("Soap", endpoint);
-
-
-                QueryResult qr = new QueryResult();
-                client.query(header, null, null, null, dealerUserQuery, out qr);
-
-                if (qr.size > 0)
-                {
-                    Contact contact = (Contact)qr.records.FirstOrDefault();
-
-                    _dealerUser.FirstName = contact.FirstName;
-                    _dealerUser.LastName = contact.LastName;
-                    _dealerUser.TrueBLUStatus__c = contact.Account.TrueBLUStatus__c;
-                }
-
-                profile.firstName = _dealerUser.FirstName;
-                profile.lastName = _dealerUser.LastName;
-
-                if (_dealerUser.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
-                        _dealerUser.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
-                        _dealerUser.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
-                        _dealerUser.TrueBLUStatus__c.Equals("UNLIMITED", StringComparison.InvariantCultureIgnoreCase))
-                    profile.userType = "BLU" + _dealerUser.TrueBLUStatus__c;
-                else
-                    profile.userType = _dealerUser.TrueBLUStatus__c;
-
-                // SFDC Logout
-                client.logout(header);
-            }
-            catch (Exception ex)
-            {
-                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
-            }
+            return true;
         }
 
         /// <summary>
         /// Get SFDC Internal User Information by Email
+        /// -- Search User in SFDC with username (Email)
+        /// ---- If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
+        /// ---- If User Not Found in SFDC: Search Budget in Employee_Budget__c in SFDC with Email
         /// </summary>
         /// <param name="profile">profile</param>
         /// <param name="email">email</param>
-        public static void GetSFDCInternalUser(AspDotNetStorefrontCore.Profile profile, string email)
+        private static bool GetSFDCInternalUser(AspDotNetStorefrontCore.Profile profile, string email)
         {
-            try
+            var internalUserQuery = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
+            QueryResult queryResult = new QueryResult();
+
+            if (QuerySFDC(internalUserQuery, ref queryResult))
             {
-                var internalUserQuery = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
-                var username = AppLogic.AppConfig("SFDCUsername");
-                var password = AppLogic.AppConfig("SFDCPassword");
-                var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
+                User user = (User)queryResult.records.FirstOrDefault();
 
-                SoapClient loginClient; // for login endpoint
-                SoapClient client; // for API endpoint
-                SessionHeader header;
-                EndpointAddress endpoint;
-                SFDCInternalUser _internalUser = new SFDCInternalUser();
-
-                // Create a SoapClient specifically for logging in
-                loginClient = new SoapClient();
-
-                // SFDC Login
-                LoginResult lr = loginClient.login(null, username, password + securityToken);
-
-                if (lr.passwordExpired)
-                {
-                    //////return false;
-                }
-
-                endpoint = new EndpointAddress(lr.serverUrl);
-                header = new SessionHeader();
-                header.sessionId = lr.sessionId;
-
-                // Create and cache an API endpoint client
-                client = new SoapClient("Soap", endpoint);
-
-
-                QueryResult qr = new QueryResult();
-                client.query(header, null, null, null, internalUserQuery, out qr);
-
-                if (qr.size > 0)
-                {
-                    User user = (User)qr.records.FirstOrDefault();
-
-                    _internalUser.FirstName = user.FirstName;
-                    _internalUser.LastName = user.LastName;
-                }
-
-                profile.firstName = _internalUser.FirstName;
-                profile.lastName = _internalUser.LastName;
+                profile.firstName = user.FirstName;
+                profile.lastName = user.LastName;
                 profile.userType = UserType.SALESREPS.ToString();
 
-                // SFDC Logout
-                client.logout(header);
+                // If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
+                var SFDCBudgetQueryById = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), user.Id);
+
+                if (QuerySFDC(SFDCBudgetQueryById, ref queryResult) == true)
+                {
+                    // Set Budget
+                }
+                return true;
             }
-            catch (Exception ex)
+            else
+            {
+                var SFDCBudgetQueryByEmail = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
+
+                if (QuerySFDC(SFDCBudgetQueryByEmail, ref queryResult) == true)
+                {
+                    // Set Budget
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Query SFDC
+        /// </summary>
+        /// <param name="query">query</param>
+        /// <param name="queryResult">queryResult</param>
+        /// <returns>queryResult</returns>
+        private static bool QuerySFDC(string query, ref QueryResult queryResult)
+        {
+            var username = AppLogic.AppConfig("SFDCUsername");
+            var password = AppLogic.AppConfig("SFDCPassword");
+            var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
+            var flag = true;
+
+            SoapClient loginClient; // for login endpoint
+            SoapClient client; // for API endpoint
+            SessionHeader header;
+            EndpointAddress endpoint;
+
+            // Create a SoapClient specifically for logging in
+            loginClient = new SoapClient();
+
+            // SFDC Login
+            LoginResult lr = loginClient.login(null, username, password + securityToken);
+
+            if (lr.passwordExpired)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                    "SFDC Login Password Is Expired", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                flag = false;
             }
+
+            endpoint = new EndpointAddress(lr.serverUrl);
+            header = new SessionHeader();
+            header.sessionId = lr.sessionId;
+
+            // Create and cache an API endpoint client
+            client = new SoapClient("Soap", endpoint);
+            client.query(header, null, null, null, query, out queryResult);
+
+            if (queryResult.size == 0)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    "Record not found for " + username, MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                flag = false;
+            }
+
+            // SFDC Logout
+            client.logout(header);
+            return flag;
         }
 
         /// <summary>
