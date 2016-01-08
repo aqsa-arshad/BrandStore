@@ -388,7 +388,7 @@ namespace AspDotNetStorefront
                 profile.userType = UserType.SALESREPS.ToString();
 
                 // If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
-                var SFDCBudgetQueryById = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), user.Id);
+                var SFDCBudgetQueryById = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), user.Sales_Rep_ID__c);
 
                 if (QuerySFDC(SFDCBudgetQueryById, ref queryResult) == true)
                 {
