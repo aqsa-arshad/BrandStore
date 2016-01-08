@@ -7,10 +7,8 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" /> 
     <asp:Panel runat="server" DefaultButton="btnContinueCheckout">
-        <div  id="createAccountDiv" class="content-box-03 body-forms">
-           
-          <h5><asp:Label runat="server" Text="<%$ Tokens:StringResource,createaccount.aspx.1 %>"></asp:Label></h5>            
-            <aspdnsf:Topic ID="Topic3" runat="server" TopicName="createAccountInstructions" />
+        <div  id="createAccountDiv" class="content-box-03 body-forms">        
+            <aspdnsf:Topic ID="Topic3" runat="server" TopicName="updateAccountInstructions" />
        
         <asp:Panel ID="pnlErrorMsg" runat="Server" Visible="false">
             <div class="error-wrap">
@@ -213,9 +211,13 @@
 
             <div class="clearfix"></div>
             <div class="col-md-5 pull-right pull-md-no">
+                 <div class="form-group">
+                    <asp:Button ID="btnSave" runat="server"  CssClass="btn btn-md btn-primary btn-half" Text="Save" ValidationGroup="registration" OnClick="btnContinueCheckout_Click" />
+                    <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-md btn-primary btn-half" Text="Cancel" OnClick="btnCancel_Click" />
+                </div>
                 <div class="form-group">
                     <asp:Button runat="server" ID="btnContinueCheckout"
-                        CssClass="btn btn-md btn-primary btn-block" Text="<%$ Tokens:StringResource,createaccount.aspx.76 %>"
+                        CssClass="btn btn-md btn-primary btn-block" Visible="false" Text="<%$ Tokens:StringResource,createaccount.aspx.76 %>"
                         ValidationGroup="registration" OnClick="btnContinueCheckout_Click" />
                 </div>
             </div>

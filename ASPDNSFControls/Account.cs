@@ -714,6 +714,15 @@ namespace AspDotNetStorefrontControls
         }
 
         /// <summary>
+        /// Gets or sets the property of textbox security code
+        /// </summary>
+        [Browsable(false), Category("TEXTBOX")]
+        public TextBox txtEmail
+        {
+            get { return _txtEmail; }
+            set { _txtEmail = value; }
+        }
+        /// <summary>
         /// Gets or sets the property of label security code
         /// </summary>
         [Browsable(false), Category("LABEL")]

@@ -150,6 +150,8 @@ namespace AspDotNetStorefront
                 {
                     Response.Redirect("JWMyAccount.aspx");
                 }
+                ctrlAccount.txtEmail.Attributes.Add("readonly", "readonly");
+
             }
             else
             {
@@ -157,7 +159,10 @@ namespace AspDotNetStorefront
             }
 
         }
-
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("JWMyAccount.aspx");
+        }
         #region EventHandlers
 
         public void btnContinueCheckout_Click(object sender, EventArgs e)
@@ -416,6 +421,8 @@ namespace AspDotNetStorefront
         }
         private void CreateAccount()
         {
+            
+            
             ThisCustomer.RequireCustomerRecord();
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
 
@@ -437,6 +444,28 @@ namespace AspDotNetStorefront
             }
 
             SetPasswordFields();
+            if (ctrlAccount.Password.Length == 0 && ctrlAccount.PasswordConfirm.Length == 0)
+            {
+                lblErrorMessage.Text = "Please enter a valid password!";
+                ResetScrollPosition();
+                pnlErrorMsg.Visible = true;
+                return;
+            }
+            if (ctrlAccount.Password.Length == 0 || ctrlAccount.PasswordConfirm.Length == 0)
+            {
+                lblErrorMessage.Text = "The new password do not match!";
+                ResetScrollPosition();
+                pnlErrorMsg.Visible = true;
+                return;
+            }
+          
+            if (!ViewState["custpwd"].Equals(ViewState["custpwd2"]))
+            {
+                lblErrorMessage.Text = "The new password do not match!";
+                ResetScrollPosition();
+                pnlErrorMsg.Visible = true;
+                return;
+            }
 
             string AccountName = (ctrlAccount.FirstName.Trim() + " " + ctrlAccount.LastName.Trim()).Trim();
             if (SkipRegistration)
@@ -887,6 +916,7 @@ namespace AspDotNetStorefront
 
         private void SetPasswordFields()
         {
+            
             if (ViewState["custpwd"] == null)
             {
                 ViewState["custpwd"] = "";
@@ -910,10 +940,14 @@ namespace AspDotNetStorefront
             {
                 ViewState["custpwd2"] = ctrlAccount.PasswordConfirm;
 
+                ctrlAccount.PasswordReqFieldValidator.Enabled = false;
+
                 string fillpwd2 = new string('\xFF', ctrlAccount.PasswordConfirm.Length);
 
                 ctrlAccount.txtPasswordConfirm.Attributes.Add("value", fillpwd2);
             }
+           
+            
         }
 
         private void ResetScrollPosition()
