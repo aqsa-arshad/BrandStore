@@ -24,8 +24,8 @@
 </div>
 
 <button class="btn btn-md btn-primary btn-block" type="button" id="btnViewAccount">VIEW MY ACCOUNT</button>
-<%--Todo: True Blu Funtionality in Phase-2--%>
-<%--<a href="#" class="sm-link">Learn more about TrueBLU ></a><br>--%>
+<br />
+<a href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about TrueBLU ></a><br>
 <br>
 <script type="text/javascript">
     $(document).ready(function () {
