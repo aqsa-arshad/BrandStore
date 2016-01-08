@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using AspDotNetStorefrontCore;
@@ -16,21 +17,33 @@ namespace AspDotNetStorefront
     public partial class orderconfirmation : SkinBase
     {
         /// <summary>
+        /// Used for the total of blu bucks used
+        /// </summary>
+        private decimal totalBluBucks;
+        /// <summary>
+        /// List for the used funds
+        /// </summary>
+        List<double> lstFund = Enumerable.Repeat(0.0, 7).ToList();
+        /// <summary>
         /// The order number
         /// </summary>
         protected int OrderNumber;
+       
         /// <summary>
         /// The Data reader for reading Data from SQL
         /// </summary>
         private IDataReader reader;
+       
         /// <summary>
         /// The reader2
         /// </summary>
         private IDataReader reader2;
+       
         /// <summary>
         /// The m_ store loc
         /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
+       
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -74,20 +87,20 @@ namespace AspDotNetStorefront
                 Response.Redirect("OrderNotFound.aspx");
             }
             if (!Page.IsPostBack)
-            {
+            {                
                 GetOrderInfo();
                 GetOrderItemsDetail();
                 SendOrderinfotoRRD();
             }
         }
-
+       
         /// <summary>
         /// Gets the order information.
         /// </summary>
         void GetOrderInfo()
         {
             try
-            {
+            {                
                 using (var conn = DB.dbConn())
                 {
                     conn.Open();
@@ -136,6 +149,49 @@ namespace AspDotNetStorefront
                             lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
                             lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
                             lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
+                            for (var i = 2; i < 7; i++)
+                            {
+                                if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
+                                {
+                                    lstFund[i] =
+                                        lstFund[i] + Convert.ToDouble(reader[i.ToString()].ToString());
+
+                                    if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
+                                    {
+                                        lblSOFFundsTotal.Text = lstFund[i].ToString();
+                                        lblSOFFundsTotal.Visible = true;
+                                        lblSOFFundsTotalCaption.Visible = true;
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
+                                    {
+                                        lblDirectMailFundsTotal.Text = lstFund[i].ToString();
+                                        lblDirectMailFundsTotal.Visible = true;
+                                        lblDirectMailFundsTotalCaption.Visible = true;
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
+                                    {
+                                        lblDisplayFundsTotal.Text = lstFund[i].ToString();
+                                        lblDisplayFundsTotal.Visible = true;
+                                        lblDisplayFundsTotalCaption.Visible = true;
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
+                                    {
+                                        lblLiteratureFundsTotal.Text = lstFund[i].ToString();
+                                        lblLiteratureFundsTotal.Visible = true;
+                                        lblLiteratureFundsTotalCaption.Visible = true;
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
+                                    {
+                                        lblPOPFundsTotal.Text = lstFund[i].ToString();
+                                        lblPOPFundsTotal.Visible = true;
+                                        lblPOPFundsTotalCaption.Visible = true;
+                                    }
+                                }
+                            }
+                            if (lstFund.Sum(x => Convert.ToDouble(x)) <= 0)
+                            {
+                                lblCreditsUsedCaption.Visible = false;                    
+                            }
                         }
                         conn.Close();
                     }
@@ -148,7 +204,7 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
-
+        
         /// <summary>
         /// Gets the order items detail.
         /// </summary>
@@ -205,15 +261,8 @@ namespace AspDotNetStorefront
                 masterHome = "JeldWenTemplate";
             }
             return masterHome;
-        }
-
-        /// <summary>
-        /// Lblreceipt_clicks this instance.
-        /// </summary>
-        private void lblreceipt_click()
-        {
-            // String ReceiptURL = "receipt.aspx?ordernumber=" + OrderNumber.ToString() + "&customerid=" + CustomerID.ToString();
-        }
+        }        
+       
         #region "Send order to RRD"
         /// <summary>
         /// Sends the orderinfoto RRD.
@@ -358,6 +407,7 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                (e.Item.FindControl("lblRegularPrice") as Label).Text =  Math.Round(Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value),2).ToString();
                 (e.Item.FindControl("ImgProduct") as Image).ImageUrl = !string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value) ? AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon") : AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
                 {
@@ -406,6 +456,31 @@ namespace AspDotNetStorefront
                 {
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
+                }
+                if (ThisCustomer.CustomerLevelID == 1 || ThisCustomer.CustomerLevelID == 8 || ThisCustomer.CustomerLevelID == 2)
+                {
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBuck") as Label).Visible = false;
+                    (e.Item.FindControl("lblRegularPriceCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblRegularPrice") as Label).Visible = false;
+                    lblCreditsUsedCaption.Visible = false;                    
+                }
+                if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7 || ThisCustomer.CustomerLevelID == 9 || ThisCustomer.CustomerLevelID == 10 || ThisCustomer.CustomerLevelID == 11 || ThisCustomer.CustomerLevelID == 12)
+                {
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBuck") as Label).Visible = false;
+                }
+                if (Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2) != 0)
+                {
+                    totalBluBucks = totalBluBucks +
+                                    Math.Round(
+                                        Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);                    
+                    lblBluBucksTotal.Text = totalBluBucks.ToString();
+                    lblBluBucksTotal.Visible = true;
+                    lblCreditsUsedCaption.Visible = true;
+                    lblBluBucksTotalCaption.Visible = true;
                 }
             }
         }
