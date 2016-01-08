@@ -273,15 +273,10 @@ namespace AspDotNetStorefront
                     //showing password fields for updation of fields
 
                     string TempPassword = AppLogic.AppConfig("TempPassword");
-                    // System.Nullable<int> newsaltkey = p.Salt;
+                
 
                     ctrlAccount.txtPassword.Attributes.Add("value", TempPassword);
                     ctrlAccount.txtPasswordConfirm.Attributes.Add("value", TempPassword);
-                    //GetJavaScriptFunctions();
-
-
-                    //ctrlAccount.txtPassword.TextMode = TextBoxMode.Password;
-                    //ctrlAccount.txtPasswordConfirm.TextMode = TextBoxMode.Password;
                 }
             }
             else
@@ -344,13 +339,6 @@ namespace AspDotNetStorefront
                     ctrlShippingAddress.ZipCode = ShippingAddress.Zip;
                     ctrlShippingAddress.ShowZip = AppLogic.GetCountryPostalCodeRequired(AppLogic.GetCountryID(ctrlShippingAddress.Country));
                 }
-
-                //if (!Checkout)
-                //{
-                //    //hide billing and shipping inputs in case of Checkout
-                //    pnlBillingInfo.Visible = false;
-                //    pnlShippingInfo.Visible = false;
-                //}
 
                 // Hide billing and shipping inputs w.r.t mock-ups
                 pnlBillingInfo.Visible = false;
@@ -575,11 +563,8 @@ namespace AspDotNetStorefront
 
                 Password blankpwd = new Password("", ThisCustomer.SaltKey);
                 string TempPassword = AppLogic.AppConfig("TempPassword");
-                // || ThisCustomer.Password == TempPassword
                 if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("")))
                 {
-                    // do NOT allow passwords to be changed on this page. this is only for creating an account.
-                    // if they want to change their password, they must use their account page
                     newpwd = null;
                     newsaltkey = null;
                 }
@@ -838,7 +823,7 @@ namespace AspDotNetStorefront
                             else
                             {
 
-                                Response.Redirect("account.aspx?checkout=true");//checkoutshipping
+                                Response.Redirect("account.aspx?checkout=true");
                             }
                         }
                     }

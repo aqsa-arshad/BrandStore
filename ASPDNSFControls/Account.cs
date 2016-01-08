@@ -714,7 +714,7 @@ namespace AspDotNetStorefrontControls
         }
 
         /// <summary>
-        /// Gets or sets the property of textbox security code
+        /// Gets or sets the property of Email.
         /// </summary>
         [Browsable(false), Category("TEXTBOX")]
         public TextBox txtEmail
