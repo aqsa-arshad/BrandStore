@@ -140,7 +140,8 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnAddAddresses_Click(object sender, EventArgs e)
         {
-            Response.Redirect("JWAddAddresses.aspx");
+            Response.Redirect("JWAddAddresses.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         /// <summary>
@@ -276,7 +277,8 @@ namespace AspDotNetStorefront
         /// <param name="addressID">addressID</param>
         private void EditAddress(int addressID)
         {
-            Response.Redirect("JWAddAddresses.aspx?AddressID=" + addressID);
+            Response.Redirect("JWAddAddresses.aspx?AddressID=" + addressID, false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         /// <summary>
@@ -300,7 +302,8 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("JWMyAccount.aspx");
+            Response.Redirect("JWMyAccount.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
         
         /// <summary>
@@ -310,7 +313,8 @@ namespace AspDotNetStorefront
         {
             string returnURL = Request.QueryString["returnURL"];
             //string paymentmethod = Request.QueryString["paymentmethod"];
-            Response.Redirect(returnURL);
+            Response.Redirect(returnURL, false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
     }

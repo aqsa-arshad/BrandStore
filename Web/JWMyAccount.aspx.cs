@@ -136,7 +136,8 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnChangeBillingAddress_Click(object sender, EventArgs e)
         {
-            Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Billing);
+            Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Billing, false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         /// <summary>
@@ -144,7 +145,8 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnChangeShippingAddress_Click(object sender, EventArgs e)
         {
-            Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Shipping);
+            Response.Redirect("JWMyAddresses.aspx?AddressType=" + (int)AddressTypes.Shipping, false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         /// <summary>

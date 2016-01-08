@@ -95,7 +95,7 @@ namespace AspDotNetStorefront
                 ddlState.ClearSelection();
                 ddlState.DataSource = State.GetAllStateForCountry(AppLogic.GetCountryID(ddlCountry.SelectedValue), ThisCustomer.LocaleSetting);
                 ddlState.DataTextField = "Name";
-                ddlState.DataValueField = "Name";
+                ddlState.DataValueField = "Abbreviation";
                 ddlState.DataBind();
                 ddlState.Items.Insert(0, "Please select");
             }
@@ -203,8 +203,8 @@ namespace AspDotNetStorefront
                 anyAddress.Address2 = txtAddress2.Text.Trim();
                 anyAddress.Suite = (!string.IsNullOrEmpty(txtSuite.Text.Trim()) && char.IsNumber(txtSuite.Text.Trim().FirstOrDefault())) ? "Suite " + txtSuite.Text.Trim() : txtSuite.Text.Trim();
                 anyAddress.City = txtCity.Text.Trim();
-                anyAddress.Country = ddlCountry.SelectedItem.Text.Trim();
-                anyAddress.State = ddlState.SelectedItem.Text.Trim();
+                anyAddress.Country = ddlCountry.SelectedItem.Value.Trim();
+                anyAddress.State = ddlState.SelectedItem.Value.Trim();
                 anyAddress.Zip = txtZip.Text.Trim();
 
                 anyAddress.ResidenceType = (int)ResidenceTypes.Unknown;
@@ -223,7 +223,8 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect(hfPreviousURL.Value);
+            Response.Redirect(hfPreviousURL.Value, false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         /// <summary>
@@ -247,7 +248,8 @@ namespace AspDotNetStorefront
                     DB.ExecuteSQL("Update Customer set ShippingAddressID=" + addressID + " where CustomerID=" + ThisCustomer.CustomerID.ToString());
                     ThisCustomer.SetPrimaryShippingAddressForShoppingCart(ThisCustomer.PrimaryShippingAddressID, addressID);
                 }
-                Response.Redirect(hfPreviousURL.Value);
+                Response.Redirect(hfPreviousURL.Value, false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)
             {
@@ -266,7 +268,8 @@ namespace AspDotNetStorefront
             {
                 Address anyAddress = LoadClassData();
                 anyAddress.UpdateDB();
-                Response.Redirect(hfPreviousURL.Value);
+                Response.Redirect(hfPreviousURL.Value, false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)
             {
