@@ -58,36 +58,43 @@
         </asp:ScriptManager>
 
         <div class="container">
-            <div class="header clearfix">
-                <div class="header-part">
-                    <img class="logo" src="App_Themes/Skin_3/images/logo.png" />
-                    <span class="head-tagline">Brand Store      </span>
-                </div>
-                <div class="clearfix">
-                </div>
-            </div>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td class="padding-none">
 
-            <div class="body-container">
-                <div class="body-heading">
-                    <h2>Receipt</h2>
-                </div>
-                <div class="row">
-                    <div>
-                        <div class="left-side">
+                            <table class="receipt-border" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td height="175" valign="middle" width="215"><a class="logo" href="#">
+                                            <img alt="JeldWen" src="App_Themes/Skin_3/images/logo.png"></a></td>
+                                        <td align="left" valign="middle"><span class="print-logo-text ">Brand Store </span></td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="receipt-border">
+                            <h2 style="margin: 10px 20px;" class="black-color">Receipt</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 50px;">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="footer margin-none">
 
-            <%--Footer Section--%>
-            <footer class="footer">
                 <div class="row">
-                    <div class="col-md-2">
-                        <img src="~/../App_Themes/Skin_3/images/bottom-logo.png">
+                    <div class="col-sm-2 col-md-2">
+                        <img alt="Logo" src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
                     </div>
-                    <div class="col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.  <span>|</span>   <a href="JWTermsAndConditions.aspx">Privacy Policy</a></div>
+                    <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.</div>
                 </div>
             </footer>
         </div>
