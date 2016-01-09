@@ -171,10 +171,16 @@ namespace AspDotNetStorefront
                     "User '" + userName + "' is not found in SFDC. Hence Application will treat this as in Internal User without any budget.", MessageTypeEnum.Informational, MessageSeverityEnum.Message);
                     profile.userType = UserType.INTERNAL.ToString();
                 }
+                if (string.IsNullOrEmpty(profile.sfid))
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        "User '" + userName + "' sfid or email is not found in SFDC.", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                    profile.userType = UserType.INTERNAL.ToString();
+                }
 
                 Password p = new Password(password);
                 int customerLevelID = GetCustomerLevelID(profile.userType);
-
+                
                 var ThisCustomer = new Customer(userName);
 
                 if (!IsCustomerAvailable)
@@ -191,6 +197,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@BillingAddressID", 0),
                                         new SqlParameter("@ShippingAddressID", 0),
+                                        new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -202,6 +209,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@SaltKey", p.Salt),
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@IsRegistered", 1), 
+                                        new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -386,24 +394,27 @@ namespace AspDotNetStorefront
                 profile.firstName = user.FirstName;
                 profile.lastName = user.LastName;
                 profile.userType = UserType.SALESREPS.ToString();
+                profile.sfid = user.Sales_Rep_ID__c;
 
-                // If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
-                var SFDCBudgetQueryById = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), user.Sales_Rep_ID__c);
+                //////// If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
+                //////var SFDCBudgetQueryById = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), user.Sales_Rep_ID__c);
 
-                if (QuerySFDC(SFDCBudgetQueryById, ref queryResult) == true)
-                {
-                    // Set Budget
-                }
+                //////if (QuerySFDC(SFDCBudgetQueryById, ref queryResult) == true)
+                //////{
+                //////    // Set Budget
+                //////}
                 return true;
             }
             else
             {
-                var SFDCBudgetQueryByEmail = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
-
-                if (QuerySFDC(SFDCBudgetQueryByEmail, ref queryResult) == true)
-                {
-                    // Set Budget
-                }
+                profile.sfid = email;
+                
+                //////var SFDCBudgetQueryByEmail = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
+                
+                //////if (QuerySFDC(SFDCBudgetQueryByEmail, ref queryResult) == true)
+                //////{
+                //////    // Set Budget
+                //////}
                 return false;
             }
         }
@@ -461,6 +472,9 @@ namespace AspDotNetStorefront
 
         /// <summary>
         /// Get Customer Fund
+        /// 1. Get Customer Fund from SFDC.
+        /// 2. Update Local DB.
+        /// 3. Return lstCustomerFund.
         /// </summary>
         /// <param name="CustomerID">CustomerID</param>
         /// <returns>lstCustomerFund</returns>
