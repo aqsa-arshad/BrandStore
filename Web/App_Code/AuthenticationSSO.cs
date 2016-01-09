@@ -175,7 +175,6 @@ namespace AspDotNetStorefront
                 {
                     SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                         "User '" + userName + "' sfid or email is not found in SFDC.", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
-                    profile.userType = UserType.INTERNAL.ToString();
                 }
 
                 Password p = new Password(password);
