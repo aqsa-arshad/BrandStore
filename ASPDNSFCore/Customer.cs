@@ -4663,7 +4663,7 @@ namespace AspDotNetStorefrontCore
     #endregion
 
     #region Public Enums for Customer Funds
-    public enum FundType
+    public enum  FundType:int
     {
         BLUBucks = 1,
         SOFFunds = 2,

@@ -562,7 +562,7 @@ namespace AspDotNetStorefront
             //get fund BluBucks Percentage
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
-
+            hdnProductCategoryID.Text = parentCategoryID.ToString();
         }
 
 
@@ -625,8 +625,8 @@ namespace AspDotNetStorefront
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
             formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
-
-
+            formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
+            formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);

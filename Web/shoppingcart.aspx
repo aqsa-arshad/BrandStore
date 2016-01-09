@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="OrderOption" Src="~/controls/OrderOption.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="BuySafeKicker" Src="~/controls/BuySafeKicker.ascx" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="PageContent" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <%--<asp:Panel ID="pnlContent" runat="server">--%>
@@ -12,7 +13,21 @@
         <%--<h1>
 				<asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
 			</h1>--%>
+         <%--Hidden Variables Regions--%>
         <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+         <asp:Label ID="hdncurrentrecordid" name="hdncurrentrecordid" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+         <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnsoffundamount" name="hdnsoffundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdndirectmailfundamount" name="hdndirectmailfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdndisplayfundamount" name="hdndisplayfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnliteraturefundamount" name="hdndisplayfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnpopfundamount" name="hdnpopfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdntoreplace" name="hdntoreplace" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+         <%--End Hidden Variables Regions--%>
         <asp:Literal ID="ltValidationScript" runat="server"></asp:Literal>
         <asp:Literal ID="ltJsPopupRoutines" runat="server"></asp:Literal>
         <aspdnsf:Topic runat="server" ID="topicHeaderMessage" TopicName="CartPageHeader" />
@@ -138,7 +153,7 @@
 					</div>
 				</asp:Panel>
 			</div>--%>
-        <asp:Panel ID="pnlShoppingCart" runat="server" DefaultButton="btnUpdateShoppingCart">
+        <asp:Panel ID="pnlShoppingCart" runat="server"  DefaultButton="btnUpdateShoppingCart">
             <table class="table">
                 <tbody>
                     <aspdnsfc:ShoppingCartControl ID="ctrlShoppingCart" runat="server"
@@ -364,25 +379,63 @@
 
     <%--</asp:Panel> --%>
 
-     <script type="text/javascript">
-         $(document).ready(function () {             
-             showhidepricelabels();
+     <%-- Region Open Pop Up for bucckts--%>
+    <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-checkout" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="text-uppercase-no">TrueBLU</h5>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
+                    <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
 
+                    <div class="form-group">
+                        <div class="col-xs-6 padding-none">
+                            <label class="roman-black">BLU Bucks used:</label>
+                        </div>
+                        <div class="col-xs-6 padding-none">
+                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <p class="label-text">
+                        <span class="roman-black">Total price using BLU Bucks:</span>
+                        <span id="spprice" runat="server" clientidmode="Static">$X,XXX.XX </span>
+                    </p>
+                    <div class="buttons-group trueblue-popup">
+                        <div>
+                             <asp:Button id="btnaddtocart" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat ="server" OnClick="btnaddtocart_Click"/>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--End Region Open Pop Up for bucckts--%>
+
+
+     <script  type="text/javascript">
+         $(document).ready(function () {            
+             showhidepricelabels();
+           
              function showhidepricelabels()
              {
+                 
                  var customerlevel = GetCustomerLevel();
                  if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
-                     $("#spregularprice").removeClass("hide-element");
-                     $("#funddiscountprice").removeClass("hide-element");
-                     $("#blubucksprice").removeClass("hide-element");
+                     $(".spregularprice").removeClass("hide-element");
+                     $(".spfunddiscountprice").removeClass("hide-element");
+                     $(".spblubucksprice").removeClass("hide-element");
                  }
                  else if (customerlevel == 8 || customerlevel == 1) {
                     //all or hidden except price
 
                  }
                  else {
-                     $("#spregularprice").removeClass("hide-element");
-                     $("#funddiscountprice").removeClass("hide-element");
+                     $(".spregularprice").removeClass("hide-element");
+                     $(".funddiscountprice").removeClass("hide-element");
 
                  }
              }
@@ -401,8 +454,166 @@
 
                  return CustomerLevelElemment.innerHTML;
              }
+             $("#btnaddtocart").click(function (e) {                 
+                     
+               $("#txtBluBuksUsed").trigger("focusout");                   
 
+             });
+
+             $("#txtBluBuksUsed").focusout(function () {
+                 debugger;
+                 $("#hdncurrentrecordid").text();
+                 var currentrecordid = $("#hdncurrentrecordid").text();
+                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
+                 var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
+                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
+                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
+                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+
+                 if (applyblubuksvalidation(newpricetotal, ProductCategoryID)) {                    
+                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
+                     $("#spprice").text("$" + updatedprice.toFixed(2));
+                 }
+                 
+             });
+
+             $("#txtBluBuksUsed").keypress(function (evt) {
+                 var charCode = (evt.which) ? evt.which : event.keyCode
+                 if (charCode == 46)
+                     return true;
+                 else if (charCode > 31 && (charCode < 48 || charCode > 57))
+                     return false;
+                 else
+                     return true;
+             });
+
+             $(".lnkUpdateItem").click(function () {
+               
+                 var id = $(this).attr("id");
+                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1); 
+                 $("#hdntoreplace").text(toreplace);
+                 $("#hdncurrentrecordid").text(id.replace(toreplace, ""));
+                 var currentrecordid = id.replace(toreplace, "");
+                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
+                 var quantityfieldid = "#" + toreplace + "txtQuantity";
+                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
+                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
+                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+                 //apply fund and buskts
+                 applyproductcategoryfund(newpricetotal, currentrecordid, BluBucksPercentage)              
+                 
+                 $(".lnkUpdateItem").attr("data-toggle", "modal");
+                 $(".lnkUpdateItem").attr("data-target", "#myModa2");                      
+
+             });
+
+             function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage) {
+
+                 GetBluBucksPercentage(ProductCategoryID);
+                 var maxfundlimit = newpricetotal * (Number.parseFloat(BluBucksPercentage) / 100)             
+                 
+                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
+                     return false;
+                 }
+                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt(maxfundlimit)) {
+                     alert("BLU BUKS cannot be greater than allowed limit");
+                     $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                     return false;
+                 }
+                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
+                     alert("You exceed available BLU BUKS");
+                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text()).toFixed(2)
+
+                     return false;
+                 }
+                 else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
+                     alert("BLU BUKS cannot be greater than product price");
+                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2))
+                     return false;
+                 }
+                 else
+                     return true;
+
+             }
+
+             function GetBluBucksPercentage(ProductCategoryID) {
+                 debugger;
+                 PageMethods.UpdateItems();
+                 ////alert("11");
+                 //$.ajax({
+                 //    type: "GET",
+                 //    url: "GetBluBucksPercentage",
+                 //    data: JSON.stringify({"ProductcategoryID":"35"}),
+                 //    contentType: "application/json; charset=utf-8",
+                 //    dataType: "json",
+                 //    success: function (response) {
+                 //        // Replace the div's content with the page method's return.
+                 //        alert(success);
+                 //        alert(response);
+                 //    },
+                 //    failure: function (response) {
+                 //        alert(failure);
+                 //        alert(response);
+                 //    },
+                 //    error: function (error) {
+                 //        alert("error");
+                 //        alert(JSON.parse(error));
+                 //    }
+                 //});
+                // $.ajax({url: 'shoppingcart.aspx?Action=GetBluBucksPercentage&ProductcategoryID=' + "35"});
+             }
+             
+             function applyproductcategoryfund(newpricetotal, currentrecordid) {
+                debugger;
+                 var ItemFundId = $("#spItemFundId_" + currentrecordid).text();
+                 var fundamount = 0;
+                 if (ItemFundId == 2)
+                 {
+                     fundamount = $("#hdnsoffundamount").text();
+                     applyFund(newpricetotal, fundamount);
+                 }
+
+                 else if (ItemFundId == 3)
+                 {
+                     fundamount = $("#hdndirectmailfundamount").text();
+                     applyFund(newpricetotal, fundamount);
+                 }
+
+                 else if (ItemFundId == 4) {
+                     fundamount = $("#hdndisplayfundamount").text();
+                     applyFund(newpricetotal, fundamount);
+                 }
+                 else if (ItemFundId == 5) {
+                     fundamount = $("#hdnliteraturefundamount").text();
+                     applyFund(newpricetotal, fundamount);
+                 }
+                 else if (ItemFundId == 6) {
+                     fundamount = $("#hdnpopfundamount").text();
+                     applyFund(newpricetotal, fundamount);
+                 }
+             }
+
+           function  applyFund(newpricetotal, fundamount)
+             {
+                 
+                 if (fundamount < newpricetotal) {
+                     newpricetotal = newpricetotal - fundamount;
+                     $("#hdnProductFundAmountUsed").text(fundamount);
+                 }
+                 else {
+                     fundamount = fundamount - newpricetotal;                     
+                     $("#hdnProductFundAmountUsed").text(newpricetotal);
+                     newpricetotal = 0;                    
+
+                 }
+                 $("#spprice").text(newpricetotal.toFixed(2));//price to show on popup after deduction of category fund
+                
+             }
          });
+
+        
 
          </script>
 </asp:Content>

@@ -1352,6 +1352,9 @@ namespace AspDotNetStorefrontCore
                         newItem.CategoryFundUsed = DB.RSFieldDecimal(rs, "CategoryFundUsed");
                         newItem.pricewithBluBuksUsed = DB.RSFieldDecimal(rs, "pricewithBluBucksUsed");
                         newItem.pricewithategoryFundUsed = DB.RSFieldDecimal(rs, "pricewithCategoryFundUsed");
+                        newItem.FundID = DB.RSFieldInt(rs, "FundID");
+                        newItem.BluBucksPercentageUsed = DB.RSFieldDecimal(rs, "BluBucksPercentageUsed");
+                        newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
@@ -6850,14 +6853,14 @@ namespace AspDotNetStorefrontCore
         /// <param name="GiftRegistryForCustomerID">The gift registry for CustomerID.</param>
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0)
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null,BluBuksUsed, CategoryFundUsed,FundID);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null,BluBuksUsed, CategoryFundUsed,FundID, BluBucksPercentageUsed ,  ProductCategoryID);
         }
 
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID=0)
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false,BluBuksUsed, CategoryFundUsed,FundID);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false, BluBuksUsed, CategoryFundUsed, FundID, BluBucksPercentageUsed, ProductCategoryID);
         }
 
         // NOTE: ChosenColor and ChosenSize MUST ALWAYS be passed in here in the MASTER WEBCONFIG LOCALE, If in a ML situation!
@@ -6881,7 +6884,7 @@ namespace AspDotNetStorefrontCore
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <param name="preferredComposition">The preferred composition.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift,Decimal BluBuksUsed=0,Decimal CategoryFundUsed=0,int FundID=0)
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0)
         {
             if (null != preferredComposition)
             {
@@ -6970,6 +6973,8 @@ namespace AspDotNetStorefrontCore
                                           DB.CreateSQLParameter("@BluBuksUsed", SqlDbType.Money, 4, BluBuksUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@CategoryFundUsed", SqlDbType.Money, 4, CategoryFundUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@FundID", SqlDbType.Int, 4, FundID, ParameterDirection.Input),
+                                           DB.CreateSQLParameter("@BluBucksPercentageUsed", SqlDbType.Money, 4, BluBucksPercentageUsed, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@ProductCategoryID", SqlDbType.Int, 4, ProductCategoryID, ParameterDirection.Input),
                                          };
 
                         NewRecID = DB.ExecuteStoredProcInt("dbo.aspdnsf_AddItemToCart", spa, m_DBTrans);
@@ -11130,7 +11135,9 @@ namespace AspDotNetStorefrontCore
                                     preferredComposition,
                                     addCartInfo.BluBucksUsed,
                                     addCartInfo.CategoryFundUsed,
-                                    addCartInfo.FundID
+                                    addCartInfo.FundID,
+                                    addCartInfo.BluBucksPercentageUsed,
+                                    addCartInfo.ProductCategoryID
                                     );
                 }
                 else
@@ -11152,7 +11159,9 @@ namespace AspDotNetStorefrontCore
                         addCartInfo.CustomerEnteredPrice,
                         addCartInfo.BluBucksUsed,
                         addCartInfo.CategoryFundUsed,
-                        addCartInfo.FundID
+                        addCartInfo.FundID,
+                        addCartInfo.BluBucksPercentageUsed,
+                        addCartInfo.ProductCategoryID
                        );
                 }
 
@@ -11539,6 +11548,23 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_FundID; }
             set { m_FundID = value; }
+        }
+
+        private int m_ProductCategoryID;
+        public int ProductCategoryID
+        {
+            get { return m_ProductCategoryID; }
+            set { m_ProductCategoryID = value; }
+        }
+
+        private decimal m_BluBucksPercentageUsed;
+        /// <summary>
+        /// Gets or sets the customer entered price
+        /// </summary>
+        public decimal BluBucksPercentageUsed
+        {
+            get { return m_BluBucksPercentageUsed; }
+            set { m_BluBucksPercentageUsed = value; }
         }
 
         private string m_chosencolor;

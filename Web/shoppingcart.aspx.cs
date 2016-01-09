@@ -25,6 +25,8 @@ namespace AspDotNetStorefront
     [PageType("shoppingcart")]
     public partial class ShoppingCartPage : SkinBase
     {
+        List<CustomerFund> CustomerFunds = new List<CustomerFund>();
+        Decimal productcategoryfund = 0;
         #region Web Form Designer generated code
         override protected void OnInit(EventArgs e)
         {
@@ -120,10 +122,12 @@ namespace AspDotNetStorefront
         int CountryID = 0;
         int StateID = 0;
         string ZipCode = string.Empty;
-
+       
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
             Updatecartcounttotalonmenue();
+           
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
 
@@ -200,6 +204,8 @@ namespace AspDotNetStorefront
 
                 InitializePageContent(checkOutType);
                 InitializeShippingAndEstimateControl();
+
+                GetBluBucksAndCategoryFundsForCustomer();
             }
             else
             {
@@ -240,6 +246,118 @@ namespace AspDotNetStorefront
 
         }
 
+        private void GetBluBucksAndCategoryFundsForCustomer()
+        {
+            CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
+            if (CustomerFunds.Count > 0)
+            {
+                GeAllFundsOfCustomer();
+            }
+
+            //    CartItem citem = new CartItem();
+            //    citem =cart.CartItems.Find(x => x.ShoppingCartRecordID == Convert.ToInt32(hdncurrentrecordid.Text));
+            //    //Category Fund
+            //    hdnProductFundID.Text = Convert.ToString(citem.FundID);
+            //    if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
+            //    {
+            //        CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text));
+            //        if (tempfund != null)
+            //        {
+            //            hdnProductFundAmount.Text = tempfund.Amount.ToString();
+            //            productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+            //        }
+            //        else
+            //        {
+            //            tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds.ToString()));//for sales rep
+            //            if (tempfund != null)
+            //            {
+            //                hdnProductFundAmount.Text = tempfund.Amount.ToString();
+            //                productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+            //            }
+            //            else
+            //            {
+            //                hdnProductFundAmount.Text = "0";
+            //                productcategoryfund = Convert.ToDecimal("0.00");
+            //            }
+            //            hdnProductFundID.Text = FundType.SOFFunds.ToString();
+
+            //        }
+            //    }
+            //    else
+            //    {
+            //        hdnProductFundAmount.Text = "0";
+            //        productcategoryfund = Convert.ToDecimal("0.00");
+            //    }
+
+
+            //    hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
+            //    if (this.IsPostBack)
+            //    {
+            //        hdnquantity.Text = Request.Form["Quantity_1_1"];
+            //    }
+            //    else
+            //    {
+            //        hdnquantity.Text = "1";
+            //    }
+
+            //    productprice = productprice * Convert.ToInt32(hdnquantity.Text);
+            //    if (productcategoryfund < productprice)
+            //    {
+            //        productprice = productprice - productcategoryfund;
+            //        hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productcategoryfund)).ToString();
+            //    }
+            //    else
+            //    {
+            //        productcategoryfund = productcategoryfund - productprice;
+            //        hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productprice)).ToString();
+            //        productprice = 0;
+            //        txtBluBuksUsed.Text = productprice.ToString();
+
+            //    }
+            //    hdnpricewithfund.Text = productprice.ToString();
+            //    //End apply fund
+            //    //End
+            //}
+            //else
+            //{
+            //    hdnpricewithfund.Text = productprice.ToString();
+            //    hdnBluBucktsPoints.Text = "0";
+            //    ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU Bucks you can use to purchase your items.";
+
+            //}
+        }
+
+        private void GeAllFundsOfCustomer()
+        { 
+            //Get all funds amount of customer
+            hdnBluBucktsPoints.Text = getfundamount(Convert.ToInt32(FundType.BLUBucks));
+            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(hdnBluBucktsPoints.Text), 2) + " BLU Bucks you can use to purchase your items.";
+            hdnsoffundamount.Text = getfundamount(Convert.ToInt32(FundType.SOFFunds));
+            hdndirectmailfundamount.Text = getfundamount(Convert.ToInt32(FundType.DirectMailFunds));
+            hdndisplayfundamount.Text = getfundamount(Convert.ToInt32(FundType.DisplayFunds));
+            hdnliteraturefundamount.Text = getfundamount(Convert.ToInt32(FundType.LiteratureFunds));
+            hdnpopfundamount.Text = getfundamount(Convert.ToInt32(FundType.POPFunds));
+            //end get all funds amount of customer
+        }
+        private string getfundamount(int FundID)
+        {
+            string fundamount = "0";
+            CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == FundID);            
+            if (tempfund != null)         
+                fundamount = tempfund.Amount.ToString();
+
+            return Math.Round(Convert.ToDecimal(fundamount), 2).ToString();
+        }
+
+        [System.Web.Services.WebMethod]
+        public static String GetBluBucksPercentage(String ProductcategoryID)
+        {
+            //get fund BluBucks Percentage
+            BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(4, Convert.ToInt32(1));
+            String Text = FundPercentage.BudgetPercentageValue.ToString();
+
+            return Text;
+        }
         void btnContinueShoppingTop_Click(object sender, EventArgs e)
         {
             UpdateCartQuantity();
@@ -300,6 +418,39 @@ namespace AspDotNetStorefront
         {
             UpdateCart();
         }
+       public void btnaddtocart_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text))
+                txtBluBuksUsed.Text = "0";
+
+            String test = Request.Form["hdnProductFundAmountUsed"];
+           // String pf=hdnProductFundAmountUsed.Text;
+            String BB = txtBluBuksUsed.Text;
+         //   UpdateCart();
+        }
+           [System.Web.Services.WebMethod]
+       public static  void UpdateItems()
+       {
+
+           // public delegate void printString();
+           // printString ps1 = new printString(GettxtBluBuksUsedValue);
+           //printString ps11 = new printString(GettxtCategoryFundUsedValue);
+
+          
+           //// String pf=hdnProductFundAmountUsed.Text;
+           //String BB = txtBluBuksUsed.Text;
+           //   UpdateCart();
+       }
+           public  string GettxtBluBuksUsedValue()
+           {
+               return txtBluBuksUsed.Text;
+              
+           }
+           public String GettxtCategoryFundUsedValue()
+           {
+               return hdnProductFundAmountUsed.Text;
+
+           }
 
         private void UpdateCart()
         {
