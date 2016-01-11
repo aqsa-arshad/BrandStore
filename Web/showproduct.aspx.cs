@@ -658,8 +658,8 @@ namespace AspDotNetStorefront
                 if (success)
                 {
                     //update fund/blubukts amount related to product for current customer
-                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text) - Convert.ToDecimal(hdnProductFundAmountUsed.Text));
-                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToDecimal(txtBluBuksUsed.Text)));
+                    //////AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text) - Convert.ToDecimal(hdnProductFundAmountUsed.Text));
+                    //////AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToDecimal(txtBluBuksUsed.Text)));
 
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
