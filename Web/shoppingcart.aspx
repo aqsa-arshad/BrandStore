@@ -470,16 +470,17 @@
                  var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
                  var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                  var ItemQuantity = $(quantityfieldid).val().replace("$", "");
-                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                 var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                  var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                  var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
-
-                 if (applyblubuksvalidation(newpricetotal, ProductCategoryID)) {                    
+               
+                 if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage)) {
                      var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                      $("#spprice").text("$" + updatedprice.toFixed(2));
 
                      var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                      var BluBucksUsed = $("#txtBluBuksUsed").val();
+                    
                      PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
                  }
                  
@@ -487,7 +488,7 @@
 
              // CallBack method when the page call success
              function onSucceed(results, currentContext, methodName) {
-                 alert("success");
+                // alert("success");
              }
              //CallBack method when the page call fails due to internal, server error 
              function onError(results, currentContext, methodName) {
@@ -521,10 +522,14 @@
                  var customerlevel = $("#hdncustomerlevel").text();
                  applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
                  
-                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
-
-                     $(".lnkUpdateItem").attr("data-toggle", "modal");
-                     $(".lnkUpdateItem").attr("data-target", "#myModa2");
+                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {                   
+                     if (ItemQuantity == 0) {
+                         PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);
+                     }
+                     else {
+                         $(".lnkUpdateItem").attr("data-toggle", "modal");
+                         $(".lnkUpdateItem").attr("data-target", "#myModa2");
+                     }
                  }
                  else if (customerlevel == 2) {
                      //bind link update to sof fund opup
@@ -557,7 +562,7 @@
                  }
                  else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
                      alert("BLU BUKS cannot be greater than product price");
-                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2))
+                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""))
                      return false;
                  }
                  else

@@ -73,9 +73,9 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="td-35-percent label-text">
-                                  <span>
-                                        <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
+                              <td class="td-35-percent label-text">
+                                    <span class="normal-heading black-color">
+                                        <asp:Label ID="lblPaymentCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.payment %>' />
                                     </span>
                                     <span>
                                         <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
