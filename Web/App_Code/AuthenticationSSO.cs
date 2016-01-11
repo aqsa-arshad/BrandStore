@@ -179,7 +179,7 @@ namespace AspDotNetStorefront
 
                 Password p = new Password(password);
                 int customerLevelID = GetCustomerLevelID(profile.userType);
-                
+
                 var ThisCustomer = new Customer(userName);
 
                 if (!IsCustomerAvailable)
@@ -407,9 +407,9 @@ namespace AspDotNetStorefront
             else
             {
                 profile.sfid = email;
-                
+
                 //////var SFDCBudgetQueryByEmail = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
-                
+
                 //////if (QuerySFDC(SFDCBudgetQueryByEmail, ref queryResult) == true)
                 //////{
                 //////    // Set Budget
@@ -479,6 +479,9 @@ namespace AspDotNetStorefront
         /// <returns>lstCustomerFund</returns>
         public static List<CustomerFund> GetCustomerFund(int CustomerID)
         {
+            if (CustomerID == 0)
+                return new List<CustomerFund>();
+
             List<CustomerFund> lstCustomerFund = new List<CustomerFund>();
             try
             {
@@ -499,7 +502,8 @@ namespace AspDotNetStorefront
                                 CustomerID = idr.GetInt32(idr.GetOrdinal("CustomerID")),
                                 FundID = idr.GetInt32(idr.GetOrdinal("FundID")),
                                 FundName = idr.GetString(idr.GetOrdinal("FundName")),
-                                Amount = idr.GetDecimal(idr.GetOrdinal("Amount"))
+                                Amount = idr.GetDecimal(idr.GetOrdinal("Amount")),
+                                AmountUsed = idr.GetDecimal(idr.GetOrdinal("AmountUsed"))
                             });
                         }
                     }
@@ -522,6 +526,9 @@ namespace AspDotNetStorefront
         /// <returns>customerFund</returns>
         public static CustomerFund GetCustomerFund(int CustomerID, int FundID)
         {
+            if (CustomerID == 0 || FundID == 0)
+                return new CustomerFund();
+
             CustomerFund customerFund = new CustomerFund();
             try
             {
@@ -542,6 +549,7 @@ namespace AspDotNetStorefront
                             customerFund.FundID = idr.GetInt32(idr.GetOrdinal("FundID"));
                             customerFund.FundName = idr.GetString(idr.GetOrdinal("FundName"));
                             customerFund.Amount = idr.GetDecimal(idr.GetOrdinal("Amount"));
+                            customerFund.AmountUsed = idr.GetDecimal(idr.GetOrdinal("AmountUsed"));
                         }
                     }
                 }
@@ -565,7 +573,7 @@ namespace AspDotNetStorefront
                 return;
 
             foreach (CustomerFund customerFund in lstCustomerFund)
-                UpdateCustomerFund(customerFund.CustomerID, customerFund.FundID, customerFund.Amount);
+                UpdateCustomerFund(customerFund.CustomerID, customerFund.FundID, customerFund.AmountUsed);
         }
 
         /// <summary>
@@ -574,7 +582,7 @@ namespace AspDotNetStorefront
         /// <param name="CustomerID">CustomerID</param>
         /// <param name="FundID">FundID</param>
         /// <param name="Amount">Amount</param>
-        public static void UpdateCustomerFund(int CustomerID, int FundID, decimal Amount)
+        public static void UpdateCustomerFund(int CustomerID, int FundID, decimal AmountUsed)
         {
             try
             {
@@ -586,7 +594,7 @@ namespace AspDotNetStorefront
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
                         cmd.Parameters.AddWithValue("@FundID", FundID);
-                        cmd.Parameters.AddWithValue("@Amount", Amount);
+                        cmd.Parameters.AddWithValue("@AmountUsed", AmountUsed);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -597,6 +605,47 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
+        }
+
+        private static bool UpdateCustomerFundFromSFDC(int CustomerID)
+        {
+            Customer customer = new Customer(CustomerID);
+
+            // If Dealer User
+            if (IsDealerUser(customer.CustomerLevelID))
+            {
+
+            }
+            else if (IsInternalUser(customer.CustomerLevelID))
+            {
+            
+            }
+
+            return true;
+        }
+
+        private static bool IsDealerUser(int customerLevelID)
+        {
+            if (customerLevelID == (int)UserType.BLUAUTHORIZED ||
+                customerLevelID == (int)UserType.BLUELITE ||
+                customerLevelID == (int)UserType.BLUPREMIER ||
+                customerLevelID == (int)UserType.BLUUNLIMITED ||
+                customerLevelID == (int)UserType.HOMEDEPOT ||
+                customerLevelID == (int)UserType.LOWES ||
+                customerLevelID == (int)UserType.MENARDS ||
+                customerLevelID == (int)UserType.POTENTIAL)
+                return true;
+            else
+                return false;
+        }
+
+        private static bool IsInternalUser(int customerLevelID)
+        {
+            if (customerLevelID == (int)UserType.INTERNAL ||
+                customerLevelID == (int)UserType.SALESREPS)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
