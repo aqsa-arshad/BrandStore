@@ -788,6 +788,7 @@ namespace AspDotNetStorefront
             }
         }
 
+       
         public Customer AdminImpersonatingCustomer
         {
             get

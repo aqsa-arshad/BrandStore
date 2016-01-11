@@ -853,7 +853,7 @@ namespace AspDotNetStorefrontControls
         Label recurringFrequencyLabel = new Label();
         DropDownList variantList = new DropDownList();
         LinkButton lnkDelete = new LinkButton();
-        Label lnkUpdate = new Label();
+        LinkButton lnkUpdate = new LinkButton();
         CartItem cItem = null;
 
         private ShoppingCartLineItemDescriptionControl lineItemDescription = new ShoppingCartLineItemDescriptionControl();
@@ -1284,7 +1284,7 @@ namespace AspDotNetStorefrontControls
                             lnkDelete.CssClass = "underline-link";
                             Controls.Add(lnkDelete);
 
-                            lnkUpdate.CssClass = "lnkUpdateItem";
+                            lnkUpdate.CssClass = "lnkUpdateItem underline-link";
                             lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();
                             
                             Controls.Add(lnkUpdate);
