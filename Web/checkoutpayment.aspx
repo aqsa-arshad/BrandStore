@@ -44,7 +44,7 @@
                     <aspdnsf:Topic runat="server" ID="CheckoutPaymentPageHeader" TopicName="CheckoutPaymentPageHeader" />
                     <asp:Literal ID="XmlPackage_CheckoutPaymentPageHeader" runat="server" Mode="PassThrough"></asp:Literal>
 
-                    <asp:Panel ID="pnlNoPaymentRequired" runat="server" Visible="false">
+                    <asp:Panel ID="pnlNoPaymentRequired" CssClass="col-md-12" runat="server" Visible="false">
                         <p></p>
                         <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>
                        

@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------
 // Copyright AspDotNetStorefront.com. All Rights Reserved.
 // http://www.aspdotnetstorefront.com
 // For details on this license please visit the product homepage at the URL above.
@@ -16,7 +16,7 @@ using AspDotNetStorefrontCore.Validation;
 
 namespace AspDotNetStorefront
 {
-    public partial class createaccount : SkinBase
+    public partial class JWUpdateAccount : SkinBase
     {
         bool Checkout = false;
         bool SkipRegistration = false;
@@ -63,7 +63,6 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
@@ -145,14 +144,25 @@ namespace AspDotNetStorefront
                 ctrlAccount.txtPasswordConfirm.Attributes.Add("value", ctrlAccount.txtPasswordConfirm.Text);
                 GetJavaScriptFunctions();
             }
-
-
             if (ThisCustomer.IsRegistered)
             {
-                Response.Redirect("home.aspx");
-            }
-        }
+                if (ThisCustomer.CustomerLevelID != (int)UserType.PUBLIC)
+                {
+                    Response.Redirect("JWMyAccount.aspx");
+                }
+                ctrlAccount.txtEmail.Attributes.Add("readonly", "readonly");
 
+            }
+            else
+            {
+                Response.Redirect("Default.aspx");
+            }
+
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("JWMyAccount.aspx");
+        }
         #region EventHandlers
 
         public void btnContinueCheckout_Click(object sender, EventArgs e)
@@ -210,12 +220,17 @@ namespace AspDotNetStorefront
 
             //if the customer already has entered a password don't ask them for another one
             Password p = new Password("", ThisCustomer.SaltKey);
-
             ctrlAccount.ShowPassword = (ThisCustomer.Password == "" || ThisCustomer.Password == p.SaltedPassword);
+            if (ThisCustomer.IsAuthenticated)
+            {
+                ctrlAccount.ShowPassword = true;
+                string TempPassword = AppLogic.AppConfig("TempPassword");
+                ctrlAccount.txtPassword.Attributes.Add("value", TempPassword);
+                ctrlAccount.txtPasswordConfirm.Attributes.Add("value", TempPassword);
+            }
 
             ctrlAccount.Over13 = ThisCustomer.IsOver13;
             ctrlAccount.VATRegistrationID = ThisCustomer.VATRegistrationID;
-
             //Account Info
             if (!SkipRegistration)
             {
@@ -254,6 +269,14 @@ namespace AspDotNetStorefront
 
                     ctrlAccount.OKToEmailYes = (ThisCustomer.EMail.Length != 0);
                     ctrlAccount.OKToEmailNo = !ctrlAccount.OKToEmailYes;
+
+                    //showing password fields for updation of fields
+
+                    string TempPassword = AppLogic.AppConfig("TempPassword");
+                
+
+                    ctrlAccount.txtPassword.Attributes.Add("value", TempPassword);
+                    ctrlAccount.txtPasswordConfirm.Attributes.Add("value", TempPassword);
                 }
             }
             else
@@ -316,13 +339,6 @@ namespace AspDotNetStorefront
                     ctrlShippingAddress.ZipCode = ShippingAddress.Zip;
                     ctrlShippingAddress.ShowZip = AppLogic.GetCountryPostalCodeRequired(AppLogic.GetCountryID(ctrlShippingAddress.Country));
                 }
-
-                //if (!Checkout)
-                //{
-                //    //hide billing and shipping inputs in case of Checkout
-                //    pnlBillingInfo.Visible = false;
-                //    pnlShippingInfo.Visible = false;
-                //}
 
                 // Hide billing and shipping inputs w.r.t mock-ups
                 pnlBillingInfo.Visible = false;
@@ -393,6 +409,8 @@ namespace AspDotNetStorefront
         }
         private void CreateAccount()
         {
+            
+            
             ThisCustomer.RequireCustomerRecord();
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
 
@@ -414,6 +432,28 @@ namespace AspDotNetStorefront
             }
 
             SetPasswordFields();
+            if (ctrlAccount.Password.Length == 0 && ctrlAccount.PasswordConfirm.Length == 0)
+            {
+                lblErrorMessage.Text = "Please enter a valid password!";
+                ResetScrollPosition();
+                pnlErrorMsg.Visible = true;
+                return;
+            }
+            if (ctrlAccount.Password.Length == 0 || ctrlAccount.PasswordConfirm.Length == 0)
+            {
+                lblErrorMessage.Text = "The new password do not match!";
+                ResetScrollPosition();
+                pnlErrorMsg.Visible = true;
+                return;
+            }
+          
+            if (!ViewState["custpwd"].Equals(ViewState["custpwd2"]))
+            {
+                lblErrorMessage.Text = "The new password do not match!";
+                ResetScrollPosition();
+                pnlErrorMsg.Visible = true;
+                return;
+            }
 
             string AccountName = (ctrlAccount.FirstName.Trim() + " " + ctrlAccount.LastName.Trim()).Trim();
             if (SkipRegistration)
@@ -430,12 +470,12 @@ namespace AspDotNetStorefront
             }
             else
             {
-                if (ctrlAccount.Password.Contains('\xFF') || ctrlAccount.Password.Length == 0)
+                if (ctrlAccount.Password.Contains('\xFF') || ctrlAccount.Password.Length == 0 || ctrlAccount.Password.Equals(AppLogic.AppConfig("TempPassword")))
                     ctrlAccount.PasswordValidate = ViewState["custpwd"].ToString();
                 else
                     ctrlAccount.PasswordValidate = ctrlAccount.Password;
 
-                if (ctrlAccount.PasswordConfirm.Contains('\xFF') || ctrlAccount.PasswordConfirm.Length == 0)
+                if (ctrlAccount.PasswordConfirm.Contains('\xFF') || ctrlAccount.PasswordConfirm.Length == 0 || ctrlAccount.Password.Equals(AppLogic.AppConfig("TempPassword")))
                     ctrlAccount.PasswordConfirmValidate = ViewState["custpwd2"].ToString();
                 else
                     ctrlAccount.PasswordConfirmValidate = ctrlAccount.PasswordConfirm;
@@ -522,10 +562,9 @@ namespace AspDotNetStorefront
                 System.Nullable<int> newsaltkey = p.Salt;
 
                 Password blankpwd = new Password("", ThisCustomer.SaltKey);
-                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword))
+                string TempPassword = AppLogic.AppConfig("TempPassword");
+                if (!(ThisCustomer.Password == "" || ThisCustomer.Password == blankpwd.SaltedPassword) && (ViewState["custpwd"].ToString().Equals(AppLogic.AppConfig("TempPassword")) || ViewState["custpwd"].ToString().Equals("")))
                 {
-                    // do NOT allow passwords to be changed on this page. this is only for creating an account.
-                    // if they want to change their password, they must use their account page
                     newpwd = null;
                     newsaltkey = null;
                 }
@@ -784,7 +823,7 @@ namespace AspDotNetStorefront
                             else
                             {
 
-                                Response.Redirect("account.aspx?checkout=true");//checkoutshipping
+                                Response.Redirect("account.aspx?checkout=true");
                             }
                         }
                     }
@@ -862,12 +901,12 @@ namespace AspDotNetStorefront
 
         private void SetPasswordFields()
         {
+            
             if (ViewState["custpwd"] == null)
             {
                 ViewState["custpwd"] = "";
             }
-
-            if (ctrlAccount.Password.Trim() != "" && Regex.IsMatch(ctrlAccount.Password.Trim(), "[^\xFF]", RegexOptions.Compiled))
+            if (ctrlAccount.Password.Trim() != AppLogic.AppConfig("TempPassword") && ctrlAccount.Password.Trim() != "" && Regex.IsMatch(ctrlAccount.Password.Trim(), "[^\xFF]", RegexOptions.Compiled))
             {
                 ViewState["custpwd"] = ctrlAccount.Password;
 
@@ -882,14 +921,18 @@ namespace AspDotNetStorefront
             {
                 ViewState["custpwd2"] = "";
             }
-            if (ctrlAccount.PasswordConfirm != "" && Regex.IsMatch(ctrlAccount.PasswordConfirm.Trim(), "[^\xFF]", RegexOptions.Compiled))
+            if (ctrlAccount.PasswordConfirm.Trim() != AppLogic.AppConfig("TempPassword") && ctrlAccount.PasswordConfirm != "" && Regex.IsMatch(ctrlAccount.PasswordConfirm.Trim(), "[^\xFF]", RegexOptions.Compiled))
             {
                 ViewState["custpwd2"] = ctrlAccount.PasswordConfirm;
+
+                ctrlAccount.PasswordReqFieldValidator.Enabled = false;
 
                 string fillpwd2 = new string('\xFF', ctrlAccount.PasswordConfirm.Length);
 
                 ctrlAccount.txtPasswordConfirm.Attributes.Add("value", fillpwd2);
             }
+           
+            
         }
 
         private void ResetScrollPosition()

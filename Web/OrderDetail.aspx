@@ -74,7 +74,6 @@
                 </div>
             </div>
         </div>
-
         <div>
             <div class="clearfix"></div>
             <div class="clearfix"></div>
@@ -84,6 +83,8 @@
                     <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
                         <ItemTemplate>
                             <tr>
+                                <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
+                                <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
                                 <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                 <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
                                 <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
@@ -128,13 +129,16 @@
                                         <asp:Label ID="lblPaymentCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.payment %>' />
                                     </span>
                                     <span>
+                                        <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
+                                    </span>
+                                    <span>
                                         <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
                                     </span>
                                     <span>
                                         <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("OrderedProductPrice")), 2).ToString() %>
+                                        <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("CreditPrice")), 2).ToString() %>
                                     </span>
                                 </td>
                                 <td class="td-30-percent">
@@ -148,7 +152,7 @@
                                 </td>
                                 <td class="td-15-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
-                                    <asp:HyperLink ID="hlTrackItem" class="underline-link" runat="server">Track item &gt;</asp:HyperLink>
+                                    <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server">Track item &gt;</asp:HyperLink>
                                 </td>
                             </tr>
                         </ItemTemplate>
@@ -169,12 +173,29 @@
                     </span>
                 </p>
                 <%--TODO: Commented due to unavailablity Blu Bucks--%>
-                <%--<span class="normal-heading black-color">Credits Used</span>
-                <p>
-                    <span class="block-text">Credit Name: $X,XXX.XX</span>
-                    <span class="block-text">Credit Name: $XXX.XX</span>
-                    <span class="block-text">BLU Bucks: $XXX.XX</span>
-                </p>--%>
+                <span class="normal-heading black-color">
+                    <asp:Label ID="lblCreditsUsedCaption" runat="server" Text='<%$ Tokens:StringResource, CreditsUsedCaption %>' />
+                </span>
+                <p class="label-text">
+                    <span class="block-text">
+                        <asp:Label ID="lblSOFFundsTotalCaption" Text="SOF Fund: $" Visible="False" runat="server" /><asp:Label runat="server" ID="lblSOFFundsTotal" Visible="False"></asp:Label>
+                    </span>
+                    <span class="block-text">
+                        <asp:Label ID="lblDirectMailFundsTotalCaption" Visible="False" Text="Direct Mail Funds: $" runat="server" /><asp:Label runat="server" ID="lblDirectMailFundsTotal" Visible="False"></asp:Label>
+                    </span>
+                    <span class="block-text">
+                        <asp:Label ID="lblDisplayFundsTotalCaption" Visible="False" Text="Display Funds: $" runat="server" /><asp:Label runat="server" ID="lblDisplayFundsTotal" Visible="False"></asp:Label>
+                    </span>
+                    <span class="block-text">
+                        <asp:Label ID="lblLiteratureFundsTotalCaption" Visible="False" Text="Literature Funds: $" runat="server" /><asp:Label runat="server" ID="lblLiteratureFundsTotal" Visible="False"></asp:Label>
+                    </span>
+                    <span class="block-text">
+                        <asp:Label ID="lblPOPFundsTotalCaption" Visible="False" Text="POP Funds: $" runat="server" /><asp:Label runat="server" ID="lblPOPFundsTotal" Visible="False"></asp:Label>
+                    </span>
+                    <span class="block-text">
+                        <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text="BLU Bucks: $" runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal" Visible="False"></asp:Label>
+                    </span>
+                </p>
 
                 <span class="normal-heading black-color">Charges</span>
                 <p>

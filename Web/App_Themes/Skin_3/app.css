@@ -6400,11 +6400,11 @@ a:hover.underline-link {
 .margin-top-none {
   margin-top: 0;
 }
-.mrgin-top-sm {
+.margin-top-sm {
   margin-top: 15px;
 }
-@media screen and (max-width: 767px) {
-  .mrgin-top-sm {
+@media screen and (min-width: 768px) {
+  .margin-top-sm {
     margin-top: 0;
   }
 }
@@ -6513,6 +6513,11 @@ a:hover.underline-link {
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .tablet-view .col-md-6 {
     width: 50%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .tablet-view .col-md-7 {
+    width: 60%;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {

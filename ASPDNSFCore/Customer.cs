@@ -98,6 +98,7 @@ namespace AspDotNetStorefrontCore
         private Address m_PrimaryShippingAddress;
         private string m_RequestedPaymentMethod;
         private DateTime m_CreatedOn;
+        private string m_SFDCQueryParam;
         SqlTransaction m_DBTrans = null;
 
         private bool m_DefaultCustLevel_DiscountExtendedPrices;
@@ -3064,6 +3065,18 @@ namespace AspDotNetStorefrontCore
         }
 
         /// <summary>
+        /// Gets the SFDC Query Param
+        /// </summary>
+        /// <value>The SFDCQueryParam</value>
+        public string SFDCQueryParam
+        {
+            get
+            {
+                return m_SFDCQueryParam;
+            }
+        }
+        
+        /// <summary>
         /// Gets or sets the VAT setting RAW.
         /// </summary>
         /// <value>The VAT setting RAW.</value>
@@ -3140,8 +3153,6 @@ namespace AspDotNetStorefrontCore
                 return xvat;
             }
         }
-
-
 
         /// <summary>
         /// Gets the VAT registration ID.

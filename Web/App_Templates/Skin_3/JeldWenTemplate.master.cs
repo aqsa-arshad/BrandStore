@@ -229,10 +229,10 @@ namespace AspDotNetStorefront
         /// </summary>
         private void ShowPostLoginControls()
         {
-            
+
             divbeforelogin.Visible = false;
             divafterlogin.Visible = true;
-        
+
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace AspDotNetStorefront
         {
             divbeforelogin.Visible = true;
             divafterlogin.Visible = false;
-      
+
         }
 
         /// <summary>
@@ -275,6 +275,19 @@ namespace AspDotNetStorefront
                     JWBUserInfoAfterLoginControl.Visible = false;
                 }
             }
+            else if (currentURL.ToUpper().Contains("JWUPDATEACCOUNT.ASPX"))
+            {
+                lblPageHeading.Text = "UPDATE YOUR ACCOUNT INFORMATION";
+                pnlPageHeading.Visible = true;
+
+                lnkMyAccount.Attributes.Add("class", "active account-link");
+
+                var newClassValue = JWBPublicUserAfterLoginControl.Attributes["class"].Replace("hide-element", "");
+                JWBPublicUserAfterLoginControl.Attributes.Remove("class");
+                JWBPublicUserAfterLoginControl.Attributes.Add("class", newClassValue);
+                JWBUserInfoAfterLoginControl.Visible = false;
+
+            }
             else if (currentURL.ToUpper().Contains("JWMYADDRESSES.ASPX"))
             {
                 // Label will be loaded from Content Page w.r.t AddressType in QueryString
@@ -296,7 +309,7 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 divSideBarBeforeLogin.Visible = false;
                 divSideBarAfterLogin.Visible = false;
-               // lnkShoppingCart.Attributes.Add("class", "active shopping-link");
+                // lnkShoppingCart.Attributes.Add("class", "active shopping-link");
                 //divcontentarea.Attributes["class"] = "col-md-12";
             }
 
@@ -309,7 +322,7 @@ namespace AspDotNetStorefront
             {
                 lblPageHeading.Text = "About Marketing Services";
                 pnlPageHeading.Visible = true;
-            }           
+            }
             else if (currentURL.ToUpper().Contains("JWSUPPORT.ASPX"))
             {
                 lblPageHeading.Text = "Support";
