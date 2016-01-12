@@ -27,14 +27,14 @@
                         <span class="block-text">
                             <asp:Label runat="server" Text='<%# Eval("FundName") %>'></asp:Label>
                             <asp:Label runat="server" Text="="></asp:Label>
-                            <asp:Label runat="server" Text='<%# String.Format("{0:0.00}", Eval("Amount")) %>'></asp:Label>
+                            <asp:Label runat="server" Text='<%# String.Format("{0:0.00}", Eval("AmountAvailable")) %>'></asp:Label>
                         </span>
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
         </div>
     </div>
-    <a id="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="expandFunds()">Other Credits <span style="font-size:20px">&#709;</span></a>
+    <a id="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="expandFunds()">Other Credits <span style="font-size:15px">&#709;</span></a>
     <a id="HideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="HideFunds()">Close other credits ^</a>
 </div>
 
