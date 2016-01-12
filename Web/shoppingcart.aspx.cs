@@ -253,24 +253,31 @@ namespace AspDotNetStorefront
             }
 
               //Update amount used for each category funds
-            String SofFundsUsedTotal="0",DirectMailFundsUsedTotal="0",DisplayFundsUsedTotal="0",LiteratureFundsUsedTotal="0",PopFundsUsedTotal="0",BluBucksFundsUsedTotal="0";
+            Decimal SofFundsUsedTotal=0,DirectMailFundsUsedTotal=0,DisplayFundsUsedTotal=0,LiteratureFundsUsedTotal=0,PopFundsUsedTotal=0,BluBucksFundsUsedTotal=0;
             foreach (CartItem cItem in cart.CartItems)
                 {
                     if (cItem.FundID == 2)
-                        SofFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(SofFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        SofFundsUsedTotal = Math.Round((Convert.ToDecimal(SofFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
                     else if (cItem.FundID == 3)
-                        DirectMailFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(DirectMailFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        DirectMailFundsUsedTotal =Math.Round((Convert.ToDecimal(DirectMailFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
                     else if (cItem.FundID == 4)
-                        DisplayFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(DisplayFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        DisplayFundsUsedTotal = Math.Round((Convert.ToDecimal(DisplayFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
                     else if (cItem.FundID == 5)
-                        LiteratureFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(LiteratureFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        LiteratureFundsUsedTotal = Math.Round((Convert.ToDecimal(LiteratureFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
                     else if (cItem.FundID == 6)
-                        PopFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(PopFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        PopFundsUsedTotal = Math.Round((Convert.ToDecimal(PopFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
 
-                    BluBucksFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
+                    BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
                                        
-                }         
-              
+                }
+          
+                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);         
+                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);         
+                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DirectMailFunds), DirectMailFundsUsedTotal);          
+                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DisplayFunds), DisplayFundsUsedTotal);       
+                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.LiteratureFunds), LiteratureFundsUsedTotal);          
+                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.POPFunds), PopFundsUsedTotal);
+              //End Update Funds
 
         }
 
@@ -303,7 +310,7 @@ namespace AspDotNetStorefront
             string fundamount = "0";
             CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == FundID);            
             if (tempfund != null)         
-                fundamount = tempfund.Amount.ToString();
+                fundamount = tempfund.AmountAvailable.ToString();
 
             return Math.Round(Convert.ToDecimal(fundamount), 2).ToString();
         }

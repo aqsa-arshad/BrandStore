@@ -182,10 +182,10 @@ namespace AspDotNetStorefront
                     if (CustomerFunds.Count > 0)
                     {
                         //BluBucks
-                        CustomerFund tempBluBucksfund = CustomerFunds.Find(x => x.FundID == 1);
+                        CustomerFund tempBluBucksfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.BLUBucks));
                         if (tempBluBucksfund != null)
                         {
-                            BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
+                            BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).AmountAvailable.ToString();
                             hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
                             ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
                         }
@@ -203,15 +203,15 @@ namespace AspDotNetStorefront
                             CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text));
                             if (tempfund != null)
                             {
-                                hdnProductFundAmount.Text = tempfund.Amount.ToString();
+                                hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                             }
                             else
                             {
-                                 tempfund = CustomerFunds.Find(x => x.FundID == 2);//for sales rep
+                                tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds));//for sales rep
                                  if (tempfund != null)
                                  {
-                                     hdnProductFundAmount.Text = tempfund.Amount.ToString();
+                                     hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
                                      productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                                  }
                                  else
