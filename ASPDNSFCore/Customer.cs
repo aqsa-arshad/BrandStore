@@ -1749,6 +1749,7 @@ namespace AspDotNetStorefrontCore
             m_Active = true;
             m_Roles = String.Empty;
             m_SkinID = AppLogic.GetStoreSkinID(StoreID);
+            m_SFDCQueryParam = String.Empty;
 
             if (rs != null && rs.Read())
             {
@@ -1806,6 +1807,7 @@ namespace AspDotNetStorefrontCore
                 StoreID = DB.RSFieldInt(rs, "StoreID");
                 StoreName = DB.RSField(rs, "StoreName");
                 m_LastIPAddress = DB.RSField(rs, "LastIPAddress");
+                m_SFDCQueryParam = DB.RSField(rs, "SFDCQueryParam");
 
                 //Find Failed Transactions
                 using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
