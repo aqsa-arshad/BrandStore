@@ -4713,11 +4713,16 @@ fieldset[disabled] .btn-danger.active {
   font-weight: bold;
   font-style: normal;
 }
+html {
+  -webkit-text-size-adjust: none;
+  /* Prevent font scaling in landscape */
+}
 body {
   color: #545759;
   font-family: 'FrutigerLTStd-Light';
   margin: 0;
   letter-spacing: 0.5px;
+  font-size: 14px;
 }
 input[type="text"],
 input[type="password"],
@@ -5293,6 +5298,12 @@ a:hover.mb-login-btn {
   right: 12px;
   opacity: 1;
 }
+.modal-body .col-sm-5 {
+  padding-left: 10px;
+}
+.modal-body .col-sm-7 {
+  padding-right: 10px;
+}
 .modal-list {
   padding: 0;
   margin: 10px 0 30px;
@@ -5314,7 +5325,7 @@ a:hover.mb-login-btn {
   width: 100%;
 }
 .buttons-group .btn-primary {
-  display: table-cell;
+  display: inline-block;
   width: 49.7%;
   text-align: center;
 }
@@ -5327,6 +5338,9 @@ a:hover.mb-login-btn {
   background: transparent;
   float: left;
   width: 114px;
+}
+.trueblue-popup .content-box-03 h4 {
+  display: none;
 }
 .trueblue-popup .content-box-03 .row {
   margin: 0;
@@ -5520,7 +5534,7 @@ a:hover.mb-login-btn {
 .checkout-two-fields .form-control:nth-last-child(2) {
   width: 49%;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .checkout-two-fields .form-control:nth-last-child(2) {
     width: 25%;
   }
@@ -5568,7 +5582,7 @@ a:hover.mb-login-btn {
 .select-quantity .item-quantity {
   margin: 0 10px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .select-quantity {
     margin: 15px 0 30px;
   }
@@ -5577,12 +5591,12 @@ a:hover.mb-login-btn {
   display: block;
   color: #1d446b;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .select-quantity label {
     display: inline-block;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .item-space-right {
     padding-right: 50px;
   }
@@ -5712,25 +5726,39 @@ table.shopping-cart tbody .col-md-6:nth-child(1) {
 table.shopping-cart tbody tr td {
   width: auto;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table.shopping-cart tbody tr td:nth-child(1) {
     width: 35%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table.shopping-cart tbody tr td:nth-child(2) {
     width: 35%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table.shopping-cart tbody tr td:nth-child(3) {
     width: 15%;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   table.shopping-cart tbody tr td:nth-child(4) {
     width: 15%;
   }
+}
+.shopping-cart-links {
+  margin-top: 10px;
+}
+.shopping-cart-links a {
+  display: inline-block;
+  text-decoration: underline;
+}
+.shopping-cart-links a:hover {
+  text-decoration: none;
+}
+.shopping-cart-links font {
+  padding: 0 6px;
+  color: #999;
 }
 table.order-detail tbody tr td {
   display: block;
@@ -5862,7 +5890,7 @@ table.order-detail tbody tr td {
   padding: 0;
   margin: 0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .checkout-head ul {
     padding-left: 40px;
   }
@@ -5901,6 +5929,36 @@ table.order-detail tbody tr td {
     margin-right: 4%;
   }
 }
+.receipt-print > tbody > tr,
+.receipt-border {
+  border-bottom: 1px solid #000;
+  padding: 10px 0;
+  width: 100%;
+  display: table;
+}
+.receipt-print td {
+  height: 30px;
+}
+.receipt-print .primary-img-box {
+  background-color: #fff;
+  border: 0 none;
+  margin: 0;
+  padding: 5px 15px;
+}
+.receipt-print .primary-img-box img {
+  height: 120px;
+}
+.print-logo-text {
+  border-left: 1px solid #000;
+  border-top: 0;
+  display: inline-block;
+  float: left;
+  height: 40px;
+  font-size: 26px;
+  margin-left: 57px;
+  padding-left: 58px;
+  text-align: center;
+}
 /******************* Side Bar ***********************/
 .pre-login-pannel {
   margin-bottom: 30px;
@@ -5921,7 +5979,7 @@ table.order-detail tbody tr td {
   text-align: left;
   margin-bottom: 10px !important;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .mb-login-bar {
     display: none;
   }
@@ -5929,7 +5987,7 @@ table.order-detail tbody tr td {
 .desktop-login-bar {
   display: none;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .desktop-login-bar {
     display: block;
   }
@@ -5938,10 +5996,11 @@ table.order-detail tbody tr td {
   background-color: #f5f5f5;
   padding: 30px 35px;
   margin-top: 0;
+  margin-bottom: 25px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .side-bar {
-    margin-bottom: 25px;
+    margin-bottom: 0;
   }
 }
 .side-bar .btn-primary {
@@ -6001,7 +6060,7 @@ table.order-detail tbody tr td {
   display: block;
   margin-bottom: 8px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .login-box .checkbox a {
     position: absolute;
     right: 0;
@@ -6049,7 +6108,7 @@ footer {
   text-transform: uppercase;
   margin-top: 35px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   footer {
     border-top: solid 1px #c0c0c0;
     margin-top: 45px;
@@ -6062,7 +6121,7 @@ footer {
   padding-bottom: 15px;
   font-size: 16px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .footer-nav {
     padding-bottom: 35px;
   }
@@ -6077,7 +6136,7 @@ footer {
 .footer-nav:nth-child(2) {
   display: none;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .footer-nav:nth-child(2) {
     display: block;
   }
@@ -6085,7 +6144,7 @@ footer {
 .footer-nav:nth-child(3) {
   padding-bottom: 40px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .footer-nav:nth-child(3) {
     display: block;
   }
@@ -6114,7 +6173,7 @@ footer {
 .social-links {
   padding-top: 10px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .social-links {
     float: right;
     padding-left: 0;
@@ -6124,7 +6183,7 @@ footer {
   padding: 40px 0 10px;
   margin-bottom: 0;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .social-links ul {
     padding: 0;
     float: right;
@@ -6141,7 +6200,7 @@ footer {
   margin-right: 15px;
   text-decoration: none;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .social-links ul li a {
     margin-left: 20px;
     margin-right: 0;
@@ -6191,7 +6250,7 @@ footer {
 .body-container {
   padding: 30px 20px 0 !important;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .body-container {
     padding: 44px 20px 0 !important;
   }
@@ -6219,7 +6278,7 @@ footer {
   line-height: 18px;
   text-decoration: underline;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .desktop-link {
     display: block;
   }
@@ -6232,7 +6291,7 @@ footer {
   padding: 10px 0;
   line-height: 18px;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .mb-link {
     display: none;
   }
@@ -6375,6 +6434,24 @@ a:hover.underline-link {
     overflow: hidden;
   }
 }
+@media screen and (min-width: 768px) {
+  .shopping-cart-fix {
+    height: 104px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+}
+.shopping-cart-fix ul {
+  margin: 0;
+  padding: 0;
+}
+@media screen and (min-width: 768px) {
+  .receipt-fix {
+    height: 85px;
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+}
 .vertical-top {
   vertical-align: top;
 }
@@ -6479,6 +6556,9 @@ a:hover.underline-link {
   .text-center .btn {
     width: 45%;
   }
+}
+.border-none {
+  border: none !important;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .checkout-tablet-main .checkout-tablet-view {

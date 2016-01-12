@@ -252,6 +252,26 @@ namespace AspDotNetStorefront
                 btnUpdateShoppingCart.CssClass = "hide-element";
             }
 
+              //Update amount used for each category funds
+            String SofFundsUsedTotal="0",DirectMailFundsUsedTotal="0",DisplayFundsUsedTotal="0",LiteratureFundsUsedTotal="0",PopFundsUsedTotal="0",BluBucksFundsUsedTotal="0";
+            foreach (CartItem cItem in cart.CartItems)
+                {
+                    if (cItem.FundID == 2)
+                        SofFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(SofFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 3)
+                        DirectMailFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(DirectMailFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 4)
+                        DisplayFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(DisplayFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 5)
+                        LiteratureFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(LiteratureFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 6)
+                        PopFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(PopFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+
+                    BluBucksFundsUsedTotal = " $" + Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
+                                       
+                }         
+              
+
         }
 
         private void GetBluBucksAndCategoryFundsForCustomer()
@@ -290,7 +310,7 @@ namespace AspDotNetStorefront
         
         void btnContinueShoppingTop_Click(object sender, EventArgs e)
         {
-            UpdateCartQuantity();
+           // UpdateCartQuantity();
             ContinueShopping();
         }
         void btnContinueShoppingBottom_Click(object sender, EventArgs e)
@@ -299,13 +319,13 @@ namespace AspDotNetStorefront
         }
         void btnCheckOutNowTop_Click(object sender, EventArgs e)
         {
-            UpdateCartQuantity();
+         //   UpdateCartQuantity();
             ProcessCart(true, false, false);
             InitializeShippingAndEstimateControl();
         }
         void btnCheckOutNowBottom_Click(object sender, EventArgs e)
         {
-            UpdateCartQuantity();
+          //  UpdateCartQuantity();
             ProcessCart(true, false, false);
             InitializeShippingAndEstimateControl();
         }
@@ -352,6 +372,11 @@ namespace AspDotNetStorefront
         {        
           UpdateCart();
         }
+
+       public void btnaddtocartforsalesrep_Click(object sender, EventArgs e)
+       {
+           UpdateCart();
+       }
            [System.Web.Services.WebMethod]
        public static void SaveValuesInSession(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid)
        {
@@ -1057,7 +1082,7 @@ namespace AspDotNetStorefront
             }
 
             // update cart quantities:
-            UpdateCartQuantity();
+           // UpdateCartQuantity();
 
             // save coupon code, no need to reload cart object
             // will update customer record also:

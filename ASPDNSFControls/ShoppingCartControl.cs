@@ -1280,17 +1280,16 @@ namespace AspDotNetStorefrontControls
                     {
                         if (this.AllowEdit && this.CartItem.RestrictedQuantities.Count == 0)
                         {
-                          //  Controls.Add(new LiteralControl("  <td class='delete-wrap'>"));
-                            lnkDelete.CssClass = "underline-link";
+                            Controls.Add(new LiteralControl("  <div class='shopping-cart-links'>"));                          
                             Controls.Add(lnkDelete);
-
-                            lnkUpdate.CssClass = "lnkUpdateItem underline-link";
-                            lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();
-                            
-                            Controls.Add(lnkUpdate);
-                            
-                            //Controls.Add(new LiteralControl("  </td>")); 
+                            Controls.Add(new LiteralControl("<font>|</font>"));
+                            lnkUpdate.CssClass = "lnkUpdateItem";
+                            lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();                            
+                            Controls.Add(lnkUpdate);                            
+                            Controls.Add(new LiteralControl("  </div>")); 
                         }
+
+                  
                     }
 
                     Controls.Add(new LiteralControl("  </td>")); 

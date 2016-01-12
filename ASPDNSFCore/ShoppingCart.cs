@@ -1575,6 +1575,7 @@ namespace AspDotNetStorefrontCore
                 m_Coupon.m_validformanufacturersexpanded = new List<int>();
                 m_Coupon.m_numuses = 0;
             }
+            
 
         }
 
@@ -7396,12 +7397,12 @@ namespace AspDotNetStorefrontCore
                 DB.ExecuteSQL(sql, m_DBTrans);
               
                 //Update Customer Funds when item is deleted from shopping cart
-                StringBuilder sql1 = new StringBuilder(4096);
-                sql1.Append(String.Format("dbo.aspdnsf_CustomerFundUpdateOnItemDelete {0}, {1}, {2}", m_ThisCustomer.CustomerID, 1,BluBucksUsed));
-                DB.ExecuteSQL(sql1.ToString(), m_DBTrans);
-                sql1 = new StringBuilder(4096);
-                sql1.Append(String.Format("dbo.aspdnsf_CustomerFundUpdateOnItemDelete {0}, {1}, {2}", m_ThisCustomer.CustomerID, FundID, CategoryFundUsed));
-                DB.ExecuteSQL(sql1.ToString(), m_DBTrans);
+                //StringBuilder sql1 = new StringBuilder(4096);
+                //sql1.Append(String.Format("dbo.aspdnsf_CustomerFundUpdateOnItemDelete {0}, {1}, {2}", m_ThisCustomer.CustomerID, 1,BluBucksUsed));
+                //DB.ExecuteSQL(sql1.ToString(), m_DBTrans);
+                //sql1 = new StringBuilder(4096);
+                //sql1.Append(String.Format("dbo.aspdnsf_CustomerFundUpdateOnItemDelete {0}, {1}, {2}", m_ThisCustomer.CustomerID, FundID, CategoryFundUsed));
+                //DB.ExecuteSQL(sql1.ToString(), m_DBTrans);
                 //End
 
                 if (Recurse && RequiresProducts.Trim().Length > 0)

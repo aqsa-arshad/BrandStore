@@ -50,6 +50,7 @@
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
                             <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+
                         </div>
                     </div>
                 </div>
