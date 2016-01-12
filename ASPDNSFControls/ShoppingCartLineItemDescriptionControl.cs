@@ -233,14 +233,14 @@ namespace AspDotNetStorefrontControls
                 //Controls.Add(lblShipping);
                 //Controls.Add(new LiteralControl("    </div>"));
 
-                if (cItem.ProductDescription.Length > 180)
-                {
-                    cItem.ProductDescription = cItem.ProductDescription.Substring(0, 180) + "...";
-                }
+                //if (cItem.ProductDescription.Length > 180)
+                //{
+                //    cItem.ProductDescription = cItem.ProductDescription.Substring(0, 180) + "...";
+                //}
                 lblProductDescription.Text = cItem.ProductDescription;                
-                Controls.Add(new LiteralControl("     <p style='word-wrap:break-word'"));
+                Controls.Add(new LiteralControl("     <div class=\"shopping-cart-fix\""));
                 Controls.Add(lblProductDescription);
-                Controls.Add(new LiteralControl("     </p>"));
+                Controls.Add(new LiteralControl("     </div>"));
                 Controls.Add(new LiteralControl("     </div></div>"));
 
                 //Item Notes              

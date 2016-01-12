@@ -6,7 +6,7 @@
     <table class="receipt-print" border="0" cellpadding="0" cellspacing="0" width="100%">
         <tbody>
             <tr>
-                <td height="50" width="32%">
+                <td height="30" width="32%">
                     <span class="frut-roman-font black-color text-uppercase">
                         <asp:Label ID="lblOrderNumberCaption" runat="server" Text='<%$ Tokens:StringResource, orders.aspx.OrderNumber %>' />
                         <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
@@ -14,7 +14,7 @@
                 </td>
                 <td width="2%"></td>
                 <td width="32%">
-                    <span class="frut-roman-font black-color text-uppercase">Billed to: XXXXX
+                    <span class="frut-roman-font black-color text-uppercase">
                         <asp:Label ID="lblCustomerIDCaption" runat="server" Text="<%$ Tokens:StringResource,admin.common.CustomerID%>" />
                         <asp:Label runat="server" ID="lblCustomerID"></asp:Label>
                     </span>
@@ -29,7 +29,7 @@
             </tr>
 
             <tr>
-                <td width="32%" valign="top">
+                <td height="30" width="32%" valign="top">
                     <span class="normal-heading black-color">Shipped to</span>
                     <p>
                         <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
@@ -93,15 +93,15 @@
                 <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptOrderItemsDetail_ItemDataBound">
                     <HeaderTemplate>
                         <tr>
-                            <td width="50%" valign="top">
+                            <td height="30">
                                 <span class="frut-roman-font black-color text-uppercase">Description</span>
                             </td>
                             <td width="2%"></td>
-                            <td width="14%" valign="top">
+                            <td width="14%">
                                 <span class="frut-roman-font black-color text-uppercase">Quantity</span>
                             </td>
                             <td width="2%"></td>
-                            <td width="32%" valign="top">
+                            <td width="32%">
                                 <span class="frut-roman-font black-color text-uppercase">Payment</span>
                             </td>
                         </tr>
@@ -110,7 +110,6 @@
                         <tr>
                             <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
                             <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
-                            <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                             <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
                             <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
                             <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
@@ -122,19 +121,19 @@
                                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td width="30%" valign="top">
+                                            <td width="40%" valign="top">
                                                 <div class="primary-img-box"> <asp:Image ID="ImgProduct" runat="server" class="img-responsive" /></div>
                                             </td>
-                                            <td width="70%" valign="top" valign="top">
+                                            <td width="60%" valign="top" valign="top">
                                                 <span class="normal-heading black-color">
                                                     <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                                 </span>
                                                 <span>
                                                     <asp:Label ID="lblProductSKU" runat="server" />
                                                 </span>
-                                                <p>
-                                                    <asp:Label ID="lblDescription" runat="server" />
-                                                </p>
+                                                <div class="shopping-cart-fix">
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>                                            
+                                            </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -167,7 +166,7 @@
         </table>
    
     <%--Billing Amounts--%>
-    <table class="table margin-none">
+        <table class="table margin-none" border="0" cellpadding="0" cellspacing="0" width="100%">
         <tbody>
             <tr>
             
@@ -180,11 +179,9 @@
                     <td width="32%">
                          <p class="label-text">
                         <span>
-                            <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font>
-                            <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                            <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                         </span>
                     </p>
-                    <%--TODO: Commented due to unavailablity Blu Bucks--%>
                     <span class="normal-heading black-color">
                         <asp:Label ID="lblCreditsUsedCaption" runat="server" Text='<%$ Tokens:StringResource, CreditsUsedCaption %>' />
                     </span>
@@ -221,10 +218,8 @@
                     <p class="label-text">
                         <span><font><asp:Label ID="lblTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.61 %>'/> </font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
                     </p>
-                    </td>
-                
+                    </td>                
             </tr>
-
         </tbody>
     </table>
 

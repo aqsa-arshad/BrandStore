@@ -85,7 +85,6 @@
                             <tr>
                                 <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
                                 <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
-                                <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                 <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
                                 <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
                                 <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
@@ -110,9 +109,9 @@
                                             <span>
                                                 <asp:Label ID="lblProductSKU" runat="server"></asp:Label>
                                             </span>
-                                            <p>
-                                                <asp:Label ID="lblDescription" runat="server"></asp:Label>
-                                            </p>
+                                            <div class="shopping-cart-fix">
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>                                            
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -172,7 +171,7 @@
                         <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                     </span>
                 </p>
-                <%--TODO: Commented due to unavailablity Blu Bucks--%>
+     
                 <span class="normal-heading black-color">
                     <asp:Label ID="lblCreditsUsedCaption" runat="server" Text='<%$ Tokens:StringResource, CreditsUsedCaption %>' />
                 </span>

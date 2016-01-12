@@ -325,18 +325,7 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
                                                                           (e.Item.FindControl("hfSKU") as HiddenField)
                                                                               .Value;
-                }
-                if (!string.IsNullOrEmpty((e.Item.FindControl("hfDescription") as HiddenField).Value))
-                {
-                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
-                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
-                                                                              .Value.Take(60).Aggregate("", (x, y) => x + y) + " ...";
-                    else
-                    {
-                        (e.Item.FindControl("lblDescription") as Label).Text =
-                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
-                    }
-                }
+                }               
                 if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
                 {
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();

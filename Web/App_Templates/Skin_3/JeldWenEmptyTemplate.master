@@ -15,12 +15,11 @@
     <meta content="" name="description">
     <meta content="" name="author">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%-- Leave the title empty, it will get populated at runtime --%>
     <title></title>
-    <%-- Leave the description and keyword content empty, it will get populated at runtime --%>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <%-- The skin ref will base on the current theme applied so we don't need to declare here which css file to use --%>
+    <%-- Leave the description and keyword content empty, it will get populat
+    
     <%--<link runat="server" rel="stylesheet" href="~/skins/skin_1/style.css" type="text/css">--%>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +57,7 @@
         </asp:ScriptManager>
 
         <div class="container">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <table border="0" cellpadding="0" cellspacing="0" width="1024" align="center">
                 <tbody>
                     <tr>
                         <td class="padding-none">
@@ -66,7 +65,7 @@
                             <table class="receipt-border" border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tbody>
                                     <tr>
-                                        <td height="175" valign="middle" width="215"><a class="logo" href="#">
+                                        <td height="135" valign="middle" width="215"><a class="logo" href="#">
                                             <img alt="JeldWen" src="App_Themes/Skin_3/images/logo.png"></a></td>
                                         <td align="left" valign="middle"><span class="print-logo-text ">Brand Store </span></td>
                                         <td>&nbsp;</td>
@@ -86,17 +85,22 @@
                             </asp:ContentPlaceHolder>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <footer class="footer margin-none">
+
+                                <div class="row">
+                                    <div class="col-sm-2 col-md-2">
+                                        <img alt="Logo" src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.</div>
+                                </div>
+                            </footer>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <footer class="footer margin-none">
 
-                <div class="row">
-                    <div class="col-sm-2 col-md-2">
-                        <img alt="Logo" src="~/../App_Themes/Skin_3/images/bottom-logo.png" />
-                    </div>
-                    <div class="col-sm-6 col-md-4 footer-privacy-link">©2016 JELD-WEN, Inc.</div>
-                </div>
-            </footer>
         </div>
     </form>
 </body>
