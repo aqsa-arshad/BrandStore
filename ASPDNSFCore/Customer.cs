@@ -98,6 +98,7 @@ namespace AspDotNetStorefrontCore
         private Address m_PrimaryShippingAddress;
         private string m_RequestedPaymentMethod;
         private DateTime m_CreatedOn;
+        private string m_SFDCQueryParam;
         SqlTransaction m_DBTrans = null;
 
         private bool m_DefaultCustLevel_DiscountExtendedPrices;
@@ -1748,6 +1749,7 @@ namespace AspDotNetStorefrontCore
             m_Active = true;
             m_Roles = String.Empty;
             m_SkinID = AppLogic.GetStoreSkinID(StoreID);
+            m_SFDCQueryParam = String.Empty;
 
             if (rs != null && rs.Read())
             {
@@ -1805,6 +1807,7 @@ namespace AspDotNetStorefrontCore
                 StoreID = DB.RSFieldInt(rs, "StoreID");
                 StoreName = DB.RSField(rs, "StoreName");
                 m_LastIPAddress = DB.RSField(rs, "LastIPAddress");
+                m_SFDCQueryParam = DB.RSField(rs, "SFDCQueryParam");
 
                 //Find Failed Transactions
                 using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
@@ -3064,6 +3067,18 @@ namespace AspDotNetStorefrontCore
         }
 
         /// <summary>
+        /// Gets the SFDC Query Param
+        /// </summary>
+        /// <value>The SFDCQueryParam</value>
+        public string SFDCQueryParam
+        {
+            get
+            {
+                return m_SFDCQueryParam;
+            }
+        }
+        
+        /// <summary>
         /// Gets or sets the VAT setting RAW.
         /// </summary>
         /// <value>The VAT setting RAW.</value>
@@ -3140,8 +3155,6 @@ namespace AspDotNetStorefrontCore
                 return xvat;
             }
         }
-
-
 
         /// <summary>
         /// Gets the VAT registration ID.
@@ -4663,7 +4676,7 @@ namespace AspDotNetStorefrontCore
     #endregion
 
     #region Public Enums for Customer Funds
-    public enum FundType
+    public enum  FundType
     {
         BLUBucks = 1,
         SOFFunds = 2,

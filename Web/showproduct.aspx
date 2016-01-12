@@ -14,6 +14,7 @@
     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnProductCategoryID" name="hdnProductCategoryID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnpricewithfund" name="hdnpricewithfund" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnproductprice" name="hdnprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnButtonName" name="hdnButtonName" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -26,7 +27,7 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="text-uppercase-no">TrueBLU</h5>
+                    <h5 class="text-uppercase-no">True BLU</h5>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
                     <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
 
@@ -43,12 +44,13 @@
 
                     <p class="label-text">
                         <span class="roman-black">Total price using BLU Bucks:</span>
-                        <span id="spprice" runat="server" clientidmode="Static">$X,XXX.XX </span>
+                        <span id="spprice" runat="server" clientidmode="Static">$0,000.00</span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
                             <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+
                         </div>
                     </div>
                 </div>

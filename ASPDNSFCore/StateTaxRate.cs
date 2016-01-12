@@ -302,6 +302,7 @@ namespace AspDotNetStorefrontCore
 
         public decimal GetTaxRate(int StateID, int TaxClassID)
         {
+          
             if (StateID == 0)
             {
                 return 0.0M;

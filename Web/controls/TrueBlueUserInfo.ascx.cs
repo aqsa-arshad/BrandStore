@@ -26,17 +26,28 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
 
         WelcomeHeading = " Hi," + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
         WelcomeHeadingAfterUserLogin.InnerText = WelcomeHeading;
-        getCustomerfund();
+        ExpandCustomerfund();
     }
-
-    private void getCustomerfund()
+    private void ExpandCustomerfund()
     {
+        CustomerFund cf = new CustomerFund();
         int customerLevelId = (int)UserType.BLUUNLIMITED;
         lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
         lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName);
         lblDealerLevel.Text = ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU", ""));
-        rptCustomerFunds.DataSource = lstCustomerFund;
-        rptCustomerFunds.DataBind();
+        cf = lstCustomerFund.SingleOrDefault(x => x.FundID == (int)FundType.BLUBucks);
+        if (cf != null)
+        {
+            lstCustomerFund.Remove(cf);
+            rptAllCustomerFunds.DataSource = lstCustomerFund;
+            rptAllCustomerFunds.DataBind();
+
+            lstCustomerFund.Clear();
+            lstCustomerFund.Add(cf);
+            rptCustomerFunds.DataSource = lstCustomerFund;
+            rptCustomerFunds.DataBind();
+        }   
     }
+
 
 }

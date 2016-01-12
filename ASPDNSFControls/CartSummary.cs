@@ -66,6 +66,27 @@ namespace AspDotNetStorefrontControls
 
         private Label lblGiftCardTotalCaption = new Label();
         private Label lblGiftCardTotal = new Label();
+
+        //variables for showing total fund used
+        private Label lblCreditUsed = new Label();
+
+        private Label lblBluBucksFundsUsedTotalCaption = new Label();
+        private Label lblBluBucksFundsUsedTotal = new Label();
+
+        private Label lblSofFundsUsedTotalCaption = new Label();
+        private Label lblSofFundsUsedTotal = new Label();
+
+        private Label lblDirectMailFundsUsedTotalCaption = new Label();
+        private Label lblDirectMailFundsUsedTotal = new Label();
+
+        private Label lblDisplayFundsUsedTotalCaption = new Label();
+        private Label lblDisplayFundsUsedTotal = new Label();
+
+        private Label lblLiteratureFundsUsedTotalCaption = new Label();
+        private Label lblLiteratureFundsUsedTotal = new Label();
+
+        private Label lblPopFundsUsedTotalCaption = new Label();
+        private Label lblPopFundsUsedTotal = new Label();
         
         #endregion
 
@@ -98,6 +119,71 @@ namespace AspDotNetStorefrontControls
                     Controls.Add(lblSubTotalNoDiscount);
                    // Controls.Add(new LiteralControl("          </span>"));
                     Controls.Add(new LiteralControl("        </span></p>"));
+
+                    //Category wise Credit Used total region
+
+                    Controls.Add(new LiteralControl(" <p><span class='normal-heading black-color'>         <font>"));
+                    Controls.Add(lblCreditUsed);
+                    Controls.Add(new LiteralControl("          </font>"));                   
+                    Controls.Add(new LiteralControl("        </span></p>"));
+
+                    //Blu Bucks used total                  
+                    if (Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) > 0)
+                    {
+                        Controls.Add(lblBluBucksFundsUsedTotalCaption);
+                        Controls.Add(lblBluBucksFundsUsedTotal);
+                        Controls.Add(new LiteralControl(" <br>"));
+                    }                 
+                    //End Blu Bucks Used Total
+
+                    //Sof used total                  
+                    if (Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) > 0)
+                    {
+                        Controls.Add(lblSofFundsUsedTotalCaption);
+                        Controls.Add(lblSofFundsUsedTotal);
+                        Controls.Add(new LiteralControl(" <br>"));
+                    }                  
+                    //End Sof Used Total
+
+                    //Direct mail fund used total                 
+                    if (Convert.ToDecimal(lblDirectMailFundsUsedTotal.Text.Replace("$", "")) > 0)
+                    {
+                        Controls.Add(lblDirectMailFundsUsedTotalCaption);
+                        Controls.Add(lblDirectMailFundsUsedTotal);
+                        Controls.Add(new LiteralControl(" <br>")); 
+                    }                  
+                  
+                    //End Direct mail fund Used Total
+
+                    //Display fund used total                   
+                    if (Convert.ToDecimal(lblDisplayFundsUsedTotal.Text.Replace("$", "")) > 0)
+                    {
+                        Controls.Add(lblDisplayFundsUsedTotalCaption);
+                        Controls.Add(lblDisplayFundsUsedTotal);
+                        Controls.Add(new LiteralControl(" <br>"));
+                    }                   
+                    //End Display fund Used Total
+
+                    //literature fund used total                  
+                    if (Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$","")) > 0)
+                    {
+                        Controls.Add(lblLiteratureFundsUsedTotalCaption);
+                        Controls.Add(lblLiteratureFundsUsedTotal);
+                        Controls.Add(new LiteralControl(" <br>"));
+                    }                  
+                    //End literature fund Used Total
+
+                    //POP fund used total                  
+                    if (Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) > 0)
+                    {
+                        Controls.Add(lblPopFundsUsedTotalCaption);
+                        Controls.Add(lblPopFundsUsedTotal);
+                        Controls.Add(new LiteralControl(" <br>"));
+                    }
+                    Controls.Add(new LiteralControl(" <br>"));
+                    //End POP fund Used Total
+
+                    //End Category wise Credit Used total region
 
                     if (_dataSource.DiscountResults.Sum(dr => dr.LineItemTotal) < 0)
                     {
@@ -337,6 +423,36 @@ namespace AspDotNetStorefrontControls
             {
                 lblTotal.Text = "0.00";
             }
+
+            //Category wise fund used regioon
+            lblCreditUsed.ID = "lblCreditUsed";
+            lblCreditUsed.Text = "Credits Used";
+
+            lblBluBucksFundsUsedTotalCaption.ID = "lblBluBucksFundsUsedTotalCaption";
+            lblBluBucksFundsUsedTotalCaption.Text = "Blu Bucks:";
+
+            lblSofFundsUsedTotalCaption.ID = "lblSofFundsUsedTotalCaption";
+            lblSofFundsUsedTotalCaption.Text = "Sof Funds:";
+
+            lblDirectMailFundsUsedTotalCaption.ID = "lblDirectMailFundsUsedTotalCaption";
+            lblDirectMailFundsUsedTotalCaption.Text = "Direct Mail Funds:";
+
+            lblDisplayFundsUsedTotalCaption.ID = "lblDisplayFundsUsedTotalCaption";
+            lblDisplayFundsUsedTotalCaption.Text = "Display Funds:";
+
+            lblLiteratureFundsUsedTotalCaption.ID = "lblLiteratureFundsUsedTotalCaption";
+            lblLiteratureFundsUsedTotalCaption.Text = "Literature Funds:";
+
+            lblPopFundsUsedTotalCaption.ID = "lblPopFundsUsedTotalCaption";
+            lblPopFundsUsedTotalCaption.Text = "Pop Funds:";
+
+            lblBluBucksFundsUsedTotal.Text = "$0.00";
+            lblSofFundsUsedTotal.Text = "$0.00";
+            lblDirectMailFundsUsedTotal.Text = "$0.00";
+            lblDisplayFundsUsedTotal.Text = "$0.00";
+            lblLiteratureFundsUsedTotal.Text = "$0.00";
+            lblPopFundsUsedTotal.Text = "$0.00";
+            //End
         }
         
         /// <summary>
@@ -347,6 +463,27 @@ namespace AspDotNetStorefrontControls
         {
             if (DataSource != null && !cart.IsEmpty())
             {
+                //Set Total for each fund type used
+                foreach (CartItem cItem in cart.CartItems)
+                {
+                    if (cItem.FundID == 2)
+                        lblSofFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 3)
+                        lblDirectMailFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblDirectMailFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 4)
+                        lblDisplayFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblDisplayFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 5)
+                        lblLiteratureFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                    else if (cItem.FundID == 6)
+                        lblPopFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+
+                    lblBluBucksFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
+                                       
+                }
+                //End
+
+               
+               
                 //SubTotal
                 Decimal subTotalNoDiscount = cart.SubTotal(false, false, true, true, true, true);
                 Decimal lineItemDiscount = cart.DiscountResults.Sum(dr => dr.LineItemTotal);

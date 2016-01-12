@@ -847,11 +847,13 @@ namespace AspDotNetStorefrontControls
         Label lblSubTotal = new Label();
         Label lblpricewithBluBucksUsed = new Label();
         Label lblpricewithCategoryFundUsed = new Label();
+        Label lblItemPrice = new Label();
         Label lblVatDisplay = new Label();
         Label lblQtyDiscount = new Label();
         Label recurringFrequencyLabel = new Label();
         DropDownList variantList = new DropDownList();
         LinkButton lnkDelete = new LinkButton();
+        LinkButton lnkUpdate = new LinkButton();
         CartItem cItem = null;
 
         private ShoppingCartLineItemDescriptionControl lineItemDescription = new ShoppingCartLineItemDescriptionControl();
@@ -1122,15 +1124,20 @@ namespace AspDotNetStorefrontControls
                         lnkDelete.Text = this.MinicartSummarySetting.MiniCartRemoveText;
                     }
                     lnkDelete.CommandName = "Delete";
-
+                   // lnkUpdate.CommandName = "Update";
+                    lnkUpdate.Text = "Update";
                 }
                 else
                 {
                     lnkDelete.Text = "shoppingcart.cs.107".StringResource();
                     lnkDelete.CommandName = "Delete";
+
+                  //  lnkUpdate.CommandName = "Update";
+                    lnkUpdate.Text = "Update";
                 }
                 lnkDelete.CommandArgument = cItem.ShoppingCartRecordID.ToString();
-
+              //  lnkUpdate.CommandArgument = cItem.ShoppingCartRecordID.ToString();
+               
                 //Line Item Description
                 if (LineItemSetting != null)
                 {
@@ -1147,6 +1154,8 @@ namespace AspDotNetStorefrontControls
                     lblQtyDiscount.Text = cItem.LineItemQuantityDiscount;
                     lblpricewithBluBucksUsed.Text = "$" + Math.Round(cItem.pricewithBluBuksUsed, 2).ToString();
                     lblpricewithCategoryFundUsed.Text = "$" + Math.Round(cItem.pricewithategoryFundUsed,2).ToString();
+                    lblItemPrice.Text = Math.Round(cItem.Price, 2).ToString();
+                  
                 }
                 else
                 {
@@ -1228,7 +1237,7 @@ namespace AspDotNetStorefrontControls
                     {
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
                         Decimal RegularPrices = Convert.ToDecimal(lblSubTotal.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", ""));
-                        lblSubTotal.Text = "<span id='spregularprice' class='hide-element'><b>Regular Price: </b>$" + Math.Round(RegularPrices, 2).ToString() + "</span>" + "<span id='funddiscountprice' class='hide-element'>(FUND) discount: " + lblpricewithCategoryFundUsed.Text + "</span><span id='blubucksprice' class='hide-element'>Blu Bucks used: " + lblpricewithBluBucksUsed.Text + "" + "</span><span id='creditprice'><b>Your Price: </b>" + lblSubTotal.Text + "</span>";
+                        lblSubTotal.Text = "<span id='" + "spregularprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spregularprice'><b>Regular Price: </b>$" + Math.Round(RegularPrices, 2).ToString() + "</span>" + "<span id='" + "spfunddiscountprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spfunddiscountprice'>(FUND) discount: " + lblpricewithCategoryFundUsed.Text + "</span><span id='" + "spblubucksprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spblubucksprice'>Blu Bucks used: " + lblpricewithBluBucksUsed.Text + "" + "</span><span id='" + "spcreditprice_" + cItem.ShoppingCartRecordID.ToString() + "' ><b>Your Price: </b>" + lblSubTotal.Text + "</span>" + "<span id='" + "spItemPrice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemPrice'><b>Item Price: </b>$" + lblItemPrice.Text.ToString() + "</span>" + "<span id='" + "spItemFundId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemFundId'>" + cItem.FundID.ToString() + "</span>" + "<span id='" + "spItemProductCategoryId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemProductCategoryId'>" + cItem.ProductCategoryID.ToString() + "</span>" + "<span id='" + "spBluBucksPercentageUsed_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spBluBucksPercentageUsed'>" + cItem.BluBucksPercentageUsed.ToString() + "</span>";
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
                     }
@@ -1271,11 +1280,16 @@ namespace AspDotNetStorefrontControls
                     {
                         if (this.AllowEdit && this.CartItem.RestrictedQuantities.Count == 0)
                         {
-                          //  Controls.Add(new LiteralControl("  <td class='delete-wrap'>"));
-                            lnkDelete.CssClass = "underline-link";
+                            Controls.Add(new LiteralControl("  <div class='shopping-cart-links'>"));                          
                             Controls.Add(lnkDelete);
-                            //Controls.Add(new LiteralControl("  </td>")); 
+                            Controls.Add(new LiteralControl("<font>|</font>"));
+                            lnkUpdate.CssClass = "lnkUpdateItem";
+                            lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();                            
+                            Controls.Add(lnkUpdate);                            
+                            Controls.Add(new LiteralControl("  </div>")); 
                         }
+
+                  
                     }
 
                     Controls.Add(new LiteralControl("  </td>")); 

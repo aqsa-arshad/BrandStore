@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="aspdnsf" TagName="XmlPackage" Src="~/Controls/XmlPackageControl.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="OrderOption" Src="~/controls/OrderOption.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="BuySafeKicker" Src="~/controls/BuySafeKicker.ascx" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="PageContent" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <%--<asp:Panel ID="pnlContent" runat="server">--%>
@@ -12,7 +13,24 @@
         <%--<h1>
 				<asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
 			</h1>--%>
+        <%--Hidden Variables Regions--%>
+
+
         <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdncurrentrecordid" name="hdncurrentrecordid" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnsoffundamount" name="hdnsoffundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdndirectmailfundamount" name="hdndirectmailfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdndisplayfundamount" name="hdndisplayfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnliteraturefundamount" name="hdndisplayfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnpopfundamount" name="hdnpopfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdntoreplace" name="hdntoreplace" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+
+        <%--End Hidden Variables Regions--%>
         <asp:Literal ID="ltValidationScript" runat="server"></asp:Literal>
         <asp:Literal ID="ltJsPopupRoutines" runat="server"></asp:Literal>
         <aspdnsf:Topic runat="server" ID="topicHeaderMessage" TopicName="CartPageHeader" />
@@ -199,7 +217,7 @@
 
                     <div>
                         <asp:ValidationSummary ID="vsQuantity" runat="server" ValidationGroup="val" DisplayMode="List" ShowMessageBox="true" ShowSummary="false" />
-                        <asp:Button ID="btnUpdateShoppingCart" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>"
+                        <asp:Button ID="btnUpdateShoppingCart" CssClass="btn btn-primary btn-block hide-element" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>"
                             runat="server" ValidationGroup="val" />
                         <div class="clearfix"></div>
                         <%--<asp:Button ID="btnContinueShoppingBottom" Text="<%$ Tokens:StringResource,shoppingcart.cs.62 %>"
@@ -364,45 +382,299 @@
 
     <%--</asp:Panel> --%>
 
-     <script type="text/javascript">
-         $(document).ready(function () {             
-             showhidepricelabels();
+    <%-- Region Open Pop Up for bucckts--%>
+    <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-checkout" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="text-uppercase-no">True BLU</h5>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
+                    <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
 
-             function showhidepricelabels()
-             {
-                 var customerlevel = GetCustomerLevel();
-                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
-                     $("#spregularprice").removeClass("hide-element");
-                     $("#funddiscountprice").removeClass("hide-element");
-                     $("#blubucksprice").removeClass("hide-element");
-                 }
-                 else if (customerlevel == 8 || customerlevel == 1) {
+                    <div class="form-group">
+                        <div class="col-xs-6 padding-none">
+                            <label class="roman-black">BLU Bucks used:</label>
+                        </div>
+                        <div class="col-xs-6 padding-none">
+                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <p class="label-text">
+                        <span class="roman-black">Total price using BLU Bucks:</span>
+                        <span id="spprice" runat="server" clientidmode="Static">$0,000.00 </span>
+                    </p>
+                    <div class="buttons-group trueblue-popup">
+                        <div>
+                            <asp:Button ID="btnaddtocart" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocart_Click" />
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--End Region Open Pop Up for bucckts--%>
+
+    <%-- Region Open PopUp for SOF Funds--%>
+  
+        <!-- Modal -->
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-checkout" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h5 class="text-uppercase-no">Apply sales funds to this item</h5>
+                        <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-7">
+                                    <label class="roman-black">GL Code:</label>
+                                    <input class="form-control" type="text" value="">
+                                </div>
+                                <div class="col-xs-6 col-sm-5">
+                                    <label class="roman-black">Amount:</label>
+                                     <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server" ReadOnly="true"></asp:TextBox>
+                                   
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <p class="label-text">                           
+
+                             <span class="roman-black">Total price using sale funds:</span>
+                            <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                        </p>
+                        <div class="buttons-group">
+                              <asp:Button ID="Button1" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
+                            <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server"  />
+                            
+                            <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+  
+    <%--End Region Open Pop Up For SOF Funds--%>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            showhidepricelabels();
+
+            function showhidepricelabels() {
+
+                var customerlevel = GetCustomerLevel();
+                if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
+                    $(".spregularprice").removeClass("hide-element");
+                    $(".spfunddiscountprice").removeClass("hide-element");
+                    $(".spblubucksprice").removeClass("hide-element");
+                }
+                else if (customerlevel == 8 || customerlevel == 1) {
                     //all or hidden except price
 
-                 }
-                 else {
-                     $("#spregularprice").removeClass("hide-element");
-                     $("#funddiscountprice").removeClass("hide-element");
+                }
+                else {
+                    $(".spregularprice").removeClass("hide-element");
+                    $(".spfunddiscountprice").removeClass("hide-element");
 
-                 }
-             }
+                }
+            }
 
-             function GetCustomerLevel() {
-                 var CustomerLevelElemment;
-                 if (document.getElementById('hdnCustomerLevel')) {
-                     CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
-                 }
-                 else if (document.all) {
-                     CustomerLevelElemment = document.all['hdnCustomerLevel'];
-                 }
-                 else {
-                     CustomerLevelElemment = document.layers['hdnCustomerLevel'];
-                 }
+            function GetCustomerLevel() {
+                var CustomerLevelElemment;
+                if (document.getElementById('hdnCustomerLevel')) {
+                    CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
+                }
+                else if (document.all) {
+                    CustomerLevelElemment = document.all['hdnCustomerLevel'];
+                }
+                else {
+                    CustomerLevelElemment = document.layers['hdnCustomerLevel'];
+                }
 
-                 return CustomerLevelElemment.innerHTML;
-             }
+                return CustomerLevelElemment.innerHTML;
+            }
+            $("#btnaddtocart").click(function (e) {
 
-         });
+                $("#txtBluBuksUsed").trigger("focusout");
 
-         </script>
+            });
+
+            $("#txtBluBuksUsed").focusout(function () {
+                debugger;
+                $("#hdncurrentrecordid").text();
+                var currentrecordid = $("#hdncurrentrecordid").text();
+                var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
+                var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
+                var ItemQuantity = $(quantityfieldid).val().replace("$", "");
+                var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
+                var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+
+                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage)) {
+                    var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
+                    $("#spprice").text("$" + updatedprice.toFixed(2));
+                    $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
+                    var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
+                    var BluBucksUsed = $("#txtBluBuksUsed").val();
+
+                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
+                }
+
+            });
+
+            // CallBack method when the page call success
+            function onSucceed(results, currentContext, methodName) {
+                // alert("success");
+            }
+            //CallBack method when the page call fails due to internal, server error 
+            function onError(results, currentContext, methodName) {
+                alert("error");
+            }
+
+            $("#txtBluBuksUsed").keypress(function (evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode == 46)
+                    return true;
+                else if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                else
+                    return true;
+            });
+
+            $(".lnkUpdateItem").click(function () {
+                var id = $(this).attr("id");
+                var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
+                $("#hdntoreplace").text(toreplace);
+                $("#hdncurrentrecordid").text(id.replace(toreplace, ""));
+                var currentrecordid = id.replace(toreplace, "");
+                var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
+                var quantityfieldid = "#" + toreplace + "txtQuantity";
+                var ItemQuantity = $(quantityfieldid).val().replace("$", "");
+                var newpricetotal = (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
+                var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+                $("#txtBluBuksUsed").val(0);
+                //apply fund and buskts
+                var customerlevel = $("#hdncustomerlevel").text();
+                applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
+
+                if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
+                    if (ItemQuantity == 0) {
+                        PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);
+                    }
+                    else {
+                       
+                        $(".lnkUpdateItem").attr("data-toggle", "modal");
+                        $(".lnkUpdateItem").attr("data-target", "#myModa2");
+                    }
+                }
+                else if (customerlevel == 3) {
+                   
+                    //bind link update to sof fund opup
+                    //$("#spproductcategoryfundused").text($("#hdnProductFundAmountUsed").text());
+                    $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
+                    $("#sppriceforsalesrep").text($("#spprice").text().replace("$", ""));
+                    $(".lnkUpdateItem").attr("data-toggle", "modal");
+                    $(".lnkUpdateItem").attr("data-target", "#myModal1");
+                }
+                else
+                    PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);
+                // $("#btnaddtocart").trigger("click");
+
+
+            });
+
+            function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage) {
+
+                var maxfundlimit = newpricetotal * (Number.parseFloat(BluBucksPercentage) / 100)
+
+                if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
+                    return false;
+                }
+                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt(maxfundlimit)) {
+                    alert("BLU BUKS cannot be greater than allowed limit");
+                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    return false;
+                }
+                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
+                    alert("You exceed available BLU BUKS");
+                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text()).toFixed(2)
+
+                    return false;
+                }
+                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
+                    alert("BLU BUKS cannot be greater than product price");
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""))
+                    return false;
+                }
+                else
+                    return true;
+
+            }
+
+
+            function applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel) {
+                debugger;
+                var ItemFundId = $("#spItemFundId_" + currentrecordid).text();
+
+                var fundamount = 0;
+                if (customerlevel == 2) {
+                    fundamount = $("#hdnsoffundamount").text();
+                    applyFund(newpricetotal, fundamount);
+                }
+                else if (ItemFundId == 2) {
+                    fundamount = $("#hdnsoffundamount").text();
+                    applyFund(newpricetotal, fundamount);
+                }
+
+                else if (ItemFundId == 3) {
+                    fundamount = $("#hdndirectmailfundamount").text();
+                    applyFund(newpricetotal, fundamount);
+                }
+
+                else if (ItemFundId == 4) {
+                    fundamount = $("#hdndisplayfundamount").text();
+                    applyFund(newpricetotal, fundamount);
+                }
+                else if (ItemFundId == 5) {
+                    fundamount = $("#hdnliteraturefundamount").text();
+                    applyFund(newpricetotal, fundamount);
+                }
+                else if (ItemFundId == 6) {
+                    fundamount = $("#hdnpopfundamount").text();
+                    applyFund(newpricetotal, fundamount);
+                }
+
+                var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
+                var BluBucksUsed = $("#txtBluBuksUsed").val();
+                PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
+            }
+
+            function applyFund(newpricetotal, fundamount) {
+
+                if (fundamount < newpricetotal) {
+                    newpricetotal = newpricetotal - fundamount;
+                    $("#hdnProductFundAmountUsed").text(fundamount);
+                }
+                else {
+                    fundamount = fundamount - newpricetotal;
+                    $("#hdnProductFundAmountUsed").text(newpricetotal);
+                    newpricetotal = 0;
+
+                }
+                $("#spprice").text(newpricetotal.toFixed(2));//price to show on popup after deduction of category fund
+
+            }
+
+        });
+
+
+
+    </script>
 </asp:Content>

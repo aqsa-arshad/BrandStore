@@ -182,10 +182,10 @@ namespace AspDotNetStorefront
                     if (CustomerFunds.Count > 0)
                     {
                         //BluBucks
-                        CustomerFund tempBluBucksfund = CustomerFunds.Find(x => x.FundID == 1);
+                        CustomerFund tempBluBucksfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.BLUBucks));
                         if (tempBluBucksfund != null)
                         {
-                            BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).Amount.ToString();
+                            BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).AmountAvailable.ToString();
                             hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
                             ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase your items.";
                         }
@@ -203,15 +203,15 @@ namespace AspDotNetStorefront
                             CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(hdnProductFundID.Text));
                             if (tempfund != null)
                             {
-                                hdnProductFundAmount.Text = tempfund.Amount.ToString();
+                                hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                             }
                             else
                             {
-                                 tempfund = CustomerFunds.Find(x => x.FundID == 2);//for sales rep
+                                tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds));//for sales rep
                                  if (tempfund != null)
                                  {
-                                     hdnProductFundAmount.Text = tempfund.Amount.ToString();
+                                     hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
                                      productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                                  }
                                  else
@@ -534,7 +534,7 @@ namespace AspDotNetStorefront
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
-                        //HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                       // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
                         m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
                         LiteralCustom.Text = m_PageOutputCustom+"<div>";
                     }
@@ -562,7 +562,7 @@ namespace AspDotNetStorefront
             //get fund BluBucks Percentage
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
-
+            hdnProductCategoryID.Text = parentCategoryID.ToString();
         }
 
 
@@ -625,8 +625,9 @@ namespace AspDotNetStorefront
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
             formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
-
-
+            formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
+            formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
+            formInput.GLcode = "";
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
@@ -657,10 +658,7 @@ namespace AspDotNetStorefront
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
                 {
-                    //update fund/blubukts amount related to product for current customer
-                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(hdnProductFundID.Text), Convert.ToDecimal(hdnProductFundAmount.Text) - Convert.ToDecimal(hdnProductFundAmountUsed.Text));
-                    AuthenticationSSO.UpdateCustomerFund(ThisCustomer.CustomerID, Convert.ToInt32(1), Convert.ToDecimal(Convert.ToDecimal(hdnBluBucktsPoints.Text) - Convert.ToDecimal(txtBluBuksUsed.Text)));
-
+   
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
                     {

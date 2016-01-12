@@ -14,6 +14,7 @@ using System.Runtime;
 using SFDCSoapClient;
 using System.ServiceModel;
 using System.Data;
+using System.Text.RegularExpressions;
 
 
 namespace AspDotNetStorefront
@@ -32,33 +33,46 @@ namespace AspDotNetStorefront
         /// <returns>Status</returns>
         public static Customer InitializeCustomerObject(string userName, string password)
         {
-            var ThisCustomer = new Customer(userName, true);
-            var IsCustomerAvailable = ThisCustomer.HasCustomerRecord;
+            var thisCustomer = new Customer(userName, true);
+            var isCustomerAvailable = thisCustomer.HasCustomerRecord;
             var userModel = GetUserModel(userName);
 
             try
             {
                 if (userModel == null) // Execute Local Authentication if User is not Exist in Okta
-                    return ThisCustomer;
+                    return thisCustomer;
 
                 if (UserAuthentication(userName, password)) // If User is Authenticated by Okta then Add / Update local Customer object
                 {
-                    if (!IsCustomerAvailable)
+                    if (!isCustomerAvailable)
                     {
                         // Add New Customer in local DB
                         InsertCustomer(userName);
                     }
                     // Update Customer in local DB w.r.t Okta UserModel
-                    UpdateCustomer(userModel.profile, userName, password, IsCustomerAvailable);
+                    UpdateCustomer(userModel.profile, userName, password, isCustomerAvailable);
+                    UpdateCustomerFundFromSFDC(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
+
+                    ////// START - TEST CommitCustomerFund Functionality
+
+                    //// 1. Get Funds
+                    //List<CustomerFund> lstCustomerFund = GetCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID, false);
+                    //// 2. Update Amount Used
+                    //lstCustomerFund.ForEach(x => x.AmountUsed = 3000);
+                    //// 3. Update Customer Fund AmountUsed
+                    //UpdateCustomerFundAmountUsed(lstCustomerFund);
+                    //// 4. CommitCustomerFund
+                    //CommitCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
+
+                    ////// EMD - TEST CommitCustomerFund Functionlaity
                 }
-                else if (IsCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
+                else if (isCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
                 {
                     SqlParameter sp = new SqlParameter("@IsRegistered", System.Data.SqlDbType.TinyInt);
                     sp.Value = 0;
                     SqlParameter[] spa = { sp };
-                    ThisCustomer.UpdateCustomer(spa);
+                    thisCustomer.UpdateCustomer(spa);
                 }
-
             }
             catch (Exception ex)
             {
@@ -171,6 +185,11 @@ namespace AspDotNetStorefront
                     "User '" + userName + "' is not found in SFDC. Hence Application will treat this as in Internal User without any budget.", MessageTypeEnum.Informational, MessageSeverityEnum.Message);
                     profile.userType = UserType.INTERNAL.ToString();
                 }
+                if (string.IsNullOrEmpty(profile.sfid))
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        "User '" + userName + "' sfid or email is not found in SFDC.", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                }
 
                 Password p = new Password(password);
                 int customerLevelID = GetCustomerLevelID(profile.userType);
@@ -191,6 +210,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@BillingAddressID", 0),
                                         new SqlParameter("@ShippingAddressID", 0),
+                                        new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -202,6 +222,7 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@SaltKey", p.Salt),
                                         new SqlParameter("@CustomerLevelID", customerLevelID),
                                         new SqlParameter("@IsRegistered", 1), 
+                                        new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -344,26 +365,37 @@ namespace AspDotNetStorefront
         /// <param name="sfid">sfid</param>
         private static bool GetSFDCDealerUser(AspDotNetStorefrontCore.Profile profile, string sfid)
         {
-            var dealerUserQuery = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), sfid);
-            QueryResult queryResult = new QueryResult();
+            bool flag = false;
+            try
+            {
+                var dealerUserQuery = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), sfid);
+                QueryResult queryResult = new QueryResult();
 
-            if (QuerySFDC(dealerUserQuery, ref queryResult) == false)
-                return false;
+                if (QuerySFDC(dealerUserQuery, ref queryResult) != false)
+                {
+                    Contact contact = (Contact)queryResult.records.FirstOrDefault();
 
-            Contact contact = (Contact)queryResult.records.FirstOrDefault();
+                    profile.firstName = contact.FirstName;
+                    profile.lastName = contact.LastName;
 
-            profile.firstName = contact.FirstName;
-            profile.lastName = contact.LastName;
+                    if (contact.Account.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
+                            contact.Account.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
+                            contact.Account.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
+                            contact.Account.TrueBLUStatus__c.Equals("UNLIMITED", StringComparison.InvariantCultureIgnoreCase))
+                        profile.userType = "BLU" + contact.Account.TrueBLUStatus__c;
+                    else
+                        profile.userType = contact.Account.TrueBLUStatus__c;
 
-            if (contact.Account.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
-                    contact.Account.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
-                    contact.Account.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
-                    contact.Account.TrueBLUStatus__c.Equals("UNLIMITED", StringComparison.InvariantCultureIgnoreCase))
-                profile.userType = "BLU" + contact.Account.TrueBLUStatus__c;
-            else
-                profile.userType = contact.Account.TrueBLUStatus__c;
-
-            return true;
+                    flag = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            return flag;
         }
 
         /// <summary>
@@ -376,36 +408,35 @@ namespace AspDotNetStorefront
         /// <param name="email">email</param>
         private static bool GetSFDCInternalUser(AspDotNetStorefrontCore.Profile profile, string email)
         {
-            var internalUserQuery = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
-            QueryResult queryResult = new QueryResult();
-
-            if (QuerySFDC(internalUserQuery, ref queryResult))
+            bool flag = false;
+            try
             {
-                User user = (User)queryResult.records.FirstOrDefault();
+                var internalUserQuery = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
+                QueryResult queryResult = new QueryResult();
 
-                profile.firstName = user.FirstName;
-                profile.lastName = user.LastName;
-                profile.userType = UserType.SALESREPS.ToString();
-
-                // If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
-                var SFDCBudgetQueryById = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), user.Sales_Rep_ID__c);
-
-                if (QuerySFDC(SFDCBudgetQueryById, ref queryResult) == true)
+                if (QuerySFDC(internalUserQuery, ref queryResult))
                 {
-                    // Set Budget
+                    User user = (User)queryResult.records.FirstOrDefault();
+
+                    profile.firstName = user.FirstName;
+                    profile.lastName = user.LastName;
+                    profile.userType = UserType.SALESREPS.ToString();
+                    profile.sfid = user.Sales_Rep_ID__c;
+                    flag = true;
                 }
-                return true;
+                else
+                {
+                    profile.sfid = email;
+                    flag = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var SFDCBudgetQueryByEmail = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
-
-                if (QuerySFDC(SFDCBudgetQueryByEmail, ref queryResult) == true)
-                {
-                    // Set Budget
-                }
-                return false;
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
+            return flag;
         }
 
         /// <summary>
@@ -416,56 +447,76 @@ namespace AspDotNetStorefront
         /// <returns>queryResult</returns>
         private static bool QuerySFDC(string query, ref QueryResult queryResult)
         {
-            var username = AppLogic.AppConfig("SFDCUsername");
-            var password = AppLogic.AppConfig("SFDCPassword");
-            var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
-            var flag = true;
-
-            SoapClient loginClient; // for login endpoint
-            SoapClient client; // for API endpoint
-            SessionHeader header;
-            EndpointAddress endpoint;
-
-            // Create a SoapClient specifically for logging in
-            loginClient = new SoapClient();
-
-            // SFDC Login
-            LoginResult lr = loginClient.login(null, username, password + securityToken);
-
-            if (lr.passwordExpired)
+            var flag = false;
+            try
             {
-                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    "SFDC Login Password Is Expired", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
-                flag = false;
+                var username = AppLogic.AppConfig("SFDCUsername");
+                var password = AppLogic.AppConfig("SFDCPassword");
+                var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
+
+                SoapClient loginClient; // for login endpoint
+                SoapClient client; // for API endpoint
+                SessionHeader header;
+                EndpointAddress endpoint;
+
+                // Create a SoapClient specifically for logging in
+                loginClient = new SoapClient();
+
+                // SFDC Login
+                LoginResult lr = loginClient.login(null, username, password + securityToken);
+
+                if (lr.passwordExpired)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        "SFDC Login Password Is Expired", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                    flag = false;
+                }
+
+                endpoint = new EndpointAddress(lr.serverUrl);
+                header = new SessionHeader();
+                header.sessionId = lr.sessionId;
+
+                // Create and cache an API endpoint client
+                client = new SoapClient("Soap", endpoint);
+                client.query(header, null, null, null, query, out queryResult);
+
+                if (queryResult.size == 0)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        "Record not found for " + username, MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                    flag = false;
+                }
+
+                // SFDC Logout
+                client.logout(header);
+                flag = true;
             }
-
-            endpoint = new EndpointAddress(lr.serverUrl);
-            header = new SessionHeader();
-            header.sessionId = lr.sessionId;
-
-            // Create and cache an API endpoint client
-            client = new SoapClient("Soap", endpoint);
-            client.query(header, null, null, null, query, out queryResult);
-
-            if (queryResult.size == 0)
+            catch (Exception ex)
             {
-                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    "Record not found for " + username, MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
                 flag = false;
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
-            // SFDC Logout
-            client.logout(header);
             return flag;
         }
 
         /// <summary>
         /// Get Customer Fund
+        /// 1. Get Customer Fund from SFDC.
+        /// 2. Update Local DB.
+        /// 3. Return lstCustomerFund.
         /// </summary>
         /// <param name="CustomerID">CustomerID</param>
         /// <returns>lstCustomerFund</returns>
-        public static List<CustomerFund> GetCustomerFund(int CustomerID)
+        public static List<CustomerFund> GetCustomerFund(int customerID, bool IsUpdateSFDC = false)
         {
+            if (customerID == 0)
+                return new List<CustomerFund>();
+
+            if (IsUpdateSFDC)
+                UpdateCustomerFundFromSFDC(customerID);
+
             List<CustomerFund> lstCustomerFund = new List<CustomerFund>();
             try
             {
@@ -475,7 +526,7 @@ namespace AspDotNetStorefront
                     using (var cmd = new SqlCommand("aspdnsf_CustomerFundSelectByCustomerID", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
 
                         IDataReader idr = cmd.ExecuteReader();
 
@@ -486,7 +537,8 @@ namespace AspDotNetStorefront
                                 CustomerID = idr.GetInt32(idr.GetOrdinal("CustomerID")),
                                 FundID = idr.GetInt32(idr.GetOrdinal("FundID")),
                                 FundName = idr.GetString(idr.GetOrdinal("FundName")),
-                                Amount = idr.GetDecimal(idr.GetOrdinal("Amount"))
+                                Amount = idr.GetDecimal(idr.GetOrdinal("Amount")),
+                                AmountUsed = idr.GetDecimal(idr.GetOrdinal("AmountUsed"))
                             });
                         }
                     }
@@ -506,9 +558,16 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="CustomerID">CustomerID</param>
         /// <param name="FundID">FundID</param>
+        /// <param name="IsUpdateSFDC">If True then Funds will be updated from SFDC</param>
         /// <returns>customerFund</returns>
-        public static CustomerFund GetCustomerFund(int CustomerID, int FundID)
+        public static CustomerFund GetCustomerFund(int customerID, int fundID, bool IsUpdateSFDC = false)
         {
+            if (customerID == 0 || fundID == 0)
+                return new CustomerFund();
+
+            if (IsUpdateSFDC)
+                UpdateCustomerFundFromSFDC(customerID);
+
             CustomerFund customerFund = new CustomerFund();
             try
             {
@@ -518,8 +577,8 @@ namespace AspDotNetStorefront
                     using (var cmd = new SqlCommand("aspdnsf_CustomerFundSelectByCustomerIDFundID", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
-                        cmd.Parameters.AddWithValue("@FundID", FundID);
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                        cmd.Parameters.AddWithValue("@FundID", fundID);
 
                         IDataReader idr = cmd.ExecuteReader();
 
@@ -529,6 +588,7 @@ namespace AspDotNetStorefront
                             customerFund.FundID = idr.GetInt32(idr.GetOrdinal("FundID"));
                             customerFund.FundName = idr.GetString(idr.GetOrdinal("FundName"));
                             customerFund.Amount = idr.GetDecimal(idr.GetOrdinal("Amount"));
+                            customerFund.AmountUsed = idr.GetDecimal(idr.GetOrdinal("AmountUsed"));
                         }
                     }
                 }
@@ -543,37 +603,220 @@ namespace AspDotNetStorefront
         }
 
         /// <summary>
-        /// Update Customer Fund
+        /// Add Update Customer Fund From SFDC
         /// </summary>
-        /// <param name="lstCustomerFund">lstCustomerFund</param>
-        public static void UpdateCustomerFund(List<CustomerFund> lstCustomerFund)
+        /// <param name="customerID">customerID</param>
+        /// <returns></returns>
+        private static void UpdateCustomerFundFromSFDC(int customerID)
         {
-            if (lstCustomerFund == null || lstCustomerFund.Count == 0)
+            if (!AppLogic.AppConfig("UseSFDCBudget").ToBool())
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    "AppConfig UseSFDCBudget is set to false.", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
                 return;
+            }
 
-            foreach (CustomerFund customerFund in lstCustomerFund)
-                UpdateCustomerFund(customerFund.CustomerID, customerFund.FundID, customerFund.Amount);
+            try
+            {
+                Customer customer = new Customer(customerID);
+
+                if (IsDealerUser(customer.CustomerLevelID))
+                {
+                    GetSetDealerUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
+                }
+                else if (IsInternalUser(customer.CustomerLevelID))
+                {
+                    GetSetInternalUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
         }
 
         /// <summary>
-        /// Update Customer Fund
+        /// Update Customer Fund To SFDC
         /// </summary>
-        /// <param name="CustomerID">CustomerID</param>
-        /// <param name="FundID">FundID</param>
-        /// <param name="Amount">Amount</param>
-        public static void UpdateCustomerFund(int CustomerID, int FundID, decimal Amount)
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        private static void UpdateCustomerFundToSFDC(List<CustomerFund> lstCustomerFund)
+        {
+            if (!AppLogic.AppConfig("UseSFDCBudget").ToBool())
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    "AppConfig UseSFDCBudget is set to false.", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                return;
+            }
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Get & Set Dealer User Fund From SFDC
+        /// </summary>
+        /// <param name="customerID">CustomerID</param>
+        /// <param name="SFDCQueryParam">SFDCQueryParam</param>
+        private static void GetSetDealerUserFundFromSFDC(int customerID, string SFDCQueryParam)
+        {
+            try
+            {
+                var query = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
+                QueryResult queryResult = new QueryResult();
+
+                if (QuerySFDC(query, ref queryResult))
+                {
+                    Contact contact = (Contact)queryResult.records.FirstOrDefault();
+
+                    for (int i = 1; i <= 6; i++)
+                    {
+                        if (i == (int)FundType.BLUBucks)
+                        {
+                            CustomerFund customerFund = GetCustomerFund(customerID, i, false);
+                            if (customerFund.CustomerID == 0)
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Co_op_budget__c));
+                            else
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Co_op_budget__c));
+                        }
+                        else if (i == (int)FundType.DirectMailFunds)
+                        {
+                            CustomerFund customerFund = GetCustomerFund(customerID, i, false);
+                            if (customerFund.CustomerID == 0)
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c));
+                            else
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c));
+                        }
+                        else if (i == (int)FundType.DisplayFunds)
+                        {
+                            CustomerFund customerFund = GetCustomerFund(customerID, i, false);
+                            if (customerFund.CustomerID == 0)
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Display_Funds__c));
+                            else
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Display_Funds__c));
+                        }
+                        else if (i == (int)FundType.LiteratureFunds)
+                        {
+                            CustomerFund customerFund = GetCustomerFund(customerID, i, false);
+                            if (customerFund.CustomerID == 0)
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Literature_Funds__c));
+                            else
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Literature_Funds__c));
+                        }
+                        else if (i == (int)FundType.POPFunds)
+                        {
+                            CustomerFund customerFund = GetCustomerFund(customerID, i, false);
+                            if (customerFund.CustomerID == 0)
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.POP_Funds__c));
+                            else
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.POP_Funds__c));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Get & Set Internal User Fund From SFDC
+        /// </summary>
+        /// <param name="SFDCQueryParam">SFDCQueryParam</param>
+        private static void GetSetInternalUserFundFromSFDC(int customerID, string SFDCQueryParam)
+        {
+            try
+            {
+                Regex rgx = new Regex(@"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$");
+                string query = string.Empty;
+
+                if (rgx.IsMatch(SFDCQueryParam))
+                    query = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
+                else
+                    query = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
+
+                QueryResult queryResult = new QueryResult();
+                if (QuerySFDC(query, ref queryResult))
+                {
+                    Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
+                    CustomerFund customerFund = GetCustomerFund(customerID, (int)FundType.SOFFunds, false);
+                    if (customerFund.CustomerID == 0)
+                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c));
+                    else
+                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c));
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Validate if Dealer User
+        /// </summary>
+        /// <param name="customerLevelID">customerLevelID</param>        
+        private static bool IsDealerUser(int customerLevelID)
+        {
+            if (customerLevelID == (int)UserType.BLUAUTHORIZED ||
+                customerLevelID == (int)UserType.BLUELITE ||
+                customerLevelID == (int)UserType.BLUPREMIER ||
+                customerLevelID == (int)UserType.BLUUNLIMITED ||
+                customerLevelID == (int)UserType.HOMEDEPOT ||
+                customerLevelID == (int)UserType.LOWES ||
+                customerLevelID == (int)UserType.MENARDS ||
+                customerLevelID == (int)UserType.POTENTIAL)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Validate if Internal User
+        /// </summary>
+        /// <param name="customerLevelID">customerLevelID</param>
+        private static bool IsInternalUser(int customerLevelID)
+        {
+            if (customerLevelID == (int)UserType.INTERNAL ||
+                customerLevelID == (int)UserType.SALESREPS)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Add Customer Fund
+        /// </summary>
+        /// <param name="customerID">CustomerID</param>
+        /// <param name="fundID">FundID</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="amountUsed">AmountUsed</param>
+        private static void AddCustomerFundAmount(int customerID, int fundID, decimal amount)
         {
             try
             {
                 using (var conn = DB.dbConn())
                 {
                     conn.Open();
-                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundUpdate", conn))
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundInsert", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
-                        cmd.Parameters.AddWithValue("@FundID", FundID);
-                        cmd.Parameters.AddWithValue("@Amount", Amount);
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                        cmd.Parameters.AddWithValue("@FundID", fundID);
+                        cmd.Parameters.AddWithValue("@Amount", amount);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -584,6 +827,172 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
+        }
+
+        /// <summary>
+        /// Update Customer Fund Amount
+        /// </summary>
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        private static void UpdateCustomerFundAmount(List<CustomerFund> lstCustomerFund)
+        {
+            if (lstCustomerFund == null || lstCustomerFund.Count == 0)
+                return;
+
+            foreach (CustomerFund customerFund in lstCustomerFund)
+                UpdateCustomerFundAmount(customerFund.CustomerID, customerFund.FundID, customerFund.Amount);
+        }
+
+        /// <summary>
+        /// Update Customer Fund Amount By CustomerID & FundID
+        /// </summary>
+        /// <param name="CustomerID">CustomerID</param>
+        /// <param name="FundID">FundID</param>
+        /// <param name="Amount">Amount</param>
+        private static void UpdateCustomerFundAmount(int customerID, int fundID, decimal amount)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundUpdateAmount", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                        cmd.Parameters.AddWithValue("@FundID", fundID);
+                        cmd.Parameters.AddWithValue("@Amount", amount);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Update Customer Fund AmountUsed
+        /// </summary>
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        public static void UpdateCustomerFundAmountUsed(List<CustomerFund> lstCustomerFund)
+        {
+            if (lstCustomerFund == null || lstCustomerFund.Count == 0)
+                return;
+
+            foreach (CustomerFund customerFund in lstCustomerFund)
+                UpdateCustomerFundAmountUsed(customerFund.CustomerID, customerFund.FundID, customerFund.AmountUsed);
+        }
+
+        /// <summary>
+        /// Update Customer Fund AmountUsed By CustomerID & FundID
+        /// </summary>
+        /// <param name="CustomerID">CustomerID</param>
+        /// <param name="FundID">FundID</param>
+        /// <param name="Amount">AmountUsed</param>
+        public static void UpdateCustomerFundAmountUsed(int customerID, int fundID, decimal amountUsed)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_CustomerFundUpdateAmountUsed", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                        cmd.Parameters.AddWithValue("@FundID", fundID);
+                        cmd.Parameters.AddWithValue("@AmountUsed", amountUsed);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Commit Customer Fund After Placing Successful Order to Update SFDC Data.
+        /// </summary>
+        /// <param name="customerID">CustomerID</param>
+        public static bool CommitCustomerFund(int customerID)
+        {
+            if (customerID == 0)
+                return false;
+            else if (!AppLogic.AppConfig("UseSFDCBudget").ToBool())
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    "AppConfig UseSFDCBudget is set to false.", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                return false;
+            }
+
+            bool flag = false;
+            try
+            {
+                List<CustomerFund> lstCustomerFund = GetCustomerFund(customerID, true);
+
+                if (!ValidateCustomerFund(lstCustomerFund))
+                {
+                    flag = false;
+                }
+                else
+                {
+                    lstCustomerFund = CalculateCustomerFundAmount(lstCustomerFund);
+                    UpdateCustomerFundToSFDC(lstCustomerFund);
+                    UpdateCustomerFundAmount(lstCustomerFund);
+                    UpdateCustomerFundAmountUsed(lstCustomerFund);
+
+                    flag = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                  ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                  MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            return flag;
+        }
+
+        /// <summary>
+        /// Validate Customer Fund if Amount is Less than AmountUsed
+        /// </summary>
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        /// <returns>Status</returns>
+        public static bool ValidateCustomerFund(List<CustomerFund> lstCustomerFund)
+        {
+            if (lstCustomerFund.Count == 0 || lstCustomerFund.Where(x => x.AmountAvailable < 0).Count() > 0)
+                return false;
+            else
+                return true;
+        }
+
+        /// <summary>
+        /// Validate Customer Fund By CustomerID
+        /// </summary>
+        /// <param name="customerID">CustomerID</param>
+        /// <returns>Status</returns>
+        public static bool ValidateCustomerFund(int customerID)
+        {
+            return ValidateCustomerFund(GetCustomerFund(customerID, false));
+        }
+
+        /// <summary>
+        /// Calculate Customer Fund Amount of List<CustomerFund>
+        /// </summary>
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        /// <returns>Calculated lstCustomerFund</returns>
+        private static List<CustomerFund> CalculateCustomerFundAmount(List<CustomerFund> lstCustomerFund)
+        {
+            lstCustomerFund.ForEach(x => x.Amount = x.Amount - x.AmountUsed);
+            lstCustomerFund.ForEach(x => x.AmountUsed = 0);
+            return lstCustomerFund;
         }
 
         /// <summary>

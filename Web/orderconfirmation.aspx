@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="td-35-percent label-text">
+                              <td class="td-35-percent label-text">
                                     <span class="normal-heading black-color">
                                         <asp:Label ID="lblPaymentCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.payment %>' />
                                     </span>

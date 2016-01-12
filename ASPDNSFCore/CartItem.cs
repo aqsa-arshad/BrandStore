@@ -95,6 +95,10 @@ namespace AspDotNetStorefrontCore
         private Decimal m_CategoryFundUsed;
         private Decimal m_pricewithBluBuksUsed;
         private Decimal m_pricewithCategoryFundUsed;
+        private int m_FundID;
+        private int m_ProductCategory;
+        private Decimal m_BluBucksPercentageUsed;
+
 
 
 
@@ -204,6 +208,9 @@ namespace AspDotNetStorefrontCore
            m_CategoryFundUsed=ci.CategoryFundUsed;
            m_pricewithBluBuksUsed = ci.pricewithBluBuksUsed;
            m_pricewithCategoryFundUsed = ci.pricewithategoryFundUsed;
+           m_FundID = ci.FundID;
+           m_ProductCategory=ci.ProductCategoryID;
+           m_BluBucksPercentageUsed = ci.BluBucksPercentageUsed;
         }
 
         #endregion
@@ -283,6 +290,24 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_CategoryFundUsed; }
             set { m_CategoryFundUsed = value; }
+        }
+
+        public Decimal BluBucksPercentageUsed
+        {
+            get { return m_BluBucksPercentageUsed; }
+            set { m_BluBucksPercentageUsed = value; }
+        }
+
+        public int FundID
+        {
+            get { return m_FundID; }
+            set { m_FundID = value; }
+        }
+
+        public int ProductCategoryID
+        {
+            get { return m_ProductCategory; }
+            set { m_ProductCategory = value; }
         }
 
         /// <summary>
