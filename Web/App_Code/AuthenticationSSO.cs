@@ -769,7 +769,7 @@ namespace AspDotNetStorefront
         /// Validate if Dealer User
         /// </summary>
         /// <param name="customerLevelID">customerLevelID</param>        
-        private static bool IsDealerUser(int customerLevelID)
+        public static bool IsDealerUser(int customerLevelID)
         {
             if (customerLevelID == (int)UserType.BLUAUTHORIZED ||
                 customerLevelID == (int)UserType.BLUELITE ||
@@ -788,7 +788,7 @@ namespace AspDotNetStorefront
         /// Validate if Internal User
         /// </summary>
         /// <param name="customerLevelID">customerLevelID</param>
-        private static bool IsInternalUser(int customerLevelID)
+        public static bool IsInternalUser(int customerLevelID)
         {
             if (customerLevelID == (int)UserType.INTERNAL ||
                 customerLevelID == (int)UserType.SALESREPS)

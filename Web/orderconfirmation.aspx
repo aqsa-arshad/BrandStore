@@ -45,7 +45,6 @@
                                 <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
                                 <asp:HiddenField ID="hfIsDownload" runat="server" Value='<%# Eval("IsDownload") %>' />
                                 <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
-                                <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                 <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                 <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
                                 <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
@@ -67,9 +66,9 @@
                                             <span>
                                                 <asp:Label ID="lblProductSKU" runat="server" />
                                             </span>
-                                            <p>
-                                                <asp:Label ID="lblDescription" runat="server"></asp:Label>
-                                            </p>
+                                            <div class="shopping-cart-fix">
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>                                            
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
