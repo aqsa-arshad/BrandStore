@@ -5964,11 +5964,17 @@ table.order-detail tbody tr td {
 .side-bar .blu-bucks {
   margin-bottom: 10px;
 }
-.side-bar .blu-bucks p {
-  border-bottom: solid 1px #1d446b;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+.side-bar .blu-bucks .blu-collapse-link {
+      border-top: solid 1px #1d446b;
+    padding-top: 8px;
+    margin-top: 8px;
+    display: block;
 }
+.well {
+    background: none;
+    box-shadow: none;
+}
+
 .login-box h4 {
   text-align: center;
   font-size: 18px;

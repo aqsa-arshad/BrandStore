@@ -28,8 +28,12 @@ public partial class controls_MarketingServicesDetailControl : System.Web.UI.Use
                     results.Append(pSummary );                   
                 }
             }
-        }        
-        results.Append("<button id=\"btnShopMarketing\" class=\"btn btn-md btn-primary\" type=\"button\">Shop Marketing Services</button >");        
+        }
+        results.Append("<div class=\"row\">");
+        results.Append("<div class=\"col-md-6\">");
+        results.Append("<button id=\"btnShopMarketing\" class=\"btn btn-md btn-block btn-primary tablet-btn\" type=\"button\">Shop Marketing Services</button >");
+        results.Append("</div>");
+        results.Append("</div>");
         ContentBox.InnerHtml = results.ToString();
     }
 }
