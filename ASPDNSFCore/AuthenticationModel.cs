@@ -110,6 +110,7 @@ namespace AspDotNetStorefrontCore
         public int FundID { get; set; }
         public string FundName { get; set; }
         public decimal Amount { get; set; }
+        public decimal AmountUsed { get; set; }
     }
 
     public class BudgetPercentageRatio

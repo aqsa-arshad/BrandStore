@@ -366,7 +366,7 @@ namespace AspDotNetStorefront
                             Ba.Address1 = String.IsNullOrEmpty(reader2["BillingAddress1"].ToString()) ? String.Empty : reader2["BillingAddress1"].ToString();
                             Ba.Address2 = String.IsNullOrEmpty(reader2["BillingAddress2"].ToString()) ? String.Empty : reader2["BillingAddress2"].ToString() + " " + (String.IsNullOrEmpty(reader2["BillingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
                             Ba.City = String.IsNullOrEmpty(reader2["BillingCity"].ToString()) ? String.Empty : reader2["BillingCity"].ToString();
-                            Ba.Locale = String.IsNullOrEmpty(reader2["BillingState"].ToString()) ? String.Empty : reader2["BillingState"].ToString();
+                            Ba.Locale = String.IsNullOrEmpty(reader2["BillingStateName"].ToString()) ? String.Empty : reader2["BillingStateName"].ToString();
                             Ba.Country = String.IsNullOrEmpty(reader2["BillingCountryCode"].ToString()) ? String.Empty : reader2["BillingCountryCode"].ToString();
                             Ba.PostalCode = String.IsNullOrEmpty(reader2["BillingZip"].ToString()) ? String.Empty : reader2["BillingZip"].ToString();
 
@@ -378,7 +378,7 @@ namespace AspDotNetStorefront
                             Sa.Address1 = String.IsNullOrEmpty(reader2["ShippingAddress1"].ToString()) ? String.Empty : reader2["ShippingAddress1"].ToString();
                             Sa.Address2 = String.IsNullOrEmpty(reader2["ShippingAddress2"].ToString()) ? String.Empty : reader2["ShippingAddress2"].ToString() + " " + (String.IsNullOrEmpty(reader2["ShippingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
                             Sa.City = String.IsNullOrEmpty(reader2["ShippingCity"].ToString()) ? String.Empty : reader2["ShippingCity"].ToString();
-                            Sa.Locale = String.IsNullOrEmpty(reader2["ShippingState"].ToString()) ? String.Empty : reader2["ShippingState"].ToString();
+                            Sa.Locale = String.IsNullOrEmpty(reader2["ShippingStateName"].ToString()) ? String.Empty : reader2["ShippingStateName"].ToString();
                             Sa.Country = String.IsNullOrEmpty(reader2["ShippingCountryCode"].ToString()) ? String.Empty : reader2["ShippingCountryCode"].ToString();
                             Sa.PostalCode = String.IsNullOrEmpty(reader2["ShippingZip"].ToString()) ? String.Empty : reader2["ShippingZip"].ToString();
 
