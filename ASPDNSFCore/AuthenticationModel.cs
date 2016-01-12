@@ -111,6 +111,13 @@ namespace AspDotNetStorefrontCore
         public string FundName { get; set; }
         public decimal Amount { get; set; }
         public decimal AmountUsed { get; set; }
+        public decimal AmountAvailable
+        {
+            get
+            { 
+                return Amount - AmountUsed; 
+            }
+        }
     }
 
     public class BudgetPercentageRatio
@@ -119,6 +126,6 @@ namespace AspDotNetStorefrontCore
         public int CustomerLevelID { get; set; }
         public int CategoryID { get; set; }
         public int BudgetPercentageValue { get; set; }
-        public bool IsActive{ get; set; }
+        public bool IsActive { get; set; }
     }
 }

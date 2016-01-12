@@ -58,7 +58,7 @@ namespace AspDotNetStorefront
                     //// 1. Get Funds
                     //List<CustomerFund> lstCustomerFund = GetCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID, false);
                     //// 2. Update Amount Used
-                    //lstCustomerFund.ForEach(x => x.AmountUsed = 200);
+                    //lstCustomerFund.ForEach(x => x.AmountUsed = 3000);
                     //// 3. Update Customer Fund AmountUsed
                     //UpdateCustomerFundAmountUsed(lstCustomerFund);
                     //// 4. CommitCustomerFund
@@ -833,7 +833,7 @@ namespace AspDotNetStorefront
         /// Update Customer Fund Amount
         /// </summary>
         /// <param name="lstCustomerFund">lstCustomerFund</param>
-        public static void UpdateCustomerFundAmount(List<CustomerFund> lstCustomerFund)
+        private static void UpdateCustomerFundAmount(List<CustomerFund> lstCustomerFund)
         {
             if (lstCustomerFund == null || lstCustomerFund.Count == 0)
                 return;
@@ -938,8 +938,8 @@ namespace AspDotNetStorefront
                 List<CustomerFund> lstCustomerFund = GetCustomerFund(customerID, true);
 
                 if (!ValidateCustomerFund(lstCustomerFund))
-                { 
-                    flag = false; 
+                {
+                    flag = false;
                 }
                 else
                 {
@@ -948,7 +948,7 @@ namespace AspDotNetStorefront
                     UpdateCustomerFundAmount(lstCustomerFund);
                     UpdateCustomerFundAmountUsed(lstCustomerFund);
 
-                    flag = true; 
+                    flag = true;
                 }
             }
             catch (Exception ex)
@@ -967,23 +967,20 @@ namespace AspDotNetStorefront
         /// <returns>Status</returns>
         public static bool ValidateCustomerFund(List<CustomerFund> lstCustomerFund)
         {
-            bool flag = true;
-            if (lstCustomerFund.Count > 0)
-            {
-                foreach (CustomerFund customerFund in lstCustomerFund)
-                {
-                    if ((customerFund.Amount - customerFund.AmountUsed) < 0)
-                    {
-                        flag = false;
-                        break;
-                    }
-                }
-            }
+            if (lstCustomerFund.Count == 0 || lstCustomerFund.Where(x => x.AmountAvailable < 0).Count() > 0)
+                return false;
             else
-            {
-                flag = false;
-            }
-            return flag;
+                return true;
+        }
+
+        /// <summary>
+        /// Validate Customer Fund By CustomerID
+        /// </summary>
+        /// <param name="customerID">CustomerID</param>
+        /// <returns>Status</returns>
+        public static bool ValidateCustomerFund(int customerID)
+        {
+            return ValidateCustomerFund(GetCustomerFund(customerID, false));
         }
 
         /// <summary>
