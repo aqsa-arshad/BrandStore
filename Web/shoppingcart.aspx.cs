@@ -269,8 +269,7 @@ namespace AspDotNetStorefront
 
                     BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
                                        
-                }
-          
+                }          
                 AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);         
                 AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);         
                 AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DirectMailFunds), DirectMailFundsUsedTotal);          
@@ -326,15 +325,33 @@ namespace AspDotNetStorefront
         }
         void btnCheckOutNowTop_Click(object sender, EventArgs e)
         {
-         //   UpdateCartQuantity();
-            ProcessCart(true, false, false);
-            InitializeShippingAndEstimateControl();
+           string errormessage=AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
+            string script="alert('" +  errormessage + "')";
+            if (AuthenticationSSO.ValidateCustomerFund(ThisCustomer.CustomerID))
+            {
+                ProcessCart(true, false, false);
+                InitializeShippingAndEstimateControl();
+            }
+            else
+            {
+                System.Web.UI.ClientScriptManager cs = this.ClientScript;
+                cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);
+            }
         }
         void btnCheckOutNowBottom_Click(object sender, EventArgs e)
         {
-          //  UpdateCartQuantity();
-            ProcessCart(true, false, false);
-            InitializeShippingAndEstimateControl();
+            string errormessage = AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
+            string script="alert('" +  errormessage + "')";           
+            if (AuthenticationSSO.ValidateCustomerFund(ThisCustomer.CustomerID))
+            {
+                ProcessCart(true, false, false);
+                InitializeShippingAndEstimateControl();
+            }
+            else
+            {
+                System.Web.UI.ClientScriptManager cs = this.ClientScript;
+                cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);
+            }
         }
         void btnInternationalCheckOutNowTop_Click(object sender, EventArgs e)
         {
