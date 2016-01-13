@@ -5522,21 +5522,13 @@ a:hover.mb-login-btn {
 .checkout-two-fields .form-control {
   display: inline-block;
 }
-.checkout-two-fields .form-control:nth-last-child(1) {
+.checkout-two-fields .form-control {
   width: 49%;
 }
 @media screen and (min-width: 768px) {
-  .checkout-two-fields .form-control:nth-last-child(1) {
-    width: 40%;
-    margin-left: 5px;
-  }
-}
-.checkout-two-fields .form-control:nth-last-child(2) {
-  width: 49%;
-}
-@media screen and (min-width: 768px) {
-  .checkout-two-fields .form-control:nth-last-child(2) {
-    width: 25%;
+  .checkout-two-fields .form-control {
+    width: 30%;
+    margin-right: 5px;
   }
 }
 .disabled-pageArea [disabled] {
@@ -6023,17 +6015,11 @@ table.order-detail tbody tr td {
 .side-bar .blu-bucks {
   margin-bottom: 10px;
 }
-.side-bar .blu-bucks .blu-collapse-link {
-      border-top: solid 1px #1d446b;
-    padding-top: 8px;
-    margin-top: 8px;
-    display: block;
+.side-bar .blu-bucks p {
+  border-bottom: solid 1px #1d446b;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
 }
-.well {
-    background: none;
-    box-shadow: none;
-}
-
 .login-box h4 {
   text-align: center;
   font-size: 18px;
