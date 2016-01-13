@@ -421,7 +421,7 @@ namespace AspDotNetStorefront
                     profile.firstName = user.FirstName;
                     profile.lastName = user.LastName;
                     profile.userType = UserType.SALESREPS.ToString();
-                    profile.sfid = user.Sales_Rep_ID__c;
+                    profile.sfid = user.Id;
                     flag = true;
                 }
                 else
