@@ -3,5 +3,5 @@
 <div class="row">  
 </div>
 <p>View your dealers’ activity.</p>
-<asp:Button ID="btnViewReport" runat="server" CssClass="btn btn-md btn-primary btn-block" OnClientClick="return false;" Text="VIEW MY REPORTS" />
+<asp:Button ID="btnViewReport" runat="server" CssClass="btn btn-md btn-primary btn-block tablet-btn" OnClientClick="return false;" Text="VIEW MY REPORTS" />
 

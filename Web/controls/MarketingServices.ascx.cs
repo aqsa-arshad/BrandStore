@@ -31,7 +31,7 @@ public partial class controls_MarketingServices : System.Web.UI.UserControl
                 }
             }
         }
-        results.Append("<button id=\"btnShowMarketingServicesDetail\" class=\"btn btn-md btn-primary btn-block\" type=\"button\">More</button>");
+        results.Append("<button id=\"btnShowMarketingServicesDetail\" class=\"btn btn-md btn-primary btn-block tablet-btn\" type=\"button\">More</button>");
         MarketingServiceSection.InnerHtml = results.ToString();
     }
 }
