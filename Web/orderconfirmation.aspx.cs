@@ -303,6 +303,8 @@ namespace AspDotNetStorefront
                         int index = 0;
                         bool hasproducts = false;
                         string shippingMethodCode = string.Empty;
+                        string shippingMethod = string.Empty;
+                        
                         while (reader.Read())
                         {
                             if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
@@ -319,13 +321,14 @@ namespace AspDotNetStorefront
                                 index++;
                                 hasproducts = true;
                                 shippingMethodCode = reader["ShippingMethodCode"].ToString();
+                                shippingMethod = reader["ShippingMethod"].ToString();
                             }
                         }
 
                         // call the service after verification if the shopping cart has RRD Product & UseFulfillmentAPI flag is true
                         if (hasproducts && AppLogic.AppConfig("UseFulfillmentAPI").ToBool())
                         {
-                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting), shippingMethodCode);
+                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting), shippingMethodCode, shippingMethod);
                             bool isok = rs.status.Equals(0) ? false : true;
                         }
                     }

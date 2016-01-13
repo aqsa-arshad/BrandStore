@@ -968,6 +968,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -1433,12 +1434,14 @@
               <xsd:element minOccurs="0" name="ExpirationDate" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="FeedItem" nillable="true" type="ens:FeedItem" />
               <xsd:element minOccurs="0" name="FeedItemId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="IsArchived" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="Parent" nillable="true" type="ens:CollaborationGroup" />
               <xsd:element minOccurs="0" name="ParentId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="SendEmails" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="UserRecordAccess" nillable="true" type="ens:UserRecordAccess" />
             </xsd:sequence>
@@ -1596,6 +1599,25 @@
           </xsd:extension>
         </xsd:complexContent>
       </xsd:complexType>
+      <xsd:complexType name="ApexTestSuite">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="ApexClassIds" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="ApexClassJunctions" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="TestSuiteName" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
       <xsd:complexType name="ApexTrigger">
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
@@ -1732,6 +1754,8 @@
               <xsd:element minOccurs="0" name="Notes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="NotesAndAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="OpenActivities" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Parent" nillable="true" type="ens:Asset" />
+              <xsd:element minOccurs="0" name="ParentId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="Price" nillable="true" type="xsd:double" />
               <xsd:element minOccurs="0" name="ProcessInstances" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="ProcessSteps" nillable="true" type="tns:QueryResult" />
@@ -1739,6 +1763,8 @@
               <xsd:element minOccurs="0" name="Product2Id" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="PurchaseDate" nillable="true" type="xsd:date" />
               <xsd:element minOccurs="0" name="Quantity" nillable="true" type="xsd:double" />
+              <xsd:element minOccurs="0" name="RootAsset" nillable="true" type="ens:Asset" />
+              <xsd:element minOccurs="0" name="RootAssetId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="SerialNumber" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
@@ -1765,6 +1791,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -2012,6 +2039,7 @@
               <xsd:element minOccurs="0" name="ConsumerKey" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="ConsumerSecret" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="CustomMetadataTypeRecord" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="DefaultScopes" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="DeveloperName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="ErrorUrl" nillable="true" type="xsd:string" />
@@ -2023,6 +2051,7 @@
               <xsd:element minOccurs="0" name="OptionsIncludeOrgIdInId" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="OptionsSendAccessTokenInHeader" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="OptionsSendClientCredentialsInHeader" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PluginId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="ProviderType" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="RegistrationHandlerId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="TokenUrl" nillable="true" type="xsd:string" />
@@ -2126,6 +2155,44 @@
               <xsd:element minOccurs="0" name="Tasks" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="TopicAssignments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="UserRecordAccess" nillable="true" type="ens:UserRecordAccess" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BackgroundOperation">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Error" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ExecutionGroup" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ExpiresAt" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FinishedAt" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="GroupLeader" nillable="true" type="ens:BackgroundOperation" />
+              <xsd:element minOccurs="0" name="GroupLeaderId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="MergedOperations" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="NumFollowers" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="ParentKey" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ProcessAfter" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="RetryBackoff" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="RetryCount" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="RetryLimit" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="SequenceGroup" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SequenceNumber" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="StartedAt" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SubmittedAt" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Timeout" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="UserRecordAccess" nillable="true" type="ens:UserRecordAccess" />
+              <xsd:element minOccurs="0" name="WorkerUri" nillable="true" type="xsd:string" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -2565,6 +2632,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -2591,22 +2659,45 @@
             <xsd:sequence>
               <xsd:element minOccurs="0" name="Campaign" nillable="true" type="ens:Campaign" />
               <xsd:element minOccurs="0" name="CampaignId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="CompanyOrAccount" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Contact" nillable="true" type="ens:Contact" />
               <xsd:element minOccurs="0" name="ContactId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="Country" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="DoNotCall" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="Email" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Fax" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="FirstRespondedDate" nillable="true" type="xsd:date" />
+              <xsd:element minOccurs="0" name="HasOptedOutOfEmail" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="HasOptedOutOfFax" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="HasResponded" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Lead" nillable="true" type="ens:Lead" />
               <xsd:element minOccurs="0" name="LeadId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LeadOrContactId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LeadOrContactOwner" nillable="true" type="ens:Name" />
+              <xsd:element minOccurs="0" name="LeadOrContactOwnerId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LeadSource" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="MobilePhone" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Phone" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="PostalCode" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Salutation" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="State" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Street" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -2819,6 +2910,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -2895,6 +2987,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -3186,6 +3279,7 @@
               <xsd:element minOccurs="0" name="Announcement" nillable="true" type="ens:Announcement" />
               <xsd:element minOccurs="0" name="AnnouncementId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="AttachedContentDocuments" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="BannerPhotoUrl" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CanHaveGuests" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="CollaborationGroupRecords" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="CollaborationType" nillable="true" type="xsd:string" />
@@ -3204,6 +3298,7 @@
               <xsd:element minOccurs="0" name="InformationTitle" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="IsArchived" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="IsAutoArchiveDisabled" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="IsBroadcast" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="LastFeedModifiedDate" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
@@ -3234,6 +3329,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -3740,6 +3836,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -3922,6 +4019,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -4227,6 +4325,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -4268,6 +4367,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -4625,6 +4725,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -4659,6 +4760,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -4692,6 +4794,20 @@
               <xsd:element minOccurs="0" name="TagDefinition" nillable="true" type="ens:TagDefinition" />
               <xsd:element minOccurs="0" name="TagDefinitionId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="DataStatistics">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="ExternalId" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="StatType" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="StatValue" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="User" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="UserId" nillable="true" type="tns:ID" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -5707,6 +5823,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -5969,7 +6086,6 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
-              <xsd:element minOccurs="0" name="ApiKey" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -5987,6 +6103,7 @@
               <xsd:element minOccurs="0" name="MasterLabel" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="NamespacePrefix" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="PrincipalType" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Protocol" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Repository" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SetupEntityAccessItems" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="SmallIcon" nillable="true" type="ens:StaticResource" />
@@ -6017,6 +6134,20 @@
               <xsd:element minOccurs="0" name="User" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="UserId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="Username" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="FeedAttachment">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="FeedEntityId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="RecordId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Value" nillable="true" type="xsd:string" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -6052,14 +6183,10 @@
               <xsd:element minOccurs="0" name="BestCommentId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="Body" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CommentCount" nillable="true" type="xsd:int" />
-              <xsd:element minOccurs="0" name="ContentData" nillable="true" type="xsd:base64Binary" />
-              <xsd:element minOccurs="0" name="ContentDescription" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="ContentFileName" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="ContentSize" nillable="true" type="xsd:int" />
-              <xsd:element minOccurs="0" name="ContentType" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedRevisions" nillable="true" type="tns:QueryResult" />
@@ -6435,6 +6562,19 @@
           </xsd:extension>
         </xsd:complexContent>
       </xsd:complexType>
+      <xsd:complexType name="FlexQueueItem">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="AsyncApexJob" nillable="true" type="ens:AsyncApexJob" />
+              <xsd:element minOccurs="0" name="AsyncApexJobId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="FlexQueueItemId" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="JobPosition" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="JobType" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
       <xsd:complexType name="FlowInterview">
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
@@ -6651,19 +6791,6 @@
               <xsd:element minOccurs="0" name="Tags" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="TopicAssignments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="UserRecordAccess" nillable="true" type="ens:UserRecordAccess" />
-            </xsd:sequence>
-          </xsd:extension>
-        </xsd:complexContent>
-      </xsd:complexType>
-      <xsd:complexType name="HashtagDefinition">
-        <xsd:complexContent mixed="false">
-          <xsd:extension base="ens:sObject">
-            <xsd:sequence>
-              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
-              <xsd:element minOccurs="0" name="HashtagCount" nillable="true" type="xsd:int" />
-              <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="NameNorm" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -7374,6 +7501,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -7433,6 +7561,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -8343,32 +8472,6 @@
           </xsd:extension>
         </xsd:complexContent>
       </xsd:complexType>
-      <xsd:complexType name="MobileDeviceRegistrar">
-        <xsd:complexContent mixed="false">
-          <xsd:extension base="ens:sObject">
-            <xsd:sequence>
-              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
-              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
-              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
-              <xsd:element minOccurs="0" name="DeveloperName" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
-              <xsd:element minOccurs="0" name="Language" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
-              <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
-              <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
-              <xsd:element minOccurs="0" name="MasterLabel" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="MdmProviderApiAccessToken" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="MdmProviderApiPassword" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="MdmProviderApiUsername" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="MdmProviderEnrollEndpoint" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="MdmProviderPushAppEndpoint" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="NamespacePrefix" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="Provider" nillable="true" type="xsd:string" />
-              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
-            </xsd:sequence>
-          </xsd:extension>
-        </xsd:complexContent>
-      </xsd:complexType>
       <xsd:complexType name="Name">
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
@@ -8941,6 +9044,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -9076,6 +9180,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -9131,6 +9236,7 @@
               <xsd:element minOccurs="0" name="PhotoUrl" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="TeamMemberRole" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="User" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="UserId" nillable="true" type="tns:ID" />
             </xsd:sequence>
@@ -9378,6 +9484,7 @@
               <xsd:element minOccurs="0" name="MonthlyPageViewsEntitlement" nillable="true" type="xsd:int" />
               <xsd:element minOccurs="0" name="MonthlyPageViewsUsed" nillable="true" type="xsd:int" />
               <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="NamespacePrefix" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="OrganizationType" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Phone" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="PostalCode" nillable="true" type="xsd:string" />
@@ -9385,6 +9492,7 @@
               <xsd:element minOccurs="0" name="PrimaryContact" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="ReceivesAdminInfoEmails" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="ReceivesInfoEmails" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="SignupCountryIsoCode" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="State" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Street" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
@@ -9537,6 +9645,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -9645,6 +9754,7 @@
               <xsd:element minOccurs="0" name="PermissionsForceTwoFactor" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsIdentityConnect" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsIdentityEnabled" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PermissionsImportCustomObjects" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsImportLeads" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsImportPersonal" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsInboundMigrationToolsUser" nillable="true" type="xsd:boolean" />
@@ -9677,12 +9787,14 @@
               <xsd:element minOccurs="0" name="PermissionsManageMobile" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManagePasswordPolicies" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageProfilesPermissionsets" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PermissionsManagePvtRptsAndDashbds" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageRemoteAccess" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageReportsInPubFolders" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageRoles" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageSelfService" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageSharing" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageSolutions" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PermissionsManageSynonyms" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageTwoFactor" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageUnlistedGroups" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageUsers" nillable="true" type="xsd:boolean" />
@@ -9816,6 +9928,7 @@
               <xsd:element minOccurs="0" name="MaximumPermissionsForceTwoFactor" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsIdentityConnect" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsIdentityEnabled" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="MaximumPermissionsImportCustomObjects" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsImportLeads" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsImportPersonal" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsInboundMigrationToolsUser" nillable="true" type="xsd:boolean" />
@@ -9848,12 +9961,14 @@
               <xsd:element minOccurs="0" name="MaximumPermissionsManageMobile" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManagePasswordPolicies" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageProfilesPermissionsets" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="MaximumPermissionsManagePvtRptsAndDashbds" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageRemoteAccess" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageReportsInPubFolders" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageRoles" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageSelfService" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageSharing" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageSolutions" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="MaximumPermissionsManageSynonyms" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageTwoFactor" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageUnlistedGroups" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="MaximumPermissionsManageUsers" nillable="true" type="xsd:boolean" />
@@ -10091,6 +10206,7 @@
             <xsd:sequence>
               <xsd:element minOccurs="0" name="AllocatedCapacity" nillable="true" type="xsd:int" />
               <xsd:element minOccurs="0" name="AllocatedPurchasedCapacity" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="AllocatedTrialCapacity" nillable="true" type="xsd:int" />
               <xsd:element minOccurs="0" name="CacheType" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
@@ -10653,6 +10769,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -10844,6 +10961,7 @@
               <xsd:element minOccurs="0" name="PermissionsForceTwoFactor" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsIdentityConnect" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsIdentityEnabled" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PermissionsImportCustomObjects" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsImportLeads" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsImportPersonal" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsInboundMigrationToolsUser" nillable="true" type="xsd:boolean" />
@@ -10876,12 +10994,14 @@
               <xsd:element minOccurs="0" name="PermissionsManageMobile" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManagePasswordPolicies" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageProfilesPermissionsets" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PermissionsManagePvtRptsAndDashbds" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageRemoteAccess" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageReportsInPubFolders" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageRoles" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageSelfService" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageSharing" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageSolutions" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="PermissionsManageSynonyms" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageTwoFactor" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageUnlistedGroups" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="PermissionsManageUsers" nillable="true" type="xsd:boolean" />
@@ -10989,6 +11109,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -11274,6 +11395,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -12150,6 +12272,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -13960,6 +14083,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -14058,6 +14182,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -14099,6 +14224,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -14145,6 +14271,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -15044,6 +15171,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -15068,6 +15196,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -15106,6 +15235,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
             <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApiName" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
@@ -15162,6 +15292,26 @@
               <xsd:element minOccurs="0" name="StartDate" nillable="true" type="xsd:date" />
               <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="UsageDate" nillable="true" type="xsd:dateTime" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="TestSuiteMembership">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="ApexClass" nillable="true" type="ens:ApexClass" />
+              <xsd:element minOccurs="0" name="ApexClassId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="ApexTestSuite" nillable="true" type="ens:ApexTestSuite" />
+              <xsd:element minOccurs="0" name="ApexTestSuiteId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -15234,6 +15384,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -15453,6 +15604,7 @@
               <xsd:element minOccurs="0" name="AttachedContentDocuments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="BW_Notes__c" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="BadgeText" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="BannerPhotoUrl" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Bid_Room_Notifications__r" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="Billing_GL__c" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Billing_Terms__c" nillable="true" type="xsd:string" />
@@ -15498,6 +15650,7 @@
               <xsd:element minOccurs="0" name="GroupMemberships" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="InstalledMobileApps" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="IsActive" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="IsProfilePhotoActive" nillable="true" type="xsd:boolean" />
               <xsd:element minOccurs="0" name="LanguageLocaleKey" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="LastLoginDate" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
@@ -15734,6 +15887,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -16203,6 +16357,38 @@
           </xsd:extension>
         </xsd:complexContent>
       </xsd:complexType>
+      <xsd:complexType name="VerificationHistory">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="Activity" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="EventGroup" nillable="true" type="xsd:int" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="LoginGeo" nillable="true" type="ens:LoginGeo" />
+              <xsd:element minOccurs="0" name="LoginGeoId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LoginHistory" nillable="true" type="ens:LoginHistory" />
+              <xsd:element minOccurs="0" name="LoginHistoryId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="Policy" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Remarks" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Resource" nillable="true" type="ens:ConnectedApplication" />
+              <xsd:element minOccurs="0" name="ResourceId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="SourceIp" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="User" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="UserId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="VerificationMethod" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="VerificationTime" nillable="true" type="xsd:dateTime" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
       <xsd:complexType name="Vote">
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
@@ -16233,6 +16419,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -16355,6 +16542,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -16564,6 +16752,7 @@
               <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
               <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="FeedAttachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedLikes" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedTrackedChanges" nillable="true" type="tns:QueryResult" />
@@ -18381,6 +18570,12 @@
           <xsd:element name="value" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
+      <xsd:complexType name="NameObjectValuePair">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element maxOccurs="unbounded" name="value" type="xsd:anyType" />
+        </xsd:sequence>
+      </xsd:complexType>
       <xsd:complexType name="GetUpdatedResult">
         <xsd:sequence>
           <xsd:element minOccurs="0" maxOccurs="unbounded" name="ids" type="tns:ID" />
@@ -18540,6 +18735,7 @@
           <xsd:enumeration value="ENVIRONMENT_HUB_MEMBERSHIP_USER_ALREADY_IN_HUB" />
           <xsd:enumeration value="ENVIRONMENT_HUB_MEMBERSHIP_USER_NOT_ORG_ADMIN" />
           <xsd:enumeration value="ERROR_IN_MAILER" />
+          <xsd:enumeration value="EXCHANGE_WEB_SERVICES_URL_INVALID" />
           <xsd:enumeration value="FAILED_ACTIVATION" />
           <xsd:enumeration value="FIELD_CUSTOM_VALIDATION_EXCEPTION" />
           <xsd:enumeration value="FIELD_FILTER_VALIDATION_EXCEPTION" />
@@ -18547,9 +18743,15 @@
           <xsd:enumeration value="FIELD_KEYWORD_LIST_MATCH_LIMIT" />
           <xsd:enumeration value="FIELD_MODERATION_RULE_BLOCK" />
           <xsd:enumeration value="FIELD_NOT_UPDATABLE" />
+          <xsd:enumeration value="FILE_EXTENSION_NOT_ALLOWED" />
+          <xsd:enumeration value="FILE_SIZE_LIMIT_EXCEEDED" />
           <xsd:enumeration value="FILTERED_LOOKUP_LIMIT_EXCEEDED" />
           <xsd:enumeration value="FIND_DUPLICATES_ERROR" />
           <xsd:enumeration value="FUNCTIONALITY_NOT_ENABLED" />
+          <xsd:enumeration value="GMAIL_TRANSPORT_CONNECTION_ERROR" />
+          <xsd:enumeration value="GMAIL_TRANSPORT_PERMISSION_ERROR" />
+          <xsd:enumeration value="GMAIL_TRANSPORT_TOKEN_ERROR" />
+          <xsd:enumeration value="GMAIL_TRANSPORT_UNKNOWN_ERROR" />
           <xsd:enumeration value="HTML_FILE_UPLOAD_NOT_ALLOWED" />
           <xsd:enumeration value="IMAGE_TOO_LARGE" />
           <xsd:enumeration value="INACTIVE_OWNER_OR_USER" />
@@ -18578,6 +18780,7 @@
           <xsd:enumeration value="INVALID_ENTITY_FOR_MATCH_ENGINE_ERROR" />
           <xsd:enumeration value="INVALID_ENTITY_FOR_MATCH_OPERATION_ERROR" />
           <xsd:enumeration value="INVALID_ENVIRONMENT_HUB_MEMBER" />
+          <xsd:enumeration value="INVALID_EVENT_DELIVERY" />
           <xsd:enumeration value="INVALID_EVENT_PUBLICATION" />
           <xsd:enumeration value="INVALID_FIELD" />
           <xsd:enumeration value="INVALID_FIELD_FOR_INSERT_UPDATE" />
@@ -18643,6 +18846,7 @@
           <xsd:enumeration value="MATCH_SERVICE_UNAVAILABLE_ERROR" />
           <xsd:enumeration value="MAXIMUM_CCEMAILS_EXCEEDED" />
           <xsd:enumeration value="MAXIMUM_DASHBOARD_COMPONENTS_EXCEEDED" />
+          <xsd:enumeration value="MAXIMUM_HIERARCHY_CHILDREN_REACHED" />
           <xsd:enumeration value="MAXIMUM_HIERARCHY_LEVELS_REACHED" />
           <xsd:enumeration value="MAXIMUM_SIZE_OF_ATTACHMENT" />
           <xsd:enumeration value="MAXIMUM_SIZE_OF_DOCUMENT" />
@@ -18690,6 +18894,8 @@
           <xsd:enumeration value="PORTAL_NO_ACCESS" />
           <xsd:enumeration value="PORTAL_USER_ALREADY_EXISTS_FOR_CONTACT" />
           <xsd:enumeration value="PRIVATE_CONTACT_ON_ASSET" />
+          <xsd:enumeration value="QA_INVALID_CREATE_FEED_ITEM" />
+          <xsd:enumeration value="QA_INVALID_SUCCESS_MESSAGE" />
           <xsd:enumeration value="QUERY_TIMEOUT" />
           <xsd:enumeration value="RECORD_IN_USE_BY_WORKFLOW" />
           <xsd:enumeration value="REPUTATION_MINIMUM_NUMBER_NOT_REACHED" />
@@ -18720,6 +18926,7 @@
           <xsd:enumeration value="UNAVAILABLE_RECORDTYPE_EXCEPTION" />
           <xsd:enumeration value="UNDELETE_FAILED" />
           <xsd:enumeration value="UNKNOWN_EXCEPTION" />
+          <xsd:enumeration value="UNSAFE_HTML_CONTENT" />
           <xsd:enumeration value="UNSPECIFIED_EMAIL_ADDRESS" />
           <xsd:enumeration value="UNSUPPORTED_APEX_TRIGGER_OPERATON" />
           <xsd:enumeration value="UNVERIFIED_SENDER_ADDRESS" />
@@ -18778,6 +18985,7 @@
           <xsd:element minOccurs="0" maxOccurs="unbounded" name="feedItemIds" nillable="true" type="tns:ID" />
           <xsd:element minOccurs="0" maxOccurs="unbounded" name="ids" nillable="true" type="tns:ID" />
           <xsd:element name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="successMessage" nillable="true" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="QuickActionTemplateResult">
@@ -18963,6 +19171,7 @@
           <xsd:element name="mruEnabled" type="xsd:boolean" />
           <xsd:element name="name" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="unbounded" name="namedLayoutInfos" type="tns:NamedLayoutInfo" />
+          <xsd:element name="networkScopeFieldName" nillable="true" type="xsd:string" />
           <xsd:element name="queryable" type="xsd:boolean" />
           <xsd:element minOccurs="0" maxOccurs="unbounded" name="recordTypeInfos" type="tns:RecordTypeInfo" />
           <xsd:element name="replicateable" type="xsd:boolean" />
@@ -19094,6 +19303,7 @@
       </xsd:complexType>
       <xsd:complexType name="Field">
         <xsd:sequence>
+          <xsd:element name="aggregatable" type="xsd:boolean" />
           <xsd:element name="autoNumber" type="xsd:boolean" />
           <xsd:element name="byteLength" type="xsd:int" />
           <xsd:element name="calculated" type="xsd:boolean" />
@@ -19103,6 +19313,7 @@
           <xsd:element minOccurs="0" name="controllerName" type="xsd:string" />
           <xsd:element name="createable" type="xsd:boolean" />
           <xsd:element name="custom" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="defaultValue" type="xsd:anyType" />
           <xsd:element minOccurs="0" name="defaultValueFormula" type="xsd:string" />
           <xsd:element name="defaultedOnCreate" type="xsd:boolean" />
           <xsd:element minOccurs="0" name="dependentPicklist" type="xsd:boolean" />
@@ -20079,7 +20290,7 @@
         <xsd:complexContent mixed="false">
           <xsd:extension base="tns:SoqlWhereCondition">
             <xsd:sequence>
-              <xsd:element maxOccurs="unbounded" name="conditions" type="tns:SoqlWhereCondition" />
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="conditions" type="tns:SoqlWhereCondition" />
               <xsd:element name="conjunction" type="tns:soqlConjunction" />
             </xsd:sequence>
           </xsd:extension>
@@ -20161,6 +20372,7 @@
       </xsd:complexType>
       <xsd:complexType name="ActionOverride">
         <xsd:sequence>
+          <xsd:element name="formFactor" type="xsd:string" />
           <xsd:element name="isAvailableInTouch" type="xsd:boolean" />
           <xsd:element name="name" type="xsd:string" />
           <xsd:element name="pageId" type="tns:ID" />
@@ -21153,7 +21365,9 @@
           <xsd:enumeration value="CONTENT_HUB_INVALID_OBJECT_TYPE_EXCEPTION" />
           <xsd:enumeration value="CONTENT_HUB_INVALID_PAGE_NUMBER_EXCEPTION" />
           <xsd:enumeration value="CONTENT_HUB_INVALID_PAYLOAD" />
+          <xsd:enumeration value="CONTENT_HUB_INVALID_RENDITION_PAGE_NUMBER_EXCEPTION" />
           <xsd:enumeration value="CONTENT_HUB_ITEM_TYPE_NOT_FOUND_EXCEPTION" />
+          <xsd:enumeration value="CONTENT_HUB_OBJECT_NOT_FOUND_EXCEPTION" />
           <xsd:enumeration value="CONTENT_HUB_OPERATION_NOT_SUPPORTED_EXCEPTION" />
           <xsd:enumeration value="CONTENT_HUB_SECURITY_EXCEPTION" />
           <xsd:enumeration value="CONTENT_HUB_TIMEOUT_EXCEPTION" />
@@ -21162,6 +21376,7 @@
           <xsd:enumeration value="CUSTOM_SETTINGS_LIMIT_EXCEEDED" />
           <xsd:enumeration value="DATACLOUD_API_CLIENT_EXCEPTION" />
           <xsd:enumeration value="DATACLOUD_API_DISABLED_EXCEPTION" />
+          <xsd:enumeration value="DATACLOUD_API_INVALID_QUERY_EXCEPTION" />
           <xsd:enumeration value="DATACLOUD_API_SERVER_BUSY_EXCEPTION" />
           <xsd:enumeration value="DATACLOUD_API_SERVER_EXCEPTION" />
           <xsd:enumeration value="DATACLOUD_API_TIMEOUT_EXCEPTION" />
@@ -21242,6 +21457,7 @@
           <xsd:enumeration value="MALFORMED_SEARCH" />
           <xsd:enumeration value="MISSING_ARGUMENT" />
           <xsd:enumeration value="MISSING_RECORD" />
+          <xsd:enumeration value="MODIFIED" />
           <xsd:enumeration value="MUTUAL_AUTHENTICATION_FAILED" />
           <xsd:enumeration value="NOT_ACCEPTABLE" />
           <xsd:enumeration value="NOT_MODIFIED" />
@@ -21307,7 +21523,9 @@
           <xsd:enumeration value="fns:CONTENT_HUB_INVALID_OBJECT_TYPE_EXCEPTION" />
           <xsd:enumeration value="fns:CONTENT_HUB_INVALID_PAGE_NUMBER_EXCEPTION" />
           <xsd:enumeration value="fns:CONTENT_HUB_INVALID_PAYLOAD" />
+          <xsd:enumeration value="fns:CONTENT_HUB_INVALID_RENDITION_PAGE_NUMBER_EXCEPTION" />
           <xsd:enumeration value="fns:CONTENT_HUB_ITEM_TYPE_NOT_FOUND_EXCEPTION" />
+          <xsd:enumeration value="fns:CONTENT_HUB_OBJECT_NOT_FOUND_EXCEPTION" />
           <xsd:enumeration value="fns:CONTENT_HUB_OPERATION_NOT_SUPPORTED_EXCEPTION" />
           <xsd:enumeration value="fns:CONTENT_HUB_SECURITY_EXCEPTION" />
           <xsd:enumeration value="fns:CONTENT_HUB_TIMEOUT_EXCEPTION" />
@@ -21316,6 +21534,7 @@
           <xsd:enumeration value="fns:CUSTOM_SETTINGS_LIMIT_EXCEEDED" />
           <xsd:enumeration value="fns:DATACLOUD_API_CLIENT_EXCEPTION" />
           <xsd:enumeration value="fns:DATACLOUD_API_DISABLED_EXCEPTION" />
+          <xsd:enumeration value="fns:DATACLOUD_API_INVALID_QUERY_EXCEPTION" />
           <xsd:enumeration value="fns:DATACLOUD_API_SERVER_BUSY_EXCEPTION" />
           <xsd:enumeration value="fns:DATACLOUD_API_SERVER_EXCEPTION" />
           <xsd:enumeration value="fns:DATACLOUD_API_TIMEOUT_EXCEPTION" />
@@ -21396,6 +21615,7 @@
           <xsd:enumeration value="fns:MALFORMED_SEARCH" />
           <xsd:enumeration value="fns:MISSING_ARGUMENT" />
           <xsd:enumeration value="fns:MISSING_RECORD" />
+          <xsd:enumeration value="fns:MODIFIED" />
           <xsd:enumeration value="fns:MUTUAL_AUTHENTICATION_FAILED" />
           <xsd:enumeration value="fns:NOT_ACCEPTABLE" />
           <xsd:enumeration value="fns:NOT_MODIFIED" />
@@ -23271,7 +23491,7 @@
   <service name="SforceService">
     <documentation>Sforce SOAP API</documentation>
     <port name="Soap" binding="tns:SoapBinding">
-      <soap:address location="https://test.salesforce.com/services/Soap/c/35.0/0DFF0000000TYlx" />
+      <soap:address location="https://test.salesforce.com/services/Soap/c/36.0/0DFF0000000TYlx" />
     </port>
   </service>
 </definitions>
