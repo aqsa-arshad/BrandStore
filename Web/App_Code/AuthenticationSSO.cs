@@ -24,7 +24,6 @@ namespace AspDotNetStorefront
     /// </summary>
     public static class AuthenticationSSO
     {
-
         /// <summary>
         /// Initialize Customer Object after OKTA Authentication
         /// </summary>
@@ -758,7 +757,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-
         }
 
         /// <summary>
