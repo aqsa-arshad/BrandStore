@@ -409,7 +409,6 @@
         //End Google tracking code
 
         function ShowControlsForSubDealersLogin() {
-            $("#TrueBlu").hide();
             $(".prelogin").hide();
             $("#PublicHomePageTopic").removeClass("hide-element");
             $("#FeaturedProduct").removeClass("hide-element");
@@ -422,6 +421,7 @@
             $(".hide-element").css("display", "none");
             $(".prelogin").show();  
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
+            $("#TrueBlu").hide();
             $("#headerlogo").attr("href", "home.aspx");
 
         }
