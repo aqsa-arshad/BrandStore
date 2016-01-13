@@ -205,8 +205,8 @@ namespace AspDotNetStorefront
                 InitializePageContent(checkOutType);
                 InitializeShippingAndEstimateControl();
 
-                GetBluBucksAndCategoryFundsForCustomer();
-                SetSessionValue("FireEvent");
+                GetBluBucksAndCategoryFundsForCustomer();                
+                AppLogic.SetAppConfig("FireEvent", "0", 1);
             }
             else
             {
@@ -219,11 +219,11 @@ namespace AspDotNetStorefront
                 btnRequestEstimates.Visible = !cart.IsEmpty();
                 pnlSubTotals.Visible = !cart.IsEmpty();
 
-                String FireEvent = GetSessionValue("FireEvent");
-                if (FireEvent == "1")
+                bool FireEvent = AppLogic.AppConfigBool("FireEvent");
+                if (FireEvent == true)
                 {
                     btnaddtocart_Click(null, null);
-                    SetSessionValue("FireEvent");
+                    AppLogic.SetAppConfig("FireEvent", "0", 1);
                 }
             }
 
@@ -414,11 +414,10 @@ namespace AspDotNetStorefront
        public static void SaveValuesInSession(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid)
        {
            try
-           {           
-              
-            System.Web.HttpContext.Current.Session["ProductCategoryFundUsed"] = ProductCategoryFundUsed;
-            System.Web.HttpContext. Current.Session["BluBucksUsed"] = BluBucksUsed;
-            System.Web.HttpContext.Current.Session["currentrecordid"] = currentrecordid;
+           {    
+               AppLogic.SetAppConfig("ProductCategoryFundUsed", ProductCategoryFundUsed,1);
+               AppLogic.SetAppConfig("BluBucksUsed", BluBucksUsed, 1);
+               AppLogic.SetAppConfig("currentrecordid", currentrecordid, 1);
            }
            catch (Exception ex)
            { 
@@ -430,8 +429,8 @@ namespace AspDotNetStorefront
            public static void Firebtnaddtocartclickevent(String FireEvent)
            {
                try
-               {                  
-                   System.Web.HttpContext.Current.Session["FireEvent"] = FireEvent;
+               {
+                   AppLogic.SetAppConfig("FireEvent", FireEvent, 1);
                }
 
                catch (Exception ex)
@@ -1018,10 +1017,10 @@ namespace AspDotNetStorefront
 
         private void UpdateCurrentItemFundsUsed()
         {
-            String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
-            String BluBucksUsed = GetSessionValue("BluBucksUsed");
-            String currentrecordid = GetSessionValue("currentrecordid");
-
+            String ProductCategoryFundUsed = AppLogic.AppConfig("ProductCategoryFundUsed");
+            String BluBucksUsed = AppLogic.AppConfig("BluBucksUsed");
+            String currentrecordid = AppLogic.AppConfig("currentrecordid");
+            
             cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed));
             SetSessionValue("ProductCategoryFundUsed");
             SetSessionValue("BluBucksUsed");
@@ -1031,7 +1030,7 @@ namespace AspDotNetStorefront
 
         private String GetSessionValue(String ParamName)
         {
-            var value = System.Web.HttpContext.Current.Session[ParamName];
+            var value = AppLogic.GetAppConfig(ParamName);
             if (value != null)
                 return Convert.ToString(value);
             else
@@ -1042,7 +1041,7 @@ namespace AspDotNetStorefront
         {
             try
             {
-                System.Web.HttpContext.Current.Session[ParamName] = "0";
+                AppLogic.SetAppConfig(ParamName,"0");
             }
 
             catch(Exception ex)

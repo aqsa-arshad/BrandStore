@@ -523,7 +523,7 @@
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
 
-                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid);// onSucceed, onError
+                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
 
             });
@@ -569,10 +569,11 @@
 
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
-                        PageMethods.Firebtnaddtocartclickevent("1");//, onSucceed, onError
+                        
+                        PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                     }
                     else {
-                       
+                        
                         $(".lnkUpdateItem").attr("data-toggle", "modal");
                         $(".lnkUpdateItem").attr("data-target", "#myModa2");
                     }
@@ -587,7 +588,7 @@
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
                 }
                 else
-                    PageMethods.Firebtnaddtocartclickevent("1");//, onSucceed, onError
+                PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                 // $("#btnaddtocart").trigger("click");
 
 
@@ -656,7 +657,7 @@
 
                 var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                 var BluBucksUsed = $("#txtBluBuksUsed").val();
-                PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid);//, onSucceed, onError
+                PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);//, onSucceed, onError
             }
 
             function applyFund(newpricetotal, fundamount) {
