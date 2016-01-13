@@ -2,7 +2,7 @@
 <h3 id="WelcomeHeadingAfterUserLogin" runat="server"></h3>
 
 <p class="hideforpublicuser"><asp:Label ID="lblSOF" runat="server" /></p>
-<button class="btn btn-md btn-primary btn-block" type="button" id="btnViewAccountofuser">VIEW MY ACCOUNT</button>
+<button class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccountofuser">VIEW MY ACCOUNT</button>
 
 <script type="text/javascript">
     $(document).ready(function () {      
