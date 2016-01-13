@@ -353,6 +353,7 @@
             $("#headerlogo").attr("href", "default.aspx");
         }
         function ShowControlsForDealerLogin() {
+            $("#TrueBlu").show();
             $("#DealerHomePageTopic").removeClass("hide-element");
             $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
             $("#JWBMarketingServicesControl").removeClass("hide-element");
@@ -360,6 +361,7 @@
             $("#headerlogo").attr("href", "home.aspx");
         }
         function ShowControlsForPotentialLogin() {
+            $("#TrueBlu").hide();
             $("#DealerHomePageTopic").removeClass("hide-element");
             $("#JWBTrueBlueUserInfoControl").removeClass("hide-element");
             $("#JWBMarketingServicesControl").removeClass("hide-element");
@@ -367,6 +369,7 @@
             $("#headerlogo").attr("href", "home.aspx");
         }
         function ShowControlsForSalesRepAndInternalLogin() {
+            $("#TrueBlu").hide();
             $("#InternalHomePageTopic").removeClass("hide-element");
             $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
             //$("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
@@ -377,6 +380,7 @@
 
         }
         function ShowControlsForPublicLogin() {
+            $("#TrueBlu").hide();
             $(".prelogin").hide();
             $("#PublicHomePageTopic").removeClass("hide-element");
             $("#FeaturedProduct").removeClass("hide-element");
@@ -387,8 +391,7 @@
             $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
             //$("#JWBPublicUserAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
-            $(".prelogin").show();
-            $("#TrueBlu").hide();
+            $(".prelogin").show();     
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
             $("#headerlogo").attr("href", "home.aspx");
         }
@@ -406,6 +409,7 @@
         //End Google tracking code
 
         function ShowControlsForSubDealersLogin() {
+            $("#TrueBlu").hide();
             $(".prelogin").hide();
             $("#PublicHomePageTopic").removeClass("hide-element");
             $("#FeaturedProduct").removeClass("hide-element");
@@ -413,12 +417,10 @@
             $(".beforeloginControl").hide();
             // $(".afterloginControl").removeClass("hide-element");//need to keep this line for future use
             $(".prelogin").removeClass("hide-element");
-
             $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
             //$("#JWBPublicUserAfterLoginControl").removeClass("hide-element");
             $(".hide-element").css("display", "none");
-            $(".prelogin").show();
-            $("#TrueBlu").hide();
+            $(".prelogin").show();  
             $(".hideforpublicuser").hide();//hide user info that is not required for public user
             $("#headerlogo").attr("href", "home.aspx");
 

@@ -113,25 +113,6 @@
             </table>
         </div>
 
-        <%--learn more POP UP Start here --%>
-        <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: none">
-            <div class="modal-dialog modal-checkout" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
-                            <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
-                        <p>
-                            <asp:Label runat="server" Text="<%$ Tokens:StringResource, learnMore.aspx.1 %>"></asp:Label>
-                        </p>
-                        <p>
-                            <asp:Label runat="server" Text="<%$ Tokens:StringResource, learnMore.aspx.2 %>"></asp:Label>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--learn more POP UP ends here --%>
-
         <%--Billing Amounts--%>
         <div class="top-row-adjsut">
             <div class="td-40-percent pull-left ">

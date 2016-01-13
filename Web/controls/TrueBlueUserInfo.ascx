@@ -14,9 +14,9 @@
         <asp:Repeater ID="rptCustomerFunds" runat="server">
             <ItemTemplate>
                 <span class="block-text">
-                <asp:Label ID="lblCustomerFundName" runat="server" Text='<%# Eval("FundName") %>'></asp:Label>
-                <asp:Label ID="lblSeprator" runat="server" Text="="></asp:Label>
-                <asp:Label ID="lblCustomerFundAmount" runat="server" Text='<%# String.Format("{0:0.00}", Eval("Amount")) %>'></asp:Label>
+                    <asp:Label ID="lblCustomerFundName" runat="server" Text='<%# Eval("FundName") %>'></asp:Label>
+                    <asp:Label ID="lblSeprator" runat="server" Text="="></asp:Label>
+                    <asp:Label ID="lblCustomerFundAmount" runat="server" Text='<%# String.Format("{0:0.00}", Eval("Amount")) %>'></asp:Label>
                 </span>
             </ItemTemplate>
         </asp:Repeater>
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <a id="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="expandFunds()">Other Credits <span style="font-size:15px">&#709;</span></a>
+    <a id="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="expandFunds()">Other Credits <span style="font-size: 15px">&#709;</span></a>
     <a id="HideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="HideFunds()">Close other credits ^</a>
 </div>
 
@@ -57,6 +57,7 @@
     function expandFunds() {
         $("#ExpandFunds").hide();
         $("#HideFunds").show();
+        $("#collapseExample").addClass("collapse");
     }
     function HideFunds() {
         $("#ExpandFunds").show();
