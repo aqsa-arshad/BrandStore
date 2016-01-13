@@ -325,9 +325,10 @@ namespace AspDotNetStorefront
         }
         void btnCheckOutNowTop_Click(object sender, EventArgs e)
         {
-           string errormessage=AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
+            string errormessage=AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
             string script="alert('" +  errormessage + "')";
-            if (AuthenticationSSO.ValidateCustomerFund(ThisCustomer.CustomerID))
+
+            if (validateuserfunds())
             {
                 ProcessCart(true, false, false);
                 InitializeShippingAndEstimateControl();
@@ -338,11 +339,19 @@ namespace AspDotNetStorefront
                 cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);
             }
         }
+
+        private bool validateuserfunds()
+        {
+            if (AuthenticationSSO.IsDealerUser(ThisCustomer.CustomerLevelID) || AuthenticationSSO.IsInternalUser(ThisCustomer.CustomerLevelID))          
+                return AuthenticationSSO.ValidateCustomerFund(ThisCustomer.CustomerID);           
+            else
+                return true;
+        }
         void btnCheckOutNowBottom_Click(object sender, EventArgs e)
         {
             string errormessage = AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
-            string script="alert('" +  errormessage + "')";           
-            if (AuthenticationSSO.ValidateCustomerFund(ThisCustomer.CustomerID))
+            string script="alert('" +  errormessage + "')";
+            if (validateuserfunds())
             {
                 ProcessCart(true, false, false);
                 InitializeShippingAndEstimateControl();
@@ -401,20 +410,34 @@ namespace AspDotNetStorefront
        {
            UpdateCart();
        }
-           [System.Web.Services.WebMethod]
+           [System.Web.Services.WebMethod(EnableSession=true)]
        public static void SaveValuesInSession(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid)
        {
-           System.Web.HttpContext.Current.Session["ProductCategoryFundUsed"] = ProductCategoryFundUsed;
-           System.Web.HttpContext.Current.Session["BluBucksUsed"] = BluBucksUsed;
-           System.Web.HttpContext.Current.Session["currentrecordid"] = currentrecordid;
-               
-          
+           try
+           {           
+              
+            System.Web.HttpContext.Current.Session["ProductCategoryFundUsed"] = ProductCategoryFundUsed;
+            System.Web.HttpContext. Current.Session["BluBucksUsed"] = BluBucksUsed;
+            System.Web.HttpContext.Current.Session["currentrecordid"] = currentrecordid;
+           }
+           catch (Exception ex)
+           { 
+           
+           }          
        }
 
-           [System.Web.Services.WebMethod]
+           [System.Web.Services.WebMethod(EnableSession = true)]
            public static void Firebtnaddtocartclickevent(String FireEvent)
            {
-               System.Web.HttpContext.Current.Session["FireEvent"] = FireEvent;              
+               try
+               {                  
+                   System.Web.HttpContext.Current.Session["FireEvent"] = FireEvent;
+               }
+
+               catch (Exception ex)
+               {
+
+               }
 
            }  
 
@@ -1017,7 +1040,15 @@ namespace AspDotNetStorefront
 
         private void SetSessionValue(String ParamName)
         {
-             System.Web.HttpContext.Current.Session[ParamName]="0";
+            try
+            {
+                System.Web.HttpContext.Current.Session[ParamName] = "0";
+            }
+
+            catch(Exception ex)
+            { 
+            
+            }
           
         }
 
@@ -1106,7 +1137,7 @@ namespace AspDotNetStorefront
             }
 
             // update cart quantities:
-           // UpdateCartQuantity();
+            UpdateCartQuantity();
 
             // save coupon code, no need to reload cart object
             // will update customer record also:

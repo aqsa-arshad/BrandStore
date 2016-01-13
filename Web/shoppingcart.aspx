@@ -523,7 +523,7 @@
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
 
-                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
+                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid);// onSucceed, onError
                 }
 
             });
@@ -534,7 +534,10 @@
             }
             //CallBack method when the page call fails due to internal, server error 
             function onError(results, currentContext, methodName) {
-                alert("error");
+              
+                //alert("error");
+                //alert(currentContext);
+                //alert(methodName);
             }
 
             $("#txtBluBuksUsed").keypress(function (evt) {
@@ -566,7 +569,7 @@
 
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
-                        PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);
+                        PageMethods.Firebtnaddtocartclickevent("1");//, onSucceed, onError
                     }
                     else {
                        
@@ -584,7 +587,7 @@
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
                 }
                 else
-                    PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);
+                    PageMethods.Firebtnaddtocartclickevent("1");//, onSucceed, onError
                 // $("#btnaddtocart").trigger("click");
 
 
@@ -653,7 +656,7 @@
 
                 var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                 var BluBucksUsed = $("#txtBluBuksUsed").val();
-                PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
+                PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid);//, onSucceed, onError
             }
 
             function applyFund(newpricetotal, fundamount) {
