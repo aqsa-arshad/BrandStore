@@ -389,7 +389,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
-                    <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
+                    <p runat="server" id="ppointscount" ClientIDMode="Static" >You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
                     <p>Decide how many BLU Bucks you want to use to buy this item.</p>
 
                     <div class="form-group">
@@ -598,15 +598,19 @@
                 $("#hdncurrentrecordid").text(id.replace(toreplace, ""));
                 var currentrecordid = id.replace(toreplace, "");
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
+                var Itemquantityfromcart = $("#spItemQuantity_" + currentrecordid).text();
                 var quantityfieldid = "#" + toreplace + "txtQuantity";
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
-                var newpricetotal = (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 $("#txtBluBuksUsed").val("0.00");
                 //apply fund and buskts
                 var customerlevel = $("#hdncustomerlevel").text();
-                applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
+                if (Itemquantityfromcart != ItemQuantity) {
+                    //if quantity is not changed then no need to apply fund
+                    applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
+                }
 
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
@@ -670,32 +674,45 @@
             function applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel) {
                 debugger;
                 var ItemFundId = $("#spItemFundId_" + currentrecordid).text();
+                var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text().replace("(FUND) discount: $", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used: $", "");
 
+                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
+                var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
+                $("#ppointscount").text(blubucks);
+              
                 var fundamount = 0;
                 if (customerlevel == 2) {
                     fundamount = $("#hdnsoffundamount").text();
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }
                 else if (ItemFundId == 2) {
                     fundamount = $("#hdnsoffundamount").text();
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }
 
                 else if (ItemFundId == 3) {
-                    fundamount = $("#hdndirectmailfundamount").text();
+                    fundamount = $("#hdndirectmailfundamount").text();                   
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice) //+ parseFloat(spblubucksprice); 
+                                    
                     applyFund(newpricetotal, fundamount);
                 }
 
                 else if (ItemFundId == 4) {
                     fundamount = $("#hdndisplayfundamount").text();
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice) //+ parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }
                 else if (ItemFundId == 5) {
                     fundamount = $("#hdnliteraturefundamount").text();
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }
                 else if (ItemFundId == 6) {
                     fundamount = $("#hdnpopfundamount").text();
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }
 

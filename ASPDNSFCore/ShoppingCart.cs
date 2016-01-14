@@ -7158,8 +7158,8 @@ namespace AspDotNetStorefrontCore
                 if (((CartItem)m_CartItems[i]).ShoppingCartRecordID == cartRecordID)
                 {
                     CartItem ci = (CartItem)m_CartItems[i];
-                    CategoryFundUsed =  ci.CategoryFundUsed + CategoryFundUsed;
-                    BluBucksUsed =  ci.BluBuksUsed + BluBucksUsed;
+                    //CategoryFundUsed =  ci.CategoryFundUsed + CategoryFundUsed;
+                  //  BluBucksUsed =  ci.BluBuksUsed + BluBucksUsed;
                     ci.CategoryFundUsed = CategoryFundUsed;
                     ci.BluBuksUsed = BluBucksUsed;
                     m_CartItems[i] = ci;

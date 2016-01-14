@@ -6009,23 +6009,17 @@ table.order-detail tbody tr td {
   font-size: 16px;
   margin-top: 0;
 }
-
-.side-bar p { line-height: 20px; }
-
-.side-bar .blu-bucks { margin-bottom: 10px; }
-
-.side-bar .blu-bucks .blu-collapse-link {
-  border-top: solid 1px #1d446b;
-  padding-top: 8px;
-  margin-top: 8px;
-  display: block;
+.side-bar p {
+  line-height: 20px;
 }
-
-.side-bar .blu-bucks .well {
-  background: none;
-  box-shadow: none;
+.side-bar .blu-bucks {
+  margin-bottom: 10px;
 }
-
+.side-bar .blu-bucks p {
+  border-bottom: solid 1px #1d446b;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
 .login-box h4 {
   text-align: center;
   font-size: 18px;
@@ -6033,7 +6027,6 @@ table.order-detail tbody tr td {
   letter-spacing: 2.6px;
   margin-bottom: 12px;
 }
-
 .login-box input[type=text],
 .login-box input[type="password"],
 .login-box .form-control {
