@@ -24,7 +24,6 @@ namespace AspDotNetStorefront
     /// </summary>
     public static class AuthenticationSSO
     {
-
         /// <summary>
         /// Initialize Customer Object after OKTA Authentication
         /// </summary>
@@ -55,14 +54,14 @@ namespace AspDotNetStorefront
 
                     ////// START - TEST CommitCustomerFund Functionality
 
-                    //// 1. Get Funds
-                    //List<CustomerFund> lstCustomerFund = GetCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID, false);
-                    //// 2. Update Amount Used
-                    //lstCustomerFund.ForEach(x => x.AmountUsed = 3000);
-                    //// 3. Update Customer Fund AmountUsed
-                    //UpdateCustomerFundAmountUsed(lstCustomerFund);
-                    //// 4. CommitCustomerFund
-                    //CommitCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
+                    // 1. Get Funds
+                    List<CustomerFund> lstCustomerFund = GetCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID, false);
+                    // 2. Update Amount Used
+                    lstCustomerFund.ForEach(x => x.AmountUsed = 100);
+                    // 3. Update Customer Fund AmountUsed
+                    UpdateCustomerFundAmountUsed(lstCustomerFund);
+                    // 4. CommitCustomerFund
+                    CommitCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
 
                     ////// EMD - TEST CommitCustomerFund Functionlaity
                 }
@@ -450,55 +449,68 @@ namespace AspDotNetStorefront
             var flag = false;
             try
             {
-                var username = AppLogic.AppConfig("SFDCUsername");
-                var password = AppLogic.AppConfig("SFDCPassword");
-                var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
+                SoapClient client = new SoapClient();
+                SessionHeader header = new SessionHeader();
 
-                SoapClient loginClient; // for login endpoint
-                SoapClient client; // for API endpoint
-                SessionHeader header;
-                EndpointAddress endpoint;
-
-                // Create a SoapClient specifically for logging in
-                loginClient = new SoapClient();
-
-                // SFDC Login
-                LoginResult lr = loginClient.login(null, username, password + securityToken);
-
-                if (lr.passwordExpired)
+                if (GetSFDCSoapClient(ref client, ref header))
                 {
-                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                        "SFDC Login Password Is Expired", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
-                    flag = false;
+                    client.query(header, null, null, null, query, out queryResult);
+
+                    if (queryResult.size == 0)
+                    {
+                        SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                            "Record not found for query: " + query, MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                        flag = false;
+                    }
+
+                    // SFDC Logout
+                    client.logout(header);
+                    flag = true;
                 }
-
-                endpoint = new EndpointAddress(lr.serverUrl);
-                header = new SessionHeader();
-                header.sessionId = lr.sessionId;
-
-                // Create and cache an API endpoint client
-                client = new SoapClient("Soap", endpoint);
-                client.query(header, null, null, null, query, out queryResult);
-
-                if (queryResult.size == 0)
-                {
-                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
-                        "Record not found for " + username, MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
-                    flag = false;
-                }
-
-                // SFDC Logout
-                client.logout(header);
-                flag = true;
             }
             catch (Exception ex)
             {
-                flag = false;
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return flag;
+        }
+
+        /// <summary>
+        /// Get SFDC SoapClient After Login
+        /// </summary>
+        /// <param name="client">By Ref SoapClient</param>
+        /// <param name="header">By Ref SessionHeader</param>
+        /// <returns></returns>
+        private static bool GetSFDCSoapClient(ref SoapClient client, ref SessionHeader header)
+        {
+            var username = AppLogic.AppConfig("SFDCUsername");
+            var password = AppLogic.AppConfig("SFDCPassword");
+            var securityToken = AppLogic.AppConfig("SFDCSecurityToken");
+
+            SoapClient loginClient; // for login endpoint
+            EndpointAddress endpoint;
+
+            // Create a SoapClient specifically for logging in
+            loginClient = new SoapClient();
+
+            // SFDC Login
+            LoginResult lr = loginClient.login(null, username, password + securityToken);
+
+            if (lr.passwordExpired)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    "SFDC Login Password Is Expired", MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
+                return false;
+            }
+
+            endpoint = new EndpointAddress(lr.serverUrl);
+            header.sessionId = lr.sessionId;
+
+            // Create and cache an API endpoint client
+            client = new SoapClient("Soap", endpoint);
+            return true;
         }
 
         /// <summary>
@@ -622,11 +634,11 @@ namespace AspDotNetStorefront
 
                 if (IsDealerUser(customer.CustomerLevelID))
                 {
-                    GetSetDealerUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
+                    GetDealerUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
                 }
                 else if (IsInternalUser(customer.CustomerLevelID))
                 {
-                    GetSetInternalUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
+                    GetInternalUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
                 }
             }
             catch (Exception ex)
@@ -651,7 +663,15 @@ namespace AspDotNetStorefront
             }
             try
             {
-
+                Customer customer = new Customer(lstCustomerFund[0].CustomerID);
+                if (IsDealerUser(customer.CustomerLevelID))
+                {
+                    UpdateDealerUserFundToSFDC(customer.SFDCQueryParam, lstCustomerFund);
+                }
+                else if (IsInternalUser(customer.CustomerLevelID))
+                {
+                    UpdateInternalUserFundToSFDC(customer.SFDCQueryParam, lstCustomerFund);
+                }
             }
             catch (Exception ex)
             {
@@ -662,11 +682,151 @@ namespace AspDotNetStorefront
         }
 
         /// <summary>
+        /// Update Dealer User Fund To SFDC
+        /// </summary>
+        /// <param name="SFDCQueryParam">SFDCQueryParam</param>
+        /// <param name="lstCustomerFund">SFDCQueryParam</param>
+        private static void UpdateDealerUserFundToSFDC(string SFDCQueryParam, List<CustomerFund> lstCustomerFund)
+        {
+            try
+            {
+                var query = AppLogic.AppConfig("SFDCDealerUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
+                QueryResult queryResult = new QueryResult();
+
+                if (QuerySFDC(query, ref queryResult))
+                {
+                    Contact contact = (Contact)queryResult.records.FirstOrDefault();
+
+                    //Contact updateContact = new Contact();
+                    Account updateAccount = new Account();
+                    updateAccount.Id = contact.Account.Id;
+
+                    foreach (CustomerFund customerFund in lstCustomerFund)
+                    {
+                        if (customerFund.FundID == (int)FundType.BLUBucks)
+                        {
+                            updateAccount.Co_op_budget__c = Convert.ToDouble(customerFund.Amount);
+                            updateAccount.Co_op_budget__cSpecified = true;
+                        }
+                        else if (customerFund.FundID == (int)FundType.DirectMailFunds)
+                        {
+                            updateAccount.Direct_Marketing_Funds__c = Convert.ToDouble(customerFund.Amount);
+                            updateAccount.Direct_Marketing_Funds__cSpecified = true;
+                        }
+                        else if (customerFund.FundID == (int)FundType.DisplayFunds)
+                        {
+                            updateAccount.Display_Funds__c = Convert.ToDouble(customerFund.Amount);
+                            updateAccount.Display_Funds__cSpecified = true;
+                        }
+                        else if (customerFund.FundID == (int)FundType.LiteratureFunds)
+                        {
+                            updateAccount.Literature_Funds__c = Convert.ToDouble(customerFund.Amount);
+                            updateAccount.Literature_Funds__cSpecified = true;
+                        }
+                        else if (customerFund.FundID == (int)FundType.POPFunds)
+                        {
+                            updateAccount.POP_Funds__c = Convert.ToDouble(customerFund.Amount);
+                            updateAccount.POP_Funds__cSpecified = true;
+                        }
+                    }
+
+                    SoapClient client = new SoapClient();
+                    SessionHeader header = new SessionHeader();
+
+                    if (GetSFDCSoapClient(ref client, ref header))
+                    {
+                        SaveResult[] saveResult = new SaveResult[1];
+                        LimitInfo[] limitInfo = new LimitInfo[1];
+
+                        client.update(header, null, null, null, null, null, null, null, null, null, null, null, null, new sObject[] { updateAccount }, out limitInfo, out saveResult);
+
+                        if (!saveResult[0].success)
+                        {
+                            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                                saveResult.FirstOrDefault().errors.FirstOrDefault().message, MessageTypeEnum.Informational, MessageSeverityEnum.Error);
+                        }
+
+                        // SFDC Logout
+                        client.logout(header);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Update Internal User Fund To SFDC
+        /// </summary>
+        /// <param name="SFDCQueryParam">SFDCQueryParam</param>
+        /// <param name="lstCustomerFund">lstCustomerFund</param>
+        private static void UpdateInternalUserFundToSFDC(string SFDCQueryParam, List<CustomerFund> lstCustomerFund)
+        {
+            try
+            {
+                Regex rgx = new Regex(@"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$");
+                string query = string.Empty;
+
+                if (rgx.IsMatch(SFDCQueryParam))
+                    query = AppLogic.AppConfig("SFDCBudgetQueryByEmail").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
+                else
+                    query = AppLogic.AppConfig("SFDCBudgetQueryById").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
+
+                QueryResult queryResult = new QueryResult();
+                if (QuerySFDC(query, ref queryResult))
+                {
+                    Employee_Budget__c updateEmployeeBudget = new Employee_Budget__c();
+
+                    foreach (CustomerFund customerFund in lstCustomerFund)
+                    {
+                        if (customerFund.FundID == (int)FundType.SOFFunds)
+                        {
+                            Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
+                            updateEmployeeBudget.Id = employeeBudget.Id;
+                            updateEmployeeBudget.Budget__c = Convert.ToDouble(customerFund.Amount);
+                            updateEmployeeBudget.Budget__cSpecified = true;
+                        }
+                    }
+
+                    SoapClient client = new SoapClient();
+                    SessionHeader header = new SessionHeader();
+
+                    if (GetSFDCSoapClient(ref client, ref header))
+                    {
+                        SaveResult[] saveResult = new SaveResult[1];
+                        LimitInfo[] limitInfo = new LimitInfo[1];
+
+                        client.update(header, null, null, null, null, null, null, null, null, null, null, null, null, new sObject[] { updateEmployeeBudget }, out limitInfo, out saveResult);
+
+                        if (!saveResult[0].success)
+                        {
+                            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                                saveResult.FirstOrDefault().errors.FirstOrDefault().message, MessageTypeEnum.Informational, MessageSeverityEnum.Error);
+                        }
+
+                        // SFDC Logout
+                        client.logout(header);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                        MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
         /// Get & Set Dealer User Fund From SFDC
         /// </summary>
         /// <param name="customerID">CustomerID</param>
         /// <param name="SFDCQueryParam">SFDCQueryParam</param>
-        private static void GetSetDealerUserFundFromSFDC(int customerID, string SFDCQueryParam)
+        private static void GetDealerUserFundFromSFDC(int customerID, string SFDCQueryParam)
         {
             try
             {
@@ -734,7 +894,7 @@ namespace AspDotNetStorefront
         /// Get & Set Internal User Fund From SFDC
         /// </summary>
         /// <param name="SFDCQueryParam">SFDCQueryParam</param>
-        private static void GetSetInternalUserFundFromSFDC(int customerID, string SFDCQueryParam)
+        private static void GetInternalUserFundFromSFDC(int customerID, string SFDCQueryParam)
         {
             try
             {

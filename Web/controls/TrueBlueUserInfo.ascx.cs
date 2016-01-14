@@ -35,6 +35,7 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
         lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName);
         lblDealerLevel.Text = ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU", ""));
+        lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);
         cf = lstCustomerFund.SingleOrDefault(x => x.FundID == (int)FundType.BLUBucks);
         if (cf != null)
         {
@@ -46,7 +47,12 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
             lstCustomerFund.Add(cf);
             rptCustomerFunds.DataSource = lstCustomerFund;
             rptCustomerFunds.DataBind();
-        }   
+        }
+        else
+        {
+            rptAllCustomerFunds.DataSource = lstCustomerFund;
+            rptAllCustomerFunds.DataBind();
+        }
     }
 
 
