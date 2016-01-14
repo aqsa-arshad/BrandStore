@@ -3216,7 +3216,7 @@ function popupzoom(url,alturl)
         public string NotifyMeButton(String sProductID, String sVariantID)
         {
             StringBuilder result = new StringBuilder(3000);
-            result.Append("<span class=\"notify\">Out of Stock</span>");
+            result.Append("<span class=\"notify\">Out of Stock</span></div>");
             //TODO: Commented as Noify me feature is not in the current release
             //result.Append("<div class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
             //result.Append("<div class=\"buttons-group\">");
@@ -4055,7 +4055,7 @@ function popupzoom(url,alturl)
                     schemaPrice = discountedPrice;
                 }
                 //TODO: Will be uncommented when true blue point implemented
-                results.Append("<span id='sppricewithfund' class=\"black-blu-label hide-element\"><font>Price with (FUND) credit:</font> $Y,YYY.YY</span>");
+                results.Append("<span id='sppricewithfund' class=\"black-blu-label hide-element\"><font>Price with FUND credit:</font> $Y,YYY.YY</span>");
                 results.Append(" ");
 
                 results.Append(taxSuffix);

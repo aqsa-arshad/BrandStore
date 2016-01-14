@@ -38,7 +38,7 @@
         </div>
     </div>
     <a id="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="expandFunds()">Other Credits ˅</a>
-    <a id="HideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="HideFunds()">Close other credits ˄</a>
+    <a id="HideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="HideFunds()" style="display: none;">Close other credits ˄</a>
 </div>
 
 <button class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccount">VIEW MY ACCOUNT</button>
@@ -47,16 +47,14 @@
 <br>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#ExpandFunds").show();
+        $("#HideFunds").hide();
         $("#btnViewAccount").click(function () {
             window.open("JWMyAccount.aspx", '_self');
         });
     });
 </script>
 <script>
-    $(document).ready(function () {
-        HideFunds();
-
-    });
     function expandFunds() {
         $("#ExpandFunds").hide();
         $("#HideFunds").show();
