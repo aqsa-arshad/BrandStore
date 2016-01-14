@@ -164,7 +164,7 @@
                 }
                 $("#hdnpricewithfund").text(updatedtotalprice);
                 $("#spprice").text("$" + updatedtotalprice.toFixed(2));
-                $("#sppricewithfund").html("<font>Price with (FUND) credit: $</font>" + updatedtotalprice.toFixed(2));
+                $("#sppricewithfund").html("<font>Price with FUND credit: $</font>" + updatedtotalprice.toFixed(2));
 
             }
 
@@ -200,7 +200,7 @@
             }
             function applyproductcategoryfund() {
                 $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
                     var customerlevel = $("#hdncustomerlevel").text();
