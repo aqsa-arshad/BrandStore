@@ -196,6 +196,8 @@ namespace AspDotNetStorefront
                 }
             }
 
+          
+
             if (!this.IsPostBack)
             {
                 string ReturnURL = CommonLogic.QueryStringCanBeDangerousContent("ReturnUrl");
@@ -203,10 +205,11 @@ namespace AspDotNetStorefront
                 ViewState["ReturnURL"] = ReturnURL;
 
                 InitializePageContent(checkOutType);
+                SetFundUsedByCategory();
                 InitializeShippingAndEstimateControl();
 
-                GetBluBucksAndCategoryFundsForCustomer();                
-                AppLogic.SetAppConfig("FireEvent", "0", 1);
+               
+                SetSessionValue("FireEvent");
             }
             else
             {
@@ -219,11 +222,11 @@ namespace AspDotNetStorefront
                 btnRequestEstimates.Visible = !cart.IsEmpty();
                 pnlSubTotals.Visible = !cart.IsEmpty();
 
-                bool FireEvent = AppLogic.AppConfigBool("FireEvent");
-                if (FireEvent == true)
+                String FireEvent = GetSessionValue("FireEvent");
+                if (FireEvent == "1")
                 {
                     btnaddtocart_Click(null, null);
-                    AppLogic.SetAppConfig("FireEvent", "0", 1);
+                    SetSessionValue("FireEvent");
                 }
             }
 
@@ -252,32 +255,7 @@ namespace AspDotNetStorefront
                 btnUpdateShoppingCart.CssClass = "hide-element";
             }
 
-              //Update amount used for each category funds
-            Decimal SofFundsUsedTotal=0,DirectMailFundsUsedTotal=0,DisplayFundsUsedTotal=0,LiteratureFundsUsedTotal=0,PopFundsUsedTotal=0,BluBucksFundsUsedTotal=0;
-            foreach (CartItem cItem in cart.CartItems)
-                {
-                    if (cItem.FundID == 2)
-                        SofFundsUsedTotal = Math.Round((Convert.ToDecimal(SofFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
-                    else if (cItem.FundID == 3)
-                        DirectMailFundsUsedTotal =Math.Round((Convert.ToDecimal(DirectMailFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
-                    else if (cItem.FundID == 4)
-                        DisplayFundsUsedTotal = Math.Round((Convert.ToDecimal(DisplayFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
-                    else if (cItem.FundID == 5)
-                        LiteratureFundsUsedTotal = Math.Round((Convert.ToDecimal(LiteratureFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
-                    else if (cItem.FundID == 6)
-                        PopFundsUsedTotal = Math.Round((Convert.ToDecimal(PopFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)),2);
-
-                    BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
-                                       
-                }          
-                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);         
-                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);         
-                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DirectMailFunds), DirectMailFundsUsedTotal);          
-                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DisplayFunds), DisplayFundsUsedTotal);       
-                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.LiteratureFunds), LiteratureFundsUsedTotal);          
-                AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.POPFunds), PopFundsUsedTotal);
-              //End Update Funds
-
+            GetBluBucksAndCategoryFundsForCustomer();
         }
 
         private void GetBluBucksAndCategoryFundsForCustomer()
@@ -404,8 +382,10 @@ namespace AspDotNetStorefront
        public void btnaddtocart_Click(object sender, EventArgs e)
         {        
           UpdateCart();
+           
         }
 
+       #region "Session related"
        public void btnaddtocartforsalesrep_Click(object sender, EventArgs e)
        {
            UpdateCart();
@@ -414,10 +394,11 @@ namespace AspDotNetStorefront
        public static void SaveValuesInSession(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid)
        {
            try
-           {    
-               AppLogic.SetAppConfig("ProductCategoryFundUsed", ProductCategoryFundUsed,1);
-               AppLogic.SetAppConfig("BluBucksUsed", BluBucksUsed, 1);
-               AppLogic.SetAppConfig("currentrecordid", currentrecordid, 1);
+           {
+               System.Web.HttpContext.Current.Session["ProductCategoryFundUsed"] = ProductCategoryFundUsed;
+               System.Web.HttpContext.Current.Session["BluBucksUsed"] = BluBucksUsed;
+               System.Web.HttpContext.Current.Session["currentrecordid"] = currentrecordid;
+               
            }
            catch (Exception ex)
            { 
@@ -430,7 +411,7 @@ namespace AspDotNetStorefront
            {
                try
                {
-                   AppLogic.SetAppConfig("FireEvent", FireEvent, 1);
+                   System.Web.HttpContext.Current.Session["FireEvent"] = FireEvent; 
                }
 
                catch (Exception ex)
@@ -438,9 +419,34 @@ namespace AspDotNetStorefront
 
                }
 
-           }  
+           }
 
-        private  void UpdateCart()
+           private String GetSessionValue(String ParamName)
+           {
+               var value = System.Web.HttpContext.Current.Session[ParamName];
+               if (value != null)
+                   return Convert.ToString(value);
+               else
+                   return "0";
+           }
+
+           private void SetSessionValue(String ParamName)
+           {
+               try
+               {
+                   System.Web.HttpContext.Current.Session[ParamName] = "0";
+               }
+
+               catch (Exception ex)
+               {
+
+               }
+
+           }
+
+       #endregion
+
+           private  void UpdateCart()
         {
             if (cart.InventoryTrimmed || this.InventoryTrimmed)
             {
@@ -460,7 +466,41 @@ namespace AspDotNetStorefront
             InitializePageContent(CheckOutPageControllerFactory.CreateCheckOutPageController(ThisCustomer, cart).GetCheckoutType());
             InitializeShippingAndEstimateControl();
             InitializeShoppingCartControl();
+            SetFundUsedByCategory();
+            GetBluBucksAndCategoryFundsForCustomer();
         }
+
+           public void SetFundUsedByCategory()
+           {
+               #region "Update summary control"
+
+               //Update amount used for each category funds
+               Decimal SofFundsUsedTotal = 0, DirectMailFundsUsedTotal = 0, DisplayFundsUsedTotal = 0, LiteratureFundsUsedTotal = 0, PopFundsUsedTotal = 0, BluBucksFundsUsedTotal = 0;
+               foreach (CartItem cItem in cart.CartItems)
+               {
+                   if (cItem.FundID == 2)
+                       SofFundsUsedTotal = Math.Round((Convert.ToDecimal(SofFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
+                   else if (cItem.FundID == 3)
+                       DirectMailFundsUsedTotal = Math.Round((Convert.ToDecimal(DirectMailFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
+                   else if (cItem.FundID == 4)
+                       DisplayFundsUsedTotal = Math.Round((Convert.ToDecimal(DisplayFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
+                   else if (cItem.FundID == 5)
+                       LiteratureFundsUsedTotal = Math.Round((Convert.ToDecimal(LiteratureFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
+                   else if (cItem.FundID == 6)
+                       PopFundsUsedTotal = Math.Round((Convert.ToDecimal(PopFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
+
+                   BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
+
+               }
+               AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);
+               AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);
+               AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DirectMailFunds), DirectMailFundsUsedTotal);
+               AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DisplayFunds), DisplayFundsUsedTotal);
+               AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.LiteratureFunds), LiteratureFundsUsedTotal);
+               AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.POPFunds), PopFundsUsedTotal);
+               //End Update Funds
+               #endregion
+           }
 
         public void InitializePageContent(CheckOutType checkoutType)
         {
@@ -1017,9 +1057,9 @@ namespace AspDotNetStorefront
 
         private void UpdateCurrentItemFundsUsed()
         {
-            String ProductCategoryFundUsed = AppLogic.AppConfig("ProductCategoryFundUsed");
-            String BluBucksUsed = AppLogic.AppConfig("BluBucksUsed");
-            String currentrecordid = AppLogic.AppConfig("currentrecordid");
+            String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
+            String BluBucksUsed = GetSessionValue("BluBucksUsed");
+            String currentrecordid = GetSessionValue("currentrecordid");
             
             cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed));
             SetSessionValue("ProductCategoryFundUsed");
@@ -1028,28 +1068,7 @@ namespace AspDotNetStorefront
 
         }
 
-        private String GetSessionValue(String ParamName)
-        {
-            var value = AppLogic.GetAppConfig(ParamName);
-            if (value != null)
-                return Convert.ToString(value);
-            else
-                return "0";
-        }
-
-        private void SetSessionValue(String ParamName)
-        {
-            try
-            {
-                AppLogic.SetAppConfig(ParamName,"0");
-            }
-
-            catch(Exception ex)
-            { 
-            
-            }
-          
-        }
+      
 
         private void Updatecartcounttotalonmenue()
         {            
@@ -1136,7 +1155,7 @@ namespace AspDotNetStorefront
             }
 
             // update cart quantities:
-            UpdateCartQuantity();
+           // UpdateCartQuantity();
 
             // save coupon code, no need to reload cart object
             // will update customer record also:
