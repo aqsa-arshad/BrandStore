@@ -54,14 +54,14 @@ namespace AspDotNetStorefront
 
                     ////// START - TEST CommitCustomerFund Functionality
 
-                    // 1. Get Funds
-                    List<CustomerFund> lstCustomerFund = GetCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID, false);
-                    // 2. Update Amount Used
-                    lstCustomerFund.ForEach(x => x.AmountUsed = 100);
-                    // 3. Update Customer Fund AmountUsed
-                    UpdateCustomerFundAmountUsed(lstCustomerFund);
-                    // 4. CommitCustomerFund
-                    CommitCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
+                    //// 1. Get Funds
+                    //List<CustomerFund> lstCustomerFund = GetCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID, false);
+                    //// 2. Update Amount Used
+                    //lstCustomerFund.ForEach(x => x.AmountUsed = 100);
+                    //// 3. Update Customer Fund AmountUsed
+                    //UpdateCustomerFundAmountUsed(lstCustomerFund);
+                    //// 4. CommitCustomerFund
+                    //CommitCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
 
                     ////// EMD - TEST CommitCustomerFund Functionlaity
                 }
