@@ -634,7 +634,7 @@ namespace AspDotNetStorefront
 
                 if (IsDealerUser(customer.CustomerLevelID))
                 {
-                    GetDealerUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam);
+                    GetDealerUserFundFromSFDC(customer.CustomerID, customer.SFDCQueryParam, IsTrueBluDealerUser(customer.CustomerLevelID));
                 }
                 else if (IsInternalUser(customer.CustomerLevelID))
                 {
@@ -826,7 +826,7 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="customerID">CustomerID</param>
         /// <param name="SFDCQueryParam">SFDCQueryParam</param>
-        private static void GetDealerUserFundFromSFDC(int customerID, string SFDCQueryParam)
+        private static void GetDealerUserFundFromSFDC(int customerID, string SFDCQueryParam, bool IsTrueBluDealerUser)
         {
             try
             {
@@ -839,7 +839,7 @@ namespace AspDotNetStorefront
 
                     for (int i = 1; i <= 6; i++)
                     {
-                        if (i == (int)FundType.BLUBucks)
+                        if (i == (int)FundType.BLUBucks && IsTrueBluDealerUser)
                         {
                             CustomerFund customerFund = GetCustomerFund(customerID, i, false);
                             if (customerFund.CustomerID == 0)
@@ -939,6 +939,21 @@ namespace AspDotNetStorefront
                 customerLevelID == (int)UserType.LOWES ||
                 customerLevelID == (int)UserType.MENARDS ||
                 customerLevelID == (int)UserType.POTENTIAL)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Validate if Dealer User is True Blu
+        /// </summary>
+        /// <param name="customerLevelID">customerLevelID</param>        
+        public static bool IsTrueBluDealerUser(int customerLevelID)
+        {
+            if (customerLevelID == (int)UserType.BLUAUTHORIZED ||
+                customerLevelID == (int)UserType.BLUELITE ||
+                customerLevelID == (int)UserType.BLUPREMIER ||
+                customerLevelID == (int)UserType.BLUUNLIMITED)
                 return true;
             else
                 return false;
