@@ -8656,7 +8656,7 @@ namespace AspDotNetStorefrontCore
                     {
                         InitialQ = QuantityForEdit;
                     }
-                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"4\">", "1", "1");
+                    tmpS.AppendFormat("<font class=\"black-color\" for=\"Quantity_{0}_{1}\">" + AppLogic.GetString("common.cs.78", SkinID, LocaleSetting) + "</font> <input class=\"item-quantity\" type=\"text\" value=\"" + InitialQ.ToString() + "\" name=\"Quantity_{0}_{1}\" id=\"Quantity_{0}_{1}\" maxlength=\"6\">", "1", "1");
                     tmpS.Append("<input name=\"Quantity_vldt\" type=\"hidden\" value=\"[req][integer][number][blankalert=" + AppLogic.GetString("common.cs.79", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("common.cs.80", SkinID, LocaleSetting) + "]\">");
                 }
                 else

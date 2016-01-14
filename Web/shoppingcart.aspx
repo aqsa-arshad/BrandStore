@@ -388,9 +388,9 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="text-uppercase-no">True BLU</h5>
-                    <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
-                    <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
+                    <h5 class="text-uppercase-no">True BLU(tm)</h5>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
+                    <p>Decide how many BLU Bucks you want to use to buy this item.</p>
 
                     <div class="form-group">
                         <div class="col-xs-6 padding-none">

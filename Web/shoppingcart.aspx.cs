@@ -273,7 +273,7 @@ namespace AspDotNetStorefront
         { 
             //Get all funds amount of customer
             hdnBluBucktsPoints.Text = getfundamount(Convert.ToInt32(FundType.BLUBucks));
-            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(hdnBluBucktsPoints.Text), 2) + " BLU Bucks you can use to purchase your items.";
+            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(hdnBluBucktsPoints.Text), 2) + " BLU(tm) Bucks you can use to purchase items.";
             hdnsoffundamount.Text = getfundamount(Convert.ToInt32(FundType.SOFFunds));
             hdndirectmailfundamount.Text = getfundamount(Convert.ToInt32(FundType.DirectMailFunds));
             hdndisplayfundamount.Text = getfundamount(Convert.ToInt32(FundType.DisplayFunds));
