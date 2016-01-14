@@ -31,6 +31,7 @@
                         </span>
                     </ItemTemplate>
                 </asp:Repeater>
+                <asp:Label runat="server" ID="lblOtherDiscounts" Text="(Other discounts per tier level)"></asp:Label>
             </div>
         </div>
     </div>
