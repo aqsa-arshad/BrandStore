@@ -35,6 +35,22 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
         lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName);
         lblDealerLevel.Text = ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU", ""));
+        if (ThisCustomer.CustomerLevelID == (int)UserType.POTENTIAL)
+        {
+            lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.BLUBucks);
+            hBluBucks.Visible = false;
+        }
+        else if (ThisCustomer.CustomerLevelID == (int)UserType.HOMEDEPOT || ThisCustomer.CustomerLevelID == (int)UserType.MENARDS || ThisCustomer.CustomerLevelID == (int)UserType.LOWES)
+        {
+            lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.BLUBucks);
+            hBluBucks.Visible = false;
+            dLogoBox.Visible = false;
+        }
+        else
+        {
+            dLogoBox.Visible = true;
+            hBluBucks.Visible = true;
+        }
         lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);
         cf = lstCustomerFund.SingleOrDefault(x => x.FundID == (int)FundType.BLUBucks);
         if (cf != null)
