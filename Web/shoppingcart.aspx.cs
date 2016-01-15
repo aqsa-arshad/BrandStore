@@ -286,51 +286,8 @@ namespace AspDotNetStorefront
             //end get all funds amount of customer          
             hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();
 
-            fromload = true;
-            //Decimal SofFundsUsedTotal = 0, DirectMailFundsUsedTotal = 0, DisplayFundsUsedTotal = 0, LiteratureFundsUsedTotal = 0, PopFundsUsedTotal = 0, BluBucksFundsUsedTotal = 0;
-
-            //foreach (CartItem cItem in cart.CartItems)
-            //{
-            //    if (cItem.FundID == 2)
-            //        SofFundsUsedTotal = Math.Round((Convert.ToDecimal(SofFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
-            //    else if (cItem.FundID == 3)
-            //        DirectMailFundsUsedTotal = Math.Round((Convert.ToDecimal(DirectMailFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
-            //    else if (cItem.FundID == 4)
-            //        DisplayFundsUsedTotal = Math.Round((Convert.ToDecimal(DisplayFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
-            //    else if (cItem.FundID == 5)
-            //        LiteratureFundsUsedTotal = Math.Round((Convert.ToDecimal(LiteratureFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
-            //    else if (cItem.FundID == 6)
-            //        PopFundsUsedTotal = Math.Round((Convert.ToDecimal(PopFundsUsedTotal) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2);
-
-            //    BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
-            //}
-            //if (fromload)
-            //{
-            //    //Get all funds amount of customer
-            //    hdnBluBucktsPoints.Text = (Convert.ToDecimal(getfundamount(Convert.ToInt32(FundType.BLUBucks))) - BluBucksFundsUsedTotal).ToString();
-            //    ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(hdnBluBucktsPoints.Text), 2) + " BLU(tm) Bucks you can use to purchase items.";
-            //    hdnsoffundamount.Text = (Convert.ToDecimal(getfundamount(Convert.ToInt32(FundType.SOFFunds))) - SofFundsUsedTotal).ToString();
-            //    hdndirectmailfundamount.Text = (Convert.ToDecimal(getfundamount(Convert.ToInt32(FundType.DirectMailFunds))) - DirectMailFundsUsedTotal).ToString();
-            //    hdndisplayfundamount.Text = (Convert.ToDecimal(getfundamount(Convert.ToInt32(FundType.DisplayFunds))) - DisplayFundsUsedTotal).ToString();
-            //    hdnliteraturefundamount.Text = (Convert.ToDecimal(getfundamount(Convert.ToInt32(FundType.LiteratureFunds))) - LiteratureFundsUsedTotal).ToString();
-            //    hdnpopfundamount.Text = (Convert.ToDecimal(getfundamount(Convert.ToInt32(FundType.POPFunds))) - PopFundsUsedTotal).ToString();
-            //    //end get all funds amount of customer   
-
-            //}
-
-            //else
-            //{
-            //    //Get all funds amount of customer
-            //    hdnBluBucktsPoints.Text = (Convert.ToDecimal(hdnBluBucktsPoints.Text) - BluBucksFundsUsedTotal).ToString();
-            //    ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(hdnBluBucktsPoints.Text), 2) + " BLU(tm) Bucks you can use to purchase items.";
-            //    hdnsoffundamount.Text = (Convert.ToDecimal(hdnsoffundamount.Text) - SofFundsUsedTotal).ToString();
-            //    hdndirectmailfundamount.Text = (Convert.ToDecimal(hdndirectmailfundamount.Text) - DirectMailFundsUsedTotal).ToString();
-            //    hdndisplayfundamount.Text = (Convert.ToDecimal(hdndisplayfundamount.Text) - DisplayFundsUsedTotal).ToString();
-            //    hdnliteraturefundamount.Text = (Convert.ToDecimal(hdnliteraturefundamount.Text) - LiteratureFundsUsedTotal).ToString();
-            //    hdnpopfundamount.Text = (Convert.ToDecimal(hdnpopfundamount.Text) - PopFundsUsedTotal).ToString();
-            //    //end get all funds amount of customer   
-
-            //}
+           
+            
 
           
         }
@@ -1117,7 +1074,13 @@ namespace AspDotNetStorefront
             String BluBucksUsed = GetSessionValue("BluBucksUsed");
             String currentrecordid = GetSessionValue("currentrecordid");
 
-            cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed));
+            try
+            {
+                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed));
+            }
+            catch (Exception ex)
+            { 
+            }
             SetSessionValue("ProductCategoryFundUsed");
             SetSessionValue("BluBucksUsed");
             SetSessionValue("currentrecordid");
