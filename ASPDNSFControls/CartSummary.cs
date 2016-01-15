@@ -121,12 +121,15 @@ namespace AspDotNetStorefrontControls
                     Controls.Add(new LiteralControl("        </span></p>"));
 
                     //Category wise Credit Used total region
-
+                    if (Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) > 0 || Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) > 0 ||
+                        Convert.ToDecimal(lblDirectMailFundsUsedTotal.Text.Replace("$", "")) > 0 || Convert.ToDecimal(lblDisplayFundsUsedTotal.Text.Replace("$", "")) > 0 ||
+                        Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$", "")) > 0 || Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) > 0)
+                    {
                     Controls.Add(new LiteralControl(" <p><span class='normal-heading black-color'>         <font>"));
                     Controls.Add(lblCreditUsed);
                     Controls.Add(new LiteralControl("          </font>"));                   
                     Controls.Add(new LiteralControl("        </span></p>"));
-
+                    }
                     //Blu Bucks used total                  
                     if (Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) > 0)
                     {

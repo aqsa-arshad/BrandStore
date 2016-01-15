@@ -28,10 +28,10 @@ public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
 
     private void getCustomerfund()
     {
-        if (ThisCustomer.CustomerLevelID == (int)UserType.SALESREPS)
+        if (ThisCustomer.CustomerLevelID == (int)UserType.SALESREPS || ThisCustomer.CustomerLevelID==(int)UserType.INTERNAL)
         {
             decimal SAFAmount = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID,(int)FundType.SOFFunds).AmountAvailable;
-            lblSOF.Text = "Sales Funds = " + String.Format("{0:0.00}", SAFAmount);
+            lblSOF.Text = "Sales Funds = " + String.Format("{0:C}", SAFAmount);
         }
     }
 }

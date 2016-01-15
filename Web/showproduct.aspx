@@ -11,7 +11,7 @@
     <%--Hidden Variables Regions--%>
     <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />     
     <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductCategoryID" name="hdnProductCategoryID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -27,16 +27,16 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="text-uppercase-no">True BLU</h5>
-                    <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
-                    <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
+                    <h5 class="text-uppercase-no">True BLU(tm)</h5>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
+                    <p>Decide hom many BLU Bucks you want to use to buy this item.</p>
 
                     <div class="form-group">
                         <div class="col-xs-6 padding-none">
                             <label class="roman-black">BLU Bucks used:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -78,6 +78,21 @@
             else {
                 $("#MCCategory6").addClass("active");
             }
+
+            var btnname = "#" + $("#hdnButtonName").text();
+
+            $(btnname).click(function (e) {
+              
+                $("#spprice").text($("#hdnpricewithfund").text());
+                if (applyblubuksvalidation()) {
+                    return true;
+                }
+                else {
+                    return false;
+
+                }
+
+            });
             $("#btnaddtocart").click(function (e) {
                 if (ApplyValidation(theForm)) {
                     debugger;
@@ -97,15 +112,21 @@
             });           
            
 
+
             //Set product price  to show on pupup
             applyproductcategoryfund();
             setpricewithquantitychange();
             $("#txtBluBuksUsed").focusout(function () {
+                $("#spprice").text($("#hdnpricewithfund").text());
                 if (applyblubuksvalidation()) {
                     var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
+                }
+                else {
+                   
+
                 }
             });
 
@@ -125,6 +146,16 @@
                 setpricewithquantitychange();
                
             });
+            $('input').keypress(function (e) {
+                var regex = new RegExp("^[0-9-]+$");
+                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+
+                e.preventDefault();
+                return false;
+            });
 
             function setpricewithquantitychange() {
                 debugger;
@@ -143,7 +174,7 @@
                 }
                 $("#hdnpricewithfund").text(updatedtotalprice);
                 $("#spprice").text("$" + updatedtotalprice.toFixed(2));
-                $("#sppricewithfund").html("<font>Price with (FUND) credit: $</font>" + updatedtotalprice.toFixed(2));
+                $("#sppricewithfund").html("<font>Price with FUND credit: $</font>" + updatedtotalprice.toFixed(2));
 
             }
 
@@ -154,20 +185,23 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt(maxfundlimit)) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
-                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
-                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
-                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text()).toFixed(2)
+                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val("0.00");
 
                     return false;
                 }
-                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
-                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2))
+                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
                 else
@@ -176,11 +210,11 @@
             }
             function applyproductcategoryfund() {
                 $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                $("#sppricewithfund").html("<font>Price with (FUND) credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
                     var customerlevel = $("#hdncustomerlevel").text();
-                   if (customerlevel == 1 || customerlevel == 3 ||  customerlevel == 8 )
+                   if (customerlevel == 1 ||  customerlevel == 8 )
                     {
                          $("#sppricewithfund").addClass("hide-element");
                    
@@ -193,7 +227,7 @@
 
            $("#Size_1_1").change(function () {
                  var customerlevel = $("#hdncustomerlevel").text();
-                   if (customerlevel == 1 || customerlevel == 3 ||  customerlevel == 8 )
+                   if (customerlevel == 1 ||   customerlevel == 8 )
                     {
                          $("#sppricewithfund").addClass("hide-element");
                    

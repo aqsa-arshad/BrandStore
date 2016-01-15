@@ -231,11 +231,30 @@ namespace AspDotNetStorefront
             ContinueCheckout();
         }
 
+        private bool validateuserfunds()
+        {
+            if (AuthenticationSSO.IsDealerUser(ThisCustomer.CustomerLevelID) || AuthenticationSSO.IsInternalUser(ThisCustomer.CustomerLevelID))
+                return AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
+            else
+                return true;
+        }
         private void ContinueCheckout()
         {
-            String PayPalToken = CommonLogic.QueryStringCanBeDangerousContent("token").Trim();
-            String PayerID = CommonLogic.QueryStringCanBeDangerousContent("payerid").Trim();
-            ProcessCheckout();
+            string errormessage = AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
+            string script = "alert('" + errormessage + "')";
+            if (validateuserfunds())
+            {
+                String PayPalToken = CommonLogic.QueryStringCanBeDangerousContent("token").Trim();
+                String PayerID = CommonLogic.QueryStringCanBeDangerousContent("payerid").Trim();
+                ProcessCheckout();
+            }
+
+            else
+            {
+                System.Web.UI.ClientScriptManager cs = this.ClientScript;
+                cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);              
+               
+            }
         }
 
         private void InitializePageContent()
