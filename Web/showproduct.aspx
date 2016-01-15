@@ -27,9 +27,9 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="text-uppercase-no">True BLU</h5>
-                    <p runat="server" id="ppointscount">You have XXXXXX BLU Bucks you can use to purchase your items.</p>
-                    <p>Decide hom many BLU Bucks you want to use to purchase this item.</p>
+                    <h5 class="text-uppercase-no">True BLU(tm)</h5>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
+                    <p>Decide hom many BLU Bucks you want to use to buy this item.</p>
 
                     <div class="form-group">
                         <div class="col-xs-6 padding-none">
@@ -146,6 +146,16 @@
                 setpricewithquantitychange();
                
             });
+            $('input').keypress(function (e) {
+                var regex = new RegExp("^[0-9-]+$");
+                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+
+                e.preventDefault();
+                return false;
+            });
 
             function setpricewithquantitychange() {
                 debugger;
@@ -175,20 +185,20 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt(maxfundlimit)) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
                     $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
-                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#hdnBluBucktsPoints").text())) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
                     // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
                     $("#txtBluBuksUsed").val("0.00");
 
                     return false;
                 }
-                else if (Number.parseInt($("#txtBluBuksUsed").val()) > Number.parseInt($("#spprice").text().replace("$", ""))) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
                     // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
                     $("#txtBluBuksUsed").val("0.00");
