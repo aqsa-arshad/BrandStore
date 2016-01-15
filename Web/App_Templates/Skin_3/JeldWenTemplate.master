@@ -8,7 +8,6 @@
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarkeetingExample" Src="~/Controls/MarkeetingExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBBrandAssetExample" Src="~/Controls/BrandAssetExample.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBUserInfoAfterLogin" Src="~/Controls/UserInfoAfterLogin.ascx" %>
-<%--<%@ Register TagPrefix="aspdnsf" TagName="JWBSubDealerInfoAfterLogin" Src="~/Controls/SubDealerInfoAfterLogin.ascx" %>--%>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBPublicUserAfterLogin" Src="~/Controls/PublicUserAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBDealerInfoAfterLogin" Src="~/Controls/DealerInfoAfterLogin.ascx" %>
 <%@ Register TagPrefix="aspdnsf" TagName="JWBMarketingServices" Src="~/Controls/MarketingServices.ascx" %>
@@ -187,9 +186,6 @@
                     <div class="col-md-4" id="divSideBarAfterLogin" runat="server">
                         <div class="side-bar" id="divafterlogin" runat="server">
                             <div>
-                               <%-- <div class="side-bar-box hide-element" id="JWBSubDealerInfoAfterLoginControl">
-                                    <aspdnsf:JWBSubDealerInfoAfterLogin runat="server" />
-                                </div>--%>
                                 <div class="side-bar-box hide-element" id="JWBUserInfoAfterLoginControl" runat="server">
                                     <aspdnsf:JWBUserInfoAfterLogin runat="server" />
                                 </div>

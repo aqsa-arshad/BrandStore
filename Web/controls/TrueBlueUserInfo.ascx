@@ -53,7 +53,6 @@
     function expandFunds() {
         $("#ExpandFunds").hide();
         $("#HideFunds").show();
-       // $("#collapseExample").addClass("collapse");
     }
     function HideFunds() {
         $("#ExpandFunds").show();
