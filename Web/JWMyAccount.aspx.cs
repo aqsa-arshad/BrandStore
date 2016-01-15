@@ -234,7 +234,7 @@ namespace AspDotNetStorefront
         /// <returns></returns>
         static string SetTrackingPath(int orderNumber)
         {
-            List<TrackingInformation> lstTrackingInformation = TrackingInformationLogic.GetTrackingInformation(orderNumber);
+            //List<TrackingInformation> lstTrackingInformation = TrackingInformationLogic.GetTrackingInformation(orderNumber);
 
             using (var conn = DB.dbConn())
             {
