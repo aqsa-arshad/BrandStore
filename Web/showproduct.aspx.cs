@@ -238,7 +238,9 @@ namespace AspDotNetStorefront
                         else{
                         hdnquantity.Text="1";
                         }
-                      
+
+                        if (String.IsNullOrEmpty(hdnquantity.Text) || String.IsNullOrWhiteSpace(hdnquantity.Text))
+                            hdnquantity.Text = "0";
                       productprice = productprice * Convert.ToInt32(hdnquantity.Text);
                         if (productcategoryfund < productprice)
                         {
