@@ -56,6 +56,7 @@ namespace AspDotNetStorefront
                 OrderNumber = CommonLogic.QueryStringUSInt("OrderNumber");
                 GetOrderInfo();
                 GetOrderItemsDetail();
+                SetTrackingInfo();
                 hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";
             }
         }
@@ -272,29 +273,29 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void rptOrderItemsDetail_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {            
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
                 (e.Item.FindControl("lblRegularPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value)));
                 (e.Item.FindControl("lblCreditPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfCreditPrice") as HiddenField).Value)));
-                if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
-                {
-                    var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.ToUpper().Contains(listItem.ToUpper()) && (e.Item.FindControl("hfIsDownload") as HiddenField).Value != "1"))
-                    {
-                        if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
-                        {
-                            (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
-                                string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
-                                    (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
-                        }
-                    }
-                    if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
-                    {
-                        (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
-                    }
-                }
+                //if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
+                //{
+                //    var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                //    foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.ToUpper().Contains(listItem.ToUpper()) && (e.Item.FindControl("hfIsDownload") as HiddenField).Value != "1"))
+                //    {
+                //        if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
+                //        {
+                //            (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
+                //                string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
+                //                    (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
+                //        }
+                //    }
+                //    if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
+                //    {
+                //        (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
+                //    }
+                //}
 
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value))
                 {
@@ -308,7 +309,7 @@ namespace AspDotNetStorefront
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
-                    (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
+                    //(e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
                 else
@@ -370,9 +371,34 @@ namespace AspDotNetStorefront
                     totalBluBucks = totalBluBucks +
                                     Math.Round(
                                         Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
-                    lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), totalBluBucks.ToString());
+                    lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), totalBluBucks);
                     lblBluBucksTotal.Visible = true;
                     lblBluBucksTotalCaption.Visible = true;
+                }
+            }
+        }
+
+        void SetTrackingInfo()
+        {
+            var lstTrackingInformation = TrackingInformationLogic.GetTrackingInformation(OrderNumber);
+
+            rptTrackingInformation.DataSource = lstTrackingInformation;
+            rptTrackingInformation.DataBind();
+        }
+
+        protected void rptTrackingInformation_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if ((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains("|"))
+                {
+                    var shippingMethodSplit = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Split('|');
+                    (e.Item.FindControl("lblShippingMethod") as Label).Text = shippingMethodSplit[0] + ": $" + shippingMethodSplit[1];
+                }
+                else
+                {
+                    (e.Item.FindControl("lblShippingMethod") as Label).Text =
+                        (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
                 }
             }
         }

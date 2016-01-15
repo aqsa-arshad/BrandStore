@@ -4,7 +4,7 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <div class="content-box-03">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <p class="label-text">
                     <span>
                         <font><asp:Label ID="lblOrderNumberCaption" runat="server" Text='<%$ Tokens:StringResource, orders.aspx.OrderNumber %>'/></font>
@@ -14,6 +14,16 @@
                         <font><asp:Label ID="lblOrderDateCaption" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>" /></font>
                         <asp:Label runat="server" ID="lblOrderDate"></asp:Label>
                     </span>
+                    <asp:Repeater ID="rptTrackingInformation" runat="server" OnItemDataBound="rptTrackingInformation_ItemDataBound">
+                        <ItemTemplate>
+                            <asp:HiddenField ID="hfShippingMethod" runat="server" Value='<%# Eval("ShippingMethod") %>' />
+                            <span>
+                                <asp:Label ID="lblShippingMethod" runat="server" />
+                                <asp:Label runat="server" ID="lblTrackingNumberCaption" Text="- Tracking Number: " />
+                                <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server" Text='<%# Eval("TrackingNumber") %>' NavigateUrl='<%# Eval("TrackingURL") %>' />
+                            </span>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </p>
             </div>
         </div>
@@ -80,7 +90,7 @@
             <div class="clearfix"></div>
             <table class="table order-detail border-line">
                 <tbody>
-                    <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
+                    <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptOrderItemsDetail_ItemDataBound">
                         <ItemTemplate>
                             <tr>
                                 <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
@@ -150,10 +160,10 @@
                                         <asp:Label ID="lblDelivery" runat="server"></asp:Label>
                                     </span>
                                 </td>
-                                <td class="td-15-percent">
+                                <%--<td class="td-15-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
                                     <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server">Track item &gt;</asp:HyperLink>
-                                </td>
+                                </td>--%>
                             </tr>
                         </ItemTemplate>
                         <FooterTemplate></FooterTemplate>

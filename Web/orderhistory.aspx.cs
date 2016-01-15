@@ -136,34 +136,7 @@ namespace AspDotNetStorefront
             String ShippingStatus = String.Empty;
             if (AppLogic.OrderHasShippableComponents(OrderNumber))
             {
-                if (ShippedOn != "")
-                {
-                    ShippingStatus = AppLogic.GetString("account.aspx.48", SkinID, ThisCustomer.LocaleSetting);
-                    if (ShippedVIA.Length != 0)
-                    {
-                        ShippingStatus += " " + AppLogic.GetString("account.aspx.49", SkinID, ThisCustomer.LocaleSetting) + " " + ShippedVIA;
-                    }
-
-                    ShippingStatus += " " + AppLogic.GetString("account.aspx.50", SkinID, ThisCustomer.LocaleSetting) + " " + Localization.ParseNativeDateTime(ShippedOn).ToString(new CultureInfo(ThisCustomer.LocaleSetting));
-                    if (ShippingTrackingNumber.Length != 0)
-                    {
-                        ShippingStatus += "<br>" + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
-
-                        String TrackURL = Shipping.GetTrackingURL(ShippingTrackingNumber);
-                        if (TrackURL.Length != 0)
-                        {
-                            ShippingStatus += "<a href=\"" + TrackURL + "\" target=\"_blank\">" + ShippingTrackingNumber + "</a>";
-                        }
-                        else
-                        {
-                            ShippingStatus += ShippingTrackingNumber;
-                        }
-                    }
-                }
-                else
-                {
-                    ShippingStatus = AppLogic.GetString("account.aspx.52", SkinID, ThisCustomer.LocaleSetting);
-                }
+                ShippingStatus = AppLogic.GetString(ShippedOn != "" ? "account.aspx.48" : "account.aspx.52", SkinID, ThisCustomer.LocaleSetting);
             }
             if (AppLogic.OrderHasDownloadComponents(OrderNumber, true))
             {

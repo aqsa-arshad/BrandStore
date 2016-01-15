@@ -21,7 +21,7 @@ namespace AspDotNetStorefront
         /// <summary>
         /// List for the used funds
         /// </summary>
-        List<double> lstFund = Enumerable.Repeat(0.0, 7).ToList();
+        List<decimal> lstFund = Enumerable.Repeat(0m, 7).ToList();
         /// <summary>
         /// The order number
         /// </summary>
@@ -162,50 +162,50 @@ namespace AspDotNetStorefront
                                                    reader["CardExpirationYear"];
                             lblPMCountry.Text = reader["BillingCountry"].ToString();
                             //Billing Amounts
-                            lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderSubtotal"]));
-                            lblTax.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderTax"]));
-                            lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderShippingCosts"]));
-                            lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderTotal"]));
+                            lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderSubtotal"]));
+                            lblTax.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTax"]));
+                            lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderShippingCosts"]));
+                            lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTotal"]));
                             for (var i = 2; i < 7; i++)
                             {
                                 if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
                                 {
                                     lstFund[i] =
-                                        lstFund[i] + Convert.ToDouble(reader[i.ToString()].ToString());
+                                        lstFund[i] + Convert.ToDecimal(reader[i.ToString()].ToString());
 
                                     if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
                                     {
-                                        lblSOFFundsTotal.Text = lstFund[i].ToString();
+                                        lblSOFFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         lblSOFFundsTotal.Visible = true;
                                         lblSOFFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
                                     {
-                                        lblDirectMailFundsTotal.Text = lstFund[i].ToString();
+                                        lblDirectMailFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         lblDirectMailFundsTotal.Visible = true;
                                         lblDirectMailFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
                                     {
-                                        lblDisplayFundsTotal.Text = lstFund[i].ToString();
+                                        lblDisplayFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         lblDisplayFundsTotal.Visible = true;
                                         lblDisplayFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
                                     {
-                                        lblLiteratureFundsTotal.Text = lstFund[i].ToString();
+                                        lblLiteratureFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         lblLiteratureFundsTotal.Visible = true;
                                         lblLiteratureFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
                                     {
-                                        lblPOPFundsTotal.Text = lstFund[i].ToString();
+                                        lblPOPFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         lblPOPFundsTotal.Visible = true;
                                         lblPOPFundsTotalCaption.Visible = true;
                                     }
                                 }
                             }
-                            if (lstFund.Sum(x => Convert.ToDouble(x)) <= 0)
+                            if (lstFund.Sum(x => Convert.ToDecimal(x)) <= 0)
                             {
                                 lblCreditsUsedCaption.Visible = false;
                             }
@@ -270,19 +270,32 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                (e.Item.FindControl("lblRegularPrice") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value), 2).ToString();
+                (e.Item.FindControl("lblRegularPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value)));
+                (e.Item.FindControl("lblCreditPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfCreditPrice") as HiddenField).Value)));
                 (e.Item.FindControl("ImgProduct") as Image).ImageUrl = !string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value) ? AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon") : AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
                                                                           (e.Item.FindControl("hfSKU") as HiddenField)
                                                                               .Value;
-                }                
+                }
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfDescription") as HiddenField).Value))
+                {
+                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 100)
+                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
+                                                                              .Value.Take(100).Aggregate("", (x, y) => x + y) + " ...";
+                    else
+                    {
+                        (e.Item.FindControl("lblDescription") as Label).Text =
+                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
+                    }
+                }
                 if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
                 {
-                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
                 }
+                
                 else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
@@ -291,12 +304,12 @@ namespace AspDotNetStorefront
                 else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
                 }
                 else
                 {
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value), 2).ToString();
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)); 
                 }
                 if (ThisCustomer.CustomerLevelID == 1 || ThisCustomer.CustomerLevelID == 8 || ThisCustomer.CustomerLevelID == 2)
                 {
@@ -317,8 +330,8 @@ namespace AspDotNetStorefront
                 {
                     totalBluBucks = totalBluBucks +
                                     Math.Round(
-                                        Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);                    
-                    lblBluBucksTotal.Text = totalBluBucks.ToString();
+                                        Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
+                    lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), totalBluBucks);
                     lblBluBucksTotal.Visible = true;
                     lblBluBucksTotalCaption.Visible = true;
                 }
