@@ -78,8 +78,12 @@ namespace AspDotNetStorefrontAdmin.Controls
         private MenuItem GetMenuItem(String key, String value, String Url, String target)
         {
             String name = AppLogic.GetStringForDefaultLocale(key);
-
-            MenuItem item = new MenuItem();
+             MenuItem item = new MenuItem();
+            //disable Manage Customer level links
+            if(name.Equals("Manage Customer Levels"))
+            {
+                item.Enabled = false;
+            }
             item.Text = AppLogic.GetStringForDefaultLocale(key);
             item.Value = CommonLogic.IIF(String.IsNullOrEmpty(value), name, value);
             if (!String.IsNullOrEmpty(Url))

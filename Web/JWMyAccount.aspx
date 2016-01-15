@@ -25,19 +25,10 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6 pull-sm-no">
-                <a href="OrderHistory.aspx" class="btn btn-md btn-primary btn-block" type="submit">View Order History</a>
-            </div>
+        <div class="btn-center">
+            <a href="OrderHistory.aspx" class="btn btn-md btn-primary" type="submit">View Order History</a>
         </div>
-
     </div>
-
-    <%--<div class="content-box-03 body-forms">
-        <aspdnsf:CustomerAlerts ID="UC_EditAccount" runat="server" />
-    </div>--%>
 
     <div class="content-box-03">
         <div class="row address tablet-view">

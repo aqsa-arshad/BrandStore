@@ -19,6 +19,8 @@ namespace AspDotNetStorefrontAdmin
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            Response.Redirect("Default.aspx");
+
             Response.CacheControl = "private";
             Response.Expires = 0;
             Response.AddHeader("pragma", "no-cache");
@@ -83,7 +85,7 @@ namespace AspDotNetStorefrontAdmin
 
 
             writer.Append(" </table>\n");
-            writer.Append("<p align=\"left\"><input class=\"normalButtons\" type=\"button\" value=\"" + AppLogic.GetString("admin.customerlevels.AddNewCustomerLevel", SkinID, LocaleSetting) + "\" name=\"AddNew\" onClick=\"self.location='" + AppLogic.AdminLinkUrl("editCustomerLevel.aspx") + "';\"></p>\n");
+            writer.Append("<p align=\"left\"><input class=\"normalButtons\"   type=\"button\" value=\"" + AppLogic.GetString("admin.customerlevels.AddNewCustomerLevel", SkinID, LocaleSetting) + "\" name=\"AddNew\" onClick=\"self.location='" + AppLogic.AdminLinkUrl("editCustomerLevel.aspx") + "';\"></p>\n");
             writer.Append("</form>\n");
 
             writer.Append("</center></b>\n");
