@@ -737,6 +737,11 @@
                     fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }
+                else if (ItemFundId == 0) {
+                    fundamount = 0;
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
+                    applyFund(newpricetotal, fundamount);
+                }
 
                 var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                 var BluBucksUsed = $("#txtBluBuksUsed").val();
