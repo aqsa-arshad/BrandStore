@@ -101,16 +101,11 @@
                     if (customerlevel == 13 || customerlevel == 4 ||  customerlevel == 5 || customerlevel == 6) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                        $("#spprice").text("$" + updatedprice.toFixed(2));
-                        if (parseFloat($("#hdnBluBucktsPoints").text()) <= 0) {
-                            $(btnname).trigger("click");
-                           
-                        }
-                        else {
+                        $("#spprice").text("$" + updatedprice.toFixed(2));                        
 
                             $("#btnaddtocart").attr("data-toggle", "modal");
                             $("#btnaddtocart").attr("data-target", "#myModa2");
-                        }
+                      
 
                     }                   
                     else {                      

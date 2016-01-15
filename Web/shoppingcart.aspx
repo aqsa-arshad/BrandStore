@@ -635,7 +635,7 @@
                 
 
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
-                    if (ItemQuantity == 0 || parseFloat($("#hdnBluBucktsPoints").text()) <=0) {
+                    if (ItemQuantity == 0) {
                         
                         PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                     }
