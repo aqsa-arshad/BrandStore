@@ -640,11 +640,11 @@ namespace AspDotNetStorefrontControls
             _txtCCNumber.CssClass = "form-control card-number";
             _txtCCVerCd.CssClass = "form-control card-ccv";
             _txtCCIssueNum.CssClass = "form-control card-issue-number";
-            _ddlCCType.CssClass = "form-control card-type";
-            _ddlCCExpMonth.CssClass = "form-control card-expiration-month";
-			_ddlCCExpYr.CssClass = "form-control card-expiration-year";
-			_ddlCCStartMonth.CssClass = "form-control card-start-month";
-			_ddlCCStartYr.CssClass = "form-control card-start-year";
+            _ddlCCType.CssClass = "select-list card-type";
+            _ddlCCExpMonth.CssClass = "select-list card-expiration-month";
+            _ddlCCExpYr.CssClass = "select-list card-expiration-year";
+            _ddlCCStartMonth.CssClass = "select-list card-start-month";
+            _ddlCCStartYr.CssClass = "select-list card-start-year";
         }
 
         /// <summary>

@@ -4746,6 +4746,13 @@ input[type="password"]:focus,
   color: #1d446b;
   outline: none;
 }
+.select-list {
+  border: 1px solid #c6c6c6;
+  border-radius: 0;
+  padding: 4px 12px;
+  height: 26px;
+  color: #1d446b;
+}
 h1 {
   color: #ffffff;
   font-family: 'Minion Pro';
@@ -5519,14 +5526,14 @@ a:hover.mb-login-btn {
 .pagerArea .page-next {
   padding-left: 10px;
 }
-.checkout-two-fields .form-control {
+.checkout-two-fields .select-list {
   display: inline-block;
 }
-.checkout-two-fields .form-control {
+.checkout-two-fields .select-list {
   width: 49%;
 }
 @media screen and (min-width: 768px) {
-  .checkout-two-fields .form-control {
+  .checkout-two-fields .select-list {
     width: 30%;
     margin-right: 5px;
   }

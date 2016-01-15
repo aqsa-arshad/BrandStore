@@ -28,23 +28,10 @@
             </div>
         </div>
 
-        <%-- <div class="text-center">
+        <div class="btn-center">
             <a href="OrderHistory.aspx" class="btn btn-md btn-primary" type="submit">View Order History</a>
-        </div>--%>
-
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6 pull-sm-no">
-                <a href="OrderHistory.aspx" class="btn btn-md btn-primary btn-block" type="submit">View Order History</a>
-            </div>
         </div>
-
     </div>
-
-    <%--<div class="content-box-03 body-forms">
-        <aspdnsf:CustomerAlerts ID="UC_EditAccount" runat="server" />
-    </div>--%>
 
     <div class="content-box-03">
         <div class="row address tablet-view">
@@ -61,56 +48,56 @@
 
                 </p>
             </div>
-    </div>
-    <div class="row address tablet-view">
-        <div class="col-md-6 pull-left-md pull-sm-no">
-            <h5>Primary Billing Address</h5>
-            <ul style="overflow: hidden;">
-                <li>
-                    <asp:Label ID="lblBANA" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBAFullName" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBAAddress1" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBAAddress2" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBASuite" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBACityStateZip" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBACountry" runat="server" Visible="false"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblBAPhone" runat="server"></asp:Label></li>
-            </ul>
-            <div class="clearfix"></div>
-            <asp:Button ID="btnChangeBillingAddress" runat="server" CssClass="btn btn-md btn-primary btn-block" Text="Change Billing Address" OnClick="btnChangeBillingAddress_Click" />
         </div>
+        <div class="row address tablet-view">
+            <div class="col-md-6 pull-left-md pull-sm-no">
+                <h5>Primary Billing Address</h5>
+                <ul style="overflow: hidden;">
+                    <li>
+                        <asp:Label ID="lblBANA" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBAFullName" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBAAddress1" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBAAddress2" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBASuite" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBACityStateZip" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBACountry" runat="server" Visible="false"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblBAPhone" runat="server"></asp:Label></li>
+                </ul>
+                <div class="clearfix"></div>
+                <asp:Button ID="btnChangeBillingAddress" runat="server" CssClass="btn btn-md btn-primary btn-block" Text="Change Billing Address" OnClick="btnChangeBillingAddress_Click" />
+            </div>
 
-        <div class="col-md-6 pull-left-md pull-sm-no">
-            <h5>Primary Shipping Address</h5>
-            <ul style="overflow: hidden;">
-                <li>
-                    <asp:Label ID="lblSANA" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSAFullName" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSAAddress1" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSAAddress2" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSASuite" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSACityStateZip" runat="server"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSACountry" runat="server" Visible="false"></asp:Label></li>
-                <li>
-                    <asp:Label ID="lblSAPhone" runat="server"></asp:Label></li>
-            </ul>
-            <div class="clearfix"></div>
-            <asp:Button ID="btnChangeShippingAddress" runat="server" CssClass="btn btn-md btn-primary btn-block" Text="Change Shipping Address" OnClick="btnChangeShippingAddress_Click" />
+            <div class="col-md-6 pull-left-md pull-sm-no">
+                <h5>Primary Shipping Address</h5>
+                <ul style="overflow: hidden;">
+                    <li>
+                        <asp:Label ID="lblSANA" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSAFullName" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSAAddress1" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSAAddress2" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSASuite" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSACityStateZip" runat="server"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSACountry" runat="server" Visible="false"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblSAPhone" runat="server"></asp:Label></li>
+                </ul>
+                <div class="clearfix"></div>
+                <asp:Button ID="btnChangeShippingAddress" runat="server" CssClass="btn btn-md btn-primary btn-block" Text="Change Shipping Address" OnClick="btnChangeShippingAddress_Click" />
+            </div>
         </div>
-    </div>
     </div>
 
 </asp:Content>
