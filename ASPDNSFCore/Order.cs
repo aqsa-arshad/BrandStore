@@ -1603,6 +1603,13 @@ namespace AspDotNetStorefrontCore
                 return m_BillingAddress;
             }
         }
+        public String ShippingTrackingNumber
+        {
+            get
+            {
+                return m_ShippingTrackingNumber;
+            }
+        }
 
         public String ShippingMethod
         {

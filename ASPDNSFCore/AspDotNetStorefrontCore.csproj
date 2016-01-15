@@ -153,6 +153,7 @@
     <Compile Include="fts.cs" />
     <Compile Include="Skin.cs" />
     <Compile Include="SkinProvider.cs" />
+    <Compile Include="TrackingInformation.cs" />
     <Compile Include="Validation\AddressValidator.cs" />
     <Compile Include="MultiShipOrder_Shipment.cs" />
     <Compile Include="OrderShipment.cs" />
