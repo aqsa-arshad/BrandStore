@@ -7150,7 +7150,7 @@ namespace AspDotNetStorefrontCore
         }
 
         //Added By Tayyab on 10-01-2016 to update fund used for item
-        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed)
+        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode)
         {
             m_CachedTotals.Clear();
             for (int i = 0; i < m_CartItems.Count; i++)
@@ -7162,25 +7162,15 @@ namespace AspDotNetStorefrontCore
                   //  BluBucksUsed =  ci.BluBuksUsed + BluBucksUsed;
                     ci.CategoryFundUsed = CategoryFundUsed;
                     ci.BluBuksUsed = BluBucksUsed;
+                    ci.GLcode = GLcode;
                     m_CartItems[i] = ci;
                     break;
                 }
             }
 
 
-            String sql = "update ShoppingCart set CategoryFundUsed=" + CategoryFundUsed.ToString() + ",BluBucksUsed=" + BluBucksUsed.ToString() + "  where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
-            DB.ExecuteSQL(sql, m_DBTrans);
-                //for (int i = 0; i < m_CartItems.Count; i++)
-                //{
-                //    if (((CartItem)m_CartItems[i]).ShoppingCartRecordID == cartRecordID)
-                //    {
-                //        CartItem ci = (CartItem)m_CartItems[i];
-                //        ci.CategoryFundUsed = ci.CategoryFundUsed + Convert.ToDecimal(CategoryFundUsed);
-                //        ci.BluBuksUsed =ci.BluBuksUsed + Convert.ToDecimal(BluBucksUsed);
-                //        m_CartItems[i] = ci;
-                //        break;
-                //    }
-                //}
+            String sql = "update ShoppingCart set CategoryFundUsed=" + CategoryFundUsed.ToString() + ",GLcode='" + GLcode.ToString()  +"',BluBucksUsed=" + BluBucksUsed.ToString() + "  where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
+            DB.ExecuteSQL(sql, m_DBTrans);              
            
 
             RecalculateCartDiscount();

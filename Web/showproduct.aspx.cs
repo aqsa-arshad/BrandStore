@@ -225,8 +225,19 @@ namespace AspDotNetStorefront
                         }
                         else
                         {
-                            hdnProductFundAmount.Text = "0";
-                            productcategoryfund = Convert.ToDecimal("0.00");
+                            CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds));//for sales rep
+                            if (tempfund != null)
+                            {
+                                hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                            }
+                            else
+                            {
+                                hdnProductFundAmount.Text = "0";
+                                productcategoryfund = Convert.ToDecimal("0.00");
+                            }
+                            hdnProductFundID.Text = "2";
+                           
                         }
 
 
@@ -537,8 +548,9 @@ namespace AspDotNetStorefront
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
                        // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        LiteralCustom.Text = m_PageOutputCustom+"<div>";
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);                       
+                            LiteralCustom.Text = m_PageOutputCustom + "<div>";
+
                     }
                 }
             }

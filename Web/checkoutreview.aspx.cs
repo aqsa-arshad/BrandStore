@@ -233,9 +233,9 @@ namespace AspDotNetStorefront
 
         private bool validateuserfunds()
         {
-            if (AuthenticationSSO.IsDealerUser(ThisCustomer.CustomerLevelID) || AuthenticationSSO.IsInternalUser(ThisCustomer.CustomerLevelID))
-                return AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
-            else
+            //if (AuthenticationSSO.IsDealerUser(ThisCustomer.CustomerLevelID) || AuthenticationSSO.IsInternalUser(ThisCustomer.CustomerLevelID))
+            //    return  AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
+            //else
                 return true;
         }
         private void ContinueCheckout()
