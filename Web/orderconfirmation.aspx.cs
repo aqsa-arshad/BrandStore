@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using AspDotNetStorefrontCore;
 using System.Net;
 using System.Linq;
@@ -144,11 +145,11 @@ namespace AspDotNetStorefront
                             lblPMExpireDate.Text = "Expires: " + reader["CardExpirationMonth"].ToString() + '/' +
                                                    reader["CardExpirationYear"].ToString();
                             lblPMCountry.Text = reader["BillingCountry"].ToString();
-                            //Billing Amounts
-                            lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
-                            lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
-                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
-                            lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
+                            //Billing Amounts                            
+                            lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderSubtotal"]));
+                            lblTax.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderTax"]));
+                            lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderShippingCosts"]));
+                            lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}",Convert.ToDecimal(reader["OrderTotal"]));
                             for (var i = 2; i < 7; i++)
                             {
                                 if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
@@ -416,8 +417,7 @@ namespace AspDotNetStorefront
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
-                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                  
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;                  
                 }
                 else
                 {

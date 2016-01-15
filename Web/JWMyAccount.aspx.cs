@@ -199,7 +199,7 @@ namespace AspDotNetStorefront
                         {
                             accountaspx55.Visible = false;
                             bOrderNumber.InnerText = reader["OrderNumber"].ToString();
-                            bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
+                            bStatus.InnerHtml = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
                             if (string.IsNullOrEmpty(SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()))))
                             {
                                 hlTrackItem.Visible = false;
@@ -290,7 +290,7 @@ namespace AspDotNetStorefront
                     shippingStatus += " " + AppLogic.GetString("account.aspx.50", SkinID, ThisCustomer.LocaleSetting) + " " + Localization.ParseNativeDateTime(ShippedOn).ToString(new CultureInfo(ThisCustomer.LocaleSetting));
                     if (ShippingTrackingNumber.Length != 0)
                     {
-                        shippingStatus += " " + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
+                        shippingStatus += "<br>" + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
 
                         var trackUrl = Shipping.GetTrackingURL(ShippingTrackingNumber);
                         if (trackUrl.Length != 0)

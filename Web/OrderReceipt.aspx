@@ -87,99 +87,99 @@
     </table>
 
     <%--Items Detail--%>
-    
-        <table class="receipt-print" border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tbody>
-                <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptOrderItemsDetail_ItemDataBound">
-                    <HeaderTemplate>
-                        <tr>
-                            <td height="30">
-                                <span class="frut-roman-font black-color text-uppercase">Description</span>
-                            </td>
-                            <td width="2%"></td>
-                            <td width="14%">
-                                <span class="frut-roman-font black-color text-uppercase">Quantity</span>
-                            </td>
-                            <td width="2%"></td>
-                            <td width="32%">
-                                <span class="frut-roman-font black-color text-uppercase">Payment</span>
-                            </td>
-                        </tr>
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <tr>
-                            <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
-                            <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
-                            <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
-                            <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
-                            <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
-                            <asp:HiddenField ID="hfChosenColor" runat="server" Value='<%# Eval("ChosenColor") %>' />
-                            <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
-                            <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
 
-                            <td width="50%" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td width="40%" valign="top">
-                                                <div class="primary-img-box"> <asp:Image ID="ImgProduct" runat="server" class="img-responsive" /></div>
-                                            </td>
-                                            <td width="60%" valign="top" valign="top">
-                                                <span class="normal-heading black-color">
-                                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
-                                                </span>
-                                                <span>
-                                                    <asp:Label ID="lblProductSKU" runat="server" />
-                                                </span>
-                                                <div class="shopping-cart-fix">
-                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>                                            
+    <table class="receipt-print" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptOrderItemsDetail_ItemDataBound">
+                <HeaderTemplate>
+                    <tr>
+                        <td height="30">
+                            <span class="frut-roman-font black-color text-uppercase">Description</span>
+                        </td>
+                        <td width="2%"></td>
+                        <td width="14%">
+                            <span class="frut-roman-font black-color text-uppercase">Quantity</span>
+                        </td>
+                        <td width="2%"></td>
+                        <td width="32%">
+                            <span class="frut-roman-font black-color text-uppercase">Payment</span>
+                        </td>
+                    </tr>
+                </HeaderTemplate>
+                <ItemTemplate>
+                    <tr>
+                        <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
+                        <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
+                        <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
+                        <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
+                        <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
+                        <asp:HiddenField ID="hfChosenColor" runat="server" Value='<%# Eval("ChosenColor") %>' />
+                        <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
+                        <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
+
+                        <td width="50%" valign="top">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td width="40%" valign="top">
+                                            <div class="primary-img-box">
+                                                <asp:Image ID="ImgProduct" runat="server" class="img-responsive" /></div>
+                                        </td>
+                                        <td width="60%" valign="top" valign="top">
+                                            <span class="normal-heading black-color">
+                                                <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
+                                            </span>
+                                            <span>
+                                                <asp:Label ID="lblProductSKU" runat="server" />
+                                            </span>
+                                            <div class="shopping-cart-fix">
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                                             </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                            </td>
-                            <td width="2%"></td>
-                            <td width="14%" valign="top">
-                                <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>' />
-                            </td>
-                            <td width="2%" ></td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="2%"></td>
+                        <td width="14%" valign="top">
+                            <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>' />
+                        </td>
+                        <td width="2%"></td>
 
-                            <td width="32%" valign="top">                                
-                                <span class="block-text">
-                                    <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
-                                </span>
-                                <span class="block-text">
-                                    <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
-                                </span>
-                                <span class="block-text">
-                                    <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
-                                </span>
-                                <span class="block-text">
-                                    <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("CreditPrice")), 2).ToString() %>
-                                </span>
-                            </td>
-                        </tr>
-                    </ItemTemplate>                    
-                </asp:Repeater>
-            </tbody>
-        </table>
-   
+                        <td width="32%" valign="top">
+                            <span class="block-text">
+                                <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
+                            </span>
+                            <span class="block-text">
+                                <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
+                            </span>
+                            <span class="block-text">
+                                <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
+                            </span>
+                            <span class="block-text">
+                                <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><%#Math.Round(Convert.ToDecimal(Eval("CreditPrice")), 2).ToString() %>
+                            </span>
+                        </td>
+                    </tr>
+                </ItemTemplate>
+            </asp:Repeater>
+        </tbody>
+    </table>
+
     <%--Billing Amounts--%>
-        <table class="table margin-none" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table class="table margin-none" border="0" cellpadding="0" cellspacing="0" width="100%">
         <tbody>
             <tr>
-            
-                    <td width="50%">
-    
-                    </td>
-                    <td width="2%"></td>
-                    <td width="14%"></td>
-                    <td width="2%"></td>
-                    <td width="32%">
-                         <p class="label-text">
+
+                <td width="50%"></td>
+                <td width="2%"></td>
+                <td width="14%"></td>
+                <td width="2%"></td>
+                <td width="32%">
+                    <p class="label-text">
                         <span>
-                            <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                            <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/></font>
+                            <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                         </span>
                     </p>
                     <span class="normal-heading black-color">
@@ -208,17 +208,19 @@
 
                     <span class="normal-heading black-color">Charges</span>
                     <p class="label-text">
-                        <span>Taxes: $<asp:Label runat="server" ID="lblTax"></asp:Label></span>
+                        <span>Taxes: <asp:Label runat="server" ID="lblTax"></asp:Label></span>
                         <span>
                             <asp:Label ID="lblShippingCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.aspx.12 %>' />
-                            $<asp:Label runat="server" ID="lblShippingCost"></asp:Label>
+                            <asp:Label runat="server" ID="lblShippingCost"></asp:Label>
                         </span>
                     </p>
 
                     <p class="label-text">
-                        <span><font><asp:Label ID="lblTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.61 %>'/> </font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                        <span><font><asp:Label ID="lblTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.61 %>'/> </font>
+                            <asp:Label runat="server" ID="lblTotalAmount"></asp:Label>
+                        </span>
                     </p>
-                    </td>                
+                </td>
             </tr>
         </tbody>
     </table>

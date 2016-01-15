@@ -147,7 +147,7 @@ namespace AspDotNetStorefront
                     ShippingStatus += " " + AppLogic.GetString("account.aspx.50", SkinID, ThisCustomer.LocaleSetting) + " " + Localization.ParseNativeDateTime(ShippedOn).ToString(new CultureInfo(ThisCustomer.LocaleSetting));
                     if (ShippingTrackingNumber.Length != 0)
                     {
-                        ShippingStatus += " " + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
+                        ShippingStatus += "<br>" + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
 
                         String TrackURL = Shipping.GetTrackingURL(ShippingTrackingNumber);
                         if (TrackURL.Length != 0)

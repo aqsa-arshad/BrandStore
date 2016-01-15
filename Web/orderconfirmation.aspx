@@ -67,12 +67,12 @@
                                                 <asp:Label ID="lblProductSKU" runat="server" />
                                             </span>
                                             <div class="shopping-cart-fix">
-                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>                                            
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                              <td class="td-35-percent label-text">
+                                <td class="td-35-percent label-text">
                                     <span class="normal-heading black-color">
                                         <asp:Label ID="lblPaymentCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.payment %>' />
                                     </span>
@@ -158,7 +158,8 @@
             <div class="td-25-percent pull-left">
                 <p>
                     <span class="black-blu-label">
-                        <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/> $</font><asp:Label runat="server" ID="lblSubTotal"></asp:Label>
+                        <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/></font>
+                        <asp:Label runat="server" ID="lblSubTotal"></asp:Label>
                     </span>
                 </p>
                 <span class="normal-heading black-color">
@@ -186,13 +187,15 @@
                 </p>
                 <span class="normal-heading black-color">Charges</span>
                 <p>
-                    <span class="block-text">Taxes: $<asp:Label runat="server" ID="lblTax"></asp:Label></span>
+                    <span class="block-text">Taxes: <asp:Label runat="server" ID="lblTax"></asp:Label></span>
                     <span class="block-text">
                         <asp:Label ID="lblShippingCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.aspx.12 %>' />
-                        $<asp:Label runat="server" ID="lblShippingCost"></asp:Label></span>
+                        <asp:Label runat="server" ID="lblShippingCost"></asp:Label></span>
                 </p>
                 <p>
-                    <span class="black-blu-label"><font><asp:Label ID="lblTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.61 %>'/> </font>$<asp:Label runat="server" ID="lblTotalAmount"></asp:Label></span>
+                    <span class="black-blu-label"><font><asp:Label ID="lblTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.61 %>'/></font>
+                        <asp:Label runat="server" ID="lblTotalAmount"></asp:Label>
+                    </span>
                 </p>
             </div>
             <div class="clearfix"></div>

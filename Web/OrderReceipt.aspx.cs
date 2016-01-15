@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
@@ -161,10 +162,10 @@ namespace AspDotNetStorefront
                                                    reader["CardExpirationYear"];
                             lblPMCountry.Text = reader["BillingCountry"].ToString();
                             //Billing Amounts
-                            lblSubTotal.Text = Math.Round(Convert.ToDecimal(reader["OrderSubtotal"]), 2).ToString();
-                            lblTax.Text = Math.Round(Convert.ToDecimal(reader["OrderTax"]), 2).ToString();
-                            lblShippingCost.Text = Math.Round(Convert.ToDecimal(reader["OrderShippingCosts"]), 2).ToString();
-                            lblTotalAmount.Text = Math.Round(Convert.ToDecimal(reader["OrderTotal"]), 2).ToString();
+                            lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderSubtotal"]));
+                            lblTax.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderTax"]));
+                            lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderShippingCosts"]));
+                            lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:C}", Convert.ToDecimal(reader["OrderTotal"]));
                             for (var i = 2; i < 7; i++)
                             {
                                 if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
