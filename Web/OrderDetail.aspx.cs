@@ -309,21 +309,7 @@ namespace AspDotNetStorefront
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
-                    //(e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                }
-                else
-                {
-                    if ((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains("|"))
-                    {
-                        var shippingMethodSplit = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Split('|');
-                        (e.Item.FindControl("lblDelivery") as Label).Text = shippingMethodSplit[0] + ": $" + shippingMethodSplit[1];
-                    }
-                    else
-                    {
-                        (e.Item.FindControl("lblDelivery") as Label).Text =
-                            (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
-                    }
                 }
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {

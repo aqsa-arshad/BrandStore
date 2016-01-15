@@ -408,10 +408,10 @@
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                        <div>
+                     
                             <asp:Button ID="btnaddtocart" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocart_Click" />
                             <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
-                        </div>
+                      
                     </div>
                 </div>
             </div>
@@ -586,11 +586,12 @@
                 //alert(currentContext);
                 //alert(methodName);
             }
-
+           
             $('input').keypress(function (e) {
-                var regex = new RegExp("^[0-9-]+$"); 
+             
+                var regex = new RegExp("^[0-9-.]+$");
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if (regex.test(str)) {
+                if (regex.test(str)) {                    
                     return true;
                 }
 
@@ -631,7 +632,7 @@
             
                 var customerlevel = $("#hdncustomerlevel").text();               
                 applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
-           
+                
 
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
@@ -733,6 +734,11 @@
                 }
                 else if (ItemFundId == 6) {
                     fundamount = $("#hdnpopfundamount").text();
+                    fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
+                    applyFund(newpricetotal, fundamount);
+                }
+                else if (ItemFundId == 0) {
+                    fundamount = 0;
                     fundamount = parseFloat(fundamount) + parseFloat(spfunddiscountprice)// + parseFloat(spblubucksprice);
                     applyFund(newpricetotal, fundamount);
                 }

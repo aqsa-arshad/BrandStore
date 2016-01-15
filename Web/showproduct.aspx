@@ -99,10 +99,14 @@
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
                     if (customerlevel == 13 || customerlevel == 4 ||  customerlevel == 5 || customerlevel == 6) {
+
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                        $("#spprice").text("$" + updatedprice.toFixed(2));
-                        $("#btnaddtocart").attr("data-toggle", "modal");
-                        $("#btnaddtocart").attr("data-target", "#myModa2");
+                        $("#spprice").text("$" + updatedprice.toFixed(2));                        
+
+                            $("#btnaddtocart").attr("data-toggle", "modal");
+                            $("#btnaddtocart").attr("data-target", "#myModa2");
+                      
+
                     }                   
                     else {                      
                         $(btnname).trigger("click");
@@ -147,7 +151,7 @@
                
             });
             $('input').keypress(function (e) {
-                var regex = new RegExp("^[0-9-]+$");
+                var regex = new RegExp("^[0-9-.]+$");
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
                     return true;
@@ -264,7 +268,7 @@
                     return (false);
                 }
                 if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
-                    alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_561_561 + ". Please contact us if you need more information.");
+                    alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
                     theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
                     theForm.Quantity_1_1.focus();
                     submitenabled(theForm);
