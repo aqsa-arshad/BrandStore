@@ -328,11 +328,13 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-4 col-md-4 checkout-field-adjust">
 
-                        <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block" runat="server" OnClick="btnback_Click" Text="Back"></asp:Button>
-                        <div class="clearfix"></div>
+                       
+                        
                         <asp:Button ID="btnContCheckout" runat="server" CssClass="btn btn-primary btn-block"
                             OnClick="btnContCheckout_Click"
                             Text="<%$ Tokens:StringResource, checkoutpayment.aspx.18 %>" />
+                        <div class="clearfix"></div>
+                        <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block btn-success" runat="server" OnClick="btnback_Click" Text="<< Back"></asp:Button>
                     </div>
 
                 </asp:Panel>
