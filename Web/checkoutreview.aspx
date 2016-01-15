@@ -141,5 +141,47 @@
     </div>
         <asp:Literal ID="ltPayPalIntegratedCheckout" runat="server" />
     </asp:Panel>
+
+     <script type="text/javascript">
+        $(document).ready(function () {
+            showhidepricelabels();
+
+            function showhidepricelabels() {
+
+                var customerlevel = GetCustomerLevel();
+                if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
+                    $(".spregularprice").removeClass("hide-element");
+                    $(".spfunddiscountprice").removeClass("hide-element");
+                    $(".spblubucksprice").removeClass("hide-element");
+                }
+                else if (customerlevel == 8 || customerlevel == 1) {
+                    //all or hidden except price
+
+                }
+                else {
+                    $(".spregularprice").removeClass("hide-element");
+                    $(".spfunddiscountprice").removeClass("hide-element");
+
+                }
+            }
+
+            function GetCustomerLevel() {
+                var CustomerLevelElemment;
+                if (document.getElementById('hdnCustomerLevel')) {
+                    CustomerLevelElemment = document.getElementById('hdnCustomerLevel');
+                }
+                else if (document.all) {
+                    CustomerLevelElemment = document.all['hdnCustomerLevel'];
+                }
+                else {
+                    CustomerLevelElemment = document.layers['hdnCustomerLevel'];
+                }
+
+                return CustomerLevelElemment.innerHTML;
+            }
+
+        });
+
+            </script>
     
 </asp:Content>

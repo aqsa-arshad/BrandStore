@@ -187,13 +187,13 @@ namespace AspDotNetStorefront
                         {
                             BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).AmountAvailable.ToString();
                             hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
-                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase items.";
+                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU(tm) Bucks you can use to purchase items.";
                         }
                         else
                         {
                             BluBuksPoints = "0".ToString();
                             hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
-                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU Bucks you can use to purchase items.";
+                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU(tm) Bucks you can use to purchase items.";
                         }
 
                        //Category Fund
@@ -261,7 +261,7 @@ namespace AspDotNetStorefront
                     {
                         hdnpricewithfund.Text = productprice.ToString();
                         hdnBluBucktsPoints.Text = "0";
-                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU Bucks you can use to purchase your items.";
+                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU(tm) Bucks you can use to purchase your items.";
 
                     }
 
