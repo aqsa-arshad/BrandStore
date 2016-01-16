@@ -1355,6 +1355,7 @@ namespace AspDotNetStorefrontCore
                         newItem.FundID = DB.RSFieldInt(rs, "FundID");
                         newItem.BluBucksPercentageUsed = DB.RSFieldDecimal(rs, "BluBucksPercentageUsed");
                         newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
+                        newItem.GLcode = DB.RSField(rs, "GLcode");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
@@ -6976,7 +6977,7 @@ namespace AspDotNetStorefrontCore
                                           DB.CreateSQLParameter("@FundID", SqlDbType.Int, 4, FundID, ParameterDirection.Input),
                                            DB.CreateSQLParameter("@BluBucksPercentageUsed", SqlDbType.Money, 4, BluBucksPercentageUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@ProductCategoryID", SqlDbType.Int, 4, ProductCategoryID, ParameterDirection.Input),
-                                           DB.CreateSQLParameter("@GLcode", SqlDbType.VarChar, 4, GLcode, ParameterDirection.Input),
+                                           DB.CreateSQLParameter("@GLcode", SqlDbType.NVarChar, 200, GLcode, ParameterDirection.Input),
                                          };
 
                         NewRecID = DB.ExecuteStoredProcInt("dbo.aspdnsf_AddItemToCart", spa, m_DBTrans);
@@ -10628,6 +10629,10 @@ namespace AspDotNetStorefrontCore
             get
             {
                 return m_OrderNotes;
+            }
+            set
+            {
+                m_OrderNotes = value;
             }
         }
 

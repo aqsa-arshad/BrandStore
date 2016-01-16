@@ -92,7 +92,7 @@
                     <div class="buttons-group trueblue-popup">
                       
                        <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server"  />
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server"  />
                         <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
                      
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>

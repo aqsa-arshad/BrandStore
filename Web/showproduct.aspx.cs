@@ -637,11 +637,16 @@ namespace AspDotNetStorefront
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
+
+            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
+                formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
+            else
             formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
+
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
-            formInput.GLcode = "";
+            formInput.GLcode = txtGLcode.Text;
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
