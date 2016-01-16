@@ -15,6 +15,8 @@ namespace AspDotNetStorefront
     /// <summary>
     /// Handle the Order confirmation
     /// </summary>
+    [PageType("orderconfirmation")] //added in by Mauricio to fix Analytics Ecommerce problem
+   
     public partial class orderconfirmation : SkinBase
     {
         /// <summary>
