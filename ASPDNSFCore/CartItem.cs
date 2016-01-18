@@ -99,6 +99,7 @@ namespace AspDotNetStorefrontCore
         private int m_ProductCategory;
         private Decimal m_BluBucksPercentageUsed;
         private String m_GLcode;
+        private String m_FundName;
 
 
 
@@ -213,6 +214,7 @@ namespace AspDotNetStorefrontCore
            m_ProductCategory=ci.ProductCategoryID;
            m_BluBucksPercentageUsed = ci.BluBucksPercentageUsed;
            m_GLcode = ci.GLcode;
+           m_FundName = ci.FundName;
         }
 
         #endregion
@@ -268,6 +270,12 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_GLcode; }
             set { m_GLcode = value; }
+        }
+
+        public String FundName
+        {
+            get { return m_FundName; }
+            set { m_FundName = value; }
         }
 
         public String ProductDescription
