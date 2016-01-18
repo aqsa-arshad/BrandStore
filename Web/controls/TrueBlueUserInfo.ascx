@@ -14,7 +14,7 @@
                 <span class="block-text">
                 <asp:Label ID="lblCustomerFundName" runat="server" Text='<%# Eval("FundName") %>'></asp:Label>
                 <asp:Label ID="lblSeprator" runat="server" Text="="></asp:Label>
-                <asp:Label ID="lblCustomerFundAmount" runat="server" Text='<%# String.Format("{0:C}", Eval("AmountAvailable")) %>'></asp:Label>                  
+                <asp:Label ID="lblCustomerFundAmount" runat="server" Text='<%# String.Format("{0:0.00}", Eval("AmountAvailable")) %>'></asp:Label>                  
 
                 </span>
             </ItemTemplate>
@@ -30,7 +30,6 @@
                         </span>
                     </ItemTemplate>
                 </asp:Repeater>
-                <p>(Other discounts per tier level)</p>
             </div>
         </div>
     </div>
