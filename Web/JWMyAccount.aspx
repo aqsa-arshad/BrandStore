@@ -13,12 +13,9 @@
                 <ul id="ulLatestOrderStatus" runat="server">
                     <li>Order Number: <b runat="server" id="bOrderNumber"></b></li>
                     <li>Status: <b id="bStatus" runat="server"></b></li>
-                    <li>
-                        <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server">Track Current Order</asp:HyperLink>
-                    </li>
+                    <a class="underline-link" id="aOrderDetail" runat="server" target="_blank">View Detail</a>
                 </ul>
             </div>
-
 
             <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Downloads</h5>
@@ -38,14 +35,12 @@
             <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Contact Information</h5>
                 <p>
-
                     <asp:Label ID="lblName" runat="server" CssClass="block-text"></asp:Label>
                     <asp:Label ID="lblmailId" runat="server" CssClass="block-text"></asp:Label>
 
                     <asp:Label ID="lblPhoneNumber" runat="server" CssClass="block-text"></asp:Label>
                     <br />
                     <asp:LinkButton runat="server" CssClass="underline-link block-text" ID="lnkEditAccountInfo" OnClick="UpdateAccountInfo_Click" Text="Update Contact Information" Visible="false"></asp:LinkButton>
-
                 </p>
             </div>
         </div>
@@ -99,6 +94,11 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnViewAccountofuser").addClass("hide-element");
+        });
+    </script>
 
 </asp:Content>
 
