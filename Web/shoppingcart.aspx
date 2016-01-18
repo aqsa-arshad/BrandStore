@@ -526,7 +526,10 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spproductcategoryfund = $("#spfunddiscountprice_" + currentrecordid).text().replace("(FUND) discount: $", "");
+                var spproductcategoryfund = $("#spfunddiscountprice_" + currentrecordid).text()//529;
+                var toreplace = spproductcategoryfund.substr(0, spproductcategoryfund.lastIndexOf(":") + 1);
+                spproductcategoryfund = spproductcategoryfund.replace(toreplace, "").replace("$", "");
+
                 spproductcategoryfund = parseFloat($("#hdnsoffundamount").text()) + parseFloat(spproductcategoryfund)
                 // $("#hdnsoffundamount").text(spproductcategoryfund);
 
@@ -657,6 +660,7 @@
             });
 
             $(".lnkUpdateItem").click(function () {
+                debugger;
                 var id = $(this).attr("id");
                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
                 $("#hdntoreplace").text(toreplace);
@@ -743,7 +747,9 @@
             function applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel) {
                 debugger;
                 var ItemFundId = $("#spItemFundId_" + currentrecordid).text();
-                var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text().replace("(FUND) discount: $", "");
+                var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();//.replace("(FUND) discount: $", "");
+                var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
+                spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$","");              
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used:", "");
 
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
