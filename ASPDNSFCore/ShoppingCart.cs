@@ -8555,7 +8555,7 @@ namespace AspDotNetStorefrontCore
                     String[] SizesDisplaySplit = SizesDisplay.Split(',');
                     String[] SizeSKUsSplit = SizeSKUModifiers.Split(',');
                    // tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", ProductID, VariantID);
-                    tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", "1", "1");
+                    tmpS.AppendFormat(" <select class=\"select-list\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", "1", "1");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + SizeOptionPrompt + "</option>\n");
@@ -8589,7 +8589,7 @@ namespace AspDotNetStorefrontCore
                     String[] ColorsMasterSplit = ColorsMaster.Split(',');
                     String[] ColorsDisplaySplit = ColorsDisplay.Split(',');
                     String[] ColorSKUsSplit = ColorSKUModifiers.Split(',');
-                    tmpS.Append(String.Format(" <select class=\"form-control color-select\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", "1", "1"));
+                    tmpS.Append(String.Format(" <select class=\"select-list\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", "1", "1"));
 
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
@@ -10249,7 +10249,7 @@ namespace AspDotNetStorefrontCore
                     String[] SizesMasterSplit = SizesMaster.Split(',');
                     String[] SizesDisplaySplit = SizesDisplay.Split(',');
                     String[] SizeSKUsSplit = SizeSKUModifiers.Split(',');
-                    tmpS.Append(" <select name=\"Size\" id=\"Size\" class=\"form-control size-select\" " + CommonLogic.IIF(HasSizePriceModifiers, "onChange=\"if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")}\"", "") + ">\n");
+                    tmpS.Append(" <select name=\"Size\" id=\"Size\" class=\"select-list\" " + CommonLogic.IIF(HasSizePriceModifiers, "onChange=\"if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")}\"", "") + ">\n");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + SizeOptionPrompt + "</option>\n");
@@ -10281,7 +10281,7 @@ namespace AspDotNetStorefrontCore
                     String[] ColorsMasterSplit = ColorsMaster.Split(',');
                     String[] ColorsDisplaySplit = ColorsDisplay.Split(',');
                     String[] ColorSKUsSplit = ColorSKUModifiers.Split(',');
-                    tmpS.Append(" <select id=\"Color\" name=\"Color\" class=\"form-control color-select\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + CommonLogic.IIF(HasColorPriceModifiers, "if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")};", "") + "\">\n");
+                    tmpS.Append(" <select id=\"Color\" name=\"Color\" class=\"select-list\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + CommonLogic.IIF(HasColorPriceModifiers, "if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")};", "") + "\">\n");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + ColorOptionPrompt + "</option>\n");
