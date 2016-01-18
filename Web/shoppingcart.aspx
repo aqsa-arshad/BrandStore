@@ -599,7 +599,7 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used: $", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used:", "");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
                 $("#hdnBluBucktsPoints").text(spblubucksprice);
                 
@@ -744,7 +744,7 @@
                 debugger;
                 var ItemFundId = $("#spItemFundId_" + currentrecordid).text();
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text().replace("(FUND) discount: $", "");
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used: $", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used:", "");
 
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
                 var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
