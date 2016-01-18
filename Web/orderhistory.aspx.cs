@@ -37,21 +37,67 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 || ThisCustomer.CustomerLevelID == 6)
-            {
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY FOR " + GetDealerName(ThisCustomer.CustomerID);
-            }
+            RequireSecurePage();
+            RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
+
             if (!this.IsPostBack)
             {
-                GetOrders(1);
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY";
+                string email = Request.QueryString["email"];
+                hfCustomerID.Value = ThisCustomer.CustomerID.ToString();
+                if (!string.IsNullOrEmpty(email))
+                {
+                    Customer customer = new Customer(email);
+                    hfCustomerID.Value = customer.CustomerID.ToString();
+                    ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY FOR " + customer.FullName();
+                    pnlFundsInformation.Visible = true;
+                    GetCustomerFunds(customer.CustomerID, customer.CustomerLevelID, customer.CustomerLevelName);
+                }
+                GetOrders(1, int.Parse(hfCustomerID.Value));
             }
+        }
+
+        /// <summary>
+        /// Get Customer Funds
+        /// </summary>
+        /// <param name="customerID">CustomerID</param>
+        /// <param name="customerLevelID">CustomerLevelID</param>
+        /// <param name="customerLevelName">CustomerLevelName</param>
+        private void GetCustomerFunds(int customerID, int customerLevelID, string customerLevelName)
+        {
+            lblCustomerLevel.Text = customerLevelName;
+            List<CustomerFund> lstCustomerFund = AuthenticationSSO.GetCustomerFund(customerID, false);
+            
+            if (AuthenticationSSO.IsInternalUser(customerLevelID))
+            {
+                lstCustomerFund.RemoveAll(x => x.FundID != (int)FundType.SOFFunds);
+                lblBluBucksHeading.Visible = false;
+                lblBluBucks.Visible = false;
+            }
+            else if (AuthenticationSSO.IsDealerUser(customerLevelID))
+            {
+                if (AuthenticationSSO.IsTrueBluDealerUser(customerLevelID))
+                {
+                    decimal BLUBucks = lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks) != null ? lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks).AmountAvailable : 0;
+                    lblBluBucks.Text = String.Format("{0:00}", BLUBucks);
+                }
+                else
+                {
+                    lblBluBucksHeading.Visible = false;
+                    lblBluBucks.Visible = false;
+                }
+                lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.BLUBucks);
+                lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);                
+            }
+            rptAllCustomerFunds.DataSource = lstCustomerFund;
+            rptAllCustomerFunds.DataBind();
         }
 
         /// <summary>
         /// Gets the orders.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
-        public void GetOrders(int pageIndex)
+        public void GetOrders(int pageIndex, int customerID)
         {
             string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
             try
@@ -67,7 +113,7 @@ namespace AspDotNetStorefront
                         cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
                         cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
                         cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
-                        cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
                         cmd.Parameters.AddWithValue("@AllowCustomerFiltering",
                             CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0));
                         cmd.Parameters.AddWithValue("@StoreID", AppLogic.StoreID());
@@ -227,46 +273,7 @@ namespace AspDotNetStorefront
         {
             if (string.IsNullOrEmpty((sender as LinkButton).CommandArgument)) return;
             var pageIndex = int.Parse((sender as LinkButton).CommandArgument);
-            GetOrders(pageIndex);
+            GetOrders(pageIndex, int.Parse(hfCustomerID.Value));
         }
-
-        /// <summary>
-        /// Gets the name of the dealer.
-        /// </summary>
-        /// <param name="customerId">The customer identifier.</param>
-        /// <returns></returns>
-        private static string GetDealerName(int customerId)
-        {
-            var customerName = string.Empty;
-            try
-            {
-                using (var conn = DB.dbConn())
-                {
-                    conn.Open();
-                    var query = "select FirstName + ' ' + LastName as CustomerName from Customer where CustomerID = " +
-                                customerId;
-                    using (var cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.CommandType = CommandType.Text;
-                        IDataReader reader = cmd.ExecuteReader();
-                        if (reader.Read())
-                            customerName = reader["CustomerName"].ToString();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                SysLog.LogMessage(
-                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
-                    System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    ex.Message +
-                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
-                        ? " :: " + ex.InnerException.Message
-                        : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
-            }
-            return customerName;
-        }
-
     }
 }

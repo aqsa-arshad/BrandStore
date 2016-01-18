@@ -64,6 +64,10 @@ namespace AspDotNetStorefront
                     //CommitCustomerFund(thisCustomer.CustomerID == 0 ? new Customer(userName).CustomerID : thisCustomer.CustomerID);
 
                     ////// EMD - TEST CommitCustomerFund Functionlaity
+
+                    ////// START - TEST GetSubordinateUsers Functionality
+                    //GetSubordinateUsers("davewe=jeld-wen.com@example.com");
+                    ////// START - TEST GetSubordinateUsers Functionality
                 }
                 else if (isCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
                 {
@@ -456,7 +460,11 @@ namespace AspDotNetStorefront
                 {
                     client.query(header, null, null, null, query, out queryResult);
 
-                    if (queryResult.size == 0)
+                    if (queryResult.size > 0)
+                    {
+                        flag = true;
+                    }
+                    else
                     {
                         SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                             "Record not found for query: " + query, MessageTypeEnum.Informational, MessageSeverityEnum.Alert);
@@ -465,7 +473,6 @@ namespace AspDotNetStorefront
 
                     // SFDC Logout
                     client.logout(header);
-                    flag = true;
                 }
             }
             catch (Exception ex)
@@ -1248,6 +1255,50 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return budgetPercentageRatio;
+        }
+
+        /// <summary>
+        /// Get User's Subordinate
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <returns>List<SFDCSoapClient.User></returns>
+        public static List<SFDCSoapClient.User> GetSubordinateUsers(string email)
+        {
+            List<SFDCSoapClient.User> lstUser = new List<SFDCSoapClient.User>();
+            try
+            {
+                string query = string.Empty;
+                string managerId = string.Empty;
+
+                if (!string.IsNullOrEmpty(email))
+                {
+                    query = AppLogic.AppConfig("SFDCInternalUserQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), email);
+                    QueryResult queryResult = new QueryResult();
+
+                    if (QuerySFDC(query, ref queryResult))
+                    {
+                        managerId = ((User)queryResult.records.FirstOrDefault()).Id;
+                        query = AppLogic.AppConfig("SFDCSubordinateUsersQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), managerId);
+                        queryResult = new QueryResult();
+
+                        if (QuerySFDC(query, ref queryResult))
+                        {
+                            sObject[] users = queryResult.records;
+                            foreach (sObject user in users)
+                            {
+                                lstUser.Add((SFDCSoapClient.User)user);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            return lstUser;
         }
     }
 }

@@ -44,10 +44,7 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, EventArgs e)
         {
             RequireSecurePage();
-            if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 || ThisCustomer.CustomerLevelID == 6)
-            {
-                ((Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAILS FOR " + GetDealerName(ThisCustomer.CustomerID);
-            }
+            RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
 
             if (!Page.IsPostBack)
             {
@@ -114,6 +111,8 @@ namespace AspDotNetStorefront
                             lblTax.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTax"]));
                             lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderShippingCosts"]));
                             lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTotal"]));
+
+                            SetPageHeading(int.Parse(reader["CustomerID"].ToString()), reader["FirstName"].ToString(), reader["LastName"].ToString());
                             
                             for (var i = 2; i < 7; i++)
                             {
@@ -230,42 +229,16 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
-        /// <summary>
-        /// Gets the name of the dealer.
-        /// </summary>
-        /// <param name="customerId">The customer identifier.</param>
-        /// <returns></returns>
-        private static string GetDealerName(int customerId)
+        private void SetPageHeading(int customerID, string firstName, string lastName)
         {
-            var customerName = string.Empty;
-            try
+            if (ThisCustomer.CustomerID == customerID)
             {
-                using (var conn = DB.dbConn())
-                {
-                    conn.Open();
-                    var query = "select FirstName + ' ' + LastName as CustomerName from Customer where CustomerID = " +
-                                customerId;
-                    using (var cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.CommandType = CommandType.Text;
-                        IDataReader reader = cmd.ExecuteReader();
-                        if (reader.Read())
-                            customerName = reader["CustomerName"].ToString();
-                    }
-                }
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY";
             }
-            catch (Exception ex)
+            else
             {
-                SysLog.LogMessage(
-                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
-                    System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    ex.Message +
-                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
-                        ? " :: " + ex.InnerException.Message
-                        : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY FOR " + firstName + " " + lastName;
             }
-            return customerName;
         }
 
         /// <summary>
