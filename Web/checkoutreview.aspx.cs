@@ -489,7 +489,7 @@ namespace AspDotNetStorefront
             //Set GLcodes of each item to ordernotes field of cart
             foreach(CartItem citem in cart.CartItems)
             {
-                cart.OrderNotes += citem.ProductID + "_" + citem.GLcode + ",";
+                cart.OrderNotes +="Product ID: " + citem.SKU + ", GL: " + citem.GLcode + ",";
             }
             cart.OrderNotes = cart.OrderNotes.Remove(cart.OrderNotes.LastIndexOf(","), 1);
             //end set gl code
