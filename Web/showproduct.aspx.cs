@@ -225,8 +225,19 @@ namespace AspDotNetStorefront
                         }
                         else
                         {
-                            hdnProductFundAmount.Text = "0";
-                            productcategoryfund = Convert.ToDecimal("0.00");
+                            CustomerFund tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds));//for sales rep
+                            if (tempfund != null)
+                            {
+                                hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                            }
+                            else
+                            {
+                                hdnProductFundAmount.Text = "0";
+                                productcategoryfund = Convert.ToDecimal("0.00");
+                            }
+                            hdnProductFundID.Text = "2";
+                           
                         }
 
 
@@ -537,8 +548,9 @@ namespace AspDotNetStorefront
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
                        // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        LiteralCustom.Text = m_PageOutputCustom+"<div>";
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);                       
+                            LiteralCustom.Text = m_PageOutputCustom + "<div>";
+
                     }
                 }
             }
@@ -625,11 +637,16 @@ namespace AspDotNetStorefront
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
+
+            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
+                formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
+            else
             formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
+
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
-            formInput.GLcode = "";
+            formInput.GLcode = txtGLcode.Text;
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
