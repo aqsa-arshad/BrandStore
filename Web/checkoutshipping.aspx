@@ -138,7 +138,7 @@
                 <div class="col-md-4 checkout-shipping">
                     <asp:Label ID="ShipSelectionMsg" runat="server"></asp:Label>
                     <asp:Label ID="lblMultiShipPrompt" runat="server" Visible="false" />
-                      <label id="Label1" runat="server">Select Shipping Method</label>
+                      <h4 class="black-color margin-top-none"><label id="Label1" runat="server" class="black-color margin-top-none">Select Shipping Method</label></h4>
                     <aspdnsfc:ShippingMethodControl ID="ctrlShippingMethods" runat="server" />
                 
                 <div class="page-row row-buysafe">

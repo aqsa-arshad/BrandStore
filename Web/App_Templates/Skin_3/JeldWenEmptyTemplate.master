@@ -80,14 +80,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 0 50px;">
+                        <td align="center" style="border-bottom: 1px solid #000">
                             <asp:ContentPlaceHolder ID="PageContent" runat="server">
                             </asp:ContentPlaceHolder>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <footer class="footer margin-none">
+                            <footer class="footer margin-none border-none">
 
                                 <div class="row">
                                     <div class="col-sm-2 col-md-2">

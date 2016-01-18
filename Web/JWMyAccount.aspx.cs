@@ -17,6 +17,10 @@ namespace AspDotNetStorefront
     public partial class JWMyAccount : SkinBase
     {
         /// <summary>
+        /// The m_ store loc
+        /// </summary>
+        public string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
+        /// <summary>
         /// Override JeldWen Master Template
         /// </summary>
         protected override string OverrideTemplate()
@@ -199,15 +203,8 @@ namespace AspDotNetStorefront
                         {
                             accountaspx55.Visible = false;
                             bOrderNumber.InnerText = reader["OrderNumber"].ToString();
-                            bStatus.InnerText = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());
-                            if (string.IsNullOrEmpty(SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()))))
-                            {
-                                hlTrackItem.Visible = false;
-                            }
-                            else
-                            {
-                                hlTrackItem.NavigateUrl = SetTrackingPath(int.Parse(reader["OrderNumber"].ToString()));
-                            }
+                            aOrderDetail.HRef = "OrderDetail.aspx?ordernumber=" + reader["OrderNumber"].ToString();
+                            bStatus.InnerHtml = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());                            
                         }
                         else
                         {
@@ -225,45 +222,6 @@ namespace AspDotNetStorefront
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
-        }
-
-        /// <summary>
-        /// Set Tracking Path against Order
-        /// </summary>
-        /// <param name="orderNumber">orderNumber</param>
-        /// <returns></returns>
-        static string SetTrackingPath(int orderNumber)
-        {
-            //List<TrackingInformation> lstTrackingInformation = TrackingInformationLogic.GetTrackingInformation(orderNumber);
-
-            using (var conn = DB.dbConn())
-            {
-                conn.Open();
-                using (var cmd = new SqlCommand("aspdnsf_GetOrderItemsDetail", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ORDERNUMBER", orderNumber);
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
-                        {
-                            var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var listItem in carrierList.Where(listItem => (reader["ShippingMethod"].ToString().ToUpper().Contains(listItem.ToUpper()) && reader["IsDownload"].ToString() != "1")))
-                            {
-                                if (!string.IsNullOrEmpty(reader["ShippingTrackingNumber"].ToString()))
-                                {
-                                    return
-                                        string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
-                                            reader["ShippingTrackingNumber"]);
-                                }
-                            }
-                        }
-                    }
-                    conn.Close();
-                }
-            }
-            return string.Empty;
         }
 
         /// <summary>
@@ -292,7 +250,7 @@ namespace AspDotNetStorefront
                     shippingStatus += " " + AppLogic.GetString("account.aspx.50", SkinID, ThisCustomer.LocaleSetting) + " " + Localization.ParseNativeDateTime(ShippedOn).ToString(new CultureInfo(ThisCustomer.LocaleSetting));
                     if (ShippingTrackingNumber.Length != 0)
                     {
-                        shippingStatus += " " + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
+                        shippingStatus += "<br>" + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
 
                         var trackUrl = Shipping.GetTrackingURL(ShippingTrackingNumber);
                         if (trackUrl.Length != 0)
@@ -319,7 +277,6 @@ namespace AspDotNetStorefront
             else if (shippingStatus.Contains("downloads.aspx"))
             {
                 shippingStatus = "Downloadable";
-                hlTrackItem.Visible = false;
             }
             return shippingStatus;
         }
