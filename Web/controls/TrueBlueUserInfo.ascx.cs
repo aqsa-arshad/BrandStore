@@ -35,6 +35,7 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         lstCustomerFund = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID);
         lblCustomerLevel.Text = "Level: " + ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName);
         lblDealerLevel.Text = ((ThisCustomer.CustomerLevelID == customerLevelId) ? "Partners" : ThisCustomer.CustomerLevelName.Replace("BLU", ""));
+
         if (ThisCustomer.CustomerLevelID == (int)UserType.POTENTIAL)
         {
             lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.BLUBucks);
@@ -53,11 +54,29 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         }
         lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);
         cf = lstCustomerFund.SingleOrDefault(x => x.FundID == (int)FundType.BLUBucks);
+        if (ThisCustomer.CustomerLevelID == (int)UserType.BLUUNLIMITED)
+        {
+            if (cf != null)
+            {
+                lstCustomerFund.Clear();
+                lstCustomerFund.Add(cf);
+                rptCustomerFunds.DataSource = lstCustomerFund;
+                rptCustomerFunds.DataBind();
+            }
+            else
+            {
+                lstCustomerFund.Clear();
+                rptCustomerFunds.DataSource = lstCustomerFund;
+                rptCustomerFunds.DataBind();
+            }
+            ExpandFunds.Visible = false;
+            lnkHideFunds.Visible = false;
+            return;
+        }
         if (cf != null)
         {
             lstCustomerFund.Remove(cf);
-            rptAllCustomerFunds.DataSource = lstCustomerFund;
-            rptAllCustomerFunds.DataBind();
+            GetFilteredCustomerFund(lstCustomerFund);
 
             lstCustomerFund.Clear();
             lstCustomerFund.Add(cf);
@@ -66,10 +85,45 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         }
         else
         {
-            rptAllCustomerFunds.DataSource = lstCustomerFund;
-            rptAllCustomerFunds.DataBind();
+            GetFilteredCustomerFund(lstCustomerFund);
         }
     }
+    private void GetFilteredCustomerFund(List<CustomerFund> lstCustomerFund)
+    {
+        try
+        {
+            foreach (CustomerFund item in lstCustomerFund.ToList())
+            {
+                if (item != null)
+                {
+                    if (item.AmountAvailable <= 0)
+                    {
+                        lstCustomerFund.Remove(item);
+                    }
+                }
+            }
+            if (lstCustomerFund.Count > 0)
+            {
+                rptAllCustomerFunds.DataSource = lstCustomerFund;
+                rptAllCustomerFunds.DataBind();
+                ExpandFunds.Visible = true;
+            }
+            else
+            {
+                ExpandFunds.Visible = false;
+                lnkHideFunds.Visible = false;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+            ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+        }
+    }
+
+
 
 
 }
