@@ -1152,7 +1152,7 @@ namespace AspDotNetStorefrontControls
                     lblSubTotal.Text = cItem.RegularPriceRateDisplayFormat.ToString(); //.ExtPriceRateDisplayFormat.ToString();
                     lblVatDisplay.Text = cItem.VatRateDisplayFormat;
                     lblQtyDiscount.Text = cItem.LineItemQuantityDiscount;
-                    lblpricewithBluBucksUsed.Text = "$" + Math.Round(cItem.pricewithBluBuksUsed, 2).ToString();
+                    lblpricewithBluBucksUsed.Text = Math.Round(cItem.pricewithBluBuksUsed, 2).ToString();
                     lblpricewithCategoryFundUsed.Text = "$" + Math.Round(cItem.pricewithategoryFundUsed,2).ToString();
                     lblItemPrice.Text = Math.Round(cItem.Price, 2).ToString();
                   

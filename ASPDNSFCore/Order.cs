@@ -2250,7 +2250,23 @@ namespace AspDotNetStorefrontCore
                         }
                         else
                         {
-                            cart.AddItem(ThisCustomer, ShipAddrID, c.ProductID, c.VariantID, c.Quantity, c.ChosenColor, c.ChosenColorSKUModifier, c.ChosenSize, c.ChosenSizeSKUModifier, c.TextOption, CartTypeEnum.ShoppingCart, true, false, c.GiftRegistryForCustomerID, System.Decimal.Zero);
+                            //area to get fund and bucks used with original order for this reorder option
+                            using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
+                            {
+                                con.Open();
+                                using (IDataReader rs = DB.GetRS("select CategoryFundUsed,BluBucksUsed,CategoryFundType,BluBucksPercentageUsed,ProductCategoryId,GLcode from Orders_ShoppingCart where OrderNumber=" + OrderNumber + " and CustomerID=" + ThisCustomer.CustomerID.ToString() + " and ProductID=" + c.ProductID.ToString() + " and VariantID=" + c.VariantID.ToString(), con))
+                                {
+                                    rs.Read();
+                                    c.CategoryFundUsed = DB.RSFieldDecimal(rs, "CategoryFundUsed");
+                                    c.BluBuksUsed = DB.RSFieldDecimal(rs, "BluBucksUsed");
+                                    c.FundID = DB.RSFieldInt(rs, "CategoryFundType");
+                                    c.BluBucksPercentageUsed = DB.RSFieldDecimal(rs, "BluBucksPercentageUsed");
+                                    c.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryId");
+                                    c.GLcode = DB.RSField(rs, "GLcode");
+                                }
+                            }
+                            //end area
+                            cart.AddItem(ThisCustomer, ShipAddrID, c.ProductID, c.VariantID, c.Quantity, c.ChosenColor, c.ChosenColorSKUModifier, c.ChosenSize, c.ChosenSizeSKUModifier, c.TextOption, CartTypeEnum.ShoppingCart, true, false, c.GiftRegistryForCustomerID, System.Decimal.Zero,c.BluBuksUsed,c.CategoryFundUsed,c.FundID,c.BluBucksPercentageUsed,c.ProductCategoryID,c.GLcode);
                         }
                     }
                 }

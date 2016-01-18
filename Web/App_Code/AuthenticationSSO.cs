@@ -1098,6 +1098,7 @@ namespace AspDotNetStorefront
         /// <param name="customerID">CustomerID</param>
         public static bool CommitCustomerFund(int customerID)
         {
+            
             if (customerID == 0)
                 return false;
             else if (!AppLogic.AppConfig("UseSFDCBudget").ToBool())

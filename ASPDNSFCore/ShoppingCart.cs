@@ -1355,6 +1355,7 @@ namespace AspDotNetStorefrontCore
                         newItem.FundID = DB.RSFieldInt(rs, "FundID");
                         newItem.BluBucksPercentageUsed = DB.RSFieldDecimal(rs, "BluBucksPercentageUsed");
                         newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
+                        newItem.GLcode = DB.RSField(rs, "GLcode");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
@@ -6976,7 +6977,7 @@ namespace AspDotNetStorefrontCore
                                           DB.CreateSQLParameter("@FundID", SqlDbType.Int, 4, FundID, ParameterDirection.Input),
                                            DB.CreateSQLParameter("@BluBucksPercentageUsed", SqlDbType.Money, 4, BluBucksPercentageUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@ProductCategoryID", SqlDbType.Int, 4, ProductCategoryID, ParameterDirection.Input),
-                                           DB.CreateSQLParameter("@GLcode", SqlDbType.VarChar, 4, GLcode, ParameterDirection.Input),
+                                           DB.CreateSQLParameter("@GLcode", SqlDbType.NVarChar, 200, GLcode, ParameterDirection.Input),
                                          };
 
                         NewRecID = DB.ExecuteStoredProcInt("dbo.aspdnsf_AddItemToCart", spa, m_DBTrans);
@@ -7150,7 +7151,7 @@ namespace AspDotNetStorefrontCore
         }
 
         //Added By Tayyab on 10-01-2016 to update fund used for item
-        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed)
+        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode)
         {
             m_CachedTotals.Clear();
             for (int i = 0; i < m_CartItems.Count; i++)
@@ -7162,25 +7163,15 @@ namespace AspDotNetStorefrontCore
                   //  BluBucksUsed =  ci.BluBuksUsed + BluBucksUsed;
                     ci.CategoryFundUsed = CategoryFundUsed;
                     ci.BluBuksUsed = BluBucksUsed;
+                    ci.GLcode = GLcode;
                     m_CartItems[i] = ci;
                     break;
                 }
             }
 
 
-            String sql = "update ShoppingCart set CategoryFundUsed=" + CategoryFundUsed.ToString() + ",BluBucksUsed=" + BluBucksUsed.ToString() + "  where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
-            DB.ExecuteSQL(sql, m_DBTrans);
-                //for (int i = 0; i < m_CartItems.Count; i++)
-                //{
-                //    if (((CartItem)m_CartItems[i]).ShoppingCartRecordID == cartRecordID)
-                //    {
-                //        CartItem ci = (CartItem)m_CartItems[i];
-                //        ci.CategoryFundUsed = ci.CategoryFundUsed + Convert.ToDecimal(CategoryFundUsed);
-                //        ci.BluBuksUsed =ci.BluBuksUsed + Convert.ToDecimal(BluBucksUsed);
-                //        m_CartItems[i] = ci;
-                //        break;
-                //    }
-                //}
+            String sql = "update ShoppingCart set CategoryFundUsed=" + CategoryFundUsed.ToString() + ",GLcode='" + GLcode.ToString()  +"',BluBucksUsed=" + BluBucksUsed.ToString() + "  where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
+            DB.ExecuteSQL(sql, m_DBTrans);              
            
 
             RecalculateCartDiscount();
@@ -8564,7 +8555,7 @@ namespace AspDotNetStorefrontCore
                     String[] SizesDisplaySplit = SizesDisplay.Split(',');
                     String[] SizeSKUsSplit = SizeSKUModifiers.Split(',');
                    // tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", ProductID, VariantID);
-                    tmpS.AppendFormat(" <select class=\"form-control size-select\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", "1", "1");
+                    tmpS.AppendFormat(" <select class=\"select-list\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" >", "1", "1");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + SizeOptionPrompt + "</option>\n");
@@ -8598,7 +8589,7 @@ namespace AspDotNetStorefrontCore
                     String[] ColorsMasterSplit = ColorsMaster.Split(',');
                     String[] ColorsDisplaySplit = ColorsDisplay.Split(',');
                     String[] ColorSKUsSplit = ColorSKUModifiers.Split(',');
-                    tmpS.Append(String.Format(" <select class=\"form-control color-select\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", "1", "1"));
+                    tmpS.Append(String.Format(" <select class=\"select-list\" id=\"Color_{0}_{1}\" name=\"Color_{0}_{1}\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + "\" >\n", "1", "1"));
 
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
@@ -10258,7 +10249,7 @@ namespace AspDotNetStorefrontCore
                     String[] SizesMasterSplit = SizesMaster.Split(',');
                     String[] SizesDisplaySplit = SizesDisplay.Split(',');
                     String[] SizeSKUsSplit = SizeSKUModifiers.Split(',');
-                    tmpS.Append(" <select name=\"Size\" id=\"Size\" class=\"form-control size-select\" " + CommonLogic.IIF(HasSizePriceModifiers, "onChange=\"if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")}\"", "") + ">\n");
+                    tmpS.Append(" <select name=\"Size\" id=\"Size\" class=\"select-list\" " + CommonLogic.IIF(HasSizePriceModifiers, "onChange=\"if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")}\"", "") + ">\n");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + SizeOptionPrompt + "</option>\n");
@@ -10290,7 +10281,7 @@ namespace AspDotNetStorefrontCore
                     String[] ColorsMasterSplit = ColorsMaster.Split(',');
                     String[] ColorsDisplaySplit = ColorsDisplay.Split(',');
                     String[] ColorSKUsSplit = ColorSKUModifiers.Split(',');
-                    tmpS.Append(" <select id=\"Color\" name=\"Color\" class=\"form-control color-select\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + CommonLogic.IIF(HasColorPriceModifiers, "if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")};", "") + "\">\n");
+                    tmpS.Append(" <select id=\"Color\" name=\"Color\" class=\"select-list\" onChange=\"" + CommonLogic.IIF(ColorChangeProductImage, "setcolorpic_" + ProductID.ToString() + "(this.value);", "") + CommonLogic.IIF(HasColorPriceModifiers, "if(typeof(getPricing) == 'function'){getPricing(" + ProductID.ToString() + "," + VariantID.ToString() + ")};", "") + "\">\n");
                     if (!AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
                     {
                         tmpS.Append("<option value=\"-,-\">" + ColorOptionPrompt + "</option>\n");
@@ -10638,6 +10629,10 @@ namespace AspDotNetStorefrontCore
             get
             {
                 return m_OrderNotes;
+            }
+            set
+            {
+                m_OrderNotes = value;
             }
         }
 
