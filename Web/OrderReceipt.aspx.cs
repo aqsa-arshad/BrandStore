@@ -293,7 +293,7 @@ namespace AspDotNetStorefront
                 if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
                 {
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value));
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
                 
                 else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
@@ -304,7 +304,7 @@ namespace AspDotNetStorefront
                 else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
                 else
                 {
@@ -331,7 +331,7 @@ namespace AspDotNetStorefront
                     totalBluBucks = totalBluBucks +
                                     Math.Round(
                                         Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
-                    lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), totalBluBucks);
+                    lblBluBucksTotal.Text = Math.Round(totalBluBucks,2).ToString();
                     lblBluBucksTotal.Visible = true;
                     lblBluBucksTotalCaption.Visible = true;
                 }

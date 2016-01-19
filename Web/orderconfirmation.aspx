@@ -39,7 +39,7 @@
         <div>
             <table class="table top-row-adjsut border-line">
                 <tbody>
-                    <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptAddresses_ItemDataBound">
+                    <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptOrderItemsDetail_ItemDataBound">
                         <ItemTemplate>
                             <tr>
                                 <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />

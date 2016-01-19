@@ -36,7 +36,7 @@
                                         <span class="normal-heading black-color">
                                             <asp:Label ID="lblStatus" runat="server" Text="<%$ Tokens:StringResource,account.aspx.40 %>" />
                                         </span>
-                                        <%#GetShippingStatus(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "OrderNumber").ToString()), DataBinder.Eval(Container.DataItem, "ShippedOn").ToString(), DataBinder.Eval(Container.DataItem, "ShippedVIA").ToString(), DataBinder.Eval(Container.DataItem, "ShippingTrackingNumber").ToString(), DataBinder.Eval(Container.DataItem, "TransactionState").ToString(), DataBinder.Eval(Container.DataItem, "DownloadEMailSentOn").ToString()) + "&nbsp;"%>
+                                        <%#GetShippingStatus(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "OrderNumber").ToString()), DataBinder.Eval(Container.DataItem, "ShippedOn").ToString()) + "&nbsp;"%>
                                     </td>
                                 </tr>
                             </ItemTemplate>
