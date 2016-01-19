@@ -53,6 +53,7 @@
                                 <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
                                 <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
                                 <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
+                                <asp:HiddenField ID="hfFundName" runat="server" Value='<%# Eval("FundName") %>' />
                                 <td class="td-40-percent">
                                     <div class="row tablet-view">
                                         <div class="col-md-4">
@@ -81,7 +82,7 @@
                                         <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
+                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server"/><asp:Label ID="lblCategoryFundCredit" Visible="False" runat="server" />
                                     </span>
                                     <span>
                                         <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />

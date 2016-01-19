@@ -5,8 +5,38 @@
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlOrderHistory" runat="server">
-        <div class="content-box-03 padding-top-none">
+        <div class="content-box-03">
+            <asp:Panel ID="pnlFundsInformation" runat="server" Visible="false">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="label-text">
+                            <span>
+                                <font><asp:Label ID="lblBluBucksHeading" runat="server" Text="<%$ Tokens:StringResource,BluBucksHeading%>"/></font>
+                                <asp:Label runat="server" ID="lblBluBucks"></asp:Label>
+                            </span>
+                            <span>
+                                <font><asp:Label ID="lblCustomerLevelHeading" runat="server" Text="<%$ Tokens:StringResource,CustomerLevelHeading%>"/></font>
+                                <asp:Label runat="server" ID="lblCustomerLevel"></asp:Label>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="label-text">
+                            <asp:Repeater ID="rptAllCustomerFunds" runat="server">
+                                <ItemTemplate>
+                                    <span>
+                                        <font><asp:Label runat="server" Text='<%# Eval("FundName") %>'></asp:Label></font>
+                                        <asp:Label runat="server" Text='<%# String.Format("{0:C}", Eval("AmountAvailable")) %>'></asp:Label>
+                                    </span>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </p>
+                    </div>
+                </div>
+                <div class="top-row-adjsut border-line"></div>
+            </asp:Panel>
             <div>
+                <asp:HiddenField ID="hfCustomerID" runat="server" />
                 <table class="table">
                     <tbody>
                         <asp:Repeater ID="rptOrderhistory" runat="server">

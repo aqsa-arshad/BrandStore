@@ -1356,6 +1356,8 @@ namespace AspDotNetStorefrontCore
                         newItem.BluBucksPercentageUsed = DB.RSFieldDecimal(rs, "BluBucksPercentageUsed");
                         newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
                         newItem.GLcode = DB.RSField(rs, "GLcode");
+                        newItem.FundName = DB.RSField(rs, "FundName");
+
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
