@@ -12,6 +12,6 @@ namespace AspDotNetStorefrontCore
         public string CarrierCode { get; set; }
         public string ShippingMethod { get; set; }
         public string TrackingURL { get; set; }
-
+        public string ShippingStatus { get; set; }
     }
 }

@@ -125,6 +125,7 @@
                                         <asp:HiddenField ID="hfCreditPrice" runat="server" Value='<%# Eval("CreditPrice") %>' />
                                         <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
                                         <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
+                                        <asp:HiddenField ID="hfFundName" runat="server" Value='<%# Eval("FundName") %>' />
 
                                         <td width="50%" valign="top">
                                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -162,7 +163,7 @@
                                                 <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
                                             </span>
                                             <span class="block-text">
-                                                <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
+                                                <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" runat="server" />
                                             </span>
                                             <span class="block-text">
                                                 <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
@@ -216,7 +217,7 @@
                                         </span>
                                         <span class="block-text">
                                             <asp:Label ID="lblPOPFundsTotalCaption" Visible="False" Text="POP Funds: " runat="server" /><asp:Label runat="server" ID="lblPOPFundsTotal" Visible="False"></asp:Label>
-                                        </span>                                        
+                                        </span>
                                     </p>
 
                                     <span class="normal-heading black-color">Charges</span>

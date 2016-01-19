@@ -79,7 +79,7 @@ namespace AspDotNetStorefront
                 if (AuthenticationSSO.IsTrueBluDealerUser(customerLevelID))
                 {
                     decimal BLUBucks = lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks) != null ? lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks).AmountAvailable : 0;
-                    lblBluBucks.Text = String.Format("{0:00}", BLUBucks);
+                    lblBluBucks.Text = Math.Round(BLUBucks,2).ToString();
                 }
                 else
                 {
@@ -172,12 +172,8 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="OrderNumber">The order number.</param>
         /// <param name="ShippedOn">The shipped on.</param>
-        /// <param name="ShippedVIA">The shipped via.</param>
-        /// <param name="ShippingTrackingNumber">The shipping tracking number.</param>
-        /// <param name="TransactionState">State of the transaction.</param>
-        /// <param name="DownloadEMailSentOn">The download e mail sent on.</param>
         /// <returns></returns>
-        public string GetShippingStatus(int OrderNumber, string ShippedOn, string ShippedVIA, string ShippingTrackingNumber, string TransactionState, string DownloadEMailSentOn)
+        public string GetShippingStatus(int OrderNumber, string ShippedOn)
         {
             String ShippingStatus = String.Empty;
             if (AppLogic.OrderHasShippableComponents(OrderNumber))

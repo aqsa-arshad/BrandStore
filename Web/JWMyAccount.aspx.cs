@@ -204,7 +204,7 @@ namespace AspDotNetStorefront
                             accountaspx55.Visible = false;
                             bOrderNumber.InnerText = reader["OrderNumber"].ToString();
                             aOrderDetail.HRef = "OrderDetail.aspx?ordernumber=" + reader["OrderNumber"].ToString();
-                            bStatus.InnerHtml = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString(), reader["ShippedVIA"].ToString(), reader["ShippingTrackingNumber"].ToString(), reader["TransactionState"].ToString(), reader["DownloadEMailSentOn"].ToString());                            
+                            bStatus.InnerHtml = GetShippingStatus(int.Parse(reader["OrderNumber"].ToString()), reader["ShippedOn"].ToString());                            
                         }
                         else
                         {
@@ -228,45 +228,14 @@ namespace AspDotNetStorefront
         /// Get Order Shipping Status
         /// </summary>
         /// <param name="OrderNumber">OrderNumber</param>
-        /// <param name="ShippedOn">ShippedOn</param>
-        /// <param name="ShippedVIA">ShippedVIA</param>
-        /// <param name="ShippingTrackingNumber">ShippingTrackingNumber</param>
-        /// <param name="TransactionState">TransactionState</param>
-        /// <param name="DownloadEMailSentOn">DownloadEMailSentOn</param>
+        /// <param name="ShippedOn">ShippedOn</param>       
         /// <returns>shippingStatus</returns>
-        private string GetShippingStatus(int OrderNumber, string ShippedOn, string ShippedVIA, string ShippingTrackingNumber, string TransactionState, string DownloadEMailSentOn)
+        private string GetShippingStatus(int OrderNumber, string ShippedOn)
         {
             var shippingStatus = String.Empty;
             if (AppLogic.OrderHasShippableComponents(OrderNumber))
             {
-                if (ShippedOn != "")
-                {
-                    shippingStatus = AppLogic.GetString("account.aspx.48", SkinID, ThisCustomer.LocaleSetting);
-                    if (ShippedVIA.Length != 0)
-                    {
-                        shippingStatus += " " + AppLogic.GetString("account.aspx.49", SkinID, ThisCustomer.LocaleSetting) + " " + ShippedVIA;
-                    }
-
-                    shippingStatus += " " + AppLogic.GetString("account.aspx.50", SkinID, ThisCustomer.LocaleSetting) + " " + Localization.ParseNativeDateTime(ShippedOn).ToString(new CultureInfo(ThisCustomer.LocaleSetting));
-                    if (ShippingTrackingNumber.Length != 0)
-                    {
-                        shippingStatus += "<br>" + AppLogic.GetString("account.aspx.51", SkinID, ThisCustomer.LocaleSetting) + " ";
-
-                        var trackUrl = Shipping.GetTrackingURL(ShippingTrackingNumber);
-                        if (trackUrl.Length != 0)
-                        {
-                            shippingStatus += "<a href=\"" + trackUrl + "\" target=\"_blank\">" + ShippingTrackingNumber + "</a>";
-                        }
-                        else
-                        {
-                            shippingStatus += ShippingTrackingNumber;
-                        }
-                    }
-                }
-                else
-                {
-                    shippingStatus = AppLogic.GetString("account.aspx.52", SkinID, ThisCustomer.LocaleSetting);
-                }
+                shippingStatus = AppLogic.GetString(ShippedOn != "" ? "account.aspx.48" : "account.aspx.52", SkinID, ThisCustomer.LocaleSetting);
             }
             if (AppLogic.OrderHasDownloadComponents(OrderNumber, true))
             {

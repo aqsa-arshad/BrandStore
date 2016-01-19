@@ -97,6 +97,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnViewAccountofuser").addClass("hide-element");
+            $("#btnViewAccount").addClass("hide-element");
         });
     </script>
 

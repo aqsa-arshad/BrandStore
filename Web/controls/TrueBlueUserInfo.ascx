@@ -36,17 +36,9 @@
     <asp:LinkButton runat="server" ID="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" OnClientClick="expandFunds()" Text="Other Credits ˅"></asp:LinkButton>
     <asp:LinkButton runat="server" ID="lnkHideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" OnClientClick="hideFunds()" Text="Close other credits ˄" style="display:none;"></asp:LinkButton>
 </div>
-<button class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccount">VIEW MY ACCOUNT</button>
+<a href="JWMyAccount.aspx" class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccount">VIEW MY ACCOUNT</a>
 <br />
-<a id="lnkLearnMoreAboutTruBlue" href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about TrueBLU ></a>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#btnViewAccount").click(function () {
-            window.open("JWMyAccount.aspx", '_self');
-        });
-    });
-</script>
+<a id="lnkLearnMoreAboutTruBlue" href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about True BLU ></a>
 <script>
     function expandFunds() {
         var clientID = '<%= ExpandFunds.ClientID %>';

@@ -11,11 +11,11 @@
                     <div class="col-md-6">
                         <p class="label-text">
                             <span>
-                                <font><asp:Label ID="lblBluBucksHeading" runat="server" Text="BLU BUCKS Reamining"/></font>
+                                <font><asp:Label ID="lblBluBucksHeading" runat="server" Text="<%$ Tokens:StringResource,BluBucksHeading%>"/></font>
                                 <asp:Label runat="server" ID="lblBluBucks"></asp:Label>
                             </span>
                             <span>
-                                <font><asp:Label ID="lblCustomerLevelHeading" runat="server" Text="Tire Level"/></font>
+                                <font><asp:Label ID="lblCustomerLevelHeading" runat="server" Text="<%$ Tokens:StringResource,CustomerLevelHeading%>"/></font>
                                 <asp:Label runat="server" ID="lblCustomerLevel"></asp:Label>
                             </span>
                         </p>
@@ -66,7 +66,7 @@
                                         <span class="normal-heading black-color">
                                             <asp:Label ID="lblStatus" runat="server" Text="<%$ Tokens:StringResource,account.aspx.40 %>" />
                                         </span>
-                                        <%#GetShippingStatus(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "OrderNumber").ToString()), DataBinder.Eval(Container.DataItem, "ShippedOn").ToString(), DataBinder.Eval(Container.DataItem, "ShippedVIA").ToString(), DataBinder.Eval(Container.DataItem, "ShippingTrackingNumber").ToString(), DataBinder.Eval(Container.DataItem, "TransactionState").ToString(), DataBinder.Eval(Container.DataItem, "DownloadEMailSentOn").ToString()) + "&nbsp;"%>
+                                        <%#GetShippingStatus(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "OrderNumber").ToString()), DataBinder.Eval(Container.DataItem, "ShippedOn").ToString()) + "&nbsp;"%>
                                     </td>
                                 </tr>
                             </ItemTemplate>
