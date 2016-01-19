@@ -233,11 +233,11 @@ namespace AspDotNetStorefront
         {
             if (ThisCustomer.CustomerID == customerID)
             {
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY";
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAIL";
             }
             else
             {
-                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY FOR " + firstName + " " + lastName;
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAIL FOR " + firstName + " " + lastName;
             }
         }
 
