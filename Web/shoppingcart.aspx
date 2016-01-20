@@ -397,7 +397,7 @@
                             <label class="roman-black">BLU Bucks used:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -437,7 +437,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-5">
                                     <label class="roman-black">Amount:</label>
-                                     <asp:TextBox ID="txtproductcategoryfundusedforsalesrep"  ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                     <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="10"   ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                                     
                                 </div>
                             </div>
@@ -638,13 +638,22 @@
             }
            
             $('input').keypress(function (e) {
-             
-                var regex = new RegExp("^[0-9-.]+$");
+               
+                var regex;
+                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep")
+                {                  
+                    regex = new RegExp("^[0-9.]+$");
+                }
+                else if ($(this).attr('id').includes("txtQuantity"))
+                    regex = new RegExp("^[0-9]+$");
+                else if ($(this).attr('id').includes("txtGLcode"))
+                    regex = new RegExp("^[0-9-A-Za-z]+$");
+
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {                    
                     return true;
                 }
-
+                
                 e.preventDefault();
                 return false;
             });
