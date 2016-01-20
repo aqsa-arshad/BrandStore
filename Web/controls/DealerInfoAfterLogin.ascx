@@ -3,5 +3,12 @@
 <div class="row">  
 </div>
 <p>View your dealers’ activity.</p>
-<asp:Button ID="btnViewReport" runat="server" CssClass="btn btn-md btn-primary btn-block tablet-btn"  Text="VIEW MY REPORTS" />
+<button class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewReport">VIEW MY REPORTS</button>
+<script type="text/javascript">
+    $(document).ready(function () {      
+        $("#btnViewReport").click(function () {
+            window.open("JWMyDealers.aspx", '_self');
+        });
+    });
+</script>
 

@@ -31,10 +31,18 @@ namespace AspDotNetStorefront
             if (string.IsNullOrEmpty(order.CartItems.FirstOrDefault().Notes))
             {
                 if (string.IsNullOrEmpty(order.ShippingTrackingNumber))
-                {
+                {                    
                     SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     "ShippingTrackingNumber is empty.", MessageTypeEnum.GeneralException, MessageSeverityEnum.Message);
-                    return new List<TrackingInformation>();
+                    lstTrackingInformation.Add(new TrackingInformation()
+                    {
+                        OrderNumber = order.OrderNumber.ToString(),
+                        TrackingNumber = string.Empty,
+                        CarrierCode = string.Empty,                        
+                        ShippingMethod = order.ShippingMethod + ": ",
+                        ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()),
+                        TrackingURL = string.Empty
+                    });                    
                 }
 
                 else
@@ -44,15 +52,19 @@ namespace AspDotNetStorefront
                         OrderNumber = order.OrderNumber.ToString(),
                         TrackingNumber = order.ShippingTrackingNumber,
                         CarrierCode = string.Empty,
-                        ShippingMethod = order.ShippingMethod,
+                        ShippingMethod = order.ShippingMethod + ": ",
+                        ShippingStatus = GetShippingStatus(order.OrderNumber,order.ShippedOn.ToString()) + ": ",
                         TrackingURL = GetTrackingURL(order.ShippingTrackingNumber, order.ShippingMethod)
                     });
                 }
             }
             else if (ValidateJSON(ref lstTrackingInformation, order.CartItems.FirstOrDefault().Notes))
             {
-                lstTrackingInformation.ForEach(x => x.ShippingMethod = GetShippingMethod(x.CarrierCode));
-                lstTrackingInformation.ForEach(x => x.TrackingURL = GetTrackingURL(x.TrackingNumber, x.ShippingMethod));
+                lstTrackingInformation.ForEach(x => x.ShippingMethod = GetShippingMethod(x.CarrierCode) + ": ");
+
+                lstTrackingInformation.ForEach(x => x.ShippingStatus = GetShippingStatus(order.OrderNumber,order.ShippedOn.ToString()) + ": ");
+
+                lstTrackingInformation.ForEach(x => x.TrackingURL = GetTrackingURL(x.TrackingNumber, x.ShippingMethod) + ": ");
             }
             else
             {
@@ -62,6 +74,31 @@ namespace AspDotNetStorefront
             }
 
             return lstTrackingInformation;
+        }
+
+        static string GetShippingStatus(int OrderNumber, string ShippedOn)
+        {
+            String ShippingStatus = String.Empty;
+            if (AppLogic.OrderHasShippableComponents(OrderNumber))
+            {
+                if (ShippedOn == "1/1/0001 12:00:00 AM" || string.IsNullOrEmpty(ShippedOn))
+                    ShippingStatus = AppLogic.GetString("account.aspx.52", 3, "en-US");
+                else
+                {
+                    ShippingStatus = AppLogic.GetString("account.aspx.48", 3, "en-US");
+                }
+            }
+            if (AppLogic.OrderHasDownloadComponents(OrderNumber, true))
+            {
+                ShippingStatus += string.Format("<div><a href=\"downloads.aspx\">{0}</a></div>", AppLogic.GetString("download.aspx.1", 3, "en-US"));
+            }
+            if (ShippingStatus.Contains("downloads.aspx") && ShippingStatus.Contains("Not Yet Shipped"))
+                ShippingStatus = "Not Yet Shipped, Downloadable";
+            else if (ShippingStatus.Contains("downloads.aspx"))
+            {
+                ShippingStatus = "Downloadable";
+            }
+            return ShippingStatus;
         }
 
         private static bool ValidateJSON(ref List<TrackingInformation> lstTrackingInformation, string notes)
@@ -104,6 +141,7 @@ namespace AspDotNetStorefront
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     "Shipping Method Name is not found.", MessageTypeEnum.GeneralException, MessageSeverityEnum.Message);
+                shippingMethod = "Unknow Carrier";
             }
             return shippingMethod;
         }

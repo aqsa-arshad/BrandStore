@@ -4795,6 +4795,9 @@ select {
   border: solid 1px #c0c0c0;
   width: 100%;
 }
+img {
+  border: none;
+}
 .header-part {
   padding-top: 40px;
   width: 260px;

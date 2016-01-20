@@ -300,7 +300,12 @@ namespace AspDotNetStorefront
                 pnlPageHeading.Visible = true;
                 lnkMyAccount.Attributes.Add("class", "active account-link");
             }
-
+            else if (currentURL.ToUpper().Contains("JWMYDEALERS.ASPX"))
+            {
+                lblPageHeading.Text = "MY DEALERS";
+                pnlPageHeading.Visible = true;
+                lnkMyAccount.Attributes.Add("class", "active account-link");
+            }
             else if (currentURL.ToUpper().Contains("SIGNIN.ASPX"))
             {
                 divlogin.Visible = false;
@@ -350,29 +355,13 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("ORDERHISTORY.ASPX"))
             {
-                if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
-                    ThisCustomer.CustomerLevelID == 6)
-                {
-                    //For Dealer lblPageHeading will be set in OrderHistory Page
-                }
-                else
-                {
-                    lblPageHeading.Text = "ORDER HISTORY";
-                }
+                // Label will be loaded from Content Page w.r.t QueryString Value
                 lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }
             else if (currentURL.ToUpper().Contains("ORDERDETAIL.ASPX"))
             {
-                if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
-                    ThisCustomer.CustomerLevelID == 6)
-                {
-                    //For Dealer lblPageHeading will be set in OrderHistory Page
-                }
-                else
-                {
-                    lblPageHeading.Text = "ORDER DETAIL";
-                }
+                // Label will be loaded from Content Page w.r.t QueryString Value
                 lnkMyAccount.Attributes.Add("class", "active account-link");
                 pnlPageHeading.Visible = true;
             }

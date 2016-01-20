@@ -400,7 +400,7 @@
             });
             function ApplyValidation(theForm) {
                 debugger;
-                if ($("#Quantity_1_1").length <= 0 || $("#Size_1_1").length <= 0 || $("#Color_1_1").length <= 0) {
+                if ($("#Quantity_1_1").length <= 0) {
                     submitenabled(theForm);
                     return (true);
                 }
@@ -412,17 +412,21 @@
                     return (false);
 
                 }
-                if (theForm.Size_1_1.selectedIndex < 1) {
-                    alert("Please select a size.");
-                    theForm.Size_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
+                if ($("#Size_1_1").length > 0) {
+                    if (theForm.Size_1_1.selectedIndex < 1) {
+                        alert("Please select a size.");
+                        theForm.Size_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
                 }
-                if (theForm.Color_1_1.selectedIndex < 1) {
-                    alert("Please select a color.");
-                    theForm.Color_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
+                if ($("#Color_1_1").length > 0) {
+                    if (theForm.Color_1_1.selectedIndex < 1) {
+                        alert("Please select a color.");
+                        theForm.Color_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
                 }
                 if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
                     alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
