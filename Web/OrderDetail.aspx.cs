@@ -44,10 +44,7 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, EventArgs e)
         {
             RequireSecurePage();
-            if (ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 || ThisCustomer.CustomerLevelID == 6)
-            {
-                ((Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAILS FOR " + GetDealerName(ThisCustomer.CustomerID);
-            }
+            RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
 
             if (!Page.IsPostBack)
             {
@@ -114,6 +111,8 @@ namespace AspDotNetStorefront
                             lblTax.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTax"]));
                             lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderShippingCosts"]));
                             lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTotal"]));
+
+                            SetPageHeading(int.Parse(reader["CustomerID"].ToString()), reader["FirstName"].ToString(), reader["LastName"].ToString());
                             
                             for (var i = 2; i < 7; i++)
                             {
@@ -158,7 +157,7 @@ namespace AspDotNetStorefront
                             {
                                 lblCreditsUsedCaption.Visible = false;
                             }
-                            
+
                         }
                         conn.Close();
                     }
@@ -230,42 +229,16 @@ namespace AspDotNetStorefront
             return masterHome;
         }
 
-        /// <summary>
-        /// Gets the name of the dealer.
-        /// </summary>
-        /// <param name="customerId">The customer identifier.</param>
-        /// <returns></returns>
-        private static string GetDealerName(int customerId)
+        private void SetPageHeading(int customerID, string firstName, string lastName)
         {
-            var customerName = string.Empty;
-            try
+            if (ThisCustomer.CustomerID == customerID)
             {
-                using (var conn = DB.dbConn())
-                {
-                    conn.Open();
-                    var query = "select FirstName + ' ' + LastName as CustomerName from Customer where CustomerID = " +
-                                customerId;
-                    using (var cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.CommandType = CommandType.Text;
-                        IDataReader reader = cmd.ExecuteReader();
-                        if (reader.Read())
-                            customerName = reader["CustomerName"].ToString();
-                    }
-                }
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAIL";
             }
-            catch (Exception ex)
+            else
             {
-                SysLog.LogMessage(
-                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " +
-                    System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    ex.Message +
-                    ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message))
-                        ? " :: " + ex.InnerException.Message
-                        : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER DETAIL FOR " + firstName + " " + lastName;
             }
-            return customerName;
         }
 
         /// <summary>
@@ -274,28 +247,11 @@ namespace AspDotNetStorefront
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void rptOrderItemsDetail_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {            
+        {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
                 (e.Item.FindControl("lblRegularPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value)));
                 (e.Item.FindControl("lblCreditPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfCreditPrice") as HiddenField).Value)));
-                //if (AppLogic.AppConfig("RTShipping.ActiveCarrier") != null)
-                //{
-                //    var carrierList = AppLogic.AppConfig("RTShipping.ActiveCarrier").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                //    foreach (var listItem in carrierList.Where(listItem => (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.ToUpper().Contains(listItem.ToUpper()) && (e.Item.FindControl("hfIsDownload") as HiddenField).Value != "1"))
-                //    {
-                //        if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
-                //        {
-                //            (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
-                //                string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem),
-                //                    (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value);
-                //        }
-                //    }
-                //    if (string.IsNullOrEmpty((e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl))
-                //    {
-                //        (e.Item.FindControl("hlTrackItem") as HyperLink).Visible = false;
-                //    }
-                //}
 
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value))
                 {
@@ -305,6 +261,7 @@ namespace AspDotNetStorefront
                 {
                     (e.Item.FindControl("ImgProduct") as Image).ImageUrl = AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 }
+
                 if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
@@ -314,23 +271,22 @@ namespace AspDotNetStorefront
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
-                                                                          (e.Item.FindControl("hfSKU") as HiddenField)
-                                                                              .Value;
-                }               
-                if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                                                                          (e.Item.FindControl("hfSKU") as HiddenField).Value;
+                }
+                if (((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") != 0) && ((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value.CompareTo("0.0000") != 0))
                 {
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value));
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
-                else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                else if (((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") == 0) && ((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value.CompareTo("0.0000") == 0))
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
                 }
-                else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
+                else if ((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") == 0)
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
                 else
                 {
@@ -357,9 +313,15 @@ namespace AspDotNetStorefront
                     totalBluBucks = totalBluBucks +
                                     Math.Round(
                                         Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
-                    lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), totalBluBucks);
+                    lblBluBucksTotal.Text = Math.Round(totalBluBucks,2).ToString();
                     lblBluBucksTotal.Visible = true;
                     lblBluBucksTotalCaption.Visible = true;
+                }
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfFundName") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Visible = true;
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Text =
+                        (e.Item.FindControl("hfFundName") as HiddenField).Value + " Discount: ";
                 }
             }
         }
@@ -376,16 +338,44 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                (e.Item.FindControl("lblPackageNumber") as Label).Text = (e.Item.ItemIndex + 1).ToString() + ": ";
                 if ((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains("|"))
                 {
                     var shippingMethodSplit = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Split('|');
-                    (e.Item.FindControl("lblShippingMethod") as Label).Text = shippingMethodSplit[0] + ": $" + shippingMethodSplit[1];
+                    (e.Item.FindControl("lblShippingMethod") as Label).Text = shippingMethodSplit[0];
                 }
                 else
                 {
-                    (e.Item.FindControl("lblShippingMethod") as Label).Text =
-                        (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
+                    if (((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.CompareTo("Download:")) == 0)
+                    {
+                        (e.Item.FindControl("lblShippingMethod") as Label).Text = string.Empty;
+                    }
+                    else
+                    {
+                        (e.Item.FindControl("lblShippingMethod") as Label).Text =
+                            (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
+                    }
                 }
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfTrackingNumber") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("hlTrackItem") as HyperLink).Text =
+                        (e.Item.FindControl("hfTrackingNumber") as HiddenField).Value;
+                    if (!string.IsNullOrEmpty((e.Item.FindControl("hfTrackingURL") as HiddenField).Value))
+                    {
+                        (e.Item.FindControl("hlTrackItem") as HyperLink).NavigateUrl =
+                            (e.Item.FindControl("hfTrackingURL") as HiddenField).Value;
+                    }
+                    else
+                    {
+                        (e.Item.FindControl("hlTrackItem") as HyperLink).Font.Underline = false;
+                    }
+                }
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingStatus") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("lblShippingStatus") as Label).Text =
+                        (e.Item.FindControl("hfShippingStatus") as HiddenField).Value;
+                }
+
             }
         }
     }

@@ -1073,10 +1073,10 @@ namespace AspDotNetStorefront
             String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
             String BluBucksUsed = GetSessionValue("BluBucksUsed");
             String currentrecordid = GetSessionValue("currentrecordid");
-
+            String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
             try
             {
-                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed));
+                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode);
             }
             catch (Exception ex)
             { 

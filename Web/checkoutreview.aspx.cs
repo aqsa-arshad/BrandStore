@@ -486,6 +486,13 @@ namespace AspDotNetStorefront
 
         private void ProcessCheckout()
         {
+            //Set GLcodes of each item to ordernotes field of cart
+            foreach(CartItem citem in cart.CartItems)
+            {
+                cart.OrderNotes +="Product ID: " + citem.ProductID + ", GL: " + citem.GLcode + ",";
+            }
+            cart.OrderNotes = cart.OrderNotes.Remove(cart.OrderNotes.LastIndexOf(","), 1);
+            //end set gl code
             Address BillingAddress = new Address();
             BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
 

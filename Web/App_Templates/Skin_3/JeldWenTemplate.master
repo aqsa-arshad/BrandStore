@@ -302,8 +302,8 @@
                     ShowControlsForPotentialLogin();
                 }
                 else if (CustomerLevel == "7" || CustomerLevel == "3" || CustomerLevel == "1" || CustomerLevel == "2") {
-                    //Sales Rep or JW Internal(Store Admin/Budget Admin) Login                   
-                    ShowControlsForSalesRepAndInternalLogin();
+                    //JW Internal(Store Admin/Budget Admin) Login                   
+                    ShowControlsForInternalAndSalesRepsLogin();
                 }
                 else if (CustomerLevel == "10" || CustomerLevel == "11" || CustomerLevel == "12") {
                     //HomeDepot, Lowes and Menards                  
@@ -369,15 +369,17 @@
             $(".hide-element").css("display", "none");
             $("#headerlogo").attr("href", "home.aspx");
         }
-        function ShowControlsForSalesRepAndInternalLogin() {
+        function ShowControlsForInternalAndSalesRepsLogin() {
+            var CustomerLevelId = GetCustomerLevel();
+            if (CustomerLevelId=="3")
+            {
+             $("#JWBDealerInfoAfterLoginControl").removeClass("hide-element");
+            }
             $("#TrueBlu").hide();
             $("#InternalHomePageTopic").removeClass("hide-element");
             $("#" + '<%= JWBUserInfoAfterLoginControl.ClientID %>').removeClass("hide-element");
             $(".hide-element").css("display", "none");
-            $("#controlHeadingforPromotionalItems").text("Our brand is their brand");
-            $("#productdescriptionAfterLogin").text("Help your dealers express their support for JELD-WEN with a variety of quality branded merchandise. ");
             $("#headerlogo").attr("href", "home.aspx");
-
         }
         function ShowControlsForPublicLogin() {
             $(".prelogin").hide();

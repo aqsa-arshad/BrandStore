@@ -14,7 +14,7 @@
                 <span class="block-text">
                 <asp:Label ID="lblCustomerFundName" runat="server" Text='<%# Eval("FundName") %>'></asp:Label>
                 <asp:Label ID="lblSeprator" runat="server" Text="="></asp:Label>
-                <asp:Label ID="lblCustomerFundAmount" runat="server" Text='<%# String.Format("{0:C}", Eval("AmountAvailable")) %>'></asp:Label>                  
+                <asp:Label ID="lblCustomerFundAmount" runat="server" Text='<%# String.Format("{0:0.00}", Eval("AmountAvailable")) %>'></asp:Label>                  
 
                 </span>
             </ItemTemplate>
@@ -30,33 +30,32 @@
                         </span>
                     </ItemTemplate>
                 </asp:Repeater>
-                <p>(Other discounts per tier level)</p>
             </div>
         </div>
     </div>
-    <a id="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="expandFunds()">Other Credits ˅</a>
-    <a id="HideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="HideFunds()" style="display: none;">Close other credits ˄</a>
+    <asp:LinkButton runat="server" ID="ExpandFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" OnClientClick="expandFunds()" Text="Other Credits ˅"></asp:LinkButton>
+    <asp:LinkButton runat="server" ID="lnkHideFunds" class="blu-collapse-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" OnClientClick="hideFunds()" Text="Close other credits ˄" style="display:none;"></asp:LinkButton>
 </div>
-<button class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccount">VIEW MY ACCOUNT</button>
+<a href="JWMyAccount.aspx" class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccount">VIEW MY ACCOUNT</a>
 <br />
-<a id="lnkLearnMoreAboutTruBlue" href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about TrueBLU ></a>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#ExpandFunds").show();
-        $("#HideFunds").hide();
-        $("#btnViewAccount").click(function () {
-            window.open("JWMyAccount.aspx", '_self');
-        });
-    });
-</script>
+<a id="lnkLearnMoreAboutTruBlue" href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about True BLU ></a>
 <script>
     function expandFunds() {
-        $("#ExpandFunds").hide();
-        $("#HideFunds").show();
+        var clientID = '<%= ExpandFunds.ClientID %>';
+        var lnkHideclientID = '<%= lnkHideFunds.ClientID %>'; 
+
+        $("#" + clientID).css("display", "none");
+        $("#" + lnkHideclientID).css("display", "block");
+
     }
-    function HideFunds() {
-        $("#ExpandFunds").show();
-        $("#HideFunds").hide();
+    function hideFunds() {
+
+        var clientID = '<%= ExpandFunds.ClientID %>';
+        var lnkHideclientID = '<%= lnkHideFunds.ClientID %>';
+
+        $("#" + clientID).css("display", "block");
+        $("#" + lnkHideclientID).css("display", "none");
+
 
     }
 </script>
