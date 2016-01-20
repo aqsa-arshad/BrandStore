@@ -49,7 +49,7 @@
                     <asp:TextBox ID="txtAddress2" CssClass="form-control" runat="server" MaxLength="100"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ControlToValidate="txtAddress2" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.96 %>" ValidationExpression="[0-9a-zA-Z #.',-/():]+" />
                 </div>
-                <div class="form-group">
+                <div class="form-group hide" >
                     <label><asp:Label ID="lblSuite" runat="server" Text='<%$ Tokens:StringResource, address.cs.8 %>'></asp:Label></label>
                     <asp:TextBox ID="txtSuite" CssClass="form-control" runat="server" MaxLength="50"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtSuite" Display="Dynamic" ValidationGroup="AddAddress" ErrorMessage="<%$ Tokens:StringResource, address.cs.97 %>" ValidationExpression="^[0-9a-zA-Z .,'-]*$" />
