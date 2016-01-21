@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-7">
                                 <label class="roman-black">GL Code:</label>
-                                <asp:TextBox ID="txtGLcode" ClientIDMode="Static" placeholder="xxx-xx-xxx-xxx" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtGLcode" ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
@@ -86,7 +86,7 @@
 
                     <p class="label-text">
 
-                        <span  class="roman-black">Total price using sale funds:</span>
+                        <span  class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
@@ -135,7 +135,7 @@
                 }
                 else {
 
-                    $("#spprice").text($("#hdnpricewithfund").text());
+                    $("#spprice").text("$" + $("#hdnpricewithfund").text());
                     if (applyblubuksvalidation()) {
                         return true;
                     }
@@ -164,13 +164,13 @@
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
                 debugger;
-                $("#spprice").text($("#hdnpricewithcategoryfundapplied").text());
+                $("#spprice").text("$" + $("#hdnpricewithcategoryfundapplied").text());
                 $("#hdncurrentrecordid").text();
                 //  var currentrecordid = $("#hdncurrentrecordid").text();
                 var ItemOriginalPrice = $("#hdnproductactualprice").text();
                 // var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                 var ItemQuantity = theForm.Quantity_1_1.value;
-                var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = $("#spprice").text().replace("$","");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 // var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 // var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
@@ -178,13 +178,13 @@
                 spproductcategoryfund = parseFloat($("#hdnsoffundamount").text()) + parseFloat(spproductcategoryfund)
                 // $("#hdnsoffundamount").text(spproductcategoryfund);
 
-                $("#spprice").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                $("#sppriceforsalesrep").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                newpricetotal = $("#spprice").text();
+                $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                $("#sppriceforsalesrep").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                newpricetotal = $("#spprice").text().replace("$","");
                 var sofentered = parseFloat($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
-                    $("#spprice").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                    $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtproductcategoryfundusedforsalesrep").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                     $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -258,7 +258,7 @@
             applyproductcategoryfund();
             setpricewithquantitychange();
             $("#txtBluBuksUsed").focusout(function () {
-                $("#spprice").text($("#hdnpricewithfund").text());
+                $("#spprice").text("$" + $("#hdnpricewithfund").text());
                 if (applyblubuksvalidation()) {
                     var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -301,9 +301,7 @@
                     }
                 }
                 else if ($(this).attr('id').includes("Quantity"))
-                    regex = new RegExp("^[0-9]+$");
-                else if ($(this).attr('id').includes("txtGLcode"))
-                    regex = new RegExp("^[0-9-A-Za-z]+$");
+                    regex = new RegExp("^[0-9]+$");              
 
                
                     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -313,22 +311,7 @@
 
                     e.preventDefault();
                     return false;
-                });
-
-                function round2Fixed(value) {
-                    value = +value;
-
-                    if (isNaN(value))
-                        return NaN;
-
-                    // Shift
-                    value = value.toString().split('e');
-                    value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + 2) : 2)));
-
-                    // Shift back
-                    value = value.toString().split('e');
-                    return (+(value[0] + 'e' + (value[1] ? (+value[1] - 2) : -2))).toFixed(2);
-                }
+                });                
 
                 function setpricewithquantitychange() {
                     debugger;

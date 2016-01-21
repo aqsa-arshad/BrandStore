@@ -20,6 +20,7 @@
         <asp:Label ID="hdncurrentrecordid" name="hdncurrentrecordid" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnpricewithcategoryfundapplied" name="hdnpricewithcategoryfundapplied" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+         <asp:Label ID="hdnaddblubucks" name="hdnaddblubucks" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
         <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -433,7 +434,7 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-7">
                                     <label class="roman-black">GL Code:</label>                                  
-                                     <asp:TextBox ID="txtGLcode" ClientIDMode="Static" placeholder="xxx-xx-xxx-xxx" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                     <asp:TextBox ID="txtGLcode" ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-xs-6 col-sm-5">
                                     <label class="roman-black">Amount:</label>
@@ -446,7 +447,7 @@
 
                         <p class="label-text">                           
 
-                             <span class="roman-black">Total price using sale funds:</span>
+                             <span class="roman-black">Total price using sales funds:</span>
                             <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                         </p>
                         <div class="buttons-group">
@@ -522,7 +523,7 @@
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
                 var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
-                var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = $("#spprice").text().replace("$", "");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
@@ -533,13 +534,13 @@
                 spproductcategoryfund = parseFloat($("#hdnsoffundamount").text()) + parseFloat(spproductcategoryfund)
                 // $("#hdnsoffundamount").text(spproductcategoryfund);
 
-                $("#spprice").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                $("#sppriceforsalesrep").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                newpricetotal = $("#spprice").text();
+                $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                $("#sppriceforsalesrep").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                newpricetotal = $("#spprice").text().replace("$","");
                 var sofentered = parseFloat($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
-                    $("#spprice").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                    $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtproductcategoryfundusedforsalesrep").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                     $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -579,11 +580,15 @@
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
                 var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
-                var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = $("#spprice").text().replace("$","");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage)) {
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");
+                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
+                var availableblubucksforthisitem = spblubucksprice.toFixed(2);
+
+                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {
                     return true;
                 }
                 else
@@ -592,23 +597,24 @@
           
 
             $("#txtBluBuksUsed").focusout(function () {
-                $("#spprice").text($("#hdnpricewithcategoryfundapplied").text());
+                $("#spprice").text("$" + $("#hdnpricewithcategoryfundapplied").text());
                 $("#hdncurrentrecordid").text();
                 var currentrecordid = $("#hdncurrentrecordid").text();
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
                 var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
-                var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = $("#spprice").text().replace("$","");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used:", "");
-                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
-                $("#hdnBluBucktsPoints").text(spblubucksprice);
-                
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");
+                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
+                var availableblubucksforthisitem = spblubucksprice.toFixed(2);
+               // $("#hdnBluBucktsPoints").text(spblubucksprice.toFixed(2));
+                 
 
 
-                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage)) {              
+                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {
 
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -617,8 +623,7 @@
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
-                else {
-                   
+                else {                   
                    
                 }
 
@@ -627,14 +632,11 @@
 
             // CallBack method when the page call success
             function onSucceed(results, currentContext, methodName) {
-                // alert("success");
+                
             }
             //CallBack method when the page call fails due to internal, server error 
-            function onError(results, currentContext, methodName) {
-              
-                //alert("error");
-                //alert(currentContext);
-                //alert(methodName);
+            function onError(results, currentContext, methodName) {              
+                
             }
            
             $('input').keypress(function (e) {
@@ -653,9 +655,7 @@
                     }
                 }
                 else if ($(this).attr('id').includes("txtQuantity"))
-                    regex = new RegExp("^[0-9]+$");
-                else if ($(this).attr('id').includes("txtGLcode"))
-                    regex = new RegExp("^[0-9-A-Za-z]+$");
+                    regex = new RegExp("^[0-9]+$");                
 
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {                    
@@ -729,7 +729,7 @@
                     //bind link update to sof fund opup/internal user
                     //$("#spproductcategoryfundused").text($("#hdnProductFundAmountUsed").text());
                     $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
-                    $("#sppriceforsalesrep").text($("#spprice").text().replace("$", ""));
+                    $("#sppriceforsalesrep").text("$" + $("#spprice").text().replace("$", ""));
                     $(".lnkUpdateItem").attr("data-toggle", "modal");
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
                 }
@@ -740,7 +740,7 @@
 
             });
 
-            function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage) {
+            function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem) {
 
                 var maxfundlimit = newpricetotal * (Number.parseFloat(BluBucksPercentage) / 100)
                
@@ -753,7 +753,7 @@
                     $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(availableblubucksforthisitem)) {
                     alert("You exceed available BLU BUKS");
                     //  $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2)).toFixed(2)
                     $("#txtBluBuksUsed").val("0.00");
@@ -779,7 +779,9 @@
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
                 spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$","");              
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");               
-                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
+                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
+                
+               
                 var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
                 $("#ppointscount").text(blubucks);
               
@@ -840,8 +842,8 @@
                     newpricetotal = 0;
 
                 }
-                $("#spprice").text(newpricetotal.toFixed(2));//price to show on popup after deduction of category fund
-                $("#sppriceforsalesrep").text(newpricetotal.toFixed(2));//price to show on popup after deduction of category fund for sales rep
+                $("#spprice").text("$"+newpricetotal.toFixed(2));//price to show on popup after deduction of category fund
+                $("#sppriceforsalesrep").text("$" + newpricetotal.toFixed(2));//price to show on popup after deduction of category fund for sales rep
                 
                 $("#hdnpricewithcategoryfundapplied").text(newpricetotal.toFixed(2));
                 
