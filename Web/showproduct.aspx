@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
-                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="10" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                             </div>
                         </div>
@@ -86,15 +86,15 @@
 
                     <p class="label-text">
 
-                        <span class="roman-black">Total price using sale funds:</span>
+                        <span  class="roman-black">Total price using sale funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                      
-                       <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server"  />
+
+                        <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
+                        <asp:Button ID="btnaddtocartforsalesrep"  ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
                         <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
-                     
+
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
                 </div>
@@ -290,7 +290,15 @@
             $('input').keypress(function (e) {
                 var regex;               
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
-                    regex = new RegExp("^[0-9.]+$");                   
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
+                        event.preventDefault();
+                    }
+
+                    var text = $(this).val();
+
+                    if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && (event.which != 0 && event.which != 8) && ($(this)[0].selectionStart >= text.length - 2)) {
+                        event.preventDefault();
+                    }
                 }
                 else if ($(this).attr('id').includes("Quantity"))
                     regex = new RegExp("^[0-9]+$");
@@ -298,159 +306,160 @@
                     regex = new RegExp("^[0-9-A-Za-z]+$");
 
                
-                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if (regex.test(str)) {
-                    return true;
-                }
+                    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                    if (regex.test(str)) {
+                        return true;
+                    }
 
-                e.preventDefault();
-                return false;
-            });
-
-            function round2Fixed(value) {
-                value = +value;
-
-                if (isNaN(value))
-                    return NaN;
-
-                // Shift
-                value = value.toString().split('e');
-                value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + 2) : 2)));
-
-                // Shift back
-                value = value.toString().split('e');
-                return (+(value[0] + 'e' + (value[1] ? (+value[1] - 2) : -2))).toFixed(2);
-            }
-
-            function setpricewithquantitychange() {
-                debugger;
-                var updatedtotalprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value);
-                var productfundamount = $("#hdnProductFundAmount").text();
-
-                if (productfundamount < updatedtotalprice) {
-                    updatedtotalprice = updatedtotalprice - productfundamount;
-                    $("#hdnProductFundAmountUsed").text(productfundamount);
-                }
-                else {
-                    productfundamount = productfundamount - updatedtotalprice;
-                    $("#hdnProductFundAmountUsed").text(updatedtotalprice);
-                    updatedtotalprice = 0;
-                    $("#txtBluBuksUsed").text(updatedtotalprice);
-                }
-                $("#hdnpricewithfund").text(updatedtotalprice);
-                $("#spprice").text("$" + updatedtotalprice.toFixed(2));
-                $("#sppricewithfund").html("<font>Price with FUND credit: $</font>" + updatedtotalprice.toFixed(2));
-
-            }
-
-            function applyblubuksvalidation() {
-                var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                $("#spprice").text("$" + updatedprice.toFixed(2));
-                var maxfundlimit = $("#spprice").text().replace("$", "") * (Number.parseFloat($("#hdnBudgetPercentValue").text()) / 100)
-                if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
+                    e.preventDefault();
                     return false;
-                }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
-                }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
-                    alert("You exceed available BLU BUKS");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
+                });
 
-                    return false;
-                }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
-                    alert("BLU BUKS cannot be greater than product price");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
-                }
-                else
-                    return true;
+                function round2Fixed(value) {
+                    value = +value;
 
-            }
-            function applyproductcategoryfund() {
-                $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
+                    if (isNaN(value))
+                        return NaN;
 
-                var customerlevel = $("#hdncustomerlevel").text();
-                if (customerlevel == 1 || customerlevel == 8) {
-                    $("#sppricewithfund").addClass("hide-element");
+                    // Shift
+                    value = value.toString().split('e');
+                    value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + 2) : 2)));
 
+                    // Shift back
+                    value = value.toString().split('e');
+                    return (+(value[0] + 'e' + (value[1] ? (+value[1] - 2) : -2))).toFixed(2);
                 }
-                else {
-                    $("#sppricewithfund").removeClass("hide-element");
-                }
-            }
 
-            $("#Size_1_1").change(function () {
-                var customerlevel = $("#hdncustomerlevel").text();
-                if (customerlevel == 1 || customerlevel == 8) {
-                    $("#sppricewithfund").addClass("hide-element");
+                function setpricewithquantitychange() {
+                    debugger;
+                    var updatedtotalprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value);
+                    var productfundamount = $("#hdnProductFundAmount").text();
+
+                    if (productfundamount < updatedtotalprice) {
+                        updatedtotalprice = updatedtotalprice - productfundamount;
+                        $("#hdnProductFundAmountUsed").text(productfundamount);
+                    }
+                    else {
+                        productfundamount = productfundamount - updatedtotalprice;
+                        $("#hdnProductFundAmountUsed").text(updatedtotalprice);
+                        updatedtotalprice = 0;
+                        $("#txtBluBuksUsed").text(updatedtotalprice);
+                    }
+                    $("#hdnpricewithfund").text(updatedtotalprice);
+                    $("#spprice").text("$" + updatedtotalprice.toFixed(2));
+                    $("#sppricewithfund").html("<font>Price with FUND credit: $</font>" + updatedtotalprice.toFixed(2));
 
                 }
-                else {
-                    $("#sppricewithfund").removeClass("hide-element");
+
+                function applyblubuksvalidation() {
+                  
+                    var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
+                    $("#spprice").text("$" + updatedprice.toFixed(2));
+                    var maxfundlimit = $("#spprice").text().replace("$", "") * (parseFloat($("#hdnBudgetPercentValue").text()) / 100)
+                    if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
+                        return false;
+                    }
+                    else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                        alert("BLU BUKS cannot be greater than allowed limit");
+                        // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                        $("#txtBluBuksUsed").val("0.00");
+                        return false;
+                    }
+                    else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
+                        alert("You exceed available BLU BUKS");
+                        // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                        $("#txtBluBuksUsed").val("0.00");
+
+                        return false;
+                    }
+                    else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
+                        alert("BLU BUKS cannot be greater than product price");
+                        // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                        $("#txtBluBuksUsed").val("0.00");
+                        return false;
+                    }
+                    else
+                        return true;
+
                 }
-            });
-            function ApplyValidation(theForm) {
-                debugger;
-                if ($("#Quantity_1_1").length <= 0) {
+                function applyproductcategoryfund() {
+                    $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                    $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                    $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
+
+                    var customerlevel = $("#hdncustomerlevel").text();
+                    if (customerlevel == 1 || customerlevel == 8) {
+                        $("#sppricewithfund").addClass("hide-element");
+
+                    }
+                    else {
+                        $("#sppricewithfund").removeClass("hide-element");
+                    }
+                }
+
+                $("#Size_1_1").change(function () {
+                    var customerlevel = $("#hdncustomerlevel").text();
+                    if (customerlevel == 1 || customerlevel == 8) {
+                        $("#sppricewithfund").addClass("hide-element");
+
+                    }
+                    else {
+                        $("#sppricewithfund").removeClass("hide-element");
+                    }
+                });
+                function ApplyValidation(theForm) {
+                    debugger;
+                    if ($("#Quantity_1_1").length <= 0) {
+                        submitenabled(theForm);
+                        return (true);
+                    }
+                    submitonce(theForm);
+                    if ((theForm.Quantity_1_1.value * 1) < 1) {
+                        alert("Please specify the quantity you want to add to your cart");
+                        theForm.Quantity_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+
+                    }
+                    if ($("#Size_1_1").length > 0) {
+                        if (theForm.Size_1_1.selectedIndex < 1) {
+                            alert("Please select a size.");
+                            theForm.Size_1_1.focus();
+                            submitenabled(theForm);
+                            return (false);
+                        }
+                    }
+                    if ($("#Color_1_1").length > 0) {
+                        if (theForm.Color_1_1.selectedIndex < 1) {
+                            alert("Please select a color.");
+                            theForm.Color_1_1.focus();
+                            submitenabled(theForm);
+                            return (false);
+                        }
+                    }
+                    if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
+                        alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
+                        theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
+                        theForm.Quantity_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
                     submitenabled(theForm);
                     return (true);
-                }
-                submitonce(theForm);
-                if ((theForm.Quantity_1_1.value * 1) < 1) {
-                    alert("Please specify the quantity you want to add to your cart");
-                    theForm.Quantity_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
-
-                }
-                if ($("#Size_1_1").length > 0) {
-                    if (theForm.Size_1_1.selectedIndex < 1) {
-                        alert("Please select a size.");
-                        theForm.Size_1_1.focus();
-                        submitenabled(theForm);
-                        return (false);
+                }                function GetControlValue(id) {
+                    var CustomerLevelElemment;
+                    if (document.getElementById(id)) {
+                        CustomerLevelElemment = document.getElementById(id);
                     }
-                }
-                if ($("#Color_1_1").length > 0) {
-                    if (theForm.Color_1_1.selectedIndex < 1) {
-                        alert("Please select a color.");
-                        theForm.Color_1_1.focus();
-                        submitenabled(theForm);
-                        return (false);
+                    else if (document.all) {
+                        CustomerLevelElemment = document.all[id];
                     }
+                    else {
+                        CustomerLevelElemment = document.layers[id];
+                    }
+                    return CustomerLevelElemment.innerHTML;
                 }
-                if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
-                    alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
-                    theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
-                    theForm.Quantity_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
-                }
-                submitenabled(theForm);
-                return (true);
-            }            function GetControlValue(id) {
-                var CustomerLevelElemment;
-                if (document.getElementById(id)) {
-                    CustomerLevelElemment = document.getElementById(id);
-                }
-                else if (document.all) {
-                    CustomerLevelElemment = document.all[id];
-                }
-                else {
-                    CustomerLevelElemment = document.layers[id];
-                }
-                return CustomerLevelElemment.innerHTML;
-            }
-        });
+            });
     </script>
 </asp:Content>
 

@@ -437,7 +437,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-5">
                                     <label class="roman-black">Amount:</label>
-                                     <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="10"   ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                     <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7"   ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                                     
                                 </div>
                             </div>
@@ -642,7 +642,15 @@
                 var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep")
                 {                  
-                    regex = new RegExp("^[0-9.]+$");
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
+                        event.preventDefault();
+                    }
+
+                    var text = $(this).val();
+
+                    if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && (event.which != 0 && event.which != 8) && ($(this)[0].selectionStart >= text.length - 2)) {
+                        event.preventDefault();
+                    }
                 }
                 else if ($(this).attr('id').includes("txtQuantity"))
                     regex = new RegExp("^[0-9]+$");
@@ -675,18 +683,29 @@
                 $("#hdntoreplace").text(toreplace);
                 $("#hdncurrentrecordid").text(id.replace(toreplace, ""));
                 var currentrecordid = id.replace(toreplace, "");
+                var maxInventory = $("#spInventory_" + currentrecordid).text();
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
                 var Itemquantityfromcart = $("#spItemQuantity_" + currentrecordid).text();
                 var quantityfieldid = "#" + toreplace + "txtQuantity";
-                var ItemQuantity = $(quantityfieldid).val().replace("$", "");
+                var ItemQuantity = $(quantityfieldid).val().replace("$", "");                
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 $("#txtGLcode").val("");
+
+              
                 if (ItemQuantity*1 < 1)
                 {
                     alert("Please specify the quantity you want to add to your cart");
+                    $(quantityfieldid).val(1);
                     return false;
+                }
+                else if (ItemQuantity * 1 > maxInventory)
+                {
+                    alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + maxInventory + ". Please contact us if you need more information.");
+                    $(quantityfieldid).val(maxInventory);
+                    return false;
+                
                 }
                 $("#txtBluBuksUsed").val("0.00");
             
@@ -759,8 +778,7 @@
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();//.replace("(FUND) discount: $", "");
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
                 spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$","");              
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("Blu Bucks used:", "");
-
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");               
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice)
                 var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
                 $("#ppointscount").text(blubucks);

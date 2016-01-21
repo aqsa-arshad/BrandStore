@@ -1357,7 +1357,7 @@ namespace AspDotNetStorefrontCore
                         newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
                         newItem.GLcode = DB.RSField(rs, "GLcode");
                         newItem.FundName = DB.RSField(rs, "FundName");
-
+                        newItem.Inventory = DB.RSFieldInt(rs, "Inventory");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
