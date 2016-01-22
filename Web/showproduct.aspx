@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-7">
                                 <label class="roman-black">GL Code:</label>
-                                <asp:TextBox ID="txtGLcode" ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtGLcode" MaxLength="12"  ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
@@ -288,8 +288,8 @@
 
             });
             $('input').keypress(function (e) {
-                var regex;               
-                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
+                var regex;              
+                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {                  
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         event.preventDefault();
                     }
@@ -300,8 +300,9 @@
                         event.preventDefault();
                     }
                 }
-                else if ($(this).attr('id').includes("Quantity"))
-                    regex = new RegExp("^[0-9]+$");              
+                else if ($(this).attr('id')=="Quantity_1_1") {                   
+                    regex = new RegExp("^[0-9]+$");
+                }                
 
                
                     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);

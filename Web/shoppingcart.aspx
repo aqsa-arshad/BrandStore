@@ -434,7 +434,7 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-7">
                                     <label class="roman-black">GL Code:</label>                                  
-                                     <asp:TextBox ID="txtGLcode" ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                     <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-xs-6 col-sm-5">
                                     <label class="roman-black">Amount:</label>
@@ -642,6 +642,9 @@
             $('input').keypress(function (e) {
                
                 var regex;
+                var id = $(this).attr('id');
+                var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
+                id = id.replace(toreplace,"");
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep")
                 {                  
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
@@ -654,7 +657,7 @@
                         event.preventDefault();
                     }
                 }
-                else if ($(this).attr('id').includes("txtQuantity"))
+                else if (id == "txtQuantity")
                     regex = new RegExp("^[0-9]+$");                
 
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -691,16 +694,10 @@
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
-                $("#txtGLcode").val("");
-
-              
-                if (ItemQuantity*1 < 1)
-                {
-                    alert("Please specify the quantity you want to add to your cart");
-                    $(quantityfieldid).val(1);
-                    return false;
-                }
-                else if (ItemQuantity * 1 > maxInventory)
+                $("#txtGLcode").val("");              
+               
+                
+               if (ItemQuantity * 1 > maxInventory)
                 {
                     alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + maxInventory + ". Please contact us if you need more information.");
                     $(quantityfieldid).val(maxInventory);

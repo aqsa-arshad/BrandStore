@@ -1238,21 +1238,17 @@ namespace AspDotNetStorefrontControls
                         if (String.IsNullOrEmpty(cItem.FundName))
                             cItem.FundName = "";
                         else
-                            cItem.FundName = "(" + cItem.FundName + ")" + " used: ";
+                            cItem.FundName = cItem.FundName + " used: ";
+                        
                         String CreditPrice = lblSubTotal.Text;
+                        System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
                         Decimal RegularPrices = Convert.ToDecimal(lblSubTotal.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", ""));
                         lblSubTotal.Text = "<span id='" + "spregularprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spregularprice'><b>Regular Price: </b>$" + Math.Round(RegularPrices, 2).ToString() + "</span>";
                         if (Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) > 0)
                             lblSubTotal.Text += "<span id='" + "spfunddiscountprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spfunddiscountprice'>" + cItem.FundName + lblpricewithCategoryFundUsed.Text + "</span>";
-                        //else
-                        //    lblSubTotal.Text += "<span id='" + "spfunddiscountprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element>" + cItem.FundName + lblpricewithCategoryFundUsed.Text + "</span>";
-
-                        if (Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", "")) > 0)
+                       if (Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", "")) > 0)
                             lblSubTotal.Text += "<span id='" + "spblubucksprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spblubucksprice'>BLU BUCKS used: " + lblpricewithBluBucksUsed.Text + "" + "</span>";
-                        //else
-                        //    lblSubTotal.Text += "<span id='" + "spblubucksprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element>BLU BUCKS used: " + lblpricewithBluBucksUsed.Text + "" + "</span>";
-
                         lblSubTotal.Text += "<span id='" + "spcreditprice_" + cItem.ShoppingCartRecordID.ToString() + "' ><b>Your Price: </b>" + CreditPrice + "</span>";
                         lblSubTotal.Text += "<span id='" + "spItemPrice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemPrice'><b>Item Price: </b>$" + lblItemPrice.Text.ToString() + "</span>" + "<span id='" + "spItemFundId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemFundId'>" + cItem.FundID.ToString() + "</span>" + "<span id='" + "spItemProductCategoryId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemProductCategoryId'>" + cItem.ProductCategoryID.ToString() + "</span>" + "<span id='" + "spBluBucksPercentageUsed_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spBluBucksPercentageUsed'>" + cItem.BluBucksPercentageUsed.ToString() + "</span>" + "<span id='" + "spItemQuantity_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemQuantity'>" + cItem.Quantity.ToString() + "</span>";
                         lblSubTotal.Text += "<span id='" + "spfunddiscountprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>" + cItem.FundName + lblpricewithCategoryFundUsed.Text + "</span>";
