@@ -100,6 +100,7 @@ namespace AspDotNetStorefrontCore
         private Decimal m_BluBucksPercentageUsed;
         private String m_GLcode;
         private String m_FundName;
+        private int m_Inventory;
 
 
 
@@ -215,6 +216,7 @@ namespace AspDotNetStorefrontCore
            m_BluBucksPercentageUsed = ci.BluBucksPercentageUsed;
            m_GLcode = ci.GLcode;
            m_FundName = ci.FundName;
+           m_Inventory = ci.Inventory;
         }
 
         #endregion
@@ -247,7 +249,12 @@ namespace AspDotNetStorefrontCore
             get { return m_RecurringIndex; }
             set { m_RecurringIndex = value; }
         }
-
+        public int Inventory
+        {
+            get { return m_Inventory; }
+            set { m_Inventory = value; }
+        }
+        
         /// <summary>
         /// Gets or sets the OriginalRecurringOrderNumber
         /// </summary>

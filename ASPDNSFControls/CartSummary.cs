@@ -432,10 +432,10 @@ namespace AspDotNetStorefrontControls
             lblCreditUsed.Text = "Credits Used";
 
             lblBluBucksFundsUsedTotalCaption.ID = "lblBluBucksFundsUsedTotalCaption";
-            lblBluBucksFundsUsedTotalCaption.Text = "Blu Bucks:";
+            lblBluBucksFundsUsedTotalCaption.Text = "BLU BUCKS:";
 
             lblSofFundsUsedTotalCaption.ID = "lblSofFundsUsedTotalCaption";
-            lblSofFundsUsedTotalCaption.Text = "Sof Funds:";
+            lblSofFundsUsedTotalCaption.Text = "Sales Funds:";
 
             lblDirectMailFundsUsedTotalCaption.ID = "lblDirectMailFundsUsedTotalCaption";
             lblDirectMailFundsUsedTotalCaption.Text = "Direct Mail Funds:";

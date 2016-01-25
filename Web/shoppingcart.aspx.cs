@@ -205,7 +205,7 @@ namespace AspDotNetStorefront
                 ViewState["ReturnURL"] = ReturnURL;
 
                 InitializePageContent(checkOutType);
-                 SetFundUsedByCategory(); //need this later
+                SetFundUsedByCategory(); //need this later
                 InitializeShippingAndEstimateControl();
 
 
@@ -259,7 +259,8 @@ namespace AspDotNetStorefront
                 GetBluBucksAndCategoryFundsForCustomer(true);
             else
                 GetBluBucksAndCategoryFundsForCustomer(false);
-           
+
+
         }
 
         private void GetBluBucksAndCategoryFundsForCustomer(bool fromload)
@@ -286,10 +287,10 @@ namespace AspDotNetStorefront
             //end get all funds amount of customer          
             hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();
 
-           
-            
 
-          
+
+
+
         }
         private string getfundamount(int FundID)
         {
@@ -312,7 +313,7 @@ namespace AspDotNetStorefront
         }
         void btnCheckOutNowTop_Click(object sender, EventArgs e)
         {
-           // SetFundUsedByCategory(); //remove this later if required
+            // SetFundUsedByCategory(); //remove this later if required
 
             string errormessage = AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
             string script = "alert('" + errormessage + "')";
@@ -338,7 +339,7 @@ namespace AspDotNetStorefront
         }
         void btnCheckOutNowBottom_Click(object sender, EventArgs e)
         {
-           // SetFundUsedByCategory(); //remove this later if required
+            // SetFundUsedByCategory(); //remove this later if required
 
             string errormessage = AppLogic.GetString("FundLimitExceeds", SkinID, ThisCustomer.LocaleSetting.ToString());
             string script = "alert('" + errormessage + "')";
@@ -471,16 +472,23 @@ namespace AspDotNetStorefront
             }
             cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
             //cart.SetCoupon(txtGiftCard.Text.ToUpperInvariant(), true);
-            UpdateCurrentItemFundsUsed();//Added By Tayyab on 10-01-2016
-            UpdateCartQuantity();
+
+            String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
+            String BluBucksUsed = GetSessionValue("BluBucksUsed");
+            String currentrecordid = GetSessionValue("currentrecordid");
+            String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
+
+            UpdateCurrentItemFundsUsed(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, GLcode);//Added By Tayyab on 10-01-2016
+            UpdateCartQuantity(currentrecordid);
 
             ctrlOrderOption.UpdateChanges();
             ProcessCart(false, false, false);
             InitializePageContent(CheckOutPageControllerFactory.CreateCheckOutPageController(ThisCustomer, cart).GetCheckoutType());
             InitializeShippingAndEstimateControl();
             InitializeShoppingCartControl();
-              SetFundUsedByCategory(); //need this later
+            SetFundUsedByCategory(); //need this later
             GetBluBucksAndCategoryFundsForCustomer(true);
+            Updatecartcounttotalonmenue();
         }
 
         public void SetFundUsedByCategory()
@@ -1036,7 +1044,7 @@ namespace AspDotNetStorefront
             return results.ToString();
         }
 
-        private void UpdateCartQuantity()
+        private void UpdateCartQuantity(String currentrecordid)
         {
             int quantity = 0;
             int sRecID = 0;
@@ -1049,18 +1057,29 @@ namespace AspDotNetStorefront
                 sRecID = ctrlShoppingCart.Items[i].ShoppingCartRecId;
                 itemNotes = ctrlShoppingCart.Items[i].ItemNotes;
 
-                if (AppLogic.AppConfigBool("AllowRecurringFrequencyChangeInCart") && ctrlShoppingCart.Items[i].ShowVariantDropdown)
+              
+                try
                 {
-                    recurringVariantID = ctrlShoppingCart.Items[i].RecurringVariantId;
 
-                    if (recurringVariantID != 0)
-                        UpdateRecurringFrequency(sRecID, recurringVariantID, quantity);
+                    if (Convert.ToInt32(currentrecordid) == sRecID)
+                    {
+                        if (AppLogic.AppConfigBool("AllowRecurringFrequencyChangeInCart") && ctrlShoppingCart.Items[i].ShowVariantDropdown)
+                        {
+                            recurringVariantID = ctrlShoppingCart.Items[i].RecurringVariantId;
+
+                            if (recurringVariantID != 0)
+                                UpdateRecurringFrequency(sRecID, recurringVariantID, quantity);
+                        }
+
+                        cart.SetItemQuantity(sRecID, quantity);
+
+
+                        cart.SetItemNotes(sRecID, CommonLogic.CleanLevelOne(itemNotes));
+                    }
                 }
-
-                cart.SetItemQuantity(sRecID, quantity);
-
-
-                cart.SetItemNotes(sRecID, CommonLogic.CleanLevelOne(itemNotes));
+                catch (Exception ex)
+                {
+                }
             }
 
             Updatecartcounttotalonmenue();
@@ -1068,18 +1087,18 @@ namespace AspDotNetStorefront
 
         }
 
-        private void UpdateCurrentItemFundsUsed()
+        private void UpdateCurrentItemFundsUsed(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid, String GLcode)
         {
-            String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
-            String BluBucksUsed = GetSessionValue("BluBucksUsed");
-            String currentrecordid = GetSessionValue("currentrecordid");
-            String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
+            //String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
+            //String BluBucksUsed = GetSessionValue("BluBucksUsed");
+            //String currentrecordid = GetSessionValue("currentrecordid");
+            //String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
             try
             {
                 cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode);
             }
             catch (Exception ex)
-            { 
+            {
             }
             SetSessionValue("ProductCategoryFundUsed");
             SetSessionValue("BluBucksUsed");

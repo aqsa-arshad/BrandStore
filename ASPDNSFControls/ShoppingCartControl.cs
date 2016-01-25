@@ -317,7 +317,7 @@ namespace AspDotNetStorefrontControls
                         pnlItems.Controls.Add(new LiteralControl("</div>"));
                     }
 
-                 //   pnlItems.Controls.Add(new LiteralControl("<div class='cart-row row-separator'></div>"));
+                    //   pnlItems.Controls.Add(new LiteralControl("<div class='cart-row row-separator'></div>"));
 
                 }
 
@@ -1124,7 +1124,7 @@ namespace AspDotNetStorefrontControls
                         lnkDelete.Text = this.MinicartSummarySetting.MiniCartRemoveText;
                     }
                     lnkDelete.CommandName = "Delete";
-                   // lnkUpdate.CommandName = "Update";
+                    // lnkUpdate.CommandName = "Update";
                     lnkUpdate.Text = "Update";
                 }
                 else
@@ -1132,12 +1132,12 @@ namespace AspDotNetStorefrontControls
                     lnkDelete.Text = "shoppingcart.cs.107".StringResource();
                     lnkDelete.CommandName = "Delete";
 
-                  //  lnkUpdate.CommandName = "Update";
+                    //  lnkUpdate.CommandName = "Update";
                     lnkUpdate.Text = "Update";
                 }
                 lnkDelete.CommandArgument = cItem.ShoppingCartRecordID.ToString();
-              //  lnkUpdate.CommandArgument = cItem.ShoppingCartRecordID.ToString();
-               
+                //  lnkUpdate.CommandArgument = cItem.ShoppingCartRecordID.ToString();
+
                 //Line Item Description
                 if (LineItemSetting != null)
                 {
@@ -1153,9 +1153,9 @@ namespace AspDotNetStorefrontControls
                     lblVatDisplay.Text = cItem.VatRateDisplayFormat;
                     lblQtyDiscount.Text = cItem.LineItemQuantityDiscount;
                     lblpricewithBluBucksUsed.Text = Math.Round(cItem.pricewithBluBuksUsed, 2).ToString();
-                    lblpricewithCategoryFundUsed.Text = "$" + Math.Round(cItem.pricewithategoryFundUsed,2).ToString();
+                    lblpricewithCategoryFundUsed.Text = "$" + Math.Round(cItem.pricewithategoryFundUsed, 2).ToString();
                     lblItemPrice.Text = Math.Round(cItem.Price, 2).ToString();
-                  
+
                 }
                 else
                 {
@@ -1179,27 +1179,27 @@ namespace AspDotNetStorefrontControls
                 };
                 Controls.Add(hiddenInventory);
                 //END
-              
+
                 if (this.DisplayMode != CartDisplayMode.MiniCart)
                 {
                     //LineItemDescription
-                   // Controls.Add(new LiteralControl("    <td class='cart-column cart-column-description'>"));
+                    // Controls.Add(new LiteralControl("    <td class='cart-column cart-column-description'>"));
                     Controls.Add(lineItemDescription);
-                    Controls.Add(new LiteralControl("    </td>")); 
+                    Controls.Add(new LiteralControl("    </td>"));
                     //payment sub total here
                     Controls.Add(new LiteralControl("<td class='td-35-percent'>"));//<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>
-                  //  Controls.Add(new LiteralControl("<td class='cart-column cart-column-subtotal'>"));
+                    //  Controls.Add(new LiteralControl("<td class='cart-column cart-column-subtotal'>"));
 
-                   // Controls.Add(new LiteralControl("   <td class='cart-row'>"));
+                    // Controls.Add(new LiteralControl("   <td class='cart-row'>"));
 
                     if (this.DisplayMode == CartDisplayMode.MiniCart &&
                         CartItem.CartType == CartTypeEnum.Deleted)
                     {
-                       // Controls.Add(new LiteralControl("     <td class='cart-column cart-price cart-column-price opacity-twenty'>"));
+                        // Controls.Add(new LiteralControl("     <td class='cart-column cart-price cart-column-price opacity-twenty'>"));
                     }
                     else
                     {
-                    // Controls.Add(new LiteralControl("     <td class=''>"));
+                        // Controls.Add(new LiteralControl("     <td class=''>"));
                     }
 
                     if (this.DisplayMode == CartDisplayMode.WishList || this.DisplayMode == CartDisplayMode.GiftRegistry)
@@ -1236,31 +1236,44 @@ namespace AspDotNetStorefrontControls
                     else
                     {
                         if (String.IsNullOrEmpty(cItem.FundName))
-                            cItem.FundName = "(FUND) discount: ";
+                            cItem.FundName = "";
                         else
-                            cItem.FundName = "(" + cItem.FundName + ")" + "discount: ";
+                            cItem.FundName = cItem.FundName + " used: ";
+                        
+                        String CreditPrice = lblSubTotal.Text;
+                        System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
                         Decimal RegularPrices = Convert.ToDecimal(lblSubTotal.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) + Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", ""));
-                        lblSubTotal.Text = "<span id='" + "spregularprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spregularprice'><b>Regular Price: </b>$" + Math.Round(RegularPrices, 2).ToString() + "</span>" + "<span id='" + "spfunddiscountprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spfunddiscountprice'>" + cItem.FundName  + lblpricewithCategoryFundUsed.Text + "</span><span id='" + "spblubucksprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spblubucksprice'>Blu Bucks used: " + lblpricewithBluBucksUsed.Text + "" + "</span><span id='" + "spcreditprice_" + cItem.ShoppingCartRecordID.ToString() + "' ><b>Your Price: </b>" + lblSubTotal.Text + "</span>" + "<span id='" + "spItemPrice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemPrice'><b>Item Price: </b>$" + lblItemPrice.Text.ToString() + "</span>" + "<span id='" + "spItemFundId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemFundId'>" + cItem.FundID.ToString() + "</span>" + "<span id='" + "spItemProductCategoryId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemProductCategoryId'>" + cItem.ProductCategoryID.ToString() + "</span>" + "<span id='" + "spBluBucksPercentageUsed_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spBluBucksPercentageUsed'>" + cItem.BluBucksPercentageUsed.ToString() + "</span>" + "<span id='" + "spItemQuantity_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemQuantity'>" + cItem.Quantity.ToString() + "</span>";
+                        lblSubTotal.Text = "<span id='" + "spregularprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spregularprice'><b>Regular Price: </b>$" + Math.Round(RegularPrices, 2).ToString() + "</span>";
+                        if (Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) > 0)
+                            lblSubTotal.Text += "<span id='" + "spfunddiscountprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spfunddiscountprice'>" + cItem.FundName + lblpricewithCategoryFundUsed.Text + "</span>";
+                       if (Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", "")) > 0)
+                            lblSubTotal.Text += "<span id='" + "spblubucksprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spblubucksprice'>BLU BUCKS used: " + lblpricewithBluBucksUsed.Text + "" + "</span>";
+                        lblSubTotal.Text += "<span id='" + "spcreditprice_" + cItem.ShoppingCartRecordID.ToString() + "' ><b>Your Price: </b>" + CreditPrice + "</span>";
+                        lblSubTotal.Text += "<span id='" + "spItemPrice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemPrice'><b>Item Price: </b>$" + lblItemPrice.Text.ToString() + "</span>" + "<span id='" + "spItemFundId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemFundId'>" + cItem.FundID.ToString() + "</span>" + "<span id='" + "spItemProductCategoryId_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemProductCategoryId'>" + cItem.ProductCategoryID.ToString() + "</span>" + "<span id='" + "spBluBucksPercentageUsed_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spBluBucksPercentageUsed'>" + cItem.BluBucksPercentageUsed.ToString() + "</span>" + "<span id='" + "spItemQuantity_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spItemQuantity'>" + cItem.Quantity.ToString() + "</span>";
+                        lblSubTotal.Text += "<span id='" + "spfunddiscountprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>" + cItem.FundName + lblpricewithCategoryFundUsed.Text + "</span>";
+                        lblSubTotal.Text += "<span id='" + "spblubucksprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>BLU BUCKS used: " + lblpricewithBluBucksUsed.Text + "" + "</span>";
+                        lblSubTotal.Text += "<span id='" + "spInventory_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>" + cItem.Inventory + "" + "</span>";
+
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
                     }
                     Controls.Add(new LiteralControl("                 </td>"));
                     Controls.Add(new LiteralControl("             </td>"));
                     Controls.Add(new LiteralControl("        </td>"));
-                    Controls.Add(new LiteralControl("</td>"));  
+                    Controls.Add(new LiteralControl("</td>"));
                     //end payment sub total 
                     Controls.Add(new LiteralControl("<td class='td-25-percent'><span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblQuantityHeader'>Quantity</span>"));
                     //Controls.Add(new LiteralControl("    <td class='cart-column cart-column-edit'>"));
                     if (this.AllowEdit)
                     {
-                     //   Controls.Add(new LiteralControl("     <td class='edit-wrap'>"));
+                        //   Controls.Add(new LiteralControl("     <td class='edit-wrap'>"));
                     }
                     else
                     {
-                      //  Controls.Add(new LiteralControl("      <td>")); 
+                        //  Controls.Add(new LiteralControl("      <td>")); 
                     }
-                    
+
                     //check for restricted quantity
                     if (this.CartItem.RestrictedQuantities.Count == 0 || !this.AllowEdit)
                     {
@@ -1275,28 +1288,36 @@ namespace AspDotNetStorefrontControls
                         // build dropdown for restricted quantities                    
                         BuildRestrictedQuantities();
                         Controls.Add(cboQuantity);
+
+                        Controls.Add(new LiteralControl("  <div class='shopping-cart-links'>"));
+                        Controls.Add(lnkDelete);
+                        Controls.Add(new LiteralControl("<font>|</font>"));
+                        lnkUpdate.CssClass = "lnkUpdateItem";
+                        lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();
+                        Controls.Add(lnkUpdate);
+                        Controls.Add(new LiteralControl("  </div>"));
                     }
 
 
-                 //   Controls.Add(new LiteralControl("    </td>")); 
+                    //   Controls.Add(new LiteralControl("    </td>")); 
 
                     if (this.DisplayMode != CartDisplayMode.MiniCart && this.DisplayMode != CartDisplayMode.GiftRegistry)
                     {
                         if (this.AllowEdit && this.CartItem.RestrictedQuantities.Count == 0)
                         {
-                            Controls.Add(new LiteralControl("  <div class='shopping-cart-links'>"));                          
+                            Controls.Add(new LiteralControl("  <div class='shopping-cart-links'>"));
                             Controls.Add(lnkDelete);
                             Controls.Add(new LiteralControl("<font>|</font>"));
                             lnkUpdate.CssClass = "lnkUpdateItem";
-                            lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();                            
-                            Controls.Add(lnkUpdate);                            
-                            Controls.Add(new LiteralControl("  </div>")); 
+                            lnkUpdate.ID = cItem.ShoppingCartRecordID.ToString();
+                            Controls.Add(lnkUpdate);
+                            Controls.Add(new LiteralControl("  </div>"));
                         }
 
-                  
+
                     }
 
-                    Controls.Add(new LiteralControl("  </td>")); 
+                    Controls.Add(new LiteralControl("  </td>"));
                 }
                 else
                 {
@@ -1330,7 +1351,7 @@ namespace AspDotNetStorefrontControls
                     {
                         Controls.Add(vreQuantity);
                     }
-                    Controls.Add(new LiteralControl("            </td>")); 
+                    Controls.Add(new LiteralControl("            </td>"));
 
                     if (this.DisplayMode != CartDisplayMode.MiniCart)
                     {
@@ -1338,10 +1359,10 @@ namespace AspDotNetStorefrontControls
                         {
                             Controls.Add(new LiteralControl("            <td class='delete-wrap'>"));
                             Controls.Add(lnkDelete);
-                            Controls.Add(new LiteralControl("            </td>")); 
+                            Controls.Add(new LiteralControl("            </td>"));
                         }
                     }
-                    Controls.Add(new LiteralControl("          </td>")); 
+                    Controls.Add(new LiteralControl("          </td>"));
 
                     if (this.DisplayMode == CartDisplayMode.MiniCart &&
                         CartItem.CartType == CartTypeEnum.Deleted)
@@ -1353,7 +1374,7 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(new LiteralControl("          <td class='cart-column cart-column-description'>"));
                     }
                     Controls.Add(lineItemDescription);
-                    Controls.Add(new LiteralControl("          </td>")); 
+                    Controls.Add(new LiteralControl("          </td>"));
                 }
 
                 //Controls.Add(new LiteralControl("<div class='cart-column cart-column-subtotal'>"));
@@ -1411,7 +1432,7 @@ namespace AspDotNetStorefrontControls
                 {
                     Controls.Add(new LiteralControl("              <td class='delete-wrap'>"));
                     Controls.Add(lnkDelete);
-                    Controls.Add(new LiteralControl("              </td>"));  
+                    Controls.Add(new LiteralControl("              </td>"));
                 }
 
                 if (this.DisplayMode != CartDisplayMode.MiniCart)
@@ -1427,7 +1448,7 @@ namespace AspDotNetStorefrontControls
                     {
                         Controls.Add(new LiteralControl("               <td class='cart-small quantity-discount-wrap'>"));
                         Controls.Add(lblQtyDiscount);
-                        Controls.Add(new LiteralControl("              </td>")); 
+                        Controls.Add(new LiteralControl("              </td>"));
                     }
                 }
                 //Controls.Add(new LiteralControl("                 </div>"));
@@ -1480,8 +1501,8 @@ namespace AspDotNetStorefrontControls
             string DELETE_QTY = "DELETE";
             List<int> quantities = cItem.RestrictedQuantities;
             string defaultSelectedValue = DELETE_QTY;
-
-            cboQuantity.Items.Add(new ListItem(DELETE_QTY, "0"));
+            cboQuantity.ID = "txtQuantity";
+            // cboQuantity.Items.Add(new ListItem(DELETE_QTY, "0"));
             foreach (int qty in quantities)
             {
                 cboQuantity.Items.Add(new ListItem(qty.ToString(), qty.ToString()));
@@ -2226,7 +2247,7 @@ namespace AspDotNetStorefrontControls
                 container.Controls.Add(lblQuantityHeader);
                 container.Controls.Add(new LiteralControl("          </div>"));
 
-                
+
                 container.Controls.Add(new LiteralControl("        </div>"));
             }
             else
@@ -2238,7 +2259,7 @@ namespace AspDotNetStorefrontControls
                 container.Controls.Add(new LiteralControl("        <div class='cart-row cart-empty'>"));
                 container.Controls.Add(lblCartMessage);
                 container.Controls.Add(new LiteralControl("        </div>"));
-                
+
 
             }
         }
