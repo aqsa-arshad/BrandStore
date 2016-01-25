@@ -151,6 +151,7 @@
     <Compile Include="ErrorMessage.cs" />
     <Compile Include="FedEx.cs" />
     <Compile Include="fts.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Skin.cs" />
     <Compile Include="SkinProvider.cs" />
     <Compile Include="TrackingInformation.cs" />

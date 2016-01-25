@@ -7,12 +7,15 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 namespace AspDotNetStorefront
 {
@@ -22,10 +25,11 @@ namespace AspDotNetStorefront
     [PageType("product")]
     public partial class showproduct : SkinBase
     {
+        public static string LstInventories { get; set; }
+
         String SourceEntityInstanceName = String.Empty;
         protected string parentCategoryID = String.Empty;
         protected string parentCategoryName = String.Empty;
-
 
         int ProductID;
         bool IsAKit;
@@ -196,7 +200,7 @@ namespace AspDotNetStorefront
                             ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU(tm) Bucks you can use to purchase items.";
                         }
 
-                       //Category Fund
+                        //Category Fund
                         hdnProductFundID.Text = Convert.ToString(DB.RSFieldInt(rs, "FundID"));
                         if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
                         {
@@ -209,17 +213,17 @@ namespace AspDotNetStorefront
                             else
                             {
                                 tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds));//for sales rep
-                                 if (tempfund != null)
-                                 {
-                                     hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
-                                     productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
-                                 }
-                                 else
-                                 {
-                                     hdnProductFundAmount.Text = "0";
-                                     productcategoryfund = Convert.ToDecimal("0.00");
-                                 }
-                                 hdnProductFundID.Text = "2";
+                                if (tempfund != null)
+                                {
+                                    hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                    productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                                }
+                                else
+                                {
+                                    hdnProductFundAmount.Text = "0";
+                                    productcategoryfund = Convert.ToDecimal("0.00");
+                                }
+                                hdnProductFundID.Text = "2";
 
                             }
                         }
@@ -236,36 +240,33 @@ namespace AspDotNetStorefront
                                 hdnProductFundAmount.Text = "0";
                                 productcategoryfund = Convert.ToDecimal("0.00");
                             }
-                           
-                           
                         }
 
-
-                      hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
-                        if(this.IsPostBack)
+                        hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
+                        if (this.IsPostBack)
                         {
-                            hdnquantity.Text= Request.Form["Quantity_1_1"];
+                            hdnquantity.Text = Request.Form["Quantity_1_1"];
                         }
-                        else{
-                        hdnquantity.Text="1";
+                        else
+                        {
+                            hdnquantity.Text = "1";
                         }
 
                         if (String.IsNullOrEmpty(hdnquantity.Text) || String.IsNullOrWhiteSpace(hdnquantity.Text))
                             hdnquantity.Text = "0";
-                      productprice = productprice * Convert.ToInt32(hdnquantity.Text);
+                        productprice = productprice * Convert.ToInt32(hdnquantity.Text);
                         if (productcategoryfund < productprice)
                         {
-                            productprice = productprice - productcategoryfund;                         
+                            productprice = productprice - productcategoryfund;
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productcategoryfund)).ToString();
                         }
                         else
                         {
                             productcategoryfund = productcategoryfund - productprice;
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productprice)).ToString();
-                            productprice = 0;                        
-                            txtBluBuksUsed.Text = productprice.ToString();                          
-
-                        }                    
+                            productprice = 0;
+                            txtBluBuksUsed.Text = productprice.ToString();
+                        }
                         hdnpricewithfund.Text = productprice.ToString();
                         //End apply fund
                         //End
@@ -275,7 +276,6 @@ namespace AspDotNetStorefront
                         hdnpricewithfund.Text = productprice.ToString();
                         hdnBluBucktsPoints.Text = "0";
                         ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU(tm) Bucks you can use to purchase your items.";
-
                     }
 
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
@@ -547,9 +547,9 @@ namespace AspDotNetStorefront
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
-                       // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);                       
-                            LiteralCustom.Text = m_PageOutputCustom + "<div>";
+                        // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        LiteralCustom.Text = m_PageOutputCustom + "<div>";
 
                     }
                 }
@@ -558,7 +558,7 @@ namespace AspDotNetStorefront
             {
                 litOutput.Text = m_PageOutput;
             }
-            
+
             GetParentCategory();
             if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
             {
@@ -577,7 +577,9 @@ namespace AspDotNetStorefront
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
             hdnProductCategoryID.Text = parentCategoryID.ToString();
+            LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
         }
+
 
 
         /// <summary>
@@ -641,7 +643,7 @@ namespace AspDotNetStorefront
             if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
                 formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
             else
-            formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
+                formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
 
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
@@ -677,7 +679,7 @@ namespace AspDotNetStorefront
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
                 {
-   
+
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
                     {
@@ -821,14 +823,30 @@ namespace AspDotNetStorefront
             return false;
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        [System.Web.Services.WebMethod]
+        public static int GetQuantity(string color, string size, List<Inventory> lstInventories)
         {
-
+            foreach (var inventory in lstInventories)
+            {
+                if (inventory.Color == color && inventory.Size == size)
+                {
+                    if (int.Parse(inventory.Quantity) > 5)
+                    {
+                        return int.Parse(inventory.Quantity);
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
         }
-        protected void btnaddtocart_Click(object sender, EventArgs e)
+
+        [System.Web.Services.WebMethod]
+        public static string GetInventoryList()
         {
-
-
+            return LstInventories;
         }
     }
 }
