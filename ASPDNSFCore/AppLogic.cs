@@ -9536,6 +9536,77 @@ namespace AspDotNetStorefrontCore
         {
             SendMail(subject, body, useHTML, fromaddress, fromname, toaddress, toname, bccaddresses, String.Empty, server);
         }
+        static public void SendOutOfStockMail(String subject, String body, bool useHTML, String fromaddress, String fromname, String toaddress, String toname, String bccaddresses, String server)
+        {
+            SendOutOfStockMail(subject, body, useHTML, fromaddress, fromname, toaddress, toname, bccaddresses, String.Empty, server);
+        }
+        static public void SendOutOfStockMail(String subject, String body, bool useHTML, String fromaddress, String fromname, String toaddress, String toname, String bccaddresses, String ReplyTo, String server)
+        {
+            if (false == server.Equals(AppLogic.ro_TBD, StringComparison.InvariantCultureIgnoreCase) &&
+                false == server.Equals("MAIL.YOURDOMAIN.COM", StringComparison.InvariantCultureIgnoreCase) &&
+                server.Length != 0)
+            {
+                System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage(new MailAddress(fromaddress, fromname), new MailAddress(toaddress, toname));
+                if (ReplyTo.Length != 0)
+                {
+                    msg.ReplyTo = new MailAddress(ReplyTo);
+                }
+                msg.Subject = subject;
+                msg.Body = body;
+                msg.IsBodyHtml = useHTML;
+                if (bccaddresses.Length != 0)
+                {
+                    MailAddressCollection mc = new MailAddressCollection();
+                    foreach (String s in bccaddresses.Split(new char[] { ',', ';' }))
+                    {
+                        if (s.Trim().Length > 0)
+                        {
+                            msg.Bcc.Add(new MailAddress(s.Trim()));
+                        }
+                    }
+                }
+                SmtpClient client = new SmtpClient(server);
+                if (AppLogic.AppConfig("MailMe_User").Length != 0)
+                {
+                    System.Net.NetworkCredential SMTPUserInfo = new System.Net.NetworkCredential(AppLogic.AppConfig("MailMe_User"), AppLogic.AppConfig("MailMe_Pwd"));
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = SMTPUserInfo;
+                }
+                else
+                {
+                    client.Credentials = CredentialCache.DefaultNetworkCredentials;
+                }
+
+                //Added to support SSL and non-standard port configurations
+                client.EnableSsl = AppLogic.AppConfigBool("MailMe_UseSSL");
+                client.Port = AppLogic.AppConfigNativeInt("MailMe_Port");
+                //End SSL Support
+
+                try
+                {
+                    client.Send(msg);
+                }
+                catch (Exception ex)
+                {
+
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                    if (!AppLogic.IsAdminSite)
+                    {
+                        throw new ArgumentException("Mail Error occurred - " + CommonLogic.GetExceptionDetail(ex, ""));
+                    }
+                }
+                msg.Dispose();
+            }
+            else
+            {
+                if (!AppLogic.IsAdminSite)
+                {
+                    throw new ArgumentException("Invalid Mail Server: " + server + "" + AppLogic.GetString("admin.splash.aspx.security.MailServer", Customer.Current.SkinID, Customer.Current.LocaleSetting));
+                }
+            }
+        }
 
         // mask errors on store site, better to have a lost receipt than crash the site
         // on admin site, throw exceptions

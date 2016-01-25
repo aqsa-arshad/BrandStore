@@ -13,6 +13,7 @@ using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using System.Web.Services;
 
 namespace AspDotNetStorefront
 {
@@ -196,7 +197,7 @@ namespace AspDotNetStorefront
                             ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU(tm) Bucks you can use to purchase items.";
                         }
 
-                       //Category Fund
+                        //Category Fund
                         hdnProductFundID.Text = Convert.ToString(DB.RSFieldInt(rs, "FundID"));
                         if (hdnProductFundID.Text.Trim() != "" && hdnProductFundID.Text != "0")
                         {
@@ -209,17 +210,17 @@ namespace AspDotNetStorefront
                             else
                             {
                                 tempfund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.SOFFunds));//for sales rep
-                                 if (tempfund != null)
-                                 {
-                                     hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
-                                     productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
-                                 }
-                                 else
-                                 {
-                                     hdnProductFundAmount.Text = "0";
-                                     productcategoryfund = Convert.ToDecimal("0.00");
-                                 }
-                                 hdnProductFundID.Text = "2";
+                                if (tempfund != null)
+                                {
+                                    hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                    productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                                }
+                                else
+                                {
+                                    hdnProductFundAmount.Text = "0";
+                                    productcategoryfund = Convert.ToDecimal("0.00");
+                                }
+                                hdnProductFundID.Text = "2";
 
                             }
                         }
@@ -236,36 +237,37 @@ namespace AspDotNetStorefront
                                 hdnProductFundAmount.Text = "0";
                                 productcategoryfund = Convert.ToDecimal("0.00");
                             }
-                           
-                           
+
+
                         }
 
 
-                      hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
-                        if(this.IsPostBack)
+                        hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
+                        if (this.IsPostBack)
                         {
-                            hdnquantity.Text= Request.Form["Quantity_1_1"];
+                            hdnquantity.Text = Request.Form["Quantity_1_1"];
                         }
-                        else{
-                        hdnquantity.Text="1";
+                        else
+                        {
+                            hdnquantity.Text = "1";
                         }
 
                         if (String.IsNullOrEmpty(hdnquantity.Text) || String.IsNullOrWhiteSpace(hdnquantity.Text))
                             hdnquantity.Text = "0";
-                      productprice = productprice * Convert.ToInt32(hdnquantity.Text);
+                        productprice = productprice * Convert.ToInt32(hdnquantity.Text);
                         if (productcategoryfund < productprice)
                         {
-                            productprice = productprice - productcategoryfund;                         
+                            productprice = productprice - productcategoryfund;
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productcategoryfund)).ToString();
                         }
                         else
                         {
                             productcategoryfund = productcategoryfund - productprice;
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productprice)).ToString();
-                            productprice = 0;                        
-                            txtBluBuksUsed.Text = productprice.ToString();                          
+                            productprice = 0;
+                            txtBluBuksUsed.Text = productprice.ToString();
 
-                        }                    
+                        }
                         hdnpricewithfund.Text = productprice.ToString();
                         //End apply fund
                         //End
@@ -547,9 +549,9 @@ namespace AspDotNetStorefront
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {
-                       // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);                       
-                            LiteralCustom.Text = m_PageOutputCustom + "<div>";
+                        // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        LiteralCustom.Text = m_PageOutputCustom + "<div>";
 
                     }
                 }
@@ -558,7 +560,7 @@ namespace AspDotNetStorefront
             {
                 litOutput.Text = m_PageOutput;
             }
-            
+
             GetParentCategory();
             if (!string.IsNullOrEmpty(SourceEntityInstanceName) && !string.IsNullOrEmpty(parentCategoryID))
             {
@@ -594,7 +596,53 @@ namespace AspDotNetStorefront
         {
             HandleAddToCart();
         }
+        [System.Web.Services.WebMethod()]
+        public static bool InsertCustomersToBeNotifiedInDB(string PId, string VId, string EId)  
+        {
 
+            if (EId.Equals(null) || EId.Equals(""))
+            {
+                return false;
+            }
+            else
+            {
+                int Issent = 0;
+                bool status = false;
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                {
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + Convert.ToInt32(PId) + " and VarientID=" + Convert.ToInt32(VId) + " and Issent=0 and Email='" + EId + "'", dbconn))
+                    {
+                        if (rs.Read())
+                        {
+                            status = true;
+                            return false;
+                        }
+                    }
+                }
+                if (!status)
+                {
+                    using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
+                    {
+                        try
+                        {
+                            con.Open();
+                            DB.ExecuteSQL("Insert into CustomerNotification values(" + Convert.ToInt32(PId) + "," + Convert.ToInt32(VId) + ",'" + EId + "'," + Issent + ")");
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                            ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                        }
+
+                    }
+                }
+
+            }
+            return true;
+        }
         /// <summary>
         /// Registers the required scripts and webservice references
         /// </summary>
@@ -641,7 +689,7 @@ namespace AspDotNetStorefront
             if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
                 formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
             else
-            formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
+                formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
 
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
@@ -677,7 +725,7 @@ namespace AspDotNetStorefront
                 AppLogic.eventHandler("AddToCart").CallEvent("&AddToCart=true&VariantID=" + formInput.VariantId.ToString() + "&ProductID=" + formInput.ProductId.ToString() + "&ChosenColor=" + formInput.ChosenColor.ToString() + "&ChosenSize=" + formInput.ChosenSize.ToString());
                 if (success)
                 {
-   
+
                     bool stayOnThisPage = AppLogic.AppConfig("AddToCartAction").Equals("STAY", StringComparison.InvariantCultureIgnoreCase);
                     if (stayOnThisPage)
                     {

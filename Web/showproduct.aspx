@@ -5,6 +5,25 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+
+    <%--Thankyou POP UP Start here --%>
+    <div id="divThankyouPopUp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-checkout" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" id="Closebutton" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
+                    <h4 id="hNotification">Thank you!</h4>
+                    <p id="pNotification">
+                        You will receive an email when this item is back in stock.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" id="HiddenButton" class="btn btn-primary margin-none" data-toggle="modal" data-target="#divThankyouPopUp" style="display: none">Click me</button>
+    <%--Thankyou POP UP Start here --%>
+
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
@@ -90,11 +109,11 @@
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                      
-                       <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server"  />
+
+                        <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
                         <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
-                     
+
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
                 </div>
@@ -125,6 +144,51 @@
                 $("#MCCategory6").addClass("active");
             }
 
+            $("#btnSubmit").click(function (e) {
+                var EID = $("#txtOutOfStock").val();
+                var PID = $("#hdnProductId").val();
+                var VID = $("#hdnVarientId").val();
+                if (EID == "" || EID == null) {        
+                    document.getElementById('lblErrorMsg').style.display = 'block';
+                    e.preventDefault();
+                    return false;
+                }
+                else {
+                    var regex = /^[a-z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
+                    var flag = regex.test(EID);
+                    if (flag == true) {
+                        document.getElementById('lblErrorMsg').style.display = 'none';
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/InsertCustomersToBeNotifiedInDB",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "PId": PID,
+                                "VId": VID,
+                                "EId": EID
+                            }),
+                            dataType: "json",
+                            async: true,
+                            success: function (result) {
+                                $("#HiddenButton").trigger("click");
+                            },
+                            error: function (result) {
+                                alert('error occured');
+                                alert(result.responseText);
+
+                            },
+                        });
+                    }
+                    else {
+                        document.getElementById('lblErrorMsg').style.display = 'block';
+                        e.preventDefault();
+                        return false;
+                        
+                    }
+                }
+            });
+
+
             var btnname = "#" + $("#hdnButtonName").text();
 
             $(btnname).click(function () {
@@ -146,7 +210,7 @@
                 }
 
             });
-         
+
 
             //Area for pop up for sales rep
             $("#btnaddtocartforsalesrep").click(function () {
@@ -159,7 +223,7 @@
                     return true;
                 }
                 else return false;
-               
+
             });
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
