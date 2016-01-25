@@ -16,7 +16,7 @@ namespace AspDotNetStorefront
     /// Handle the Order confirmation
     /// </summary>
     [PageType("orderconfirmation")] //added in by Mauricio to fix Analytics Ecommerce problem
-   
+
     public partial class orderconfirmation : SkinBase
     {
         /// <summary>
@@ -31,22 +31,22 @@ namespace AspDotNetStorefront
         /// The order number
         /// </summary>
         protected int OrderNumber;
-       
+
         /// <summary>
         /// The Data reader for reading Data from SQL
         /// </summary>
         private IDataReader reader;
-       
+
         /// <summary>
         /// The reader2
         /// </summary>
         private IDataReader reader2;
-       
+
         /// <summary>
         /// The m_ store loc
         /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
-       
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -90,20 +90,20 @@ namespace AspDotNetStorefront
                 Response.Redirect("OrderNotFound.aspx");
             }
             if (!Page.IsPostBack)
-            {                
+            {
                 GetOrderInfo();
                 GetOrderItemsDetail();
                 SendOrderinfotoRRD();
             }
         }
-       
+
         /// <summary>
         /// Gets the order information.
         /// </summary>
         void GetOrderInfo()
         {
             try
-            {                
+            {
                 using (var conn = DB.dbConn())
                 {
                     conn.Open();
@@ -207,7 +207,7 @@ namespace AspDotNetStorefront
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
-        
+
         /// <summary>
         /// Gets the order items detail.
         /// </summary>
@@ -264,8 +264,8 @@ namespace AspDotNetStorefront
                 masterHome = "JeldWenTemplate";
             }
             return masterHome;
-        }        
-       
+        }
+
         #region "Send order to RRD"
         /// <summary>
         /// Sends the orderinfoto RRD.
@@ -307,7 +307,7 @@ namespace AspDotNetStorefront
                         bool hasproducts = false;
                         string shippingMethodCode = string.Empty;
                         string shippingMethod = string.Empty;
-                        
+
                         while (reader.Read())
                         {
                             if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
@@ -409,45 +409,45 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void rptAddresses_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void rptOrderItemsDetail_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
                 (e.Item.FindControl("lblRegularPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value)));
                 (e.Item.FindControl("lblCreditPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfCreditPrice") as HiddenField).Value)));
-                
+
                 (e.Item.FindControl("ImgProduct") as Image).ImageUrl = !string.IsNullOrEmpty((e.Item.FindControl("hfChosenColor") as HiddenField).Value) ? AppLogic.LookupProductImageByNumberAndColor(int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), ThisCustomer.SkinID, (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, ThisCustomer.LocaleSetting, 1, (e.Item.FindControl("hfChosenColor") as HiddenField).Value, "icon") : AppLogic.LookupImage("Product", int.Parse((e.Item.FindControl("hfProductID") as HiddenField).Value), (e.Item.FindControl("hfImageFileNameOverride") as HiddenField).Value, (e.Item.FindControl("hfSKU") as HiddenField).Value, "icon", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 if ((e.Item.FindControl("hfIsDownload") as HiddenField).Value != "0")
                 {
                     (e.Item.FindControl("hlDelivery") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                     (e.Item.FindControl("hlDelivery") as HyperLink).Text = "Download";
-                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;                  
+                    (e.Item.FindControl("lblDelivery") as Label).Visible = false;
                 }
                 else
                 {
                     (e.Item.FindControl("lblDelivery") as Label).Visible = false;
-                 
+
                 }
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
                                                                           (e.Item.FindControl("hfSKU") as HiddenField)
                                                                               .Value;
-                }                
-                if (!(string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && !(string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                }
+                if (((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") != 0) && ((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value.CompareTo("0.0000") != 0))
                 {
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value));
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
-                else if ((string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value)) && (string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value)))
+                else if (((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") == 0) && ((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value.CompareTo("0.0000") == 0))
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
                 }
-                else if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value))
+                else if ((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") == 0)
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
-                    (e.Item.FindControl("lblBluBuck") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value));
+                    (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
                 }
                 else
                 {
@@ -462,7 +462,7 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblBluBuck") as Label).Visible = false;
                     (e.Item.FindControl("lblRegularPriceCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblRegularPrice") as Label).Visible = false;
-                    lblCreditsUsedCaption.Visible = false;                    
+                    lblCreditsUsedCaption.Visible = false;
                 }
                 if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7 || ThisCustomer.CustomerLevelID == 9 || ThisCustomer.CustomerLevelID == 10 || ThisCustomer.CustomerLevelID == 11 || ThisCustomer.CustomerLevelID == 12)
                 {
@@ -472,12 +472,18 @@ namespace AspDotNetStorefront
                 if (Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2) != 0)
                 {
                     totalBluBucks = totalBluBucks +
-                                    Math.Round(
-                                        Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
-                    lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), totalBluBucks);
+                                    Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
+                    lblBluBucksTotal.Text = Math.Round(totalBluBucks, 2).ToString();
                     lblBluBucksTotal.Visible = true;
                     lblCreditsUsedCaption.Visible = true;
                     lblBluBucksTotalCaption.Visible = true;
+                }
+
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfFundName") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("lblCategoryFundCredit") as Label).Visible = true;
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Text =
+                        (e.Item.FindControl("hfFundName") as HiddenField).Value + " Discount: ";
                 }
             }
         }

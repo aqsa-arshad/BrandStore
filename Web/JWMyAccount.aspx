@@ -13,7 +13,7 @@
                 <ul id="ulLatestOrderStatus" runat="server">
                     <li>Order Number: <b runat="server" id="bOrderNumber"></b></li>
                     <li>Status: <b id="bStatus" runat="server"></b></li>
-                    <a class="underline-link" id="aOrderDetail" runat="server" target="_blank">View Detail</a>
+                    <a class="underline-link" id="aOrderDetail" runat="server">View Detail</a>
                 </ul>
             </div>
 

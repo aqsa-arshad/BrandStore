@@ -14,13 +14,21 @@
                         <font><asp:Label ID="lblOrderDateCaption" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>" /></font>
                         <asp:Label runat="server" ID="lblOrderDate"></asp:Label>
                     </span>
+                    <span>
+                        <font><asp:Label ID="lblDeliveryStatus" runat="server" Text="Delivery Status" /></font>
+                    </span>
                     <asp:Repeater ID="rptTrackingInformation" runat="server" OnItemDataBound="rptTrackingInformation_ItemDataBound">
                         <ItemTemplate>
                             <asp:HiddenField ID="hfShippingMethod" runat="server" Value='<%# Eval("ShippingMethod") %>' />
+                            <asp:HiddenField ID="hfTrackingNumber" runat="server" Value='<%# Eval("TrackingNumber") %>' />
+                            <asp:HiddenField ID="hfTrackingURL" runat="server" Value='<%# Eval("TrackingURL") %>' />
+                            <asp:HiddenField ID="hfShippingStatus" runat="server" Value='<%# Eval("ShippingStatus") %>' />
                             <span>
+                                <asp:Label ID="lblPackage" Text="Package" runat="server" />
+                                <asp:Label ID="lblPackageNumber" runat="server" />
                                 <asp:Label ID="lblShippingMethod" runat="server" />
-                                <asp:Label runat="server" ID="lblTrackingNumberCaption" Text="- Tracking Number: " />
-                                <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server" Text='<%# Eval("TrackingNumber") %>' NavigateUrl='<%# Eval("TrackingURL") %>' />
+                                 <asp:Label ID="lblShippingStatus" runat="server" />
+                                <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server" />
                             </span>
                         </ItemTemplate>
                     </asp:Repeater>
@@ -106,6 +114,7 @@
                                 <asp:HiddenField ID="hfShippingMethod" runat="server" Value='<%# Eval("ShippingMethod") %>' />
                                 <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                 <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
+                                <asp:HiddenField ID="hfFundName" runat="server" Value='<%# Eval("FundName") %>' />
                                 <td class="td-55-percent">
                                     <div class="row">
                                         <div class="col-md-5">
@@ -142,7 +151,7 @@
                                         <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" Text='<%$ Tokens:StringResource,CategoryFundCreditCaption  %>' /><asp:Label ID="lblCategoryFundCredit" runat="server" />
+                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" runat="server" />
                                     </span>
                                     <span>
                                         <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
@@ -151,13 +160,13 @@
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><asp:Label ID="lblCreditPrice" runat="server" />
                                     </span>
                                 </td>
-                                <td class="td-30-percent">                                    
+                                <td class="td-30-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
                                     <span>
                                         <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
                                         <asp:Label ID="lblDelivery" runat="server"></asp:Label>
                                     </span>
-                                </td>                               
+                                </td>
                             </tr>
                         </ItemTemplate>
                         <FooterTemplate></FooterTemplate>
@@ -200,7 +209,7 @@
                     </span>
                     <span class="block-text">
                         <asp:Label ID="lblPOPFundsTotalCaption" Visible="False" Text="POP Funds: " runat="server" /><asp:Label runat="server" ID="lblPOPFundsTotal" Visible="False"></asp:Label>
-                    </span>                    
+                    </span>
                 </p>
 
                 <span class="normal-heading black-color">Charges</span>

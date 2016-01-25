@@ -1357,7 +1357,7 @@ namespace AspDotNetStorefrontCore
                         newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
                         newItem.GLcode = DB.RSField(rs, "GLcode");
                         newItem.FundName = DB.RSField(rs, "FundName");
-
+                        newItem.Inventory = DB.RSFieldInt(rs, "Inventory");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
@@ -8171,7 +8171,8 @@ namespace AspDotNetStorefrontCore
 
                     HasSizePriceModifiers = SizesMaster.IndexOf('[') != -1;
                     HasColorPriceModifiers = ColorsMaster.IndexOf('[') != -1;
-                    boardSuffix = string.Format("_{0}_{1}", ProductID.ToString(), VariantID.ToString());
+                    //boardSuffix = string.Format("_{0}_{1}", ProductID.ToString(), VariantID.ToString());
+                    boardSuffix = string.Format("_{0}_{1}", "1", "1");
 
                     TextOptionPrompt = DB.RSFieldByLocale(rs, "MLTextOptionPrompt", LocaleSetting).Trim();
                     TextOptionMaxLength = DB.RSFieldInt(rs, "TextOptionMaxLength");
@@ -8295,7 +8296,7 @@ namespace AspDotNetStorefrontCore
             tmpS.Append("var VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + " = " + MinimumQuantity.ToString() + ";\n");
             tmpS.Append("var SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + " = " + inv.ToString() + ";\n");
 
-
+            AppLogic.LstInventory.Clear();
             if (ProtectInventory && InventoryControlList.Length != 0)
             {
                 bool first = true;
@@ -8311,6 +8312,13 @@ namespace AspDotNetStorefrontCore
                     }
                     String[] ivals = s.Split(',');
                     tmpS.Append("new Array('" + ivals[0].Replace("'", "").Trim() + "','" + ivals[1].Replace("'", "").Trim() + "','" + ivals[2].Replace("'", "").Trim() + "')");
+                    AppLogic.LstInventory.Add(new Inventory()
+                    {
+                        Color = ivals[0].Replace("'", "").Trim() ,
+                        Size = ivals[1].Replace("'", "").Trim(),
+                        Quantity = ivals[2].Replace("'", "").Trim()
+                    });
+
                     first = false;
                 }
                 tmpS.Append(");\n");
@@ -8547,6 +8555,15 @@ namespace AspDotNetStorefrontCore
                 tmpS.AppendFormat(" <input maxLength=\"10\" class=\"form-control price-field\" name=\"Price_{0}_{1}\" id=\"Price_{0}_{1}\" value=\"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ProductPriceForEdit) + "\">", ProductID, VariantID);
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
             }
+
+
+
+            tmpS.Append("<p id=\"pInStock\"><span class=\"black-blu-label\"><font>In Stock: </font><label runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"/></span></p>");
+            tmpS.Append("<p id=\"pOutofStock\"><span class=\"notify \">Out of Stock</span></p>");
+
+
+
+
 
             //Colors Alternative
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)

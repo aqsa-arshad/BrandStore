@@ -5,8 +5,7 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
-
-    <%--Thankyou POP UP Start here --%>
+	    <%--Thankyou POP UP Start here --%>
     <div id="divThankyouPopUp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
@@ -23,11 +22,11 @@
     </div>
     <button type="button" id="HiddenButton" class="btn btn-primary margin-none" data-toggle="modal" data-target="#divThankyouPopUp" style="display: none">Click me</button>
     <%--Thankyou POP UP Start here --%>
-
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
     <%--Hidden Variables Regions--%>
+
     <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -55,7 +54,7 @@
                             <label class="roman-black">BLU Bucks used:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -92,11 +91,11 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-7">
                                 <label class="roman-black">GL Code:</label>
-                                <asp:TextBox ID="txtGLcode" ClientIDMode="Static" placeholder="xxx-xx-xxx-xxx" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtGLcode" MaxLength="12"  ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
-                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                             </div>
                         </div>
@@ -105,15 +104,15 @@
 
                     <p class="label-text">
 
-                        <span class="roman-black">Total price using sale funds:</span>
+                        <span  class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-
-                        <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
+                      
+                       <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
+                        <asp:Button ID="btnaddtocartforsalesrep"  ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
                         <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
-
+                     
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
                 </div>
@@ -121,10 +120,27 @@
         </div>
     </div>
 
-
     <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $("#pInStock").hide();
+            $("#pOutofStock").hide();
+
+            var inventoryArray;
+            $.ajax({
+                type: "post",
+                url: "showproduct.aspx/GetInventoryList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,
+                success: function (result) {
+                    inventoryArray = $.parseJSON(result.d);
+                    console.log(inventoryArray);
+                    console.log(inventoryArray.length);
+                }
+            });
+
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
             }
@@ -148,7 +164,7 @@
                 var EID = $("#txtOutOfStock").val();
                 var PID = $("#hdnProductId").val();
                 var VID = $("#hdnVarientId").val();
-                if (EID == "" || EID == null) {        
+                if (EID == "" || EID == null) {
                     document.getElementById('lblErrorMsg').style.display = 'block';
                     e.preventDefault();
                     return false;
@@ -183,11 +199,10 @@
                         document.getElementById('lblErrorMsg').style.display = 'block';
                         e.preventDefault();
                         return false;
-                        
+
                     }
                 }
             });
-
 
             var btnname = "#" + $("#hdnButtonName").text();
 
@@ -199,18 +214,15 @@
                 }
                 else {
 
-                    $("#spprice").text($("#hdnpricewithfund").text());
+                    $("#spprice").text("$" + $("#hdnpricewithfund").text());
                     if (applyblubuksvalidation()) {
                         return true;
                     }
                     else {
                         return false;
-
                     }
                 }
-
             });
-
 
             //Area for pop up for sales rep
             $("#btnaddtocartforsalesrep").click(function () {
@@ -223,18 +235,17 @@
                     return true;
                 }
                 else return false;
-
             });
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
                 debugger;
-                $("#spprice").text($("#hdnpricewithcategoryfundapplied").text());
+                $("#spprice").text("$" + $("#hdnpricewithcategoryfundapplied").text());
                 $("#hdncurrentrecordid").text();
                 //  var currentrecordid = $("#hdncurrentrecordid").text();
                 var ItemOriginalPrice = $("#hdnproductactualprice").text();
                 // var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                 var ItemQuantity = theForm.Quantity_1_1.value;
-                var newpricetotal = $("#spprice").text();// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = $("#spprice").text().replace("$", "");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 // var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 // var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
@@ -242,13 +253,13 @@
                 spproductcategoryfund = parseFloat($("#hdnsoffundamount").text()) + parseFloat(spproductcategoryfund)
                 // $("#hdnsoffundamount").text(spproductcategoryfund);
 
-                $("#spprice").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                $("#sppriceforsalesrep").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                newpricetotal = $("#spprice").text();
+                $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                $("#sppriceforsalesrep").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                newpricetotal = $("#spprice").text().replace("$", "");
                 var sofentered = parseFloat($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
-                    $("#spprice").text(parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
+                    $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtproductcategoryfundusedforsalesrep").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                     $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -313,16 +324,13 @@
                         $(btnname).trigger("click");
                     }
                 }
-
             });
-
-
 
             //Set product price  to show on pupup
             applyproductcategoryfund();
             setpricewithquantitychange();
             $("#txtBluBuksUsed").focusout(function () {
-                $("#spprice").text($("#hdnpricewithfund").text());
+                $("#spprice").text("$" + $("#hdnpricewithfund").text());
                 if (applyblubuksvalidation()) {
                     var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -330,8 +338,6 @@
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                 }
                 else {
-
-
                 }
             });
 
@@ -349,10 +355,120 @@
                 debugger;
                 $("#hdnquantity").text(theForm.Quantity_1_1.value);
                 setpricewithquantitychange();
-
             });
+
+            //Shehriyar's Code
+            $("#Color_1_1").change(function () {
+                debugger;
+                if (inventoryArray.length > 1) {
+                    if ($("#Size_1_1").length > 0) {
+                        var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                        sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                        var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+
+                        if (sel_size != "-" && sel_color != "-") {
+                            $.ajax({
+                                type: "post",
+                                url: "showproduct.aspx/GetQuantity",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    "color": sel_color,
+                                    "size": sel_size,
+                                    "lstInventories": inventoryArray
+                                }),
+                                dataType: "json",
+                                async: true,
+                                success: function (result) {
+                                    console.log(result.d);
+                                    if (result.d.toString() != '0') {
+                                        $("#btnaddtocart").removeClass("hide-element");
+                                        $("#pInStock").show();
+                                        $("#lblInStock").text(result.d);
+                                        $("#pOutofStock").hide();
+                                    } else {
+                                        $("#btnaddtocart").addClass("hide-element");
+                                        $("#pInStock").hide();
+                                        $("#pOutofStock").show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+            //End
+
+            $("#Size_1_1").change(function () {
+                debugger;
+                var customerlevel = $("#hdncustomerlevel").text();
+                if (customerlevel == 1 || customerlevel == 8) {
+                    $("#sppricewithfund").addClass("hide-element");
+
+                }
+                else {
+                    $("#sppricewithfund").removeClass("hide-element");
+                }
+
+                //Shehriyar's Code
+
+                if (inventoryArray.length > 1) {
+                    if ($("#Color_1_1").length > 0) {
+                        var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                        sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                        var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+
+                        if (sel_size != "-" && sel_color != "-") {
+                            $.ajax({
+                                type: "post",
+                                url: "showproduct.aspx/GetQuantity",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    "color": sel_color,
+                                    "size": sel_size,
+                                    "lstInventories": inventoryArray
+                                }),
+                                dataType: "json",
+                                async: true,
+                                success: function (result) {
+                                    console.log(result.d);
+                                    if (result.d.toString() != '0') {
+                                        $("#btnaddtocart").removeClass("hide-element");
+                                        $("#pInStock").show();
+                                        $("#lblInStock").text(result.d);
+                                        $("#pOutofStock").hide();
+                                    } else {
+                                        $("#btnaddtocart").addClass("hide-element");
+                                        $("#pInStock").hide();
+                                        $("#pOutofStock").show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+                //End 
+            });
+
             $('input').keypress(function (e) {
-                var regex = new RegExp("^[0-9-.]+$");
+                var regex;
+                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
+                        event.preventDefault();
+                    }
+
+                    var text = $(this).val();
+
+                    if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && (event.which != 0 && event.which != 8) && ($(this)[0].selectionStart >= text.length - 2)) {
+                        event.preventDefault();
+                    }
+                }
+                else if ($(this).attr('id') == "Quantity_1_1") {
+                    regex = new RegExp("^[0-9]+$");
+                }
+
+
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
                     return true;
@@ -384,9 +500,10 @@
             }
 
             function applyblubuksvalidation() {
+
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
-                var maxfundlimit = $("#spprice").text().replace("$", "") * (Number.parseFloat($("#hdnBudgetPercentValue").text()) / 100)
+                var maxfundlimit = $("#spprice").text().replace("$", "") * (parseFloat($("#hdnBudgetPercentValue").text()) / 100)
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
@@ -411,11 +528,10 @@
                 }
                 else
                     return true;
-
             }
             function applyproductcategoryfund() {
-                $("#spprice").text("$" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + Number.parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
                 var customerlevel = $("#hdncustomerlevel").text();
@@ -428,19 +544,9 @@
                 }
             }
 
-            $("#Size_1_1").change(function () {
-                var customerlevel = $("#hdncustomerlevel").text();
-                if (customerlevel == 1 || customerlevel == 8) {
-                    $("#sppricewithfund").addClass("hide-element");
-
-                }
-                else {
-                    $("#sppricewithfund").removeClass("hide-element");
-                }
-            });
             function ApplyValidation(theForm) {
                 debugger;
-                if ($("#Quantity_1_1").length <= 0 || $("#Size_1_1").length <= 0 || $("#Color_1_1").length <= 0) {
+                if ($("#Quantity_1_1").length <= 0) {
                     submitenabled(theForm);
                     return (true);
                 }
@@ -452,25 +558,108 @@
                     return (false);
 
                 }
-                if (theForm.Size_1_1.selectedIndex < 1) {
-                    alert("Please select a size.");
-                    theForm.Size_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
+                if ($("#Size_1_1").length > 0) {
+                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    if (theForm.Size_1_1.selectedIndex < 1) {
+                        alert("Please select a size.");
+                        theForm.Size_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
                 }
-                if (theForm.Color_1_1.selectedIndex < 1) {
-                    alert("Please select a color.");
-                    theForm.Color_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
+                if ($("#Color_1_1").length > 0) {
+                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    if (theForm.Color_1_1.selectedIndex < 1) {
+                        alert("Please select a color.");
+                        theForm.Color_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
                 }
-                if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
-                    alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
-                    theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
-                    theForm.Quantity_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
+                if (inventoryArray.length <= 1) {
+                    if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
+                        alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
+                        theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
+                        theForm.Quantity_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
+                } else {
+                    //Shehriyar's Code Start                      
+                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+
+                    $.ajax({
+                        type: "post",
+                        url: "showproduct.aspx/GetQuantity",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            "color": sel_color,
+                            "size": sel_size,
+                            "lstInventories": inventoryArray
+                        }),
+                        dataType: "json",
+                        async: true,
+                        success: function (result) {
+                            if (result > 0) {
+                                $("#spInStock").removeClass("hide-element");
+                                $("#lblInStock").text = result;
+
+                                if (typeof (sel_size) == 'undefined') sel_size = '';
+                                if (typeof (sel_color) == 'undefined') sel_color = '';
+                                var j = sel_size.indexOf("[");
+                                if (j != -1) {
+                                    sel_size = Trim(sel_size.substring(0, j));
+                                }
+                                var i = sel_color.indexOf("[");
+                                if (i != -1) {
+                                    sel_color = Trim(sel_color.substring(0, i));
+                                }
+                                var sel_size_master = sel_size;
+                                var sel_color_master = sel_color;
+                                var sel_qty = theForm.Quantity_1_1.value;
+                                var sizecolorfound = 0;
+                                for (i = 0; i < board_1_1.length; i++) {
+                                    if (board_1_1[i][1] == sel_size_master && board_1_1[i][0] == sel_color_master) {
+                                        sizecolorfound = 1;
+                                        if (parseInt(sel_qty) > parseInt(board_1_1[i][2])) {
+                                            if (parseInt(board_1_1[i][2]) == 0) {
+                                                if (sel_color == '') sel_color = 'N/A';
+                                                if (sel_size == '') sel_size = 'N/A';
+                                                alert('Color: ' + sel_color + ', Size: ' + sel_size + ' is currently out of stock.\n\nPlease select another Color/Size combination.');
+                                                theForm.Quantity_1_1.value = board_1_1[i][2];
+                                                theForm.Quantity_1_1.focus();
+                                            } else {
+                                                if (sel_color == '') sel_color = 'N/A';
+                                                if (sel_size == '') sel_size = 'N/A';
+                                                alert('Your quantity exceeds our inventory on hand. The maximum quantity that can be added for Color: ' + sel_color + ', Size: ' + sel_size + ' is ' + board_1_1[i][2] + '.\n\nPlease reduce your quantity, or select another Color/Size combination.');
+                                                theForm.Quantity_1_1.value = board_1_1[i][2];
+                                                theForm.Quantity_1_1.focus();
+                                            }
+                                            submitenabled(theForm);
+                                            return (false);
+                                        }
+                                    }
+                                }
+                                if (sizecolorfound == 0) {
+                                    if (sel_color == '') sel_color = 'N/A';
+                                    if (sel_size == '') sel_size = 'N/A';
+                                    alert('Inventory Table Error - No Inventory Record Found For Color=[' + sel_color + '], Size=[' + sel_size + ']');
+                                    submitenabled(theForm);
+                                    return (false);
+                                }
+                            } else {
+                                $("#spOutofStock").removeClass("hide-element");
+                            }
+                        }
+                    });
                 }
+                //End Code
+
                 submitenabled(theForm);
                 return (true);
             }            function GetControlValue(id) {

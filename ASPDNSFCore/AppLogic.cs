@@ -38,6 +38,8 @@ namespace AspDotNetStorefrontCore
 	public partial class AppLogic
     {
 
+        public static List<Inventory> LstInventory = new List<Inventory>();
+
         static public int NumProductsInDB = 0; // set to # of products in the db on Application_Start. Not updated thereafter
         static public bool CachingOn = false;  // set to true in Application_Start if AppConfig:CacheMenus=true
 
@@ -11448,6 +11450,6 @@ namespace AspDotNetStorefrontCore
             get { return m_customer; }
         }
         #endregion
-    }
+    }    
 
 }

@@ -7,14 +7,16 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using AspDotNetStorefrontCore;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 using System.Web.Services;
-
 namespace AspDotNetStorefront
 {
     /// <summary>
@@ -23,10 +25,11 @@ namespace AspDotNetStorefront
     [PageType("product")]
     public partial class showproduct : SkinBase
     {
+        public static string LstInventories { get; set; }
+
         String SourceEntityInstanceName = String.Empty;
         protected string parentCategoryID = String.Empty;
         protected string parentCategoryName = String.Empty;
-
 
         int ProductID;
         bool IsAKit;
@@ -237,10 +240,7 @@ namespace AspDotNetStorefront
                                 hdnProductFundAmount.Text = "0";
                                 productcategoryfund = Convert.ToDecimal("0.00");
                             }
-
-
                         }
-
 
                         hdnproductprice.Text = productprice.ToString().Replace("$", "").Replace(",", "").Replace(" ", "");
                         if (this.IsPostBack)
@@ -266,7 +266,6 @@ namespace AspDotNetStorefront
                             hdnProductFundAmountUsed.Text = (Convert.ToDecimal(productprice)).ToString();
                             productprice = 0;
                             txtBluBuksUsed.Text = productprice.ToString();
-
                         }
                         hdnpricewithfund.Text = productprice.ToString();
                         //End apply fund
@@ -277,7 +276,6 @@ namespace AspDotNetStorefront
                         hdnpricewithfund.Text = productprice.ToString();
                         hdnBluBucktsPoints.Text = "0";
                         ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU(tm) Bucks you can use to purchase your items.";
-
                     }
 
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
@@ -579,7 +577,9 @@ namespace AspDotNetStorefront
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
             hdnProductCategoryID.Text = parentCategoryID.ToString();
+            LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
         }
+
 
 
         /// <summary>
@@ -596,8 +596,42 @@ namespace AspDotNetStorefront
         {
             HandleAddToCart();
         }
+
+        /// <summary>
+        /// Registers the required scripts and webservice references
+        /// </summary>
+        /// <param name="scrptMgr"></param>
+        public override void RegisterScriptAndServices(ScriptManager scrptMgr)
+        {
+            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
+            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
+            {
+                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
+            }
+        }
+
+        private void HandleKitUpdate()
+        {
+            ThisCustomer.RequireCustomerRecord();
+            AppLogic.ProcessKitForm(ThisCustomer, ProductID);
+            if (CommonLogic.FormUSInt("CartRecID") > 0)
+            {
+                switch (ShoppingCart.CartTypeFromRecID(CommonLogic.FormUSInt("CartRecID")))
+                {
+                    case CartTypeEnum.GiftRegistryCart:
+                        Response.Redirect(ResolveClientUrl("~/giftregistry.aspx"));
+                        break;
+                    case CartTypeEnum.ShoppingCart:
+                        Response.Redirect(ResolveClientUrl("~/shoppingcart.aspx"));
+                        break;
+                    case CartTypeEnum.WishCart:
+                        Response.Redirect(ResolveClientUrl("~/wishlist.aspx"));
+                        break;
+                }
+            }
+        }
         [System.Web.Services.WebMethod()]
-        public static bool InsertCustomersToBeNotifiedInDB(string PId, string VId, string EId)  
+        public static bool InsertCustomersToBeNotifiedInDB(string PId, string VId, string EId)
         {
 
             if (EId.Equals(null) || EId.Equals(""))
@@ -642,39 +676,6 @@ namespace AspDotNetStorefront
 
             }
             return true;
-        }
-        /// <summary>
-        /// Registers the required scripts and webservice references
-        /// </summary>
-        /// <param name="scrptMgr"></param>
-        public override void RegisterScriptAndServices(ScriptManager scrptMgr)
-        {
-            scrptMgr.Scripts.Add(new ScriptReference("~/jscripts/product.js"));
-            if (AppLogic.AppConfigBool("Minicart.UseAjaxAddToCart") && !Vortx.MobileFramework.MobileHelper.isMobile())
-            {
-                scrptMgr.Services.Add(new ServiceReference("~/actionservice.asmx"));
-            }
-        }
-
-        private void HandleKitUpdate()
-        {
-            ThisCustomer.RequireCustomerRecord();
-            AppLogic.ProcessKitForm(ThisCustomer, ProductID);
-            if (CommonLogic.FormUSInt("CartRecID") > 0)
-            {
-                switch (ShoppingCart.CartTypeFromRecID(CommonLogic.FormUSInt("CartRecID")))
-                {
-                    case CartTypeEnum.GiftRegistryCart:
-                        Response.Redirect(ResolveClientUrl("~/giftregistry.aspx"));
-                        break;
-                    case CartTypeEnum.ShoppingCart:
-                        Response.Redirect(ResolveClientUrl("~/shoppingcart.aspx"));
-                        break;
-                    case CartTypeEnum.WishCart:
-                        Response.Redirect(ResolveClientUrl("~/wishlist.aspx"));
-                        break;
-                }
-            }
         }
 
         private void HandleAddToCart()
@@ -869,14 +870,30 @@ namespace AspDotNetStorefront
             return false;
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        [System.Web.Services.WebMethod]
+        public static int GetQuantity(string color, string size, List<Inventory> lstInventories)
         {
-
+            foreach (var inventory in lstInventories)
+            {
+                if (inventory.Color == color && inventory.Size == size)
+                {
+                    if (int.Parse(inventory.Quantity) > 5)
+                    {
+                        return int.Parse(inventory.Quantity);
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
         }
-        protected void btnaddtocart_Click(object sender, EventArgs e)
+
+        [System.Web.Services.WebMethod]
+        public static string GetInventoryList()
         {
-
-
+            return LstInventories;
         }
     }
 }
