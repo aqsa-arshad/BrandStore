@@ -22,6 +22,7 @@ ASPDNSFCommon/bin/Debug/
 Web/Bin/
 Web/images/product
 Web/images/variant
+Web/website.publishproj
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
