@@ -3228,7 +3228,7 @@ function popupzoom(url,alturl)
             //result.Append("<br/>");
             result.Append("<div id=\"divNotifyme\" class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
             result.Append("<div id=\"divNotifymepopUp\" class=\"buttons-group\">");
-            result.Append("<button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa3\">Notify Me</button>");
+            result.Append("<button type=\"button\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa3\">Notify Me</button>");
             result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
             result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
             result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
@@ -3236,7 +3236,6 @@ function popupzoom(url,alturl)
             result.Append("<button type=\"button\" id=\"Closebtn\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" >");
             result.Append("<img src=\"App_Themes/Skin_3/images/close-popup.png\" alt=\"Close\">");
             result.Append("</button>");
-            result.Append("<form>");
             result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
             result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
             result.Append("<input type=\"hidden\" id=\"hdnProductId\" value=" + sProductID + " />");
@@ -3249,8 +3248,7 @@ function popupzoom(url,alturl)
             }
             result.Append("> </div>");
             result.Append("<label class=\"error-large\" ID=\"lblErrorMsg\" style=\"display:none\">Plase enter a valid email address</label>");
-            result.Append("<button type=\"submit\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
-            result.Append("</form>");
+            result.Append("<button type=\"button\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
             result.Append("</div> </div> </div> </div> </div>");            
             return result.ToString();
         }
