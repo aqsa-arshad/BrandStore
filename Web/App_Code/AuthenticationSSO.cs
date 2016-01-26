@@ -1260,12 +1260,18 @@ namespace AspDotNetStorefront
             return budgetPercentageRatio;
         }
 
+        /// <summary>
+        /// Has Subordinates?
+        /// </summary>
+        /// <param name="customerLevelID">customerLevelID</param>
+        /// <param name="SFDCQueryParam">SFDCQueryParam</param>
+        /// <returns></returns>
         private static bool HasSubordinates(int customerLevelID, string SFDCQueryParam)
         {
             if (customerLevelID != (int)UserType.SALESREPS)
                 return false;
 
-            List<SFDCSoapClient.Account> lstAccount = GetSubordinateUsers(SFDCQueryParam);
+            List<SFDCSoapClient.Account> lstAccount = GetSubordinateAccounts(SFDCQueryParam);
             if (lstAccount.Count == 0)
                 return false;
             else
@@ -1276,8 +1282,8 @@ namespace AspDotNetStorefront
         /// Get User's Subordinate
         /// </summary>
         /// <param name="email">email</param>
-        /// <returns>List<SFDCSoapClient.User></returns>
-        public static List<SFDCSoapClient.Account> GetSubordinateUsers(string SFDCQueryParam)
+        /// <returns>lstAccount<SFDCSoapClient.User></returns>
+        public static List<SFDCSoapClient.Account> GetSubordinateAccounts(string SFDCQueryParam)
         {
             List<SFDCSoapClient.Account> lstAccount = new List<SFDCSoapClient.Account>();
             Regex rgx = new Regex(@"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$");
@@ -1289,7 +1295,6 @@ namespace AspDotNetStorefront
                 string query = string.Empty;
                 QueryResult queryResult = new QueryResult();
                 query = AppLogic.AppConfig("SFDCSubordinateUsersQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), SFDCQueryParam);
-                queryResult = new QueryResult();
 
                 if (QuerySFDC(query, ref queryResult))
                 {
@@ -1308,5 +1313,43 @@ namespace AspDotNetStorefront
             }
             return lstAccount;
         }
+
+        /// <summary>
+        /// Get Subordinate Dealers available in local DB
+        /// </summary>
+        /// <param name="accountId">SFDC AccountId</param>
+        /// <returns>lstContact</returns>
+        public static List<SFDCSoapClient.Contact> GetSubordinateDealers(string accountId)
+        {
+            List<SFDCSoapClient.Contact> lstContact = new List<SFDCSoapClient.Contact>();
+
+            if (!string.IsNullOrEmpty(accountId))
+            {
+                try
+                {
+                    string query = string.Empty;
+                    QueryResult queryResult = new QueryResult();
+                    query = AppLogic.AppConfig("SFDCAccountDealersQuery").Replace(AppLogic.AppConfig("SFDCQueryParam"), accountId);
+
+                    if (QuerySFDC(query, ref queryResult))
+                    {
+                        sObject[] contacts = queryResult.records;
+                        foreach (sObject contact in contacts)
+                        {
+                            lstContact.Add((SFDCSoapClient.Contact)contact);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                }
+            }
+
+            return lstContact;
+        }
+
     }
 }

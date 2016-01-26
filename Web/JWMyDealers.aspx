@@ -6,13 +6,21 @@
         <table class="table">
             <tbody>
                 <asp:Repeater ID="rptMyDealers" runat="server">
-                    <ItemTemplate>
+                    <HeaderTemplate>
                         <tr class="table-row">
                             <td class="td-50-percent">
                                 <span class="normal-heading black-color">
                                     <asp:Label ID="lblDealerNameHeading" runat="server" Text="<%$ Tokens:StringResource,mydealers.aspx.1 %>" />
-                                    <%--<a class="underline-link" href="orderhistory.aspx?email=<%# Eval("Email") %>"><%# Eval("Name") %></a>--%>
-                                    <a class="underline-link" href="orderhistory.aspx?email=unlimitedtestdealer@mailinator.com"><%# Eval("Name") %></a>
+                                </span>
+                            </td>
+                            <td class="td-50-percent"></td>
+                        </tr>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <tr class="table-row">
+                            <td class="td-50-percent">
+                                <span class="normal-heading black-color">
+                                    <a class="underline-link" href="JWDealersOrderHistory.aspx?AccountId=<%# Eval("Id") %>"><%# Eval("Name") %></a>
                                 </span>
                             </td>
                             <td class="td-50-percent"></td>
