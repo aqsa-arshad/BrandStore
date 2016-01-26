@@ -114,7 +114,9 @@ namespace AspDotNetStorefrontCore
         public decimal AmountAvailable
         {
             get
-            { 
+            {
+                if ((Amount - AmountUsed) < 0)
+                    return 0;
                 return Amount - AmountUsed; 
             }
         }

@@ -208,6 +208,7 @@ namespace AspDotNetStorefront
                             if (tempfund != null)
                             {
                                 hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                hdnFundName.Text = tempfund.FundName;
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                             }
                             else
@@ -216,6 +217,7 @@ namespace AspDotNetStorefront
                                 if (tempfund != null)
                                 {
                                     hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                    hdnFundName.Text = tempfund.FundName;
                                     productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                                 }
                                 else
@@ -233,6 +235,7 @@ namespace AspDotNetStorefront
                             if (tempfund != null)
                             {
                                 hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                hdnFundName.Text = tempfund.FundName;
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                             }
                             else

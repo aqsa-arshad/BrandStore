@@ -21,6 +21,7 @@
     <asp:Label ID="hdnButtonName" name="hdnButtonName" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnproductactualprice" name="hdnproductactualprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnFundName" name="hdnFundName" runat="server" ClientIDMode="Static" Style="display: none" Text="" />
     <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <%--End Hidden Variables Region--%>
     <%-- Region Open Pop Up for bucckts--%>
@@ -434,7 +435,7 @@
                 }
                 $("#hdnpricewithfund").text(updatedtotalprice);
                 $("#spprice").text("$" + updatedtotalprice.toFixed(2));
-                $("#sppricewithfund").html("<font>Price with FUND credit: $</font>" + updatedtotalprice.toFixed(2));
+                $("#sppricewithfund").html("<font>Price with " + $("#hdnFundName").text() + " credit: $</font>" + updatedtotalprice.toFixed(2));
 
             }
 
@@ -470,7 +471,7 @@
             }
             function applyproductcategoryfund() {
                     $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                    $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                    $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
                 var customerlevel = $("#hdncustomerlevel").text();
@@ -479,7 +480,11 @@
 
                 }
                 else {
-                    $("#sppricewithfund").removeClass("hide-element");
+                    if (parseFloat($("#hdnProductFundAmount").text())>0)
+                        $("#sppricewithfund").removeClass("hide-element");
+                    else
+                        $("#sppricewithfund").addClass("hide-element");
+
                 }
             }
 
