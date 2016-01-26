@@ -99,6 +99,7 @@ namespace AspDotNetStorefrontCore
         private string m_RequestedPaymentMethod;
         private DateTime m_CreatedOn;
         private string m_SFDCQueryParam;
+        private bool m_HasSubordinates;
         SqlTransaction m_DBTrans = null;
 
         private bool m_DefaultCustLevel_DiscountExtendedPrices;
@@ -1750,6 +1751,7 @@ namespace AspDotNetStorefrontCore
             m_Roles = String.Empty;
             m_SkinID = AppLogic.GetStoreSkinID(StoreID);
             m_SFDCQueryParam = String.Empty;
+            m_HasSubordinates = false;
 
             if (rs != null && rs.Read())
             {
@@ -1808,6 +1810,7 @@ namespace AspDotNetStorefrontCore
                 StoreName = DB.RSField(rs, "StoreName");
                 m_LastIPAddress = DB.RSField(rs, "LastIPAddress");
                 m_SFDCQueryParam = DB.RSField(rs, "SFDCQueryParam");
+                m_HasSubordinates = DB.RSFieldBool(rs, "HasSubordinates");
 
                 //Find Failed Transactions
                 using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
@@ -3075,6 +3078,18 @@ namespace AspDotNetStorefrontCore
             get
             {
                 return m_SFDCQueryParam;
+            }
+        }
+
+        /// <summary>
+        /// Check if the Sales Rep User Has Subordinates
+        /// </summary>
+        /// <value><c>true</c> if this user has subordinates; otherwise, <c>false</c>.</value>
+        public bool HasSubordinates
+        {
+            get
+            {
+                return m_HasSubordinates;
             }
         }
         

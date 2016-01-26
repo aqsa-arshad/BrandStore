@@ -67,15 +67,17 @@ namespace AspDotNetStorefront
         /// <param name="pageIndex">pageIndex</param>
         private void LoadMyDealers(int pageIndex)
         {
-            //////List<SFDCSoapClient.User> lstSFDCUser = AuthenticationSSO.GetSubordinateUsers(ThisCustomer.EMail);
-            List<SFDCSoapClient.User> lstSFDCUser = AuthenticationSSO.GetSubordinateUsers("davewe=jeld-wen.com@example.com");
-
-            if (lstSFDCUser.Count > 0)
+            if (ThisCustomer.HasSubordinates)
             {
-                rptMyDealers.DataSource = lstSFDCUser.Skip((pageIndex - 1) * PageSize).Take(PageSize);
-                rptMyDealers.DataBind();
-                lblDealerNotFound.Visible = false;
-                PopulatePager(lstSFDCUser.Count, pageIndex);
+                List<SFDCSoapClient.Account> lstSFDCAccount = AuthenticationSSO.GetSubordinateUsers(ThisCustomer.SFDCQueryParam);
+
+                if (lstSFDCAccount.Count > 0)
+                {
+                    rptMyDealers.DataSource = lstSFDCAccount.Skip((pageIndex - 1) * PageSize).Take(PageSize);
+                    rptMyDealers.DataBind();
+                    lblDealerNotFound.Visible = false;
+                    PopulatePager(lstSFDCAccount.Count, pageIndex);
+                }
             }
         }
 
