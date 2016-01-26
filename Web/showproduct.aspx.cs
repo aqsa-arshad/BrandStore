@@ -237,6 +237,7 @@ namespace AspDotNetStorefront
                                 hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
                                 hdnFundName.Text = tempfund.FundName;
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                                hdnProductFundID.Text = "2";
                             }
                             else
                             {
@@ -642,13 +643,16 @@ namespace AspDotNetStorefront
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
-
+            formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
+            {
                 formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
+                formInput.FundID = (int)FundType.SOFFunds;
+            }
             else
                 formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
 
-            formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
+           
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
             formInput.GLcode = txtGLcode.Text;
