@@ -353,6 +353,12 @@ namespace AspDotNetStorefront
                 lblPageHeading.Text = "Terms and Privacy Policy";
                 pnlPageHeading.Visible = true;
             }
+            else if (currentURL.ToUpper().Contains("JWDEALERSORDERHISTORY.ASPX"))
+            {
+                // Label will be loaded from Content Page w.r.t QueryString Value
+                lnkMyAccount.Attributes.Add("class", "active account-link");
+                pnlPageHeading.Visible = true;
+            }
             else if (currentURL.ToUpper().Contains("ORDERHISTORY.ASPX"))
             {
                 // Label will be loaded from Content Page w.r.t QueryString Value
