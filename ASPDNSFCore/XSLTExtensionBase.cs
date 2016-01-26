@@ -3212,6 +3212,7 @@ function popupzoom(url,alturl)
             {
                 var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
                 var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
+                AppLogic.LstInventory.Clear();
                 return result.Substring(startIndex, lastIndex - startIndex).ToUpper().Contains("OUT OF STOCK") ? 1 : 0;
             }
             else
@@ -3224,11 +3225,12 @@ function popupzoom(url,alturl)
         public string NotifyMeButton(String sProductID, String sVariantID)
         {
             StringBuilder result = new StringBuilder(3000);
-            result.Append("<div class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
-            result.Append("<div class=\"buttons-group\">");
-            result.Append("<button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa2\">Notify Me</button>");
+            //result.Append("<br/>");
+            result.Append("<div id=\"divNotifyme\" class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
+            result.Append("<div id=\"divNotifymepopUp\" class=\"buttons-group\">");
+            result.Append("<button type=\"submit\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa3\">Notify Me</button>");
             result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
-            result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
+            result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
             result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
             result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
             result.Append("<button type=\"button\" id=\"Closebtn\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" >");
@@ -3245,7 +3247,7 @@ function popupzoom(url,alturl)
             {
                 result.Append("value=" + ThisCustomer.EMail);
             }
-            result.Append(" required> </div>");
+            result.Append("> </div>");
             result.Append("<label class=\"error-large\" ID=\"lblErrorMsg\" style=\"display:none\">Plase enter a valid email address</label>");
             result.Append("<button type=\"submit\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
             result.Append("</form>");

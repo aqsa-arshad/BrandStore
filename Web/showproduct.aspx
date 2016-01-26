@@ -5,7 +5,7 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
-	    <%--Thankyou POP UP Start here --%>
+    <%--Thankyou POP UP Start here --%>
     <div id="divThankyouPopUp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
@@ -40,6 +40,7 @@
     <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <%--End Hidden Variables Region--%>
+
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
@@ -91,7 +92,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-7">
                                 <label class="roman-black">GL Code:</label>
-                                <asp:TextBox ID="txtGLcode" MaxLength="12"  ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
@@ -104,15 +105,15 @@
 
                     <p class="label-text">
 
-                        <span  class="roman-black">Total price using sales funds:</span>
+                        <span class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                      
-                       <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep"  ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
+
+                        <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
                         <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
-                     
+
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
                 </div>
@@ -120,10 +121,10 @@
         </div>
     </div>
 
+
     <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
-
             $("#pInStock").hide();
             $("#pOutofStock").hide();
 
@@ -136,10 +137,16 @@
                 async: true,
                 success: function (result) {
                     inventoryArray = $.parseJSON(result.d);
-                    console.log(inventoryArray);
-                    console.log(inventoryArray.length);
+                    //aqsa code block starts here
+                    if (inventoryArray.length >= 1) {
+                        $("#divNotifyme").hide();
+                        $("#divNotifymepopUp").hide();
+
+                    }
+                    //aqsa code block ends here
                 }
             });
+
 
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
@@ -159,11 +166,50 @@
             else {
                 $("#MCCategory6").addClass("active");
             }
-
+            //aqsa arshad code block starts here
             $("#btnSubmit").click(function (e) {
+                document.getElementById('lblErrorMsg').style.display = 'none';
+                var IID = "-1";
+                if (inventoryArray.length > 1) {
+                    var psize = "";
+                    var pcolor = "";
+                    if ($("#Size_1_1").length > 0) {
+                        psize = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                        psize = psize.substring(0, psize.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
+                    if ($("#Color_1_1").length > 0) {
+                        pcolor = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        pcolor = pcolor.substring(0, pcolor.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
+                    var varientID = $("#hdnVarientId").val();
+                    if (psize != "-" && pcolor != "-") {
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/GetInventoryID",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "color": pcolor,
+                                "size": psize,
+                                "varientID": varientID
+                            }),
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {     
+                                IID = result.d;
+                            }
+                        });
+                    }
+                    else {
+                        alert("please selct valid color and size");
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+
                 var EID = $("#txtOutOfStock").val();
                 var PID = $("#hdnProductId").val();
                 var VID = $("#hdnVarientId").val();
+                
                 if (EID == "" || EID == null) {
                     document.getElementById('lblErrorMsg').style.display = 'block';
                     e.preventDefault();
@@ -181,7 +227,8 @@
                             data: JSON.stringify({
                                 "PId": PID,
                                 "VId": VID,
-                                "EId": EID
+                                "EId": EID,
+                                "IId": IID
                             }),
                             dataType: "json",
                             async: true,
@@ -203,7 +250,7 @@
                     }
                 }
             });
-
+            //aqsa arshad code block ends here
             var btnname = "#" + $("#hdnButtonName").text();
 
             $(btnname).click(function () {
@@ -386,10 +433,17 @@
                                         $("#pInStock").show();
                                         $("#lblInStock").text(result.d);
                                         $("#pOutofStock").hide();
+                                        $("#QtyDropDown").show();
+                                        $("#divNotifyme").hide();
+                                        $("#divNotifymepopUp").hide();
                                     } else {
                                         $("#btnaddtocart").addClass("hide-element");
                                         $("#pInStock").hide();
-                                        $("#pOutofStock").show();
+                                        // $("#pOutofStock").show();       
+                                        $("#QtyDropDown").hide();
+                                        $("#divNotifyme").show();
+                                        $("#divNotifymepopUp").show();
+
                                     }
                                 }
                             });
@@ -438,10 +492,16 @@
                                         $("#pInStock").show();
                                         $("#lblInStock").text(result.d);
                                         $("#pOutofStock").hide();
+                                        $("#QtyDropDown").show();
+                                        $("#divNotifyme").hide();
+                                        $("#divNotifymepopUp").hide();
                                     } else {
                                         $("#btnaddtocart").addClass("hide-element");
                                         $("#pInStock").hide();
-                                        $("#pOutofStock").show();
+                                        //$("#pOutofStock").show();
+                                        $("#QtyDropDown").hide();
+                                        $("#divNotifyme").show();
+                                        $("#divNotifymepopUp").show();
                                     }
                                 }
                             });

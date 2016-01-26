@@ -1075,8 +1075,8 @@ namespace AspDotNetStorefrontAdmin
             }
             else
             {
-                // Notify customer when Item is back in Stock
-                #region notify Customer when Inventory will increase
+                
+                #region Notify customer when Item is back in Stock
                 int c_SkinID = 3;
                 int minimumInventory=5;              
                 if (CurrentInventory >= minimumInventory)
@@ -1085,7 +1085,7 @@ namespace AspDotNetStorefrontAdmin
                     using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                     {
                         dbconn.Open();
-                        using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + pID + " and VarientID=" + vID + " and Issent=0", dbconn))
+                        using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + pID + " and VarientID=" + vID + " and Issent=0 and InventoryID=-1", dbconn))
                         {
                             while (rs.Read())
                             {
@@ -1096,7 +1096,7 @@ namespace AspDotNetStorefrontAdmin
                                 Boolean SendWasOk = true;
                                 if (SendWasOk)
                                 {
-                                    DB.ExecuteSQL("update CustomerNotification set IsSent=1 where Email='" + EMail + "' and ProductID="+ pID + " and VarientID=" + vID);  
+                                    DB.ExecuteSQL("update CustomerNotification set IsSent=1 where Email='" + EMail + "' and ProductID=" + pID + " and VarientID=" + vID + " and InventoryID=-1");  
                                 }
                             }
 

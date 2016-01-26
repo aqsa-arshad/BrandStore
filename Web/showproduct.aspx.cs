@@ -631,9 +631,8 @@ namespace AspDotNetStorefront
             }
         }
         [System.Web.Services.WebMethod()]
-        public static bool InsertCustomersToBeNotifiedInDB(string PId, string VId, string EId)
+        public static bool InsertCustomersToBeNotifiedInDB(string PId, string VId, string EId, string IId)
         {
-
             if (EId.Equals(null) || EId.Equals(""))
             {
                 return false;
@@ -645,7 +644,7 @@ namespace AspDotNetStorefront
                 using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                 {
                     dbconn.Open();
-                    using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + Convert.ToInt32(PId) + " and VarientID=" + Convert.ToInt32(VId) + " and Issent=0 and Email='" + EId + "'", dbconn))
+                    using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + Convert.ToInt32(PId) + " and VarientID=" + Convert.ToInt32(VId)+"and InventoryID=" + Convert.ToInt32(IId) + " and Issent=0 and Email='" + EId + "'", dbconn))
                     {
                         if (rs.Read())
                         {
@@ -661,7 +660,7 @@ namespace AspDotNetStorefront
                         try
                         {
                             con.Open();
-                            DB.ExecuteSQL("Insert into CustomerNotification values(" + Convert.ToInt32(PId) + "," + Convert.ToInt32(VId) + ",'" + EId + "'," + Issent + ")");
+                            DB.ExecuteSQL("Insert into CustomerNotification(ProductID,VarientID,InventoryID,Email,IsSent) values(" + Convert.ToInt32(PId) + "," + Convert.ToInt32(VId) + "," + Convert.ToInt32(IId) + ",'" + EId + "'," + Issent + ")");
                             return true;
                         }
                         catch (Exception ex)
@@ -888,6 +887,23 @@ namespace AspDotNetStorefront
                 }
             }
             return 0;
+        }
+        [System.Web.Services.WebMethod]
+        public static string GetInventoryID(string color, string size, string varientID)
+        {
+            string InventoryID = "-1";
+            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+            {
+                dbconn.Open();
+                using (IDataReader rs = DB.GetRS("select InventoryID from Inventory where Color='" + color + "' and Size='" + size + "' and VariantID=" + Convert.ToInt32(varientID), dbconn))
+                {
+                    if (rs.Read())
+                    {
+                        InventoryID= DB.RSFieldInt(rs, "InventoryID").ToString();
+                    }
+                }
+            }
+            return InventoryID;
         }
 
         [System.Web.Services.WebMethod]
