@@ -105,7 +105,7 @@ namespace AspDotNetStorefrontAdmin
             eName = CommonLogic.QueryStringCanBeDangerousContent("EntityName");
             eSpecs = EntityDefinitions.LookupSpecs(eName);
 
-            if (pID>0)
+            if (pID > 0)
             {
                 ltProduct.Text = "<a href=\"" + AppLogic.AdminLinkUrl("entityEditProducts.aspx") + "?iden=" + pID + "&entityName=" + eName + "&entityFilterID=" + eID + "\">" + AppLogic.GetProductName(pID, ThisCustomer.LocaleSetting) + " (" + pID + ")</a>&nbsp;";
             }
@@ -179,7 +179,7 @@ namespace AspDotNetStorefrontAdmin
                     foreach (DateIntervalTypeEnum intType in GWActual.GetAllowedRecurringIntervals())
                         ddRecurringInterval.Items.Add(new ListItem(intType.ToString(), ((int)intType).ToString()));
                 }
-               
+
                 Product kitCheck = new Product(pID);
                 if (kitCheck.IsAKit)    //Hide recurring options for kits
                 {
@@ -189,34 +189,34 @@ namespace AspDotNetStorefrontAdmin
                 rblSubscriptionIntervalType.Items.Clear();
                 if (UseSpecialRecurringIntervals)
                 {
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.Weekly.ToString(),
-                                              ((int)DateIntervalTypeEnum.Weekly).ToString()));
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.BiWeekly.ToString(),
-                                              ((int)DateIntervalTypeEnum.BiWeekly).ToString()));
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.Monthly.ToString(),
-                                              ((int)DateIntervalTypeEnum.Monthly).ToString()));
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.EveryFourWeeks.ToString(),
-                                              ((int)DateIntervalTypeEnum.EveryFourWeeks).ToString()));
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.Quarterly.ToString(),
-                                              ((int)DateIntervalTypeEnum.Quarterly).ToString()));
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.SemiYearly.ToString(),
-                                              ((int)DateIntervalTypeEnum.SemiYearly).ToString()));
-                        rblSubscriptionIntervalType.Items.Add(
-                                new ListItem(DateIntervalTypeEnum.Yearly.ToString(),
-                                              ((int)DateIntervalTypeEnum.Yearly).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.Weekly.ToString(),
+                                          ((int)DateIntervalTypeEnum.Weekly).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.BiWeekly.ToString(),
+                                          ((int)DateIntervalTypeEnum.BiWeekly).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.Monthly.ToString(),
+                                          ((int)DateIntervalTypeEnum.Monthly).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.EveryFourWeeks.ToString(),
+                                          ((int)DateIntervalTypeEnum.EveryFourWeeks).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.Quarterly.ToString(),
+                                          ((int)DateIntervalTypeEnum.Quarterly).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.SemiYearly.ToString(),
+                                          ((int)DateIntervalTypeEnum.SemiYearly).ToString()));
+                    rblSubscriptionIntervalType.Items.Add(
+                            new ListItem(DateIntervalTypeEnum.Yearly.ToString(),
+                                          ((int)DateIntervalTypeEnum.Yearly).ToString()));
                 }
                 else
                 {
                     foreach (DateIntervalTypeEnum intType in GWActual.GetAllowedRecurringIntervals())
                         rblSubscriptionIntervalType.Items.Add(new ListItem(intType.ToString(), ((int)intType).ToString()));
                 }
-                
+
 
                 ddLocale.Items.Clear();
                 using (DataTable dtLocale = Localization.GetLocales())
@@ -379,7 +379,7 @@ namespace AspDotNetStorefrontAdmin
 
                         txtSKU.Text = Server.HtmlEncode(DB.RSField(rs, "SKUSuffix"));
                         txtManufacturePartNumber.Text = Server.HtmlEncode(DB.RSField(rs, "ManufacturerPartNumber"));
-						txtGTIN.Text = Server.HtmlEncode(DB.RSField(rs, "GTIN"));
+                        txtGTIN.Text = Server.HtmlEncode(DB.RSField(rs, "GTIN"));
                         if (!DB.RSFieldBool(rs, "Published"))
                         {
                             rblPublished.BackColor = Color.LightYellow;
@@ -445,7 +445,7 @@ namespace AspDotNetStorefrontAdmin
                             txtCustomerEntersPricePrompt.Text = XmlCommon.GetLocaleEntry(DB.RSField(rs, "CustomerEntersPricePrompt"), locale, false);
                         }
                         txtMSRP.Text = CommonLogic.IIF(DB.RSFieldDecimal(rs, "MSRP") != Decimal.Zero, Localization.ParseNativeCurrency(DB.RSFieldDecimal(rs, "MSRP").ToString()).ToString(), "");
- 	 	 	            txtActualCost.Text = CommonLogic.IIF(DB.RSFieldDecimal(rs, "Cost") != Decimal.Zero, Localization.ParseNativeCurrency(DB.RSFieldDecimal(rs, "Cost").ToString()).ToString(), "");
+                        txtActualCost.Text = CommonLogic.IIF(DB.RSFieldDecimal(rs, "Cost") != Decimal.Zero, Localization.ParseNativeCurrency(DB.RSFieldDecimal(rs, "Cost").ToString()).ToString(), "");
 
                         rblTaxable.SelectedIndex = (DB.RSFieldBool(rs, "IsTaxable") ? 1 : 0);
 
@@ -454,7 +454,7 @@ namespace AspDotNetStorefrontAdmin
                         rblDownload.SelectedIndex = (DB.RSFieldBool(rs, "IsDownload") ? 1 : 0);
                         rblCondition.SelectedIndex = (DB.RSFieldTinyInt(rs, "Condition"));
                         txtDownloadLocation.Text = DB.RSField(rs, "DownloadLocation");
-						txtValidForDays.Text = DB.RSFieldInt(rs, "DownloadValidDays") > 0 ? DB.RSFieldInt(rs, "DownloadValidDays").ToString() : string.Empty;
+                        txtValidForDays.Text = DB.RSFieldInt(rs, "DownloadValidDays") > 0 ? DB.RSFieldInt(rs, "DownloadValidDays").ToString() : string.Empty;
                         txtWeight.Text = Localization.ParseNativeDecimal(DB.RSFieldDecimal(rs, "Weight").ToString()).ToString();
                         txtDimensions.Text = Server.HtmlEncode(DB.RSField(rs, "Dimensions"));
 
@@ -802,7 +802,7 @@ namespace AspDotNetStorefrontAdmin
                 {
                     return int.Parse(txtCurrentInventory.Text);
                 }
-                catch 
+                catch
                 {
                     return 0;
                 }
@@ -868,6 +868,16 @@ namespace AspDotNetStorefrontAdmin
             resetError(error.ToString(), true);
 
             return false;
+        }
+        protected void UpdateCustomerStatus()
+        {
+            try
+            {
+
+            }
+            catch { 
+            
+            }
         }
 
         protected Boolean UpdateVariant()
@@ -985,8 +995,8 @@ namespace AspDotNetStorefrontAdmin
                 sql.Append(CommonLogic.IIF(Cost != Decimal.Zero, Localization.DecimalStringForDB(Cost), "NULL") + ",");
                 sql.Append(Localization.IntStringForDB(Points) + ",");
                 sql.Append(CommonLogic.IIF(MinimumQuantity != 0, Localization.IntStringForDB(MinimumQuantity), "NULL") + ",");
-                
-				if (txtSKU.Text.Length != 0)
+
+                if (txtSKU.Text.Length != 0)
                     sql.Append(DB.SQuote(txtSKU.Text) + ",");
                 else
                     sql.Append("NULL,");
@@ -996,10 +1006,10 @@ namespace AspDotNetStorefrontAdmin
                 else
                     sql.Append("NULL,");
 
-				if (txtGTIN.Text.Length != 0)
-					sql.Append(DB.SQuote(txtGTIN.Text) + ",");
-				else
-					sql.Append("NULL,");
+                if (txtGTIN.Text.Length != 0)
+                    sql.Append(DB.SQuote(txtGTIN.Text) + ",");
+                else
+                    sql.Append("NULL,");
 
                 decimal Weight = Localization.ParseNativeDecimal(txtWeight.Text);
                 sql.Append(CommonLogic.IIF(Weight != 0.0M, Localization.DecimalStringForDB(Weight), "NULL") + ",");
@@ -1035,8 +1045,8 @@ namespace AspDotNetStorefrontAdmin
                 }
                 sql.Append(DB.SQuote(DLoc) + ",");
 
-				int validDays = 0;
-				sql.Append((int.TryParse(txtValidForDays.Text, out validDays) ? validDays.ToString() : "NULL") + ",");                
+                int validDays = 0;
+                sql.Append((int.TryParse(txtValidForDays.Text, out validDays) ? validDays.ToString() : "NULL") + ",");
                 sql.Append(rblCondition.SelectedValue);
                 sql.Append(")");
                 try
@@ -1065,6 +1075,35 @@ namespace AspDotNetStorefrontAdmin
             }
             else
             {
+                
+                #region Notify customer when Item is back in Stock
+                int c_SkinID = 3;
+                int minimumInventory=5;              
+                if (CurrentInventory >= minimumInventory)
+                {
+
+                    using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                    {
+                        dbconn.Open();
+                        using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + pID + " and VarientID=" + vID + " and Issent=0 and InventoryID=-1", dbconn))
+                        {
+                            while (rs.Read())
+                            {
+                                String EMail = DB.RSField(rs, "Email");
+                                String FromEMail = AppLogic.AppConfig("MailMe_OutOfStock");
+                                String PackageName = AppLogic.AppConfig("XmlPackage.OutOfStock");
+                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "VarientID=" + vID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
+                                Boolean SendWasOk = true;
+                                if (SendWasOk)
+                                {
+                                    DB.ExecuteSQL("update CustomerNotification set IsSent=1 where Email='" + EMail + "' and ProductID=" + pID + " and VarientID=" + vID + " and InventoryID=-1");  
+                                }
+                            }
+
+                        }
+                    }
+                }
+                #endregion 
                 // ok to update:
                 sql.Append("update productvariant set ");
                 sql.Append("ProductID=" + pID.ToString() + ",");
@@ -1115,8 +1154,8 @@ namespace AspDotNetStorefrontAdmin
                 sql.Append("Cost=" + CommonLogic.IIF(Cost != Decimal.Zero, Localization.DecimalStringForDB(Cost), "NULL") + ",");
                 sql.Append("Points=" + Localization.IntStringForDB(Points) + ",");
                 sql.Append("MinimumQuantity=" + CommonLogic.IIF(MinimumQuantity != 0, Localization.IntStringForDB(MinimumQuantity), "NULL") + ",");
-                
-				if (txtSKU.Text.Length != 0)
+
+                if (txtSKU.Text.Length != 0)
                     sql.Append("SKUSuffix=" + DB.SQuote(txtSKU.Text) + ",");
                 else
                     sql.Append("SKUSuffix=NULL,");
@@ -1126,10 +1165,10 @@ namespace AspDotNetStorefrontAdmin
                 else
                     sql.Append("ManufacturerPartNumber=NULL,");
 
-				if (txtGTIN.Text.Length != 0)
-					sql.Append("GTIN=" + DB.SQuote(txtGTIN.Text) + ",");
-				else
-					sql.Append("GTIN=NULL,");
+                if (txtGTIN.Text.Length != 0)
+                    sql.Append("GTIN=" + DB.SQuote(txtGTIN.Text) + ",");
+                else
+                    sql.Append("GTIN=NULL,");
 
 
 
@@ -1172,8 +1211,8 @@ namespace AspDotNetStorefrontAdmin
                 }
                 sql.Append("DownloadLocation=" + DB.SQuote(DLoc) + ",");
 
-				int validDays = 0;
-				sql.Append(string.Format("DownloadValidDays={0},", (int.TryParse(txtValidForDays.Text, out validDays) ? validDays.ToString() : "NULL")));
+                int validDays = 0;
+                sql.Append(string.Format("DownloadValidDays={0},", (int.TryParse(txtValidForDays.Text, out validDays) ? validDays.ToString() : "NULL")));
 
                 sql.Append("Condition=" + rblCondition.SelectedValue);
                 sql.Append(" where VariantID=" + vID.ToString());

@@ -9673,7 +9673,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.AppendLine("<span id=\"buySAFE_Kicker\" name=\"buySAFE_Kicker\" type=\"" + AppLogic.AppConfig("BuySafe.KickerType") + "\"></span>");
                 tmpS.AppendLine("</div>");
             }
-            tmpS.Append("</div>");
+           // tmpS.Append("</div>");
 
             return tmpS.ToString();
         }

@@ -69,7 +69,7 @@ namespace AspDotNetStorefront
         {
             if (ThisCustomer.HasSubordinates)
             {
-                List<SFDCSoapClient.Account> lstSFDCAccount = AuthenticationSSO.GetSubordinateUsers(ThisCustomer.SFDCQueryParam);
+                List<SFDCSoapClient.Account> lstSFDCAccount = AuthenticationSSO.GetSubordinateAccounts(ThisCustomer.SFDCQueryParam);
 
                 if (lstSFDCAccount.Count > 0)
                 {
