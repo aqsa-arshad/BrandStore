@@ -393,7 +393,7 @@
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
                     <p runat="server" id="ppointscount" ClientIDMode="Static" >You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                     <p>You can pay for up to XX% of this item's cost with BLU Bucks.</p>
+                      <p runat="server" id="ppercentage" ClientIDMode="Static">You can pay for up to XX% of this item's cost with BLU Bucks.</p>
 
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
@@ -697,6 +697,10 @@
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+
+                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU Bucks.";
+                $("#ppercentage").text(blubuckspercent);
+
                 $("#txtGLcode").val("");              
                
                 
