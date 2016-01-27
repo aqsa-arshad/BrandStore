@@ -447,23 +447,26 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
-                }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
+                    $("#txtBluBuksUsed").trigger("focusout");
+                    // $("#txtBluBuksUsed").val("0.00");
 
                     return false;
                 }
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                    alert("BLU BUKS cannot be greater than allowed limit");
+                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
+                   // $("#txtBluBuksUsed").val("0.00");
+                    return false;
+                }               
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
+                   // $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
                 else
@@ -504,7 +507,7 @@
                 }
                 if ($("#Size_1_1").length > 0) {
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');                    
                     if (theForm.Size_1_1.selectedIndex < 1) {
                         alert("Please select a size.");
                         theForm.Size_1_1.focus();
@@ -604,7 +607,7 @@
                 }
                 //End Code
 
-                submitenabled(theForm);
+                submitenabled(theForm);              
                 return (true);
             }            function GetControlValue(id) {
                 var CustomerLevelElemment;
