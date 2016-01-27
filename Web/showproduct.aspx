@@ -450,23 +450,20 @@
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
-                    $("#txtBluBuksUsed").trigger("focusout");
-                    // $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").trigger("focusout");                  
 
                     return false;
                 }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").trigger("focusout");
-                   // $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }               
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                    $("#txtBluBuksUsed").trigger("focusout");
-                   // $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else
