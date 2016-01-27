@@ -51,7 +51,7 @@
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                     <p>You can pay for up to up to XX% of this item's cost with BLU Bucks.</p>
+                     <p>You can pay for up to XX% of this item's cost with BLU Bucks.</p>
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
                             <label class="roman-black">BLU Bucks to be applied:</label>
@@ -566,23 +566,23 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                    alert("BLU BUKS cannot be greater than allowed limit");
+                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val("0.00");
+                    return false;
+                }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
-                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
-                    $("#txtBluBuksUsed").trigger("focusout");                  
+                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val("0.00");
 
                     return false;
                 }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
-                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").trigger("focusout");                  
-                    return false;
-                }               
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
-                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                    $("#txtBluBuksUsed").trigger("focusout");                  
+                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
                 else
@@ -624,7 +624,7 @@
                 }
                 if ($("#Size_1_1").length > 0) {
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');                    
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                     if (theForm.Size_1_1.selectedIndex < 1) {
                         alert("Please select a size.");
                         theForm.Size_1_1.focus();
@@ -724,7 +724,7 @@
                 }
                 //End Code
 
-                submitenabled(theForm);              
+                submitenabled(theForm);
                 return (true);
             }            function GetControlValue(id) {
                 var CustomerLevelElemment;
