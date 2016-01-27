@@ -148,6 +148,9 @@
                     Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
                     CssClass="btn btn-primary btn-block" Visible="false"
                     OnClick="btnContinueCheckout_Click" />
+
+                    <div class="clearfix"></div>
+                        <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block btn-success" runat="server" OnClick="btnback_Click" Text="<< Back"></asp:Button>
                     </div>
             </asp:Panel>
         
