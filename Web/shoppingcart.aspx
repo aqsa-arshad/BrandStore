@@ -455,7 +455,7 @@
                             <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                         </p>
                         <div class="buttons-group">
-                              <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
+                              <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-block btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
                             
                             <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                         </div>
