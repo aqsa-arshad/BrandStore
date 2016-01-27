@@ -10,6 +10,15 @@
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
+    <asp:Label ID="hdnInventory" name="hdnInventory" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+
+    <asp:Label ID="hdnProductId" name="hdnProductId" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnTrackInventoryByColor" name="hdnTrackInventoryByColor" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnTrackInventoryBySize" name="hdnTrackInventoryBySize" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnSkuSuffix" name="hdnSkuSuffix" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnSizesMaster" name="hdnSizesMaster" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnColorsMaster" name="hdnColorsMaster" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+
     <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -74,28 +83,25 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-7">
                                 <label class="roman-black">GL Code:</label>
-                                <asp:TextBox ID="txtGLcode" MaxLength="12"  ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
                                 <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-
                             </div>
                         </div>
-
                     </div>
 
                     <p class="label-text">
-
-                        <span  class="roman-black">Total price using sales funds:</span>
+                        <span class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                      
-                       <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep"  ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
+
+                        <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
                         <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
-                     
+
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
                 </div>
@@ -109,20 +115,20 @@
 
             $("#pInStock").hide();
             $("#pOutofStock").hide();
-
-            var inventoryArray ;
-            $.ajax({
-                type: "post",
-                url: "showproduct.aspx/GetInventoryList",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: true,
-                success: function (result) {
-                    inventoryArray = $.parseJSON(result.d);
-                    console.log(inventoryArray);
-                    console.log(inventoryArray.length);
-                }
-            });
+            alert($("#hdnInventory").text());
+            var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
+            //$.ajax({
+            //    type: "post",
+            //    url: "showproduct.aspx/GetInventoryList",
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    async: true,
+            //    success: function (result) {
+            //        inventoryArray = $.parseJSON(result.d);
+            //        console.log(inventoryArray);
+            //        console.log(inventoryArray.length);
+            //    }
+            //});
 
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
@@ -162,7 +168,7 @@
                     }
                 }
             });
-         
+
             //Area for pop up for sales rep
             $("#btnaddtocartforsalesrep").click(function () {
                 if ($("#txtGLcode").val() == "") {
@@ -184,7 +190,7 @@
                 var ItemOriginalPrice = $("#hdnproductactualprice").text();
                 // var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
                 var ItemQuantity = theForm.Quantity_1_1.value;
-                var newpricetotal = $("#spprice").text().replace("$","");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = $("#spprice").text().replace("$", "");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 // var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 // var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
@@ -194,7 +200,7 @@
 
                 $("#spprice").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
                 $("#sppriceforsalesrep").text("$" + parseFloat(ItemQuantity) * parseFloat(ItemOriginalPrice));
-                newpricetotal = $("#spprice").text().replace("$","");
+                newpricetotal = $("#spprice").text().replace("$", "");
                 var sofentered = parseFloat($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
@@ -209,7 +215,6 @@
                 }
                 else {
                     return false;
-
                 }
             });
 
@@ -235,7 +240,6 @@
             $("#btnaddtocart").click(function (e) {
 
                 if (ApplyValidation(theForm)) {
-
                     debugger;
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
@@ -382,7 +386,12 @@
                                         $("#pInStock").hide();
                                         $("#pOutofStock").show();
                                     }
-                                }
+                                },
+                                error: function (result) {
+                                    alert('error occured');
+                                    alert(result.responseText);
+
+                                },
                             });
                         }
                     }
@@ -391,8 +400,8 @@
             });
 
             $('input').keypress(function (e) {
-                var regex;              
-                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {                  
+                var regex;
+                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         event.preventDefault();
                     }
@@ -403,11 +412,11 @@
                         event.preventDefault();
                     }
                 }
-                else if ($(this).attr('id')=="Quantity_1_1") {                   
+                else if ($(this).attr('id') == "Quantity_1_1") {
                     regex = new RegExp("^[0-9]+$");
-                }                
+                }
 
-               
+
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
                     return true;
@@ -439,10 +448,10 @@
             }
 
             function applyblubuksvalidation() {
-                  
+
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
-                    var maxfundlimit = $("#spprice").text().replace("$", "") * (parseFloat($("#hdnBudgetPercentValue").text()) / 100)
+                var maxfundlimit = $("#spprice").text().replace("$", "") * (parseFloat($("#hdnBudgetPercentValue").text()) / 100)
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
@@ -469,8 +478,8 @@
                     return true;
             }
             function applyproductcategoryfund() {
-                    $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                    $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
                 var customerlevel = $("#hdncustomerlevel").text();
@@ -517,14 +526,14 @@
                         return (false);
                     }
                 }
-                if (inventoryArray.length <= 1 ) {
-                if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
-                    alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
-                    theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
-                    theForm.Quantity_1_1.focus();
-                    submitenabled(theForm);
-                    return (false);
-                }
+                if (inventoryArray.length <= 1) {
+                    if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
+                        alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
+                        theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
+                        theForm.Quantity_1_1.focus();
+                        submitenabled(theForm);
+                        return (false);
+                    }
                 } else {
                     //Shehriyar's Code Start                      
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
@@ -601,7 +610,9 @@
 
                 submitenabled(theForm);
                 return (true);
-            }            function GetControlValue(id) {
+            }
+
+            function GetControlValue(id) {
                 var CustomerLevelElemment;
                 if (document.getElementById(id)) {
                     CustomerLevelElemment = document.getElementById(id);

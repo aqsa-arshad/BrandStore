@@ -7,6 +7,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
@@ -81,6 +82,7 @@ namespace AspDotNetStorefront
             }
 
             ProductID = CommonLogic.QueryStringUSInt("ProductID");
+            hdnProductId.Text = ProductID.ToString();
             CategoryID = CommonLogic.QueryStringUSInt("CategoryID");
             SectionID = CommonLogic.QueryStringUSInt("SectionID");
             ManufacturerID = CommonLogic.QueryStringUSInt("ManufacturerID");
@@ -177,6 +179,7 @@ namespace AspDotNetStorefront
 
                     //Apply fund
                     int pvariantid = AppLogic.GetProductsDefaultVariantID(ProductID);
+                    SetInventoryHiddenFields(pvariantid);
                     decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
                     hdnButtonName.Text = "AddToCartButton_" + ProductID + "_" + pvariantid;
                     hdncustomerlevel.Text = Convert.ToString(ThisCustomer.CustomerLevelID);
@@ -578,6 +581,7 @@ namespace AspDotNetStorefront
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
             hdnProductCategoryID.Text = parentCategoryID.ToString();
             LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
+            hdnInventory.Text = JsonConvert.SerializeObject(AppLogic.LstInventory);
         }
 
 
@@ -823,14 +827,16 @@ namespace AspDotNetStorefront
             return false;
         }
 
+        //public static int GetQuantity(string color, string size, List<Inventory> lstInventories)
         [System.Web.Services.WebMethod]
         public static int GetQuantity(string color, string size, List<Inventory> lstInventories)
         {
+            //List<Inventory> lstInventories = JsonConvert.SerializeObject(listInventories.ToArray());
             foreach (var inventory in lstInventories)
             {
                 if (inventory.Color == color && inventory.Size == size)
                 {
-                    if (int.Parse(inventory.Quantity) > 5)
+                    if (int.Parse(inventory.Quantity) > 4)
                     {
                         return int.Parse(inventory.Quantity);
                     }
@@ -847,6 +853,31 @@ namespace AspDotNetStorefront
         public static string GetInventoryList()
         {
             return LstInventories;
+        }
+
+        public void SetInventoryHiddenFields(int variantid)
+        {
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select p.TrackInventoryByColor,p.TrackInventoryBySize,p.SKU,pv.SkuSuffix,pv.Sizes SizesMaster, pv.Colors ColorsMaster from Product P  with (NOLOCK)  left outer join productvariant PV " +
+                              "with (NOLOCK)  on p.productid=pv.productid where PV.ProductID=P.ProductID and pv.VariantID = '" + variantid + "'";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        hdnTrackInventoryByColor.Text = reader["TrackInventoryByColor"].ToString();
+                        hdnTrackInventoryBySize.Text = reader["TrackInventoryBySize"].ToString();
+                        hdnSkuSuffix.Text = reader["SkuSuffix"].ToString();
+                        hdnSizesMaster.Text = reader["SizesMaster"].ToString();
+                        hdnColorsMaster.Text = reader["ColorsMaster"].ToString();
+                    }
+                }
+
+            }
         }
     }
 }
