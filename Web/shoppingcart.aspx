@@ -584,7 +584,7 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
 
@@ -607,7 +607,7 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
                // $("#hdnBluBucktsPoints").text(spblubucksprice.toFixed(2));
@@ -744,23 +744,23 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
-                }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(availableblubucksforthisitem)) {
                     alert("You exceed available BLU BUKS");
-                    //  $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2)).toFixed(2)
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val(availableblubucksforthisitem);
+                    $("#txtBluBuksUsed").trigger("focusout");
 
                     return false;
                 }
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                    alert("BLU BUKS cannot be greater than allowed limit");
+                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
+                    return false;
+                }                
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
-                    //  $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2))
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
                     return false;
                 }
                 else
@@ -775,7 +775,7 @@
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();//.replace("(FUND) discount: $", "");
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
                 spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$","");              
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");               
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");               
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 
                
