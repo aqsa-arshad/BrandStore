@@ -8648,7 +8648,7 @@ namespace AspDotNetStorefrontCore
  
 
             //Quantity DropDown
-            tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
+            tmpS.Append("<Span id=\"QtyDropDown\" class=\"select-quantity black-blu-label\">");
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
             {
                 if (RestrictedQuantities.Length == 0)
