@@ -5159,6 +5159,7 @@ a:hover.mb-login-btn {
   line-height: 18px;
   text-align: left;
   margin: 0;
+  text-shadow: none !important;
 }
 @media screen and (min-width: 768px) {
   .nav > li > a {
@@ -5167,15 +5168,11 @@ a:hover.mb-login-btn {
     width: 95px;
   }
 }
-.nav > li a:hover {
-  background-color: transparent;
-  color: #1d446b;
-}
-.nav > li a:focus {
-  background-color: transparent;
-}
+.nav > li a:hover,
+.nav > li a:focus,
 .nav > li a.active {
-  color: #1d446b;
+  background-color: transparent;
+  color: #1d446b !important;
 }
 .nav > li:nth-last-child(1) {
   border: 0;
@@ -5222,41 +5219,56 @@ a:hover.mb-login-btn {
   padding: 0;
   border: 0;
 }
+.navbar-inverse .navbar-nav {
+  margin: 0;
+}
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background: transparent;
-  color: #1d446b;
+  background: transparent !important;
+  color: #1d446b !important;
+  box-shadow: none !important;
 }
 .nav-justified > .dropdown .dropdown-menu {
   margin-top: 0;
   left: 0;
-  padding: 20px 25px;
+  padding: 20px 0;
   box-shadow: none;
   letter-spacing: 1.5px;
   font-size: 13px;
   width: 100%;
+  border: solid 1px #c0c0c0;
+  border-bottom: none;
 }
 @media screen and (min-width: 768px) {
   .nav-justified > .dropdown .dropdown-menu {
     left: -1px;
     width: 101%;
+    padding-right: 25px;
+    padding-left: 25px;
+    border-bottom: 1px solid #c0c0c0;
   }
 }
 .nav-justified > .dropdown .dropdown-menu a {
-  display: block;
   line-height: 18px;
   padding: 5px 0;
   color: #b4b7b0;
   background: transparent;
   white-space: pre-line;
 }
+@media screen and (min-width: 768px) {
+  .nav-justified > .dropdown .dropdown-menu a {
+    display: block;
+  }
+}
 .nav-justified > .dropdown .dropdown-menu a:hover {
   background: transparent;
   color: #1d446b;
 }
-.nav li.dropdown:hover ul.dropdown-menu {
-  display: block !important;
+@media screen and (min-width: 768px) {
+  .nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+  }
 }
 .modal-dialog {
   font-size: 14px;
@@ -5347,7 +5359,7 @@ a:hover.mb-login-btn {
   margin: 0;
   background: transparent;
   float: left;
-  width: 114px;
+  width: 100%;
 }
 .trueblue-popup .content-box-03 h4 {
   display: none;
@@ -5361,9 +5373,9 @@ a:hover.mb-login-btn {
 .trueblue-popup .content-box-03 .row .col-md-6 {
   float: left !important;
   padding: 0;
+  width: 100%;
 }
 .trueblue-popup .content-box-03 .row .col-md-6 .call-to-action {
-  width: 112px;
   padding-left: 0;
   padding-right: 0;
   text-align: center;
@@ -5487,7 +5499,7 @@ a:hover.mb-login-btn {
   word-break: break-all;
 }
 @media screen and (min-width: 768px) {
-  .address ul {
+  .address .address-fix {
     height: 138px;
   }
 }
@@ -5537,7 +5549,7 @@ a:hover.mb-login-btn {
 }
 @media screen and (min-width: 768px) {
   .checkout-two-fields .select-list {
-    width: 30%;
+    width: 35%;
     margin-right: 5px;
   }
 }
@@ -6062,11 +6074,15 @@ table.order-detail tbody tr td {
   padding: 0;
 }
 .login-box .checkbox label {
-  margin-top: 0;
+  margin-top: 8px;
+}
+@media screen and (min-width: 768px) {
+  .login-box .checkbox label {
+    margin-top: 0;
+  }
 }
 .login-box .checkbox a {
-  display: block;
-  margin-bottom: 8px;
+  display: inline;
 }
 @media screen and (min-width: 768px) {
   .login-box .checkbox a {
@@ -6441,7 +6457,7 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 768px) {
   .shopping-cart-fix {
-    height: 104px;
+    height: 108px;
     overflow: hidden;
     margin-bottom: 0;
   }
@@ -6564,6 +6580,9 @@ a:hover.underline-link {
 }
 .border-none {
   border: none !important;
+}
+.dropdown-backdrop {
+  position: static;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .checkout-tablet-main .checkout-tablet-view {

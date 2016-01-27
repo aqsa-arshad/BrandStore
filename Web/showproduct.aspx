@@ -47,13 +47,14 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                    <p>Decide hom many BLU Bucks you want to use to buy this item.</p>
-
+                     <p>You can pay for up to up to XX% of this item's cost with BLU Bucks.</p>
                     <div class="form-group">
-                        <div class="col-xs-6 padding-none">
-                            <label class="roman-black">BLU Bucks used:</label>
+                        <div class="col-xs-12 padding-none">
+                            <label class="roman-black">BLU Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -63,13 +64,13 @@
                     </div>
 
                     <p class="label-text">
-                        <span class="roman-black">Total price using BLU Bucks:</span>
+                        <span class="roman-black">Price using BLU Bucks:</span>
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00</span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                           <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
 
                         </div>
                     </div>
@@ -86,6 +87,8 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">Apply sales funds to this item</h5>
                     <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
 
@@ -112,8 +115,7 @@
                     <div class="buttons-group trueblue-popup">
 
                         <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
-                        <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
 
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
@@ -344,8 +346,6 @@
             $("#btnaddtocart").click(function (e) {
 
                 if (ApplyValidation(theForm)) {
-
-                    debugger;
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
                     if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
@@ -356,10 +356,8 @@
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
 
-
                     }
                     else if (customerlevel == 3 || customerlevel == 7) {
-
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
