@@ -43,8 +43,36 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            RequireSecurePage();
-            RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
+            Response.CacheControl = "private";
+            Response.Expires = 0;
+            Response.AddHeader("pragma", "no-cache");
+
+            SkinBase.RequireSecurePage();
+
+            OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
+            int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
+                        
+            // currently viewing user must be logged in to view receipts:
+            if (!ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("signin.aspx?returnurl=receipt.aspx?" +
+                                  Server.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING")));
+            }
+
+            // are we allowed to view?
+            // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
+            if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
+            {
+                Response.Redirect("OrderNotFound.aspx");
+            }
+
+            //For multi store checking
+            //Determine if customer is allowed to view orders from other store.
+            if (!ThisCustomer.IsAdminUser && AppLogic.StoreID() != AppLogic.GetOrdersStoreID(OrderNumber) &&
+                AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true)
+            {
+                Response.Redirect("OrderNotFound.aspx");
+            }
 
             if (!Page.IsPostBack)
             {
@@ -273,7 +301,12 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
                                                                           (e.Item.FindControl("hfSKU") as HiddenField).Value;
                 }
-                if (((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") != 0) && ((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value.CompareTo("0.0000") != 0))
+                if (string.IsNullOrEmpty((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value) && string.IsNullOrEmpty((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value))
+                {
+                    (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
+                    (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
+                }
+                else if (((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value.CompareTo("0.0000") != 0) && ((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value.CompareTo("0.0000") != 0))
                 {
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value));
                     (e.Item.FindControl("lblBluBuck") as Label).Text = Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucksUsed") as HiddenField).Value), 2).ToString();
@@ -308,14 +341,18 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblBluBuck") as Label).Visible = false;
                 }
-                if (Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2) != 0)
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfBluBucks") as HiddenField).Value))
                 {
-                    totalBluBucks = totalBluBucks +
-                                    Math.Round(
-                                        Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2);
-                    lblBluBucksTotal.Text = Math.Round(totalBluBucks,2).ToString();
-                    lblBluBucksTotal.Visible = true;
-                    lblBluBucksTotalCaption.Visible = true;
+                    if (Math.Round(Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value), 2) != 0)
+                    {
+                        totalBluBucks = totalBluBucks +
+                                        Math.Round(
+                                            Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value),
+                                            2);
+                        lblBluBucksTotal.Text = Math.Round(totalBluBucks, 2).ToString();
+                        lblBluBucksTotal.Visible = true;
+                        lblBluBucksTotalCaption.Visible = true;
+                    }
                 }
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfFundName") as HiddenField).Value))
                 {

@@ -344,7 +344,7 @@ namespace AspDotNetStorefrontControls
             }
 
             //Product Name
-            lnkProductName.Text = cItem.ProperProductName;
+            lnkProductName.Text = cItem.ProductName;
             lnkProductName.Attributes["class"] = "black-color";
             if (LineItemDescriptionSettings != null)
             {
