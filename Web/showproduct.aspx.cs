@@ -7,6 +7,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
@@ -603,6 +604,7 @@ namespace AspDotNetStorefront
             ppercentage.InnerText = "You can pay for up to " + hdnBudgetPercentValue.Text + "% of this item's cost with BLU Bucks.";
             hdnProductCategoryID.Text = parentCategoryID.ToString();
             LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
+            hdnInventory.Text = JsonConvert.SerializeObject(AppLogic.LstInventory);
         }
 
 
@@ -716,7 +718,7 @@ namespace AspDotNetStorefront
                 using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                 {
                     dbconn.Open();
-                    using (IDataReader rs = DB.GetRS("SELECT productid From dbo.shoppingcart with (nolock) where ProductID = " + PId + " and VariantID = " + VId + "  and ChosenColor = '" + SelectedColour + "' and ChosenSize='" + SelectedSize + "' and CustomerID = " + CustomerID, dbconn))
+                    using (IDataReader rs = DB.GetRS("SELECT productid From dbo.shoppingcart with (nolock) where ProductID = " + PId + " and VariantID = " + VId + "  and (ChosenColor = '" + SelectedColour + "' or ChosenColor='" + "0" + "')  and (ChosenSize='" + SelectedSize + "' or ChosenSize='" + "0" + "') and CustomerID = " + CustomerID, dbconn))
                     {
                         if (rs.Read())
                         {
@@ -928,21 +930,16 @@ namespace AspDotNetStorefront
         [System.Web.Services.WebMethod]
         public static int GetQuantity(string color, string size, List<Inventory> lstInventories)
         {
-            foreach (var inventory in lstInventories)
+            if (!string.IsNullOrEmpty(color))
             {
-                if (inventory.Color == color && inventory.Size == size)
-                {
-                    if (int.Parse(inventory.Quantity) > 5)
-                    {
-                        return int.Parse(inventory.Quantity);
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
+                return (from inventory in lstInventories
+                    where inventory.Color == color && inventory.Size == size
+                    select int.Parse(inventory.Quantity) > 4 ? int.Parse(inventory.Quantity) : 0).FirstOrDefault();
             }
-            return 0;
+            return
+                lstInventories.Where(inventory => inventory.Size == size)
+                    .Select(inventory => int.Parse(inventory.Quantity) > 4 ? int.Parse(inventory.Quantity) : 0)
+                    .FirstOrDefault();
         }
         [System.Web.Services.WebMethod]
         public static string GetInventoryID(string color, string size, string varientID)
@@ -967,5 +964,6 @@ namespace AspDotNetStorefront
         {
             return LstInventories;
         }
+        
     }
 }

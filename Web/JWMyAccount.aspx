@@ -6,7 +6,7 @@
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 
     <div class="content-box-03">
-        <div class="row tablet-view">
+        <div class="row address tablet-view">
             <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Current Order Status</h5>
                 <asp:Label ID="accountaspx55" runat="server" Text="<%$ Tokens:StringResource,account.aspx.55 %>"></asp:Label>
@@ -24,10 +24,13 @@
                 </ul>
             </div>
         </div>
-
-        <div class="btn-center">
-            <a href="OrderHistory.aspx" class="btn btn-md btn-primary" type="submit">View Order History</a>
+        <div class="row address tablet-view">
+        <div class="col-md-6 pull-left-md pull-sm-no">
+            </div>
+        <div class="col-md-6 pull-left-md pull-sm-no">
+            <a href="OrderHistory.aspx" class="btn btn-md btn-block btn-primary" type="submit">View Order History</a>
         </div>
+         </div>
     </div>
 
     <div class="content-box-03">
@@ -47,7 +50,7 @@
         <div class="row address tablet-view">
             <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Primary Billing Address</h5>
-                <ul style="overflow: hidden;">
+                <ul style="overflow: hidden;" class="address-fix">
                     <li>
                         <asp:Label ID="lblBANA" runat="server"></asp:Label></li>
                     <li>
@@ -71,7 +74,7 @@
 
             <div class="col-md-6 pull-left-md pull-sm-no">
                 <h5>Primary Shipping Address</h5>
-                <ul style="overflow: hidden;">
+                <ul style="overflow: hidden;" class="address-fix">
                     <li>
                         <asp:Label ID="lblSANA" runat="server"></asp:Label></li>
                     <li>

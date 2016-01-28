@@ -28,6 +28,7 @@
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
+    <asp:Label ID="hdnInventory" name="hdnInventory" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -77,7 +78,6 @@
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
                            <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
-
                         </div>
                     </div>
                 </div>
@@ -107,10 +107,8 @@
                             <div class="col-xs-6 col-sm-5">
                                 <label class="roman-black">Amount:</label>
                                 <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-
                             </div>
                         </div>
-
                     </div>
 
                     <p class="label-text">
@@ -121,7 +119,8 @@
                     <div class="buttons-group trueblue-popup">
 
                         <%-- <asp:Literal ID="LiteralCustom2" runat="server"></asp:Literal>--%>
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,AppConfig.CartButtonPrompt %>" runat="server" />
+                        <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server" />
 
                         <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
@@ -136,25 +135,12 @@
         $(document).ready(function () {
             $("#pInStock").hide();
             $("#pOutofStock").hide();
+            var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
 
-            var inventoryArray;
-            $.ajax({
-                type: "post",
-                url: "showproduct.aspx/GetInventoryList",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: true,
-                success: function (result) {
-                    inventoryArray = $.parseJSON(result.d);
-                    //aqsa code block starts here
                     if (inventoryArray.length >= 1) {
                         $("#divNotifyme").hide();
                         $("#divNotifymepopUp").hide();
-
                     }
-                    //aqsa code block ends here
-                }
-            });
 
             //Check if product exist
             if (($("#Size_1_1").length > 0 || $("#Color_1_1").length > 0)) {
@@ -355,7 +341,6 @@
                 }
                 else {
                     return false;
-
                 }
             });
 
@@ -395,6 +380,8 @@
 
                 
                 if (ApplyValidation(theForm)) {
+
+                    debugger;
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
                     if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
@@ -421,16 +408,28 @@
                     else {
                         $(btnname).trigger("click");
                     }
-                }               
+                }
             });
 
             function checkifproductalreadyexists()
             {
                 var exist = false;
-                var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');               
+                var sel_size = '0';
+                var sel_color ='0';
+                if ($("#Size_1_1").length > 0)
+                {
+                 sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                 sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                }
+
+                if ($("#Color_1_1").length > 0)
+                {
+                 sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                 sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');   
+                }
+                
+                
+                           
                 var ProductID = $("#hdnProductID").text();
                 var VariantID = $("#hdnVariantID").text();
                 var CustomerID = $("#hdnCustomerID").text();
@@ -508,7 +507,7 @@
             $("#Color_1_1").change(function () {
                 debugger;
                 if (inventoryArray.length > 1) {
-                    if ($("#Size_1_1").length > 0) {
+                    //if ($("#Size_1_1").length > 0) {
                         var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
                         sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                         var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
@@ -527,7 +526,6 @@
                                 dataType: "json",
                                 async: true,
                                 success: function (result) {
-                                    console.log(result.d);
                                     if (result.d.toString() != '0') {
                                         $("#btnaddtocart").removeClass("hide-element");
                                         $("#pInStock").show();
@@ -548,7 +546,11 @@
                                 }
                             });
                         }
+                    else {
+                        $("#pInStock").hide();
+                        $("#pOutofStock").hide();
                     }
+                    //}
                 }
             });
             //End
@@ -567,12 +569,15 @@
                 //Shehriyar's Code
 
                 if (inventoryArray.length > 1) {
-                    if ($("#Color_1_1").length > 0) {
+                    var sel_color;
+                    if ($("#Color_1_1").length <= 0) {
+                        sel_color = "";
+                    } else {
+                        sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
                         var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
                         sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                        var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-
                         if (sel_size != "-" && sel_color != "-") {
                             $.ajax({
                                 type: "post",
@@ -586,7 +591,6 @@
                                 dataType: "json",
                                 async: true,
                                 success: function (result) {
-                                    console.log(result.d);
                                     if (result.d.toString() != '0') {
                                         $("#btnaddtocart").removeClass("hide-element");
                                         $("#pInStock").show();
@@ -605,9 +609,12 @@
                                     }
                                 }
                             });
-                        }
+                    } else {
+                        $("#pInStock").hide();
+                        $("#pOutofStock").hide();
                     }
                 }
+
                 //End 
             });
 
@@ -701,7 +708,7 @@
 
                 }
                 else {
-                    if (parseFloat($("#hdnProductFundAmount").text())>0)
+                    if (parseFloat($("#hdnProductFundAmount").text()) > 0)
                         $("#sppricewithfund").removeClass("hide-element");
                     else
                         $("#sppricewithfund").addClass("hide-element");
@@ -718,6 +725,9 @@
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
                     alert("Please specify the quantity you want to add to your cart");
+                    $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                    $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                    $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                     theForm.Quantity_1_1.focus();
                     submitenabled(theForm);
                     return (false);
@@ -728,6 +738,9 @@
                     sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                     if (theForm.Size_1_1.selectedIndex < 1) {
                         alert("Please select a size.");
+                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                         theForm.Size_1_1.focus();
                         submitenabled(theForm);
                         return (false);
@@ -738,6 +751,9 @@
                     sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                     if (theForm.Color_1_1.selectedIndex < 1) {
                         alert("Please select a color.");
+                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                         theForm.Color_1_1.focus();
                         submitenabled(theForm);
                         return (false);
@@ -753,10 +769,15 @@
                     }
                 } else {
                     //Shehriyar's Code Start                      
+                    var sel_color;
+                    if ($("#Color_1_1").length <= 0) {
+                        sel_color = "";
+                    } else {
+                        sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
                     sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
 
                     $.ajax({
                         type: "post",
@@ -770,9 +791,9 @@
                         dataType: "json",
                         async: true,
                         success: function (result) {
-                            if (result > 0) {
-                                $("#spInStock").removeClass("hide-element");
-                                $("#lblInStock").text = result;
+                            if (result.d.toString() != '0') {
+                                $("#pInStock").show();
+                                $("#lblInStock").text(result.d);
 
                                 if (typeof (sel_size) == 'undefined') sel_size = '';
                                 if (typeof (sel_color) == 'undefined') sel_color = '';
@@ -818,7 +839,7 @@
                                     return (false);
                                 }
                             } else {
-                                $("#spOutofStock").removeClass("hide-element");
+                                $("#pOutofStock").hide();
                             }
                         }
                     });

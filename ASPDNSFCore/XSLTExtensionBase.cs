@@ -3207,6 +3207,7 @@ function popupzoom(url,alturl)
 
         public int IsShowProductStockStatus(String sProductID, String sVariantID)
         {
+            AppLogic.LstInventory.Clear();
             var result = ShowInventoryTable(sProductID, sVariantID);
             if (result.Contains("Out of stock"))
             {
@@ -3223,7 +3224,7 @@ function popupzoom(url,alturl)
         }
 
         public string NotifyMeButton(String sProductID, String sVariantID)
-        {
+        {            
             StringBuilder result = new StringBuilder(3000);
             //result.Append("<br/>");
             result.Append("<div id=\"divNotifyme\" class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
