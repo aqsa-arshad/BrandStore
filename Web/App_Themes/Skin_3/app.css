@@ -4921,6 +4921,14 @@ img {
   border-color: #1d446b;
   color: #1d446b;
 }
+.search-results-text {
+  margin-top: 60px;
+}
+@media screen and (min-width: 768px) {
+  .search-results-text {
+    margin-top: 0;
+  }
+}
 .profile-links {
   border-bottom: 1px solid #c0c0c0;
   display: block;
