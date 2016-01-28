@@ -5359,7 +5359,7 @@ a:hover.mb-login-btn {
   margin: 0;
   background: transparent;
   float: left;
-  width: 114px;
+  width: 100%;
 }
 .trueblue-popup .content-box-03 h4 {
   display: none;
@@ -5373,9 +5373,9 @@ a:hover.mb-login-btn {
 .trueblue-popup .content-box-03 .row .col-md-6 {
   float: left !important;
   padding: 0;
+  width: 100%;
 }
 .trueblue-popup .content-box-03 .row .col-md-6 .call-to-action {
-  width: 100%;
   padding-left: 0;
   padding-right: 0;
   text-align: center;
