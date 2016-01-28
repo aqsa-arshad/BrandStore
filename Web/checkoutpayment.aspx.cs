@@ -432,6 +432,7 @@ namespace AspDotNetStorefront
                 NoPaymentRequired.Text = AppLogic.GetString("checkoutpayment.aspx.28", SkinID, ThisCustomer.LocaleSetting);
                 pnlNoPaymentRequired.Visible = true;
                 pnlPaymentOptions.Visible = false;
+                pnlContCheckout.Visible = false;
                 if (RequireTerms)
                 {
                     StringBuilder s = new StringBuilder("");
@@ -439,6 +440,7 @@ namespace AspDotNetStorefront
                     NoPaymentRequired.Text = NoPaymentRequired.Text + "<br><br>" + s.ToString();  //Cannot concat types String and StringBuilder in VB
                     pnlRequireTerms.Visible = false;
                 }
+               
             }
 
 
@@ -446,6 +448,7 @@ namespace AspDotNetStorefront
 
             OrderSummary.Text = cart.DisplaySummary(true, true, true, true, false);
             AppLogic.GetButtonDisable(btnContinueCheckOut1);
+         
         }
 
         /// <summary>
@@ -2413,16 +2416,17 @@ namespace AspDotNetStorefront
                     BillingAddress.CardIssueNumber = CardIssueNumber;
                     BillingAddress.UpdateDB();
 
-                    if (CardNumber.Length == 0)
-                    {
-                        err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.1", 1, Localization.GetDefaultLocale())));
-                        Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
-                    }
-                    if ((!AppLogic.AppConfigBool("CardExtraCodeIsOptional") && CardExtraCode.Length == 0))
-                    {
-                        err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.5", 1, Localization.GetDefaultLocale())));
-                        Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
-                    }
+                    //need in future currently it is disabled to go back to shipping methods
+                    //if (CardNumber.Length == 0)
+                    //{
+                    //    err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.1", 1, Localization.GetDefaultLocale())));
+                    //    Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                    //}
+                    //if ((!AppLogic.AppConfigBool("CardExtraCodeIsOptional") && CardExtraCode.Length == 0))
+                    //{
+                    //    err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutcard_process.aspx.5", 1, Localization.GetDefaultLocale())));
+                    //    Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+                    //}
 
                     // Save card to CIM if selected
                     if (ctrlCreditCardPanel.CimSaveCard)

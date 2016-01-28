@@ -51,7 +51,8 @@
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                     <p>You can pay for up to XX% of this item's cost with BLU Bucks.</p>
+                     <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU Bucks.</p>
+
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
                             <label class="roman-black">BLU Bucks to be applied:</label>
@@ -511,10 +512,10 @@
             });
 
             $('input').keypress(function (e) {
-                var regex;
+                var regex="";
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
-                        event.preventDefault();
+                      event.preventDefault();
                     }
 
                     var text = $(this).val();
@@ -526,12 +527,12 @@
                 else if ($(this).attr('id') == "Quantity_1_1") {
                     regex = new RegExp("^[0-9]+$");
                 }
-
-
+             
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
                     return true;
-                }
+               
+            }
 
                 e.preventDefault();
                 return false;

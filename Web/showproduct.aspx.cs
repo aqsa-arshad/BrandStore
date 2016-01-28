@@ -580,6 +580,7 @@ namespace AspDotNetStorefront
             //get fund BluBucks Percentage
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
+            ppercentage.InnerText = "You can pay for up to " + hdnBudgetPercentValue.Text + "% of this item's cost with BLU Bucks.";
             hdnProductCategoryID.Text = parentCategoryID.ToString();
             LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
         }
