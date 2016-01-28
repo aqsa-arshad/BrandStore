@@ -8734,7 +8734,10 @@ namespace AspDotNetStorefrontCore
                 // render normal html button
                 //Disable add to cart functionality and creat a simple button that opens popup
                // tmpS.AppendFormat(" <input type=\"button\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btnaddtocart  btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+                tmpS.Append("<div class=\"clearfix\"></div><p id=\"palreadyexist\" ClientIDMode=\"Static\"  class=\"hide-element\"><span class=\"notify\">This item is in your shopping cart already.Please make edits there.</span></p>");
                 tmpS.AppendFormat(" <input type=\"button\"  id=\"btnaddtocart\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+                tmpS.AppendFormat(" <input type=\"button\"  id=\"btnShoppingcart\" name=\"btnShoppingcart\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button hide-element\" value=\"Shopping Cart\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+                
             }//data-toggle=\"modal\" data-target=\"#myModa2\"
 
             // TODO: Commented for the Wishlist and Gift button functionality 

@@ -24,6 +24,7 @@
     <%--Thankyou POP UP Start here --%>
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
+       
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
@@ -39,7 +40,11 @@
     <asp:Label ID="hdnproductactualprice" name="hdnproductactualprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnFundName" name="hdnFundName" runat="server" ClientIDMode="Static" Style="display: none" Text="" />
+    <asp:Label ID="hdnIsProductExist" name="hdnIsProductExist" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
+    <asp:Label ID="hdnProductID" name="hdnProductID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+     <asp:Label ID="hdnVariantID" name="hdnVariantID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+     <asp:Label ID="hdnCustomerID" name="hdnCustomerID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <%--End Hidden Variables Region--%>
 
     <%-- Region Open Pop Up for bucckts--%>
@@ -151,6 +156,35 @@
                 }
             });
 
+            //Check if product exist
+            if (($("#Size_1_1").length > 0 || $("#Color_1_1").length > 0)) {
+                        
+                if ($("#hdnIsProductExist").text() == "1") {
+                    
+                }
+                else {
+                    $("#btnaddtocart").removeClass("hide-element");
+                    $("#btnShoppingcart").addClass("hide-element");
+                }                             
+            }
+            else {                
+                if ($("#hdnIsProductExist").text() == "1") {                    
+                    $("#btnaddtocart").addClass("hide-element");
+                    $("#btnShoppingcart").removeClass("hide-element");
+                    $("#palreadyexist").removeClass("hide-element");
+                    
+                }
+                else {
+                    $("#btnaddtocart").removeClass("hide-element");
+                    $("#btnShoppingcart").addClass("hide-element");
+                }
+            }
+            //end check
+
+            $("#btnShoppingcart").click(function () {              
+                window.location.href ="ShoppingCart.aspx";
+
+            });
 
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
@@ -343,9 +377,23 @@
                     return true;
                 }
             }
+           
             //end area for pop up for sales rep
             $("#btnaddtocart").click(function (e) {
+                debugger;
+                if (checkifproductalreadyexists()) {
+                    $("#palreadyexist").removeClass("hide-element");
+                    $("#palreadyexist").html("<span class=\"notify\">Product with selected options already exists in cart,Please go to shopping cart and update quantity or select different option.</span>");
+                    $("#palreadyexist").addClass("notify");
+                    $("#palreadyexist").removeAttr("Style");
+                    e.preventDefault();
+                    return false;
+                }
+                else {
+                    $("#palreadyexist").addClass("hide-element");
+                }
 
+                
                 if (ApplyValidation(theForm)) {
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
@@ -359,6 +407,7 @@
 
                     }
                     else if (customerlevel == 3 || customerlevel == 7) {
+
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -366,12 +415,63 @@
 
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModal1");
+                      
+                      
                     }
                     else {
                         $(btnname).trigger("click");
                     }
-                }
+                }               
             });
+
+            function checkifproductalreadyexists()
+            {
+                var exist = false;
+                var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');               
+                var ProductID = $("#hdnProductID").text();
+                var VariantID = $("#hdnVariantID").text();
+                var CustomerID = $("#hdnCustomerID").text();
+                if (sel_size != "-" && sel_color != "-") {
+                    $.ajax({
+                        type: "post",
+                        url: "showproduct.aspx/IsProductExist",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            "PId": ProductID,
+                            "VId": VariantID,
+                            "SelectedColour": sel_color,
+                            "SelectedSize": sel_size,
+                            "CustomerID": CustomerID
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {                          
+                           
+                            if (result.d.toString() == 'true') {
+                               // alert("Product with selected options already exists,Please go to shopping cart and update quantity or select different option.");
+                               // $("#btnaddtocart").addClass("hide-element");
+                                $("#btnShoppingcart").removeClass("hide-element");                               
+                                exist = true;
+                               
+                            } else {                               
+                                $("#btnaddtocart").removeClass("hide-element");
+                                $("#btnShoppingcart").addClass("hide-element");                               
+                                exist = false;
+                              
+                            }
+                        },
+                        error: function (result) {                       
+
+                    }
+                    });
+                }
+               
+                return exist;
+
+            }
 
             //Set product price  to show on pupup
             applyproductcategoryfund();
@@ -512,7 +612,7 @@
             });
 
             $('input').keypress(function (e) {
-                var regex="";
+                var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                       event.preventDefault();
