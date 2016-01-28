@@ -27,7 +27,7 @@
                                 <asp:Label ID="lblPackage" Text="Package" runat="server" />
                                 <asp:Label ID="lblPackageNumber" runat="server" />
                                 <asp:Label ID="lblShippingMethod" runat="server" />
-                                 <asp:Label ID="lblShippingStatus" runat="server" />
+                                <asp:Label ID="lblShippingStatus" runat="server" />
                                 <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server" />
                             </span>
                         </ItemTemplate>
