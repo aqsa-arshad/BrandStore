@@ -30,7 +30,7 @@ namespace AspDotNetStorefront
             var masterHome = AppLogic.HomeTemplate();
             if (masterHome.Trim().Length == 0)
             {
-                masterHome = "JeldWenEmptyTemplate";
+                masterHome = "JeldWenTemplate";
             }
             if (masterHome.EndsWith(".ascx"))
             {
@@ -42,7 +42,7 @@ namespace AspDotNetStorefront
             }
             if (!CommonLogic.FileExists(CommonLogic.SafeMapPath("~/App_Templates/Skin_" + SkinID + "/" + masterHome)))
             {
-                masterHome = "JeldWenEmptyTemplate";
+                masterHome = "JeldWenTemplate";
             }
             return masterHome;
         }

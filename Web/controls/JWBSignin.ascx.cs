@@ -29,7 +29,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         ForgotPaswwordSuccessMessage.Text = String.Empty;
     }
     protected void forgotpasswordButton_Click(object sender, EventArgs e)
-    {        
+    {
         HiddenLabel.Text = "true";
         string EMail = ForgotPasswordEmailTextField.Text.ToString();
         if (EMail.Length == 0)
@@ -45,7 +45,11 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
 
         if (userModel != null) // If Okta User
         {
-            SendWasOk = AuthenticationSSO.ForgotPasswordRequest(userModel.id);
+            successMessageNotification();
+            if (!string.IsNullOrEmpty(userModel.profile.sfid)) // Dealer User
+                ForgotPaswwordSuccessMessage.Text = AppLogic.GetString("lostpassword.aspx.8", m_SkinID, ThisCustomer.LocaleSetting);
+            else // Internal User
+                ForgotPaswwordSuccessMessage.Text = AppLogic.GetString("lostpassword.aspx.9", m_SkinID, ThisCustomer.LocaleSetting);
         }
         else
         {
@@ -75,20 +79,22 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                 {
                     SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                    MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                }
+
+                if (!SendWasOk)
+                {
+                    errorMessageNotification();
+                    ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                }
+                else
+                {
+                    successMessageNotification();
+                    ForgotPaswwordSuccessMessage.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
                 }
             }
-        }
 
-        if (!SendWasOk)
-        {
-            errorMessageNotification();
-            ForgotPasswordErrorMsgLabel.Text = AppLogic.GetString("lostpassword.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
-        }
-        else
-        {
-            successMessageNotification();
-            ForgotPaswwordSuccessMessage.Text = AppLogic.GetString("lostpassword.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+            
         }
     }
 
@@ -123,7 +129,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
     private void focusOnEmailTextField(bool status)
     {
         var currentURL = Request.Url.AbsolutePath;
-        if(status)
+        if (status)
         {
             if (currentURL.ToUpper().Contains("DEFAULT"))
             {
@@ -136,9 +142,9 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             {
                 EmailTextField.Focus();
             }
-        
+
         }
-    
+
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -194,36 +200,36 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
         {
             try
             {
-            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
-            {
-                dbconn.Open();
-                using (IDataReader rs = DB.GetRS(String.Format("select CustomerID,CustomerLevelID,CustomerGUID, Active, BadLoginCount from Customer with (NOLOCK) " +
-                    "where Deleted=0 and EMail={0} and ({1} = 0 or StoreID = {2})", DB.SQuote(EMailField), CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0), AppLogic.StoreID()), dbconn))
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                 {
-                    LoginOK = rs.Read();
-                    if (LoginOK)
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS(String.Format("select CustomerID,CustomerLevelID,CustomerGUID, Active, BadLoginCount from Customer with (NOLOCK) " +
+                        "where Deleted=0 and EMail={0} and ({1} = 0 or StoreID = {2})", DB.SQuote(EMailField), CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0), AppLogic.StoreID()), dbconn))
                     {
-                        ThisCustomer = new Customer(EMailField, true);
-                        ExecutePanel.Visible = true;
-                        String CustomerGUID = ThisCustomer.CustomerGUID.Replace("{", "").Replace("}", "");
-                        ExecutePanel.Visible = true;
-                        SignInExecuteLabel.Text = AppLogic.GetString("signin.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
-                        string sReturnURL = FormsAuthentication.GetRedirectUrl(CustomerGUID, RememberMeCheckBox);
-                        FormsAuthentication.SetAuthCookie(CustomerGUID, RememberMeCheckBox);
-                        Response.Redirect("home.aspx");
-                    }
-                    else
-                    {
-                        ThisCustomer = new Customer(0, true);
+                        LoginOK = rs.Read();
+                        if (LoginOK)
+                        {
+                            ThisCustomer = new Customer(EMailField, true);
+                            ExecutePanel.Visible = true;
+                            String CustomerGUID = ThisCustomer.CustomerGUID.Replace("{", "").Replace("}", "");
+                            ExecutePanel.Visible = true;
+                            SignInExecuteLabel.Text = AppLogic.GetString("signin.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+                            string sReturnURL = FormsAuthentication.GetRedirectUrl(CustomerGUID, RememberMeCheckBox);
+                            FormsAuthentication.SetAuthCookie(CustomerGUID, RememberMeCheckBox);
+                            Response.Redirect("home.aspx");
+                        }
+                        else
+                        {
+                            ThisCustomer = new Customer(0, true);
+                        }
                     }
                 }
             }
-        }
             catch (Exception ex)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
-                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error); 
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
         }
         else //normal login
