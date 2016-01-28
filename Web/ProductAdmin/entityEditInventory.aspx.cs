@@ -271,7 +271,9 @@ namespace AspDotNetStorefrontAdmin
                                 String EMail = DB.RSField(rs, "Email");
                                 String FromEMail = AppLogic.AppConfig("MailMe_OutOfStock");
                                 String PackageName = AppLogic.AppConfig("XmlPackage.OutOfStock");
-                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "VarientID=" + VariantId.ToString()+"ProductName="+ProductName.ToString()+"price="+price.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
+                                var currentURL = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "/");
+                                String pLink = String.Format(currentURL.ToString() + "p-" + pID + "-" + ProductName.Replace("/", "") + ".aspx");
+                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "&VarientID=" + VariantId.ToString() + "&ProductName=" + ProductName.ToString() + "&price=" + String.Format("{0:C}", price) + "&productLink=" + pLink, false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
                                 Boolean SendWasOk = true;
                                 if (SendWasOk)
                                 {
