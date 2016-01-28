@@ -631,7 +631,11 @@ namespace AspDotNetStorefront
 
             if (userModel != null) // If Okta User
             {
-                SendWasOk = AuthenticationSSO.ForgotPasswordRequest(userModel.id);
+                successMessageNotification();
+                if (!string.IsNullOrEmpty(userModel.profile.sfid)) // Dealer User
+                    ForgotPaswwordSuccessMessage1.Text = AppLogic.GetString("lostpassword.aspx.8", m_SkinID, ThisCustomer.LocaleSetting);
+                else // Internal User
+                    ForgotPaswwordSuccessMessage1.Text = AppLogic.GetString("lostpassword.aspx.9", m_SkinID, ThisCustomer.LocaleSetting);
             }
             else
             {
@@ -664,6 +668,7 @@ namespace AspDotNetStorefront
                         ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                         MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
                     }
+                    
                     if (!SendWasOk)
                     {
                         errorMessageNotification();
@@ -676,7 +681,6 @@ namespace AspDotNetStorefront
                     }
                 }
             }
-
         }
 
         protected void btnChgPwd_Click(object sender, EventArgs e)

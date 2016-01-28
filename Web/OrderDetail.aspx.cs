@@ -44,8 +44,36 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            RequireSecurePage();
-            RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
+            Response.CacheControl = "private";
+            Response.Expires = 0;
+            Response.AddHeader("pragma", "no-cache");
+
+            SkinBase.RequireSecurePage();
+
+            OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
+            int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
+                        
+            // currently viewing user must be logged in to view receipts:
+            if (!ThisCustomer.IsRegistered)
+            {
+                Response.Redirect("signin.aspx?returnurl=receipt.aspx?" +
+                                  Server.UrlEncode(CommonLogic.ServerVariables("QUERY_STRING")));
+            }
+
+            // are we allowed to view?
+            // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
+            if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
+            {
+                Response.Redirect("OrderNotFound.aspx");
+            }
+
+            //For multi store checking
+            //Determine if customer is allowed to view orders from other store.
+            if (!ThisCustomer.IsAdminUser && AppLogic.StoreID() != AppLogic.GetOrdersStoreID(OrderNumber) &&
+                AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true)
+            {
+                Response.Redirect("OrderNotFound.aspx");
+            }
 
             if (!Page.IsPostBack)
             {

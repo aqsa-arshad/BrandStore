@@ -89,6 +89,9 @@ namespace AspDotNetStorefront
             GenreID = CommonLogic.QueryStringUSInt("GenreID");
             VectorID = CommonLogic.QueryStringUSInt("VectorID");
 
+            int IsProductExist = 0;
+
+
             String ActualSEName = string.Empty;
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
@@ -176,8 +179,23 @@ namespace AspDotNetStorefront
                     ProductName = DB.RSFieldByLocale(rs, "Name", ThisCustomer.LocaleSetting);
                     //Get Customer Funds/Blue BuksPoint and Set BluBuks Point on popup.1 is id for BluBuks
 
-                    //Apply fund
+                    
                     int pvariantid = AppLogic.GetProductsDefaultVariantID(ProductID);
+                    //Check if product already exist in shopping cart                  
+                    SqlParameter[] spa = {DB.CreateSQLParameter("@CustomerID", SqlDbType.Int, 4, ThisCustomer.CustomerID, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@ProductID", SqlDbType.Int, 4, ProductID, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@VariantID", SqlDbType.Int, 4, pvariantid, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@StoreID", SqlDbType.Int, 4, ThisCustomer.StoreID, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@IsExist", SqlDbType.Int, 4, null, ParameterDirection.Output)};
+                    IsProductExist = DB.ExecuteStoredProcInt("dbo.aspdnsf_IsProductExistsinShoppingCart", spa);
+                    hdnIsProductExist.Text = IsProductExist.ToString();
+                    hdnProductID.Text = ProductID.ToString();
+                    hdnVariantID.Text = pvariantid.ToString();
+                    hdnCustomerID.Text = ThisCustomer.CustomerID.ToString();
+
+                    //end check if product already exist in shopping cart
+
+                    //Apply fund
                     decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
                     hdnButtonName.Text = "AddToCartButton_" + ProductID + "_" + pvariantid;
                     hdncustomerlevel.Text = Convert.ToString(ThisCustomer.CustomerLevelID);
@@ -551,17 +569,19 @@ namespace AspDotNetStorefront
                     }
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
-                    {
-                        // HttpContext.Current.Session["btnAddtocart"] =  AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                        LiteralCustom.Text = m_PageOutputCustom + "<div>";
+                    {                        
+                            m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                            LiteralCustom.Text = m_PageOutputCustom + "<div>";                     
+                       
 
                     }
                 }
             }
             if (!this.IsPostBack)
             {
-                litOutput.Text = m_PageOutput;
+                  litOutput.Text = m_PageOutput;                 
+
+               
             }
 
             GetParentCategory();
@@ -619,6 +639,7 @@ namespace AspDotNetStorefront
 
         private void HandleKitUpdate()
         {
+            
             ThisCustomer.RequireCustomerRecord();
             AppLogic.ProcessKitForm(ThisCustomer, ProductID);
             if (CommonLogic.FormUSInt("CartRecID") > 0)
@@ -682,6 +703,33 @@ namespace AspDotNetStorefront
 
             }
             return true;
+        }
+         [System.Web.Services.WebMethod()]
+        public static bool IsProductExist(string PId, string VId, string SelectedColour, string SelectedSize,String CustomerID)
+        {
+            bool status = false;
+            if (SelectedColour.Equals("") || SelectedSize.Equals(""))
+            {
+                return false;
+            }
+            else
+            {               
+               
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                {
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS("SELECT productid From dbo.shoppingcart with (nolock) where ProductID = " + PId + " and VariantID = " + VId + "  and (ChosenColor = '" + SelectedColour + "' or ChosenColor='" + "0" + "')  and (ChosenSize='" + SelectedSize + "' or ChosenSize='" + "0" + "') and CustomerID = " + CustomerID, dbconn))
+                    {
+                        if (rs.Read())
+                        {
+                            status = true;
+                           
+                        }
+                    }
+                }               
+
+            }
+            return status;
         }
 
         private void HandleAddToCart()

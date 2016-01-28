@@ -1078,7 +1078,34 @@ namespace AspDotNetStorefrontAdmin
                 
                 #region Notify customer when Item is back in Stock
                 int c_SkinID = 3;
-                int minimumInventory=5;              
+                int minimumInventory=5;
+                Decimal price = 0;
+                String ProductName=String.Empty;
+                String pLink =String.Empty;
+                // get the price of product
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                {
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS("select price from ProductVariant where VariantID=" + vID, dbconn))
+                    {
+                        if (rs.Read())
+                        {
+                            price = DB.RSFieldDecimal(rs, "Price");
+                        }
+                    }
+                }
+                //get the product name for redirection to that product.
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                {
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS("select Name from Product where ProductID=" + pID, dbconn))
+                    {
+                        if (rs.Read())
+                        {
+                            ProductName = DB.RSField(rs, "Name");
+                        }
+                    }
+                }
                 if (CurrentInventory >= minimumInventory)
                 {
 
@@ -1092,7 +1119,9 @@ namespace AspDotNetStorefrontAdmin
                                 String EMail = DB.RSField(rs, "Email");
                                 String FromEMail = AppLogic.AppConfig("MailMe_OutOfStock");
                                 String PackageName = AppLogic.AppConfig("XmlPackage.OutOfStock");
-                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "VarientID=" + vID.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
+                                var currentURL = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "/");
+                                pLink = String.Format(currentURL.ToString()+"p-" + pID + "-" + ProductName.Replace("/", "") + ".aspx");
+                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "&VarientID=" + vID.ToString() + "&ProductName=" + ProductName.ToString() + "&price=" + String.Format("{0:C}", price)+"&productLink="+pLink, false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
                                 Boolean SendWasOk = true;
                                 if (SendWasOk)
                                 {
