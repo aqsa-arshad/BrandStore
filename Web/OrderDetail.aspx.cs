@@ -15,6 +15,7 @@ namespace AspDotNetStorefront
     /// </summary>
     public partial class OrderDetail : SkinBase
     {
+        private string trackingNumber = string.Empty;
         /// <summary>
         /// Used for the total of blu bucks used
         /// </summary>
@@ -250,6 +251,10 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value))
+                {
+                    trackingNumber = (e.Item.FindControl("hfShippingTrackingNumber") as HiddenField).Value;
+                }
                 (e.Item.FindControl("lblRegularPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfRegularPrice") as HiddenField).Value)));
                 (e.Item.FindControl("lblCreditPrice") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), (Convert.ToDecimal((e.Item.FindControl("hfCreditPrice") as HiddenField).Value)));
 
@@ -347,24 +352,13 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                (e.Item.FindControl("lblPackageNumber") as Label).Text = (e.Item.ItemIndex + 1).ToString() + ": ";
-                if ((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Contains("|"))
+                (e.Item.FindControl("lblPackageNumber") as Label).Text = (e.Item.ItemIndex + 1).ToString() + ": ";               
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingStatus") as HiddenField).Value) && (string.IsNullOrEmpty((e.Item.FindControl("hfTrackingNumber") as HiddenField).Value) && string.IsNullOrEmpty(trackingNumber)))
                 {
-                    var shippingMethodSplit = (e.Item.FindControl("hfShippingMethod") as HiddenField).Value.Split('|');
-                    (e.Item.FindControl("lblShippingMethod") as Label).Text = shippingMethodSplit[0];
+                    (e.Item.FindControl("lblShippingStatus") as Label).Text =
+                        (e.Item.FindControl("hfShippingStatus") as HiddenField).Value;
                 }
-                else
-                {
-                    if (((e.Item.FindControl("hfShippingMethod") as HiddenField).Value.CompareTo("Download:")) == 0)
-                    {
-                        (e.Item.FindControl("lblShippingMethod") as Label).Text = string.Empty;
-                    }
-                    else
-                    {
-                        (e.Item.FindControl("lblShippingMethod") as Label).Text =
-                            (e.Item.FindControl("hfShippingMethod") as HiddenField).Value;
-                    }
-                }
+
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfTrackingNumber") as HiddenField).Value))
                 {
                     (e.Item.FindControl("hlTrackItem") as HyperLink).Text =
@@ -379,12 +373,7 @@ namespace AspDotNetStorefront
                         (e.Item.FindControl("hlTrackItem") as HyperLink).Font.Underline = false;
                     }
                 }
-                if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingStatus") as HiddenField).Value))
-                {
-                    (e.Item.FindControl("lblShippingStatus") as Label).Text =
-                        (e.Item.FindControl("hfShippingStatus") as HiddenField).Value;
-                }
-
+                
             }
         }
     }

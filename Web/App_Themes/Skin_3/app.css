@@ -4921,6 +4921,14 @@ img {
   border-color: #1d446b;
   color: #1d446b;
 }
+.search-results-text {
+  margin-top: 60px;
+}
+@media screen and (min-width: 768px) {
+  .search-results-text {
+    margin-top: 0;
+  }
+}
 .profile-links {
   border-bottom: 1px solid #c0c0c0;
   display: block;
@@ -5359,7 +5367,7 @@ a:hover.mb-login-btn {
   margin: 0;
   background: transparent;
   float: left;
-  width: 114px;
+  width: 100%;
 }
 .trueblue-popup .content-box-03 h4 {
   display: none;
@@ -5373,9 +5381,9 @@ a:hover.mb-login-btn {
 .trueblue-popup .content-box-03 .row .col-md-6 {
   float: left !important;
   padding: 0;
+  width: 100%;
 }
 .trueblue-popup .content-box-03 .row .col-md-6 .call-to-action {
-  width: 100%;
   padding-left: 0;
   padding-right: 0;
   text-align: center;

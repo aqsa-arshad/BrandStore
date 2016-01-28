@@ -26,7 +26,7 @@
                             <span>
                                 <asp:Label ID="lblPackage" Text="Package" runat="server" />
                                 <asp:Label ID="lblPackageNumber" runat="server" />
-                                <asp:Label ID="lblShippingMethod" runat="server" />
+                                <%--<asp:Label ID="lblShippingMethod" runat="server" />--%>
                                 <asp:Label ID="lblShippingStatus" runat="server" />
                                 <asp:HyperLink ID="hlTrackItem" class="underline-link" Target="_blank" runat="server" />
                             </span>
@@ -103,7 +103,7 @@
                             <tr>
                                 <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
                                 <asp:HiddenField ID="hfBluBucks" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
-                                <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("SKU") %>' />
+                                <asp:HiddenField ID="hfSKU" runat="server" Value='<%# Eval("OrderedProductSKU") %>' />
                                 <asp:HiddenField ID="hfCategoryFundUsed" runat="server" Value='<%# Eval("CategoryFundUsed") %>' />
                                 <asp:HiddenField ID="hfBluBucksUsed" runat="server" Value='<%# Eval("BluBucksUsed") %>' />
                                 <asp:HiddenField ID="hfCreditPrice" runat="server" Value='<%# Eval("CreditPrice") %>' />
