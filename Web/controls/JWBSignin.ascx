@@ -7,7 +7,6 @@
             <div id="LoginPanel" runat="server">
                 <h4></h4>
                 <asp:Label class="blue-color" runat="server"> <aspdnsf:Topic ID="SignInInstructions" runat="server" TopicName="signinheading"  Visible="false" /></asp:Label>
-               
                 <label>
                     <asp:Label runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                 <asp:TextBox ID="EmailTextField" CssClass="form-control" runat="server" ValidationGroup="LoginGroup" MaxLength="100"
@@ -24,6 +23,7 @@
                     ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="PasswordTextField"></asp:RequiredFieldValidator>
                 <div class="checkbox">
                     <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" Font-Underline="true" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
+                    <div class="clearfix visible-xs"></div>
                     <label><asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>Remember me</label>
                 </div>
                 <br />

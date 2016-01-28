@@ -17,7 +17,7 @@ using AspDotNetStorefrontCore;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
-
+using System.Web.Services;
 namespace AspDotNetStorefront
 {
     /// <summary>
@@ -209,6 +209,7 @@ namespace AspDotNetStorefront
                             if (tempfund != null)
                             {
                                 hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                hdnFundName.Text = tempfund.FundName;
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                             }
                             else
@@ -217,6 +218,7 @@ namespace AspDotNetStorefront
                                 if (tempfund != null)
                                 {
                                     hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                    hdnFundName.Text = tempfund.FundName;
                                     productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
                                 }
                                 else
@@ -234,7 +236,9 @@ namespace AspDotNetStorefront
                             if (tempfund != null)
                             {
                                 hdnProductFundAmount.Text = tempfund.AmountAvailable.ToString();
+                                hdnFundName.Text = tempfund.FundName;
                                 productcategoryfund = Convert.ToDecimal(hdnProductFundAmount.Text);
+                                hdnProductFundID.Text = "2";
                             }
                             else
                             {
@@ -577,6 +581,7 @@ namespace AspDotNetStorefront
             //get fund BluBucks Percentage
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
+            ppercentage.InnerText = "You can pay for up to " + hdnBudgetPercentValue.Text + "% of this item's cost with BLU Bucks.";
             hdnProductCategoryID.Text = parentCategoryID.ToString();
             LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
             hdnInventory.Text = JsonConvert.SerializeObject(AppLogic.LstInventory);
@@ -632,6 +637,52 @@ namespace AspDotNetStorefront
                 }
             }
         }
+        [System.Web.Services.WebMethod()]
+        public static bool InsertCustomersToBeNotifiedInDB(string PId, string VId, string EId, string IId)
+        {
+            if (EId.Equals(null) || EId.Equals(""))
+            {
+                return false;
+            }
+            else
+            {
+                int Issent = 0;
+                bool status = false;
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                {
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + Convert.ToInt32(PId) + " and VarientID=" + Convert.ToInt32(VId)+"and InventoryID=" + Convert.ToInt32(IId) + " and Issent=0 and Email='" + EId + "'", dbconn))
+                    {
+                        if (rs.Read())
+                        {
+                            status = true;
+                            return false;
+                        }
+                    }
+                }
+                if (!status)
+                {
+                    using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
+                    {
+                        try
+                        {
+                            con.Open();
+                            DB.ExecuteSQL("Insert into CustomerNotification(ProductID,VarientID,InventoryID,Email,IsSent) values(" + Convert.ToInt32(PId) + "," + Convert.ToInt32(VId) + "," + Convert.ToInt32(IId) + ",'" + EId + "'," + Issent + ")");
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                            ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                            MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+                        }
+
+                    }
+                }
+
+            }
+            return true;
+        }
 
         private void HandleAddToCart()
         {
@@ -641,13 +692,16 @@ namespace AspDotNetStorefront
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
-
+            formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
             if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
+            {
                 formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
+                formInput.FundID = (int)FundType.SOFFunds;
+            }
             else
                 formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
 
-            formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
+           
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
             formInput.GLcode = txtGLcode.Text;
@@ -838,6 +892,23 @@ namespace AspDotNetStorefront
                 lstInventories.Where(inventory => inventory.Size == size)
                     .Select(inventory => int.Parse(inventory.Quantity) > 4 ? int.Parse(inventory.Quantity) : 0)
                     .FirstOrDefault();
+        }
+        [System.Web.Services.WebMethod]
+        public static string GetInventoryID(string color, string size, string varientID)
+        {
+            string InventoryID = "-1";
+            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+            {
+                dbconn.Open();
+                using (IDataReader rs = DB.GetRS("select InventoryID from Inventory where Color='" + color + "' and Size='" + size + "' and VariantID=" + Convert.ToInt32(varientID), dbconn))
+                {
+                    if (rs.Read())
+                    {
+                        InventoryID= DB.RSFieldInt(rs, "InventoryID").ToString();
+                    }
+                }
+            }
+            return InventoryID;
         }
 
         [System.Web.Services.WebMethod]

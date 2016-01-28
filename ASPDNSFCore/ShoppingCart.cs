@@ -8639,7 +8639,7 @@ namespace AspDotNetStorefrontCore
             }
 
             //Quantity DropDown
-            tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
+            tmpS.Append("<Span id=\"QtyDropDown\" class=\"select-quantity black-blu-label\">");
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
             {
                 if (RestrictedQuantities.Length == 0)
@@ -9679,7 +9679,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.AppendLine("<span id=\"buySAFE_Kicker\" name=\"buySAFE_Kicker\" type=\"" + AppLogic.AppConfig("BuySafe.KickerType") + "\"></span>");
                 tmpS.AppendLine("</div>");
             }
-            tmpS.Append("</div>");
+           // tmpS.Append("</div>");
 
             return tmpS.ToString();
         }

@@ -389,13 +389,15 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
                     <p runat="server" id="ppointscount" ClientIDMode="Static" >You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                    <p>Decide how many BLU Bucks you want to use to buy this item.</p>
+                      <p runat="server" id="ppercentage" ClientIDMode="Static">You can pay for up to XX% of this item's cost with BLU Bucks.</p>
 
                     <div class="form-group">
-                        <div class="col-xs-6 padding-none">
-                            <label class="roman-black">BLU Bucks used:</label>
+                        <div class="col-xs-12 padding-none">
+                            <label class="roman-black">BLU Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -405,13 +407,13 @@
                     </div>
 
                     <p class="label-text">
-                        <span class="roman-black">Total price using BLU Bucks:</span>
+                        <span class="roman-black">Price using BLU Bucks:</span>
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                      
-                            <asp:Button ID="btnaddtocart" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocart_Click" />
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                            <asp:Button ID="btnaddtocart" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocart_Click" />
+                           
                       
                     </div>
                 </div>
@@ -427,6 +429,8 @@
             <div class="modal-dialog modal-checkout" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                         <h5 class="text-uppercase-no">Apply sales funds to this item</h5>
                         <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
 
@@ -451,8 +455,7 @@
                             <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                         </p>
                         <div class="buttons-group">
-                              <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
-                            <asp:Button ID="Button2" CssClass="btn btn-primary" data-dismiss="modal" Text="Cancel" runat="server"  />
+                              <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-block btn-primary" Text="<%$ Tokens:StringResource,shoppingcart.cs.110 %>" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
                             
                             <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                         </div>
@@ -584,7 +587,7 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
 
@@ -607,7 +610,7 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
 
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
                // $("#hdnBluBucktsPoints").text(spblubucksprice.toFixed(2));
@@ -694,6 +697,10 @@
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+
+                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU Bucks.";
+                $("#ppercentage").text(blubuckspercent);
+
                 $("#txtGLcode").val("");              
                
                 
@@ -744,23 +751,23 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
-                }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(availableblubucksforthisitem)) {
                     alert("You exceed available BLU BUKS");
-                    //  $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2)).toFixed(2)
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val(availableblubucksforthisitem);
+                    $("#txtBluBuksUsed").trigger("focusout");
 
                     return false;
                 }
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                    alert("BLU BUKS cannot be greater than allowed limit");
+                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
+                    return false;
+                }                
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
-                    //  $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2))
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
                     return false;
                 }
                 else
@@ -775,7 +782,7 @@
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();//.replace("(FUND) discount: $", "");
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
                 spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$","");              
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU BUCKS used:", "");               
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");               
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 
                

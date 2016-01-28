@@ -5,12 +5,29 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+    <%--Thankyou POP UP Start here --%>
+    <div id="divThankyouPopUp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-checkout" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" id="Closebutton" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
+                    <h4 id="hNotification">Thank you!</h4>
+                    <p id="pNotification">
+                        You will receive an email when this item is back in stock.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" id="HiddenButton" class="btn btn-primary margin-none" data-toggle="modal" data-target="#divThankyouPopUp" style="display: none">Click me</button>
+    <%--Thankyou POP UP Start here --%>
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
-    <asp:Label ID="hdnInventory" name="hdnInventory" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />    
+    <asp:Label ID="hdnInventory" name="hdnInventory" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -22,20 +39,24 @@
     <asp:Label ID="hdnButtonName" name="hdnButtonName" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnproductactualprice" name="hdnproductactualprice" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdncustomerlevel" name="hdncustomerlevel" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnFundName" name="hdnFundName" runat="server" ClientIDMode="Static" Style="display: none" Text="" />
     <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <%--End Hidden Variables Region--%>
+
     <%-- Region Open Pop Up for bucckts--%>
     <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">True BLU(tm)</h5>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                    <p>Decide hom many BLU Bucks you want to use to buy this item.</p>
+                    <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU Bucks.</p>
 
                     <div class="form-group">
-                        <div class="col-xs-6 padding-none">
-                            <label class="roman-black">BLU Bucks used:</label>
+                        <div class="col-xs-12 padding-none">
+                            <label class="roman-black">BLU Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -45,14 +66,13 @@
                     </div>
 
                     <p class="label-text">
-                        <span class="roman-black">Total price using BLU Bucks:</span>
+                        <span class="roman-black">Price using BLU Bucks:</span>
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00</span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>
-
+                            <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                         </div>
                     </div>
                 </div>
@@ -68,6 +88,8 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h5 class="text-uppercase-no">Apply sales funds to this item</h5>
                     <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
 
@@ -85,6 +107,7 @@
                     </div>
 
                     <p class="label-text">
+
                         <span class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
@@ -101,13 +124,18 @@
         </div>
     </div>
 
+
     <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
-
             $("#pInStock").hide();
             $("#pOutofStock").hide();
-            var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());            
+            var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
+
+            if (inventoryArray.length >= 1) {
+                $("#divNotifyme").hide();
+                $("#divNotifymepopUp").hide();
+            }
 
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
@@ -127,7 +155,91 @@
             else {
                 $("#MCCategory6").addClass("active");
             }
+            //aqsa arshad code block starts here
+            $("#btnSubmit").click(function (e) {
+                document.getElementById('lblErrorMsg').style.display = 'none';
+                var IID = "-1";
+                if (inventoryArray.length > 1) {
+                    var psize = "";
+                    var pcolor = "";
+                    if ($("#Size_1_1").length > 0) {
+                        psize = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                        psize = psize.substring(0, psize.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
+                    if ($("#Color_1_1").length > 0) {
+                        pcolor = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        pcolor = pcolor.substring(0, pcolor.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
+                    var varientID = $("#hdnVarientId").val();
+                    if (psize != "-" && pcolor != "-") {
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/GetInventoryID",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "color": pcolor,
+                                "size": psize,
+                                "varientID": varientID
+                            }),
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {
+                                IID = result.d;
+                            }
+                        });
+                    }
+                    else {
+                        alert("please selct valid color and size");
+                        e.preventDefault();
+                        return false;
+                    }
+                }
 
+                var EID = $("#txtOutOfStock").val();
+                var PID = $("#hdnProductId").val();
+                var VID = $("#hdnVarientId").val();
+
+                if (EID == "" || EID == null) {
+                    document.getElementById('lblErrorMsg').style.display = 'block';
+                    e.preventDefault();
+                    return false;
+                }
+                else {
+                    var regex = /^[a-z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
+                    var flag = regex.test(EID);
+                    if (flag == true) {
+                        document.getElementById('lblErrorMsg').style.display = 'none';
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/InsertCustomersToBeNotifiedInDB",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "PId": PID,
+                                "VId": VID,
+                                "EId": EID,
+                                "IId": IID
+                            }),
+                            dataType: "json",
+                            async: true,
+                            success: function (result) {
+                                $("#HiddenButton").trigger("click");
+                            },
+                            error: function (result) {
+                                alert('error occured');
+                                alert(result.responseText);
+
+                            },
+                        });
+                    }
+                    else {
+                        document.getElementById('lblErrorMsg').style.display = 'block';
+                        e.preventDefault();
+                        return false;
+
+                    }
+                }
+            });
+            //aqsa arshad code block ends here
             var btnname = "#" + $("#hdnButtonName").text();
 
             $(btnname).click(function () {
@@ -219,6 +331,7 @@
             $("#btnaddtocart").click(function (e) {
                 debugger;
                 if (ApplyValidation(theForm)) {
+
                     debugger;
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
@@ -230,10 +343,8 @@
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
 
-
                     }
                     else if (customerlevel == 3 || customerlevel == 7) {
-
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -307,10 +418,17 @@
                                     $("#pInStock").show();
                                     $("#lblInStock").text(result.d);
                                     $("#pOutofStock").hide();
+                                    $("#QtyDropDown").show();
+                                    $("#divNotifyme").hide();
+                                    $("#divNotifymepopUp").hide();
                                 } else {
                                     $("#btnaddtocart").addClass("hide-element");
                                     $("#pInStock").hide();
-                                    $("#pOutofStock").show();
+                                    // $("#pOutofStock").show();       
+                                    $("#QtyDropDown").hide();
+                                    $("#divNotifyme").show();
+                                    $("#divNotifymepopUp").show();
+
                                 }
                             }
                         });
@@ -365,10 +483,16 @@
                                     $("#pInStock").show();
                                     $("#lblInStock").text(result.d);
                                     $("#pOutofStock").hide();
+                                    $("#QtyDropDown").show();
+                                    $("#divNotifyme").hide();
+                                    $("#divNotifymepopUp").hide();
                                 } else {
                                     $("#btnaddtocart").addClass("hide-element");
                                     $("#pInStock").hide();
-                                    $("#pOutofStock").show();
+                                    //$("#pOutofStock").show();
+                                    $("#QtyDropDown").hide();
+                                    $("#divNotifyme").show();
+                                    $("#divNotifymepopUp").show();
                                 }
                             }
                         });
@@ -382,7 +506,7 @@
             });
 
             $('input').keypress(function (e) {
-                var regex;
+                var regex = "";
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         event.preventDefault();
@@ -398,10 +522,10 @@
                     regex = new RegExp("^[0-9]+$");
                 }
 
-
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if (regex.test(str)) {
                     return true;
+
                 }
 
                 e.preventDefault();
@@ -425,7 +549,7 @@
                 }
                 $("#hdnpricewithfund").text(updatedtotalprice);
                 $("#spprice").text("$" + updatedtotalprice.toFixed(2));
-                $("#sppricewithfund").html("<font>Price with FUND credit: $</font>" + updatedtotalprice.toFixed(2));
+                $("#sppricewithfund").html("<font>Price with " + $("#hdnFundName").text() + " credit: $</font>" + updatedtotalprice.toFixed(2));
 
             }
 
@@ -461,7 +585,8 @@
             }
             function applyproductcategoryfund() {
                 $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
-                $("#sppricewithfund").html("<font>Price with FUND credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
+
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
                 var customerlevel = $("#hdncustomerlevel").text();
@@ -470,7 +595,11 @@
 
                 }
                 else {
-                    $("#sppricewithfund").removeClass("hide-element");
+                    if (parseFloat($("#hdnProductFundAmount").text()) > 0)
+                        $("#sppricewithfund").removeClass("hide-element");
+                    else
+                        $("#sppricewithfund").addClass("hide-element");
+
                 }
             }
 
@@ -526,7 +655,7 @@
                         return (false);
                     }
                 } else {
-                    //Shehriyar's Code Start
+                    //Shehriyar's Code Start                      
                     var sel_color;
                     if ($("#Color_1_1").length <= 0) {
                         sel_color = "";
@@ -549,9 +678,9 @@
                         dataType: "json",
                         async: true,
                         success: function (result) {
-                            if (result > 0) {
-                                $("#spInStock").removeClass("hide-element");
-                                $("#lblInStock").text = result;
+                            if (result.d.toString() != '0') {
+                                $("#pInStock").show();
+                                $("#lblInStock").text(result.d);
 
                                 if (typeof (sel_size) == 'undefined') sel_size = '';
                                 if (typeof (sel_color) == 'undefined') sel_color = '';
@@ -606,9 +735,7 @@
 
                 submitenabled(theForm);
                 return (true);
-            }
-
-            function GetControlValue(id) {
+            }            function GetControlValue(id) {
                 var CustomerLevelElemment;
                 if (document.getElementById(id)) {
                     CustomerLevelElemment = document.getElementById(id);

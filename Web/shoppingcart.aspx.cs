@@ -285,9 +285,7 @@ namespace AspDotNetStorefront
             hdnliteraturefundamount.Text = getfundamount(Convert.ToInt32(FundType.LiteratureFunds));
             hdnpopfundamount.Text = getfundamount(Convert.ToInt32(FundType.POPFunds));
             //end get all funds amount of customer          
-            hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();
-
-
+            hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();           
 
 
 
