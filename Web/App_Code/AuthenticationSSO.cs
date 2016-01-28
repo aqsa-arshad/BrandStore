@@ -71,10 +71,11 @@ namespace AspDotNetStorefront
                 }
                 else if (isCustomerAvailable) // If User is not Authenticated by Okta then Update local Customer object if exist
                 {
-                    SqlParameter sp = new SqlParameter("@IsRegistered", System.Data.SqlDbType.TinyInt);
-                    sp.Value = 0;
-                    SqlParameter[] spa = { sp };
-                    thisCustomer.UpdateCustomer(spa);
+                    //SqlParameter sp = new SqlParameter("@IsRegistered", System.Data.SqlDbType.TinyInt);
+                    //sp.Value = 0;
+                    //SqlParameter[] spa = { sp };
+                    //thisCustomer.UpdateCustomer(spa);
+                    return new Customer("");
                 }
             }
             catch (Exception ex)
