@@ -10,15 +10,7 @@
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
-    <asp:Label ID="hdnInventory" name="hdnInventory" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-
-    <asp:Label ID="hdnProductId" name="hdnProductId" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnTrackInventoryByColor" name="hdnTrackInventoryByColor" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnTrackInventoryBySize" name="hdnTrackInventoryBySize" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnSkuSuffix" name="hdnSkuSuffix" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnSizesMaster" name="hdnSizesMaster" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnColorsMaster" name="hdnColorsMaster" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-
+    <asp:Label ID="hdnInventory" name="hdnInventory" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />    
     <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnProductFundAmountUsed" name="hdnProductFundAmountUsed" EnableViewState="true" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -115,20 +107,7 @@
 
             $("#pInStock").hide();
             $("#pOutofStock").hide();
-            alert($("#hdnInventory").text());
-            var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
-            //$.ajax({
-            //    type: "post",
-            //    url: "showproduct.aspx/GetInventoryList",
-            //    contentType: "application/json; charset=utf-8",
-            //    dataType: "json",
-            //    async: true,
-            //    success: function (result) {
-            //        inventoryArray = $.parseJSON(result.d);
-            //        console.log(inventoryArray);
-            //        console.log(inventoryArray.length);
-            //    }
-            //});
+            var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());            
 
             if ('<%=parentCategoryID%>' == "1") {
                 $("#MCCategory1").addClass("active");
@@ -238,7 +217,7 @@
             }
             //end area for pop up for sales rep
             $("#btnaddtocart").click(function (e) {
-
+                debugger;
                 if (ApplyValidation(theForm)) {
                     debugger;
                     var btnname = "#" + $("#hdnButtonName").text();
@@ -304,40 +283,43 @@
             $("#Color_1_1").change(function () {
                 debugger;
                 if (inventoryArray.length > 1) {
-                    if ($("#Size_1_1").length > 0) {
-                        var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                        sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                        var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    //if ($("#Size_1_1").length > 0) {
+                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
 
-                        if (sel_size != "-" && sel_color != "-") {
-                            $.ajax({
-                                type: "post",
-                                url: "showproduct.aspx/GetQuantity",
-                                contentType: "application/json; charset=utf-8",
-                                data: JSON.stringify({
-                                    "color": sel_color,
-                                    "size": sel_size,
-                                    "lstInventories": inventoryArray
-                                }),
-                                dataType: "json",
-                                async: true,
-                                success: function (result) {
-                                    console.log(result.d);
-                                    if (result.d.toString() != '0') {
-                                        $("#btnaddtocart").removeClass("hide-element");
-                                        $("#pInStock").show();
-                                        $("#lblInStock").text(result.d);
-                                        $("#pOutofStock").hide();
-                                    } else {
-                                        $("#btnaddtocart").addClass("hide-element");
-                                        $("#pInStock").hide();
-                                        $("#pOutofStock").show();
-                                    }
+                    if (sel_size != "-" && sel_color != "-") {
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/GetQuantity",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "color": sel_color,
+                                "size": sel_size,
+                                "lstInventories": inventoryArray
+                            }),
+                            dataType: "json",
+                            async: true,
+                            success: function (result) {
+                                if (result.d.toString() != '0') {
+                                    $("#btnaddtocart").removeClass("hide-element");
+                                    $("#pInStock").show();
+                                    $("#lblInStock").text(result.d);
+                                    $("#pOutofStock").hide();
+                                } else {
+                                    $("#btnaddtocart").addClass("hide-element");
+                                    $("#pInStock").hide();
+                                    $("#pOutofStock").show();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
+                    else {
+                        $("#pInStock").hide();
+                        $("#pOutofStock").hide();
+                    }
+                    //}
                 }
             });
             //End
@@ -356,46 +338,46 @@
                 //Shehriyar's Code
 
                 if (inventoryArray.length > 1) {
-                    if ($("#Color_1_1").length > 0) {
-                        var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                        sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                        var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                    var sel_color;
+                    if ($("#Color_1_1").length <= 0) {
+                        sel_color = "";
+                    } else {
+                        sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
                         sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-
-                        if (sel_size != "-" && sel_color != "-") {
-                            $.ajax({
-                                type: "post",
-                                url: "showproduct.aspx/GetQuantity",
-                                contentType: "application/json; charset=utf-8",
-                                data: JSON.stringify({
-                                    "color": sel_color,
-                                    "size": sel_size,
-                                    "lstInventories": inventoryArray
-                                }),
-                                dataType: "json",
-                                async: true,
-                                success: function (result) {
-                                    console.log(result.d);
-                                    if (result.d.toString() != '0') {
-                                        $("#btnaddtocart").removeClass("hide-element");
-                                        $("#pInStock").show();
-                                        $("#lblInStock").text(result.d);
-                                        $("#pOutofStock").hide();
-                                    } else {
-                                        $("#btnaddtocart").addClass("hide-element");
-                                        $("#pInStock").hide();
-                                        $("#pOutofStock").show();
-                                    }
-                                },
-                                error: function (result) {
-                                    alert('error occured');
-                                    alert(result.responseText);
-
-                                },
-                            });
-                        }
+                    }
+                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    if (sel_size != "-" && sel_color != "-") {
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/GetQuantity",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "color": sel_color,
+                                "size": sel_size,
+                                "lstInventories": inventoryArray
+                            }),
+                            dataType: "json",
+                            async: true,
+                            success: function (result) {
+                                if (result.d.toString() != '0') {
+                                    $("#btnaddtocart").removeClass("hide-element");
+                                    $("#pInStock").show();
+                                    $("#lblInStock").text(result.d);
+                                    $("#pOutofStock").hide();
+                                } else {
+                                    $("#btnaddtocart").addClass("hide-element");
+                                    $("#pInStock").hide();
+                                    $("#pOutofStock").show();
+                                }
+                            }
+                        });
+                    } else {
+                        $("#pInStock").hide();
+                        $("#pOutofStock").hide();
                     }
                 }
+
                 //End 
             });
 
@@ -501,6 +483,9 @@
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
                     alert("Please specify the quantity you want to add to your cart");
+                    $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                    $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                    $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                     theForm.Quantity_1_1.focus();
                     submitenabled(theForm);
                     return (false);
@@ -511,6 +496,9 @@
                     sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                     if (theForm.Size_1_1.selectedIndex < 1) {
                         alert("Please select a size.");
+                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                         theForm.Size_1_1.focus();
                         submitenabled(theForm);
                         return (false);
@@ -521,6 +509,9 @@
                     sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                     if (theForm.Color_1_1.selectedIndex < 1) {
                         alert("Please select a color.");
+                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                         theForm.Color_1_1.focus();
                         submitenabled(theForm);
                         return (false);
@@ -535,11 +526,16 @@
                         return (false);
                     }
                 } else {
-                    //Shehriyar's Code Start                      
+                    //Shehriyar's Code Start
+                    var sel_color;
+                    if ($("#Color_1_1").length <= 0) {
+                        sel_color = "";
+                    } else {
+                        sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    }
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
                     sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
 
                     $.ajax({
                         type: "post",
@@ -601,7 +597,7 @@
                                     return (false);
                                 }
                             } else {
-                                $("#spOutofStock").removeClass("hide-element");
+                                $("#pOutofStock").hide();
                             }
                         }
                     });

@@ -8292,6 +8292,9 @@ namespace AspDotNetStorefrontCore
 
             StringBuilder tmpS = new StringBuilder(10000);
             tmpS.Append("<div class='form add-to-cart-form' id='" + FormName + "'>\n");
+
+            //TODO: Commented because same Javascript is created in GetAddToCartFormCustom function 
+
             //tmpS.Append("<script type=\"text/javascript\" Language=\"JavaScript\">\n<!--\n");
             //tmpS.Append("var VariantMinimumQty_" + ProductID.ToString() + "_" + VariantID.ToString() + " = " + MinimumQuantity.ToString() + ";\n");
             //tmpS.Append("var SelectedVariantInventory_" + "1".ToString() + "_" + "1".ToString() + " = " + inv.ToString() + ";\n");
@@ -8557,14 +8560,8 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
             }
 
-
-
-            tmpS.Append("<p id=\"pInStock\"><span class=\"black-blu-label\"><font>In Stock: </font><label runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"/></span></p>");
+            tmpS.Append("<p id=\"pInStock\"><span class=\"black-blu-label\"><font>In Stock: </font><label class=\"blue-color\" runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"/></span></p>");
             tmpS.Append("<p id=\"pOutofStock\"><span class=\"notify \">Out of Stock</span></p>");
-
-
-
-
 
             //Colors Alternative
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
@@ -8640,13 +8637,6 @@ namespace AspDotNetStorefrontCore
                     tmpS.Append("</select>");
                 }
             }
-
-            //if (inv > 4)
-            //{
-            //    tmpS.Append("<p><span class=\"black-blu-label\"><font>In stock: </font>" + inv + "</span></p>");
-            //}
-
-
 
             //Quantity DropDown
             tmpS.Append("<Span class=\"select-quantity black-blu-label\">");
@@ -9138,39 +9128,20 @@ namespace AspDotNetStorefrontCore
                     first = false;
                 }
                 tmpS.Append(");\n");
-            }
-            //if (ProtectInventory && InventoryControlList.Length != 0)
-            //{
-            //    bool first = true;
-            //    foreach (String s in InventoryControlList.Split('|'))
-            //    {
-            //        if (first)
-            //        {
-            //            tmpS.Append("var board" + boardSuffix + " = new Array(");
-            //        }
-            //        else
-            //        {
-            //            tmpS.Append(",");
-            //        }
-            //        String[] ivals = s.Split(',');
-            //        tmpS.Append("new Array('" + ivals[0].Replace("'", "").Trim() + "','" + ivals[1].Replace("'", "").Trim() + "','" + ivals[2].Replace("'", "").Trim() + "')");
-            //        first = false;
-            //    }
-            //    tmpS.Append(");\n");
-            //}
+            }            
 
             tmpS.Append("function " + FormName + "_Validator(theForm)\n");
             tmpS.Append("	{\n");
             tmpS.Append("	submitonce(theForm);\n");
 
-            //Shehriyar Uncommented
+            //TODO: UnCommented code down below for the creation of js just one time
+ 
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
             {
                 //tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < 1)\n", ProductID, VariantID); // convert form val to integer
                 tmpS.AppendFormat("	if ((theForm.Quantity_{0}_{1}.value*1) < 1)\n", "1", "1"); // convert form val to integer
                 tmpS.Append("	{\n");
                 tmpS.Append("		alert(\"" + AppLogic.GetString("common.cs.84", SkinID, LocaleSetting) + "\");\n");
-                //tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", ProductID, VariantID);
                 tmpS.AppendFormat("		theForm.Quantity_{0}_{1}.focus();\n", "1", "1");
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
@@ -9190,11 +9161,9 @@ namespace AspDotNetStorefrontCore
 
             if (SizesMaster.Length != 0 && !AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
             {
-                //tmpS.AppendFormat("	if (theForm.Size_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
                 tmpS.AppendFormat("	if (theForm.Size_{0}_{1}.selectedIndex < 1)\n", "1", "1");
                 tmpS.Append("	{\n");
                 tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.71", SkinID, LocaleSetting), SizeOptionPrompt.ToLowerInvariant()) + "\");\n");
-                //tmpS.AppendFormat("		theForm.Size_{0}_{1}.focus();\n", ProductID, VariantID);
                 tmpS.AppendFormat("		theForm.Size_{0}_{1}.focus();\n", "1", "1");
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
@@ -9202,11 +9171,9 @@ namespace AspDotNetStorefrontCore
             }
             if (ColorsMaster.Length != 0 && !AppLogic.AppConfigBool("AutoSelectFirstSizeColorOption"))
             {
-                //tmpS.AppendFormat("	if (theForm.Color_{0}_{1}.selectedIndex < 1)\n", ProductID, VariantID);
                 tmpS.AppendFormat("	if (theForm.Color_{0}_{1}.selectedIndex < 1)\n", "1", "1");
                 tmpS.Append("	{\n");
                 tmpS.Append("		alert(\"" + String.Format(AppLogic.GetString("common.cs.71", SkinID, LocaleSetting), ColorOptionPrompt.ToLowerInvariant()) + "\");\n");
-                //tmpS.AppendFormat("		theForm.Color_{0}_{1}.focus();\n", ProductID, VariantID);
                 tmpS.AppendFormat("		theForm.Color_{0}_{1}.focus();\n", "1", "1");
                 tmpS.Append("		submitenabled(theForm);\n");
                 tmpS.Append("		return (false);\n");
@@ -9363,7 +9330,7 @@ namespace AspDotNetStorefrontCore
                 }
                 if (SizesMaster.Length == 0)
                 {
-                    tmpS.AppendFormat("<input type=\"hidden\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" value=\"\">\n", ProductID, VariantID);
+                    tmpS.AppendFormat("<input type=\"hidden\" name=\"Size_{0}_{1}\" id=\"Size_{0}_{1}\" value=\"\">\n", "1", "1");
                 }
             }
             if (AppLogic.AppConfigBool("ShowPreviousPurchase") && AppLogic.Owns(ProductID, ThisCustomer.CustomerID))

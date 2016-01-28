@@ -5375,7 +5375,7 @@ a:hover.mb-login-btn {
   padding: 0;
 }
 .trueblue-popup .content-box-03 .row .col-md-6 .call-to-action {
-  width: 112px;
+  width: 100%;
   padding-left: 0;
   padding-right: 0;
   text-align: center;
@@ -6457,7 +6457,7 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 768px) {
   .shopping-cart-fix {
-    height: 104px;
+    height: 108px;
     overflow: hidden;
     margin-bottom: 0;
   }

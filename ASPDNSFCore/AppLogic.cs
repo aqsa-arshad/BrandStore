@@ -39,7 +39,6 @@ namespace AspDotNetStorefrontCore
     {
 
         public static List<Inventory> LstInventory = new List<Inventory>();
-        //public static string LstInventory = string.Empty;
 
         static public int NumProductsInDB = 0; // set to # of products in the db on Application_Start. Not updated thereafter
         static public bool CachingOn = false;  // set to true in Application_Start if AppConfig:CacheMenus=true
