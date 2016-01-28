@@ -50,10 +50,7 @@ namespace AspDotNetStorefront
 
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
-
-            Customer ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
-            // who is logged in now viewing this page:
-
+                        
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
             {
@@ -75,6 +72,7 @@ namespace AspDotNetStorefront
             {
                 Response.Redirect("OrderNotFound.aspx");
             }
+
             if (!Page.IsPostBack)
             {
                 GetOrderInfo();
