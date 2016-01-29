@@ -222,6 +222,9 @@ namespace AspDotNetStorefrontAdmin
                 int c_SkinID = 3;
                 int minimumInventory = 5, InventoryID = 0;
                 Decimal price = 0;
+                String ImageFileNameOvrride = String.Empty;
+                String ImageName = String.Empty;
+                String Sku = String.Empty;
                 if (inventory >= minimumInventory)
                 {
                     String ProductName = string.Empty;
@@ -261,6 +264,26 @@ namespace AspDotNetStorefrontAdmin
                             }
                         }
                     }
+                    // get the image name 
+                    using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                    {
+                        dbconn.Open();
+                        using (IDataReader rs = DB.GetRS("select ImageFilenameOverride,SKU from Product where ProductID=" + pID, dbconn))
+                        {
+                            if (rs.Read())
+                            {
+                                ImageFileNameOvrride = DB.RSField(rs, "ImageFilenameOverride");
+                                Sku = DB.RSField(rs, "SKU");
+                            }
+                        }
+                    }
+                    ImageName = AppLogic.LookupImage("Product", pID, ImageFileNameOvrride, Sku, "icon", c_SkinID, ThisCustomer.LocaleSetting);
+                    int startIndex = ImageName.LastIndexOf('/');
+                    if (startIndex != -1)
+                    {
+                        int length = ImageName.Length - 1;
+                        ImageName = ImageName.Substring(startIndex + 1);
+                    }
                     using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                     {
                         dbconn.Open();
@@ -272,8 +295,9 @@ namespace AspDotNetStorefrontAdmin
                                 String FromEMail = AppLogic.AppConfig("MailMe_OutOfStock");
                                 String PackageName = AppLogic.AppConfig("XmlPackage.OutOfStock");
                                 var currentURL = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "/");
+                                String ImageFullPath = String.Format(currentURL.ToString() + ImageName.Substring(1));
                                 String pLink = String.Format(currentURL.ToString() + "p-" + pID + "-" + ProductName.Replace("/", "") + ".aspx");
-                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "&VarientID=" + VariantId.ToString() + "&ProductName=" + ProductName.ToString() + "&price=" + String.Format("{0:C}", price) + "&productLink=" + pLink, false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
+                                AppLogic.SendOutOfStockMail(AppLogic.AppConfig("StoreName") + " " + AppLogic.GetString("OutOfStock.aspx.6", c_SkinID, ThisCustomer.LocaleSetting), AppLogic.RunXmlPackage(PackageName, null, ThisCustomer, c_SkinID, string.Empty, "productID=" + pID.ToString() + "&VarientID=" + VariantId.ToString() + "&ProductName=" + ProductName.ToString() + "&price=" + String.Format("{0:C}", price) + "&productLink=" + pLink + "&ImagePath=" + ImageFullPath.ToString(), false, false), true, FromEMail, FromEMail, EMail, EMail, "", AppLogic.MailServer());
                                 Boolean SendWasOk = true;
                                 if (SendWasOk)
                                 {
