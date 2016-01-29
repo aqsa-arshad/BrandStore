@@ -130,8 +130,8 @@
     <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#pInStock").hide();
-            $("#pOutofStock").hide();
+            //$("#pInStock").hide();
+            //$("#pOutofStock").hide();
             var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
 
                     if (inventoryArray.length >= 1) {

@@ -65,6 +65,19 @@ namespace AspDotNetStorefront
                 lstTrackingInformation.ForEach(x => x.ShippingStatus = GetShippingStatus(order.OrderNumber,order.ShippedOn.ToString()) + ": ");
 
                 lstTrackingInformation.ForEach(x => x.TrackingURL = GetTrackingURL(x.TrackingNumber, x.ShippingMethod) + ": ");
+
+                if (!string.IsNullOrEmpty(order.ShippingTrackingNumber))
+                {
+                    lstTrackingInformation.Add(new TrackingInformation()
+                    {
+                        OrderNumber = order.OrderNumber.ToString(),
+                        TrackingNumber = order.ShippingTrackingNumber,
+                        CarrierCode = string.Empty,
+                        ShippingMethod = order.ShippingMethod + ": ",
+                        ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()) + ": ",
+                        TrackingURL = GetTrackingURL(order.ShippingTrackingNumber, order.ShippingMethod)
+                    });                   
+                }
             }
             else
             {
