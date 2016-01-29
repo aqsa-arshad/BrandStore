@@ -278,12 +278,6 @@ namespace AspDotNetStorefrontAdmin
                         }
                     }
                     ImageName = AppLogic.LookupImage("Product", pID, ImageFileNameOvrride, Sku, "icon", c_SkinID, ThisCustomer.LocaleSetting);
-                    int startIndex = ImageName.LastIndexOf('/');
-                    if (startIndex != -1)
-                    {
-                        int length = ImageName.Length - 1;
-                        ImageName = ImageName.Substring(startIndex + 1);
-                    }
                     using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                     {
                         dbconn.Open();
