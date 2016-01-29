@@ -732,7 +732,7 @@
                 
                 }
                
-               
+              
             
                 var customerlevel = $("#hdncustomerlevel").text();               
                 applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
@@ -740,6 +740,17 @@
                 // $("#txtBluBuksUsed").val("0.00");
                 $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
+                spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
+                var availableblubucksforthisitem = spblubucksprice.toFixed(2);
+
+                var maxfundlimit = newpricetotal * (Number.parseFloat(BluBucksPercentage) / 100)
+                $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
+
+                applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem);
+                var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
+                $("#spprice").text("$" + updatedprice.toFixed(2));
+                $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
 
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
@@ -773,6 +784,7 @@
             function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem) {
                 
                 var maxfundlimit = newpricetotal * (Number.parseFloat(BluBucksPercentage) / 100)
+                
                
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
@@ -781,17 +793,17 @@
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(availableblubucksforthisitem);
                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
-                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
+                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                     
                    // $("#txtBluBuksUsed").trigger("focusout");
 
                     return false;
                 }
-                else if (parseInt($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {                    
                     alert("BLU BUKS cannot be greater than allowed limit");
-                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
-                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
+                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                   
                   //  $("#txtBluBuksUsed").trigger("focusout");
                     return false;
@@ -800,7 +812,7 @@
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
-                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
+                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                    
                    // $("#txtBluBuksUsed").trigger("focusout");
                     return false;
@@ -821,22 +833,22 @@
                 }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(availableblubucksforthisitem)) {
                     $("#txtBluBuksUsed").val(availableblubucksforthisitem);                    
-                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
+                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                    
                     // $("#txtBluBuksUsed").trigger("focusout");                  
 
                     return false;
                 }
-                else if (parseInt($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));                    
-                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
+                else if (parseFloat($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
+                    $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
+                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                    
                     //  $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));                    
-                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
+                    applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                    
                     // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;

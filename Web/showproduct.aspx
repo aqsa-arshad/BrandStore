@@ -390,6 +390,7 @@
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                     $("#spprice").text($("#spprice").text().replace("$", "")- $("#txtBluBuksUsed").val());
                     applyblubuksvalidation2();
+                   
                     $("#txtBluBuksUsed").trigger("focusout");
  
 
@@ -689,9 +690,9 @@
 
                     return false;
                 }
-                else if (parseInt($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                else if (parseFloat($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
-                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                    // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }               
@@ -709,8 +710,8 @@
 
                             var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                             $("#spprice").text("$" + updatedprice.toFixed(2));
-                            var maxfundlimit = $("#spprice").text().replace("$", "") * (parseFloat($("#hdnBudgetPercentValue").text()) / 100)
-
+                            var maxfundlimit = $("#spprice").text().replace("$", "") * (parseFloat($("#hdnBudgetPercentValue").text()) / 100);
+                            
                             if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                                 return false;
                             }
@@ -721,13 +722,13 @@
 
                                 return false;
                             }
-                            else if (parseInt($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit.toFixed(2))) {                               
-                                $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                           else  if (parseFloat($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {                               
+                                $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                                     applyblubuksvalidation2();
                               //  $("#txtBluBuksUsed").trigger("focusout");                  
                                 return false;
                             }               
-                            else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {                               
+                          else  if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {                               
                                 $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
                                 applyblubuksvalidation2();
                                // $("#txtBluBuksUsed").trigger("focusout");                  
