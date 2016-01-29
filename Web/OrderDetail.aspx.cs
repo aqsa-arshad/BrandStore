@@ -52,7 +52,7 @@ namespace AspDotNetStorefront
 
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
-                        
+
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
             {
@@ -62,7 +62,7 @@ namespace AspDotNetStorefront
 
             // are we allowed to view?
             // if currently logged in user is not the one who owns the order, and this is not an admin user who is logged in, reject the view:
-            if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser)
+            if (ThisCustomer.CustomerID != OrderCustomerID && !ThisCustomer.IsAdminUser && !IsSubordinateDealer(OrderCustomerID))
             {
                 Response.Redirect("OrderNotFound.aspx");
             }
@@ -88,6 +88,66 @@ namespace AspDotNetStorefront
         }
 
         /// <summary>
+        /// IsSubordinateDealer
+        /// </summary>
+        /// <param name="OrderCustomerID">OrderCustomerID</param>
+        /// <returns>Status</returns>
+        private bool IsSubordinateDealer(int OrderCustomerID)
+        {
+            if (!ThisCustomer.HasSubordinates)
+                return false;
+
+            string accountId = Request.QueryString["AccountId"];
+            bool flag = false;
+
+            if (!string.IsNullOrEmpty(accountId))
+            {
+                List<SFDCSoapClient.Contact> lstContact = AuthenticationSSO.GetSubordinateDealers(accountId);
+                List<int> lstCustomerId = new List<int>();
+
+                if (lstContact.Count > 0)
+                {
+                    foreach (SFDCSoapClient.Contact contact in lstContact)
+                    {
+                        if (OrderCustomerID == GetCustomerIdbyContactId(contact.Id))
+                        {
+                            flag = true;
+                            hplPrintReceipt.Visible = false;
+                            hplReOrder.Visible = false;
+                        }
+                    }
+                }
+            }
+
+            return flag;
+        }
+
+        /// <summary>
+        /// GetCustomerIdbyContactId
+        /// </summary>
+        /// <param name="contactId">contactId</param>
+        /// <returns>customerId</returns>
+        private int GetCustomerIdbyContactId(string contactId)
+        {
+            int customerId = 0;
+            using (var conn = DB.dbConn())
+            {
+                conn.Open();
+                var query = "select CustomerId from Customer where SFDCQueryParam = '" + contactId.Trim() + "' OR SFDCQueryParam = '" + contactId.Trim().Substring(0, contactId.Length - 3) + "'";
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    IDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        int.TryParse(reader["CustomerId"].ToString(), out customerId);
+                    }
+                }
+                return customerId;
+            }
+        }
+
+        /// <summary>
         /// Gets the order information.
         /// </summary>
         void GetOrderInfo()
@@ -106,6 +166,7 @@ namespace AspDotNetStorefront
                         if (reader.Read())
                         {
                             lblOrderNumber.Text = reader["OrderNumber"].ToString();
+                            hplPrintReceipt.NavigateUrl = "OrderReceipt.aspx?ordernumber=" + lblOrderNumber.Text.Trim();
                             lblOrderDate.Text = Localization.ConvertLocaleDate(reader["OrderDate"].ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting);
                             //Billing Address
                             lblBAFullName.Text = reader["BillingFirstName"].ToString() + ' ' +
@@ -142,7 +203,7 @@ namespace AspDotNetStorefront
                             lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTotal"]));
 
                             SetPageHeading(int.Parse(reader["CustomerID"].ToString()), reader["FirstName"].ToString(), reader["LastName"].ToString());
-                            
+
                             for (var i = 2; i < 7; i++)
                             {
                                 if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
@@ -380,7 +441,7 @@ namespace AspDotNetStorefront
         {
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                (e.Item.FindControl("lblPackageNumber") as Label).Text = (e.Item.ItemIndex + 1).ToString() + ": ";               
+                (e.Item.FindControl("lblPackageNumber") as Label).Text = (e.Item.ItemIndex + 1).ToString() + ": ";
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfShippingStatus") as HiddenField).Value) && (string.IsNullOrEmpty((e.Item.FindControl("hfTrackingNumber") as HiddenField).Value) && string.IsNullOrEmpty(trackingNumber)))
                 {
                     (e.Item.FindControl("lblShippingStatus") as Label).Text =
@@ -401,7 +462,7 @@ namespace AspDotNetStorefront
                         (e.Item.FindControl("hlTrackItem") as HyperLink).Font.Underline = false;
                     }
                 }
-                
+
             }
         }
     }
