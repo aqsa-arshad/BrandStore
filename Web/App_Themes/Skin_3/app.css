@@ -5233,6 +5233,7 @@ a:hover.mb-login-btn {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
+  filter: none;
   background-color: #fff !important;
 }
 .nav .open > a,
@@ -6060,6 +6061,7 @@ table.order-detail tbody tr td {
 .side-bar .blu-bucks .well {
   background: none;
   box-shadow: none;
+  filter: none;
 }
 .login-box h4 {
   text-align: center;
@@ -6464,7 +6466,7 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 768px) {
   .fix-landing-content {
-    height: 115px;
+    height: 95px;
     overflow: hidden;
   }
 }
