@@ -133,8 +133,8 @@
     <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#pInStock").hide();
-            $("#pOutofStock").hide();
+            //$("#pInStock").hide();
+            //$("#pOutofStock").hide();
             var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
 
                     if (inventoryArray.length >= 1) {
@@ -674,28 +674,29 @@
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
-                }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#hdnBluBucktsPoints").text())) {
                     alert("You exceed available BLU BUKS");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
+                    $("#txtBluBuksUsed").trigger("focusout");
 
+                    return false;
+                }
+                else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat(maxfundlimit)) {
+                    alert("BLU BUKS cannot be greater than allowed limit");
+                    $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
                     return false;
                 }
                 else if (parseFloat($("#txtBluBuksUsed").val()) > parseFloat($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than product price");
-                    // $("#txtBluBuksUsed").val(maxfundlimit.toFixed(2));
-                    $("#txtBluBuksUsed").val("0.00");
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
+                    $("#txtBluBuksUsed").trigger("focusout");
                     return false;
                 }
                 else
                     return true;
             }
+
             function applyproductcategoryfund() {
                     $("#spprice").text("$" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
                     $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + parseFloat($("#hdnpricewithfund").text()).toFixed(2));
