@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/App_Templates/Skin_3/JeldWenTemplate.master" AutoEventWireup="true" CodeFile="JWDealersOrderHistory.aspx.cs" Inherits="AspDotNetStorefront.JWDealersOrderHistory" %>
+
 <%@ Import Namespace="AspDotNetStorefrontCore" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="PageContent">
@@ -15,56 +16,75 @@
                             </span>
                             <span>
                                 <font><asp:Label ID="lblCustomerLevelHeading" runat="server" Text="<%$ Tokens:StringResource,CustomerLevelHeading%>"/></font>
-                                <asp:Label runat="server" ID="lblCustomerLevel"></asp:Label>
+                                <asp:Label runat="server" ID="lblTierLevel"></asp:Label>
                             </span>
                         </p>
                     </div>
                     <div class="col-md-6">
                         <p class="label-text">
-                            <asp:Repeater ID="rptAllCustomerFunds" runat="server">
-                                <ItemTemplate>
-                                    <span>
-                                        <font><asp:Label runat="server" Text='<%# Eval("FundName") %>'></asp:Label></font>
-                                        <asp:Label runat="server" Text='<%# String.Format("{0:C}", Eval("AmountAvailable")) %>'></asp:Label>
-                                    </span>
-                                </ItemTemplate>
-                            </asp:Repeater>
+                            <span>
+                                <font><asp:Label ID="lblDirectMailFundsHeading" runat="server" Text="<%$ Tokens:StringResource,DirectMailFundsHeading%>"></asp:Label></font>
+                                <asp:Label ID="lblDirectMailFunds" runat="server"></asp:Label>
+                            </span>
+                            <span>
+                                <font><asp:Label ID="lblDisplayFundsHeading" runat="server" Text="<%$ Tokens:StringResource,DisplayFundsHeading%>"></asp:Label></font>
+                                <asp:Label ID="lblDisplayFunds" runat="server"></asp:Label>
+                            </span>
+                            <span>
+                                <font><asp:Label ID="lblLiteratureFundsHeading" runat="server" Text="<%$ Tokens:StringResource,LiteratureFundsHeading%>"></asp:Label></font>
+                                <asp:Label ID="lblLiteratureFunds" runat="server"></asp:Label>
+                            </span>
+                            <span>
+                                <font><asp:Label ID="lblPOPFundsHeading" runat="server" Text="<%$ Tokens:StringResource,POPFundsHeading%>"></asp:Label></font>
+                                <asp:Label ID="lblPOPFunds" runat="server"></asp:Label>
+                            </span>
                         </p>
                     </div>
                 </div>
-                <div class="top-row-adjsut border-line"></div>
+                <div class="border-line"></div>
             </asp:Panel>
             <div>
+                <asp:HiddenField ID="hfAccountId" runat="server" />
                 <asp:HiddenField ID="hfCustomerID" runat="server" />
                 <table class="table">
                     <tbody>
                         <asp:Repeater ID="rptOrderhistory" runat="server">
-                            <ItemTemplate>
+                            <HeaderTemplate>
                                 <tr class="table-row">
                                     <td class="td-20-percent">
                                         <span class="normal-heading black-color">
                                             <asp:Label ID="lblOrderNumber" runat="server" Text="<%$ Tokens:StringResource,account.aspx.36 %>" />
                                         </span>
-                                        <%# DataBinder.Eval(Container.DataItem, "OrderNumber").ToString() %>
-                                        <a class="underline-link" href='<%#m_StoreLoc + "OrderDetail.aspx?ordernumber=" + DataBinder.Eval(Container.DataItem, "OrderNumber") %>'>View Detail</a>
                                     </td>
                                     <td class="td-25-percent">
                                         <span class="normal-heading black-color">
                                             <asp:Label ID="lblOrderDate" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>" />
                                         </span>
-                                        <%#Localization.ConvertLocaleDate(DataBinder.Eval(Container.DataItem, "OrderDate").ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting)%>
                                     </td>
                                     <td class="td-25-percent">
                                         <span class="normal-heading black-color">
                                             <asp:Label ID="lblPayment" runat="server" Text="<%$ Tokens:StringResource,account.aspx.39%>" />
                                         </span>
-                                        Total: $<%# Math.Round(Convert.ToDecimal(DataBinder.Eval(Container.DataItem, "OrderTotal")), 2).ToString() %>
-                                        <%--<%#GetPaymentStatus(DataBinder.Eval(Container.DataItem, "PaymentMethod").ToString(), DataBinder.Eval(Container.DataItem, "CardNumber").ToString(), DataBinder.Eval(Container.DataItem, "TransactionState").ToString(), DataBinder.Eval(Container.DataItem, "OrderTotal").ToString())%>--%>
                                     </td>
                                     <td class="td-30-percent">
                                         <span class="normal-heading black-color">
                                             <asp:Label ID="lblStatus" runat="server" Text="Username" />
                                         </span>
+                                    </td>
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <tr class="table-row">
+                                    <td class="td-20-percent">
+                                        <%# DataBinder.Eval(Container.DataItem, "OrderNumber").ToString() %>
+                                        <a class="underline-link" href='<%#m_StoreLoc + "OrderDetail.aspx?ordernumber=" + DataBinder.Eval(Container.DataItem, "OrderNumber") + "&AccountId=" + hfAccountId.Value %>'>View Detail</a>
+                                    </td>
+                                    <td class="td-25-percent">
+                                        <%#Localization.ConvertLocaleDate(DataBinder.Eval(Container.DataItem, "OrderDate").ToString(), Localization.GetDefaultLocale(), ThisCustomer.LocaleSetting)%>
+                                    </td>
+                                    <td class="td-25-percent">
+                                        Total: $<%# Math.Round(Convert.ToDecimal(DataBinder.Eval(Container.DataItem, "OrderTotal")), 2).ToString() %>
+                                    </td>
+                                    <td class="td-30-percent">
                                         <asp:Label ID="lblUsername" runat="server" Text='<%# Eval("Username") %>'></asp:Label>
                                     </td>
                                 </tr>

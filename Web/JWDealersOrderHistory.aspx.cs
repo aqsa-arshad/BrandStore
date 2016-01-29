@@ -53,11 +53,12 @@ namespace AspDotNetStorefront
                             if (customerId != 0 && !lstCustomerId.Contains(customerId))
                                 lstCustomerId.Add(customerId);
                         }
-                        //pnlFundsInformation.Visible = true;
-                        //GetCustomerFunds(customer.CustomerID, customer.CustomerLevelID, customer.CustomerLevelName);
+                        pnlFundsInformation.Visible = true;
+                        GetAccountFunds(lstContact.FirstOrDefault());
                         ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY FOR " + lstContact[0].Account.Name;
                     }
                     hfCustomerID.Value = string.Join(",", lstCustomerId);
+                    hfAccountId.Value = accountId;
                     GetOrders(1, hfCustomerID.Value);
                 }
             }
@@ -94,34 +95,14 @@ namespace AspDotNetStorefront
         /// <param name="customerID">CustomerID</param>
         /// <param name="customerLevelID">CustomerLevelID</param>
         /// <param name="customerLevelName">CustomerLevelName</param>
-        private void GetCustomerFunds(int customerID, int customerLevelID, string customerLevelName)
+        private void GetAccountFunds(SFDCSoapClient.Contact contact)
         {
-            lblCustomerLevel.Text = customerLevelName;
-            List<CustomerFund> lstCustomerFund = AuthenticationSSO.GetCustomerFund(customerID, false);
-
-            if (AuthenticationSSO.IsInternalUser(customerLevelID))
-            {
-                lstCustomerFund.RemoveAll(x => x.FundID != (int)FundType.SOFFunds);
-                lblBluBucksHeading.Visible = false;
-                lblBluBucks.Visible = false;
-            }
-            else if (AuthenticationSSO.IsDealerUser(customerLevelID))
-            {
-                if (AuthenticationSSO.IsTrueBluDealerUser(customerLevelID))
-                {
-                    decimal BLUBucks = lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks) != null ? lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks).AmountAvailable : 0;
-                    lblBluBucks.Text = Math.Round(BLUBucks, 2).ToString();
-                }
-                else
-                {
-                    lblBluBucksHeading.Visible = false;
-                    lblBluBucks.Visible = false;
-                }
-                lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.BLUBucks);
-                lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);
-            }
-            rptAllCustomerFunds.DataSource = lstCustomerFund;
-            rptAllCustomerFunds.DataBind();
+            lblTierLevel.Text = contact.Account.TrueBLUStatus__c;
+            lblBluBucks.Text = String.Format("{0:C}", contact.Account.Co_op_budget__c);
+            lblDirectMailFunds.Text = String.Format("{0:C}", contact.Account.Direct_Marketing_Funds__c);
+            lblDisplayFunds.Text = String.Format("{0:C}", contact.Account.Display_Funds__c);
+            lblLiteratureFunds.Text = String.Format("{0:C}", contact.Account.Literature_Funds__c);
+            lblPOPFunds.Text = String.Format("{0:C}", contact.Account.POP_Funds__c);            
         }
 
         /// <summary>
