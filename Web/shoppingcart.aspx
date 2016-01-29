@@ -746,7 +746,7 @@
 
                 var maxfundlimit = newpricetotal * (Number.parseFloat(BluBucksPercentage) / 100)
                 $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
-
+                applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
                 applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem);
                 var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
