@@ -754,7 +754,7 @@
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
 
-                var maxfundlimit = newpricetotal * ( Math.round(BluBucksPercentage) / 100)
+                var maxfundlimit = Math.round(newpricetotal * (Math.round(BluBucksPercentage) / 100));
 
                 $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                 applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
@@ -818,6 +818,7 @@
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
+                    
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
