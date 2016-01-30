@@ -83,10 +83,10 @@ namespace AspDotNetStorefront
                 var lstTrackingInformationCount = 0;
                 foreach (var trackingInfo in lstTrackingInformation)
                 {
+                    lstTrackingInformationCount++;
                     if (lstTrackingInformationCount > lstTrackingInformation.Count - 1)
                         break;
-                    tempLstTrackingInformation.Add(trackingInfo);
-                    lstTrackingInformationCount++;
+                    tempLstTrackingInformation.Add(trackingInfo);                    
                 }
                 lstTrackingInformation = tempLstTrackingInformation;
             }

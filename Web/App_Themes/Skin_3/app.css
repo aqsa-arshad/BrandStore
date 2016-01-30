@@ -5230,6 +5230,12 @@ a:hover.mb-login-btn {
 .navbar-inverse .navbar-nav {
   margin: 0;
 }
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  filter: none;
+  background-color: #fff !important;
+}
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
@@ -5557,7 +5563,7 @@ a:hover.mb-login-btn {
 }
 @media screen and (min-width: 768px) {
   .checkout-two-fields .select-list {
-    width: 35%;
+    width: 40%;
     margin-right: 5px;
   }
 }
@@ -6055,6 +6061,7 @@ table.order-detail tbody tr td {
 .side-bar .blu-bucks .well {
   background: none;
   box-shadow: none;
+  filter: none;
 }
 .login-box h4 {
   text-align: center;
@@ -6459,7 +6466,7 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 768px) {
   .fix-landing-content {
-    height: 95px;
+    height: 115px;
     overflow: hidden;
   }
 }

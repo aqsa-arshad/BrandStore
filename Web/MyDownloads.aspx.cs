@@ -77,7 +77,7 @@ namespace AspDotNetStorefront
             if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
                 (e.Item.FindControl("hlDownload") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
-                (e.Item.FindControl("hlDownload") as HyperLink).Text = "Download";                   
+                (e.Item.FindControl("hlDownload") as HyperLink).Text = "Download";
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +

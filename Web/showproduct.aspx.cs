@@ -210,13 +210,13 @@ namespace AspDotNetStorefront
                         {
                             BluBuksPoints = CustomerFunds.Find(x => x.FundID == 1).AmountAvailable.ToString();
                             hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
-                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU(tm) Bucks you can use to purchase items.";
+                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU™ Bucks you can use to purchase items.";
                         }
                         else
                         {
                             BluBuksPoints = "0".ToString();
                             hdnBluBucktsPoints.Text = Math.Round(Convert.ToDecimal(BluBuksPoints), 2).ToString();
-                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU(tm) Bucks you can use to purchase items.";
+                            ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(BluBuksPoints), 2) + " BLU™ Bucks you can use to purchase items.";
                         }
 
                         //Category Fund
@@ -298,7 +298,7 @@ namespace AspDotNetStorefront
                     {
                         hdnpricewithfund.Text = productprice.ToString();
                         hdnBluBucktsPoints.Text = "0";
-                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU(tm) Bucks you can use to purchase your items.";
+                        ppointscount.InnerText = "You have " + Math.Round(Convert.ToDecimal(0.00), 2) + " BLU™ Bucks you can use to purchase your items.";
                     }
 
                     CategoryHelper = AppLogic.LookupHelper("Category", 0);
@@ -601,7 +601,7 @@ namespace AspDotNetStorefront
             //get fund BluBucks Percentage
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(parentCategoryID));
             hdnBudgetPercentValue.Text = FundPercentage.BudgetPercentageValue.ToString();
-            ppercentage.InnerText = "You can pay for up to " + hdnBudgetPercentValue.Text + "% of this item's cost with BLU Bucks.";
+            ppercentage.InnerText = "You can pay for up to " + hdnBudgetPercentValue.Text + "% of this item's cost with BLU™ Bucks.";
             hdnProductCategoryID.Text = parentCategoryID.ToString();
             LstInventories = JsonConvert.SerializeObject(AppLogic.LstInventory);
             hdnInventory.Text = JsonConvert.SerializeObject(AppLogic.LstInventory);

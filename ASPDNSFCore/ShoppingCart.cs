@@ -9537,7 +9537,7 @@ namespace AspDotNetStorefrontCore
             else
             {
                 // render normal html button
-                tmpS.AppendFormat(" <input type=\"button\" data-dismiss=\"modal\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting));
+                tmpS.AppendFormat(" <input type=\"button\" data-dismiss=\"modal\" id=\"AddToCartButton_{0}_{1}\" name=\"AddToCartButton_{0}_{1}\" class=\"btn btn-primary btn-block call-to-action add-to-cart-button\" value=\"{2}\">", ProductID, VariantID, "APPLY");//AppLogic.GetString("AppConfig.CartButtonPrompt", SkinID, LocaleSetting)
                
             }
 
