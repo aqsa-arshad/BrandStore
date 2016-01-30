@@ -378,7 +378,7 @@
                 
                 if (ApplyValidation(theForm)) {
 
-                   
+
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
                     if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
@@ -386,13 +386,13 @@
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
 
-                   
-                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
-                    $("#spprice").text($("#spprice").text().replace("$", "")- $("#txtBluBuksUsed").val());
-                    applyblubuksvalidation2();
-                   
-                    $("#txtBluBuksUsed").trigger("focusout");
- 
+
+                        $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
+                        $("#spprice").text($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val());
+                        applyblubuksvalidation2();
+
+                        $("#txtBluBuksUsed").trigger("focusout");
+
 
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
@@ -404,15 +404,22 @@
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
                         $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
-                       
+
                         $("#btnaddtocart").attr("data-toggle", "modal");
-                        $("#btnaddtocart").attr("data-target", "#myModal1");                        
-                   
-                      
+                        $("#btnaddtocart").attr("data-target", "#myModal1");
+
+
                     }
                     else {
                         $(btnname).trigger("click");
                     }
+                }
+                else {
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
+                    $("#spprice").text($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val());
+                    applyblubuksvalidation2();
+                   
+                    $("#txtBluBuksUsed").trigger("focusout");
                 }
             });
 
