@@ -362,7 +362,6 @@
 
             //end area for pop up for sales rep
             $("#btnaddtocart").click(function (e) {
-
                 if (checkifproductalreadyexists()) {
                     $("#palreadyexist").removeClass("hide-element");
                     $("#palreadyexist").html("<span class=\"notify\">Product with selected options already exists in cart,Please go to shopping cart and update quantity or select different option.</span>");
@@ -375,10 +374,7 @@
                     $("#palreadyexist").addClass("hide-element");
                 }
 
-
                 if (ApplyValidation(theForm)) {
-
-
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
                     if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text())>0)) {
@@ -386,17 +382,14 @@
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
 
-
                         $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                         $("#spprice").text($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val());
                         applyblubuksvalidation2();
 
                         $("#txtBluBuksUsed").trigger("focusout");
 
-
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
-
                     }
                     else if ((customerlevel == 3 || customerlevel == 7)) {
 
@@ -407,8 +400,6 @@
 
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModal1");
-
-
                     }
                     else {
                         $(btnname).trigger("click");
@@ -436,8 +427,6 @@
                     sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
                     sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                 }
-
-
 
                 var ProductID = $("#hdnProductID").text();
                 var VariantID = $("#hdnVariantID").text();
@@ -476,9 +465,7 @@
                         }
                     });
                 }
-
                 return exist;
-
             }
 
             //Set product price  to show on pupup
@@ -518,7 +505,6 @@
 
             //Shehriyar's Code
             $("#Color_1_1").change(function () {
-
                 if (inventoryArray.length > 1) {
                     //if ($("#Size_1_1").length > 0) {
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
@@ -569,7 +555,6 @@
             //End
 
             $("#Size_1_1").change(function () {
-
                 var customerlevel = $("#hdncustomerlevel").text();
                 if (customerlevel == 1 || customerlevel == 8) {
                     $("#sppricewithfund").addClass("hide-element");
@@ -775,7 +760,7 @@
             }
 
             function ApplyValidation(theForm) {
-
+                debugger;
                 if ($("#Quantity_1_1").length <= 0) {
                     submitenabled(theForm);
                     return (true);
