@@ -381,7 +381,7 @@
 
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
-                    if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
+                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text())>0)) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -398,7 +398,7 @@
                         $("#btnaddtocart").attr("data-target", "#myModa2");
 
                     }
-                    else if (customerlevel == 3 || customerlevel == 7) {
+                    else if ((customerlevel == 3 || customerlevel == 7)) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));

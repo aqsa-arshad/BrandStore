@@ -1502,6 +1502,7 @@ namespace AspDotNetStorefrontControls
             List<int> quantities = cItem.RestrictedQuantities;
             string defaultSelectedValue = DELETE_QTY;
             cboQuantity.ID = "txtQuantity";
+            cboQuantity.CssClass = "item-quantity";
             // cboQuantity.Items.Add(new ListItem(DELETE_QTY, "0"));
             foreach (int qty in quantities)
             {
