@@ -458,6 +458,9 @@ namespace AspDotNetStorefront
                     btnContinueCheckout.Text = AppLogic.GetString("checkoutshipping.aspx.19", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 }
                 FreeShippingMsg.Text = Reason;
+                //Added by tayyab in case of free shipping
+                btnContinueCheckout.Enabled = true;
+                btnContinueCheckout.Visible = true;
             }
 
             Addresses addrs = new Addresses();
