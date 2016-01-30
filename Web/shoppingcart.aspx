@@ -754,7 +754,7 @@
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
 
-                var maxfundlimit = newpricetotal * ( Math.round(BluBucksPercentage) / 100)
+                var maxfundlimit = Math.round(newpricetotal * (Math.round(BluBucksPercentage) / 100));
 
                 $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                 applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem);
@@ -763,23 +763,27 @@
                 var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
 
                 $("#spprice").text("$" + updatedprice.toFixed(2));
-                $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
-
+                $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));                
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
                         
                         PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                     }
                     else {
-                        
-                        
-                        $(".lnkUpdateItem").attr("data-toggle", "modal");
-                        $(".lnkUpdateItem").attr("data-target", "#myModa2");
+                     
+                        if (Math.round(availableblubucksforthisitem) > 0) {//if user have blubucks then show popup otherwise not
+                            $(".lnkUpdateItem").attr("data-toggle", "modal");
+                            $(".lnkUpdateItem").attr("data-target", "#myModa2");
+                        }
+                        else {
+                            PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
+                            $("#btnaddtocart").trigger("click");
+                        }
                        
                     }
                 }
                 else if (customerlevel == 3 || customerlevel == 7) {
-                   
+
                     //bind link update to sof fund opup/internal user
                     //$("#spproductcategoryfundused").text($("#hdnProductFundAmountUsed").text());
                     $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
@@ -787,9 +791,10 @@
                     $(".lnkUpdateItem").attr("data-toggle", "modal");
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
                 }
-                else
-                PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
-                // $("#btnaddtocart").trigger("click");
+                else {
+                    PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
+                    $("#btnaddtocart").trigger("click");
+                }
 
 
             });
@@ -813,6 +818,7 @@
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
+                    
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
