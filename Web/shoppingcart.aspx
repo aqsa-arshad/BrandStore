@@ -712,7 +712,7 @@
             });
 
             $(".lnkUpdateItem").click(function () {
-               
+                debugger;
                 var id = $(this).attr("id");
                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
                 $("#hdntoreplace").text(toreplace);
@@ -743,7 +743,8 @@
                
               
             
-                var customerlevel = $("#hdncustomerlevel").text();               
+               var customerlevel = $("#hdncustomerlevel").text();
+               
                 applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
                 
                 // $("#txtBluBuksUsed").val("0.00");
