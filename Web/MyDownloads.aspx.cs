@@ -78,22 +78,10 @@ namespace AspDotNetStorefront
             {
                 (e.Item.FindControl("hlDownload") as HyperLink).NavigateUrl = (e.Item.FindControl("hfDownloadLocation") as HiddenField).Value;
                 (e.Item.FindControl("hlDownload") as HyperLink).Text = "Download";
-                //if ((e.Item.FindControl("hfSKU") as HiddenField).Value != null)
-                //{
-                //    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
-                //                                                          (e.Item.FindControl("hfSKU") as HiddenField)
-                //                                                              .Value;
-                //}
-                if ((e.Item.FindControl("hfDescription") as HiddenField).Value != null)
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfSKU") as HiddenField).Value))
                 {
-                    if ((e.Item.FindControl("hfDescription") as HiddenField).Value.Length > 60)
-                        (e.Item.FindControl("lblDescription") as Label).Text = (e.Item.FindControl("hfDescription") as HiddenField)
-                                                                              .Value.Take(60).Aggregate("", (x, y) => x + y) + " ...";
-                    else
-                    {
-                        (e.Item.FindControl("lblDescription") as Label).Text =
-                            (e.Item.FindControl("hfDescription") as HiddenField).Value;
-                    }
+                    (e.Item.FindControl("lblProductSKU") as Label).Text = "SKU: " +
+                                                                          (e.Item.FindControl("hfSKU") as HiddenField).Value;
                 }
             }
         }

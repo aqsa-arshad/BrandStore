@@ -3224,33 +3224,52 @@ function popupzoom(url,alturl)
         }
 
         public string NotifyMeButton(String sProductID, String sVariantID)
-        {            
-            StringBuilder result = new StringBuilder(3000);
-            //result.Append("<br/>");
-            result.Append("<div id=\"divNotifyme\" class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
-            result.Append("<div id=\"divNotifymepopUp\" class=\"buttons-group\">");
-            result.Append("<button type=\"button\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa3\">Notify Me</button>");
-            result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
-            result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
-            result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
-            result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
-            result.Append("<button type=\"button\" id=\"Closebtn\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" >");
-            result.Append("<img src=\"App_Themes/Skin_3/images/close-popup.png\" alt=\"Close\">");
-            result.Append("</button>");
-            result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
-            result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
-            result.Append("<input type=\"hidden\" id=\"hdnProductId\" value=" + sProductID + " />");
-            result.Append("<input type=\"hidden\" id=\"hdnVarientId\" value=" + sVariantID + " />");
-            result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
-            result.Append("<input class=\"form-control\" id=\"txtOutOfStock\" type=\"text\" ");
-            if (ThisCustomer.IsAuthenticated)
+        {
+            bool showNotifymeButton = false;
+            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
-                result.Append("value=" + ThisCustomer.EMail);
+                dbconn.Open();
+                using (IDataReader rs = DB.GetRS("select showBuyButton from Product where ProductID=" + sProductID, dbconn))
+                {
+                    if (rs.Read())
+                    {
+                        showNotifymeButton = DB.RSFieldBool(rs, "showBuyButton");
+                    }
+                }
             }
-            result.Append("> </div>");
-            result.Append("<label class=\"error-large\" ID=\"lblErrorMsg\" style=\"display:none\">Plase enter a valid email address</label>");
-            result.Append("<button type=\"button\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
-            result.Append("</div> </div> </div> </div> </div>");            
+            StringBuilder result = new StringBuilder(3000);
+            if (showNotifymeButton)
+            {
+                result.Append("<div id=\"divNotifyme\" class=\"select-quantity\">  <span class=\"notify\">Out of Stock</span> </div>");
+                result.Append("<div id=\"divNotifymepopUp\" class=\"buttons-group\">");
+                result.Append("<button type=\"button\" class=\"btn btn-primary margin-none\" data-toggle=\"modal\" data-target=\"#myModa3\"");
+                result.Append(">Notify Me</button>");
+                result.Append("<label class=\"stock-message\"> when this item is back in stock.</label> </div>");
+                result.Append("<div style=\"display: none;\" class=\"modal fade\" id=\"myModa3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">");
+                result.Append("<div class=\"modal-dialog modal-checkout\" role=\"document\">");
+                result.Append("<div class=\"modal-content\"> <div class=\"modal-body\">");
+                result.Append("<button type=\"button\" id=\"Closebtn\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" >");
+                result.Append("<img src=\"App_Themes/Skin_3/images/close-popup.png\" alt=\"Close\">");
+                result.Append("</button>");
+                result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
+                result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
+                result.Append("<input type=\"hidden\" id=\"hdnProductId\" value=" + sProductID + " />");
+                result.Append("<input type=\"hidden\" id=\"hdnVarientId\" value=" + sVariantID + " />");
+                result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
+                result.Append("<input class=\"form-control\" id=\"txtOutOfStock\" type=\"text\" ");
+                if (ThisCustomer.IsAuthenticated)
+                {
+                    result.Append("value=" + ThisCustomer.EMail);
+                }
+                result.Append("> </div>");
+                result.Append("<label class=\"error-large\" ID=\"lblErrorMsg\" style=\"display:none\">Plase enter a valid email address</label>");
+                result.Append("<button type=\"button\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
+                result.Append("</div> </div> </div> </div> </div>");
+            }
+            else
+            {
+                result.Append("</div>");
+            }
             return result.ToString();
         }
 

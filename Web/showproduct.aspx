@@ -24,7 +24,7 @@
     <%--Thankyou POP UP Start here --%>
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
-
+       
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
@@ -44,8 +44,8 @@
     <asp:Label ID="hdnIsProductExist" name="hdnIsProductExist" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <asp:Label ID="hdnProductID" name="hdnProductID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnVariantID" name="hdnVariantID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-    <asp:Label ID="hdnCustomerID" name="hdnCustomerID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+     <asp:Label ID="hdnVariantID" name="hdnVariantID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+     <asp:Label ID="hdnCustomerID" name="hdnCustomerID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <%--End Hidden Variables Region--%>
 
     <%-- Region Open Pop Up for bucckts--%>
@@ -53,15 +53,15 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
-                    <h4 class="text-uppercase-no">APPLY BLU BUCKS</h4>
-                    <p runat="server" id="ppointscount">You have XXXXXX BLU(tm) Bucks you can use to purchase items.</p>
-                    <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU Bucks.</p>
+                    <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
+                     <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
 
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
-                            <label class="roman-black">BLU Bucks to be applied:</label>
+                            <label class="roman-black">BLU™ Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -71,13 +71,13 @@
                     </div>
 
                     <p class="label-text">
-                        <span class="roman-black">Price using BLU Bucks:</span>
+                        <span class="roman-black">Price using BLU™ Bucks:</span>
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00</span>
                     </p>
                     <div class="buttons-group trueblue-popup">
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
-                            <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
+                           <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
                     <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
@@ -117,9 +117,9 @@
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-
+                       
                         <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="APPLY" runat="server" />
-
+                       
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
                 var PID = $("#hdnProductId").val();
                 var VID = $("#hdnVarientId").val();
                 
-                if (EID == "" || EID == null) {
+                if (EID == "" || EID == null || EID.length>40) {
                     document.getElementById('lblErrorMsg').style.display = 'block';
                     e.preventDefault();
                     return false;
@@ -649,12 +649,12 @@
                 }
                 else if ($(this).attr('id') == "Quantity_1_1") {
                     regex = new RegExp("^[0-9]+$");
-
+             
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                 if(regex!=="")
                 {
-                    if (regex.test(str)) {
-                        return true;
+                if (regex.test(str)) {
+                    return true;
                     }
 else
 {
