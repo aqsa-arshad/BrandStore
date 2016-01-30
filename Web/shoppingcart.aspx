@@ -663,7 +663,7 @@
             }
            
             $('input').keypress(function (e) {
-               
+                debugger;
                 var regex;
                 var id = $(this).attr('id');
                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
@@ -671,17 +671,19 @@
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep")
                 {                  
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
-                        event.preventDefault();
+                        return false;
+                        //event.preventDefault();
                     }
 
                     var text = $(this).val();
 
                     if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && (event.which != 0 && event.which != 8) && ($(this)[0].selectionStart >= text.length - 2)) {
-                        event.preventDefault();
+                        return false;
+                        //event.preventDefault();
                     }
                 }
                 else if (id == "txtQuantity") {
-                    regex = new RegExp("^[0-9]+$");
+                    regex = new RegExp("^[0-9\b]+$");
                 }
 
                 var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -689,10 +691,14 @@
                     if (regex.test(str)) {
                         return true;
                     }
+
+                    else {
+                        e.preventDefault();
+                        return false;
+                    }
                 }
                 
-                e.preventDefault();
-                return false;
+              
             });
 
             $("#txtBluBuksUsed").keypress(function (evt) {

@@ -24,7 +24,7 @@
     <%--Thankyou POP UP Start here --%>
     <asp:Panel runat="server">
         <asp:Literal ID="litOutput" runat="server"></asp:Literal>
-       
+
     </asp:Panel>
     <%--Hidden Variables Regions--%>
 
@@ -44,8 +44,8 @@
     <asp:Label ID="hdnIsProductExist" name="hdnIsProductExist" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnquantity" name="hdnquantity" EnableViewState="true" ViewStateMode="Enabled" Autopostbox="false" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
     <asp:Label ID="hdnProductID" name="hdnProductID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-     <asp:Label ID="hdnVariantID" name="hdnVariantID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-     <asp:Label ID="hdnCustomerID" name="hdnCustomerID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnVariantID" name="hdnVariantID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnCustomerID" name="hdnCustomerID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <%--End Hidden Variables Region--%>
 
     <%-- Region Open Pop Up for bucckts--%>
@@ -53,11 +53,11 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
-                     <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
+                    <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
 
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
@@ -77,7 +77,7 @@
                     <div class="buttons-group trueblue-popup">
                         <div>
                             <asp:Literal ID="LiteralCustom" runat="server"></asp:Literal>
-                           <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
+                            <%-- <button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
                     <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
@@ -117,9 +117,9 @@
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                       
+
                         <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="APPLY" runat="server" />
-                       
+
                     </div>
                 </div>
             </div>
@@ -134,28 +134,28 @@
             //$("#pOutofStock").hide();
             var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
 
-                    if (inventoryArray.length >= 1) {
-                        $("#divNotifyme").hide();
-                        $("#divNotifymepopUp").hide();
-                    }
+            if (inventoryArray.length >= 1) {
+                $("#divNotifyme").hide();
+                $("#divNotifymepopUp").hide();
+            }
 
             //Check if product exist
             if (($("#Size_1_1").length > 0 || $("#Color_1_1").length > 0)) {
-                        
+
                 if ($("#hdnIsProductExist").text() == "1") {
-                    
+
                 }
                 else {
                     $("#btnaddtocart").removeClass("hide-element");
                     $("#btnShoppingcart").addClass("hide-element");
-                }                             
+                }
             }
-            else {                
-                if ($("#hdnIsProductExist").text() == "1") {                    
+            else {
+                if ($("#hdnIsProductExist").text() == "1") {
                     $("#btnaddtocart").addClass("hide-element");
                     $("#btnShoppingcart").removeClass("hide-element");
                     $("#palreadyexist").removeClass("hide-element");
-                    $("#QtyDropDown").addClass("hide-element"); 
+                    $("#QtyDropDown").addClass("hide-element");
                 }
                 else {
                     $("#btnaddtocart").removeClass("hide-element");
@@ -164,8 +164,8 @@
             }
             //end check
 
-            $("#btnShoppingcart").click(function () {              
-                window.location.href ="ShoppingCart.aspx";
+            $("#btnShoppingcart").click(function () {
+                window.location.href = "ShoppingCart.aspx";
 
             });
 
@@ -215,7 +215,7 @@
                             }),
                             dataType: "json",
                             async: false,
-                            success: function (result) {     
+                            success: function (result) {
                                 IID = result.d;
                             }
                         });
@@ -230,8 +230,8 @@
                 var EID = $("#txtOutOfStock").val();
                 var PID = $("#hdnProductId").val();
                 var VID = $("#hdnVarientId").val();
-                
-                if (EID == "" || EID == null || EID.length>40) {
+
+                if (EID == "" || EID == null || EID.length > 40) {
                     document.getElementById('lblErrorMsg').style.display = 'block';
                     e.preventDefault();
                     return false;
@@ -306,7 +306,7 @@
             });
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
-               
+
                 $("#spprice").text("$" + $("#hdnpricewithcategoryfundapplied").text());
                 $("#hdncurrentrecordid").text();
                 //  var currentrecordid = $("#hdncurrentrecordid").text();
@@ -359,10 +359,10 @@
                     return true;
                 }
             }
-           
+
             //end area for pop up for sales rep
             $("#btnaddtocart").click(function (e) {
-               
+
                 if (checkifproductalreadyexists()) {
                     $("#palreadyexist").removeClass("hide-element");
                     $("#palreadyexist").html("<span class=\"notify\">Product with selected options already exists in cart,Please go to shopping cart and update quantity or select different option.</span>");
@@ -375,7 +375,7 @@
                     $("#palreadyexist").addClass("hide-element");
                 }
 
-                
+
                 if (ApplyValidation(theForm)) {
 
 
@@ -418,30 +418,27 @@
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                     $("#spprice").text($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val());
                     applyblubuksvalidation2();
-                   
+
                     $("#txtBluBuksUsed").trigger("focusout");
                 }
             });
 
-            function checkifproductalreadyexists()
-            {
+            function checkifproductalreadyexists() {
                 var exist = false;
                 var sel_size = '0';
-                var sel_color ='0';
-                if ($("#Size_1_1").length > 0)
-                {
-                 sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                 sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                var sel_color = '0';
+                if ($("#Size_1_1").length > 0) {
+                    sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                 }
 
-                if ($("#Color_1_1").length > 0)
-                {
-                 sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                 sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');   
+                if ($("#Color_1_1").length > 0) {
+                    sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                 }
-                
-                
-                           
+
+
+
                 var ProductID = $("#hdnProductID").text();
                 var VariantID = $("#hdnVariantID").text();
                 var CustomerID = $("#hdnCustomerID").text();
@@ -459,27 +456,27 @@
                         }),
                         dataType: "json",
                         async: false,
-                        success: function (result) {                          
-                           
+                        success: function (result) {
+
                             if (result.d.toString() == 'true') {
-                               // alert("Product with selected options already exists,Please go to shopping cart and update quantity or select different option.");
-                               // $("#btnaddtocart").addClass("hide-element");
-                                $("#btnShoppingcart").removeClass("hide-element");                               
+                                // alert("Product with selected options already exists,Please go to shopping cart and update quantity or select different option.");
+                                // $("#btnaddtocart").addClass("hide-element");
+                                $("#btnShoppingcart").removeClass("hide-element");
                                 exist = true;
-                               
-                            } else {                               
+
+                            } else {
                                 $("#btnaddtocart").removeClass("hide-element");
-                                $("#btnShoppingcart").addClass("hide-element");                               
+                                $("#btnShoppingcart").addClass("hide-element");
                                 exist = false;
-                              
+
                             }
                         },
-                        error: function (result) {                       
+                        error: function (result) {
 
-                    }
+                        }
                     });
                 }
-               
+
                 return exist;
 
             }
@@ -488,7 +485,7 @@
             applyproductcategoryfund();
             setpricewithquantitychange();
             $("#txtBluBuksUsed").focusout(function () {
-                
+
                 $("#spprice").text("$" + $("#hdnpricewithfund").text());
                 if (applyblubuksvalidation()) {
                     var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
@@ -497,9 +494,9 @@
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                 }
                 else {
-                applyblubuksvalidation2();
-                var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
-                $("#spprice").text("$" + updatedprice.toFixed(2));
+                    applyblubuksvalidation2();
+                    var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
+                    $("#spprice").text("$" + updatedprice.toFixed(2));
                 }
             });
 
@@ -514,54 +511,54 @@
             });
 
             $("#Quantity_1_1").change(function () {
-               
+
                 $("#hdnquantity").text(theForm.Quantity_1_1.value);
                 setpricewithquantitychange();
             });
 
             //Shehriyar's Code
             $("#Color_1_1").change(function () {
-              
+
                 if (inventoryArray.length > 1) {
                     //if ($("#Size_1_1").length > 0) {
-                        var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                        sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                        var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
+                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
 
-                        if (sel_size != "-" && sel_color != "-") {
-                            $.ajax({
-                                type: "post",
-                                url: "showproduct.aspx/GetQuantity",
-                                contentType: "application/json; charset=utf-8",
-                                data: JSON.stringify({
-                                    "color": sel_color,
-                                    "size": sel_size,
-                                    "lstInventories": inventoryArray
-                                }),
-                                dataType: "json",
-                                async: true,
-                                success: function (result) {
-                                    if (result.d.toString() != '0') {
-                                        $("#btnaddtocart").removeClass("hide-element");
-                                        $("#pInStock").show();
-                                        $("#lblInStock").text(result.d);
-                                        $("#pOutofStock").hide();
-                                        $("#QtyDropDown").show();
-                                        $("#divNotifyme").hide();
-                                        $("#divNotifymepopUp").hide();
-                                    } else {
-                                        $("#btnaddtocart").addClass("hide-element");
-                                        $("#pInStock").hide();
-                                        // $("#pOutofStock").show();       
-                                        $("#QtyDropDown").hide();
-                                        $("#divNotifyme").show();
-                                        $("#divNotifymepopUp").show();
+                    if (sel_size != "-" && sel_color != "-") {
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/GetQuantity",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "color": sel_color,
+                                "size": sel_size,
+                                "lstInventories": inventoryArray
+                            }),
+                            dataType: "json",
+                            async: true,
+                            success: function (result) {
+                                if (result.d.toString() != '0') {
+                                    $("#btnaddtocart").removeClass("hide-element");
+                                    $("#pInStock").show();
+                                    $("#lblInStock").text(result.d);
+                                    $("#pOutofStock").hide();
+                                    $("#QtyDropDown").show();
+                                    $("#divNotifyme").hide();
+                                    $("#divNotifymepopUp").hide();
+                                } else {
+                                    $("#btnaddtocart").addClass("hide-element");
+                                    $("#pInStock").hide();
+                                    // $("#pOutofStock").show();       
+                                    $("#QtyDropDown").hide();
+                                    $("#divNotifyme").show();
+                                    $("#divNotifymepopUp").show();
 
-                                    }
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
                     else {
                         $("#pInStock").hide();
                         $("#pOutofStock").hide();
@@ -572,7 +569,7 @@
             //End
 
             $("#Size_1_1").change(function () {
-               
+
                 var customerlevel = $("#hdncustomerlevel").text();
                 if (customerlevel == 1 || customerlevel == 8) {
                     $("#sppricewithfund").addClass("hide-element");
@@ -592,39 +589,39 @@
                         sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
                         sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                     }
-                        var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                        sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                        if (sel_size != "-" && sel_color != "-") {
-                            $.ajax({
-                                type: "post",
-                                url: "showproduct.aspx/GetQuantity",
-                                contentType: "application/json; charset=utf-8",
-                                data: JSON.stringify({
-                                    "color": sel_color,
-                                    "size": sel_size,
-                                    "lstInventories": inventoryArray
-                                }),
-                                dataType: "json",
-                                async: true,
-                                success: function (result) {
-                                    if (result.d.toString() != '0') {
-                                        $("#btnaddtocart").removeClass("hide-element");
-                                        $("#pInStock").show();
-                                        $("#lblInStock").text(result.d);
-                                        $("#pOutofStock").hide();
-                                        $("#QtyDropDown").show();
-                                        $("#divNotifyme").hide();
-                                        $("#divNotifymepopUp").hide();
-                                    } else {
-                                        $("#btnaddtocart").addClass("hide-element");
-                                        $("#pInStock").hide();
-                                        //$("#pOutofStock").show();
-                                        $("#QtyDropDown").hide();
-                                        $("#divNotifyme").show();
-                                        $("#divNotifymepopUp").show();
-                                    }
+                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
+                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
+                    if (sel_size != "-" && sel_color != "-") {
+                        $.ajax({
+                            type: "post",
+                            url: "showproduct.aspx/GetQuantity",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                "color": sel_color,
+                                "size": sel_size,
+                                "lstInventories": inventoryArray
+                            }),
+                            dataType: "json",
+                            async: true,
+                            success: function (result) {
+                                if (result.d.toString() != '0') {
+                                    $("#btnaddtocart").removeClass("hide-element");
+                                    $("#pInStock").show();
+                                    $("#lblInStock").text(result.d);
+                                    $("#pOutofStock").hide();
+                                    $("#QtyDropDown").show();
+                                    $("#divNotifyme").hide();
+                                    $("#divNotifymepopUp").hide();
+                                } else {
+                                    $("#btnaddtocart").addClass("hide-element");
+                                    $("#pInStock").hide();
+                                    //$("#pOutofStock").show();
+                                    $("#QtyDropDown").hide();
+                                    $("#divNotifyme").show();
+                                    $("#divNotifymepopUp").show();
                                 }
-                            });
+                            }
+                        });
                     } else {
                         $("#pInStock").hide();
                         $("#pOutofStock").hide();
@@ -635,10 +632,13 @@
             });
 
             $('input').keypress(function (e) {
+               
+              
                 var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
-                      event.preventDefault();
+                        event.preventDefault();
+                       
                     }
 
                     var text = $(this).val();
@@ -648,30 +648,28 @@
                     }
                 }
                 else if ($(this).attr('id') == "Quantity_1_1") {
-                    regex = new RegExp("^[0-9]+$");
-             
-                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if(regex!=="")
-                {
-                if (regex.test(str)) {
-                    return true;
-                    }
-else
-{
- e.preventDefault();
-                return false;
-}
-                }
-             
-                
-               
-            }
+                    regex = new RegExp("^[0-9\b]+$");
 
-               
+                    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                    if (regex !== "") {
+                        if (regex.test(str)) {
+                            return true;
+                        }
+                        else {
+                            e.preventDefault();
+                            return false;
+                        }
+                    }
+
+
+
+                }
+
+
             });
 
             function setpricewithquantitychange() {
-               
+
                 var updatedtotalprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value);
                 var productfundamount = $("#hdnProductFundAmount").text();
 
@@ -691,7 +689,7 @@ else
 
             }
 
-         function applyblubuksvalidation() {
+            function applyblubuksvalidation() {
 
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -702,60 +700,60 @@ else
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
-                   // $("#txtBluBuksUsed").trigger("focusout");                  
+                    // $("#txtBluBuksUsed").trigger("focusout");                  
 
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
-                   // $("#txtBluBuksUsed").trigger("focusout");                  
+                    // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
-                }               
+                }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                   // $("#txtBluBuksUsed").trigger("focusout");                  
+                    // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else
                     return true;
             }
 
-             function applyblubuksvalidation2() {
+            function applyblubuksvalidation2() {
 
-                            var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                            $("#spprice").text("$" + updatedprice.toFixed(2));
-                            var maxfundlimit = $("#spprice").text().replace("$", "") * (Math.round($("#hdnBudgetPercentValue").text()) / 100);
-                            
-                            if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
-                                return false;
-                            }
-                            else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {                               
-                                $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
-                                    applyblubuksvalidation2();
-                               // $("#txtBluBuksUsed").trigger("focusout");                  
+                var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
+                $("#spprice").text("$" + updatedprice.toFixed(2));
+                var maxfundlimit = $("#spprice").text().replace("$", "") * (Math.round($("#hdnBudgetPercentValue").text()) / 100);
 
-                                return false;
-                            }
-                           else  if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {                               
-                                $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
-                                    applyblubuksvalidation2();
-                              //  $("#txtBluBuksUsed").trigger("focusout");                  
-                                return false;
-                            }               
-                          else  if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {                               
-                                $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                                applyblubuksvalidation2();
-                               // $("#txtBluBuksUsed").trigger("focusout");                  
-                                return false;
-                            }
-                            else
-                                return true;
-                        }
+                if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
+                    return false;
+                }
+                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {
+                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
+                    applyblubuksvalidation2();
+                    // $("#txtBluBuksUsed").trigger("focusout");                  
+
+                    return false;
+                }
+                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
+                    $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
+                    applyblubuksvalidation2();
+                    //  $("#txtBluBuksUsed").trigger("focusout");                  
+                    return false;
+                }
+                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
+                    applyblubuksvalidation2();
+                    // $("#txtBluBuksUsed").trigger("focusout");                  
+                    return false;
+                }
+                else
+                    return true;
+            }
             function applyproductcategoryfund() {
-                    $("#spprice").text("$" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
-                    $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
+                $("#spprice").text("$" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
 
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
 
@@ -773,11 +771,11 @@ else
                 }
 
 
-                    
+
             }
 
             function ApplyValidation(theForm) {
-             
+
                 if ($("#Quantity_1_1").length <= 0) {
                     submitenabled(theForm);
                     return (true);
