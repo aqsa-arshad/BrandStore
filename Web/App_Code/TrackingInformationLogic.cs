@@ -31,18 +31,18 @@ namespace AspDotNetStorefront
             if (string.IsNullOrEmpty(order.CartItems.FirstOrDefault().Notes))
             {
                 if (string.IsNullOrEmpty(order.ShippingTrackingNumber))
-                {                    
+                {
                     SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     "ShippingTrackingNumber is empty.", MessageTypeEnum.GeneralException, MessageSeverityEnum.Message);
                     lstTrackingInformation.Add(new TrackingInformation()
                     {
                         OrderNumber = order.OrderNumber.ToString(),
                         TrackingNumber = string.Empty,
-                        CarrierCode = string.Empty,                        
-                        ShippingMethod = order.ShippingMethod + ": ",
+                        CarrierCode = string.Empty,
+                        ShippingMethod = order.ShippingMethod,
                         ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()),
                         TrackingURL = string.Empty
-                    });                    
+                    });
                 }
 
                 else
@@ -52,19 +52,19 @@ namespace AspDotNetStorefront
                         OrderNumber = order.OrderNumber.ToString(),
                         TrackingNumber = order.ShippingTrackingNumber,
                         CarrierCode = string.Empty,
-                        ShippingMethod = order.ShippingMethod + ": ",
-                        ShippingStatus = GetShippingStatus(order.OrderNumber,order.ShippedOn.ToString()) + ": ",
+                        ShippingMethod = order.ShippingMethod,
+                        ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()),
                         TrackingURL = GetTrackingURL(order.ShippingTrackingNumber, order.ShippingMethod)
                     });
                 }
             }
             else if (ValidateJSON(ref lstTrackingInformation, order.CartItems.FirstOrDefault().Notes))
             {
-                lstTrackingInformation.ForEach(x => x.ShippingMethod = GetShippingMethod(x.CarrierCode) + ": ");
+                lstTrackingInformation.ForEach(x => x.ShippingMethod = GetShippingMethod(x.CarrierCode));
 
-                lstTrackingInformation.ForEach(x => x.ShippingStatus = GetShippingStatus(order.OrderNumber,order.ShippedOn.ToString()) + ": ");
+                lstTrackingInformation.ForEach(x => x.ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()));
 
-                lstTrackingInformation.ForEach(x => x.TrackingURL = GetTrackingURL(x.TrackingNumber, x.ShippingMethod) + ": ");
+                lstTrackingInformation.ForEach(x => x.TrackingURL = GetTrackingURL(x.TrackingNumber, x.ShippingMethod));
 
                 if (!string.IsNullOrEmpty(order.ShippingTrackingNumber))
                 {
@@ -73,11 +73,22 @@ namespace AspDotNetStorefront
                         OrderNumber = order.OrderNumber.ToString(),
                         TrackingNumber = order.ShippingTrackingNumber,
                         CarrierCode = string.Empty,
-                        ShippingMethod = order.ShippingMethod + ": ",
-                        ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()) + ": ",
+                        ShippingMethod = order.ShippingMethod,
+                        ShippingStatus = GetShippingStatus(order.OrderNumber, order.ShippedOn.ToString()),
                         TrackingURL = GetTrackingURL(order.ShippingTrackingNumber, order.ShippingMethod)
-                    });                   
+                    });
                 }
+                var tempLstTrackingInformation = new List<TrackingInformation>();
+                tempLstTrackingInformation.Add(lstTrackingInformation[lstTrackingInformation.Count - 1]);
+                var lstTrackingInformationCount = 0;
+                foreach (var trackingInfo in lstTrackingInformation)
+                {
+                    if (lstTrackingInformationCount > lstTrackingInformation.Count - 1)
+                        break;
+                    tempLstTrackingInformation.Add(trackingInfo);
+                    lstTrackingInformationCount++;
+                }
+                lstTrackingInformation = tempLstTrackingInformation;
             }
             else
             {
@@ -154,7 +165,6 @@ namespace AspDotNetStorefront
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                     "Shipping Method Name is not found.", MessageTypeEnum.GeneralException, MessageSeverityEnum.Message);
-                shippingMethod = "Unknow Carrier";
             }
             return shippingMethod;
         }
@@ -173,7 +183,7 @@ namespace AspDotNetStorefront
 
                 foreach (var listItem in carrierList)
                 {
-                    if (shippingMethod.Contains(listItem))
+                    if (shippingMethod.ToUpper().Contains(listItem.ToUpper()))
                         if (!string.IsNullOrEmpty(trackingNumber))
                         {
                             trackingURL = string.Format(AppLogic.AppConfig("ShippingTrackingURL." + listItem), trackingNumber);

@@ -8560,7 +8560,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
             }
 
-            tmpS.Append("<p id=\"pInStock\" style=\"Display: None; \"><span class=\"black-blu-label\"><font>In Stock: </font><label class=\"blue-color\" runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"/></span></p>");
+            tmpS.Append("<p id=\"pInStock\" style=\"Display: None; \"><span class=\"black-blu-label\"><font>In Stock: </font><label class=\"blue-color\" runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"></label></span></p>");
             tmpS.Append("<p id=\"pOutofStock\" style=\"Display: None; \"><span class=\"notify \">Out of Stock</span></p>");
 
             //Colors Alternative
@@ -8980,7 +8980,7 @@ namespace AspDotNetStorefrontCore
 
                     HasSizePriceModifiers = SizesMaster.IndexOf('[') != -1;
                     HasColorPriceModifiers = ColorsMaster.IndexOf('[') != -1;
-                    boardSuffix = string.Format("_{0}_{1}", ProductID.ToString(), VariantID.ToString());
+                    boardSuffix = string.Format("_{0}_{1}", "1","1");
 
                     TextOptionPrompt = DB.RSFieldByLocale(rs, "MLTextOptionPrompt", LocaleSetting).Trim();
                     TextOptionMaxLength = DB.RSFieldInt(rs, "TextOptionMaxLength");
