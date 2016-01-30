@@ -462,7 +462,6 @@ namespace AspDotNetStorefront
                         (e.Item.FindControl("hlTrackItem") as HyperLink).Font.Underline = false;
                     }
                 }
-
             }
         }
     }
