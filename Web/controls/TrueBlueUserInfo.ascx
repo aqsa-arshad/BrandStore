@@ -5,7 +5,7 @@
     <span>
         <asp:Label ID="lblDealerLevel" runat="server" />Dealer</span>
 </div>
-<h4 runat="server" id="hBluBucks"><asp:Label ID="BluBucks" runat="server" Text="BLU Bucks"></asp:Label></h4>
+<h4 runat="server" id="hBluBucks"><asp:Label ID="BluBucks" runat="server" Text="BLU™ Bucks"></asp:Label></h4>
 <div class="blu-bucks">
     <div>
         <asp:Label runat="server" ID="lblCustomerLevel" Text=""></asp:Label>
@@ -38,7 +38,7 @@
 </div>
 <a href="JWMyAccount.aspx" class="btn btn-md btn-primary btn-block tablet-btn" type="button" id="btnViewAccount">VIEW MY ACCOUNT</a>
 <br />
-<a id="lnkLearnMoreAboutTruBlue" href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about True BLU ></a>
+<a id="lnkLearnMoreAboutTruBlue" href="JWAboutTrueBlu.aspx" class="sm-link">Learn more about True BLU™ ></a>
 <script>
     function expandFunds() {
         var clientID = '<%= ExpandFunds.ClientID %>';

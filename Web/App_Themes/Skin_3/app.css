@@ -5278,6 +5278,7 @@ a:hover.mb-login-btn {
 .nav-justified > .dropdown .dropdown-menu a:hover {
   background: transparent;
   color: #1d446b;
+  filter: none;
 }
 @media screen and (min-width: 768px) {
   .nav li.dropdown:hover ul.dropdown-menu {
@@ -5548,6 +5549,8 @@ a:hover.mb-login-btn {
   border: none !important;
   padding-right: 25px;
   margin: 0;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 .pagerArea .page-previous {
   padding-right: 10px;
@@ -6404,7 +6407,12 @@ a:hover.underline-link {
   text-decoration: none;
 }
 .btn-half {
-  width: 49%;
+  width: 100%;
+}
+@media screen and (min-width: 450px) {
+  .btn-half {
+    width: 49%;
+  }
 }
 .gray-color {
   color: #b4b7b0;

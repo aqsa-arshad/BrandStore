@@ -54,30 +54,29 @@ public partial class controls_TrueBlueUserInfo : System.Web.UI.UserControl
         }
         lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);
         cf = lstCustomerFund.SingleOrDefault(x => x.FundID == (int)FundType.BLUBucks);
-        if (ThisCustomer.CustomerLevelID == (int)UserType.BLUUNLIMITED)
-        {
-            if (cf != null)
-            {
-                lstCustomerFund.Clear();
-                lstCustomerFund.Add(cf);
-                rptCustomerFunds.DataSource = lstCustomerFund;
-                rptCustomerFunds.DataBind();
-            }
-            else
-            {
-                lstCustomerFund.Clear();
-                rptCustomerFunds.DataSource = lstCustomerFund;
-                rptCustomerFunds.DataBind();
-            }
-            ExpandFunds.Visible = false;
-            lnkHideFunds.Visible = false;
-            return;
-        }
+        //if (ThisCustomer.CustomerLevelID == (int)UserType.BLUUNLIMITED)
+        //{
+        //    if (cf != null)
+        //    {
+        //        lstCustomerFund.Clear();
+        //        lstCustomerFund.Add(cf);
+        //        rptCustomerFunds.DataSource = lstCustomerFund;
+        //        rptCustomerFunds.DataBind();
+        //    }
+        //    else
+        //    {
+        //        lstCustomerFund.Clear();
+        //        rptCustomerFunds.DataSource = lstCustomerFund;
+        //        rptCustomerFunds.DataBind();
+        //    }
+        //    ExpandFunds.Visible = false;
+        //    lnkHideFunds.Visible = false;
+        //    return;
+        //}
         if (cf != null)
         {
             lstCustomerFund.Remove(cf);
             GetFilteredCustomerFund(lstCustomerFund);
-
             lstCustomerFund.Clear();
             lstCustomerFund.Add(cf);
             rptCustomerFunds.DataSource = lstCustomerFund;
