@@ -8980,7 +8980,7 @@ namespace AspDotNetStorefrontCore
 
                     HasSizePriceModifiers = SizesMaster.IndexOf('[') != -1;
                     HasColorPriceModifiers = ColorsMaster.IndexOf('[') != -1;
-                    boardSuffix = string.Format("_{0}_{1}", ProductID.ToString(), VariantID.ToString());
+                    boardSuffix = string.Format("_{0}_{1}", "1","1");
 
                     TextOptionPrompt = DB.RSFieldByLocale(rs, "MLTextOptionPrompt", LocaleSetting).Trim();
                     TextOptionMaxLength = DB.RSFieldInt(rs, "TextOptionMaxLength");
