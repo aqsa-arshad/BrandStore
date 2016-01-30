@@ -50,49 +50,11 @@ namespace AspDotNetStorefront
                     Customer customer = new Customer(email);
                     hfCustomerID.Value = customer.CustomerID.ToString();
                     ((System.Web.UI.WebControls.Label)Master.FindControl("lblPageHeading")).Text = "ORDER HISTORY FOR " + customer.FullName();
-                    pnlFundsInformation.Visible = true;
-                    GetCustomerFunds(customer.CustomerID, customer.CustomerLevelID, customer.CustomerLevelName);
                 }
                 GetOrders(1, int.Parse(hfCustomerID.Value));
             }
         }
-
-        /// <summary>
-        /// Get Customer Funds
-        /// </summary>
-        /// <param name="customerID">CustomerID</param>
-        /// <param name="customerLevelID">CustomerLevelID</param>
-        /// <param name="customerLevelName">CustomerLevelName</param>
-        private void GetCustomerFunds(int customerID, int customerLevelID, string customerLevelName)
-        {
-            lblCustomerLevel.Text = customerLevelName;
-            List<CustomerFund> lstCustomerFund = AuthenticationSSO.GetCustomerFund(customerID, false);
-            
-            if (AuthenticationSSO.IsInternalUser(customerLevelID))
-            {
-                lstCustomerFund.RemoveAll(x => x.FundID != (int)FundType.SOFFunds);
-                lblBluBucksHeading.Visible = false;
-                lblBluBucks.Visible = false;
-            }
-            else if (AuthenticationSSO.IsDealerUser(customerLevelID))
-            {
-                if (AuthenticationSSO.IsTrueBluDealerUser(customerLevelID))
-                {
-                    decimal BLUBucks = lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks) != null ? lstCustomerFund.Find(x => x.FundID == (int)FundType.BLUBucks).AmountAvailable : 0;
-                    lblBluBucks.Text = Math.Round(BLUBucks,2).ToString();
-                }
-                else
-                {
-                    lblBluBucksHeading.Visible = false;
-                    lblBluBucks.Visible = false;
-                }
-                lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.BLUBucks);
-                lstCustomerFund.RemoveAll(x => x.FundID == (int)FundType.SOFFunds);                
-            }
-            rptAllCustomerFunds.DataSource = lstCustomerFund;
-            rptAllCustomerFunds.DataBind();
-        }
-
+                
         /// <summary>
         /// Gets the orders.
         /// </summary>
