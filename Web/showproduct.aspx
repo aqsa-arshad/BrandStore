@@ -54,7 +54,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"/></button>
                     <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
                     <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
@@ -65,7 +65,6 @@
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -83,6 +82,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
     <%--End Region Open Pop Up for bucckts--%>
 
@@ -94,7 +94,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"/></button>
                     <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
                     <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
 

@@ -3264,7 +3264,7 @@ function popupzoom(url,alturl)
                 result.Append("> </div>");
                 result.Append("<label class=\"error-large\" ID=\"lblErrorMsg\" style=\"display:none\">Plase enter a valid email address</label>");
                 result.Append("<button type=\"button\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
-                result.Append("</div> </div> </div> </div> </div>");
+                result.Append("</div> </div> </div> </div> ");
             }
             else
             {

@@ -570,10 +570,8 @@ namespace AspDotNetStorefront
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
                     {                        
-                            m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
-                            LiteralCustom.Text = m_PageOutputCustom + "<div>";                     
-                       
-
+                            m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);                                               
+                            LiteralCustom.Text = m_PageOutputCustom ;                                           
                     }
                 }
             }
