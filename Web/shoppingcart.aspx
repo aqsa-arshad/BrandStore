@@ -521,7 +521,8 @@
                 var newpricetotal = $("#spprice").text().replace("$", "");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
-
+                var customerlevel = $("#hdncustomerlevel").text(); 
+                BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
                 var spproductcategoryfund = $("#spfunddiscountprice_" + currentrecordid).text()//529;
                 var toreplace = spproductcategoryfund.substr(0, spproductcategoryfund.lastIndexOf(":") + 1);
                 spproductcategoryfund = spproductcategoryfund.replace(toreplace, "").replace("$", "");
@@ -583,6 +584,8 @@
                 $("#spprice").text("$" + (newpricetotal.toFixed(2)));
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+                var customerlevel = $("#hdncustomerlevel").text(); 
+                BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);             
@@ -617,7 +620,8 @@
                 $("#spprice").text("$" + newpricetotal.toFixed(2));
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
-               
+                var customerlevel = $("#hdncustomerlevel").text(); 
+                 BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
@@ -709,8 +713,10 @@
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");                
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
+                var customerlevel = $("#hdncustomerlevel").text();                
+                
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
-
+                BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
                 var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU Bucks.";
                 $("#ppercentage").text(blubuckspercent);
 
@@ -724,7 +730,7 @@
                     return false;                
                 }                             
             
-               var customerlevel = $("#hdncustomerlevel").text();
+               
                
                 applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)                
                 // $("#txtBluBuksUsed").val("0.00");
@@ -799,6 +805,29 @@
                 }
 
             });
+                function  GetPercentageRatio(customerlevel,ProductCategoryID)
+                {
+                    var percentageration=0;
+                        $.ajax({
+                        type: "post",
+                        url: "Shoppingcart.aspx/GetPercentageRatio",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            "CustomerLevelID": customerlevel,
+                            "ProductCategoryID": ProductCategoryID                            
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            percentageration=result.d.toString();
+                        },
+                        error: function (result) {
+
+                        }
+                    });
+
+                    return percentageration;
+                }
 
             function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem) {
                 
