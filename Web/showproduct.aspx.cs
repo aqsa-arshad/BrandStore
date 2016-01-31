@@ -735,6 +735,9 @@ namespace AspDotNetStorefront
 
             if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text))
                 txtBluBuksUsed.Text = "0";
+
+            if (String.IsNullOrEmpty(txtproductcategoryfundusedforsalesrep.Text) || String.IsNullOrWhiteSpace(txtproductcategoryfundusedforsalesrep.Text))
+                txtproductcategoryfundusedforsalesrep.Text = "0";
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);

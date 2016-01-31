@@ -294,7 +294,7 @@
 
             //Area for pop up for sales rep
             $("#btnaddtocartforsalesrep").click(function () {
-                if ($("#txtGLcode").val() == "") {
+                if ($("#txtGLcode").val() == "" && (Math.round($("#hdnProductFundAmountUsed").text()) > 0)) {
                     alert("Please enter GL code.");
                     return false;
                 }
@@ -375,9 +375,7 @@
                     $("#palreadyexist").addClass("hide-element");
                 }
 
-
                 if (ApplyValidation(theForm)) {
-
 
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
@@ -385,7 +383,6 @@
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
-
 
                         $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                         $("#spprice").text($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val());
@@ -399,15 +396,24 @@
 
                     }
                     else if ((customerlevel == 3 || customerlevel == 7)) {
+                        if (Math.round($("#hdnProductFundAmountUsed").text()) > 0) {
+                            var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
+                            $("#spprice").text("$" + updatedprice.toFixed(2));
+                            $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
+                            $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
 
-                        var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                        $("#spprice").text("$" + updatedprice.toFixed(2));
-                        $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
-                        $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
+                            $("#btnaddtocart").attr("data-toggle", "modal");
+                            $("#btnaddtocart").attr("data-target", "#myModal1");
+                        }
 
-                        $("#btnaddtocart").attr("data-toggle", "modal");
-                        $("#btnaddtocart").attr("data-target", "#myModal1");
+                        else {
+                            $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                            $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                            $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+                            
+                            $("#btnaddtocartforsalesrep").trigger("click");
 
+                        }
 
                     }
                     else {
@@ -426,6 +432,14 @@
                 }
             });
 
+            // CallBack method when the page call success
+            function onSucceed(results, currentContext, methodName) {
+
+            }
+            //CallBack method when the page call fails due to internal, server error 
+            function onError(results, currentContext, methodName) {
+
+            }
             function checkifproductalreadyexists() {
                 var exist = false;
                 var sel_size = '0';

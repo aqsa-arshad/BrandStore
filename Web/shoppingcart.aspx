@@ -503,7 +503,7 @@
             }           
 
             $("#btnaddtocartforsalesrep").click(function () {               
-                if ($("#txtGLcode").val() == "") {
+                if ($("#txtGLcode").val() == "" && (Math.round($("#hdnProductFundAmountUsed").text()) > 0)) {
                     alert("Please enter GL code.");
                     return false;
                 }
@@ -771,13 +771,24 @@
                        
                     }
                 }
-                else if (customerlevel == 3 || customerlevel == 7) {
+                else if ((customerlevel == 3 || customerlevel == 7)) {
 
+                    if(Math.round($("#hdnProductFundAmountUsed").text())>0)
+                    {
                     //bind link update to sof fund opup/internal user                    
                     $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
                     $("#sppriceforsalesrep").text("$" + $("#spprice").text().replace("$", ""));
                     $(".lnkUpdateItem").attr("data-toggle", "modal");
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
+                    }
+                    else
+                    {
+                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+                        PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
+                        $("#btnaddtocartforsalesrep").trigger("click");
+                    }
                 }
                 else {
                         $("#btnaddtocart").removeAttr("data-toggle", "modal");
