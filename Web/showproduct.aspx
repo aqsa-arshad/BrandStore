@@ -54,7 +54,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"/></button>
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
                     <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <%--End Region Open Pop Up for bucckts--%>
 
@@ -94,7 +94,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"/></button>
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
                     <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
 
@@ -321,13 +321,13 @@
                 spproductcategoryfund = Math.round($("#hdnsoffundamount").text()) + Math.round(spproductcategoryfund)
                 // $("#hdnsoffundamount").text(spproductcategoryfund);
 
-                $("#spprice").text("$" + Math.round(ItemQuantity) * Math.round(ItemOriginalPrice));
-                $("#sppriceforsalesrep").text("$" + Math.round(ItemQuantity) * Math.round(ItemOriginalPrice));
+                $("#spprice").text("$" + ItemQuantity * ItemOriginalPrice);
+                $("#sppriceforsalesrep").text("$" +ItemQuantity * ItemOriginalPrice);
                 newpricetotal = $("#spprice").text().replace("$", "");
                 var sofentered = Math.round($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
-                    $("#spprice").text("$" + Math.round(ItemQuantity) * Math.round(ItemOriginalPrice));
+                    $("#spprice").text("$" + (ItemQuantity) * (ItemOriginalPrice));
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtproductcategoryfundusedforsalesrep").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                     $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -381,7 +381,7 @@
 
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
-                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text())>0)) {
+                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text()) > 0)) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -411,6 +411,9 @@
 
                     }
                     else {
+                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
+                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
                         $(btnname).trigger("click");
                     }
                 }
@@ -632,13 +635,12 @@
             });
 
             $('input').keypress(function (e) {
-               
-              
+
                 var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         event.preventDefault();
-                       
+
                     }
 
                     var text = $(this).val();
@@ -661,10 +663,7 @@
                         }
                     }
 
-
-
                 }
-
 
             });
 
@@ -694,26 +693,27 @@
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
                 var maxfundlimit = $("#spprice").text().replace("$", "") * (Math.round($("#hdnBudgetPercentValue").text()) / 100)
+                if (Math.round($("#spprice").text().replace("$", "")) <= 0) {
+                    $("#txtBluBuksUsed").val(0);
+                    return true;
+                }
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
-                    // $("#txtBluBuksUsed").trigger("focusout");                  
 
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
-                    // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                    // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else
@@ -725,27 +725,27 @@
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
                 var maxfundlimit = $("#spprice").text().replace("$", "") * (Math.round($("#hdnBudgetPercentValue").text()) / 100);
-
+                if (Math.round($("#spprice").text().replace("$", "")) <= 0) {
+                    $("#txtBluBuksUsed").val(0);
+                    return true;
+                }
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {
                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
                     applyblubuksvalidation2();
-                    // $("#txtBluBuksUsed").trigger("focusout");                  
 
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                     applyblubuksvalidation2();
-                    //  $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
                     applyblubuksvalidation2();
-                    // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else
@@ -754,9 +754,7 @@
             function applyproductcategoryfund() {
                 $("#spprice").text("$" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
                 $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
-
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
-
                 var customerlevel = $("#hdncustomerlevel").text();
                 if (customerlevel == 1 || customerlevel == 8) {
                     $("#sppricewithfund").addClass("hide-element");
@@ -767,10 +765,7 @@
                         $("#sppricewithfund").removeClass("hide-element");
                     else
                         $("#sppricewithfund").addClass("hide-element");
-
                 }
-
-
 
             }
 
