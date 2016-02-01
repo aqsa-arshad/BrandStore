@@ -95,7 +95,7 @@
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
-                    <h4 class="text-uppercase-no">APPLY SALES FUNDS</h4>
+                    <h4 class="text-uppercase-no margin-top-none">APPLY SALES FUNDS</h4>
                     <p class="roman-black">Please indicate the amount of available sales funds you would like to apply to this item.</p>
 
                     <div class="form-group">
@@ -104,33 +104,27 @@
                                 <label class="roman-black">GL Code:</label>
                                 <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>--%>
-                            <div class="col-md-12">
+                            <div class="col-md-7">
                                 <label class="roman-black">Amount:</label>
-                            </div>
-                            <div class="col-xs-6 col-sm-5">
                                 <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>
                     <p class="roman-black">Please indicate if this purchase uses specially allocated funds from your vice president. </p>
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <div class="radio">
+                    <div class="row form-group">
+                            <div class="col-xs-6 col-sm-4">
                                 <label class="roman-black">
                                     YES:
                                     <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="radio">
+                            <div class="col-xs-4 col-sm-4">
                                 <label class="roman-black">
                                     NO:
                                     <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" />
 
                                 </label>
                             </div>
-                        </div>
                     </div>
                     <p class="label-text">
                         <span class="roman-black">Total price using sales funds:</span>
