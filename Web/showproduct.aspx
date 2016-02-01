@@ -138,7 +138,7 @@
                     </p>
                     <div class="buttons-group trueblue-popup">
 
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="APPLY" runat="server" />
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="APPLY" runat="server" />
 
                     </div>
                 </div>
@@ -411,10 +411,10 @@
                     }
                     else if ((customerlevel == 3 || customerlevel == 7)) {
                         if (Math.round($("#hdnProductFundAmountUsed").text()) > 0) {
-                        var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
+                        var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - Math.round($("#hdnProductFundAmountUsed").text());
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
-                        $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
+                        $("#txtproductcategoryfundusedforsalesrep").val( Math.round($("#hdnProductFundAmountUsed").text()));
 
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModal1");
