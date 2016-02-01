@@ -20,7 +20,7 @@
         <asp:Label ID="hdncurrentrecordid" name="hdncurrentrecordid" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnpricewithcategoryfundapplied" name="hdnpricewithcategoryfundapplied" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnBluBucktsPoints" name="hdnBluBucktsPoints" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
-         <asp:Label ID="hdnaddblubucks" name="hdnaddblubucks" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
+        <asp:Label ID="hdnaddblubucks" name="hdnaddblubucks" runat="server" ClientIDMode="Static" Style="display: none" Text="1" />
         <asp:Label ID="hdnProductFundID" name="hdnProductFundID" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnProductFundAmount" name="hdnProductFundAmount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdnBudgetPercentValue" name="hdnBudgetPercentValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
@@ -392,8 +392,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
                     <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
-                    <p runat="server" id="ppointscount" ClientIDMode="Static" >You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
-                      <p runat="server" id="ppercentage" ClientIDMode="Static">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
+                    <p runat="server" id="ppointscount" clientidmode="Static">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
+                    <p runat="server" id="ppercentage" clientidmode="Static">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
 
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
@@ -411,10 +411,10 @@
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-                     
-                            <asp:Button ID="btnaddtocart" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="APPLY" runat="server" OnClick="btnaddtocart_Click" />
-                           
-                      
+
+                        <asp:Button ID="btnaddtocart" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="APPLY" runat="server" OnClick="btnaddtocart_Click" />
+
+
                     </div>
                 </div>
             </div>
@@ -423,48 +423,68 @@
     <%--End Region Open Pop Up for bucckts--%>
 
     <%-- Region Open PopUp for SOF Funds--%>
-  
-        <!-- Modal -->
-        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-checkout" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-checkout" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
-                        <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
-                        <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
+                    <h4 class="text-uppercase-no">APPLY SALES FUNDS</h4>
+                    <p class="roman-black">Please indicate the amount of available sales funds you would like to apply to this item.</p>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-7">
-                                    <label class="roman-black">GL Code:</label>                                  
-                                     <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static"  class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-xs-6 col-sm-5">
-                                    <label class="roman-black">Amount:</label>
-                                     <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7"   ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-                                    
-                                </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-7">
+                                <label class="roman-black">GL Code:</label>
+                                <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
-
+                            <div class="col-md-12">
+                                <label class="roman-black">Amount:</label>
+                            </div>
+                            <div class="col-xs-6 col-sm-5">
+                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            </div>
                         </div>
 
-                        <p class="label-text">                           
-
-                             <span class="roman-black">Total price using sales funds:</span>
-                            <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
-                        </p>
-                        <div class="buttons-group">
-                              <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-block btn-primary" Text="APPLY" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
-                            
-                            <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
+                    </div>
+                    <p class="roman-black">Please indicate if this purchase uses specially allocated funds from your vice president. </p>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label class="roman-black">
+                                    YES:
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="" class="radio-btn-group" />
+                                </label>
+                            </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label class="roman-black">
+                                    NO:
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="radio-btn-group" />
+
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="label-text">
+
+                        <span class="roman-black">Total price using sales funds:</span>
+                        <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                    </p>
+                    <div class="buttons-group">
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-block btn-primary" Text="APPLY" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
+
+                        <%--<button type="button" data-dismiss="modal" class="btn btn-primary">Cancel</button>--%>
                     </div>
                 </div>
             </div>
         </div>
-     
-  
+    </div>
+
+
     <%--End Region Open Pop Up For SOF Funds--%>
 
     <script type="text/javascript">
@@ -505,12 +525,12 @@
                 return CustomerLevelElemment.innerHTML;
             }
             //$("#btnaddtocart").click(function (e) {
-               
+
             //    $("#txtBluBuksUsed").trigger("focusout");
 
             //});
 
-            $("#btnaddtocartforsalesrep").click(function () {               
+            $("#btnaddtocartforsalesrep").click(function () {
                 if ($("#txtGLcode").val() == "") {
                     alert("Please enter GL code.");
                     return false;
@@ -519,7 +539,7 @@
             });
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
-                
+
                 $("#spprice").text($("#hdnpricewithcategoryfundapplied").text());
                 $("#hdncurrentrecordid").text();
                 var currentrecordid = $("#hdncurrentrecordid").text();
@@ -535,11 +555,11 @@
                 var toreplace = spproductcategoryfund.substr(0, spproductcategoryfund.lastIndexOf(":") + 1);
                 spproductcategoryfund = spproductcategoryfund.replace(toreplace, "").replace("$", "");
 
-                spproductcategoryfund = Math.round($("#hdnsoffundamount").text()) + Math.round(spproductcategoryfund)              
+                spproductcategoryfund = Math.round($("#hdnsoffundamount").text()) + Math.round(spproductcategoryfund)
 
                 $("#spprice").text("$" + Math.round(ItemQuantity) * Math.round(ItemOriginalPrice));
                 $("#sppriceforsalesrep").text("$" + Math.round(ItemQuantity) * Math.round(ItemOriginalPrice));
-                newpricetotal = $("#spprice").text().replace("$","");
+                newpricetotal = $("#spprice").text().replace("$", "");
                 var sofentered = Math.round($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
@@ -576,8 +596,8 @@
                 }
             }
 
-            $("#btnaddtocart").click(function () {               
-               
+            $("#btnaddtocart").click(function () {
+
                 $("#hdncurrentrecordid").text();
                 var currentrecordid = $("#hdncurrentrecordid").text();
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
@@ -589,7 +609,7 @@
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
                 spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$", "");
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) - spfunddiscountprice;
-               
+
                 $("#spprice").text("$" + (newpricetotal.toFixed(2)));
 
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
@@ -597,26 +617,25 @@
 
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
-                var availableblubucksforthisitem = spblubucksprice.toFixed(2);               
+                var availableblubucksforthisitem = spblubucksprice.toFixed(2);
 
-                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {                   
+                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {
                     $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()).toFixed(2));
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                     return true;
                 }
-                else
-                {                   
+                else {
                     $("#spprice").text("$" + (Math.random(("#spprice").text().replace("$", "")) - Math.random($("#txtBluBuksUsed").val())));
                     return false;
                 }
-                   
+
             });
-          
+
 
             $("#txtBluBuksUsed").focusout(function () {
-              
+
                 $("#hdncurrentrecordid").text();
                 var currentrecordid = $("#hdncurrentrecordid").text();
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
@@ -626,19 +645,19 @@
 
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();//.replace("(FUND) discount: $", "");
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
-                spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$",""); 
-                var newpricetotal = (ItemOriginalPrice * ItemQuantity) - spfunddiscountprice;               
+                spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$", "");
+                var newpricetotal = (ItemOriginalPrice * ItemQuantity) - spfunddiscountprice;
                 $("#spprice").text("$" + newpricetotal.toFixed(2));
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
-               
+
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
-               // $("#hdnBluBucktsPoints").text(spblubucksprice.toFixed(2));                
+                // $("#hdnBluBucktsPoints").text(spblubucksprice.toFixed(2));                
 
 
-                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {                    
+                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
                     $("#spprice").text("$" + updatedprice.toFixed(2));
                     $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
@@ -646,7 +665,7 @@
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
-                else {                   
+                else {
                     $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                 }
 
@@ -655,21 +674,20 @@
 
             // CallBack method when the page call success
             function onSucceed(results, currentContext, methodName) {
-                
+
             }
             //CallBack method when the page call fails due to internal, server error 
-            function onError(results, currentContext, methodName) {              
-                
+            function onError(results, currentContext, methodName) {
+
             }
-           
+
             $('input').keypress(function (e) {
                 debugger;
                 var regex;
                 var id = $(this).attr('id');
                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
-                id = id.replace(toreplace,"");
-                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep")
-                {                  
+                id = id.replace(toreplace, "");
+                if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         return false;
                         //event.preventDefault();
@@ -697,8 +715,8 @@
                         return false;
                     }
                 }
-                
-              
+
+
             });
 
             $("#txtBluBuksUsed").keypress(function (evt) {
@@ -722,7 +740,7 @@
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
                 var Itemquantityfromcart = $("#spItemQuantity_" + currentrecordid).text();
                 var quantityfieldid = "#" + toreplace + "txtQuantity";
-                var ItemQuantity = $(quantityfieldid).val().replace("$", "");                
+                var ItemQuantity = $(quantityfieldid).val().replace("$", "");
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
@@ -730,26 +748,25 @@
                 var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU Bucks.";
                 $("#ppercentage").text(blubuckspercent);
 
-                $("#txtGLcode").val("");              
-               
-                
-               if (ItemQuantity * 1 > maxInventory)
-                {
+                $("#txtGLcode").val("");
+
+
+                if (ItemQuantity * 1 > maxInventory) {
                     alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + maxInventory + ". Please contact us if you need more information.");
                     $(quantityfieldid).val(maxInventory);
                     return false;
-                
+
                 }
-               
-              
-            
-               var customerlevel = $("#hdncustomerlevel").text();
-               
+
+
+
+                var customerlevel = $("#hdncustomerlevel").text();
+
                 applyproductcategoryfund(newpricetotal, currentrecordid, customerlevel)
-                
+
                 // $("#txtBluBuksUsed").val("0.00");
                 $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
-               
+
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
@@ -763,14 +780,14 @@
                 var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
 
                 $("#spprice").text("$" + updatedprice.toFixed(2));
-                $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));                
+                $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
-                        
+
                         PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                     }
                     else {
-                     
+
                         if (Math.round(availableblubucksforthisitem) > 0) {//if user have blubucks then show popup otherwise not
                             $(".lnkUpdateItem").attr("data-toggle", "modal");
                             $(".lnkUpdateItem").attr("data-target", "#myModa2");
@@ -779,7 +796,7 @@
                             PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                             $("#btnaddtocart").trigger("click");
                         }
-                       
+
                     }
                 }
                 else if (customerlevel == 3 || customerlevel == 7) {
@@ -800,60 +817,59 @@
             });
 
             function applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem) {
-                
+
                 var maxfundlimit = newpricetotal * (Math.round(BluBucksPercentage) / 100)
-                
-               
+
+
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(availableblubucksforthisitem)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(availableblubucksforthisitem);
-                   // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
+                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
-                    
-                   // $("#txtBluBuksUsed").trigger("focusout");
+
+                    // $("#txtBluBuksUsed").trigger("focusout");
 
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
-                    
+
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
-                   // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
+                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
-                  
-                  //  $("#txtBluBuksUsed").trigger("focusout");
+
+                    //  $("#txtBluBuksUsed").trigger("focusout");
                     return false;
-                }                
+                }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                   // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
+                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
-                   
-                   // $("#txtBluBuksUsed").trigger("focusout");
+
+                    // $("#txtBluBuksUsed").trigger("focusout");
                     return false;
                 }
-                else
-                {
+                else {
 
-                   // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
+                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     return true;
                 }
-               
+
             }
 
             function applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem) {
-               
+
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     //return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(availableblubucksforthisitem)) {
-                    $("#txtBluBuksUsed").val(availableblubucksforthisitem);                    
+                    $("#txtBluBuksUsed").val(availableblubucksforthisitem);
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
-                   
+
                     // $("#txtBluBuksUsed").trigger("focusout");                  
 
                     return false;
@@ -861,20 +877,20 @@
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
                     $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
-                   
+
                     //  $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
-                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));                    
+                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
-                   
+
                     // $("#txtBluBuksUsed").trigger("focusout");                  
                     return false;
                 }
                 else {
-                   
-                   // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
+
+                    // $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     return true;
                 }
             }
@@ -885,14 +901,14 @@
                 var ItemFundId = $("#spItemFundId_" + currentrecordid).text();
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();//.replace("(FUND) discount: $", "");
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
-                spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$","");              
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");               
+                spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
-                
-               
-                var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
+
+
+                var blubucks = "You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."
                 $("#ppointscount").text(blubucks);
-              
+
                 var fundamount = 0;
                 if (customerlevel == 3) {
                     fundamount = $("#hdnsoffundamount").text();
@@ -906,9 +922,9 @@
                 }
 
                 else if (ItemFundId == 3) {
-                    fundamount = $("#hdndirectmailfundamount").text();                   
+                    fundamount = $("#hdndirectmailfundamount").text();
                     fundamount = Math.round(fundamount) + Math.round(spfunddiscountprice) //+ Math.round(spblubucksprice); 
-                                    
+
                     applyFund(newpricetotal, fundamount);
                 }
 
@@ -950,11 +966,11 @@
                     newpricetotal = 0;
 
                 }
-                $("#spprice").text("$"+newpricetotal.toFixed(2));//price to show on popup after deduction of category fund
+                $("#spprice").text("$" + newpricetotal.toFixed(2));//price to show on popup after deduction of category fund
                 $("#sppriceforsalesrep").text("$" + newpricetotal.toFixed(2));//price to show on popup after deduction of category fund for sales rep
-                
+
                 $("#hdnpricewithcategoryfundapplied").text(newpricetotal.toFixed(2));
-                
+
             }
 
         });

@@ -54,7 +54,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"/></button>
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
                     <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <%--End Region Open Pop Up for bucckts--%>
 
@@ -94,9 +94,9 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"/></button>
-                    <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
-                    <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
+                        <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
+                    <h4 class="text-uppercase-no">APPLY SALES FUNDS</h4>
+                    <p class="roman-black">Please indicate the amount of available sales funds you would like to apply to this item.</p>
 
                     <div class="form-group">
                         <div class="row">
@@ -104,22 +104,40 @@
                                 <label class="roman-black">GL Code:</label>
                                 <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
-                            <div class="col-xs-6 col-sm-5">
+                            <div class="col-md-12">
                                 <label class="roman-black">Amount:</label>
+                            </div>
+                            <div class="col-xs-6 col-sm-5">
                                 <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>
+                    <p class="roman-black">Please indicate if this purchase uses specially allocated funds from your vice president. </p>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label class="roman-black">
+                                    YES:
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="" class="radio-btn-group" />
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label class="roman-black">
+                                    NO:
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="radio-btn-group" />
 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <p class="label-text">
-
                         <span class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
-
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary" Text="APPLY" runat="server" />
-
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="APPLY" runat="server" />
                     </div>
                 </div>
             </div>
@@ -377,7 +395,7 @@
                 if (ApplyValidation(theForm)) {
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
-                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text())>0)) {
+                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text()) > 0)) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -617,13 +635,13 @@
             });
 
             $('input').keypress(function (e) {
-               
-              
+
+
                 var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         event.preventDefault();
-                       
+
                     }
 
                     var text = $(this).val();

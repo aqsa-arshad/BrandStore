@@ -475,7 +475,6 @@ namespace AspDotNetStorefront
             String BluBucksUsed = GetSessionValue("BluBucksUsed");
             String currentrecordid = GetSessionValue("currentrecordid");
             String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
-
             UpdateCurrentItemFundsUsed(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, GLcode);//Added By Tayyab on 10-01-2016
             UpdateCartQuantity(currentrecordid);
 

@@ -178,7 +178,8 @@
              </div>
             <div class="row">
             <div class="col-md-4"> </div>
-            <div class="col-md-4 checkout-field-adjust">
+             <div class="col-md-4"> </div>
+            <div class="col-md-4">
                <%-- <asp:Button ID="btnUpdateAccount" CssClass="btn btn-primary btn-block margin-none" Text="<%$ Tokens:StringResource,account.aspx.28 %>" runat="server" CausesValidation="true" ValidationGroup="account" OnClick="btnUpdateAccount_Click" />--%>
                 <asp:Button ID="btnContinueToCheckOut" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,account.aspx.60 %>" runat="server" CausesValidation="false" OnClick="btnContinueToCheckOut_Click" />
             </div>

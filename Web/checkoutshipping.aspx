@@ -37,7 +37,7 @@
 
 
             <asp:Panel runat="server" ID="pnlSelectShipping">
-               
+
                 <div class="page-row row-shipping-address">
                     <div class="form login-form">
                         <div class="group-header form-header signin-header">
@@ -135,30 +135,39 @@
             </asp:Panel>
 
             <asp:Panel ID="pnlCartAllowsShippingMethodSelection" runat="server" CssClass="row">
-                <div class="col-md-4 checkout-shipping">
+                <div class="col-md-12 checkout-shipping">
                     <asp:Label ID="ShipSelectionMsg" runat="server"></asp:Label>
                     <asp:Label ID="lblMultiShipPrompt" runat="server" Visible="false" />
-                      <h4 class="black-color margin-top-none"><label id="Label1" runat="server" class="black-color margin-top-none">Select Shipping Method</label></h4>
+                    <h4 class="black-color margin-top-none">
+                        <label id="Label1" runat="server" class="black-color margin-top-none">Select Shipping Method</label></h4>
                     <aspdnsfc:ShippingMethodControl ID="ctrlShippingMethods" runat="server" />
-                
-                <div class="page-row row-buysafe">
-                    <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="shippingKicker" runat="server" />
-                </div>
-                  <asp:Button ID="btnContinueCheckout" runat="server"
-                    Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
-                    CssClass="btn btn-primary btn-block" Visible="false"
-                    OnClick="btnContinueCheckout_Click" />
 
-                    <div class="clearfix"></div>
+                    <div class="page-row row-buysafe">
+                        <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="shippingKicker" runat="server" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-4">
                         <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block btn-success" runat="server" OnClick="btnback_Click" Text="<< Back"></asp:Button>
                     </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <asp:Button ID="btnContinueCheckout" runat="server"
+                            Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
+                            CssClass="btn btn-primary btn-block" Visible="false"
+                            OnClick="btnContinueCheckout_Click" />
+                    </div>
+                </div>
+
             </asp:Panel>
-        
-              <%--  <asp:Button ID="btnContinueCheckout" runat="server"
+
+            <%--  <asp:Button ID="btnContinueCheckout" runat="server"
                     Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
                     CssClass="btn btn-primary" Visible="false"
                     OnClick="btnContinueCheckout_Click" />--%>
-        
+
 
             <div class="group-header checkout-header" style="display: none">
                 <asp:Literal ID="Literal1" Text="<%$ Tokens:StringResource,Header.ShoppingCart %>" runat="server" />
