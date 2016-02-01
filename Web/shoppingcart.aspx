@@ -455,7 +455,7 @@
                             <div class="radio">
                                 <label class="roman-black">
                                     YES:
-                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
+                                    <input type="radio" ClientIDMode="Static" runat="server" name="optionsRadios" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
                                 </label>
                             </div>
                         </div>
@@ -463,7 +463,7 @@
                             <div class="radio">
                                 <label class="roman-black">
                                     NO:
-                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" />
+                                    <input type="radio" ClientIDMode="Static" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" />
 
                                 </label>
                             </div>
@@ -728,6 +728,7 @@
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");                
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
+                var fuundcheckdecision=$("#spfundcheck_" + currentrecordid).text().replace("$", "");
                 var customerlevel = $("#hdncustomerlevel").text();                
                 
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
@@ -794,6 +795,18 @@
                     if(Math.round($("#hdnProductFundAmountUsed").text())>0)
                     {
                     //bind link update to sof fund opup/internal user
+
+                    if(fuundcheckdecision=="Yes")                    {
+
+                        $("#optionsRadioYes").prop('checked', true);
+                      
+                    }
+                    else
+                    {
+                     $("#optionsRadioNo").prop('checked', true);
+                    
+                    }
+
                     $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
                     $("#sppriceforsalesrep").text("$" + $("#spprice").text().replace("$", ""));
                     $(".lnkUpdateItem").attr("data-toggle", "modal");
