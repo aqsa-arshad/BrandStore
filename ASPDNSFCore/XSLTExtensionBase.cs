@@ -3206,14 +3206,13 @@ function popupzoom(url,alturl)
         }
 
         public int IsShowProductStockStatus(String sProductID, String sVariantID)
-        {
-            AppLogic.LstInventory.Clear();
+        {            
             var result = ShowInventoryTable(sProductID, sVariantID);
             if (result.Contains("Out of stock"))
             {
+                AppLogic.LstInventory.Clear();
                 var startIndex = result.IndexOf("'>", StringComparison.Ordinal) + "'>".Length;
                 var lastIndex = result.IndexOf("</span>", StringComparison.Ordinal);
-                AppLogic.LstInventory.Clear();
                 return result.Substring(startIndex, lastIndex - startIndex).ToUpper().Contains("OUT OF STOCK") ? 1 : 0;
             }
             else
@@ -3224,7 +3223,7 @@ function popupzoom(url,alturl)
         }
 
         public string NotifyMeButton(String sProductID, String sVariantID)
-        {
+        {            
             bool showNotifymeButton = false;
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {

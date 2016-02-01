@@ -853,41 +853,41 @@ namespace AspDotNetStorefront
                         {
                             CustomerFund customerFund = GetCustomerFund(customerID, i, false);
                             if (customerFund.CustomerID == 0)
-                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Co_op_budget__c));
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Co_op_budget__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Co_op_budget__c));
                             else
-                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Co_op_budget__c));
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Co_op_budget__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Co_op_budget__c));
                         }
                         else if (i == (int)FundType.DirectMailFunds)
                         {
                             CustomerFund customerFund = GetCustomerFund(customerID, i, false);
                             if (customerFund.CustomerID == 0)
-                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c));
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c));
                             else
-                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c));
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Direct_Marketing_Funds__c));
                         }
                         else if (i == (int)FundType.DisplayFunds)
                         {
                             CustomerFund customerFund = GetCustomerFund(customerID, i, false);
                             if (customerFund.CustomerID == 0)
-                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Display_Funds__c));
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Display_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Display_Funds__c));
                             else
-                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Display_Funds__c));
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Display_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Display_Funds__c));
                         }
                         else if (i == (int)FundType.LiteratureFunds)
                         {
                             CustomerFund customerFund = GetCustomerFund(customerID, i, false);
                             if (customerFund.CustomerID == 0)
-                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Literature_Funds__c));
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Literature_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Literature_Funds__c));
                             else
-                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Literature_Funds__c));
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.Literature_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.Literature_Funds__c));
                         }
                         else if (i == (int)FundType.POPFunds)
                         {
                             CustomerFund customerFund = GetCustomerFund(customerID, i, false);
                             if (customerFund.CustomerID == 0)
-                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.POP_Funds__c));
+                                AddCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.POP_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.POP_Funds__c));
                             else
-                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.POP_Funds__c));
+                                UpdateCustomerFundAmount(customerID, i, Convert.ToDecimal(contact.Account.POP_Funds__c) < 0 ? 0 : Convert.ToDecimal(contact.Account.POP_Funds__c));
                         }
                     }
                 }
@@ -922,9 +922,9 @@ namespace AspDotNetStorefront
                     Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
                     CustomerFund customerFund = GetCustomerFund(customerID, (int)FundType.SOFFunds, false);
                     if (customerFund.CustomerID == 0)
-                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c));
+                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Budget__c));
                     else
-                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c));
+                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Budget__c));
                 }
             }
             catch (Exception ex)

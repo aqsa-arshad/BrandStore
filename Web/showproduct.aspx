@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-
+        
     </div>
     <%--End Region Open Pop Up for bucckts--%>
 
@@ -95,24 +95,44 @@
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
-                    <h4 class="text-uppercase-no">Apply sales funds to this item</h4>
-                    <p>Apply sales funds by entering a GL code and the amount of the funds you want to use below:</p>
+                    <h4 class="text-uppercase-no">APPLY SALES FUNDS</h4>
+                    <p class="roman-black">Please indicate the amount of available sales funds you would like to apply to this item.</p>
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-xs-6 col-sm-7">
+                            <%--<div class="col-xs-6 col-sm-7">
                                 <label class="roman-black">GL Code:</label>
                                 <asp:TextBox ID="txtGLcode" MaxLength="12" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            </div>--%>
+                            <div class="col-md-12">
+                                <label class="roman-black">Amount:</label>
                             </div>
                             <div class="col-xs-6 col-sm-5">
-                                <label class="roman-black">Amount:</label>
                                 <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>
+                    <p class="roman-black">Please indicate if this purchase uses specially allocated funds from your vice president. </p>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label class="roman-black">
+                                    YES:
+                                    <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label class="roman-black">
+                                    NO:
+                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" />
 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <p class="label-text">
-
                         <span class="roman-black">Total price using sales funds:</span>
                         <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
@@ -293,11 +313,7 @@
             });
 
             //Area for pop up for sales rep
-            $("#btnaddtocartforsalesrep").click(function () {
-                if ($("#txtGLcode").val() == "" && (Math.round($("#hdnProductFundAmountUsed").text()) > 0)) {
-                    alert("Please enter GL code.");
-                    return false;
-                }
+            $("#btnaddtocartforsalesrep").click(function () {                
                 if ($("#txtproductcategoryfundusedforsalesrep").trigger("focusout")) {
                     $(btnname).trigger("click");
                     return true;
@@ -362,7 +378,6 @@
 
             //end area for pop up for sales rep
             $("#btnaddtocart").click(function (e) {
-
                 if (checkifproductalreadyexists()) {
                     $("#palreadyexist").removeClass("hide-element");
                     $("#palreadyexist").html("<span class=\"notify\">Product with selected options already exists in cart,Please go to shopping cart and update quantity or select different option.</span>");
@@ -377,6 +392,7 @@
 
                 if (ApplyValidation(theForm)) {
 
+
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
                     if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text()) > 0)) {
@@ -390,20 +406,18 @@
 
                         $("#txtBluBuksUsed").trigger("focusout");
 
-
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModa2");
-
                     }
                     else if ((customerlevel == 3 || customerlevel == 7)) {
                         if (Math.round($("#hdnProductFundAmountUsed").text()) > 0) {
-                            var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                            $("#spprice").text("$" + updatedprice.toFixed(2));
-                            $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
-                            $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
+                        var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
+                        $("#spprice").text("$" + updatedprice.toFixed(2));
+                        $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
+                        $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
 
-                            $("#btnaddtocart").attr("data-toggle", "modal");
-                            $("#btnaddtocart").attr("data-target", "#myModal1");
+                        $("#btnaddtocart").attr("data-toggle", "modal");
+                        $("#btnaddtocart").attr("data-target", "#myModal1");
                         }
 
                         else {
@@ -413,7 +427,7 @@
                             
                             $("#btnaddtocartforsalesrep").trigger("click");
 
-                        }
+                    }
 
                     }
                     else {
@@ -454,8 +468,6 @@
                     sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
                 }
 
-
-
                 var ProductID = $("#hdnProductID").text();
                 var VariantID = $("#hdnVariantID").text();
                 var CustomerID = $("#hdnCustomerID").text();
@@ -493,9 +505,7 @@
                         }
                     });
                 }
-
                 return exist;
-
             }
 
             //Set product price  to show on pupup
@@ -535,7 +545,6 @@
 
             //Shehriyar's Code
             $("#Color_1_1").change(function () {
-
                 if (inventoryArray.length > 1) {
                     //if ($("#Size_1_1").length > 0) {
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
@@ -586,7 +595,6 @@
             //End
 
             $("#Size_1_1").change(function () {
-
                 var customerlevel = $("#hdncustomerlevel").text();
                 if (customerlevel == 1 || customerlevel == 8) {
                     $("#sppricewithfund").addClass("hide-element");
@@ -649,12 +657,12 @@
             });
 
             $('input').keypress(function (e) {
-
+               
                 var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
                         event.preventDefault();
-
+                       
                     }
 
                     var text = $(this).val();

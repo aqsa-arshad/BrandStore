@@ -125,11 +125,19 @@
                                 LineItemDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.200 %>" OrderDiscountCaption="<%$Tokens:StringResource, shoppingcart.cs.201 %>" />
                         <%--</div>--%>
                          </asp:Panel>
-                    <asp:button type="submit" id="btnback" class="btn btn-primary btn-block" runat="server" onclick="btnBack_Click" Text="Back"></asp:button>
+                   
                                         <div class="clearfix"></div>
-        <asp:Button ID="btnContinueCheckout2" Text="<%$ Tokens:StringResource,checkoutreview.aspx.777 %>" CssClass="btn btn-primary btn-block" runat="server" OnClick="btnContinueCheckout2_Click" />
+       
                 </div>
-                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                         <asp:button type="submit" id="btnback" class="btn btn-primary btn-block btn-success" runat="server" onclick="btnBack_Click" Text="<< Back"></asp:button>
+                    </div>
+                     <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                         <asp:Button ID="btnContinueCheckout2" Text="<%$ Tokens:StringResource,checkoutreview.aspx.777 %>" CssClass="btn btn-primary btn-block" runat="server" OnClick="btnContinueCheckout2_Click" />
+                    </div>
+                </div>
                 </div>
     </asp:Panel>
     

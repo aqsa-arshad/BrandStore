@@ -124,8 +124,8 @@ namespace AspDotNetStorefront
         int StateID = 0;
         string ZipCode = string.Empty;
 
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
+        protected void Page_Load(object sender, System.EventArgs e)        {
+
 
             Updatecartcounttotalonmenue();
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
@@ -481,8 +481,7 @@ namespace AspDotNetStorefront
             String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
             String BluBucksUsed = GetSessionValue("BluBucksUsed");
             String currentrecordid = GetSessionValue("currentrecordid");
-            String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
-
+            String GLcode = (optionsRadioYes.Checked ? "Yes" : "No");
             UpdateCurrentItemFundsUsed(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, GLcode);//Added By Tayyab on 10-01-2016
             UpdateCartQuantity(currentrecordid);
 

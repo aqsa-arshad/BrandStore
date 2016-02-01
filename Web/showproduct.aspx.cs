@@ -753,7 +753,7 @@ namespace AspDotNetStorefront
            
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
-            formInput.GLcode = txtGLcode.Text;
+            formInput.GLcode = (optionsRadioYes.Checked ? "Yes" : "No");
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
