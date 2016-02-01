@@ -517,7 +517,10 @@
                
             $("#btnaddtocartforsalesrep").click(function () {               
                
-                $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
+                if($("#txtproductcategoryfundusedforsalesrep").trigger("focusout"))
+                    return true;
+                    else
+                    return false;
             });
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
@@ -561,6 +564,12 @@
             });
 
             function applySOFValidation(newpricetotal, sofentered, spproductcategoryfund) {
+
+                if(spproductcategoryfund <=0)
+                {
+                $("#txtproductcategoryfundusedforsalesrep").val("0.00");
+                  return true;
+                }
                 if ($("#txtproductcategoryfundusedforsalesrep").val() == "" || isNaN($("#txtproductcategoryfundusedforsalesrep").val())) {
                     return false;
                 }
@@ -758,9 +767,9 @@
                 $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));                
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
                     if (ItemQuantity == 0) {
-                        ("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+                        $(".lnkUpdateItem").removeAttr("data-toggle", "modal");
+                        $(".lnkUpdateItem").removeAttr("data-target", "#myModa2");
+                        $(".lnkUpdateItem").removeAttr("data-target", "#myModal1");
                         PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                        $("#btnaddtocart").trigger("click");
                        $
@@ -774,9 +783,9 @@
                         }
                         else {
                      
-                            $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                            $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                            $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+                            $(".lnkUpdateItem").removeAttr("data-toggle", "modal");
+                            $(".lnkUpdateItem").removeAttr("data-target", "#myModa2");
+                            $(".lnkUpdateItem").removeAttr("data-target", "#myModal1");
                             PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                             $("#btnaddtocart").trigger("click");
                         }
@@ -787,6 +796,7 @@
 
                     if(Math.round($("#hdnProductFundAmountUsed").text())>0)
                     {
+
                     //bind link update to sof fund opup/internal user
 
                     if(fuundcheckdecision=="Yes")                    {
@@ -807,17 +817,20 @@
                 }
                     else
                     {
-                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+
+                        $(".lnkUpdateItem").removeAttr("data-toggle", "modal");
+                        $(".lnkUpdateItem").removeAttr("data-target", "#myModa2");
+                        $(".lnkUpdateItem").removeAttr("data-target", "#myModal1");
+                        $("#txtproductcategoryfundusedforsalesrep").val("0.00");
                         PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                         $("#btnaddtocartforsalesrep").trigger("click");
                     }
                 }
-                else {
-                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+                else {                       
+
+                        $(".lnkUpdateItem").removeAttr("data-toggle", "modal");
+                        $(".lnkUpdateItem").removeAttr("data-target", "#myModa2");
+                        $(".lnkUpdateItem").removeAttr("data-target", "#myModal1");
                     PageMethods.Firebtnaddtocartclickevent("1", onSucceed, onError);//, onSucceed, onError
                     $("#btnaddtocart").trigger("click");
                 }
