@@ -124,8 +124,8 @@ namespace AspDotNetStorefront
         int StateID = 0;
         string ZipCode = string.Empty;
 
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
+        protected void Page_Load(object sender, System.EventArgs e)        {
+
 
             Updatecartcounttotalonmenue();
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
@@ -397,6 +397,13 @@ namespace AspDotNetStorefront
 
         }
 
+        [System.Web.Services.WebMethod()]
+        public static String GetPercentageRatio(string CustomerLevelID, string ProductCategoryID)
+        {
+            BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(Convert.ToInt32(CustomerLevelID), Convert.ToInt32(ProductCategoryID));
+            return FundPercentage.BudgetPercentageValue.ToString();
+        }
+
         #region "Session related"
         public void btnaddtocartforsalesrep_Click(object sender, EventArgs e)
         {
@@ -474,7 +481,7 @@ namespace AspDotNetStorefront
             String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
             String BluBucksUsed = GetSessionValue("BluBucksUsed");
             String currentrecordid = GetSessionValue("currentrecordid");
-            String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
+            String GLcode = (optionsRadioYes.Checked ? "Yes" : "No");
             UpdateCurrentItemFundsUsed(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, GLcode);//Added By Tayyab on 10-01-2016
             UpdateCartQuantity(currentrecordid);
 

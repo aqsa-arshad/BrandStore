@@ -735,6 +735,9 @@ namespace AspDotNetStorefront
 
             if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text))
                 txtBluBuksUsed.Text = "0";
+
+            if (String.IsNullOrEmpty(txtproductcategoryfundusedforsalesrep.Text) || String.IsNullOrWhiteSpace(txtproductcategoryfundusedforsalesrep.Text))
+                txtproductcategoryfundusedforsalesrep.Text = "0";
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
@@ -750,7 +753,7 @@ namespace AspDotNetStorefront
            
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
-            formInput.GLcode = txtGLcode.Text;
+            formInput.GLcode = (optionsRadioYes.Checked ? "Yes" : "No");
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);

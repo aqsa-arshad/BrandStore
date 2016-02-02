@@ -1254,6 +1254,7 @@ namespace AspDotNetStorefrontControls
                         lblSubTotal.Text += "<span id='" + "spfunddiscountprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>" + cItem.FundName + lblpricewithCategoryFundUsed.Text + "</span>";
                         lblSubTotal.Text += "<span id='" + "spblubucksprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>BLU Bucks used: " + lblpricewithBluBucksUsed.Text + "" + "</span>";
                         lblSubTotal.Text += "<span id='" + "spInventory_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>" + cItem.Inventory + "" + "</span>";
+                        lblSubTotal.Text += "<span id='" + "spfundcheck_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element'>" + cItem.GLcode + "" + "</span>";
 
                         Controls.Add(lblSubTotal);
                         Controls.Add(new LiteralControl("        </td>"));
