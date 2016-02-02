@@ -552,6 +552,7 @@
 
             //Shehriyar's Code
             $("#Color_1_1").change(function () {
+                debugger;
                 if (inventoryArray.length > 1) {
                     //if ($("#Size_1_1").length > 0) {
                     var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
