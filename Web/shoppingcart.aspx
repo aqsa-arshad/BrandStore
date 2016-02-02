@@ -451,13 +451,13 @@
                             <div class="col-xs-6 col-sm-4">
                                 <label class="roman-black">
                                     YES:
-                                    <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
+                                    <input type="radio" runat="server"  name="optionsRadio" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
                                 </label>
                             </div>
                             <div class="col-xs-4 col-sm-4">
                                 <label class="roman-black">
                                     NO:
-                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" />
+                                    <input type="radio" runat="server" name="optionsRadio" id="optionsRadioNo" value="option2" class="radio-btn-group" />
 
                                 </label>
                             </div>
@@ -752,7 +752,8 @@
                 
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
-                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU™ Bucks.";
+                
+                var blubuckspercent = "You can pay for up to " + round(BluBucksPercentage,2) + "% of this item's cost with BLU™ Bucks.";
                 $("#ppercentage").text(blubuckspercent);                            
                
                 
@@ -782,6 +783,7 @@
 
                 var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
 
+                //bellow two lines are important
                 $("#spprice").text("$" + updatedprice.toFixed(2));
                 $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2)); 
             
@@ -795,9 +797,9 @@
                        $
                     }
                     else {
-                     
-                        if ((availableblubucksforthisitem) > 0 && ($("#spprice").text().replace("$", "")) > 0) {//if user have blubucks then show popup otherwise not
-                             
+                    
+                        if ((availableblubucksforthisitem) > 0 &&  round($("#txtBluBuksUsed").val(),2) > 0) {//&& ($("#spprice").text().replace("$", "")) > 0 
+                            //if user have blubucks then show popup otherwise not                             
                             $(".lnkUpdateItem").attr("data-toggle", "modal");
                             $(".lnkUpdateItem").attr("data-target", "#myModa2");
                         }
@@ -814,19 +816,18 @@
                 }
                 else if ((customerlevel == 3 || customerlevel == 7)) {
 
-                    if(Math.round($("#hdnProductFundAmountUsed").text())>0)
+                    if(round($("#hdnProductFundAmountUsed").text(),2)>0)
                     {
 
                     //bind link update to sof fund opup/internal user
 
-                    if(fuundcheckdecision=="Yes")                    {                      
-                         $("#optionsRadioYes")[0].checked=true;                      
-                      
+                    if(fuundcheckdecision=="Yes")                   
+                     {                                        
+                   
                     }
                     else
                     {  
-                      $("#optionsRadioNo")[0].checked=true;
-                    
+                                                              
                     }
 
                     $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
@@ -865,17 +866,18 @@
                         data: JSON.stringify({
                             "CustomerLevelID": customerlevel,
                             "ProductCategoryID": ProductCategoryID                            
-                        }),
-                        dataType: "json",
+                        }),                        
                         async: false,
-                        success: function (result) {
+                        dataType: "json",
+                        success: function (result) {                          
+                            
                             percentageration=result.d.toString();
                         },
-                        error: function (result) {
-
+                        error: function (result) {                      
+                               
                         }
             });
-
+                   
                     return percentageration;
                 }
 

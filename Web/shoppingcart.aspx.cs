@@ -398,10 +398,14 @@ namespace AspDotNetStorefront
         }
 
         [System.Web.Services.WebMethod()]
-        public static String GetPercentageRatio(string CustomerLevelID, string ProductCategoryID)
+        public static String  GetPercentageRatio(string CustomerLevelID, string ProductCategoryID)
         {
+           
+
             BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(Convert.ToInt32(CustomerLevelID), Convert.ToInt32(ProductCategoryID));
-            return FundPercentage.BudgetPercentageValue.ToString();
+            return  FundPercentage.BudgetPercentageValue.ToString();
+            
+             
         }
 
         #region "Session related"
