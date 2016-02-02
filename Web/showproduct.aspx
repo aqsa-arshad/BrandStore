@@ -316,25 +316,18 @@
             });
 
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
-
-                $("#spprice").text("$" + $("#hdnpricewithcategoryfundapplied").text());
-                $("#hdncurrentrecordid").text();
-                //  var currentrecordid = $("#hdncurrentrecordid").text();
-                var ItemOriginalPrice = $("#hdnproductactualprice").text();
-                // var quantityfieldid = "#" + $("#hdntoreplace").text() + "txtQuantity";
+               
+                var ItemOriginalPrice = $("#hdnproductactualprice").text();                
                 var ItemQuantity = theForm.Quantity_1_1.value;
-                var newpricetotal = $("#spprice").text().replace("$", "");// (ItemOriginalPrice * ItemQuantity) - $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
-                // var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
-                // var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
+                var newpricetotal = (ItemOriginalPrice * ItemQuantity) ;                
 
-                var spproductcategoryfund = Math.round($("#hdnProductFundAmountUsed").text().replace("$", ""));
-                spproductcategoryfund = Math.round($("#hdnsoffundamount").text()) + Math.round(spproductcategoryfund)
-                // $("#hdnsoffundamount").text(spproductcategoryfund);
+                var spproductcategoryfund = round($("#hdnProductFundAmountUsed").text().replace("$", ""),2);
+                spproductcategoryfund = (spproductcategoryfund);               
 
-                $("#spprice").text("$" + ItemQuantity * ItemOriginalPrice);
                 $("#sppriceforsalesrep").text("$" +ItemQuantity * ItemOriginalPrice);
-                newpricetotal = $("#spprice").text().replace("$", "");
-                var sofentered = Math.round($("#txtproductcategoryfundusedforsalesrep").val());
+                 $("#spprice").text("$" +ItemQuantity * ItemOriginalPrice);
+                newpricetotal = $("#sppriceforsalesrep").text().replace("$", "");
+                var sofentered = ($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
                     $("#spprice").text("$" + (ItemQuantity) * (ItemOriginalPrice));
@@ -347,27 +340,46 @@
                     //PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
                 else {
+                    var updatedprice = $("#spprice").text().replace("$", "")-$("#txtproductcategoryfundusedforsalesrep").val() ;//((ItemOriginalPrice * ItemQuantity) - round($("#hdnProductFundAmountUsed").val(),2));//$("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();               
+                  
+                    $("#spprice").text("$" + round(updatedprice,2));                    
+                    $("#sppriceforsalesrep").text("$" + round(updatedprice,2));
                     return false;
+                   
                 }
             });
 
             function applySOFValidation(newpricetotal, sofentered, spproductcategoryfund) {
+
+                 if(spproductcategoryfund <=0)
+                {
+                $("#txtproductcategoryfundusedforsalesrep").val("0.00");
+                  return true;
+                }
                 if ($("#txtproductcategoryfundusedforsalesrep").val() == "" || isNaN($("#txtproductcategoryfundusedforsalesrep").val())) {
                     return false;
                 }
-                else if (Math.round(sofentered) > Math.round(spproductcategoryfund)) {
+                else if (round(sofentered,2) > round(spproductcategoryfund,2)) {
                     alert("You exceed available SOF");
-                    $("#txtproductcategoryfundusedforsalesrep").val("0.00");
+                    $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2) );
                     return false;
                 }
-                else if (Math.round(sofentered) > Math.round(newpricetotal)) {
+                else if (round(sofentered,2) >round(newpricetotal,2)) {
                     alert("You exceed price limit");
-                    $("#txtproductcategoryfundusedforsalesrep").val("0.00");
+                    $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2) );
                     return false;
                 }
                 else {
                     return true;
                 }
+            }
+
+            function round(value, decimals) 
+            {
+                    if (value == "" || isNaN(value))
+                        return 0; 
+        
+                return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
             }
 
             //end area for pop up for sales rep
@@ -389,7 +401,7 @@
 
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
-                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (Math.round($("#spprice").text().replace("$", 0)) > 0 && Math.round($("#hdnBluBucktsPoints").text()) > 0)) {
+                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (round($("#spprice").text().replace("$", 0),2) > 0 && round($("#hdnBluBucktsPoints").text(),2) > 0)) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
@@ -404,11 +416,11 @@
                         $("#btnaddtocart").attr("data-target", "#myModa2");
                     }
                     else if ((customerlevel == 3 || customerlevel == 7)) {
-                        if (Math.round($("#hdnProductFundAmountUsed").text()) > 0) {
-                        var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - Math.round($("#hdnProductFundAmountUsed").text());
+                        if (round($("#hdnProductFundAmountUsed").text(),2) > 0) {
+                        var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - ($("#hdnProductFundAmountUsed").text());
                         $("#spprice").text("$" + updatedprice.toFixed(2));
                         $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
-                        $("#txtproductcategoryfundusedforsalesrep").val( Math.round($("#hdnProductFundAmountUsed").text()));
+                        $("#txtproductcategoryfundusedforsalesrep").val(round(($("#hdnProductFundAmountUsed").text()),2));
 
                         $("#btnaddtocart").attr("data-toggle", "modal");
                         $("#btnaddtocart").attr("data-target", "#myModal1");
@@ -533,6 +545,7 @@
 
             $("#Quantity_1_1").change(function () {
 
+                ApplyValidation(theForm);
                 $("#hdnquantity").text(theForm.Quantity_1_1.value);
                 setpricewithquantitychange();
             });
@@ -699,8 +712,13 @@
                     updatedtotalprice = 0;
                     $("#txtBluBuksUsed").text(updatedtotalprice);
                 }
+                if(updatedtotalprice <0)
+                {
+                updatedtotalprice=0;
+                }
                 $("#hdnpricewithfund").text(updatedtotalprice);
                 $("#spprice").text("$" + updatedtotalprice.toFixed(2));
+                $("#sppriceforsalesrep").text("$" + updatedtotalprice.toFixed(2));
                 $("#sppricewithfund").html("<font>Price with " + $("#hdnFundName").text() + " credit: $</font>" + updatedtotalprice.toFixed(2));
 
             }
@@ -709,28 +727,31 @@
 
                 var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                 $("#spprice").text("$" + updatedprice.toFixed(2));
-                var maxfundlimit = $("#spprice").text().replace("$", "") * (Math.round($("#hdnBudgetPercentValue").text()) / 100)
-                if (Math.round($("#spprice").text().replace("$", "")) <= 0) {
+                var maxfundlimit = $("#spprice").text().replace("$", "") * (round($("#hdnBudgetPercentValue").text(),2) / 100)
+                if (round($("#spprice").text().replace("$", ""),2) <= 0) {
                     $("#txtBluBuksUsed").val(0);
                     return true;
                 }
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
                     return false;
                 }
-                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {
+                else if (round($("#txtBluBuksUsed").val(),2) > round($("#hdnBluBucktsPoints").text(),2)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
+                    applyblubuksvalidation2();
 
                     return false;
                 }
-                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
+                else if (round($("#txtBluBuksUsed").val(),2) > round(maxfundlimit,2)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
-                    $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
+                    $("#txtBluBuksUsed").val(round(maxfundlimit));
+                    applyblubuksvalidation2();
                     return false;
                 }
-                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
+                else if (round($("#txtBluBuksUsed").val(),2) > round($("#spprice").text().replace("$", ""),2)) {
+                    //alert("BLU BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
+                    applyblubuksvalidation2();
                     return false;
                 }
                 else
@@ -739,38 +760,24 @@
 
             function applyblubuksvalidation2() {
 
-                var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
-                $("#spprice").text("$" + updatedprice.toFixed(2));
-                var maxfundlimit = $("#spprice").text().replace("$", "") * (Math.round($("#hdnBudgetPercentValue").text()) / 100);
-                if (Math.round($("#spprice").text().replace("$", "")) <= 0) {
+                var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();               
+                $("#spprice").text("$" + round(updatedprice,2).toFixed(2));
+                var maxfundlimit = $("#spprice").text().replace("$", "") * (round($("#hdnBudgetPercentValue").text(),2) / 100);
+                
+                if (($("#spprice").text().replace("$", "")) <= 0) 
+                {
                     $("#txtBluBuksUsed").val(0);
                     return true;
                 }
-                if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
-                    return false;
-                }
-                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#hdnBluBucktsPoints").text())) {
-                    $("#txtBluBuksUsed").val($("#hdnBluBucktsPoints").text());
-                    applyblubuksvalidation2();
+               
+                var min=Math.min(updatedprice,maxfundlimit,$("#hdnBluBucktsPoints").text());
+                $("#txtBluBuksUsed").val(round(min,2));  
 
-                    return false;
-                }
-                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(maxfundlimit)) {
-                    $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
-                    applyblubuksvalidation2();
-                    return false;
-                }
-                else if (Math.round($("#txtBluBuksUsed").val()) > Math.round($("#spprice").text().replace("$", ""))) {
-                    $("#txtBluBuksUsed").val($("#spprice").text().replace("$", "").toFixed(2));
-                    applyblubuksvalidation2();
-                    return false;
-                }
-                else
-                    return true;
             }
             function applyproductcategoryfund() {
-                $("#spprice").text("$" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
-                $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + Math.round($("#hdnpricewithfund").text()).toFixed(2));
+                $("#spprice").text("$" + round($("#hdnpricewithfund").text(),2).toFixed(2));
+                $("#sppriceforsalesrep").text("$" + round($("#hdnpricewithfund").text(),2).toFixed(2));
+                $("#sppricewithfund").html("<font>Price with" + $("#hdnFundName").text() + " credit:</font> $" + round($("#hdnpricewithfund").text(),2).toFixed(2));
                 $("#hdnproductactualprice").text($("meta[itemprop=price]").attr("content").replace("$", "").replace(",", "").replace(" ", ""));
                 var customerlevel = $("#hdncustomerlevel").text();
                 if (customerlevel == 1 || customerlevel == 8) {
@@ -778,7 +785,7 @@
 
                 }
                 else {
-                    if (Math.round($("#hdnProductFundAmount").text()) > 0)
+                    if (round($("#hdnProductFundAmount").text(),2) > 0)
                         $("#sppricewithfund").removeClass("hide-element");
                     else
                         $("#sppricewithfund").addClass("hide-element");
