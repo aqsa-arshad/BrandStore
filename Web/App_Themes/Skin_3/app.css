@@ -1355,10 +1355,6 @@ input[type="search"] {
   margin-left: -20px;
   margin-top: 4px \9;
 }
-.radio-btn-group {
-position:absolute;
-margin-left:6px !important;
-}
 .radio + .radio,
 .checkbox + .checkbox {
   margin-top: -5px;
@@ -5176,6 +5172,7 @@ a:hover.mb-login-btn {
   text-align: left;
   margin: 0;
   text-shadow: none !important;
+  background: none !important;
 }
 @media screen and (min-width: 768px) {
   .nav > li > a {
@@ -6082,7 +6079,7 @@ table.order-detail tbody tr td {
   margin-top: 0;
   margin-bottom: 25px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .side-bar {
     margin-bottom: 0;
   }
@@ -6191,10 +6188,31 @@ a:hover.sm-link {
   line-height: 14px;
 }
 .search-right {
-  margin-top: 53px;
+  margin-top: 0;
+}
+@media screen and (min-width: 992px) {
+  .search-right {
+    margin-top: 53px;
+    margin-bottom: 0;
+  }
+}
+.search-left {
+  margin-top: -35px;
+  margin-bottom: 25px;
 }
 .sub-category-right {
   margin-top: 39px;
+}
+.search-prelogin {
+  padding-top: 25px;
+}
+@media screen and (min-width: 992px) {
+  .search-prelogin {
+    padding-top: 0;
+  }
+}
+#categoryContent {
+  margin-bottom: 15px;
 }
 /******************* Footer ***********************/
 footer {
@@ -6481,10 +6499,6 @@ a:hover.underline-link {
 .text-uppercase-no {
   text-transform: none !important;
 }
-.search-left {
-  margin-top: -35px;
-  margin-bottom: 25px;
-}
 .text-right {
   text-align: right;
 }
@@ -6533,14 +6547,19 @@ a:hover.underline-link {
 }
 @media screen and (min-width: 768px) {
   .shopping-cart-fix {
-    height: 108px;
+    height: 112px;
     overflow: hidden;
+    line-height: 23px !important;
     margin-bottom: 0;
   }
 }
-.shopping-cart-fix ul {
+.shopping-cart-fix ul,
+.shopping-cart-fix p,
+.shopping-cart-fix span,
+.shopping-cart-fix div {
   margin: 0;
   padding: 0;
+  line-height: 23px !important;
 }
 @media screen and (min-width: 768px) {
   .receipt-fix {
