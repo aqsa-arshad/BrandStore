@@ -753,7 +753,7 @@
                 
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
-                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU Bucks.";
+                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU™ Bucks.";
                 $("#ppercentage").text(blubuckspercent);                            
                
                 
@@ -902,7 +902,7 @@
                 }
                 else if ((round($("#txtBluBuksUsed").val(),2)) > (round(maxfundlimit,2))) {
                     
-                    alert("BLU BUKS cannot be greater than allowed limit");
+                    alert("BLU™ BUKS cannot be greater than allowed limit");
                    // $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, (maxfundlimit), availableblubucksforthisitem);
                   
@@ -940,7 +940,7 @@
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "").replace("BLU™ Bucks used:","");               
                 spblubucksprice = ($("#hdnBluBucktsPoints").text()) + (spblubucksprice);
                 
-                var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
+                var blubucks="You have " + spblubucksprice + " BLU™ Bucks you can use to purchase items."               
                 $("#ppointscount").text(blubucks);
               
                 var fundamount = 0;

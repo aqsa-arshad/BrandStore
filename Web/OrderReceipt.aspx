@@ -7,25 +7,24 @@
         <tbody>
             <tr>
                 <td>
-
                     <table class="receipt-print" border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tbody>
                             <tr>
-                                <td height="30" width="32%">
+                                <td align="left" height="30" width="32%">
                                     <span class="frut-roman-font black-color text-uppercase">
                                         <asp:Label ID="lblOrderNumberCaption" runat="server" Text='<%$ Tokens:StringResource, orders.aspx.OrderNumber %>' />
                                         <asp:Label runat="server" ID="lblOrderNumber"></asp:Label>
                                     </span>
                                 </td>
                                 <td width="2%"></td>
-                                <td width="32%">
+                                <td align="left" width="32%">
                                     <span class="frut-roman-font black-color text-uppercase">
                                         <asp:Label ID="lblCustomerIDCaption" runat="server" Text="<%$ Tokens:StringResource,admin.common.CustomerID%>" />
                                         <asp:Label runat="server" ID="lblCustomerID"></asp:Label>
                                     </span>
                                 </td>
                                 <td width="2%"></td>
-                                <td width="32%">
+                                <td align="left" width="32%">
                                     <span class="frut-roman-font black-color text-uppercase">
                                         <asp:Label ID="lblOrderDateCaption" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>" />
                                         <asp:Label runat="server" ID="lblOrderDate"></asp:Label>
@@ -34,7 +33,7 @@
                             </tr>
 
                             <tr>
-                                <td height="30" width="32%" valign="top">
+                                <td align="left" height="30" width="32%" valign="top">
                                     <span class="normal-heading black-color">Shipped to</span>
                                     <p>
                                         <asp:Label class="block-text" ID="lblSAFullName" runat="server"></asp:Label>
@@ -56,7 +55,7 @@
 
                                 </td>
                                 <td width="2%"></td>
-                                <td valign="top">
+                                <td align="left" valign="top">
                                     <span class="normal-heading black-color">Billed to</span>
                                     <p>
                                         <asp:Label class="block-text" ID="lblBAFullName" runat="server"></asp:Label>
@@ -77,7 +76,7 @@
                                     </p>
                                 </td>
                                 <td width="2%"></td>
-                                <td width="32%" valign="top">
+                                <td align="left" width="32%" valign="top">
                                     <span class="normal-heading black-color">Payment Method</span>
                                     <p>
                                         <asp:Label class="block-text" ID="lblPMCardInfo" runat="server"></asp:Label>
@@ -101,15 +100,15 @@
                             <asp:Repeater ID="rptOrderItemsDetail" runat="server" OnItemDataBound="rptOrderItemsDetail_ItemDataBound">
                                 <HeaderTemplate>
                                     <tr>
-                                        <td height="30">
+                                        <td align="left" height="30">
                                             <span class="frut-roman-font black-color text-uppercase">Description</span>
                                         </td>
                                         <td width="2%"></td>
-                                        <td width="14%">
+                                        <td align="left" width="14%">
                                             <span class="frut-roman-font black-color text-uppercase">Quantity</span>
                                         </td>
                                         <td width="2%"></td>
-                                        <td width="32%">
+                                        <td align="left" width="32%">
                                             <span class="frut-roman-font black-color text-uppercase">Payment</span>
                                         </td>
                                     </tr>
@@ -132,12 +131,12 @@
                                                 <tbody>
                                                     <asp:HiddenField ID="hfDescription" runat="server" Value='<%# Eval("Description") %>' />
                                                     <tr>
-                                                        <td width="40%" valign="top">
+                                                        <td align="left" width="40%" valign="top">
                                                             <div class="primary-img-box">
                                                                 <asp:Image ID="ImgProduct" runat="server" class="img-responsive" />
                                                             </div>
                                                         </td>
-                                                        <td width="60%" valign="top" valign="top">
+                                                        <td align="left" width="60%" valign="top" valign="top">
                                                             <span class="normal-heading black-color">
                                                                 <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("OrderedProductName") %>'></asp:Label>
                                                             </span>
@@ -153,12 +152,12 @@
                                             </table>
                                         </td>
                                         <td width="2%"></td>
-                                        <td width="14%" valign="top">
+                                        <td align="left" width="14%" valign="top">
                                             <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>' />
                                         </td>
                                         <td width="2%"></td>
 
-                                        <td width="32%" valign="top">
+                                        <td align="left" width="32%" valign="top">
                                             <span class="block-text">
                                                 <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
                                             </span>
@@ -189,7 +188,7 @@
                                 <td width="2%"></td>
                                 <td width="14%"></td>
                                 <td width="2%"></td>
-                                <td width="32%">
+                                <td align="left" width="32%">
                                     <p class="label-text">
                                         <span>
                                             <font><asp:Label ID="lblSubTotalCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.cs.96 %>'/></font>
@@ -201,7 +200,7 @@
                                     </span>
                                     <p class="label-text">
                                         <span class="block-text">
-                                            <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text="BLU Bucks: " runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal" Visible="False"></asp:Label>
+                                            <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text="BLU™ Bucks: " runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal" Visible="False"></asp:Label>
                                         </span>
                                         <span class="block-text">
                                             <asp:Label ID="lblSOFFundsTotalCaption" Text="SOF Fund: " Visible="False" runat="server" /><asp:Label runat="server" ID="lblSOFFundsTotal" Visible="False"></asp:Label>

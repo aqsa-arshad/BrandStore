@@ -193,7 +193,7 @@
                 </span>
                 <p class="label-text">
                     <span class="block-text">
-                        <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text="BLU Bucks: " runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal" Visible="False"></asp:Label>
+                        <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text="BLU™ Bucks: " runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal" Visible="False"></asp:Label>
                     </span>
                     <span class="block-text">
                         <asp:Label ID="lblSOFFundsTotalCaption" Text="SOF Fund: " Visible="False" runat="server" /><asp:Label runat="server" ID="lblSOFFundsTotal" Visible="False"></asp:Label>
