@@ -596,7 +596,7 @@
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 var customerlevel = $("#hdncustomerlevel").text(); 
                 BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU™ Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);               
 
@@ -631,7 +631,7 @@
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 var customerlevel = $("#hdncustomerlevel").text(); 
                  BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
+                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU™ Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
                // $("#hdnBluBucktsPoints").text(spblubucksprice.toFixed(2));                
@@ -726,7 +726,7 @@
                 
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
-                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU Bucks.";
+                var blubuckspercent = "You can pay for up to " + parseInt(BluBucksPercentage) + "% of this item's cost with BLU™ Bucks.";
                 $("#ppercentage").text(blubuckspercent);                            
                
                 
@@ -742,7 +742,7 @@
                 // $("#txtBluBuksUsed").val("0.00");
                 $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU™ Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice.toFixed(2);
 
@@ -859,7 +859,7 @@
                     return false;
                 }
                 else if (Math.round($("#txtBluBuksUsed").val()) > Math.round(availableblubucksforthisitem)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
+                    alert("BLU™ BUKS cannot be greater than allowed limit");
                     $("#txtBluBuksUsed").val(availableblubucksforthisitem);
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, Math.round(maxfundlimit), availableblubucksforthisitem);
                     
@@ -927,10 +927,10 @@
                 var spfunddiscountprice = $("#spfunddiscountprice_" + currentrecordid).text();
                 var toreplace = spfunddiscountprice.substr(0, spfunddiscountprice.lastIndexOf(":") + 1);
                 spfunddiscountprice = spfunddiscountprice.replace(toreplace, "").replace("$", "");
-                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "");               
+                var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU™ Bucks used:", "");
                 spblubucksprice = Math.round($("#hdnBluBucktsPoints").text()) + Math.round(spblubucksprice);
                 
-                var blubucks="You have " + spblubucksprice + " BLU(tm) Bucks you can use to purchase items."               
+                var blubucks = "You have " + spblubucksprice + "BLU™ Bucks you can use to purchase items."
                 $("#ppointscount").text(blubucks);
               
                 var fundamount = 0;
