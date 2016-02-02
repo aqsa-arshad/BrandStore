@@ -37,8 +37,6 @@ function setColor(newColor) {
 		    $('#Color_1_1').trigger("change");
 		}
 	});
-	//$('#Color_1_1').trigger("change");
-	//$('#Color_1_1').change();
 }
 
 function setView(newView) {
