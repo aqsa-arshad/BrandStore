@@ -6,6 +6,7 @@ function imageInfo(SRC, WIDTH, HEIGHT) {
 }
 
 function setColor(newColor) {
+    debugger;
 	//don't set the color if the color has no image. This can be done from the color dropdown.
 	if(imageSizes['Icon'][newColor][view].src.match("nopicture")) {
 		return;
@@ -32,9 +33,12 @@ function setColor(newColor) {
 		//get the color from the option's value. It's formatted Color,SkuModifier
 		var optionColor = this.value.split(',', 1);
 		if(optionColor == color) {
-			this.selected = true;
+		    this.selected = true;
+		    $('#Color_1_1').trigger("change");
 		}
 	});
+	//$('#Color_1_1').trigger("change");
+	//$('#Color_1_1').change();
 }
 
 function setView(newView) {

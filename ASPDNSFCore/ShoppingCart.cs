@@ -8559,10 +8559,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("</label>");
                 tmpS.AppendFormat(" <input maxLength=\"10\" class=\"form-control price-field\" name=\"Price_{0}_{1}\" id=\"Price_{0}_{1}\" value=\"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ProductPriceForEdit) + "\">", ProductID, VariantID);
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
-            }
-
-            tmpS.Append("<p id=\"pInStock\" style=\"Display: None; \"><span class=\"black-blu-label\"><font>In Stock: </font><label class=\"blue-color\" runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"></label></span></p>");
-            tmpS.Append("<p id=\"pOutofStock\" style=\"Display: None; \"><span class=\"notify \">Out of Stock</span></p>");
+            }            
 
             //Colors Alternative
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
@@ -8639,6 +8636,8 @@ namespace AspDotNetStorefrontCore
                 }
             }
 
+            tmpS.Append("<p id=\"pInStock\" style=\"Display: None; \"><span class=\"black-blu-label\"><font>In Stock: </font><label class=\"blue-color\" runat=\"server\" ClientIDMode=\"Static\" id=\"lblInStock\"></label></span></p>");
+            tmpS.Append("<p id=\"pOutofStock\" style=\"Display: None; \"><span class=\"notify \">Out of Stock</span></p>");
             //Quantity DropDown
             tmpS.Append("<Span id=\"QtyDropDown\" class=\"select-quantity black-blu-label\">");
             if (!CustomerEntersPrice && (AppLogic.AppConfigBool("ShowQuantityOnProductPage") && !forKit) || (!AppLogic.AppConfigBool("HideKitQuantity") && forKit))
