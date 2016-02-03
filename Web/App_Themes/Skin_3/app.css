@@ -5347,6 +5347,12 @@ a:hover.mb-login-btn {
   text-transform: uppercase;
   font-family: 'FrutigerLTStd-Light';
 }
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 @media (min-width: 768px) {
   .modal-dialog {
     margin: 170px auto 0;
