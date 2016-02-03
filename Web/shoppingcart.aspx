@@ -400,7 +400,7 @@
                             <label class="roman-black">BLU™ Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtBluBuksUsed" onpaste="return false" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -451,13 +451,13 @@
                             <div class="col-xs-6 col-sm-4">
                                 <label class="roman-black">
                                     YES:
-                                    <input type="radio" runat="server"  name="optionsRadio" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
+                                    <input type="radio" runat="server" ClientIDMode="Static"   name="optionsRadio" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
                                 </label>
                             </div>
                             <div class="col-xs-4 col-sm-4">
                                 <label class="roman-black">
                                     NO:
-                                    <input type="radio" runat="server" name="optionsRadio" id="optionsRadioNo" value="option2" class="radio-btn-group" />
+                                    <input type="radio" runat="server" ClientIDMode="Static" name="optionsRadio" id="optionsRadioNo" value="option2" class="radio-btn-group" />
 
                                 </label>
                             </div>
@@ -618,8 +618,9 @@
                 BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "").replace("BLU™ Bucks used:","");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) +parseFloat(spblubucksprice);
-                var availableblubucksforthisitem = spblubucksprice;               
-
+                var availableblubucksforthisitem = spblubucksprice;  
+                
+              
                 if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {                   
                     $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
@@ -659,7 +660,8 @@
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice;
                 var maxfundlimit = ($("#spprice").text().replace("$", "") * ((BluBucksPercentage) / 100));
-                //applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem)    ;    
+                //initially bellow line was commented
+               // applyblubuksvalidation2(newpricetotal, ProductCategoryID, maxfundlimit, availableblubucksforthisitem)    ;    
 
                 if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {                    
                     var updatedprice = $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();
@@ -822,12 +824,16 @@
                     //bind link update to sof fund opup/internal user
 
                     if(fuundcheckdecision=="Yes")                   
-                     {                                        
-                   
+                     {      
+                       $("#optionsRadioNo").prop('checked', false);                                   
+                       $("#optionsRadioYes").prop('checked', true);                         
+                      
                     }
                     else
                     {  
-                                                              
+                           $("#optionsRadioYes").prop('checked', false);  
+                           $("#optionsRadioNo").prop('checked', true);
+                                                            
                     }
 
                     $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());

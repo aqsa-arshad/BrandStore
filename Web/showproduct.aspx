@@ -384,6 +384,7 @@
 
             //end area for pop up for sales rep
             $("#btnaddtocart").click(function (e) {
+
                 if (checkifproductalreadyexists()) {
                     $("#palreadyexist").removeClass("hide-element");
                     $("#palreadyexist").html("<span class=\"notify\">Product with selected options already exists in cart,Please go to shopping cart and update quantity or select different option.</span>");
@@ -544,10 +545,17 @@
             });
 
             $("#Quantity_1_1").change(function () {
-
-                ApplyValidation(theForm);
+               ApplyValidation(theForm);
+               
+            });
+            $("#Quantity_1_1").focusout(function () {               
+                
+                 ApplyValidation(theForm);
                 $("#hdnquantity").text(theForm.Quantity_1_1.value);
                 setpricewithquantitychange();
+                applyblubuksvalidation2();
+                $("#txtBluBuksUsed").trigger("focusout");
+                
             });
 
             //Shehriyar's Code
@@ -698,7 +706,7 @@
             });
 
             function setpricewithquantitychange() {
-
+ 
                 var updatedtotalprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value);
                 var productfundamount = $("#hdnProductFundAmount").text();
 
@@ -799,6 +807,7 @@
                     submitenabled(theForm);
                     return (true);
                 }
+               
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
                     alert("Please specify the quantity you want to add to your cart");
@@ -841,6 +850,7 @@
                         alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
                         theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
                         theForm.Quantity_1_1.focus();
+                        $("#Quantity_1_1").trigger("focusout");                       
                         submitenabled(theForm);
                         return (false);
                     }

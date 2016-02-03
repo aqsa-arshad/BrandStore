@@ -77,6 +77,7 @@ namespace AspDotNetStorefrontCore.ShippingCalculation
                 ShippingMethod onlyCallForPromptShippingMethod = new ShippingMethod();
                 onlyCallForPromptShippingMethod.Name = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");
                 onlyCallForPromptShippingMethod.IsRealTime = true;
+                onlyCallForPromptShippingMethod.Id = -1;
                 availableShippingMethods.Add(onlyCallForPromptShippingMethod);
             }
             else

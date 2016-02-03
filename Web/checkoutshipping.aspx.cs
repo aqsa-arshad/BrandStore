@@ -53,9 +53,18 @@ namespace AspDotNetStorefront
             shippingMethods.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
             if (shippingMethods.Count > 0)
             {
-                AnyShippingMethodsFound = true;
-                Label1.Visible = true;
-                btnContinueCheckout.Enabled = true;
+                ShippingMethod sm=shippingMethods.Find(x=> x.Id==-1);
+                if ((shippingMethods.Count == 1) && sm != null)
+                {
+                    Label1.Visible = false;
+                    btnContinueCheckout.Enabled = false;
+                }
+                else
+                {
+                    AnyShippingMethodsFound = true;
+                    Label1.Visible = true;
+                    btnContinueCheckout.Enabled = true;
+                }
             }
             else
             {
@@ -96,6 +105,7 @@ namespace AspDotNetStorefront
 
             if (cart.OrderOptions.Count > 0)
             {
+
                 ctrlOrderOption.DataBind();
                 ctrlOrderOption.Visible = true;
             }
