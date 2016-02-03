@@ -15,7 +15,7 @@
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">
             <h4 class="black-color margin-top-none">BILLING</h4>
-            <div id="divmainrow" class="row">
+            <div id="divmainrow">
 
                 <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
                 <%-- <h1>
@@ -46,7 +46,7 @@
 
                 <asp:Panel ID="pnlNoPaymentRequired" CssClass="col-md-12" runat="server" Visible="false">
                     <p></p>
-                    <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>
+                    <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>checkout-tablet-view pull-left-md
                        
                         <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
                     <div class="clearfix"></div>
@@ -55,8 +55,8 @@
 
                 </asp:Panel>
 
-                <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" Visible="true">
-                    <div class="row">
+                <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-main" Visible="true">
+                    <div>
                         <aspdnsfc:PaymentMethod CssClass="hide-element" ID="ctrlPaymentMethod" runat="server"
                             OnPaymentMethodChanged="ctrlPaymentMethod_OnPaymentMethodChanged"
                             CARDINALMYECHECKCaption="<%$ Tokens:StringResource, checkoutpayment.aspx.13 %>"
@@ -109,28 +109,29 @@
 
                         <%-- CIM End --%>
 
+                        <div id="dv_ctrlCreditCardPanel" class="checkout-tablet-view pull-left-md">
+                            <%-- <asp:Panel ID="pnlCCPane" runat="server" Visible="false" CssClass="page-row">--%>
 
-                        <%-- <asp:Panel ID="pnlCCPane" runat="server" Visible="false" CssClass="page-row">--%>
-                        <aspdnsfc:CreditCardPanel ID="ctrlCreditCardPanel" runat="server"
-                            CreditCardExpDtCaption="<%$ Tokens:StringResource, address.cs.33 %>"
-                            CreditCardNameCaption="<%$ Tokens:StringResource, address.cs.23 %>"
-                            CreditCardNoSpacesCaption="<%$ Tokens:StringResource, shoppingcart.cs.106 %>"
-                            CreditCardNumberCaption="<%$ Tokens:StringResource, address.cs.25 %>"
-                            CreditCardTypeCaption="<%$ Tokens:StringResource, address.cs.31 %>"
-                            CreditCardVerCdCaption="<%$ Tokens:StringResource, address.cs.28 %>"
-                            HeaderCaption="<%$ Tokens:StringResource, checkoutcard.aspx.6 %>"
-                            WhatIsThis="<%$ Tokens:StringResource, address.cs.50 %>"
-                            CCNameReqFieldErrorMessage="<%$ Tokens:StringResource, address.cs.24 %>"
-                            CreditCardStartDtCaption="<%$ Tokens:StringResource, address.cs.59 %>"
-                            CreditCardIssueNumCaption="<%$ Tokens:StringResource, address.cs.61 %>"
-                            CreditCardIssueNumNote="<%$ Tokens:StringResource, address.cs.63 %>"
-                            CCNameValGrp="creditcard" CCNumberReqFieldErrorMessage="<%$ Tokens:StringResource, address.cs.26 %>"
-                            CCNumberValGrp="creditcard" CCVerCdReqFieldErrorMessage="<%$ Tokens:StringResource, address.cs.29 %>"
-                            CCVerCdValGrp="creditcard" ShowCCVerCd="True" ShowCCStartDtFields="<%$ Tokens:AppConfigBool, ShowCardStartDateFields %>"
-                            ShowCCVerCdReqVal="<%$ Tokens:AppConfigBool, CardExtraCodeIsOptional %>"
-                            CimSaveCardCaption="<%$ Tokens:StringResource, address.cs.72 %>" />
-                        <%-- </asp:Panel>--%>
-
+                            <aspdnsfc:CreditCardPanel ID="ctrlCreditCardPanel" runat="server"
+                                CreditCardExpDtCaption="<%$ Tokens:StringResource, address.cs.33 %>"
+                                CreditCardNameCaption="<%$ Tokens:StringResource, address.cs.23 %>"
+                                CreditCardNoSpacesCaption="<%$ Tokens:StringResource, shoppingcart.cs.106 %>"
+                                CreditCardNumberCaption="<%$ Tokens:StringResource, address.cs.25 %>"
+                                CreditCardTypeCaption="<%$ Tokens:StringResource, address.cs.31 %>"
+                                CreditCardVerCdCaption="<%$ Tokens:StringResource, address.cs.28 %>"
+                                HeaderCaption="<%$ Tokens:StringResource, checkoutcard.aspx.6 %>"
+                                WhatIsThis="<%$ Tokens:StringResource, address.cs.50 %>"
+                                CCNameReqFieldErrorMessage="<%$ Tokens:StringResource, address.cs.24 %>"
+                                CreditCardStartDtCaption="<%$ Tokens:StringResource, address.cs.59 %>"
+                                CreditCardIssueNumCaption="<%$ Tokens:StringResource, address.cs.61 %>"
+                                CreditCardIssueNumNote="<%$ Tokens:StringResource, address.cs.63 %>"
+                                CCNameValGrp="creditcard" CCNumberReqFieldErrorMessage="<%$ Tokens:StringResource, address.cs.26 %>"
+                                CCNumberValGrp="creditcard" CCVerCdReqFieldErrorMessage="<%$ Tokens:StringResource, address.cs.29 %>"
+                                CCVerCdValGrp="creditcard" ShowCCVerCd="True" ShowCCStartDtFields="<%$ Tokens:AppConfigBool, ShowCardStartDateFields %>"
+                                ShowCCVerCdReqVal="<%$ Tokens:AppConfigBool, CardExtraCodeIsOptional %>"
+                                CimSaveCardCaption="<%$ Tokens:StringResource, address.cs.72 %>" />
+                            <%-- </asp:Panel>--%>
+                        </div>
 
 
                         <%--Whats this POP UP Start here --%>
@@ -230,8 +231,8 @@
                                 </asp:Panel>--%>
 
                         <%--</div>--%><%--col-md-6--%>
-                        <div class="col-md-3">
-                            <div class="page-row summary-row final-total">
+                        <div class="checkout-tablet-view pull-right-md">
+                            <div class="checkout-feilds pull-right pull-sm-no">
 
                                 <aspdnsfc:CartSummary ID="ctrlCartSummary" runat="server"
                                     SubTotalCaption='<%$Tokens:StringResource, shoppingcart.cs.96 %>'
@@ -323,17 +324,16 @@
                             Visible="false" OnRequestEstimateButtonClicked="EstimateAddressControl_RequestEstimateButtonClicked" />
                     </asp:Panel>
                 </div>
-                <asp:Panel ID="pnlContCheckout" runat="server" Visible="true" CssClass="row" ChildrenAsTriggers="true">
-                    <div class="col-md-4">
+                <asp:Panel ID="pnlContCheckout" runat="server" Visible="true" ChildrenAsTriggers="true">
+                    <div class="checkout-buttons">
                         <asp:Button type="button" ID="Button1" class="btn btn-primary btn-block btn-success" runat="server" OnClick="btnback_Click" Text="<< Back"></asp:Button>
                     </div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
+                    <div class="checkout-buttons pull-right">
                         <asp:Button ID="btnContCheckout" runat="server" CssClass="btn btn-primary btn-block"
                             OnClick="btnContCheckout_Click"
                             Text="<%$ Tokens:StringResource, checkoutpayment.aspx.18 %>" />
                     </div>
-
+                    <div class="clearfix"></div>
                 </asp:Panel>
             </div>
     </asp:Panel>

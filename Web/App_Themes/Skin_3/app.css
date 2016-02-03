@@ -5347,6 +5347,12 @@ a:hover.mb-login-btn {
   text-transform: uppercase;
   font-family: 'FrutigerLTStd-Light';
 }
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 @media (min-width: 768px) {
   .modal-dialog {
     margin: 170px auto 0;
@@ -6010,6 +6016,21 @@ table.order-detail tbody tr td {
 }
 @media screen and (min-width: 992px) {
   .checkout-feilds {
+    width: 25%;
+    float: left;
+  }
+}
+.checkout-buttons {
+  width: 100%;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .checkout-buttons {
+    width: 40%;
+    float: left;
+  }
+}
+@media screen and (min-width: 992px) {
+  .checkout-buttons {
     width: 25%;
     float: left;
   }
