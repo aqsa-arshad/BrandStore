@@ -109,7 +109,9 @@ namespace AspDotNetStorefrontControls
                 rblShippingMethods.Items.Add(new ListItem(this.DesignMode ? DEFAULT_DESIGNERTEXT : DEFAULT_NOSHIPPINGDEFINEDTEXT));
                 Controls.Add(rblShippingMethods);
             }
-           
+
+            if (rblShippingMethods.SelectedItem != null)
+            {
             if (rblShippingMethods.Items.Count == 1 &&
                 rblShippingMethods.SelectedItem.Text.Contains(
                     AppLogic.GetString("checkoutshipping.aspx.12", Customer.Current.SkinID, Customer.Current.LocaleSetting)))
@@ -124,7 +126,7 @@ namespace AspDotNetStorefrontControls
             {
                 rblShippingMethods.SelectedItem.Text = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");
             }
-            
+        }
             Controls.Add(AddLiteral("  </div>"));
             Controls.Add(AddLiteral("</div>"));
         }
