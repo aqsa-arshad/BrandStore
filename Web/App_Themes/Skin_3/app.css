@@ -6525,26 +6525,17 @@ a:hover.underline-link {
     vertical-align: middle;
   }
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 768px) {
   .category-head-height {
     height: 45px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin: 15px 0;
   }
 }
-@media screen and (min-width: 992px) and (max-width: 1199px) {
-  .category-head-height {
-    height: 60px;
-    overflow: hidden;
-    margin-bottom: 15px;
-  }
-}
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .category-head-height {
-    height: 45px;
-    overflow: hidden;
-    margin-bottom: 15px;
-  }
+.category-head-height h4 {
+  display: table-cell;
+  height: 45px;
+  vertical-align: middle;
 }
 @media screen and (min-width: 768px) {
   .product-head-height {
@@ -6648,6 +6639,11 @@ a:hover.underline-link {
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .pull-left-md {
     float: left !important;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .pull-right-md {
+    float: right !important;
   }
 }
 @media screen and (min-width: 768px) {
