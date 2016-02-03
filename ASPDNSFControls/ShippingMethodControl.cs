@@ -120,14 +120,11 @@ namespace AspDotNetStorefrontControls
             }
 
             if (rblShippingMethods.Items.Count == 1 &&
-                rblShippingMethods.SelectedItem.Text.Contains(
-                    AppLogic.GetString("checkoutshipping.aspx.12", Customer.Current.SkinID, Customer.Current.LocaleSetting)))
+               rblShippingMethods.SelectedItem.Text.Contains(AppLogic.AppConfig("RTShipping.CallForShippingPrompt")))
             {
-                rblShippingMethods.SelectedItem.Text = AppLogic.GetString("checkoutshipping.aspx.12", Customer.Current.SkinID, Customer.Current.LocaleSetting);
-                Controls.Add(AddLiteral("<a id=\"ctl00_PageContent_lnkChangeShipping\" class=\"underline-link\" href=\"javascript:self.location='JWMyAddresses.aspx?Checkout=True&amp;AddressType=2&amp;returnURL=checkoutshipping.aspx%dontupdateid%3dTrue'\">Change Shipping Address</a>"));
-                
+                rblShippingMethods.SelectedItem.Text = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");
             }
-
+            
             Controls.Add(AddLiteral("  </div>"));
             Controls.Add(AddLiteral("</div>"));
         }
