@@ -64,7 +64,7 @@
                             <label class="roman-black">BLU™ Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" onpaste="return false" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -106,7 +106,7 @@
                             </div>--%>
                             <div class="col-md-7">
                                 <label class="roman-black">Amount:</label>
-                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" AutoCompleteType="Disabled" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -147,6 +147,8 @@
             //$("#pInStock").hide();
             //$("#pOutofStock").hide();
             var inventoryArray = jQuery.parseJSON($("#hdnInventory").text());
+            $("#txtBluBuksUsed").attr("autocomplete","off");
+            $("#txtproductcategoryfundusedforsalesrep").attr("autocomplete","off");
 
             if (inventoryArray.length >= 1) {
                 $("#divNotifyme").hide();

@@ -400,7 +400,7 @@
                             <label class="roman-black">BLU™ Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtBluBuksUsed" onpaste="return false" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtBluBuksUsed" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
 
                         </div>
                         <div class="clearfix"></div>
@@ -442,7 +442,7 @@
                                 </div>--%>
                            <div class="col-md-7">
                                 <label class="roman-black">Amount:</label>
-                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" AutoCompleteType="Disabled" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -482,6 +482,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             showhidepricelabels();
+
+            $("#txtBluBuksUsed").attr("autocomplete","off");
+            $("#txtproductcategoryfundusedforsalesrep").attr("autocomplete","off");
+
             function showhidepricelabels() {
                 var customerlevel = GetCustomerLevel();
                 if (customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) {
