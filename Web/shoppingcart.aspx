@@ -442,7 +442,7 @@
                                 </div>--%>
                            <div class="col-md-7">
                                 <label class="roman-black">Amount:</label>
-                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>
