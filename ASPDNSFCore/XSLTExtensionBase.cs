@@ -3250,11 +3250,11 @@ function popupzoom(url,alturl)
                 result.Append("<button type=\"button\" id=\"Closebtn\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" >");
                 result.Append("<img src=\"App_Themes/Skin_3/images/close-popup.png\" alt=\"Close\">");
                 result.Append("</button>");
-                result.Append("<h5 class=\"text-uppercase-no\">Notify Me</h5>");
+                result.Append("<h4 class=\"text-uppercase-no\">Notify Me</h4>");
                 result.Append("<p>Enter your email to be notified when this item will be back in stock.</p>");
                 result.Append("<input type=\"hidden\" id=\"hdnProductId\" value=" + sProductID + " />");
                 result.Append("<input type=\"hidden\" id=\"hdnVarientId\" value=" + sVariantID + " />");
-                result.Append("<div class=\"form-group\"> <label>Email Address:</label>");
+                result.Append("<div class=\"form-group\"> <label>Email Address</label>");
                 result.Append("<input class=\"form-control\" id=\"txtOutOfStock\" type=\"text\" ");
                 if (ThisCustomer.IsAuthenticated)
                 {
