@@ -147,20 +147,19 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="checkout-buttons">
                         <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block btn-success" runat="server" OnClick="btnback_Click" Text="<< Back"></asp:Button>
                     </div>
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4">
+                  
+                    <div class="checkout-buttons pull-right pull-sm-no">
                         <asp:Button ID="btnContinueCheckout" runat="server"
                             Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
                             CssClass="btn btn-primary btn-block" Visible="false"
                             OnClick="btnContinueCheckout_Click" />
                     </div>
                 </div>
-
+                <div class="clearfix"></div>
             </asp:Panel>
 
             <%--  <asp:Button ID="btnContinueCheckout" runat="server"

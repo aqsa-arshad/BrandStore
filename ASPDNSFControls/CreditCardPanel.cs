@@ -771,7 +771,8 @@ namespace AspDotNetStorefrontControls
         protected override void CreateChildControls()
         {
             this.Controls.Clear();
-            this.Controls.Add(new LiteralControl("<div class='col-md-4' id='divccpane1'>"));
+            this.Controls.Add(new LiteralControl("<div class='checkout-tablet-view pull-left-md'>"));
+            this.Controls.Add(new LiteralControl("<div class='checkout-feilds' id='divccpane1'>"));
             this.Controls.Add(new LiteralControl("<p class='margin-top-none'>"));
             this.Controls.Add(_lblHeader);
             this.Controls.Add(new LiteralControl("</p>"));
@@ -835,7 +836,7 @@ namespace AspDotNetStorefrontControls
                 this.Controls.Add(new LiteralControl("</div>")); 
             }
             this.Controls.Add(new LiteralControl("</div>"));
-            this.Controls.Add(new LiteralControl("<div class='col-md-4 checkout-field-adjust' id='divccpane2'>"));
+            this.Controls.Add(new LiteralControl("<div class='checkout-feilds checkout-field-adjust' id='divccpane2'>"));
             this.Controls.Add(new LiteralControl("<div class='checkout-field-fix'>"));
             this.Controls.Add(new LiteralControl("<div class='form-group'>"));
             this.Controls.Add(new LiteralControl("<label>"));
@@ -904,6 +905,7 @@ namespace AspDotNetStorefrontControls
                 this.Controls.Add(new LiteralControl("</div>"));
 			}
 
+            this.Controls.Add(new LiteralControl("</div>"));
             this.Controls.Add(new LiteralControl("</div>"));
         }
         

@@ -6014,6 +6014,21 @@ table.order-detail tbody tr td {
     float: left;
   }
 }
+.checkout-buttons {
+  width: 100%;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .checkout-buttons {
+    width: 40%;
+    float: left;
+  }
+}
+@media screen and (min-width: 992px) {
+  .checkout-buttons {
+    width: 25%;
+    float: left;
+  }
+}
 .account-field-adjust {
   margin-right: 0;
 }

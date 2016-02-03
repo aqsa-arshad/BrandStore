@@ -155,7 +155,7 @@
                         </div>--%>
                     </asp:Panel>
                 </div>
-                <div class="col-md-3"> 
+                <div class="col-md-4"> 
                    <h4 class="normal-heading black-color">
                         <asp:Label ID="Label2" runat="server" Text="PRIMARY SHIPPING ADDRESS"></asp:Label>
                 </h4>
@@ -176,14 +176,12 @@
                 </div>
             </asp:Panel>
              </div>
-            <div class="row">
-            <div class="col-md-4"> </div>
-             <div class="col-md-4"> </div>
-            <div class="col-md-4">
+            
+            <div class="checkout-buttons pull-right pull-sm-no">
                <%-- <asp:Button ID="btnUpdateAccount" CssClass="btn btn-primary btn-block margin-none" Text="<%$ Tokens:StringResource,account.aspx.28 %>" runat="server" CausesValidation="true" ValidationGroup="account" OnClick="btnUpdateAccount_Click" />--%>
                 <asp:Button ID="btnContinueToCheckOut" CssClass="btn btn-primary btn-block" Text="<%$ Tokens:StringResource,account.aspx.60 %>" runat="server" CausesValidation="false" OnClick="btnContinueToCheckOut_Click" />
             </div>
-            </div>
+            <div class="clearfix"></div>
             <asp:Panel ID="pnlPaymentMethods" runat="server" Visible="false" CssClass="hide-element">
                 <div class="page-row row-payment-methods">
                     <asp:Panel ID="pnlSecureNetPaymentMethods" runat="server" Visible="false">
