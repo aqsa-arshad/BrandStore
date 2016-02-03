@@ -97,8 +97,8 @@ namespace AspDotNetStorefront
         /// <param name="customerLevelName">CustomerLevelName</param>
         private void GetAccountFunds(SFDCSoapClient.Contact contact)
         {
-            lblTierLevel.Text = contact.Account.TrueBLUStatus__c;
-            lblBluBucks.Text = String.Format("{0:C}", contact.Account.Co_op_budget__c);
+            lblTierLevel.Text = contact.Account.TrueBLUStatus__c.ToUpper().Contains("BLU") ? contact.Account.TrueBLUStatus__c.Replace("BLU", "BLU™") : contact.Account.TrueBLUStatus__c;
+            lblBluBucks.Text = String.Format("{0:C}", contact.Account.Co_op_budget__c).Replace("$","");
             lblDirectMailFunds.Text = String.Format("{0:C}", contact.Account.Direct_Marketing_Funds__c);
             lblDisplayFunds.Text = String.Format("{0:C}", contact.Account.Display_Funds__c);
             lblLiteratureFunds.Text = String.Format("{0:C}", contact.Account.Literature_Funds__c);
