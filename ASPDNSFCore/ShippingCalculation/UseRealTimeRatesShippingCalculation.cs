@@ -85,6 +85,7 @@ namespace AspDotNetStorefrontCore.ShippingCalculation
                 ShippingMethod noShippingMethodFound = new ShippingMethod();
                 noShippingMethodFound.Name = AppLogic.GetString("checkoutshipping.estimator.control.InvalidAddress", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 noShippingMethodFound.IsRealTime = true;
+                noShippingMethodFound.Id = -2;
                 availableShippingMethods.Add(noShippingMethodFound);
             }
 
