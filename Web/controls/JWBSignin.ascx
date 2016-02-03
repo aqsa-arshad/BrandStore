@@ -3,7 +3,7 @@
 
 
 <%--Loading POP UP Start here --%>
-<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false">
+<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display:none">
     <div class="modal-dialog modal-checkout" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -99,14 +99,12 @@
 </asp:UpdatePanel>
 <script type="text/javascript" language="javascript">
     function loadsniper(e) {
-        var regex = /^[a-z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
         var EmailID=document.getElementById('<%= EmailTextField.ClientID %>').value;
         var PswID = document.getElementById('<%= PasswordTextField.ClientID %>').value;
-        var flag = regex.test(EmailID);
         if (EmailID == "" || PswID == "") {
             return false;
         }
-        else if(flag)
+        else
         {
             document.getElementById('LoadingModal').style.display = 'block';
         }
