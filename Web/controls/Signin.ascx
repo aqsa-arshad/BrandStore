@@ -2,6 +2,21 @@
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 <%@ Register Src="CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+
+<%--Loading POP UP Start here --%>
+<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display:none">
+    <div class="modal-dialog modal-checkout" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>PLEASE WAIT</h4>
+                <p style="text-align: center">WHILE WE LOG YOU IN.</p>
+                <img src="App_Themes/Skin_3/images/sniper.GIF" alt="Loader" style="margin-left:auto;margin-right:auto;display:block">
+            </div>
+        </div>
+    </div>
+</div>
+<%--Loading POP UP ENDS here --%>
+
 <asp:Label Visible="false" runat="server" ID="HiddenLabel" Text="false"></asp:Label>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
@@ -30,7 +45,7 @@
                                         <label>
                                             <asp:Label ID="Label3" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.10 %>'></asp:Label></label>
                                         <asp:TextBox ID="UserName" CssClass="form-control" runat="server" ValidationGroup="Group1" MaxLength="100"
-                                            CausesValidation="True" AutoCompleteType="Email"></asp:TextBox>
+                                            CausesValidation="True" AutoCompleteType="Email" ClientIDMode="Static"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator3" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="UserName"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="UserName" Display="Dynamic"
@@ -39,7 +54,7 @@
                                         <label>
                                             <asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
                                         <asp:TextBox ID="Password" runat="server" CssClass="form-control" ValidationGroup="Group1" MaxLength="50"
-                                            CausesValidation="True" TextMode="Password"></asp:TextBox>
+                                            CausesValidation="True" TextMode="Password"  AutoCompleteType="None" ClientIDMode="Static"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator2" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="Password"></asp:RequiredFieldValidator>
                                         <label>
@@ -74,9 +89,9 @@
                                     <div class="col-md-6">
                                     </div>
                                     <div class="col-md-6">
-                                        <asp:Button ID="LoginButton" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="SIGN IN"
+                                        <asp:Button ID="LoginButton" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="SIGN IN" OnClientClick="if(Page_ClientValidate('Group1')) loadsniper();"
                                             ValidationGroup="Group1"></asp:Button>
-                                        <asp:Button ID="btnSignInAndCheckout" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="CONTINUE CHECKOUT"
+                                        <asp:Button ID="btnSignInAndCheckout" CssClass="btn btn-md btn-primary  btn-block" CommandName="Login" runat="server" Text="CONTINUE CHECKOUT" OnClientClick="if(Page_ClientValidate('Group1')) loadsniper();"
                                             ValidationGroup="Group1"></asp:Button>
 
                                     </div>
@@ -197,20 +212,8 @@
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script type="text/javascript">
+    function loadsniper(e) {
+        document.getElementById('LoadingModal').style.display = 'block';
+    }
+</script>

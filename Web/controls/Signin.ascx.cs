@@ -339,12 +339,14 @@ namespace AspDotNetStorefront
                         if (ThisCustomer.LockedUntil > DateTime.Now)
                         {
                             ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                            ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading1", "document.getElementById('LoadingModal').style.display = 'none';", true);
                             ErrorPanel.Visible = true;
                             return;
                         }
                         if (!ThisCustomer.Active)
                         {
                             ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+                            ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading1", "document.getElementById('LoadingModal').style.display = 'none';", true);
                             ErrorPanel.Visible = true;
                             return;
                         }
@@ -510,6 +512,7 @@ namespace AspDotNetStorefront
                             Session["SecurityCode"] = CommonLogic.GenerateRandomCode(6);
                         }
                         ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
+                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading1", "document.getElementById('LoadingModal').style.display = 'none';", true);
                         ErrorPanel.Visible = true;
                         if (ThisCustomer.IsAdminUser)
                         {
@@ -520,6 +523,7 @@ namespace AspDotNetStorefront
                                 lockuntil = DateTime.Now.AddMinutes(AppLogic.AppConfigUSInt("BadLoginLockTimeOut"));
                                 badlogin = -1;
                                 ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                                ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading1", "document.getElementById('LoadingModal').style.display = 'none';", true);
                                 ErrorPanel.Visible = true;
                             }
 
@@ -588,6 +592,7 @@ namespace AspDotNetStorefront
                 else
                 {
                     ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading1", "document.getElementById('LoadingModal').style.display = 'none';", true);
                     ErrorPanel.Visible = true;
                     Session["SecurityCode"] = CommonLogic.GenerateRandomCode(6);
                     tbSecurityCode.Text = "";

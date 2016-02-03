@@ -3,13 +3,13 @@
 
 
 <%--Loading POP UP Start here --%>
-<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display:none">
+<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: none">
     <div class="modal-dialog modal-checkout" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <h4>PLEASE WAIT</h4>
                 <p style="text-align: center">WHILE WE LOG YOU IN.</p>
-                <img src="App_Themes/Skin_3/images/sniper.GIF" alt="Loader" style="margin-left:auto;margin-right:auto;display:block">
+                <img src="App_Themes/Skin_3/images/sniper.GIF" alt="Loader" style="margin-left: auto; margin-right: auto; display: block">
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                         <asp:Label CssClass="error-large" ID="ErrorMsgLabel" runat="server"></asp:Label>
                     </div>
                 </asp:Panel>
-                <asp:Button type="submit" ID="LoginButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="LoginGroup" OnClick="submitButton_Click" OnClientClick="loadsniper()" Text="Sign in" />
+                <asp:Button type="submit" ID="LoginButton" CssClass="btn btn-md btn-primary btn-block" runat="server" ValidationGroup="LoginGroup" OnClick="submitButton_Click" OnClientClick="if(Page_ClientValidate('LoginGroup')) loadsniper();" Text="Sign in" />
                 <asp:LinkButton ID="createAccountLink" runat="server" CssClass="account-link" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.7 %>' OnClick="CreateAccountLink_Click"></asp:LinkButton>
             </div>
 
@@ -97,21 +97,10 @@
         </asp:Panel>
     </ContentTemplate>
 </asp:UpdatePanel>
-<script type="text/javascript" language="javascript">
+<script type="text/javascript">
     function loadsniper(e) {
-        var EmailID=document.getElementById('<%= EmailTextField.ClientID %>').value;
-        var PswID = document.getElementById('<%= PasswordTextField.ClientID %>').value;
-        if (EmailID == "" || PswID == "") {
-            return false;
-        }
-        else
-        {
-            document.getElementById('LoadingModal').style.display = 'block';
-        }
-        
+        document.getElementById('LoadingModal').style.display = 'block';
     }
-      
-
 </script>
 
 
