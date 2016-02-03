@@ -28,9 +28,9 @@ namespace AspDotNetStorefront
         protected override void OnInit(EventArgs e)
         {
             cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
-            
+
             ShippingMethodCollection shippingMethods = cart.GetShippingMethods(ThisCustomer.PrimaryShippingAddress);
-           //Sort the shipping methids according to display order            
+            //Sort the shipping methids according to display order            
             string sql = "select Name, ShippingMethodID,DisplayOrder from ShippingMethod";
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
@@ -44,7 +44,7 @@ namespace AspDotNetStorefront
                         foreach (ShippingMethod method in shippingMethods)
                         {
                             if (method.Id == ShippingMethodID)
-                                method.DisplayOrder =DisplayOrder;
+                                method.DisplayOrder = DisplayOrder;
                         }
                     }
                 }
@@ -53,9 +53,18 @@ namespace AspDotNetStorefront
             shippingMethods.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
             if (shippingMethods.Count > 0)
             {
-                AnyShippingMethodsFound = true;
-                Label1.Visible = true;
-                btnContinueCheckout.Enabled = true;
+                ShippingMethod sm = shippingMethods.Find(x => x.Id == -1 || x.Id == -2);
+                if ((shippingMethods.Count == 1) && sm != null)
+                {
+                    Label1.Visible = false;
+                    btnContinueCheckout.Enabled = false;
+                }
+                else
+                {
+                    AnyShippingMethodsFound = true;
+                    Label1.Visible = true;
+                    btnContinueCheckout.Enabled = true;
+                }
             }
             else
             {
@@ -74,13 +83,13 @@ namespace AspDotNetStorefront
 
             InitializeOrderOptionControl();
 
-			GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
-			if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
-			{
-				pnlCBAAddressWidget.Visible = true;
-				litCBAAddressWidget.Text = new GatewayCheckoutByAmazon.CheckoutByAmazon().RenderAddressWidgetWithRedirect("CBAAddressWidgetContainer", "checkoutshipping.aspx", new Guid(ThisCustomer.CustomerGUID), 300, 200);
-				litCBAAddressWidgetInstruction.Text = "gw.checkoutbyamazon.display.4".StringResource();
-			}
+            GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
+            if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
+            {
+                pnlCBAAddressWidget.Visible = true;
+                litCBAAddressWidget.Text = new GatewayCheckoutByAmazon.CheckoutByAmazon().RenderAddressWidgetWithRedirect("CBAAddressWidgetContainer", "checkoutshipping.aspx", new Guid(ThisCustomer.CustomerGUID), 300, 200);
+                litCBAAddressWidgetInstruction.Text = "gw.checkoutbyamazon.display.4".StringResource();
+            }
 
             base.OnInit(e);
         }
@@ -96,13 +105,14 @@ namespace AspDotNetStorefront
 
             if (cart.OrderOptions.Count > 0)
             {
+
                 ctrlOrderOption.DataBind();
                 ctrlOrderOption.Visible = true;
             }
             else
             {
                 ctrlOrderOption.Visible = false;
-            }            
+            }
         }
         protected void btnback_Click(object sender, EventArgs e)
         {
@@ -114,12 +124,12 @@ namespace AspDotNetStorefront
             foreach (ShippingMethod shipMethod in shippingMethods)
             {
                 string freightDisplayText = string.Empty;
-                
+
                 if (!string.IsNullOrEmpty(ThisCustomer.CurrencySetting))
                 {
-					decimal shippingPromoDiscount = 0;
+                    decimal shippingPromoDiscount = 0;
 
-					decimal calculatedFreight = AddVatIfApplicable(shipMethod.Freight - shippingPromoDiscount);
+                    decimal calculatedFreight = AddVatIfApplicable(shipMethod.Freight - shippingPromoDiscount);
                     freightDisplayText = Localization.CurrencyStringForDisplayWithExchangeRate(calculatedFreight, ThisCustomer.CurrencySetting);
                     if (shipMethod.ShippingIsFree && Shipping.ShippingMethodIsInFreeList(shipMethod.Id))
                     {
@@ -133,7 +143,7 @@ namespace AspDotNetStorefront
 
                     freightDisplayText += AddVatDetailsIfApplicable();
                 }
-				shipMethod.DisplayFormat = string.Format("{0} {1}", shipMethod.GetNameForDisplay(), freightDisplayText);
+                shipMethod.DisplayFormat = string.Format("{0} {1}", shipMethod.GetNameForDisplay(), freightDisplayText);
             }
         }
 
@@ -169,20 +179,20 @@ namespace AspDotNetStorefront
                 err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkout.over13required", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
                 Response.Redirect("shoppingcart.aspx?errormsg=" + err.MessageId);
             }
-			
-			bool phoneCustomer = ((HttpContext.Current.Items["IsBeingImpersonated"] != null) &&
-				((string)HttpContext.Current.Items["IsBeingImpersonated"] == "true"));
 
-			bool paypalExpressCheckout = (ThisCustomer.ThisCustomerSession["paypalexpresspayerid"].ToString().Length == 0 &&
-				ThisCustomer.ThisCustomerSession["paypalexpresstoken"].ToString().Length == 0);
+            bool phoneCustomer = ((HttpContext.Current.Items["IsBeingImpersonated"] != null) &&
+                ((string)HttpContext.Current.Items["IsBeingImpersonated"] == "true"));
 
-			var checkoutController = CheckOutPageControllerFactory.CreateCheckOutPageController(ThisCustomer, cart);
-			if (checkoutController.GetCheckoutType() == CheckOutType.SmartOPC)
-			{
-				if (!phoneCustomer && checkoutController.CanUseOnePageCheckout())
-					Response.Redirect(checkoutController.GetSmartOnePageCheckoutPage());
-			}
-			
+            bool paypalExpressCheckout = (ThisCustomer.ThisCustomerSession["paypalexpresspayerid"].ToString().Length == 0 &&
+                ThisCustomer.ThisCustomerSession["paypalexpresstoken"].ToString().Length == 0);
+
+            var checkoutController = CheckOutPageControllerFactory.CreateCheckOutPageController(ThisCustomer, cart);
+            if (checkoutController.GetCheckoutType() == CheckOutType.SmartOPC)
+            {
+                if (!phoneCustomer && checkoutController.CanUseOnePageCheckout())
+                    Response.Redirect(checkoutController.GetSmartOnePageCheckoutPage());
+            }
+
             RequireSecurePage();
 
             // -----------------------------------------------------------------------------------------------
@@ -225,14 +235,14 @@ namespace AspDotNetStorefront
 
             cart.ValidProceedCheckout(); // will not come back from this if any issue. they are sent back to the cart page!
 
-			GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
-			if (checkoutByAmazon.IsCheckingOut)
-			{
-				if (checkoutByAmazon.GetDefaultShippingAddress() == null)
-					btnContinueCheckout.OnClientClick = "alert('" + "gw.checkoutbyamazon.display.3".StringResource() + "'); return false;";
-			}
+            GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
+            if (checkoutByAmazon.IsCheckingOut)
+            {
+                if (checkoutByAmazon.GetDefaultShippingAddress() == null)
+                    btnContinueCheckout.OnClientClick = "alert('" + "gw.checkoutbyamazon.display.3".StringResource() + "'); return false;";
+            }
 
-			if (!cart.IsAllDownloadComponents() && !cart.IsAllFreeShippingComponents() && !cart.IsAllSystemComponents() && (cart.HasMultipleShippingAddresses() || cart.HasGiftRegistryComponents()) && cart.TotalQuantity() <= AppLogic.MultiShipMaxNumItemsAllowed() && cart.CartAllowsShippingMethodSelection && cart.TotalQuantity() > 1 && !checkoutByAmazon.IsCheckingOut)
+            if (!cart.IsAllDownloadComponents() && !cart.IsAllFreeShippingComponents() && !cart.IsAllSystemComponents() && (cart.HasMultipleShippingAddresses() || cart.HasGiftRegistryComponents()) && cart.TotalQuantity() <= AppLogic.MultiShipMaxNumItemsAllowed() && cart.CartAllowsShippingMethodSelection && cart.TotalQuantity() > 1 && !checkoutByAmazon.IsCheckingOut)
             {
                 Response.Redirect("checkoutshippingmult.aspx");
             }
@@ -243,9 +253,9 @@ namespace AspDotNetStorefront
                 Response.Redirect("checkoutgiftcard.aspx");
             }
 
-            if (AppLogic.AppConfigBool("SkipShippingOnCheckout") || 
-                cart.IsAllSystemComponents() || 
-                cart.IsAllDownloadComponents() || 
+            if (AppLogic.AppConfigBool("SkipShippingOnCheckout") ||
+                cart.IsAllSystemComponents() ||
+                cart.IsAllDownloadComponents() ||
                 cart.NoShippingRequiredComponents())
             {
                 if (cart.ContainsGiftCard())
@@ -282,17 +292,17 @@ namespace AspDotNetStorefront
             if (!this.IsPostBack)
             {
                 if (!AppLogic.AppConfigBool("AllowMultipleShippingAddressPerOrder") && CommonLogic.QueryStringCanBeDangerousContent("dontupdateid").Length == 0)
-                {                   
+                {
                     // force primary shipping address id to be active on all cart items (safety check):
                     DB.ExecuteSQL("update ShoppingCart set ShippingAddressID=(select ShippingAddressID from customer where CustomerID=" + ThisCustomer.CustomerID.ToString() + ") where CustomerID=" + ThisCustomer.CustomerID.ToString() + " and CartType=" + ((int)CartTypeEnum.ShoppingCart).ToString());
-                  String QS=Request.QueryString["fillcontrols"];
+                    String QS = Request.QueryString["fillcontrols"];
 
-                  if (QS == "true" || QS == "True")
-                   {
-                       Response.Redirect("checkoutshipping.aspx?dontupdateid=true&fillcontrols=true");
-                   }
-                  else
-                    Response.Redirect("checkoutshipping.aspx?dontupdateid=true");
+                    if (QS == "true" || QS == "True")
+                    {
+                        Response.Redirect("checkoutshipping.aspx?dontupdateid=true&fillcontrols=true");
+                    }
+                    else
+                        Response.Redirect("checkoutshipping.aspx?dontupdateid=true");
                 }
                 InitializePageContent();
             }
@@ -411,10 +421,10 @@ namespace AspDotNetStorefront
             if (CommonLogic.QueryStringNativeInt("ErrorMsg") > 0)
             {
                 pnlErrorMsg.Visible = true;
-				
+
                 ErrorMessage e = new ErrorMessage(CommonLogic.QueryStringNativeInt("ErrorMsg"));
-				
-				ErrorMsgLabel.Text = e.Message;
+
+                ErrorMsgLabel.Text = e.Message;
             }
 
             if (!cart.ShippingIsFree && cart.MoreNeededToReachFreeShipping != 0.0M)
@@ -546,8 +556,8 @@ namespace AspDotNetStorefront
 
             SetDebugInformation();
 
-			if (AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout"))
-				ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(false);
+            if (AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout"))
+                ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(false);
         }
 
         private void SetDebugInformation()
@@ -598,7 +608,7 @@ namespace AspDotNetStorefront
         {
             if (cart.CartAllowsShippingMethodSelection)
             {
-				GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
+                GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
                 if (Shipping.MultiShipEnabled() && cart.TotalQuantity() > 1 && cart.TotalQuantity() <= AppLogic.MultiShipMaxNumItemsAllowed() && !checkoutByAmazon.IsCheckingOut)
                 {
                     lblMultiShipPrompt.Visible = true;
@@ -676,7 +686,7 @@ namespace AspDotNetStorefront
                 if (cart.ShipCalcID != Shipping.ShippingCalculationEnum.UseRealTimeRates)
                 {
                     ShippingMethodID = Localization.ParseUSInt(ShippingMethodIDFormField);
-					ShippingMethod = Shipping.GetShippingMethodDisplayName(ShippingMethodID, null);
+                    ShippingMethod = Shipping.GetShippingMethodDisplayName(ShippingMethodID, null);
                 }
                 else
                 {
@@ -703,7 +713,7 @@ namespace AspDotNetStorefront
                 }
                 else
                 {
-                    for (int i = 0; i <= cart.CartItems.Count-1; i++)
+                    for (int i = 0; i <= cart.CartItems.Count - 1; i++)
                     {
                         CartItem _CartItem = (CartItem)cart.CartItems[i];
                         int _CartRecID = DB.GetSqlN(String.Format("select ShoppingCartRecID N from ShoppingCart where CustomerID={0} and ProductID={1} and VariantID={2} and CartType={3}", ThisCustomer.CustomerID.ToString(), _CartItem.ProductID, _CartItem.VariantID, ((int)_CartItem.CartType).ToString()));
@@ -713,12 +723,12 @@ namespace AspDotNetStorefront
                             sql = String.Format("update dbo.ShoppingCart set ShippingMethodID={0}, ShippingMethod={1}, ShippingAddressID={4} where CustomerID={2} and CartType={3} and ShoppingCartRecID={5}", ShippingMethodID.ToString(), DB.SQuote(ShippingMethod), ThisCustomer.CustomerID.ToString(), ((int)CartTypeEnum.ShoppingCart).ToString(), ddlChooseShippingAddr.SelectedValue, _CartRecID.ToString());
                         }
                         else
-                        {                            
+                        {
                             sql = String.Format("update dbo.ShoppingCart set ShippingAddressID={0} where CustomerID={1} and CartType={2} and ShoppingCartRecID={3}", ddlChooseShippingAddr.SelectedValue, ThisCustomer.CustomerID.ToString(), ((int)_CartItem.CartType).ToString(), _CartRecID.ToString());
                         }
                         DB.ExecuteSQL(sql);
                     }
-                }                
+                }
 
                 sql = String.Format("update dbo.Customer set ShippingAddressID = {0} where CustomerID={1} ", ddlChooseShippingAddr.SelectedValue, ThisCustomer.CustomerID.ToString());
                 DB.ExecuteSQL(sql);
@@ -845,6 +855,6 @@ namespace AspDotNetStorefront
 
             return MasterHome;
         }
-}
+    }
 
 }

@@ -77,6 +77,7 @@ namespace AspDotNetStorefrontCore.ShippingCalculation
                 ShippingMethod onlyCallForPromptShippingMethod = new ShippingMethod();
                 onlyCallForPromptShippingMethod.Name = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");
                 onlyCallForPromptShippingMethod.IsRealTime = true;
+                onlyCallForPromptShippingMethod.Id = -1;
                 availableShippingMethods.Add(onlyCallForPromptShippingMethod);
             }
             else
@@ -84,6 +85,7 @@ namespace AspDotNetStorefrontCore.ShippingCalculation
                 ShippingMethod noShippingMethodFound = new ShippingMethod();
                 noShippingMethodFound.Name = AppLogic.GetString("checkoutshipping.estimator.control.InvalidAddress", ThisCustomer.SkinID, ThisCustomer.LocaleSetting);
                 noShippingMethodFound.IsRealTime = true;
+                noShippingMethodFound.Id = -2;
                 availableShippingMethods.Add(noShippingMethodFound);
             }
 
