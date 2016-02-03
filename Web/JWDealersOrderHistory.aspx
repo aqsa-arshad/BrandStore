@@ -68,7 +68,7 @@
                                     </td>
                                     <td class="td-30-percent">
                                         <span class="normal-heading black-color">
-                                            <asp:Label ID="lblStatus" runat="server" Text="Username" />
+                                            <asp:Label ID="lblStatus" runat="server" Text="<%$ Tokens:StringResource,account.aspx.106%>" />
                                         </span>
                                     </td>
                             </HeaderTemplate>
