@@ -119,6 +119,12 @@ namespace AspDotNetStorefrontControls
 
             }
 
+            if (rblShippingMethods.Items.Count == 1 &&
+               rblShippingMethods.SelectedItem.Text.Contains(AppLogic.AppConfig("RTShipping.CallForShippingPrompt")))
+            {
+                rblShippingMethods.SelectedItem.Text = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");               
+            }
+
             Controls.Add(AddLiteral("  </div>"));
             Controls.Add(AddLiteral("</div>"));
         }

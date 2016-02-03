@@ -612,11 +612,13 @@
 
             $("#Size_1_1").change(function () {
                 var customerlevel = $("#hdncustomerlevel").text();
-                if (customerlevel == 1 || customerlevel == 8) {
+
+                if (customerlevel == 1 || customerlevel == 8 || customerlevel == 0) {
                     $("#sppricewithfund").addClass("hide-element");
 
                 }
                 else {
+
                     $("#sppricewithfund").removeClass("hide-element");
                 }
 
@@ -793,6 +795,7 @@
 
                 }
                 else {
+
                     if (round($("#hdnProductFundAmount").text(),2) > 0)
                         $("#sppricewithfund").removeClass("hide-element");
                     else
