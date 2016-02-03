@@ -99,12 +99,15 @@
 </asp:UpdatePanel>
 <script type="text/javascript" language="javascript">
     function loadsniper(e) {
+        var regex = /^[a-z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
         var EmailID=document.getElementById('<%= EmailTextField.ClientID %>').value;
         var PswID = document.getElementById('<%= PasswordTextField.ClientID %>').value;
+        var flag = regex.test(EmailID);
         if (EmailID == "" || PswID == "") {
             return false;
         }
-        else {
+        else if(flag)
+        {
             document.getElementById('LoadingModal').style.display = 'block';
         }
         
