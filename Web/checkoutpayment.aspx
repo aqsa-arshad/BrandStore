@@ -141,7 +141,7 @@
                                     <div class="modal-body">
                                         <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
                                             <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
-                                        <h4>“What’s this”</h4>
+                                        <h4>What’s this</h4>
                                         <p>
                                             <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label>
                                         </p>
