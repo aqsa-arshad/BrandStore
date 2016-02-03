@@ -46,8 +46,7 @@
 
                 <asp:Panel ID="pnlNoPaymentRequired" CssClass="col-md-12" runat="server" Visible="false">
                     <p></p>
-                    <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>checkout-tablet-view pull-left-md
-                       
+                    <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>                       
                         <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
                     <div class="clearfix"></div>
                     <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
