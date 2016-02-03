@@ -480,7 +480,7 @@ namespace AspDotNetStorefrontControls
                     else if (cItem.FundID == 6)
                         lblPopFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
 
-                    lblBluBucksFundsUsedTotal.Text = Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
+                    lblBluBucksFundsUsedTotal.Text = " " + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
                                        
                 }
                 //End

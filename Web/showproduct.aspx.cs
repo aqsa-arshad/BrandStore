@@ -194,7 +194,7 @@ namespace AspDotNetStorefront
                     hdnCustomerID.Text = ThisCustomer.CustomerID.ToString();
 
                     //end check if product already exist in shopping cart
-
+                    
                     //Apply fund
                     decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
                     hdnButtonName.Text = "AddToCartButton_" + ProductID + "_" + pvariantid;
@@ -733,19 +733,20 @@ namespace AspDotNetStorefront
         private void HandleAddToCart()
         {
 
-            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text))
-                txtBluBuksUsed.Text = "0";
+            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text) || txtBluBuksUsed.Text==".")
+                txtBluBuksUsed.Text = "0";               
 
-            if (String.IsNullOrEmpty(txtproductcategoryfundusedforsalesrep.Text) || String.IsNullOrWhiteSpace(txtproductcategoryfundusedforsalesrep.Text))
+            if (String.IsNullOrEmpty(txtproductcategoryfundusedforsalesrep.Text) || String.IsNullOrWhiteSpace(txtproductcategoryfundusedforsalesrep.Text)||(txtproductcategoryfundusedforsalesrep.Text=="."))
                 txtproductcategoryfundusedforsalesrep.Text = "0";
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
-            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
-            {
-                formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
-                formInput.FundID = (int)FundType.SOFFunds;
+            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)  
+            {                
+                    formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
+                    formInput.FundID = (int)FundType.SOFFunds;                    
+              
             }
             else
                 formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
