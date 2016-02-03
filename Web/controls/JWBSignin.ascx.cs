@@ -247,12 +247,14 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                     if (ThisCustomer.LockedUntil > DateTime.Now)
                     {
                         ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading1", "document.getElementById('LoadingModal').style.display = 'none';", true);
                         ErrorPanel.Visible = true;
                         return;
                     }
                     if (!ThisCustomer.Active)
                     {
                         ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.2", m_SkinID, ThisCustomer.LocaleSetting);
+                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading2", "document.getElementById('LoadingModal').style.display = 'none';", true);
                         ErrorPanel.Visible = true;
                         return;
                     }
@@ -384,6 +386,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                 else
                 {
                     ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading3", "document.getElementById('LoadingModal').style.display = 'none';", true);
                     ErrorPanel.Visible = true;
                     if (ThisCustomer.IsAdminUser)
                     {
@@ -394,6 +397,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
                             lockuntil = DateTime.Now.AddMinutes(AppLogic.AppConfigUSInt("BadLoginLockTimeOut"));
                             badlogin = -1;
                             ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.3", m_SkinID, ThisCustomer.LocaleSetting);
+                            ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading4", "document.getElementById('LoadingModal').style.display = 'none';", true);
                             ErrorPanel.Visible = true;
                         }
 
@@ -462,6 +466,7 @@ public partial class controls_JWBSignin : System.Web.UI.UserControl
             else
             {
                 ErrorMsgLabel.Text = AppLogic.GetString("lat_signin_process.aspx.1", m_SkinID, ThisCustomer.LocaleSetting);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "preventloading5", "document.getElementById('LoadingModal').style.display = 'none';", true);
                 ErrorPanel.Visible = true;
                 return;
             }
