@@ -5998,8 +5998,20 @@ table.order-detail tbody tr td {
 }
 @media screen and (min-width: 992px) {
   .checkout-field-adjust {
-    margin-right: 4%;
-    margin-left: 4%;
+    margin-right: 12%;
+    margin-left: 12%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .checkout-feilds {
+    width: 100%;
+    float: left;
+  }
+}
+@media screen and (min-width: 992px) {
+  .checkout-feilds {
+    width: 25%;
+    float: left;
   }
 }
 .account-field-adjust {
@@ -6517,8 +6529,13 @@ a:hover.underline-link {
   .category-head-height {
     height: 45px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin: 15px 0;
   }
+}
+.category-head-height h4 {
+  display: table-cell;
+  height: 45px;
+  vertical-align: middle;
 }
 @media screen and (min-width: 768px) {
   .product-head-height {
@@ -6624,6 +6641,11 @@ a:hover.underline-link {
     float: left !important;
   }
 }
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .pull-right-md {
+    float: right !important;
+  }
+}
 @media screen and (min-width: 768px) {
   .pull-right-md-lrg {
     float: right !important;
@@ -6682,7 +6704,7 @@ a:hover.underline-link {
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .checkout-tablet-main .checkout-tablet-view {
     float: left;
-    width: 50%;
+    width: 40%;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {

@@ -25,7 +25,7 @@ namespace AspDotNetStorefrontControls
     /// <summary>
     /// Provides a control that display the Shipping Method List in a radio button list.
     /// </summary>
-    [ToolboxData("<{0}:ShippingMethodControl runat=server></{0}:ShippingMethodControl>"), 
+    [ToolboxData("<{0}:ShippingMethodControl runat=server></{0}:ShippingMethodControl>"),
     Designer(typeof(ShippingMethodControlDesigner))]
     public class ShippingMethodControl : CompositeControl
     {
@@ -65,9 +65,9 @@ namespace AspDotNetStorefrontControls
             IntializeControlsDefaultValues();
 
             /********************************/
-            /******** CREATE CONTROLS *******/            
+            /******** CREATE CONTROLS *******/
             /********************************/
-            
+
             //ADD LITERALS
             Controls.Add(AddLiteral("<div class='form shipping-methods-form'>"));
 
@@ -87,7 +87,7 @@ namespace AspDotNetStorefrontControls
             //Controls.Add(AddLiteral("  </div>"));
 
             //SHIPPINGMETHODLIST
-            Controls.Add(AddLiteral("  <div class='form-group'>"));            
+            Controls.Add(AddLiteral("  <div class='form-group'>"));
             if (rblShippingMethods.Items.Count > 0)
             {
                 if (rblShippingMethods.SelectedIndex == -1)
@@ -98,7 +98,7 @@ namespace AspDotNetStorefrontControls
             }
 
             //DESIGNER TEXT            
-            
+
             if (rblShippingMethods.Items.Count == 0 && HeaderText == string.Empty)
             {
                 if (!this.DesignMode)
@@ -122,9 +122,9 @@ namespace AspDotNetStorefrontControls
             if (rblShippingMethods.Items.Count == 1 &&
                rblShippingMethods.SelectedItem.Text.Contains(AppLogic.AppConfig("RTShipping.CallForShippingPrompt")))
             {
-                rblShippingMethods.SelectedItem.Text = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");               
+                rblShippingMethods.SelectedItem.Text = AppLogic.AppConfig("RTShipping.CallForShippingPrompt");
             }
-
+            
             Controls.Add(AddLiteral("  </div>"));
             Controls.Add(AddLiteral("</div>"));
         }
@@ -172,7 +172,7 @@ namespace AspDotNetStorefrontControls
 
                 if (isRealTimeShipping)
                 {
-                    rblShippingMethods.DataSource = null;                   
+                    rblShippingMethods.DataSource = null;
                     rblShippingMethods.Items.Clear();
 
                     foreach (ShippingMethod method in this.DataSource)
@@ -195,10 +195,10 @@ namespace AspDotNetStorefrontControls
                 {
                     rblShippingMethods.SelectedIndex = 0;
                 }
-            }           
+            }
 
         }
-        #endregion    
+        #endregion
 
         #region Controls Properties
 
@@ -218,39 +218,39 @@ namespace AspDotNetStorefrontControls
             {
                 _dataSource = value;
                 BindData();
-                
+
                 ChildControlsCreated = false;
             }
-        }        
+        }
 
         /// <summary>
         /// The data text to be displayed on the shipping method radio button list
         /// </summary>
-        [Browsable(true), Category(SETTINGS_CATEGORY), 
+        [Browsable(true), Category(SETTINGS_CATEGORY),
         Description(PROPERTY_DATATEXTFIELD),
         DefaultValue("DisplayFormat")]
         public string DataTextField
         {
-            get 
+            get
             {
                 if ((object)ViewState["DisplayFormat"] == null)
                 {
                     return "DisplayFormat";
                 }
-                return ViewState["DisplayFormat"].ToString();               
+                return ViewState["DisplayFormat"].ToString();
             }
-            set 
+            set
             {
                 ViewState["DisplayFormat"] = value;
                 rblShippingMethods.DataTextField = value;
                 ChildControlsCreated = false;
-            }            
+            }
         }
 
         /// <summary>
         /// The data value of the shipping method radio button list
         /// </summary>
-        [Browsable(true), Category(SETTINGS_CATEGORY), 
+        [Browsable(true), Category(SETTINGS_CATEGORY),
         Description(PROPERTY_DATAVALUEFIELD),
         DefaultValue("ID")]
         public string DataValueField
@@ -261,13 +261,13 @@ namespace AspDotNetStorefrontControls
                 {
                     return "ID";
                 }
-                return ViewState["ID"].ToString();                
+                return ViewState["ID"].ToString();
             }
-            set 
+            set
             {
                 ViewState["ID"] = value;
                 rblShippingMethods.DataValueField = value;
-                ChildControlsCreated = false;     
+                ChildControlsCreated = false;
             }
         }
 
@@ -296,7 +296,7 @@ namespace AspDotNetStorefrontControls
                 EnsureChildControls();
                 return rblShippingMethods.SelectedIndex;
             }
-            set 
+            set
             {
                 ViewState["SelectedIndex"] = value;
                 rblShippingMethods.SelectedIndex = value;
