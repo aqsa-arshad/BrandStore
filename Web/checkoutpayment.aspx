@@ -46,8 +46,7 @@
 
                 <asp:Panel ID="pnlNoPaymentRequired" CssClass="col-md-12" runat="server" Visible="false">
                     <p></p>
-                    <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>checkout-tablet-view pull-left-md
-                       
+                    <asp:Label ID="NoPaymentRequired" runat="server" CssClass="info-message" /></p>                       
                         <asp:Literal ID="Finalization" runat="server" Mode="PassThrough"></asp:Literal>
                     <div class="clearfix"></div>
                     <asp:Button ID="btnContinueCheckOut1" runat="server" Text="<%$ Tokens:StringResource,checkoutpayment.aspx.18 %>" CssClass="btn btn-primary td-30-percent" />
@@ -141,7 +140,7 @@
                                     <div class="modal-body">
                                         <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
                                             <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
-                                        <h4>“What’s this”</h4>
+                                        <h4>What’s this</h4>
                                         <p>
                                             <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label>
                                         </p>
