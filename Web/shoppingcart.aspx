@@ -840,8 +840,8 @@
                                                             
                     }
 
-                    $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
-                    $("#sppriceforsalesrep").text("$" + $("#spprice").text().replace("$", ""));
+                    $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2));
+                    $("#sppriceforsalesrep").text("$" + round($("#spprice").text().replace("$", ""),2));
                     $(".lnkUpdateItem").attr("data-toggle", "modal");
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
                 }
