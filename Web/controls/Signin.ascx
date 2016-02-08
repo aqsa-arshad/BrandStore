@@ -49,7 +49,7 @@
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator3" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="UserName"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="UserName" Display="Dynamic"
-                                            ValidationGroup="Group1" ErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>" ValidationExpression="^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$" />
+                                            ValidationGroup="Group1" ErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>" ValidationExpression="^[\s]*[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}[\s]*$" />
                                         <br />
                                         <label>
                                             <asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
@@ -216,4 +216,12 @@
     function loadsniper(e) {
         document.getElementById('LoadingModal').style.display = 'block';
     }
+
+    $(function () {
+        $("#UserName").on("focusout", function () {
+            var dest = $(this);
+            dest.val(jQuery.trim(dest.val()));
+            dest.val(dest.val().replace(/[ ]{2,}/, ' '));
+        });
+    });
 </script>
