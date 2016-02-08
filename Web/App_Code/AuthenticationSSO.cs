@@ -1153,7 +1153,9 @@ namespace AspDotNetStorefront
         /// <returns>Status</returns>
         public static bool ValidateCustomerFund(List<CustomerFund> lstCustomerFund)
         {
-            if (lstCustomerFund.Count == 0 || lstCustomerFund.Where(x => x.Amount - x.AmountUsed < 0).Count() > 0)
+            if (lstCustomerFund.Count == 0)
+                return true;
+            else if (lstCustomerFund.Where(x => x.Amount - x.AmountUsed < 0).Count() > 0)
                 return false;
             else
                 return true;
