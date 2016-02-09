@@ -776,7 +776,7 @@
                 $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "").replace("BLU™ Bucks used:","");
-
+                
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
 
                 var availableblubucksforthisitem = spblubucksprice;
@@ -840,8 +840,8 @@
                                                             
                     }
 
-                    $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
-                    $("#sppriceforsalesrep").text("$" + $("#spprice").text().replace("$", ""));
+                    $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2));
+                    $("#sppriceforsalesrep").text("$" + round($("#spprice").text().replace("$", ""),2));
                     $(".lnkUpdateItem").attr("data-toggle", "modal");
                     $(".lnkUpdateItem").attr("data-target", "#myModal1");
                 }
