@@ -4,13 +4,13 @@
 <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
 
 <%--Loading POP UP Start here --%>
-<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display:none">
+<div id="LoadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade in" aria-hidden="false" style="display: none">
     <div class="modal-dialog modal-checkout" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <h4>PLEASE WAIT</h4>
                 <p style="text-align: center">WHILE WE LOG YOU IN.</p>
-                <img src="App_Themes/Skin_3/images/sniper.GIF" alt="Loader" style="margin-left:auto;margin-right:auto;display:block">
+                <img src="App_Themes/Skin_3/images/sniper.GIF" alt="Loader" style="margin-left: auto; margin-right: auto; display: block">
             </div>
         </div>
     </div>
@@ -49,12 +49,12 @@
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator3" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.3 %>' ControlToValidate="UserName"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="UserName" Display="Dynamic"
-                                            ValidationGroup="Group1" ErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>" ValidationExpression="^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$" />
+                                            ValidationGroup="Group1" ErrorMessage="<%$ Tokens:StringResource, createaccount.aspx.17 %>" ValidationExpression="^[\s]*[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}[\s]*$" />
                                         <br />
                                         <label>
                                             <asp:Label ID="Label2" runat="server" Text='<%$ Tokens:StringResource,signin.aspx.12 %>'></asp:Label></label>
                                         <asp:TextBox ID="Password" runat="server" CssClass="form-control" ValidationGroup="Group1" MaxLength="50"
-                                            CausesValidation="True" TextMode="Password"  AutoCompleteType="None" ClientIDMode="Static"></asp:TextBox>
+                                            CausesValidation="True" TextMode="Password" AutoCompleteType="None" ClientIDMode="Static"></asp:TextBox>
                                         <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator2" runat="server" ValidationGroup="Group1"
                                             ErrorMessage='<%$ Tokens:StringResource,signin.aspx.4 %>' ControlToValidate="Password"></asp:RequiredFieldValidator>
                                         <label>
@@ -70,6 +70,7 @@
                                             <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="pull-right" Font-Underline="true" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
                                             <label>
                                                 <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>&nbsp;Remember me
+                                           
                                             </label>
                                         </div>
                                         <%--<div class="checkbox">
@@ -216,4 +217,12 @@
     function loadsniper(e) {
         document.getElementById('LoadingModal').style.display = 'block';
     }
+
+    $(function () {
+        $("#UserName").on("focusout", function () {
+            var dest = $(this);
+            dest.val(jQuery.trim(dest.val()));
+            dest.val(dest.val().replace(/[ ]{2,}/, ' '));
+        });
+    });
 </script>
