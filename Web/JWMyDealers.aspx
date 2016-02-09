@@ -2,6 +2,28 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageContent" runat="Server">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+    <div class="search-filters">
+        <div class="row tablet-view">
+            <div class="col-md-6 pull-left-md pull-sm-no" id="catSortByTop">
+                <label>Sort By: </label>
+                <select id="SelectSortTop" onchange="setParam('sortby', this.value)" name="SelectSort">
+                    <option value="relevance" selected="">Relevance</option>
+                    <option value="priceasc">Low Price</option>
+                    <option value="pricedesc">High Price</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+            <div class="col-md-6 pull-left-md pull-sm-no">
+                <label>Items per page: </label>
+                <select id="PageSizeTop" onchange="setParam('pagesize', this.value)" name="PageSize">
+                    <option value="12">12</option>
+                    <option value="48">48</option>
+                    <option value="10000">View All</option>
+                </select>
+            </div>
+            <div class="clearable"></div>
+        </div>
+    </div>
     <div class="content-box-03">
         <table class="table">
             <tbody>
