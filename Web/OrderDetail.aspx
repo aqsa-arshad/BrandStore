@@ -151,10 +151,10 @@
                                         <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" runat="server" />
+                                        <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
+                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" runat="server" />
                                     </span>
                                     <span>
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><asp:Label ID="lblCreditPrice" runat="server" />
@@ -230,6 +230,9 @@
                 <div class="form-group">
                     <asp:HyperLink ID="hplPrintReceipt" runat="server" class="btn btn-primary btn-half" role="button" Text="Print Receipt" Target="_blank"></asp:HyperLink>
                     <asp:HyperLink ID="hplReOrder" runat="server" class="btn btn-primary btn-half" role="button" Text="Reorder"></asp:HyperLink>
+                </div>
+                <div class="form-group">
+                    <asp:Button ID="btnResendInfotoFulfillmentAPI" Text="Resend Info to Fulfillment API" OnClick="btnResendInfotoFulfillmentAPI_Click" Visible="False" runat="server" class="btn btn-primary btn-block" />
                 </div>
             </div>
             <div class="clearfix"></div>

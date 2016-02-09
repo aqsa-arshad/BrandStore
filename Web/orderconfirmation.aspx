@@ -82,10 +82,10 @@
                                         <asp:Label ID="lblRegularPriceCaption" runat="server" Text='<%$ Tokens:StringResource,RegularPriceCaption  %>' /><asp:Label ID="lblRegularPrice" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server"/><asp:Label ID="lblCategoryFundCredit" Visible="False" runat="server" />
+                                        <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
                                     </span>
                                     <span>
-                                        <asp:Label ID="lblBluBucksCaption" runat="server" Text='<%$ Tokens:StringResource,BluBucksCaption  %>' /><asp:Label ID="lblBluBuck" runat="server" />
+                                        <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" Visible="False" runat="server" />
                                     </span>
                                     <span>
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><asp:Label ID="lblCreditPrice" runat="server" />
@@ -185,7 +185,7 @@
                     </span>
                     <span class="block-text">
                         <asp:Label ID="lblPOPFundsTotalCaption" Visible="False" Text="POP Funds: " runat="server" /><asp:Label runat="server" ID="lblPOPFundsTotal" Visible="False"></asp:Label>
-                    </span>                    
+                    </span>
                 </p>
                 <span class="normal-heading black-color">Charges</span>
                 <p>

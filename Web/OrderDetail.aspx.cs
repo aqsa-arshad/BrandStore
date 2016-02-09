@@ -33,6 +33,10 @@ namespace AspDotNetStorefront
         /// </summary>
         private IDataReader reader;
         /// <summary>
+        /// The reader2
+        /// </summary>
+        private IDataReader reader2;
+        /// <summary>
         /// The m_ store loc
         /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
@@ -83,9 +87,148 @@ namespace AspDotNetStorefront
                 GetOrderInfo();
                 GetOrderItemsDetail();
                 SetTrackingInfo();
-                hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";
+                hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";               
+                if (ThisCustomer.IsAdminUser)
+                    btnResendInfotoFulfillmentAPI.Visible = AppLogic.AppConfig("AllowFulfillmentAPIResend").ToBool();
             }
         }
+
+        #region "Send order to RRD"
+        /// <summary>
+        /// Handles the Click event of the btnResendInfotoFulfillmentAPI control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void btnResendInfotoFulfillmentAPI_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderItemsDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader2 = cmd.ExecuteReader();
+                        int totalRRDRow = 0;
+                        while (reader2.Read())
+                        {
+                            if ((reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting))
+                                    || (reader2["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
+                                totalRRDRow++;
+                        }
+                        reader2.Close();
+                        reader = cmd.ExecuteReader();
+                        orderService.brandstore.ws.orderService os = new orderService.brandstore.ws.orderService();
+                        orderService.brandstore.ws.Credentials c = new orderService.brandstore.ws.Credentials();
+                        orderService.brandstore.ws.BillingAddress Ba = new orderService.brandstore.ws.BillingAddress();
+                        orderService.brandstore.ws.ShippingAddress Sa = new orderService.brandstore.ws.ShippingAddress();
+                        orderService.brandstore.ws.Product p;
+                        orderService.brandstore.ws.Product[] pa = new orderService.brandstore.ws.Product[totalRRDRow];
+
+                        // Set the authentication
+                        c.Username = AppLogic.AppConfig("fullfillmentapi_username");
+                        c.Token = AppLogic.AppConfig("fullfillmentapi_password");
+                        SetBillingAndShippingAddresses(ref Ba, ref Sa, OrderNumber);
+                        int index = 0;
+                        bool hasproducts = false;
+                        string shippingMethodCode = string.Empty;
+                        string shippingMethod = string.Empty;
+
+                        while (reader.Read())
+                        {
+                            if ((reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor RRD", SkinID, ThisCustomer.LocaleSetting))
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor CDS Publications", SkinID, ThisCustomer.LocaleSetting))
+                                    || (reader["DistributorName"].ToString() == AppLogic.GetString("Fullfilment Vendor Wetzel Brothers", SkinID, ThisCustomer.LocaleSetting)))
+                            {
+                                p = new orderService.brandstore.ws.Product();
+                                // set the product
+                                p.ID = reader["ProductID"].ToString();
+                                p.Quantity = reader["Quantity"].ToString();
+                                p.SKU = reader["SKU"].ToString();
+                                p.Description = reader["OrderedProductName"].ToString();
+                                pa[index] = p;
+                                index++;
+                                hasproducts = true;
+                                shippingMethodCode = reader["ShippingMethodCode"].ToString();
+                                shippingMethod = reader["ShippingMethod"].ToString();
+                            }
+                        }
+
+                        // call the service after verification if the shopping cart has RRD Product
+                        if (hasproducts)
+                        {
+                            orderService.brandstore.ws.ReturnStatus rs = os.processOrder(c, OrderNumber.ToString(), OrderNumber.ToString(), Ba, Sa, DateTime.Now, pa, AppLogic.GetString("Fullfilment Vendor RRDParam", SkinID, ThisCustomer.LocaleSetting), shippingMethodCode, shippingMethod);
+                            bool isok = rs.status.Equals(0) ? false : true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+
+        /// <summary>
+        /// Sets the billing and shipping addresses.
+        /// </summary>
+        /// <param name="Ba">The ba.</param>
+        /// <param name="Sa">The sa.</param>
+        /// <param name="OrderNumber">The order number.</param>
+        private void SetBillingAndShippingAddresses(ref orderService.brandstore.ws.BillingAddress Ba, ref orderService.brandstore.ws.ShippingAddress Sa, int OrderNumber)
+        {
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader2 = cmd.ExecuteReader();
+                        if (reader2.Read())
+                        {
+                            //Set Billing address
+                            Ba.Name1 = reader2["BillingFirstName"].ToString() + ' ' + reader2["BillingLastName"].ToString();
+                            Ba.Name2 = "";
+                            Ba.Email = String.IsNullOrEmpty(reader2["Email"].ToString()) ? String.Empty : reader2["Email"].ToString();
+                            Ba.Address1 = String.IsNullOrEmpty(reader2["BillingAddress1"].ToString()) ? String.Empty : reader2["BillingAddress1"].ToString();
+                            Ba.Address2 = String.IsNullOrEmpty(reader2["BillingAddress2"].ToString()) ? String.Empty : reader2["BillingAddress2"].ToString() + " " + (String.IsNullOrEmpty(reader2["BillingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
+                            Ba.City = String.IsNullOrEmpty(reader2["BillingCity"].ToString()) ? String.Empty : reader2["BillingCity"].ToString();
+                            Ba.Locale = String.IsNullOrEmpty(reader2["BillingStateName"].ToString()) ? String.Empty : reader2["BillingStateName"].ToString();
+                            Ba.Country = String.IsNullOrEmpty(reader2["BillingCountryCode"].ToString()) ? String.Empty : reader2["BillingCountryCode"].ToString();
+                            Ba.PostalCode = String.IsNullOrEmpty(reader2["BillingZip"].ToString()) ? String.Empty : reader2["BillingZip"].ToString();
+
+                            //Set Shipping Address                       
+
+                            Sa.Name1 = reader2["ShippingFirstName"].ToString() + ' ' + reader2["ShippingLastName"].ToString();
+                            Sa.Name2 = "";
+                            Sa.Email = String.IsNullOrEmpty(reader2["Email"].ToString()) ? String.Empty : reader2["Email"].ToString();
+                            Sa.Address1 = String.IsNullOrEmpty(reader2["ShippingAddress1"].ToString()) ? String.Empty : reader2["ShippingAddress1"].ToString();
+                            Sa.Address2 = String.IsNullOrEmpty(reader2["ShippingAddress2"].ToString()) ? String.Empty : reader2["ShippingAddress2"].ToString() + " " + (String.IsNullOrEmpty(reader2["ShippingSuite"].ToString()) ? String.Empty : reader2["BillingSuite"].ToString());
+                            Sa.City = String.IsNullOrEmpty(reader2["ShippingCity"].ToString()) ? String.Empty : reader2["ShippingCity"].ToString();
+                            Sa.Locale = String.IsNullOrEmpty(reader2["ShippingStateName"].ToString()) ? String.Empty : reader2["ShippingStateName"].ToString();
+                            Sa.Country = String.IsNullOrEmpty(reader2["ShippingCountryCode"].ToString()) ? String.Empty : reader2["ShippingCountryCode"].ToString();
+                            Sa.PostalCode = String.IsNullOrEmpty(reader2["ShippingZip"].ToString()) ? String.Empty : reader2["ShippingZip"].ToString();
+                        }
+                        conn.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+        }
+        #endregion
 
         /// <summary>
         /// IsSubordinateDealer
