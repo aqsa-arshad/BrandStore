@@ -655,7 +655,7 @@
 
                 var newpricetotal =  parseFloat(ItemOriginalPrice * ItemQuantity) - parseFloat($("#hdnProductFundAmountUsed").text());    
           
-                $("#spprice").text("$" + newpricetotal);
+                $("#spprice").text("$" + round(newpricetotal,2));
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 var customerlevel = $("#hdncustomerlevel").text(); 
@@ -904,7 +904,7 @@
                     return false;
                 }
                 else if (($("#txtBluBuksUsed").val()) > (availableblubucksforthisitem)) {
-                    alert("BLU BUKS cannot be greater than allowed limit");
+                    alert("BLU BUCKS cannot be greater than allowed limit");
                   //  $("#txtBluBuksUsed").val(availableblubucksforthisitem);
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, (maxfundlimit), availableblubucksforthisitem);
                     
@@ -912,7 +912,7 @@
                 }
                 else if ((round($("#txtBluBuksUsed").val(),2)) > (round(maxfundlimit,2))) {
                     
-                    alert("BLU™ BUKS cannot be greater than allowed limit");
+                    alert("BLU™ BUCKS cannot be greater than allowed limit");
                    // $("#txtBluBuksUsed").val(Math.round(maxfundlimit));
                     applyblubuksvalidation2(newpricetotal, ProductCategoryID, (maxfundlimit), availableblubucksforthisitem);
                   
