@@ -232,7 +232,7 @@
                     <asp:HyperLink ID="hplReOrder" runat="server" class="btn btn-primary btn-half" role="button" Text="Reorder"></asp:HyperLink>
                 </div>
                 <div class="form-group">
-                    <asp:Button ID="btnResendInfotoFulfillmentAPI" Text="Resend Info to Fulfillment API" OnClick="btnResendInfotoFulfillmentAPI_Click" Visible="False" runat="server" class="btn btn-primary btn-block" />
+                    <asp:Button ID="btnResendInfotoFulfillmentAPI" Text="Resend Info to Fulfillment API" OnClick="btnResendInfotoFulfillmentAPI_Click" OnClientClick='return confirm("Are you sure you want to resend Fulfillment API request?")' Visible="False" runat="server" class="btn btn-primary btn-block" />
                 </div>
             </div>
             <div class="clearfix"></div>
