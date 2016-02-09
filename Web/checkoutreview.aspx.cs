@@ -234,7 +234,9 @@ namespace AspDotNetStorefront
         private bool validateuserfunds()
         {
             if (AuthenticationSSO.IsDealerUser(ThisCustomer.CustomerLevelID) || AuthenticationSSO.IsInternalUser(ThisCustomer.CustomerLevelID))
-                return AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
+            {
+                return AuthenticationSSO.ValidateCustomerFund(ThisCustomer.CustomerID, true);
+            }
             else
                 return true;
         }
@@ -247,6 +249,7 @@ namespace AspDotNetStorefront
                 String PayPalToken = CommonLogic.QueryStringCanBeDangerousContent("token").Trim();
                 String PayerID = CommonLogic.QueryStringCanBeDangerousContent("payerid").Trim();
                 ProcessCheckout();
+                AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
             }
 
             else

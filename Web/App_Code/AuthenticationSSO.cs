@@ -1166,9 +1166,9 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="customerID">CustomerID</param>
         /// <returns>Status</returns>
-        public static bool ValidateCustomerFund(int customerID)
+        public static bool ValidateCustomerFund(int customerID, bool IsUpdateSFDC = false)
         {
-            return ValidateCustomerFund(GetCustomerFund(customerID, false));
+            return ValidateCustomerFund(GetCustomerFund(customerID, IsUpdateSFDC));
         }
 
         /// <summary>
