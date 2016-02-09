@@ -776,7 +776,7 @@
                 $("#txtBluBuksUsed").val($("#spprice").text().replace("$", ""));
                
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "").replace("BLU™ Bucks used:","");
-
+                
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) + parseFloat(spblubucksprice);
 
                 var availableblubucksforthisitem = spblubucksprice;
