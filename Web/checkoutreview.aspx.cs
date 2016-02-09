@@ -249,7 +249,6 @@ namespace AspDotNetStorefront
                 String PayPalToken = CommonLogic.QueryStringCanBeDangerousContent("token").Trim();
                 String PayerID = CommonLogic.QueryStringCanBeDangerousContent("payerid").Trim();
                 ProcessCheckout();
-                AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
             }
 
             else
@@ -738,6 +737,7 @@ namespace AspDotNetStorefront
                     Response.Redirect("checkoutpayment.aspx?TryToShowPM=" + PM + "&errormsg=" + err.MessageId);
                 }
             }
+            AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
             Response.Redirect("orderconfirmation.aspx?ordernumber=" + OrderNumber.ToString() + "&paymentmethod=" + Server.UrlEncode(PaymentMethod));
         }
         protected override string OverrideTemplate()
