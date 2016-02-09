@@ -12,13 +12,12 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            debugger;
             if ('<%=ThisCustomer.IsRegistered%>' == 'False') {
                 $("#SearchResult").addClass("search-prelogin");
             }
             if ('<%=IsProductExist%>' == "true") {
                 $("#ctl00_divbeforelogin").addClass("search-right");
-                $("#ctl00_divafterlogin").addClass("search-right");                
+                $("#ctl00_divafterlogin").addClass("search-right");
             } else {
                 $("#ctl00_divbeforelogin").removeClass("search-right");
                 $("#ctl00_divafterlogin").removeClass("search-right");
