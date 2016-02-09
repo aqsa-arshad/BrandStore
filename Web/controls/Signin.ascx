@@ -70,7 +70,6 @@
                                             <asp:LinkButton runat="server" OnClick="forgotpasswordLink_Click" CssClass="pull-right" Font-Underline="true" CausesValidation="false" Text='<%$ Tokens:StringResource,signin.aspx.15 %>'></asp:LinkButton>
                                             <label>
                                                 <asp:CheckBox ID="RememberMe" runat="server"></asp:CheckBox>&nbsp;Remember me
-                                           
                                             </label>
                                         </div>
                                         <%--<div class="checkbox">
