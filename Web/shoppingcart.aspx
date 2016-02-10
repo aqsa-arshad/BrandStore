@@ -566,7 +566,7 @@
                     return true;
                 }
                 else {
-
+                    PageMethods.SaveValuesInSession("0", "0", currentrecordid, onSucceed, onError);
                     var updatedprice = $("#spprice").text().replace("$", "")-$("#txtproductcategoryfundusedforsalesrep").val() ;//((ItemOriginalPrice * ItemQuantity) - round($("#hdnProductFundAmountUsed").val(),2));//$("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();               
                   
                     $("#spprice").text("$" + round(updatedprice,2));                    
@@ -624,8 +624,9 @@
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) +parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice;  
                 
+             
+                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {    
               
-                if (applyblubuksvalidation(newpricetotal, ProductCategoryID, BluBucksPercentage, availableblubucksforthisitem)) {                   
                     $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
@@ -633,8 +634,14 @@
                     return true;
                 }
                 else {
+
                      var updatedprice = (ItemOriginalPrice * ItemQuantity) - $("#hdnProductFundAmountUsed").text();//$("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();                 
                     $("#spprice").text("$" + round(updatedprice,2));
+
+                    var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
+                    var BluBucksUsed = "0";
+                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
+
                     return false;
                 }
                    
@@ -676,8 +683,14 @@
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
                 else {  
+
                     var updatedprice =  $("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();                 
                     $("#spprice").text("$" + round(updatedprice,2));
+                    
+                    var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
+                    var BluBucksUsed = "0";
+                    PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
+
                 }
 
 
@@ -901,6 +914,7 @@
                     return true;
                 }
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
+                    $("#txtBluBuksUsed").val("0.00");
                     return false;
                 }
                 else if (($("#txtBluBuksUsed").val()) > (availableblubucksforthisitem)) {
