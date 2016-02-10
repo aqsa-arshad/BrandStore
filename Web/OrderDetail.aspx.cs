@@ -101,6 +101,7 @@ namespace AspDotNetStorefront
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void btnResendInfotoFulfillmentAPI_Click(object sender, EventArgs e)
         {
+            string message = AppLogic.GetString("SentFulfillmentAPI.Success", SkinID, ThisCustomer.LocaleSetting.ToString());
             try
             {
                 using (var conn = DB.dbConn())
@@ -156,7 +157,6 @@ namespace AspDotNetStorefront
                                 shippingMethod = reader["ShippingMethod"].ToString();
                             }
                         }
-
                         // call the service after verification if the shopping cart has RRD Product
                         if (hasproducts)
                         {
@@ -168,9 +168,16 @@ namespace AspDotNetStorefront
             }
             catch (Exception ex)
             {
+                message = AppLogic.GetString("SentFulfillmentAPI.Error", SkinID, ThisCustomer.LocaleSetting.ToString());
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            finally
+            {
+                string script = "alert('" + message + "')";
+                System.Web.UI.ClientScriptManager cs = this.ClientScript;
+                cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);
             }
         }
 
