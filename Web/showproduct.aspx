@@ -115,14 +115,13 @@
                             <div class="col-xs-6 col-sm-4">
                                 <label class="roman-black">
                                     YES:
-                                    <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
+                                    <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" class="radio-btn-group" />
                                 </label>
                             </div>
                             <div class="col-xs-4 col-sm-4">
                                 <label class="roman-black">
                                     NO:
-                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" />
-
+                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" checked />
                                 </label>
                             </div>
                     </div>
