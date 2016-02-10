@@ -6696,6 +6696,12 @@ a:hover.underline-link {
 .underline-no:hover {
   text-decoration: none;
 }
+a.link-no {
+  text-decoration: none;
+}
+a:hover.link-no {
+  text-decoration: none;
+}
 .bottom-space-border tr:last-child {
   border: none;
 }

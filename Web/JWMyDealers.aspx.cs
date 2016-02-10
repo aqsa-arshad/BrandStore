@@ -8,6 +8,12 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
+    public class temp
+    {
+        public String Name { get; set; }
+        public String Id { get; set; }
+    }
+
     /// <summary>
     /// View User Dealers from SFDC
     /// </summary>
@@ -15,8 +21,8 @@ namespace AspDotNetStorefront
     {
         protected static int PageCount;
         protected static int CurrentPageNumber;
-        private const int PageSize = 5;
-
+        protected static int PageSize;
+        static List<SFDCSoapClient.Account> lstSFDCAccount = new List<SFDCSoapClient.Account>();
         /// <summary>
         /// Override JeldWen Master Template
         /// </summary>
@@ -53,10 +59,11 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, EventArgs e)
         {
             RequireSecurePage();
+            PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
             RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
-
             if (!Page.IsPostBack)
             {
+                lstSFDCAccount = AuthenticationSSO.GetSubordinateAccounts(ThisCustomer.SFDCQueryParam);
                 LoadMyDealers(1);
             }
         }
@@ -69,8 +76,6 @@ namespace AspDotNetStorefront
         {
             if (ThisCustomer.HasSubordinates)
             {
-                List<SFDCSoapClient.Account> lstSFDCAccount = AuthenticationSSO.GetSubordinateAccounts(ThisCustomer.SFDCQueryParam);
-
                 if (lstSFDCAccount.Count > 0)
                 {
                     rptMyDealers.DataSource = lstSFDCAccount.Skip((pageIndex - 1) * PageSize).Take(PageSize);
@@ -130,5 +135,65 @@ namespace AspDotNetStorefront
             rptPager.DataSource = pages;
             rptPager.DataBind();
         }
+        private void LoadMyDealersInAscendingOrDesendingOrder(int pageIndex, int flag)
+        {
+            if (ThisCustomer.HasSubordinates)
+            {
+                if (flag == 1)
+                {
+                    lstSFDCAccount = lstSFDCAccount.OrderBy(x => x.Name).ToList();
+                }
+                else if (flag == 2)
+                {
+                    lstSFDCAccount = lstSFDCAccount.OrderByDescending(x => x.Name).ToList();
+                }
+
+                if (lstSFDCAccount.Count > 0)
+                {
+                    rptMyDealers.DataSource = lstSFDCAccount.Skip((pageIndex - 1) * PageSize).Take(PageSize);
+                    rptMyDealers.DataBind();
+                    lblDealerNotFound.Visible = false;
+                    PopulatePager(lstSFDCAccount.Count, pageIndex);
+                }
+            }
+        }
+        protected void OrderBylist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterDealers();
+        }
+        protected void PageSizelist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterDealers();
+        }
+        private void filterDealers()
+        {
+            PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
+            String selectedValue = OrderBylist.SelectedValue;
+            if (selectedValue.Equals("nameAsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 1);
+            }
+            else if (selectedValue.Equals("nameDsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 2);
+            }
+            else
+            {
+                LoadMyDealers(1);
+            }
+            PageSizeList.Items.FindByValue(PageSizeList.SelectedValue.ToString()).Selected = true;
+            OrderBylist.ClearSelection();
+            OrderBylist.Items.FindByValue(selectedValue).Selected = true;
+        }
+        protected void DealersHeader_Click(object sender, EventArgs e)
+        {
+            PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
+            String selectedValue = "nameAsc";
+            LoadMyDealersInAscendingOrDesendingOrder(1, 1);
+            PageSizeList.Items.FindByValue(PageSizeList.SelectedValue.ToString()).Selected = true;
+            OrderBylist.ClearSelection();
+            OrderBylist.Items.FindByValue(selectedValue).Selected = true;
+        }
+
     }
 }
