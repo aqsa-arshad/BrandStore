@@ -8,12 +8,6 @@ using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
-    public class temp
-    {
-        public String Name { get; set; }
-        public String Id { get; set; }
-    }
-
     /// <summary>
     /// View User Dealers from SFDC
     /// </summary>
@@ -188,11 +182,21 @@ namespace AspDotNetStorefront
         protected void DealersHeader_Click(object sender, EventArgs e)
         {
             PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
-            String selectedValue = "nameAsc";
-            LoadMyDealersInAscendingOrDesendingOrder(1, 1);
+            String selectedValue = OrderBylist.SelectedValue;
+            if (selectedValue.Equals("nameAsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 2);
+                OrderBylist.ClearSelection();
+                OrderBylist.Items.FindByValue("nameDsc").Selected = true;
+            }
+            else if (selectedValue.Equals("nameDsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 1);
+                OrderBylist.ClearSelection();
+                OrderBylist.Items.FindByValue("nameAsc").Selected = true;
+            }
             PageSizeList.Items.FindByValue(PageSizeList.SelectedValue.ToString()).Selected = true;
-            OrderBylist.ClearSelection();
-            OrderBylist.Items.FindByValue(selectedValue).Selected = true;
+           
         }
 
     }

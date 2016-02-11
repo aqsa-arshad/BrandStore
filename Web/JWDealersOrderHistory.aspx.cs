@@ -283,5 +283,17 @@ namespace AspDotNetStorefront
             var pageIndex = int.Parse((sender as LinkButton).CommandArgument);
             GetOrders(pageIndex, hfCustomerID.Value);
         }
+        protected void lblOrderNumber_Click(object sender, EventArgs e)
+        {
+        }
+        protected void lblOrderDate_Click(object sender, EventArgs e)
+        {
+        }
+        protected void lblPayment_Click(object sender, EventArgs e)
+        {
+        }
+        protected void lblStatus_Click(object sender, EventArgs e)
+        {
+        }
     }
 }

@@ -59,9 +59,5 @@
             </ItemTemplate>
         </asp:Repeater>
     </div>
-    <script>
-
-        $("#myDealersHeader")
-    </script>
 </asp:Content>
 
