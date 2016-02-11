@@ -72,8 +72,6 @@ namespace AspDotNetStorefront
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                         cmd.Parameters.AddWithValue("@PageSize", PageSize);
-                        cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
-                        cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
                         cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
                         cmd.Parameters.AddWithValue("@CustomerID", customerID);
                         cmd.Parameters.AddWithValue("@AllowCustomerFiltering",
@@ -83,12 +81,16 @@ namespace AspDotNetStorefront
                         IDataReader reader = cmd.ExecuteReader();
                         rptOrderhistory.DataSource = reader;
                         rptOrderhistory.DataBind();
-
+                        if (reader.NextResult())
+                        {
+                            if (reader.Read())
+                            {
+                                var recordCount = Convert.ToInt16(reader.GetInt32(0));
+                                PopulatePager(recordCount, pageIndex);
+                            }
+                        }
                         reader.Close();
                         conn.Close();
-
-                        var recordCount = Convert.ToInt32(cmd.Parameters["@RecordCount"].Value);
-                        PopulatePager(recordCount, pageIndex);
                     }
                 }
             }

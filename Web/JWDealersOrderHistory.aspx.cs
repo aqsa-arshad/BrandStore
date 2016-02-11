@@ -14,7 +14,11 @@ namespace AspDotNetStorefront
     {
         protected static int PageCount;
         protected static int CurrentPageNumber;
-
+        protected static int pageIndex = 1;
+        protected static int isOrderNumberAsc = 1;
+        protected static int isDateAsc = 1;
+        protected static int isPaymentTotalAsc = 1;
+        protected static int isUsernameAsc = 1;
         /// <summary>
         /// The m_ store loc
         /// </summary>
@@ -47,7 +51,7 @@ namespace AspDotNetStorefront
 
                     if (lstContact.Count > 0)
                     {
-                        foreach(SFDCSoapClient.Contact contact in lstContact)
+                        foreach (SFDCSoapClient.Contact contact in lstContact)
                         {
                             int customerId = GetCustomerIdbyContactId(contact.Id);
                             if (customerId != 0 && !lstCustomerId.Contains(customerId))
@@ -98,11 +102,11 @@ namespace AspDotNetStorefront
         private void GetAccountFunds(SFDCSoapClient.Contact contact)
         {
             lblTierLevel.Text = contact.Account.TrueBLUStatus__c.ToUpper().Contains("BLU") ? contact.Account.TrueBLUStatus__c.Replace("BLU", "BLU™") : contact.Account.TrueBLUStatus__c;
-            lblBluBucks.Text = String.Format("{0:C}", contact.Account.Co_op_budget__c).Replace("$","");
+            lblBluBucks.Text = String.Format("{0:C}", contact.Account.Co_op_budget__c).Replace("$", "");
             lblDirectMailFunds.Text = String.Format("{0:C}", contact.Account.Direct_Marketing_Funds__c);
             lblDisplayFunds.Text = String.Format("{0:C}", contact.Account.Display_Funds__c);
             lblLiteratureFunds.Text = String.Format("{0:C}", contact.Account.Literature_Funds__c);
-            lblPOPFunds.Text = String.Format("{0:C}", contact.Account.POP_Funds__c);            
+            lblPOPFunds.Text = String.Format("{0:C}", contact.Account.POP_Funds__c);
         }
 
         /// <summary>
@@ -122,8 +126,6 @@ namespace AspDotNetStorefront
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                         cmd.Parameters.AddWithValue("@PageSize", PageSize);
-                        cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
-                        cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
                         cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
                         cmd.Parameters.AddWithValue("@CustomerID", customerID);
                         cmd.Parameters.AddWithValue("@AllowCustomerFiltering",
@@ -133,12 +135,16 @@ namespace AspDotNetStorefront
                         IDataReader reader = cmd.ExecuteReader();
                         rptOrderhistory.DataSource = reader;
                         rptOrderhistory.DataBind();
-
+                        if (reader.NextResult())
+                        {
+                            if (reader.Read())
+                            {
+                                var recordCount = Convert.ToInt16(reader.GetInt32(0));
+                                PopulatePager(recordCount, pageIndex);
+                            }
+                        }
                         reader.Close();
                         conn.Close();
-
-                        var recordCount = Convert.ToInt32(cmd.Parameters["@RecordCount"].Value);
-                        PopulatePager(recordCount, pageIndex);
                     }
                 }
             }
@@ -280,20 +286,114 @@ namespace AspDotNetStorefront
         protected void Page_Changed(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty((sender as LinkButton).CommandArgument)) return;
-            var pageIndex = int.Parse((sender as LinkButton).CommandArgument);
+            pageIndex = int.Parse((sender as LinkButton).CommandArgument);
             GetOrders(pageIndex, hfCustomerID.Value);
         }
         protected void lblOrderNumber_Click(object sender, EventArgs e)
         {
+            String orderBy = "OrderNumber";
+            if (isOrderNumberAsc == 1)
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isOrderNumberAsc);
+                isOrderNumberAsc = 0;
+            }
+            else
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isOrderNumberAsc);
+                isOrderNumberAsc = 1;
+            }
         }
         protected void lblOrderDate_Click(object sender, EventArgs e)
         {
+            String orderBy = "OrderDate";
+            if (isDateAsc == 1)
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isDateAsc);
+                isDateAsc = 0;
+            }
+            else
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isDateAsc);
+                isDateAsc = 1;
+            }
         }
         protected void lblPayment_Click(object sender, EventArgs e)
         {
+            String orderBy = "OrderTotal";
+            if (isPaymentTotalAsc == 1)
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isPaymentTotalAsc);
+                isPaymentTotalAsc = 0;
+            }
+            else
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isPaymentTotalAsc);
+                isPaymentTotalAsc = 1;
+            }
         }
         protected void lblStatus_Click(object sender, EventArgs e)
         {
+            String orderBy = "Username";
+            if (isUsernameAsc == 1)
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isUsernameAsc);
+                isUsernameAsc = 0;
+            }
+            else
+            {
+                GetOrdersInSpecificOrder(pageIndex, hfCustomerID.Value, orderBy, isUsernameAsc);
+                isUsernameAsc = 1;
+            }
+        }
+
+        /// <summary>
+        /// Gets the orders.
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        public void GetOrdersInSpecificOrder(int pageIndexNO, string customerID, String orderyBy, int IsAsc)
+        {
+            string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
+            try
+            {
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetAllOrders", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                        cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                        cmd.Parameters.AddWithValue("@SortBy", orderyBy);
+                        cmd.Parameters.AddWithValue("@IsAsc", IsAsc);
+                        cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
+                        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                        cmd.Parameters.AddWithValue("@AllowCustomerFiltering",
+                            CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowCustomerFiltering") == true, 1, 0));
+                        cmd.Parameters.AddWithValue("@StoreID", AppLogic.StoreID());
+
+                        IDataReader reader = cmd.ExecuteReader();
+                        rptOrderhistory.DataSource = reader;
+                        rptOrderhistory.DataBind();
+                        if (reader.NextResult())
+                        {
+                            if (reader.Read())
+                            {
+                                var recordCount = Convert.ToInt16(reader.GetInt32(0));
+                                PopulatePager(recordCount, pageIndex);
+                            }
+                        }
+                        reader.Close();
+                        conn.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
+            }
+            lblOrderNotFound.Visible = (rptOrderhistory.Items.Count == 0);
         }
     }
 }
