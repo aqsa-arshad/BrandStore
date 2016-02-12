@@ -468,7 +468,8 @@ namespace AspDotNetStorefront
         {
             if (!IsVisible)
             {
-                // pnlCCPane.Visible = CCPaneInfo.Visible = false;
+                // pnlCCPane.Visible = CCPaneInfo.Visible = false;ctrlCreditCardPanel
+                ctrlCreditCardPanel.Visible = CCPaneInfo.Visible = false;//Added this line to set credit card control visibility
                 return;
             }
 
@@ -478,7 +479,7 @@ namespace AspDotNetStorefront
                 return;
             }
 
-            // pnlCCPane.Visible = true;
+            ctrlCreditCardPanel.Visible = true;
             pnlCCPaneInfo.Visible = false;
 
             string ccPaneData = GWActual == null ? null : GWActual.CreditCardPaneInfo(SkinID, ThisCustomer);
@@ -499,7 +500,7 @@ namespace AspDotNetStorefront
                 pnlCCPaneInfo.Visible = false;
                 if (GW != Gateway.ro_GWNETAXEPT)
                 {
-                    // pnlCCPane.Visible = true;
+                    ctrlCreditCardPanel.Visible = true;
                 }
             }
         }

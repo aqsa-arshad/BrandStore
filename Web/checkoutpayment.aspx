@@ -54,9 +54,9 @@
 
                 </asp:Panel>
 
-                <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-main" Visible="true">
+                <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-view pull-left-md" Visible="true">
                     <div>
-                        <aspdnsfc:PaymentMethod CssClass="hide-element" ID="ctrlPaymentMethod" runat="server"
+                        <aspdnsfc:PaymentMethod CssClass="" ID="ctrlPaymentMethod" runat="server"
                             OnPaymentMethodChanged="ctrlPaymentMethod_OnPaymentMethodChanged"
                             CARDINALMYECHECKCaption="<%$ Tokens:StringResource, checkoutpayment.aspx.13 %>"
                             CHECKBYMAILCaption="<%$ Tokens:StringResource, checkoutpayment.aspx.11 %>"
@@ -92,7 +92,7 @@
                             PAYPALEXPRESSImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
                             PAYPALEMBEDDEDCHECKOUTImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
                             PAYPALImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
-                            MONEYBOOKERSQUICKCHECKOUTImage="<%$ Tokens:AppConfig, Moneybookers.QuickCheckout.PaymentIcon %>" />
+                            MONEYBOOKERSQUICKCHECKOUTImage="<%$ Tokens:AppConfig, Moneybookers.QuickCheckout.PaymentIcon %>"/>
 
                         <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="paymentKicker" runat="server" />
 
@@ -175,7 +175,7 @@
                         <asp:Panel ID="pnlPOPane" runat="server" Visible="false" CssClass="page-row">
 
                             <asp:Label ID="lblPOHeader" runat="server"
-                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label>
+                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label><br>
 
                             <asp:Label ID="lblPO" runat="server"
                                 Text="<%$ Tokens:StringResource, checkoutpo.aspx.4 %>"></asp:Label>
@@ -347,7 +347,17 @@
 
             $("#divccpane1").unwrap();
             $("#divccpane2").unwrap();
+           
+            //if purchase order is not selected then select credit card option
+            if(!$('#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER').is(':checked')) 
+            {
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbCREDITCARD").trigger("click");
+            }     
+           
+      
 
+           
+            
         });
     </script>
     <script type="text/javascript">
