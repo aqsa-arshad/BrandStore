@@ -129,15 +129,20 @@ namespace AspDotNetStorefront
             rptPager.DataSource = pages;
             rptPager.DataBind();
         }
-        private void LoadMyDealersInAscendingOrDesendingOrder(int pageIndex, int flag)
+        /// <summary>
+        /// Load dealers list in specific order.
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// /// <param name="SortingOrder">Sorting order.</param>
+        private void LoadMyDealersInAscendingOrDesendingOrder(int pageIndex, int SortingOrder)
         {
             if (ThisCustomer.HasSubordinates)
             {
-                if (flag == 1)
+                if (SortingOrder == 1)
                 {
                     lstSFDCAccount = lstSFDCAccount.OrderBy(x => x.Name).ToList();
                 }
-                else if (flag == 2)
+                else if (SortingOrder == 2)
                 {
                     lstSFDCAccount = lstSFDCAccount.OrderByDescending(x => x.Name).ToList();
                 }
@@ -151,14 +156,27 @@ namespace AspDotNetStorefront
                 }
             }
         }
+        /// <summary>
+        /// Handles the Changed event of orderBy dropdown.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void OrderBylist_SelectedIndexChanged(object sender, EventArgs e)
         {
             filterDealers();
         }
+        /// <summary>
+        /// Handles the Changed event of pageSize dropdown.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void PageSizelist_SelectedIndexChanged(object sender, EventArgs e)
         {
             filterDealers();
         }
+        /// <summary>
+        /// Get the filtered dealers list.
+        /// </summary>
         private void filterDealers()
         {
             PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
@@ -179,6 +197,11 @@ namespace AspDotNetStorefront
             OrderBylist.ClearSelection();
             OrderBylist.Items.FindByValue(selectedValue).Selected = true;
         }
+        /// <summary>
+        /// Handles the click event of dealer's page header.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>s
         protected void DealersHeader_Click(object sender, EventArgs e)
         {
             PageSize = Convert.ToInt32(PageSizeList.SelectedValue);

@@ -289,6 +289,11 @@ namespace AspDotNetStorefront
             pageIndex = int.Parse((sender as LinkButton).CommandArgument);
             GetOrders(pageIndex, hfCustomerID.Value);
         }
+        /// <summary>
+        /// Handles the click event of order number.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void lblOrderNumber_Click(object sender, EventArgs e)
         {
             String orderBy = "OrderNumber";
@@ -303,6 +308,11 @@ namespace AspDotNetStorefront
                 isOrderNumberAsc = 1;
             }
         }
+        /// <summary>
+        /// Handles the click event of order date.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void lblOrderDate_Click(object sender, EventArgs e)
         {
             String orderBy = "OrderDate";
@@ -317,6 +327,11 @@ namespace AspDotNetStorefront
                 isDateAsc = 1;
             }
         }
+        /// <summary>
+        /// Handles the click event of payment.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void lblPayment_Click(object sender, EventArgs e)
         {
             String orderBy = "OrderTotal";
@@ -331,6 +346,11 @@ namespace AspDotNetStorefront
                 isPaymentTotalAsc = 1;
             }
         }
+        /// <summary>
+        /// Handles the click event of status.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void lblStatus_Click(object sender, EventArgs e)
         {
             String orderBy = "Username";
@@ -347,9 +367,12 @@ namespace AspDotNetStorefront
         }
 
         /// <summary>
-        /// Gets the orders.
+        /// Gets the filtered orders.
         /// </summary>
-        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageIndexNO">Index of the page.</param>
+        ///  /// <param name="customerID">customer ID.</param>
+        ///   /// <param name="orderyBy">Items to be sorty by.</param>
+        ///    /// <param name="IsAsc">it contains sorting order.</param>
         public void GetOrdersInSpecificOrder(int pageIndexNO, string customerID, String orderyBy, int IsAsc)
         {
             string[] trxStates = { AppLogic.ro_TXStateAuthorized, AppLogic.ro_TXStateCaptured, AppLogic.ro_TXStatePending };
