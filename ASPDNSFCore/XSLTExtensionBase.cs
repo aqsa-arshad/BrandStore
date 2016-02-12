@@ -3265,10 +3265,6 @@ function popupzoom(url,alturl)
                 result.Append("<button type=\"button\" data-dismiss=\"modal\" id=\"btnSubmit\" class=\"btn btn-primary btn-block\">Submit</button> ");
                 result.Append("</div> </div> </div> </div> ");
             }
-            else
-            {
-                result.Append("</div>");
-            }
             return result.ToString();
         }
 
