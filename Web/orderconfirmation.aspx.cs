@@ -9,6 +9,8 @@ using System.Linq;
 using System.Web.UI;
 using System.Configuration;
 using System.Web.UI.WebControls;
+using System.Text;
+using AspDotNetStorefrontGateways;
 
 namespace AspDotNetStorefront
 {
@@ -95,6 +97,37 @@ namespace AspDotNetStorefront
                 GetOrderItemsDetail();
                 SendOrderinfotoRRD();
             }
+            // get the billing address 
+            Address BillingAddress = new Address();
+            BillingAddress.LoadFromDB(ThisCustomer.PrimaryBillingAddressID);
+            litPaymentMethod.Text = GetPaymentMethod(BillingAddress);
+        }
+        private string GetPaymentMethod(Address BillingAddress)
+        {
+            StringBuilder sPmtMethod = new StringBuilder(1024);
+            if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
+            {
+                sPmtMethod.Append("<p>");
+                sPmtMethod.Append("<span class='block-text'>");
+                sPmtMethod.Append(BillingAddress.CardType);
+                sPmtMethod.Append(AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID));
+                sPmtMethod.Append("<span>");
+                sPmtMethod.Append("<span class='block-text'> Expires: ");
+                sPmtMethod.Append(BillingAddress.CardExpirationMonth.PadLeft(2, '0') + "/" + BillingAddress.CardExpirationYear);
+                sPmtMethod.Append("<span>");
+                sPmtMethod.Append("<span class='block-text'>");
+                sPmtMethod.Append(BillingAddress.Country);
+                sPmtMethod.Append("<span>");
+                sPmtMethod.Append("</p>");
+            }
+            else
+            {
+                sPmtMethod.Append("<p>");
+                sPmtMethod.Append("<span class='block-text'> Purchase order#: ");
+                sPmtMethod.Append(BillingAddress.PONumber);
+                sPmtMethod.Append("</p>");
+            }
+            return sPmtMethod.ToString();
         }
 
         /// <summary>

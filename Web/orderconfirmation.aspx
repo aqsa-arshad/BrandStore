@@ -116,7 +116,13 @@
         </div>
 
         <%--Billing Amounts--%>
-        <div class="top-row-adjsut">
+          <div class="row">
+                <div class="col-md-4 pull-left">
+                        <asp:Label ID="checkoutreviewaspx9" CssClass="normal-heading black-color" Text="<%$ Tokens:StringResource,checkoutreview.aspx.999 %>" runat="server"></asp:Label>
+                        <asp:Literal ID="litPaymentMethod" runat="server" Mode="PassThrough"></asp:Literal>
+                </div>
+            </div>
+        <div>
             <div class="td-40-percent pull-left ">
                 <span class="normal-heading black-color">Billed to</span>
                 <p>
