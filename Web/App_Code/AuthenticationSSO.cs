@@ -216,6 +216,8 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@ShippingAddressID", 0),
                                         new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@HasSubordinates", HasSubordinates(customerLevelID, profile.sfid)),
+                                        new SqlParameter("@IsPurchaseOrder", true),
+                                        new SqlParameter("@MinThreshold", 100),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -229,6 +231,8 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@IsRegistered", 1), 
                                         new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@HasSubordinates", HasSubordinates(customerLevelID, profile.sfid)),
+                                        new SqlParameter("@IsPurchaseOrder", true),
+                                        new SqlParameter("@MinThreshold", 100),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
