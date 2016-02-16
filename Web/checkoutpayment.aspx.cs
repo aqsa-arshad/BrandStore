@@ -53,7 +53,22 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, EventArgs e)
         {
             //initially hide all error messages:
-            
+            if (this.IsPostBack)
+            {
+                if (ctrlPaymentMethod.CREDITCARDChecked)
+                {
+                    pnlErrorMsg.Visible = false;
+                    
+                }
+                else
+                {
+                    valsumCreditCard.Visible = false;
+                    valsumEcheck.Visible = false;
+                    pnlCCTypeErrorMsg.Visible = false;
+                    pnlCCExpDtErrorMsg.Visible = false;
+                    CCTypeErrorMsgLabel.Visible = false;
+                }
+            }
             //valsumCreditCard.Visible = false;
             //valsumEcheck.Visible = false;
             //pnlCCTypeErrorMsg.Visible = false;
@@ -1668,6 +1683,14 @@ namespace AspDotNetStorefront
                 }
                 else
                 {
+                    //Hide all error messages initially added by tayyab on 16-2-2015
+                    valsumCreditCard.Visible = true;
+                    valsumEcheck.Visible = true;
+                    pnlCCTypeErrorMsg.Visible = true;
+                    pnlCCExpDtErrorMsg.Visible = true;
+                    CCTypeErrorMsgLabel.Visible = true;
+                    //End
+
                     Page.Validate("creditcard");
 
                     if (ctrlCreditCardPanel.CreditCardType == AppLogic.GetString("address.cs.32", SkinID, ThisCustomer.LocaleSetting))
