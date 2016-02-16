@@ -341,11 +341,20 @@ namespace AspDotNetStorefront
                             lblSACountry.Text = reader["ShippingCountry"].ToString();
                             lblSAPhone.Text = reader["ShippingPhone"].ToString();
                             //Payment Methods
-                            lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
-                                                 (string.Concat("*********", reader["CardNumber"].ToString()));
-                            lblPMExpireDate.Text = "Expires: " + reader["CardExpirationMonth"].ToString() + '/' +
-                                                   reader["CardExpirationYear"].ToString();
-                            lblPMCountry.Text = reader["BillingCountry"].ToString();
+                            if (reader["PaymentMethod"].ToString().Equals(AppLogic.ro_PMCreditCard))
+                            {
+                                lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
+                                                    (string.Concat("*********", reader["CardNumber"].ToString()));
+                                lblPMExpireDate.Text = "order.aspx.2".StringResource()+" " + reader["CardExpirationMonth"] + '/' +
+                                                       reader["CardExpirationYear"];
+                                lblPMCountry.Text = reader["BillingCountry"].ToString();
+                            }
+                            else
+                            {
+                                lblPMCardInfo.Text = "order.aspx.1".StringResource()+" " + reader["PONumber"].ToString();
+                                lblPMExpireDate.Visible = false;
+                                lblPMCountry.Visible = false;
+                            }
                             //Billing Amounts
                             lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderSubtotal"]));
                             lblTax.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTax"]));
