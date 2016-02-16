@@ -9,12 +9,13 @@
 <%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
+      <asp:Label ID="hdnPOChecked" name="hdnPOChecked" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
         <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">
-            <h4 class="black-color margin-top-none">BILLING</h4>
+            <h4 class="black-color margin-top-none">Payment</h4>
             <div id="divmainrow">
 
                 <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
@@ -54,9 +55,10 @@
 
                 </asp:Panel>
 
+                  <asp:Label ID="lbl1"  runat="server" Text="<%$ Tokens:StringResource,choosepaymentmethod%>"></asp:Label>
                 <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-view pull-left-md" Visible="true">
                     <div>
-                        <aspdnsfc:PaymentMethod CssClass="" ID="ctrlPaymentMethod" runat="server"
+                        <aspdnsfc:PaymentMethod CssClass="payment-method" ID="ctrlPaymentMethod" runat="server"
                             OnPaymentMethodChanged="ctrlPaymentMethod_OnPaymentMethodChanged"
                             CARDINALMYECHECKCaption="<%$ Tokens:StringResource, checkoutpayment.aspx.13 %>"
                             CHECKBYMAILCaption="<%$ Tokens:StringResource, checkoutpayment.aspx.11 %>"
@@ -174,12 +176,12 @@
                         </asp:Panel>
                         <asp:Panel ID="pnlPOPane" runat="server" Visible="false" CssClass="page-row">
 
-                            <asp:Label ID="lblPOHeader" runat="server"
-                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label><br>
+                            <asp:Label ID="lblPOHeader" runat="server" CssClass="block-text"
+                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label>
 
-                            <asp:Label ID="lblPO" runat="server"
+                            <asp:Label ID="lblPO" runat="server" CssClass="block-text"
                                 Text="<%$ Tokens:StringResource, checkoutpo.aspx.4 %>"></asp:Label>
-                            <asp:TextBox ID="txtPO" runat="server"></asp:TextBox>
+                                <div class="td-15-percent"><asp:TextBox ID="txtPO" AutoCompleteType="Disabled" ClientIDMode="Static" runat="server"></asp:TextBox></div>
 
                         </asp:Panel>
 
@@ -347,13 +349,17 @@
 
             $("#divccpane1").unwrap();
             $("#divccpane2").unwrap();
-           
+          
             //if purchase order is not selected then select credit card option
-            if(!$('#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER').is(':checked')) 
-            {
+            if (!$('#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER').is(':checked') && $("#hdnPOChecked").text() == "0") {
+
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbCREDITCARD").trigger("click");
-            }     
-           
+            }
+            else {
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").trigger("click");
+            }
+            //disable auto complete of po number text box field
+            $("#txtPO").attr("autocomplete", "off");
       
 
            

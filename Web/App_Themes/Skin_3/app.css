@@ -6521,6 +6521,18 @@ a:hover.underline-link {
 .gray-color {
   color: #b4b7b0;
 }
+.payment-method { 
+    padding-top: 10px;
+
+}
+.cc-images { 
+    padding: 4px 0 0 21px;
+
+}
+.cc-images img {
+     margin-right: 5px; 
+
+}
 .product-img-box {
   background-color: #ffffff;
   display: block;
