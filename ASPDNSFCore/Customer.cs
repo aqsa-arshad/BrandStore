@@ -100,6 +100,8 @@ namespace AspDotNetStorefrontCore
         private DateTime m_CreatedOn;
         private string m_SFDCQueryParam;
         private bool m_HasSubordinates;
+        private bool m_IsPurchaseOrder;
+        private int m_MinThreshold;
         SqlTransaction m_DBTrans = null;
 
         private bool m_DefaultCustLevel_DiscountExtendedPrices;
@@ -1752,6 +1754,8 @@ namespace AspDotNetStorefrontCore
             m_SkinID = AppLogic.GetStoreSkinID(StoreID);
             m_SFDCQueryParam = String.Empty;
             m_HasSubordinates = false;
+            m_IsPurchaseOrder = false;
+            m_MinThreshold = 0;
 
             if (rs != null && rs.Read())
             {
@@ -1811,6 +1815,9 @@ namespace AspDotNetStorefrontCore
                 m_LastIPAddress = DB.RSField(rs, "LastIPAddress");
                 m_SFDCQueryParam = DB.RSField(rs, "SFDCQueryParam");
                 m_HasSubordinates = DB.RSFieldBool(rs, "HasSubordinates");
+                m_IsPurchaseOrder = DB.RSFieldBool(rs, "IsPurchaseOrder");
+                m_MinThreshold = DB.RSFieldInt(rs, "MinThreshold");
+
 
                 //Find Failed Transactions
                 using (SqlConnection conn = new SqlConnection(DB.GetDBConn()))
@@ -3056,6 +3063,17 @@ namespace AspDotNetStorefrontCore
                 return m_CustomerID;
             }
         }
+        /// <summary>
+        /// Gets the MinThreshold.
+        /// </summary>
+        /// <value>The MinThreshold.</value>
+        public int MinThreshold
+        {
+            get
+            {
+                return m_MinThreshold;
+            }
+        }
 
         /// <summary>
         /// Gets the date the data was created on.
@@ -3092,7 +3110,18 @@ namespace AspDotNetStorefrontCore
                 return m_HasSubordinates;
             }
         }
-        
+        /// <summary>
+        /// Check if the Sales Rep User is allowed to use purchase order
+        /// </summary>
+        /// <value><c>true</c> if this user is allowed to use purchase order ; otherwise, <c>false</c>.</value>
+        public bool IsPurchaseOrder
+        {
+            get
+            {
+                return m_IsPurchaseOrder;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the VAT setting RAW.
         /// </summary>
@@ -4691,7 +4720,7 @@ namespace AspDotNetStorefrontCore
     #endregion
 
     #region Public Enums for Customer Funds
-    public enum  FundType
+    public enum FundType
     {
         BLUBucks = 1,
         SOFFunds = 2,
@@ -4700,5 +4729,5 @@ namespace AspDotNetStorefrontCore
         LiteratureFunds = 5,
         POPFunds = 6
     }
-     #endregion
+    #endregion
 }

@@ -190,8 +190,6 @@ namespace AspDotNetStorefront
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@PageIndex", 1);
                         cmd.Parameters.AddWithValue("@PageSize", 4);
-                        cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4);
-                        cmd.Parameters["@RecordCount"].Direction = ParameterDirection.Output;
                         cmd.Parameters.AddWithValue("@TransactionState", String.Join(",", trxStates));
                         cmd.Parameters.AddWithValue("@CustomerID", ThisCustomer.CustomerID);
                         cmd.Parameters.AddWithValue("@AllowCustomerFiltering",

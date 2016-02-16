@@ -451,7 +451,7 @@
                             <div class="col-xs-6 col-sm-4">
                                 <label class="roman-black">
                                     YES:
-                                    <input type="radio" runat="server" ClientIDMode="Static"   name="optionsRadio" id="optionsRadioYes" value="option1" checked="" class="radio-btn-group" />
+                                    <input type="radio" runat="server" ClientIDMode="Static"   name="optionsRadio" id="optionsRadioYes" value="option1" class="radio-btn-group" />
                                 </label>
                             </div>
                             <div class="col-xs-4 col-sm-4">
@@ -847,14 +847,12 @@
                     if(fuundcheckdecision=="Yes")                   
                      {      
                        $("#optionsRadioNo").prop('checked', false);                                   
-                       $("#optionsRadioYes").prop('checked', true);                         
-                      
+                       $("#optionsRadioYes").prop('checked', true);                      
                     }
                     else
                     {  
                            $("#optionsRadioYes").prop('checked', false);  
                            $("#optionsRadioNo").prop('checked', true);
-                                                            
                     }
 
                     $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2));

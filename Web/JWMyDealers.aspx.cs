@@ -15,8 +15,8 @@ namespace AspDotNetStorefront
     {
         protected static int PageCount;
         protected static int CurrentPageNumber;
-        private const int PageSize = 5;
-
+        protected static int PageSize;
+        static List<SFDCSoapClient.Account> lstSFDCAccount = new List<SFDCSoapClient.Account>();
         /// <summary>
         /// Override JeldWen Master Template
         /// </summary>
@@ -53,10 +53,11 @@ namespace AspDotNetStorefront
         protected void Page_Load(object sender, EventArgs e)
         {
             RequireSecurePage();
+            PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
             RequiresLogin(CommonLogic.GetThisPageName(false) + "?" + CommonLogic.ServerVariables("QUERY_STRING"));
-
             if (!Page.IsPostBack)
             {
+                lstSFDCAccount = AuthenticationSSO.GetSubordinateAccounts(ThisCustomer.SFDCQueryParam);
                 LoadMyDealers(1);
             }
         }
@@ -69,8 +70,6 @@ namespace AspDotNetStorefront
         {
             if (ThisCustomer.HasSubordinates)
             {
-                List<SFDCSoapClient.Account> lstSFDCAccount = AuthenticationSSO.GetSubordinateAccounts(ThisCustomer.SFDCQueryParam);
-
                 if (lstSFDCAccount.Count > 0)
                 {
                     rptMyDealers.DataSource = lstSFDCAccount.Skip((pageIndex - 1) * PageSize).Take(PageSize);
@@ -130,5 +129,98 @@ namespace AspDotNetStorefront
             rptPager.DataSource = pages;
             rptPager.DataBind();
         }
+        /// <summary>
+        /// Load dealers list in specific order.
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// /// <param name="SortingOrder">Sorting order.</param>
+        private void LoadMyDealersInAscendingOrDesendingOrder(int pageIndex, int SortingOrder)
+        {
+            if (ThisCustomer.HasSubordinates)
+            {
+                if (SortingOrder == 1)
+                {
+                    lstSFDCAccount = lstSFDCAccount.OrderBy(x => x.Name).ToList();
+                }
+                else if (SortingOrder == 2)
+                {
+                    lstSFDCAccount = lstSFDCAccount.OrderByDescending(x => x.Name).ToList();
+                }
+
+                if (lstSFDCAccount.Count > 0)
+                {
+                    rptMyDealers.DataSource = lstSFDCAccount.Skip((pageIndex - 1) * PageSize).Take(PageSize);
+                    rptMyDealers.DataBind();
+                    lblDealerNotFound.Visible = false;
+                    PopulatePager(lstSFDCAccount.Count, pageIndex);
+                }
+            }
+        }
+        /// <summary>
+        /// Handles the Changed event of orderBy dropdown.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void OrderBylist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterDealers();
+        }
+        /// <summary>
+        /// Handles the Changed event of pageSize dropdown.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void PageSizelist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterDealers();
+        }
+        /// <summary>
+        /// Get the filtered dealers list.
+        /// </summary>
+        private void filterDealers()
+        {
+            PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
+            String selectedValue = OrderBylist.SelectedValue;
+            if (selectedValue.Equals("nameAsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 1);
+            }
+            else if (selectedValue.Equals("nameDsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 2);
+            }
+            else
+            {
+                LoadMyDealers(1);
+            }
+            PageSizeList.Items.FindByValue(PageSizeList.SelectedValue.ToString()).Selected = true;
+            OrderBylist.ClearSelection();
+            OrderBylist.Items.FindByValue(selectedValue).Selected = true;
+        }
+        /// <summary>
+        /// Handles the click event of dealer's page header.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>s
+        protected void DealersHeader_Click(object sender, EventArgs e)
+        {
+            PageSize = Convert.ToInt32(PageSizeList.SelectedValue);
+            String selectedValue = OrderBylist.SelectedValue;
+            if (selectedValue.Equals("nameAsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 2);
+                OrderBylist.ClearSelection();
+                OrderBylist.Items.FindByValue("nameDsc").Selected = true;
+            }
+            else if (selectedValue.Equals("nameDsc"))
+            {
+                LoadMyDealersInAscendingOrDesendingOrder(1, 1);
+                OrderBylist.ClearSelection();
+                OrderBylist.Items.FindByValue("nameAsc").Selected = true;
+            }
+            PageSizeList.Items.FindByValue(PageSizeList.SelectedValue.ToString()).Selected = true;
+           
+        }
+
     }
 }

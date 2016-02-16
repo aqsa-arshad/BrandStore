@@ -11,6 +11,7 @@ using System.Text;
 using System.Web;
 using AspDotNetStorefrontCore;
 using AspDotNetStorefrontGateways;
+using Vortx.OnePageCheckout.Models;
 
 namespace AspDotNetStorefront
 {
@@ -345,46 +346,74 @@ namespace AspDotNetStorefront
                 }
                 else
                 {
-                    sPmtMethod.Append(AppLogic.GetString("account.aspx.45", SkinID, ThisCustomer.LocaleSetting));
-                    sPmtMethod.Append("");
+                    // This code may be needed for next phase so i am not removing it.
+
+                    //sPmtMethod.Append(AppLogic.GetString("account.aspx.45", SkinID, ThisCustomer.LocaleSetting));
+                    //sPmtMethod.Append("");
 
                     if (AppLogic.ActivePaymentGatewayCleaned() != Gateway.ro_GWNETAXEPT)
                     {
-                        sPmtMethod.Append("<div class='page-row'>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.10", SkinID, ThisCustomer.LocaleSetting));
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(BillingAddress.CardName);
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("</div>");
+                        if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
+                        {
+                            sPmtMethod.Append("<p>");
+                            sPmtMethod.Append("<span class='block-text'>");
+                            sPmtMethod.Append(BillingAddress.CardType);
+                            sPmtMethod.Append(AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID));
+                            sPmtMethod.Append("<span>");
+                            sPmtMethod.Append("<span class='block-text'> Expires: ");
+                            sPmtMethod.Append(BillingAddress.CardExpirationMonth.PadLeft(2, '0') + "/" + BillingAddress.CardExpirationYear);
+                            sPmtMethod.Append("<span>");
+                            sPmtMethod.Append("<span class='block-text'>");
+                            sPmtMethod.Append(BillingAddress.Country);
+                            sPmtMethod.Append("<span>");
+                            sPmtMethod.Append("</p>");
+                        }
+                        else
+                        {
+                            sPmtMethod.Append("<p>");
+                            sPmtMethod.Append("<span class='block-text'> Purchase order#: ");
+                            sPmtMethod.Append(BillingAddress.PONumber);
+                            sPmtMethod.Append("</p>");
+                        }
+                        
 
-                        sPmtMethod.Append("<div class='page-row'>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.11", SkinID, ThisCustomer.LocaleSetting));
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(BillingAddress.CardType);
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("</div>");
+                        // This code may be needed for next phase so i am not removing it.
 
-                        sPmtMethod.Append("<div class='page-row'>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.12", SkinID, ThisCustomer.LocaleSetting));
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID));
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("<div class='page-row'>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.10", SkinID, ThisCustomer.LocaleSetting));
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(BillingAddress.CardName);
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("</div>");
 
-                        sPmtMethod.Append("<div class='page-row'>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.13", SkinID, ThisCustomer.LocaleSetting));
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("<div class='one-half'>");
-                        sPmtMethod.Append(BillingAddress.CardExpirationMonth.PadLeft(2, '0') + "/" + BillingAddress.CardExpirationYear);
-                        sPmtMethod.Append("</div>");
-                        sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("<div class='page-row'>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.11", SkinID, ThisCustomer.LocaleSetting));
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(BillingAddress.CardType);
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("</div>");
+
+                        //sPmtMethod.Append("<div class='page-row'>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.12", SkinID, ThisCustomer.LocaleSetting));
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID));
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("</div>");
+
+                        //sPmtMethod.Append("<div class='page-row'>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.13", SkinID, ThisCustomer.LocaleSetting));
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("<div class='one-half'>");
+                        //sPmtMethod.Append(BillingAddress.CardExpirationMonth.PadLeft(2, '0') + "/" + BillingAddress.CardExpirationYear);
+                        //sPmtMethod.Append("</div>");
+                        //sPmtMethod.Append("</div>");
                     }
                 }
             else if (PM == AppLogic.ro_PMPurchaseOrder)
