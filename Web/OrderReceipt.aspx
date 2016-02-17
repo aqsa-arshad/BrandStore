@@ -223,6 +223,9 @@
                                     <p class="label-text">
                                         <span>Taxes:
                                             <asp:Label runat="server" ID="lblTax"></asp:Label></span>
+                                        <span class="block-text">
+                                                <asp:Label runat="server" ID="lblPurchasefee" Visible="false"></asp:Label>
+                                            </span>
                                         <span>
                                             <asp:Label ID="lblShippingCaption" runat="server" Text='<%$ Tokens:StringResource, shoppingcart.aspx.12 %>' />
                                             <asp:Label runat="server" ID="lblShippingCost"></asp:Label>

@@ -126,6 +126,8 @@ namespace AspDotNetStorefront
                 sPmtMethod.Append("<span class='block-text'> Purchase order#: ");
                 sPmtMethod.Append(BillingAddress.PONumber);
                 sPmtMethod.Append("</p>");
+                lblPurchasefee.Visible = true;
+                lblPurchasefee.Text = "PurchaseOrder.aspx.1".StringResource() + ": " + string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")));
             }
             return sPmtMethod.ToString();
         }
