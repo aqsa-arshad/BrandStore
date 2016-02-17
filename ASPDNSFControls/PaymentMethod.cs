@@ -1542,6 +1542,12 @@ namespace AspDotNetStorefrontControls
             _rbMONEYBOOKERSQUICKCHECKOUT.AutoPostBack = true;
             _rbSECURENETVAULT.AutoPostBack = true;
             _rbPAYPALEMBEDDEDCHECKOUT.AutoPostBack = true;
+
+            
+            //_rbPURCHASEORDER.Attributes.Add("onclick", "javascript:setTimeout('__doPostBack(\'" + _rbPURCHASEORDER.ClientID.Replace("_", "$") + "\',\'\')', 0)");         
+
+          
+            //_rbCREDITCARD.Attributes.Add("onclick", "javascript:setTimeout('__doPostBack(\'" + _rbCREDITCARD.ClientID.Replace("_", "$") + "\',\'\')', 0)");
         }
 
         /// <summary>
@@ -1614,12 +1620,12 @@ namespace AspDotNetStorefrontControls
 
             this.Controls.Clear();
 
-            this.Controls.Add(new LiteralControl("<div class='form payment-form' style=display:none>"));
+            this.Controls.Add(new LiteralControl("<div class='form payment-form'>"));
             if (this.ShowCREDITCARD)
             {
                 paymentMethodsEnabled++;
                 this.Controls.Add(new LiteralControl("<div class='form-group credit-card-group'>"));
-                _rbCREDITCARD.Checked = true;
+             //   _rbCREDITCARD.Checked = true;                
                 this.Controls.Add(_rbCREDITCARD);
 
                 this.Controls.Add(new LiteralControl("<div class='cc-images'>"));
