@@ -68,17 +68,9 @@ namespace AspDotNetStorefront
                     pnlCCExpDtErrorMsg.Visible = false;
                     CCTypeErrorMsgLabel.Visible = false;
                 }
-            }
-            //valsumCreditCard.Visible = false;
-            //valsumEcheck.Visible = false;
-            //pnlCCTypeErrorMsg.Visible = false;
-            //pnlCCExpDtErrorMsg.Visible = false;
-            //CCTypeErrorMsgLabel.Visible = false;
-            //CCExpDtErrorMsg.Visible = false;
-
-         //   pnlErrorMsg.Attributes.Add("class", "hide-element");
-            //End
-
+            }        
+           //End
+            hdnMinThreshHold.Text = ThisCustomer.MinThreshold.ToString();
             if (Request.QueryString["errormsg"] == "9" && !ctrlPaymentMethod.CREDITCARDChecked)
             {
                 hdnPOChecked.Text = "1";
@@ -379,6 +371,7 @@ namespace AspDotNetStorefront
                 }
                 else if (PM == AppLogic.ro_PMPurchaseOrder)
                 {
+                    
                     if (SelectedPaymentType.Length == 0 && AllowedPaymentMethods.IndexOf(AppLogic.ro_PMPurchaseOrder) != -1)
                     {
                         SelectedPaymentType = AppLogic.ro_PMPurchaseOrder;
@@ -595,10 +588,14 @@ namespace AspDotNetStorefront
             Address BillingAddress = new Address();
             BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
             bool EChecksAllowed = GWActual != null && GWActual.SupportsEChecks(); // let manual gw use echecks so site testing can occur
-            bool POAllowed = AppLogic.CustomerLevelAllowsPO(ThisCustomer.CustomerLevelID);
+           
+            //Initially PO option was based on customer level now we have made it to individual customer
+            bool POAllowed = ThisCustomer.IsPurchaseOrder;//AppLogic.CustomerLevelAllowsPO(ThisCustomer.CustomerLevelID);         
+          
+
             bool CODCompanyCheckAllowed = ThisCustomer.CODCompanyCheckAllowed;
             bool CODNet30Allowed = ThisCustomer.CODNet30Allowed;
-
+           
             StringBuilder OrderFinalizationInstructions = new StringBuilder(4096);
             String OrderFinalizationXmlPackageName = AppLogic.AppConfig("XmlPackage.OrderFinalization");
             String OrderFinalizationXmlPackageFN = Server.MapPath("xmlpackages/" + OrderFinalizationXmlPackageName);
@@ -731,6 +728,9 @@ namespace AspDotNetStorefront
                     }
                     else if (PMCleaned == AppLogic.ro_PMPurchaseOrder)
                     {
+                        String InvoiceFee = AppLogic.AppConfig("Invoice.Fee");
+                        String POFeeText = AppLogic.GetString("Invoice.Fee", SkinID, ThisCustomer.LocaleSetting).Replace("xxxx", InvoiceFee);
+                        lblPOFee.Text = POFeeText;
                         if (POAllowed)
                         {
                             ctrlPaymentMethod.ShowPURCHASEORDER = true;

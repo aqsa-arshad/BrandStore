@@ -9,7 +9,8 @@
 <%@ Register Src="controls/CheckoutSteps.ascx" TagName="CheckoutSteps" TagPrefix="checkout" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
-      <asp:Label ID="hdnPOChecked" name="hdnPOChecked" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnPOChecked" name="hdnPOChecked" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnMinThreshHold" name="hdnMinThreshHold" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
         <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>
@@ -55,7 +56,7 @@
 
                 </asp:Panel>
 
-                  <asp:Label ID="lbl1"  runat="server" Text="<%$ Tokens:StringResource,choosepaymentmethod%>"></asp:Label>
+                <asp:Label ID="lbl1" runat="server" Text="<%$ Tokens:StringResource,choosepaymentmethod%>"></asp:Label>
                 <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-view pull-left-md" Visible="true">
                     <div>
                         <aspdnsfc:PaymentMethod CssClass="payment-method" ID="ctrlPaymentMethod" runat="server"
@@ -94,7 +95,8 @@
                             PAYPALEXPRESSImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
                             PAYPALEMBEDDEDCHECKOUTImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
                             PAYPALImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
-                            MONEYBOOKERSQUICKCHECKOUTImage="<%$ Tokens:AppConfig, Moneybookers.QuickCheckout.PaymentIcon %>"/>
+                            MONEYBOOKERSQUICKCHECKOUTImage="<%$ Tokens:AppConfig, Moneybookers.QuickCheckout.PaymentIcon %>" 
+                             />
 
                         <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="paymentKicker" runat="server" />
 
@@ -174,15 +176,25 @@
                                 BankAccountNameReqFieldValGrp="echeck" BankNameReqFieldValGrp="echeck"
                                 BankABACodeReqFieldValGrp="echeck" BankAccountNumberReqFieldValGrp="echeck" />
                         </asp:Panel>
+
                         <asp:Panel ID="pnlPOPane" runat="server" Visible="false" CssClass="page-row">
 
-                            <asp:Label ID="lblPOHeader" runat="server" CssClass="block-text"
-                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label>
-
+                            <p class="td-25-percent"><asp:Label ID="lblPOHeader" runat="server" CssClass="block-text"
+                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label></p>
+                            <div class="clearfix"></div>
                             <asp:Label ID="lblPO" runat="server" CssClass="block-text"
                                 Text="<%$ Tokens:StringResource, checkoutpo.aspx.4 %>"></asp:Label>
-                                <div class="td-15-percent"><asp:TextBox ID="txtPO" AutoCompleteType="Disabled" ClientIDMode="Static" runat="server"></asp:TextBox></div>
-
+                            <div class="td-25-percent">
+                                <p class="item-space-right">
+                                <asp:TextBox ID="txtPO" AutoCompleteType="Disabled" ClientIDMode="Static" runat="server"></asp:TextBox>
+                                    </p>
+                                <div class="clearfix"></div>
+                            <p>
+                                <asp:Label ID="lblPOFee" runat="server" CssClass="block-text black-color"
+                                Text="<%$ Tokens:StringResource, Invoice.Fee %>"></asp:Label>     
+                                </p>
+                            </div> 
+                                            
                         </asp:Panel>
 
                         <asp:Panel ID="pnlSecureNetVaultPayment" runat="server" CssClass="page-row" Visible="false">
@@ -349,8 +361,28 @@
 
             $("#divccpane1").unwrap();
             $("#divccpane2").unwrap();
-          
+            //disable auto complete of po number text box field
+            $("#txtPO").attr("autocomplete", "off");
+
             //if purchase order is not selected then select credit card option
+            SelectRespectivePaymentMethodonLoad();
+            //Depending on min threshhold enable disable purchase order option
+            EnableDisablePOOption();
+
+
+        });
+
+        function EnableDisablePOOption() {
+            var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
+            
+            if (OrderTotal < parseFloat($("#hdnMinThreshHold").text())) {
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").attr("Disabled", "Disabled");
+            }
+            else
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").removeattribute("Disabled");
+        }
+
+        function SelectRespectivePaymentMethodonLoad() {
             if (!$('#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER').is(':checked') && $("#hdnPOChecked").text() == "0") {
 
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbCREDITCARD").trigger("click");
@@ -358,13 +390,8 @@
             else {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").trigger("click");
             }
-            //disable auto complete of po number text box field
-            $("#txtPO").attr("autocomplete", "off");
-      
 
-           
-            
-        });
+        }
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
