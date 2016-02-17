@@ -617,9 +617,10 @@ namespace AspDotNetStorefront
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (!(checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut))
             {
-
+               
                 foreach (String PM in AllowedPaymentMethods.Split(','))
                 {
+                   
                     String PMCleaned = AppLogic.CleanPaymentMethod(PM);
                     if (PMCleaned == AppLogic.ro_PMCreditCard)
                     {
@@ -739,8 +740,10 @@ namespace AspDotNetStorefront
 
                             if (!IsPostBack)
                             {
-                                ctrlPaymentMethod.PURCHASEORDERChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder) || check);
-                                pnlPOPane.Visible = (BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder || check);
+                               
+                                    ctrlPaymentMethod.PURCHASEORDERChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder) || check);
+                                    pnlPOPane.Visible = (BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder || check);
+                               
                             }
 
                             //Need these lines later
@@ -1642,13 +1645,13 @@ namespace AspDotNetStorefront
         protected void btnContCheckout_Click(object sender, EventArgs e)
         {         
                    
-            String PONumber = txtPO.Text.Trim();
-            ErrorMessage err;
-            if (PONumber.Length == 0)
-            {
-                err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
-                Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
-            }
+            //String PONumber = txtPO.Text.Trim();
+            //ErrorMessage err;
+            //if (PONumber.Length == 0)
+            //{
+            //    err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
+            //    Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+            //}
 
             if (RequireTerms && CommonLogic.FormCanBeDangerousContent("TermsAndConditionsRead") == "")
             {
