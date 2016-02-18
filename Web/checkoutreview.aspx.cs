@@ -380,9 +380,6 @@ namespace AspDotNetStorefront
                             sPmtMethod.Append(BillingAddress.Country);
                             sPmtMethod.Append("<span>");
                             sPmtMethod.Append("</p>");
-    
-                            //lblInvoiceCaption.Visible = true;
-                            //lblInvoice.Visible=true;
                         }
                         else
                         {
