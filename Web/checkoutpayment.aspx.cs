@@ -70,6 +70,7 @@ namespace AspDotNetStorefront
                 }
             }        
            //End
+            lblInvoiceValue.Text = AppLogic.AppConfig("Invoice.fee");
             hdnMinThreshHold.Text = ThisCustomer.MinThreshold.ToString();
             if (Request.QueryString["errormsg"] == "9" && !ctrlPaymentMethod.CREDITCARDChecked)
             {

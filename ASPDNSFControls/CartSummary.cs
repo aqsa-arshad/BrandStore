@@ -239,7 +239,7 @@ namespace AspDotNetStorefrontControls
                     }
                 }
                 // Invoice fee
-                Controls.Add(new LiteralControl("<span class='block-text'>"));
+                Controls.Add(new LiteralControl("<span id='InvoiceFee' class='block-text hide-element'>"));
                 Controls.Add(lblInvoiceCaption);
                 Controls.Add(lblInvoice);
                 Controls.Add(new LiteralControl("</span>"));
@@ -417,7 +417,7 @@ namespace AspDotNetStorefrontControls
             lblInvoiceCaption.Text = "Purchase Order Fee: ";
 
             lblInvoice.ID = "lblInvoice";
-            lblTax.Text = String.Format("{0:C}" ,AppLogic.AppConfig("Invoice.fee").ToString());
+
                 
                 
 
@@ -523,6 +523,8 @@ namespace AspDotNetStorefrontControls
                     //Shipping
                     lblShippingCostCaption.Text = ShippingCaption;
                     lblShippingCost.Text = cart.FreightVatIncRateDisplayFormat;
+                    lblInvoice.Text = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), cart.ThisCustomer.CurrencySetting);
+                    
 
                     string vatDisplay = string.Empty;
                     if (cart.VatEnabled)
@@ -635,20 +637,22 @@ namespace AspDotNetStorefrontControls
                 }
 
                 // invoice 
-                Address BillingAddress = new Address();
-                BillingAddress.LoadFromDB(cart.ThisCustomer.PrimaryBillingAddressID);
 
-                if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
-                {
-                    lblInvoiceCaption.Visible = false;
-                    lblInvoice.Visible = false;
-                }
-                else
-                {
-                    lblInvoiceCaption.Visible = true;
-                    lblInvoice.Visible = true;
-                    lblTotal.Text = cart.TotalRateDisplayFormat + Convert.ToInt16(AppLogic.AppConfig("Invoice.fee"));
-                }
+                //Address BillingAddress = new Address();
+                //BillingAddress.LoadFromDB(cart.ThisCustomer.PrimaryBillingAddressID);
+
+                //if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
+                //{
+                //    lblInvoiceCaption.Visible = false;
+                //    lblInvoice.Visible = false;
+                //}
+                //else
+                //{
+                //    lblInvoiceCaption.Visible = true;
+                //    lblInvoice.Visible = true;
+                //    lblInvoice.Text = String.Format(AppLogic.AppConfig("Invoice.fee"));
+                //    // lblTotal.Text = (Convert.ToInt16(cart.TotalRateDisplayFormat) + Convert.ToInt16(AppLogic.AppConfig("Invoice.fee"))).ToString();
+                //}
 
             }
         }

@@ -96,38 +96,71 @@ namespace AspDotNetStorefront
                 GetOrderInfo();
                 GetOrderItemsDetail();
                 SendOrderinfotoRRD();
+                // get the billing address 
+                Address BillingAddress = new Address();
+                BillingAddress.LoadFromDB(ThisCustomer.PrimaryBillingAddressID);
+                litPaymentMethod.Text = GetPaymentMethod(BillingAddress);
             }
-            // get the billing address 
-            Address BillingAddress = new Address();
-            BillingAddress.LoadFromDB(ThisCustomer.PrimaryBillingAddressID);
-            litPaymentMethod.Text = GetPaymentMethod(BillingAddress);
         }
         private string GetPaymentMethod(Address BillingAddress)
         {
             StringBuilder sPmtMethod = new StringBuilder(1024);
-            if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
-            {
-                sPmtMethod.Append("<p>");
-                sPmtMethod.Append("<span class='block-text'>");
-                sPmtMethod.Append(BillingAddress.CardType);
-                sPmtMethod.Append(AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID));
-                sPmtMethod.Append("<span>");
-                sPmtMethod.Append("<span class='block-text'> Expires: ");
-                sPmtMethod.Append(BillingAddress.CardExpirationMonth.PadLeft(2, '0') + "/" + BillingAddress.CardExpirationYear);
-                sPmtMethod.Append("<span>");
-                sPmtMethod.Append("<span class='block-text'>");
-                sPmtMethod.Append(BillingAddress.Country);
-                sPmtMethod.Append("<span>");
-                sPmtMethod.Append("</p>");
+            try
+            {               
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            String PaymentMethod = reader["PaymentMethod"].ToString();
+
+                            lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
+                                                 (string.Concat("*********", reader["CardNumber"].ToString()));
+                            lblPMExpireDate.Text = "Expires: " + reader["CardExpirationMonth"].ToString() + '/' +
+                                                   reader["CardExpirationYear"].ToString();
+                            lblPMCountry.Text = reader["BillingCountry"].ToString();
+
+                            if (PaymentMethod.Equals(AppLogic.ro_PMCreditCard))
+                            {
+                                sPmtMethod.Append("<p>");
+                                sPmtMethod.Append("<span class='block-text'>");
+                                sPmtMethod.Append(reader["CardType"].ToString());
+                                sPmtMethod.Append(string.Concat("*********", reader["CardNumber"].ToString()));
+                                sPmtMethod.Append("<span>");
+                                sPmtMethod.Append("<span class='block-text'> Expires: ");
+                                sPmtMethod.Append( reader["CardExpirationMonth"].ToString() + '/' +
+                                                   reader["CardExpirationYear"].ToString());
+                                sPmtMethod.Append("<span>");
+                                sPmtMethod.Append("<span class='block-text'>");
+                                sPmtMethod.Append(reader["BillingCountry"].ToString());
+                                sPmtMethod.Append("<span>");
+                                sPmtMethod.Append("</p>");
+                            }
+                            else
+                            {
+                                sPmtMethod.Append("<p>");
+                                sPmtMethod.Append("<span class='block-text'> Purchase order#: ");
+                                sPmtMethod.Append(reader["PONumber"].ToString());
+                                sPmtMethod.Append("</p>");
+                                lblPurchasefee.Visible = true;
+                                lblPurchasefee.Text = "PurchaseOrder.aspx.1".StringResource() + ": " + string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["InvoiceFee"]));
+                            }
+
+
+                        }
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                sPmtMethod.Append("<p>");
-                sPmtMethod.Append("<span class='block-text'> Purchase order#: ");
-                sPmtMethod.Append(BillingAddress.PONumber);
-                sPmtMethod.Append("</p>");
-                lblPurchasefee.Visible = true;
-                lblPurchasefee.Text = "PurchaseOrder.aspx.1".StringResource() + ": " + string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")));
+                SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
+                MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
             }
             return sPmtMethod.ToString();
         }

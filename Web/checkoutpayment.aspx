@@ -11,6 +11,7 @@
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <asp:Label ID="hdnPOChecked" name="hdnPOChecked" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <asp:Label ID="hdnMinThreshHold" name="hdnMinThreshHold" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="lblInvoiceValue" name="lblInvoiceValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server" CssClass="padding-none">
         <asp:Label ID="btnreqfrom" CssClass="hide-element" runat="server"></asp:Label>
@@ -389,8 +390,25 @@
             }
             else {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").trigger("click");
+                ShowInvoiceFee();
             }
 
+        }
+        // aqsa arshad code block
+        function ShowInvoiceFee()
+        {
+            var Invoiceval=$("#lblInvoiceValue").text(); 
+            var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
+            var total = round(OrderTotal,2)+ round(Invoiceval,2);
+           $("#InvoiceFee").removeClass("hide-element");
+            $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text("$"+total);
+        }
+        function round(value, decimals) 
+        {
+                    if (value == "" || isNaN(value))
+                        return 0; 
+        
+                return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
         }
     </script>
     <script type="text/javascript">
