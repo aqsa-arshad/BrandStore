@@ -12,6 +12,7 @@ using System.Web;
 using AspDotNetStorefrontCore;
 using AspDotNetStorefrontGateways;
 using Vortx.OnePageCheckout.Models;
+using System.Windows.Forms;
 
 namespace AspDotNetStorefront
 {
@@ -56,7 +57,19 @@ namespace AspDotNetStorefront
                     }
                 }
             }
-               
+            // check the invoice fee available
+            lblInvoiceValue.Text = AppLogic.AppConfig("Invoice.fee");
+            Address BillingAddress = new Address();
+            BillingAddress.LoadFromDB(ThisCustomer.PrimaryBillingAddressID);
+            if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
+            {
+            lblInvoiceFeehdn.Text ="false";
+            }
+            else
+            {
+             lblInvoiceFeehdn.Text ="true";
+            }
+            
 
             Response.CacheControl = "private";
             Response.Expires = -1;
@@ -418,7 +431,10 @@ namespace AspDotNetStorefront
                 }
             else if (PM == AppLogic.ro_PMPurchaseOrder)
             {
-                sPmtMethod.Append(AppLogic.GetString("checkoutreview.aspx.14", SkinID, ThisCustomer.LocaleSetting) + BillingAddress.PONumber);
+                sPmtMethod.Append("<p>");
+                sPmtMethod.Append("<span class='block-text'> Purchase Order#: ");
+                sPmtMethod.Append(BillingAddress.PONumber);
+                sPmtMethod.Append("</p>");
             }
             else if (PM == AppLogic.ro_PMCODMoneyOrder)
             {

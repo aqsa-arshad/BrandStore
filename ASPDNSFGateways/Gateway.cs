@@ -400,7 +400,7 @@ namespace AspDotNetStorefrontGateways
 						UseBillingAddress.UpdateDB();
 					}
 
-					sql.Append("insert into Orders(OrderNumber,OrderGUID,VATRegistrationID,TransactionType,CartType,LocaleSetting,OrderWeight,TransactionState,PONumber,ECheckBankABACode,ECheckBankAccountNumber,ECheckBankAccountType,ECheckBankName,ECheckBankAccountName,StoreVersion,CustomerID,Referrer,OrderNotes,FinalizationData,CustomerServiceNotes,OrderOptions,PaymentMethod,LastIPAddress,CustomerGUID,SkinID,LastName,FirstName,EMail,Phone,Notes,RegisterDate,AffiliateID,CouponCode,CouponType,CouponDescription,CouponDiscountAmount,CouponDiscountPercent,CouponIncludesFreeShipping,OKToEMail,Deleted,BillingEqualsShipping,BillingLastName,BillingFirstName,BillingCompany,BillingAddress1,BillingAddress2,BillingSuite,BillingCity,BillingState,BillingZip,BillingCountry,BillingPhone,ShippingLastName,ShippingFirstName,ShippingCompany,ShippingResidenceType,ShippingAddress1,ShippingAddress2,ShippingSuite,ShippingCity,ShippingState,ShippingZip,ShippingCountry,ShippingPhone,ShippingMethodID,ShippingMethod,ShippingCalculationID,RTShipRequest,RTShipResponse,CardType,CardName,Last4,CardExpirationMonth,CardExpirationYear,CardStartDate,CardIssueNumber,OrderSubtotal,OrderTax,OrderShippingCosts,OrderTotal,AuthorizationResult,AuthorizationCode,AuthorizationPNREF,TransactionCommand, StoreID) values (");
+                    sql.Append("insert into Orders(OrderNumber,OrderGUID,VATRegistrationID,TransactionType,CartType,LocaleSetting,OrderWeight,TransactionState,PONumber,ECheckBankABACode,ECheckBankAccountNumber,ECheckBankAccountType,ECheckBankName,ECheckBankAccountName,StoreVersion,CustomerID,Referrer,OrderNotes,FinalizationData,CustomerServiceNotes,OrderOptions,PaymentMethod,LastIPAddress,CustomerGUID,SkinID,LastName,FirstName,EMail,Phone,Notes,RegisterDate,AffiliateID,CouponCode,CouponType,CouponDescription,CouponDiscountAmount,CouponDiscountPercent,CouponIncludesFreeShipping,OKToEMail,Deleted,BillingEqualsShipping,BillingLastName,BillingFirstName,BillingCompany,BillingAddress1,BillingAddress2,BillingSuite,BillingCity,BillingState,BillingZip,BillingCountry,BillingPhone,ShippingLastName,ShippingFirstName,ShippingCompany,ShippingResidenceType,ShippingAddress1,ShippingAddress2,ShippingSuite,ShippingCity,ShippingState,ShippingZip,ShippingCountry,ShippingPhone,ShippingMethodID,ShippingMethod,ShippingCalculationID,RTShipRequest,RTShipResponse,CardType,CardName,Last4,CardExpirationMonth,CardExpirationYear,CardStartDate,CardIssueNumber,OrderSubtotal,OrderTax,OrderShippingCosts,OrderTotal,InvoiceFee,AuthorizationResult,AuthorizationCode,AuthorizationPNREF,TransactionCommand, StoreID) values (");
 					sql.Append(OrderNumber.ToString() + ",");
 					sql.Append(DB.SQuote(orderGUID) + ",");
 					sql.Append(DB.SQuote(cart.ThisCustomer.VATRegistrationID) + ",");
@@ -587,12 +587,25 @@ namespace AspDotNetStorefrontGateways
 					sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(dSubTotal) + ",");
 					sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(dTaxTotal) + ",");
 					sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(dShippingTotal) + ",");
-					sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(CartTotal) + ",");
+                    // add invoice fee when purchase order is selected
+                    if (UseBillingAddress.PaymentMethodLastUsed.ToString().Equals(AppLogic.ro_PMCreditCard))
+                    {
+                        sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(CartTotal) + ",");
+                        sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(0) + ",");                                            
+                    }
+                    else
+                    {
+                        decimal PurchaseOrderFee = Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee"));
+                        sql.Append(Localization.CurrencyStringForDBWithoutExchangeRate(CartTotal + PurchaseOrderFee) + ",");
+                        sql.Append(AppLogic.AppConfig("Invoice.fee") + ",");           
+                    }
+					
 					sql.Append(DB.SQuote(AppLogic.ro_TBD) + ","); // must update later to RawResponseString if TX is ok!
 					sql.Append(DB.SQuote(AppLogic.ro_TBD) + ",");   // must update later if TX is ok!
 					sql.Append(DB.SQuote(AppLogic.ro_TBD) + ",");  // must update later if TX is ok!
 					sql.Append(DB.SQuote(AppLogic.ro_TBD) + ",");  // must update later if TX is ok!
 					sql.Append(AppLogic.StoreID() + ")");  // Specify a stored id where the order is created.
+
 
 					DB.ExecuteSQL(sql.ToString());
 

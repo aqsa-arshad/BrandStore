@@ -354,6 +354,8 @@ namespace AspDotNetStorefront
                                 lblPMCardInfo.Text = "order.aspx.1".StringResource()+" " + reader["PONumber"].ToString();
                                 lblPMExpireDate.Visible = false;
                                 lblPMCountry.Visible = false;
+                                lblPurchasefee.Visible = true;
+                                lblPurchasefee.Text = "PurchaseOrder.aspx.1".StringResource() + ": " + string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["InvoiceFee"]));
                             }
                             //Billing Amounts
                             lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderSubtotal"]));

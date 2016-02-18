@@ -55,6 +55,9 @@ namespace AspDotNetStorefrontControls
         private Label lblTaxCaption = new Label();
         private Label lblTax = new Label();
 
+        private Label lblInvoiceCaption = new Label();
+        private Label lblInvoice = new Label();
+
         private Label lblOrderDiscountCaption = new Label();
         private Label lblOrderDiscount = new Label();
 
@@ -235,6 +238,11 @@ namespace AspDotNetStorefrontControls
                         }
                     }
                 }
+                // Invoice fee
+                Controls.Add(new LiteralControl("<span id='InvoiceFee' class='block-text hide-element'>"));
+                Controls.Add(lblInvoiceCaption);
+                Controls.Add(lblInvoice);
+                Controls.Add(new LiteralControl("</span>"));
 
                 //Shipping
                 if (ShowShipping && !UseInAjaxMiniCart)
@@ -403,6 +411,16 @@ namespace AspDotNetStorefrontControls
                 lblTax.Text = "0.00";
             }
 
+            // Invoice charges 
+             
+            lblInvoiceCaption.ID = "lblInvoiceCaption";
+            lblInvoiceCaption.Text = "Purchase Order Fee: ";
+
+            lblInvoice.ID = "lblInvoice";
+
+                
+                
+
             // Order Discount
             lblOrderSubtotalCaption.ID = "lblOrderDiscountCaption";
             lblOrderSubtotalCaption.Text = OrderDiscountCaption;
@@ -505,6 +523,8 @@ namespace AspDotNetStorefrontControls
                     //Shipping
                     lblShippingCostCaption.Text = ShippingCaption;
                     lblShippingCost.Text = cart.FreightVatIncRateDisplayFormat;
+                    lblInvoice.Text = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), cart.ThisCustomer.CurrencySetting);
+                    
 
                     string vatDisplay = string.Empty;
                     if (cart.VatEnabled)
@@ -615,6 +635,25 @@ namespace AspDotNetStorefrontControls
                     lblTotalCaption.Text = TotalCaption;
                     lblTotal.Text = cart.TotalRateDisplayFormat;
                 }
+
+                // invoice 
+
+                //Address BillingAddress = new Address();
+                //BillingAddress.LoadFromDB(cart.ThisCustomer.PrimaryBillingAddressID);
+
+                //if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
+                //{
+                //    lblInvoiceCaption.Visible = false;
+                //    lblInvoice.Visible = false;
+                //}
+                //else
+                //{
+                //    lblInvoiceCaption.Visible = true;
+                //    lblInvoice.Visible = true;
+                //    lblInvoice.Text = String.Format(AppLogic.AppConfig("Invoice.fee"));
+                //    // lblTotal.Text = (Convert.ToInt16(cart.TotalRateDisplayFormat) + Convert.ToInt16(AppLogic.AppConfig("Invoice.fee"))).ToString();
+                //}
+
             }
         }
 
@@ -1062,6 +1101,28 @@ namespace AspDotNetStorefrontControls
             set
             {
                 ViewState["TaxCaption"] = value;
+                ChildControlsCreated = false;
+            }
+        }
+        /// <summary>
+        /// The invoice caption
+        /// </summary>
+        [Browsable(true),
+        Category(SETTINGS_CATEGORY),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public string InvoiceCaption
+        {
+            get
+            {
+                if ((object)ViewState["InvoiceCaption"] == null)
+                {
+                    return string.Empty;
+                }
+                return ViewState["InvoiceCaption"].ToString();
+            }
+            set
+            {
+                ViewState["InvoiceCaption"] = value;
                 ChildControlsCreated = false;
             }
         }

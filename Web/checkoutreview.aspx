@@ -9,6 +9,8 @@
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <asp:Panel ID="pnlContent" runat="server">
+         <asp:Label ID="lblInvoiceFeehdn" name="lblInvoiceFeehdn" runat="server" ClientIDMode="Static" Style="display: none" Text="false" />
+        <asp:Label ID="lblInvoiceValue" name="lblInvoiceValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Literal ID="JSPopupRoutines" runat="server"></asp:Literal>
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">
@@ -154,7 +156,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             showhidepricelabels();
-
+            ShowInvoiceFee();
             function showhidepricelabels() {
 
                 var customerlevel = GetCustomerLevel();
@@ -187,6 +189,25 @@
                 }
 
                 return CustomerLevelElemment.innerHTML;
+            }
+            // aqsa arshad code block
+            function ShowInvoiceFee() {
+                var Istrue = $("#lblInvoiceFeehdn").text();
+                if (Istrue=="true")
+                {
+                var Invoiceval = $("#lblInvoiceValue").text();
+                var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
+                var total = round(OrderTotal, 2) + round(Invoiceval, 2);
+                $("#InvoiceFee").removeClass("hide-element");
+                $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text("$" + total);
+                }
+               
+            }
+            function round(value, decimals) {
+                if (value == "" || isNaN(value))
+                    return 0;
+
+                return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
             }
 
         });
