@@ -32,6 +32,15 @@
         <asp:Label ID="hdnpopfundamount" name="hdnpopfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdntoreplace" name="hdntoreplace" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
 
+       <%-- Hidden field for budget percentage ratio for customer by category id--%>
+        <asp:Label ID="hdnBudgetPercentageRation_Cat1" name="hdnBudgetPercentageRation_Cat1" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat2" name="hdnBudgetPercentageRation_Cat2" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat3" name="hdnBudgetPercentageRation_Cat3" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat4" name="hdnBudgetPercentageRation_Cat4" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat5" name="hdnBudgetPercentageRation_Cat5" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat6" name="hdnBudgetPercentageRation_Cat6" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+
+
         <%--End Hidden Variables Regions--%>
         <asp:Literal ID="ltValidationScript" runat="server"></asp:Literal>
         <asp:Literal ID="ltJsPopupRoutines" runat="server"></asp:Literal>
@@ -633,7 +642,8 @@
               
                     $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
-                    var BluBucksUsed = $("#txtBluBuksUsed").val();                   
+                    var BluBucksUsed = $("#txtBluBuksUsed").val();
+                   
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                     return true;
                 }
@@ -884,25 +894,39 @@
            
                 function  GetPercentageRatio(customerlevel,ProductCategoryID)            {
                    
-                    var percentageration=0;
-                        $.ajax({
-                        type: "post",
-                        url: "Shoppingcart.aspx/GetPercentageRatio",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify({
-                            "CustomerLevelID": customerlevel,
-                            "ProductCategoryID": ProductCategoryID                            
-                        }),                        
-                        async: false,
-                        dataType: "json",
-                        success: function (result) {                          
+                    var percentageration = 0;
+                    if (ProductCategoryID == "1")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat1").text(), 2);
+                    else if (ProductCategoryID == "2")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat2").text(), 2);
+                    else if (ProductCategoryID == "3")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat3").text(), 2);
+                    else if (ProductCategoryID == "4")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat4").text(), 2);
+                    else if (ProductCategoryID == "5")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat5").text(), 2);
+                    else if (ProductCategoryID == "6")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat6").text(), 2);
+                    else
+                        percentageration = 0;
+                        //$.ajax({
+                        //type: "post",
+                        //url: "Shoppingcart.aspx/GetPercentageRatio",
+                        //contentType: "application/json; charset=utf-8",
+                        //data: JSON.stringify({
+                        //    "CustomerLevelID": customerlevel,
+                        //    "ProductCategoryID": ProductCategoryID                            
+                        //}),                        
+                        //async: false,
+                        //dataType: "json",
+                        //success: function (result) {                          
                             
-                            percentageration=result.d.toString();
-                        },
-                        error: function (result) {                      
+                        //    percentageration=result.d.toString();
+                        //},
+                        //error: function (result) {                      
                                
-                        }
-            });
+                        //}
+              //   });
                    
                     return percentageration;
                 }
