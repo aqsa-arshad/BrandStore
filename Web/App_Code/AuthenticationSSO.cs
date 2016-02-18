@@ -793,16 +793,16 @@ namespace AspDotNetStorefront
                 QueryResult queryResult = new QueryResult();
                 if (QuerySFDC(query, ref queryResult))
                 {
-                    Brand_Store_Budget__c updateEmployeeBudget = new Brand_Store_Budget__c();
+                    Employee_Budget__c updateEmployeeBudget = new Employee_Budget__c();
 
                     foreach (CustomerFund customerFund in lstCustomerFund)
                     {
                         if (customerFund.FundID == (int)FundType.SOFFunds)
                         {
-                            Brand_Store_Budget__c employeeBudget = (Brand_Store_Budget__c)queryResult.records.FirstOrDefault();
+                            Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
                             updateEmployeeBudget.Id = employeeBudget.Id;
-                            updateEmployeeBudget.Current_Balance__c = Convert.ToDouble(customerFund.Amount);
-                            updateEmployeeBudget.Current_Balance__cSpecified = true;
+                            updateEmployeeBudget.Budget__c = Convert.ToDouble(customerFund.Amount);
+                            updateEmployeeBudget.Budget__cSpecified = true;
                         }
                     }
 
@@ -923,12 +923,12 @@ namespace AspDotNetStorefront
                 QueryResult queryResult = new QueryResult();
                 if (QuerySFDC(query, ref queryResult))
                 {
-                    Brand_Store_Budget__c employeeBudget = (Brand_Store_Budget__c)queryResult.records.FirstOrDefault();
+                    Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
                     CustomerFund customerFund = GetCustomerFund(customerID, (int)FundType.SOFFunds, false);
                     if (customerFund.CustomerID == 0)
-                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Current_Balance__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Current_Balance__c));
+                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Budget__c));
                     else
-                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Current_Balance__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Current_Balance__c));
+                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Budget__c));
                 }
             }
             catch (Exception ex)
