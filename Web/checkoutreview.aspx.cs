@@ -249,7 +249,7 @@ namespace AspDotNetStorefront
             {
                 String PayPalToken = CommonLogic.QueryStringCanBeDangerousContent("token").Trim();
                 String PayerID = CommonLogic.QueryStringCanBeDangerousContent("payerid").Trim();
-                ProcessCheckout();
+                ProcessCheckout();                
             }
 
             else
@@ -767,6 +767,13 @@ namespace AspDotNetStorefront
                 }
             }
             AuthenticationSSO.CommitCustomerFund(ThisCustomer.CustomerID);
+            //Once order is processed then change payment method to credit card to make it default selected for new order
+            Address BillingAddressTemp = new Address();
+            BillingAddressTemp.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
+            BillingAddressTemp.PaymentMethodLastUsed = AppLogic.ro_PMCreditCard;
+            BillingAddressTemp.ClearCCInfo();
+            BillingAddressTemp.UpdateDB();
+            //End
             Response.Redirect("orderconfirmation.aspx?ordernumber=" + OrderNumber.ToString() + "&paymentmethod=" + Server.UrlEncode(PaymentMethod));
         }
         protected override string OverrideTemplate()
