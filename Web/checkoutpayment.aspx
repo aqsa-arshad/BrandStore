@@ -95,8 +95,7 @@
                             PAYPALEXPRESSImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
                             PAYPALEMBEDDEDCHECKOUTImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
                             PAYPALImage="<%$ Tokens:AppConfig, PayPal.PaymentIcon %>"
-                            MONEYBOOKERSQUICKCHECKOUTImage="<%$ Tokens:AppConfig, Moneybookers.QuickCheckout.PaymentIcon %>" 
-                             />
+                            MONEYBOOKERSQUICKCHECKOUTImage="<%$ Tokens:AppConfig, Moneybookers.QuickCheckout.PaymentIcon %>" />
 
                         <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="paymentKicker" runat="server" />
 
@@ -179,22 +178,25 @@
 
                         <asp:Panel ID="pnlPOPane" runat="server" Visible="false" CssClass="page-row">
 
-                            <p class="td-25-percent"><asp:Label ID="lblPOHeader" runat="server" CssClass="block-text"
-                                Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label></p>
+                            <p class="td-25-percent">
+                                <asp:Label ID="lblPOHeader" runat="server" CssClass="block-text"
+                                    Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label>
+                            </p>
                             <div class="clearfix"></div>
                             <asp:Label ID="lblPO" runat="server" CssClass="block-text"
                                 Text="<%$ Tokens:StringResource, checkoutpo.aspx.4 %>"></asp:Label>
                             <div class="td-25-percent">
                                 <p class="item-space-right">
-                                <asp:TextBox ID="txtPO" AutoCompleteType="Disabled" ClientIDMode="Static" runat="server"></asp:TextBox>
-                                    </p>
-                                <div class="clearfix"></div>
-                            <p>
-                                <asp:Label ID="lblPOFee" runat="server" CssClass="block-text black-color"
-                                Text="<%$ Tokens:StringResource, Invoice.Fee %>"></asp:Label>     
+                                    <asp:TextBox ID="txtPO" AutoCompleteType="Disabled" MaxLength="20" ClientIDMode="Static" runat="server"></asp:TextBox>
+                                    <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtPO" runat="server" ErrorMessage="Special Characters are not allowed." ValidationExpression="^[0-9a-zA-Z-_\b]+$"></asp:RegularExpressionValidator>--%>
                                 </p>
-                            </div> 
-                                            
+                                <div class="clearfix"></div>
+                                <p>
+                                    <asp:Label ID="lblPOFee" runat="server" CssClass="block-text black-color"
+                                        Text="<%$ Tokens:StringResource, Invoice.Fee %>"></asp:Label>
+                                </p>
+                            </div>
+
                         </asp:Panel>
 
                         <asp:Panel ID="pnlSecureNetVaultPayment" runat="server" CssClass="page-row" Visible="false">
@@ -369,17 +371,32 @@
             //Depending on min threshhold enable disable purchase order option
             EnableDisablePOOption();
 
+            $("#txtPO").keypress(function (e) {
+                debugger;
+                var regex = new RegExp("^[0-9a-zA-Z-_\b]+$");                
+                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex !== "" && regex !== undefined && regex !== null) {
+                    if (regex.test(str)) {
+                        return true;
+                    }
+
+                    else {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+            });
 
         });
 
         function EnableDisablePOOption() {
             var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
-            
+
             if (OrderTotal < parseFloat($("#hdnMinThreshHold").text())) {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").attr("Disabled", "Disabled");
             }
             else
-                $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").removeattribute("Disabled");
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").removeAttr("Disabled");
         }
 
         function SelectRespectivePaymentMethodonLoad() {
