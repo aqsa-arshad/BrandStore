@@ -126,6 +126,7 @@ namespace AspDotNetStorefront
 
         protected void Page_Load(object sender, System.EventArgs e)        {
 
+            GetPercentageRatio(ThisCustomer.CustomerLevelID.ToString());
 
             Updatecartcounttotalonmenue();
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
@@ -396,16 +397,24 @@ namespace AspDotNetStorefront
             UpdateCart();
 
         }
-
-        [System.Web.Services.WebMethod()]
-        public static String  GetPercentageRatio(string CustomerLevelID, string ProductCategoryID)
-        {
-           
-
-            BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(Convert.ToInt32(CustomerLevelID), Convert.ToInt32(ProductCategoryID));
-            return  FundPercentage.BudgetPercentageValue.ToString();
+    
+        public  void  GetPercentageRatio(string CustomerLevelID)
+        {        
+            
+            hdnBudgetPercentageRation_Cat1.Text = GetRatio(CustomerLevelID, "1");
+            hdnBudgetPercentageRation_Cat2.Text = GetRatio(CustomerLevelID, "2");
+            hdnBudgetPercentageRation_Cat3.Text = GetRatio(CustomerLevelID, "3");
+            hdnBudgetPercentageRation_Cat4.Text = GetRatio(CustomerLevelID, "4");
+            hdnBudgetPercentageRation_Cat5.Text = GetRatio(CustomerLevelID, "5");
+            hdnBudgetPercentageRation_Cat6.Text = GetRatio(CustomerLevelID, "6");         
             
              
+        }
+
+        public string GetRatio(string CustomerLevelID, string ProductCategoryID)
+        {
+            BudgetPercentageRatio FundPercentage = AuthenticationSSO.GetBudgetPercentageRatio(Convert.ToInt32(CustomerLevelID), Convert.ToInt32(ProductCategoryID));
+            return FundPercentage.BudgetPercentageValue.ToString();
         }
 
         #region "Session related"
