@@ -1089,7 +1089,7 @@ namespace AspDotNetStorefront
                         }
 
                         cart.SetItemQuantity(sRecID, quantity);
-
+                        
 
                         cart.SetItemNotes(sRecID, CommonLogic.CleanLevelOne(itemNotes));
                     }
@@ -1112,7 +1112,8 @@ namespace AspDotNetStorefront
             //String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
             try
             {
-                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode);
+                Decimal BluBucksPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks)).BudgetPercentageValue;
+                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode, BluBucksPercentage);
             }
             catch (Exception ex)
             {

@@ -7153,7 +7153,7 @@ namespace AspDotNetStorefrontCore
         }
 
         //Added By Tayyab on 10-01-2016 to update fund used for item
-        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode)
+        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode, Decimal BluBucksPercentage)
         {
             m_CachedTotals.Clear();
             for (int i = 0; i < m_CartItems.Count; i++)
@@ -7166,6 +7166,7 @@ namespace AspDotNetStorefrontCore
                     ci.CategoryFundUsed = CategoryFundUsed;
                     ci.BluBuksUsed = BluBucksUsed;
                     ci.GLcode = GLcode;
+                    ci.BluBucksPercentageUsed = BluBucksPercentage;
                     m_CartItems[i] = ci;
                     break;
                 }

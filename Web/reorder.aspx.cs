@@ -13,18 +13,18 @@ using AspDotNetStorefrontCore;
 
 namespace AspDotNetStorefront
 {
-	/// <summary>
-	/// Summary description for reorder.
-	/// </summary>
-	public partial class reorder : System.Web.UI.Page
-	{
+    /// <summary>
+    /// Summary description for reorder.
+    /// </summary>
+    public partial class reorder : System.Web.UI.Page
+    {
         private Customer ThisCustomer
         {
             get { return Customer.Current; }
         }
 
-		protected void Page_Load(object sender, System.EventArgs e)
-		{
+        protected void Page_Load(object sender, System.EventArgs e)
+        {
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
             {
@@ -51,6 +51,7 @@ namespace AspDotNetStorefront
             String StatusMsg = String.Empty;
             if (Order.BuildReOrder(null, ThisCustomer, OrderNumber, out StatusMsg))
             {
+                CalculateFundsForReOrder();
                 Response.Redirect("shoppingcart.aspx");
             }
             else
@@ -61,6 +62,78 @@ namespace AspDotNetStorefront
             }
 
             litOutput.Text = output.ToString();
-		}
-	}
+        }
+
+        private void CalculateFundsForReOrder()
+        {
+            ShoppingCart cart = new ShoppingCart(ThisCustomer.SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
+            System.Collections.Generic.List<CustomerFund> CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, true);
+            foreach (CartItem cItem in cart.CartItems.ToArrayList())
+            {
+                String RecordID = cItem.ShoppingCartRecordID.ToString();
+                int FundID = cItem.FundID;
+                Decimal Productprice = cItem.Price;
+                int Quantity = cItem.Quantity;
+                Decimal TotalPrice = Convert.ToDecimal(Productprice * Quantity);
+
+                Decimal BluBucksPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(FundType.BLUBucks)).BudgetPercentageValue;
+
+                //Apply Product Category Fund
+                CustomerFund CategoryFund = CustomerFunds.Find(x => x.FundID == FundID);
+                if (CategoryFund != null)
+                {
+                    Decimal CategoryFundAmountAvailable = CategoryFund.AmountAvailable;
+                    if (CategoryFundAmountAvailable < TotalPrice)
+                    {
+                        TotalPrice = TotalPrice - CategoryFundAmountAvailable;
+                        cItem.CategoryFundUsed = CategoryFundAmountAvailable;
+                      
+                    }
+                    else
+                    {
+                        CategoryFundAmountAvailable = CategoryFundAmountAvailable - TotalPrice;
+                        cItem.CategoryFundUsed = TotalPrice;
+                        TotalPrice = 0;
+
+                    }
+
+                }
+                else
+                {
+                    cItem.CategoryFundUsed = 0;
+                    cItem.FundID = 0;
+                    
+                }
+                //Apply Product Category Fund
+
+                //Apply BluBucks to this item based on available bucks and percentage ratio
+                CustomerFund BluBucksFund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.BLUBucks));
+                cItem.BluBucksPercentageUsed = BluBucksPercentage;
+                if (BluBucksFund != null)
+                {
+                    Decimal BluBucksAvailable=BluBucksFund.AmountAvailable;
+                    Decimal amountTopaidbyBluBucks = Math.Round((TotalPrice * (BluBucksPercentage / 100)),2);
+
+                    if (BluBucksAvailable < amountTopaidbyBluBucks)
+                    {
+                        
+                        cItem.BluBuksUsed = BluBucksAvailable;
+                    }
+                    else
+                    {
+                        cItem.BluBuksUsed = amountTopaidbyBluBucks;
+                    }
+                    
+                }
+                else
+                {
+                    cItem.BluBuksUsed = 0;
+                    
+                }
+                //End Apply BluBucks
+
+                cart.SetItemFundsUsed(cItem.ShoppingCartRecordID, cItem.CategoryFundUsed, cItem.BluBuksUsed, cItem.GLcode, BluBucksPercentage);
+            }
+        }
+    }
 }

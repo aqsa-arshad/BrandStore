@@ -12,6 +12,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 
+
 namespace AspDotNetStorefrontCore
 {
     /// <summary>
@@ -2253,6 +2254,7 @@ namespace AspDotNetStorefrontCore
                             //area to get fund and bucks used with original order for this reorder option
                             using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
                             {
+                                
                                 con.Open();
                                 using (IDataReader rs = DB.GetRS("select CategoryFundUsed,BluBucksUsed,CategoryFundType,BluBucksPercentageUsed,ProductCategoryId,GLcode from Orders_ShoppingCart where OrderNumber=" + OrderNumber + " and CustomerID=" + ThisCustomer.CustomerID.ToString() + " and ProductID=" + c.ProductID.ToString() + " and VariantID=" + c.VariantID.ToString(), con))
                                 {
