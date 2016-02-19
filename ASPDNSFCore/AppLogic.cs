@@ -938,7 +938,7 @@ namespace AspDotNetStorefrontCore
             }
             if (CardNumberDecrypt.Length > 4)
             {
-                return "****" + CardNumberDecrypt.Substring(CardNumberDecrypt.Length - 4, 4);
+                return "*********" + CardNumberDecrypt.Substring(CardNumberDecrypt.Length - 4, 4);
             }
             else
             {

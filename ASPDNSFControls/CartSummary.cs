@@ -56,6 +56,9 @@ namespace AspDotNetStorefrontControls
         private Label lblTaxCaption = new Label();
         private Label lblTax = new Label();
 
+        private Label lblInvoiceCaption = new Label();
+        private Label lblInvoice = new Label();
+
         private Label lblOrderDiscountCaption = new Label();
         private Label lblOrderDiscount = new Label();
 
@@ -88,7 +91,7 @@ namespace AspDotNetStorefrontControls
 
         private Label lblPopFundsUsedTotalCaption = new Label();
         private Label lblPopFundsUsedTotal = new Label();
-
+        
         #endregion
 
         /// <summary>
@@ -118,7 +121,7 @@ namespace AspDotNetStorefrontControls
                     Controls.Add(new LiteralControl("          </font>"));
                     //Controls.Add(new LiteralControl("          <span class='cart-value cart-price'>"));
                     Controls.Add(lblSubTotalNoDiscount);
-                    // Controls.Add(new LiteralControl("          </span>"));
+                   // Controls.Add(new LiteralControl("          </span>"));
                     Controls.Add(new LiteralControl("        </span></p>"));
 
                     //Category wise Credit Used total region
@@ -126,10 +129,10 @@ namespace AspDotNetStorefrontControls
                         Convert.ToDecimal(lblDirectMailFundsUsedTotal.Text.Replace("$", "")) > 0 || Convert.ToDecimal(lblDisplayFundsUsedTotal.Text.Replace("$", "")) > 0 ||
                         Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$", "")) > 0 || Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) > 0)
                     {
-                        Controls.Add(new LiteralControl(" <p><span class='normal-heading black-color'>         <font>"));
-                        Controls.Add(lblCreditUsed);
-                        Controls.Add(new LiteralControl("          </font>"));
-                        Controls.Add(new LiteralControl("        </span></p>"));
+                    Controls.Add(new LiteralControl(" <p><span class='normal-heading black-color'>         <font>"));
+                    Controls.Add(lblCreditUsed);
+                    Controls.Add(new LiteralControl("          </font>"));                   
+                    Controls.Add(new LiteralControl("        </span></p>"));
                     }
                     //Blu Bucks used total                  
                     if (Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) > 0)
@@ -137,7 +140,7 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(lblBluBucksFundsUsedTotalCaption);
                         Controls.Add(lblBluBucksFundsUsedTotal);
                         Controls.Add(new LiteralControl(" <br>"));
-                    }
+                    }                 
                     //End Blu Bucks Used Total
 
                     //Sof used total                  
@@ -146,7 +149,7 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(lblSofFundsUsedTotalCaption);
                         Controls.Add(lblSofFundsUsedTotal);
                         Controls.Add(new LiteralControl(" <br>"));
-                    }
+                    }                  
                     //End Sof Used Total
 
                     //Direct mail fund used total                 
@@ -154,9 +157,9 @@ namespace AspDotNetStorefrontControls
                     {
                         Controls.Add(lblDirectMailFundsUsedTotalCaption);
                         Controls.Add(lblDirectMailFundsUsedTotal);
-                        Controls.Add(new LiteralControl(" <br>"));
-                    }
-
+                        Controls.Add(new LiteralControl(" <br>")); 
+                    }                  
+                  
                     //End Direct mail fund Used Total
 
                     //Display fund used total                   
@@ -165,7 +168,7 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(lblDisplayFundsUsedTotalCaption);
                         Controls.Add(lblDisplayFundsUsedTotal);
                         Controls.Add(new LiteralControl(" <br>"));
-                    }
+                    }                   
                     //End Display fund Used Total
 
                     //literature fund used total                  
@@ -174,7 +177,7 @@ namespace AspDotNetStorefrontControls
                         Controls.Add(lblLiteratureFundsUsedTotalCaption);
                         Controls.Add(lblLiteratureFundsUsedTotal);
                         Controls.Add(new LiteralControl(" <br>"));
-                    }
+                    }                  
                     //End literature fund Used Total
 
                     //POP fund used total                  
@@ -214,7 +217,7 @@ namespace AspDotNetStorefrontControls
                     }
                 }
 
-                Controls.Add(new LiteralControl("<span class='normal-heading black-color'>Charges</span>"));
+                 Controls.Add(new LiteralControl("<span class='normal-heading black-color'>Charges</span>"));
                 //Tax            
                 if (ShowTax && !UseInAjaxMiniCart)
                 {
@@ -222,30 +225,35 @@ namespace AspDotNetStorefrontControls
                     {
                         if (DesignMode || !this.DataSource.VatIsInclusive)
                         {
-                            // Controls.Add(new LiteralControl("         <div class='page-row text-right cart-summary-tax'>"));
+                           // Controls.Add(new LiteralControl("         <div class='page-row text-right cart-summary-tax'>"));
                             Controls.Add(new LiteralControl("<p>"));
                             Controls.Add(new LiteralControl("           <span class='block-text'>"));
                             Controls.Add(lblTaxCaption);
-                            //  Controls.Add(new LiteralControl("          </span>"));
-                            //  Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                          //  Controls.Add(new LiteralControl("          </span>"));
+                          //  Controls.Add(new LiteralControl("          <span class='cart-label'>"));
                             Controls.Add(lblTax);
                             Controls.Add(new LiteralControl("          </span>"));
                             //Controls.Add(new LiteralControl("        </div>"));
-                            // Controls.Add(new LiteralControl("</p>"));
+                           // Controls.Add(new LiteralControl("</p>"));
 
                         }
                     }
                 }
+                // Invoice fee
+                Controls.Add(new LiteralControl("<span id='InvoiceFee' class='block-text hide-element'>"));
+                Controls.Add(lblInvoiceCaption);
+                Controls.Add(lblInvoice);
+                Controls.Add(new LiteralControl("</span>"));
 
                 //Shipping
                 if (ShowShipping && !UseInAjaxMiniCart)
                 {
-                    // Controls.Add(new LiteralControl("       <div class='page-row text-right cart-summary-shipping'>"));
+                   // Controls.Add(new LiteralControl("       <div class='page-row text-right cart-summary-shipping'>"));
 
                     //shipping caption
                     Controls.Add(new LiteralControl("                <span class='block-text'>"));
                     Controls.Add(lblShippingCostCaption);
-                    //  Controls.Add(new LiteralControl("                </span>"));
+                  //  Controls.Add(new LiteralControl("                </span>"));
 
                     //vat display
                     if (DesignMode || DataSource.VatEnabled)
@@ -259,18 +267,18 @@ namespace AspDotNetStorefrontControls
                     if (DesignMode || !DataSource.WithMultipleShippingAddresses && !DataSource.WithGiftRegistryConponents && DataSource.FirstCartItem.ShippingMethod.Length != 0 || UseInAjaxMiniCart)
                     {
                         //Controls.Add(new LiteralControl("                <span class='cart-shipping-method'>"));
-                        // Controls.Add(lblShippingMethod);
-                        //  Controls.Add(new LiteralControl("                </span>"));
+                       // Controls.Add(lblShippingMethod);
+                      //  Controls.Add(new LiteralControl("                </span>"));
                     }
 
-                    //  Controls.Add(new LiteralControl("          <span class='cart-shipping-cost'>"));
+                  //  Controls.Add(new LiteralControl("          <span class='cart-shipping-cost'>"));
                     Controls.Add(lblShippingCost);
                     Controls.Add(new LiteralControl("          </span>"));
                     Controls.Add(new LiteralControl("        </p>"));
                 }
 
-
-
+               
+                
                 //Total
                 if (ShowTotal && !UseInAjaxMiniCart)
                 {
@@ -311,11 +319,11 @@ namespace AspDotNetStorefrontControls
                     }
 
                     //Controls.Add(new LiteralControl("        <div class='page-row text-right cart-summary-total'>"));
-                    // Controls.Add(new LiteralControl("          <span class='cart-label'>"));
+                   // Controls.Add(new LiteralControl("          <span class='cart-label'>"));
                     Controls.Add(new LiteralControl("<p>"));
                     Controls.Add(new LiteralControl("          <span class='normal-heading black-color'>"));
                     Controls.Add(lblTotalCaption);
-                    // Controls.Add(new LiteralControl("          </span>"));
+                   // Controls.Add(new LiteralControl("          </span>"));
                     Controls.Add(new LiteralControl("         <font"));
                     Controls.Add(lblTotal);
                     Controls.Add(new LiteralControl("          </font>"));
@@ -404,6 +412,16 @@ namespace AspDotNetStorefrontControls
                 lblTax.Text = "0.00";
             }
 
+            // Invoice charges 
+             
+            lblInvoiceCaption.ID = "lblInvoiceCaption";
+            lblInvoiceCaption.Text = "Purchase Order Fee: ";
+
+            lblInvoice.ID = "lblInvoice";
+
+                
+                
+
             // Order Discount
             lblOrderSubtotalCaption.ID = "lblOrderDiscountCaption";
             lblOrderSubtotalCaption.Text = OrderDiscountCaption;
@@ -417,7 +435,7 @@ namespace AspDotNetStorefrontControls
 
             //GiftCard
             lblGiftCardTotalCaption.ID = "lblGiftCardTotalCaption";
-            lblGiftCardTotalCaption.Text = GiftCardTotalCaption;
+            lblGiftCardTotalCaption.Text = GiftCardTotalCaption; 
 
             lblGiftCardTotal.ID = "lblGiftCardTotal";
 
@@ -458,7 +476,7 @@ namespace AspDotNetStorefrontControls
             lblPopFundsUsedTotal.Text = "$0.00";
             //End
         }
-
+        
         /// <summary>
         /// Assigns the datasource items into the control
         /// </summary>
@@ -482,7 +500,7 @@ namespace AspDotNetStorefrontControls
                         lblPopFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2).ToString();
 
                     lblBluBucksFundsUsedTotal.Text = " " + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
-
+                                       
                 }
                 //End
 
@@ -492,14 +510,14 @@ namespace AspDotNetStorefrontControls
                     lblBluBucksFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2).ToString();
                 }
                 //End Blu Bucks Used Total
-
+               
                 //Sof used total                  
                 if (Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) > 0)
                 {
                     lblSofFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) + cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2).ToString();
                 }
                 //End Sof Used Total
-
+               
                 //SubTotal
                 Decimal subTotalNoDiscount = cart.SubTotal(false, false, true, true, true, true);
                 Decimal lineItemDiscount = cart.DiscountResults.Sum(dr => dr.LineItemTotal);
@@ -517,7 +535,9 @@ namespace AspDotNetStorefrontControls
                 {
                     //Shipping
                     lblShippingCostCaption.Text = ShippingCaption;
-                    lblShippingCost.Text = cart.FreightRateDisplayFormat;
+                    lblShippingCost.Text = cart.FreightRateDisplayFormat;                    
+                    lblInvoice.Text = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), cart.ThisCustomer.CurrencySetting);
+
 
                     string vatDisplay = string.Empty;
                     if (cart.VatEnabled)
@@ -549,12 +569,12 @@ namespace AspDotNetStorefrontControls
                     {
 
                         if (!string.IsNullOrEmpty(cart.LowestfreightName) &&
-                            !(cart.IsAllFreeShippingComponents() || cart.ShippingIsFree || cart.ThisCustomer.LevelHasFreeShipping() ||
+                            !(cart.IsAllFreeShippingComponents() || cart.ShippingIsFree || cart.ThisCustomer.LevelHasFreeShipping() || 
                               cart.FreeShippingReason == Shipping.FreeShippingReasonEnum.ExceedsFreeShippingThreshold || cart.FreeShippingReason == Shipping.FreeShippingReasonEnum.CouponHasFreeShipping))
                         {
                             lblShippingMethod.Text = string.Format("({0})", cart.LowestfreightName);
                         }
-
+                       
                         if (lblShippingCost.Text.IndexOf("0") != -1)
                         {
                             if (cart.VatIsInclusive)
@@ -628,6 +648,25 @@ namespace AspDotNetStorefrontControls
                     lblTotalCaption.Text = TotalCaption;
                     lblTotal.Text = cart.TotalRateDisplayFormat;
                 }
+
+                // invoice 
+
+                //Address BillingAddress = new Address();
+                //BillingAddress.LoadFromDB(cart.ThisCustomer.PrimaryBillingAddressID);
+
+                //if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
+                //{
+                //    lblInvoiceCaption.Visible = false;
+                //    lblInvoice.Visible = false;
+                //}
+                //else
+                //{
+                //    lblInvoiceCaption.Visible = true;
+                //    lblInvoice.Visible = true;
+                //    lblInvoice.Text = String.Format(AppLogic.AppConfig("Invoice.fee"));
+                //    // lblTotal.Text = (Convert.ToInt16(cart.TotalRateDisplayFormat) + Convert.ToInt16(AppLogic.AppConfig("Invoice.fee"))).ToString();
+                //}
+
             }
         }
 
@@ -697,7 +736,7 @@ namespace AspDotNetStorefrontControls
         {
             get
             {
-
+				
                 if (SkipShippingOnCheckout)
                 {
                     return false;
@@ -1073,6 +1112,28 @@ namespace AspDotNetStorefrontControls
             set
             {
                 ViewState["TaxCaption"] = value;
+                ChildControlsCreated = false;
+            }
+        }
+        /// <summary>
+        /// The invoice caption
+        /// </summary>
+        [Browsable(true),
+        Category(SETTINGS_CATEGORY),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public string InvoiceCaption
+        {
+            get
+            {
+                if ((object)ViewState["InvoiceCaption"] == null)
+                {
+                    return string.Empty;
+                }
+                return ViewState["InvoiceCaption"].ToString();
+            }
+            set
+            {
+                ViewState["InvoiceCaption"] = value;
                 ChildControlsCreated = false;
             }
         }

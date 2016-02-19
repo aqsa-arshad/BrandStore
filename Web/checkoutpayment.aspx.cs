@@ -38,7 +38,7 @@ namespace AspDotNetStorefront
         string AllowedPaymentMethods = String.Empty;
         decimal CartTotal = Decimal.Zero;
         decimal NetTotal = Decimal.Zero;
-        bool FillControl=false;
+        bool FillControl = false;
 
 
         protected void Page_Init(object sender, EventArgs e)
@@ -48,16 +48,59 @@ namespace AspDotNetStorefront
             // Need to set this here so it persists across loading viewstate
             ctrlCreditCardPanel.ShowCimSaveCard = authorizeNet.IsCimEnabled;
 
-                   }
+        }
 
-               protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
+            //initially hide all error messages:
+            if (this.IsPostBack)
+            {
+                if (ctrlPaymentMethod.CREDITCARDChecked)
+                {
+                    pnlErrorMsg.Visible = false;
+                    
+                }
+                else
+                {
+                    valsumCreditCard.Visible = false;
+                    valsumEcheck.Visible = false;
+                    pnlCCTypeErrorMsg.Visible = false;
+                    pnlCCExpDtErrorMsg.Visible = false;
+                    CCTypeErrorMsgLabel.Visible = false;
+                }
+            }        
+           //End
+            lblInvoiceValue.Text = AppLogic.AppConfig("Invoice.fee");
+            hdnMinThreshHold.Text = ThisCustomer.MinThreshold.ToString();
+            if (Request.QueryString["errormsg"] == "9" && !ctrlPaymentMethod.CREDITCARDChecked)
+            {
+                hdnPOChecked.Text = "1";
+               
+            }
+            else
+                hdnPOChecked.Text = "0";
 
+
+            if (ctrlPaymentMethod.PURCHASEORDERChecked)
+            {
+                String PONumber = txtPO.Text.Trim();
+                hdnPOChecked.Text = "1";
+               // ErrorMessage err1;
+               // if (PONumber.Length == 0)
+              //  {
+                   
+                 //   err1 = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
+                   // Response.Redirect("checkoutpayment.aspx?errormsg=" + err1.MessageId);
+              //  }
+            }
+
+           
+           
             // Set up CIM
             AspDotNetStorefrontGateways.Processors.AuthorizeNet authorizeNet = new AspDotNetStorefrontGateways.Processors.AuthorizeNet();
             PanelWallet.Visible = authorizeNet.IsCimEnabled;
 
-           
+
 
             if (!this.IsPostBack)
             {
@@ -214,9 +257,9 @@ namespace AspDotNetStorefront
             if (!this.IsPostBack)
             {
                 InitializePageContent();
-               
+
             }
-           
+
 
             ibAmazonSimplePay.ImageUrl = AppLogic.AppConfig("AMAZON.ButtonURL");
 
@@ -299,7 +342,9 @@ namespace AspDotNetStorefront
 
         void btnContinueCheckOut1_Click(object sender, EventArgs e)
         {
-            ProcessPayment("CREDITCARD");
+
+            // ProcessPayment("CREDITCARD");
+            btnContCheckout_Click(null, null);
         }
 
 
@@ -328,6 +373,7 @@ namespace AspDotNetStorefront
                 }
                 else if (PM == AppLogic.ro_PMPurchaseOrder)
                 {
+                    
                     if (SelectedPaymentType.Length == 0 && AllowedPaymentMethods.IndexOf(AppLogic.ro_PMPurchaseOrder) != -1)
                     {
                         SelectedPaymentType = AppLogic.ro_PMPurchaseOrder;
@@ -440,7 +486,7 @@ namespace AspDotNetStorefront
                     NoPaymentRequired.Text = NoPaymentRequired.Text + "<br><br>" + s.ToString();  //Cannot concat types String and StringBuilder in VB
                     pnlRequireTerms.Visible = false;
                 }
-               
+
             }
 
 
@@ -448,7 +494,7 @@ namespace AspDotNetStorefront
 
             OrderSummary.Text = cart.DisplaySummary(true, true, true, true, false);
             AppLogic.GetButtonDisable(btnContinueCheckOut1);
-         
+
         }
 
         /// <summary>
@@ -468,7 +514,8 @@ namespace AspDotNetStorefront
         {
             if (!IsVisible)
             {
-                // pnlCCPane.Visible = CCPaneInfo.Visible = false;
+                // pnlCCPane.Visible = CCPaneInfo.Visible = false;ctrlCreditCardPanel
+                ctrlCreditCardPanel.Visible = CCPaneInfo.Visible = false;//Added this line to set credit card control visibility
                 return;
             }
 
@@ -478,7 +525,7 @@ namespace AspDotNetStorefront
                 return;
             }
 
-            // pnlCCPane.Visible = true;
+            ctrlCreditCardPanel.Visible = true;
             pnlCCPaneInfo.Visible = false;
 
             string ccPaneData = GWActual == null ? null : GWActual.CreditCardPaneInfo(SkinID, ThisCustomer);
@@ -499,7 +546,7 @@ namespace AspDotNetStorefront
                 pnlCCPaneInfo.Visible = false;
                 if (GW != Gateway.ro_GWNETAXEPT)
                 {
-                    // pnlCCPane.Visible = true;
+                    ctrlCreditCardPanel.Visible = true;
                 }
             }
         }
@@ -543,10 +590,14 @@ namespace AspDotNetStorefront
             Address BillingAddress = new Address();
             BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
             bool EChecksAllowed = GWActual != null && GWActual.SupportsEChecks(); // let manual gw use echecks so site testing can occur
-            bool POAllowed = AppLogic.CustomerLevelAllowsPO(ThisCustomer.CustomerLevelID);
+           
+            //Initially PO option was based on customer level now we have made it to individual customer
+            bool POAllowed = ThisCustomer.IsPurchaseOrder;//AppLogic.CustomerLevelAllowsPO(ThisCustomer.CustomerLevelID);         
+          
+
             bool CODCompanyCheckAllowed = ThisCustomer.CODCompanyCheckAllowed;
             bool CODNet30Allowed = ThisCustomer.CODNet30Allowed;
-
+           
             StringBuilder OrderFinalizationInstructions = new StringBuilder(4096);
             String OrderFinalizationXmlPackageName = AppLogic.AppConfig("XmlPackage.OrderFinalization");
             String OrderFinalizationXmlPackageFN = Server.MapPath("xmlpackages/" + OrderFinalizationXmlPackageName);
@@ -568,9 +619,10 @@ namespace AspDotNetStorefront
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (!(checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut))
             {
-
+               
                 foreach (String PM in AllowedPaymentMethods.Split(','))
                 {
+                   
                     String PMCleaned = AppLogic.CleanPaymentMethod(PM);
                     if (PMCleaned == AppLogic.ro_PMCreditCard)
                     {
@@ -600,29 +652,29 @@ namespace AspDotNetStorefront
                         else
                         {
                             bool fillcontrol = false;
-                            if (Request.UrlReferrer!=null)
+                            if (Request.UrlReferrer != null)
                             {
-                            String FromPage = Request.UrlReferrer.AbsolutePath;
-                            String fill = Request.QueryString["fillcontrols"];
-                           
-                            if (FromPage.Contains("checkoutshipping"))
-                            {
+                                String FromPage = Request.UrlReferrer.AbsolutePath;
+                                String fill = Request.QueryString["fillcontrols"];
 
-                                if (Request.UrlReferrer.ToString().Contains("fillcontrols"))
+                                if (FromPage.Contains("checkoutshipping"))
                                 {
-                                    fillcontrol = true;
+
+                                    if (Request.UrlReferrer.ToString().Contains("fillcontrols"))
+                                    {
+                                        fillcontrol = true;
+                                    }
+                                    else
+                                        fillcontrol = false;
                                 }
                                 else
-                                fillcontrol = false;
-                            }                           
-                            else
-                                fillcontrol = true;   
+                                    fillcontrol = true;
                             }
 
                             if (!IsPostBack & fillcontrol)
                             {
-                                ctrlPaymentMethod.CREDITCARDChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0 || check));
-                                SetCreditCardPanelVisibility(((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0)));
+                                //ctrlPaymentMethod.CREDITCARDChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0 || check));
+                                //SetCreditCardPanelVisibility(((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMCreditCard) || (BillingAddress.PaymentMethodLastUsed.Trim().Length <= 0)));
 
                                 // Display only non-CIM entries
                                 if (!(BillingAddress.CardNumber.StartsWith("****") && AppLogic.GetCardExtraCodeFromSession(ThisCustomer) == "NA"))
@@ -635,12 +687,12 @@ namespace AspDotNetStorefront
                                     if (ctrlCreditCardPanel.CreditCardNumber == "")
                                     {
                                         //need commented line in future
-                                        ctrlCreditCardPanel.CreditCardNumber =  AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
+                                        ctrlCreditCardPanel.CreditCardNumber = AppLogic.SafeDisplayCardNumber(BillingAddress.CardNumber, "Address", BillingAddress.AddressID);
                                     }
                                     if (ctrlCreditCardPanel.CreditCardVerCd == "")
                                     {
                                         //need commented line in future
-                                        ctrlCreditCardPanel.CreditCardVerCd =  AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
+                                        ctrlCreditCardPanel.CreditCardVerCd = AppLogic.SafeDisplayCardExtraCode(AppLogic.GetCardExtraCodeFromSession(ThisCustomer));
                                     }
                                     if (ctrlCreditCardPanel.CreditCardType == AppLogic.GetString("address.cs.32", SkinID, ThisCustomer.LocaleSetting))
                                     {
@@ -679,6 +731,9 @@ namespace AspDotNetStorefront
                     }
                     else if (PMCleaned == AppLogic.ro_PMPurchaseOrder)
                     {
+                        String InvoiceFee = AppLogic.AppConfig("Invoice.Fee");
+                        String POFeeText = AppLogic.GetString("Invoice.Fee", SkinID, ThisCustomer.LocaleSetting).Replace("xxxx", InvoiceFee);
+                        lblPOFee.Text = POFeeText;
                         if (POAllowed)
                         {
                             ctrlPaymentMethod.ShowPURCHASEORDER = true;
@@ -687,10 +742,13 @@ namespace AspDotNetStorefront
 
                             if (!IsPostBack)
                             {
-                                ctrlPaymentMethod.PURCHASEORDERChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder) || check);
-                                pnlPOPane.Visible = (BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder || check);
+                               
+                                    ctrlPaymentMethod.PURCHASEORDERChecked = ((BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder) || check);
+                                    pnlPOPane.Visible = (BillingAddress.PaymentMethodLastUsed == AppLogic.ro_PMPurchaseOrder || check);
+                               
                             }
 
+                            //Need these lines later
                             if (txtPO.Text == "")
                             {
                                 txtPO.Text = BillingAddress.PONumber;
@@ -1527,6 +1585,7 @@ namespace AspDotNetStorefront
 
         protected void ctrlPaymentMethod_OnPaymentMethodChanged(object sender, EventArgs e)
         {
+            
             if (ctrlPaymentMethod.HasPaymentMethodSelected)
                 CimWalletSelector.ClearSelection();
 
@@ -1550,6 +1609,7 @@ namespace AspDotNetStorefront
 
             if (ctrlPaymentMethod.MONEYBOOKERSQUICKCHECKOUTChecked)
                 PerformMoneybookersQuickCheckout();
+          
         }
 
         private void SetupSecureNetVaultPayment()
@@ -1585,7 +1645,16 @@ namespace AspDotNetStorefront
         }
 
         protected void btnContCheckout_Click(object sender, EventArgs e)
-        {
+        {         
+                   
+            //String PONumber = txtPO.Text.Trim();
+            //ErrorMessage err;
+            //if (PONumber.Length == 0)
+            //{
+            //    err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
+            //    Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
+            //}
+
             if (RequireTerms && CommonLogic.FormCanBeDangerousContent("TermsAndConditionsRead") == "")
             {
                 bool bTermsRead = false;
@@ -1619,6 +1688,14 @@ namespace AspDotNetStorefront
                 }
                 else
                 {
+                    //Hide all error messages initially added by tayyab on 16-2-2015
+                    valsumCreditCard.Visible = true;
+                    valsumEcheck.Visible = true;
+                    pnlCCTypeErrorMsg.Visible = true;
+                    pnlCCExpDtErrorMsg.Visible = true;
+                    CCTypeErrorMsgLabel.Visible = true;
+                    //End
+
                     Page.Validate("creditcard");
 
                     if (ctrlCreditCardPanel.CreditCardType == AppLogic.GetString("address.cs.32", SkinID, ThisCustomer.LocaleSetting))
@@ -2313,10 +2390,10 @@ namespace AspDotNetStorefront
 
         protected void btnback_Click(object sender, EventArgs e)
         {
-              ErrorMessage err;
+            ErrorMessage err;
             Address BillingAddress = new Address();
             BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
-            String PM = AppLogic.CleanPaymentMethod(AppLogic.ro_PMCreditCard);           
+            String PM = AppLogic.CleanPaymentMethod(AppLogic.ro_PMCreditCard);
             if (PM.StartsWith(AppLogic.ro_PMCreditCard))
             {
                 String CardName = ctrlCreditCardPanel.CreditCardName.Trim();

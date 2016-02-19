@@ -32,6 +32,15 @@
         <asp:Label ID="hdnpopfundamount" name="hdnpopfundamount" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
         <asp:Label ID="hdntoreplace" name="hdntoreplace" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
 
+       <%-- Hidden field for budget percentage ratio for customer by category id--%>
+        <asp:Label ID="hdnBudgetPercentageRation_Cat1" name="hdnBudgetPercentageRation_Cat1" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat2" name="hdnBudgetPercentageRation_Cat2" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat3" name="hdnBudgetPercentageRation_Cat3" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat4" name="hdnBudgetPercentageRation_Cat4" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat5" name="hdnBudgetPercentageRation_Cat5" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+        <asp:Label ID="hdnBudgetPercentageRation_Cat6" name="hdnBudgetPercentageRation_Cat6" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+
+
         <%--End Hidden Variables Regions--%>
         <asp:Literal ID="ltValidationScript" runat="server"></asp:Literal>
         <asp:Literal ID="ltJsPopupRoutines" runat="server"></asp:Literal>
@@ -583,7 +592,9 @@
                   return true;
                 }
                 if ($("#txtproductcategoryfundusedforsalesrep").val() == "" || isNaN($("#txtproductcategoryfundusedforsalesrep").val())) {
-                    return false;
+                    $("#txtproductcategoryfundusedforsalesrep").val("0.00");
+                    return true;
+                  
                 }
                 else if (round(sofentered,2) > round(spproductcategoryfund,2)) {
                     alert("You exceed available SOF");
@@ -600,8 +611,8 @@
                 }
             }
 
-            $("#btnaddtocart").click(function () {               
-               
+            $("#btnaddtocart").click(function () {              
+                
                 $("#hdncurrentrecordid").text();
                 var currentrecordid = $("#hdncurrentrecordid").text();
                 var ItemOriginalPrice = $("#spItemPrice_" + currentrecordid).text().replace("$", "").replace("Item Price:", "");
@@ -619,7 +630,9 @@
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var BluBucksPercentage = $("#spBluBucksPercentageUsed_" + currentrecordid).text().replace("$", "");
                 var customerlevel = $("#hdncustomerlevel").text(); 
-                BluBucksPercentage= GetPercentageRatio(customerlevel,ProductCategoryID);
+                BluBucksPercentage = GetPercentageRatio(customerlevel, ProductCategoryID);
+              
+
                 var spblubucksprice = $("#spblubucksprice_" + currentrecordid).text().replace("BLU Bucks used:", "").replace("BLU™ Bucks used:","");
                 spblubucksprice = parseFloat($("#hdnBluBucktsPoints").text()) +parseFloat(spblubucksprice);
                 var availableblubucksforthisitem = spblubucksprice;  
@@ -630,6 +643,7 @@
                     $("#spprice").text("$" + ($("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val()));
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
                     var BluBucksUsed = $("#txtBluBuksUsed").val();
+                   
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                     return true;
                 }
@@ -639,7 +653,7 @@
                     $("#spprice").text("$" + round(updatedprice,2));
 
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
-                    var BluBucksUsed = "0";
+                    var BluBucksUsed = $("#txtBluBuksUsed").val();                   
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
 
                     return false;
@@ -679,7 +693,7 @@
                     $("#spprice").text("$" + round(updatedprice,2));
                     $("#sppriceforsalesrep").text("$" + round(updatedprice.toFixed(2),2));
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
-                    var BluBucksUsed = $("#txtBluBuksUsed").val();
+                    var BluBucksUsed = $("#txtBluBuksUsed").val();                   
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
                 else {  
@@ -688,7 +702,7 @@
                     $("#spprice").text("$" + round(updatedprice,2));
                     
                     var ProductCategoryFundUsed = $("#hdnProductFundAmountUsed").text();
-                    var BluBucksUsed = "0";
+                    var BluBucksUsed = $("#txtBluBuksUsed").val();                   
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);
 
                 }
@@ -707,19 +721,19 @@
            
             $('input').keypress(function (e) {
                 debugger;
-                var regex;
+                var regex=new RegExp("(?!^ +$)^.+$");
                 var id = $(this).attr('id');
                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
                 id = id.replace(toreplace, "");
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
-                    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
+                    if ((e.which != 46 || $(this).val().indexOf('.') != -1) && ((e.which < 48 || e.which > 57) && (e.which != 0 && e.which != 8))) {
                         return false;
                         //event.preventDefault();
                     }
 
                     var text = $(this).val();
 
-                    if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && (event.which != 0 && event.which != 8) && ($(this)[0].selectionStart >= text.length - 2)) {
+                    if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && (e.which != 0 && e.which != 8) && ($(this)[0].selectionStart >= text.length - 2)) {
                         return false;
                         //event.preventDefault();
                     }
@@ -728,8 +742,8 @@
                     regex = new RegExp("^[0-9\b]+$");
                 }
 
-                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if (regex !== "") {
+                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);             
+                if (regex !== "" && regex !== undefined && regex !== null) {
                     if (regex.test(str)) {
                         return true;
                     }
@@ -877,27 +891,42 @@
                 }
 
             });
-                function  GetPercentageRatio(customerlevel,ProductCategoryID)
-                {
-                    var percentageration=0;
-                        $.ajax({
-                        type: "post",
-                        url: "Shoppingcart.aspx/GetPercentageRatio",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify({
-                            "CustomerLevelID": customerlevel,
-                            "ProductCategoryID": ProductCategoryID                            
-                        }),                        
-                        async: false,
-                        dataType: "json",
-                        success: function (result) {                          
+           
+                function  GetPercentageRatio(customerlevel,ProductCategoryID)            {
+                   
+                    var percentageration = 0;
+                    if (ProductCategoryID == "1")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat1").text(), 2);
+                    else if (ProductCategoryID == "2")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat2").text(), 2);
+                    else if (ProductCategoryID == "3")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat3").text(), 2);
+                    else if (ProductCategoryID == "4")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat4").text(), 2);
+                    else if (ProductCategoryID == "5")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat5").text(), 2);
+                    else if (ProductCategoryID == "6")
+                        percentageration = round($("#hdnBudgetPercentageRation_Cat6").text(), 2);
+                    else
+                        percentageration = 0;
+                        //$.ajax({
+                        //type: "post",
+                        //url: "Shoppingcart.aspx/GetPercentageRatio",
+                        //contentType: "application/json; charset=utf-8",
+                        //data: JSON.stringify({
+                        //    "CustomerLevelID": customerlevel,
+                        //    "ProductCategoryID": ProductCategoryID                            
+                        //}),                        
+                        //async: false,
+                        //dataType: "json",
+                        //success: function (result) {                          
                             
-                            percentageration=result.d.toString();
-                        },
-                        error: function (result) {                      
+                        //    percentageration=result.d.toString();
+                        //},
+                        //error: function (result) {                      
                                
-                        }
-            });
+                        //}
+              //   });
                    
                     return percentageration;
                 }
@@ -912,8 +941,8 @@
                     return true;
                 }
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
-                    $("#txtBluBuksUsed").val("0.00");
-                    return false;
+                    $("#txtBluBuksUsed").val("0.00");                  
+                    return true;
                 }
                 else if (($("#txtBluBuksUsed").val()) > (availableblubucksforthisitem)) {
                     alert("BLU BUCKS cannot be greater than allowed limit");

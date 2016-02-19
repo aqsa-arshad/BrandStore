@@ -10,7 +10,7 @@ namespace AspDotNetStorefrontCore.Validation
 {
 	public class EmailAddressValidator
 	{
-		private const string ValidationRegularExpression = @"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$";
+        private const string ValidationRegularExpression = @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
 
 		public string GetValidationRegExString()
 		{

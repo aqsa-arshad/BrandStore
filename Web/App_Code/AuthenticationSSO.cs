@@ -216,6 +216,8 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@ShippingAddressID", 0),
                                         new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@HasSubordinates", HasSubordinates(customerLevelID, profile.sfid)),
+                                        new SqlParameter("@IsPurchaseOrder", true),
+                                        new SqlParameter("@MinThreshold", 100),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -229,6 +231,8 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@IsRegistered", 1), 
                                         new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@HasSubordinates", HasSubordinates(customerLevelID, profile.sfid)),
+                                        new SqlParameter("@IsPurchaseOrder", true),
+                                        new SqlParameter("@MinThreshold", 100),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -778,7 +782,7 @@ namespace AspDotNetStorefront
         {
             try
             {
-                Regex rgx = new Regex(@"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$");
+                Regex rgx = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
                 string query = string.Empty;
 
                 if (rgx.IsMatch(SFDCQueryParam))
@@ -908,7 +912,7 @@ namespace AspDotNetStorefront
         {
             try
             {
-                Regex rgx = new Regex(@"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$");
+                Regex rgx = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
                 string query = string.Empty;
 
                 if (rgx.IsMatch(SFDCQueryParam))
@@ -1289,7 +1293,7 @@ namespace AspDotNetStorefront
         public static List<SFDCSoapClient.Account> GetSubordinateAccounts(string SFDCQueryParam)
         {
             List<SFDCSoapClient.Account> lstAccount = new List<SFDCSoapClient.Account>();
-            Regex rgx = new Regex(@"^[a-zA-Z0-9][-\w\.\+]*@([a-zA-Z0-9][\w\-]*\.)+[a-zA-Z]{2,4}$");
+            Regex rgx = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
             if (string.IsNullOrEmpty(SFDCQueryParam) || rgx.IsMatch(SFDCQueryParam))
                 return lstAccount;
 

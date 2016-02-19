@@ -52,24 +52,24 @@
                             <HeaderTemplate>
                                 <tr class="table-row">
                                     <td class="td-20-percent">
-                                        <span class="normal-heading black-color">
-                                            <asp:Label ID="lblOrderNumber" runat="server" Text="<%$ Tokens:StringResource,account.aspx.36 %>" />
-                                        </span>
+                                        <asp:LinkButton runat="server" OnClick="lblOrderNumber_Click" CssClass="link-no">
+                                            <asp:Label ID="lblOrderNumber" runat="server" Text="<%$ Tokens:StringResource,account.aspx.36 %>" CssClass="normal-heading black-color" />
+                                        </asp:LinkButton>
                                     </td>
                                     <td class="td-25-percent">
-                                        <span class="normal-heading black-color">
-                                            <asp:Label ID="lblOrderDate" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>" />
-                                        </span>
+                                       <asp:LinkButton runat="server" OnClick="lblOrderDate_Click" CssClass="link-no">
+                                            <asp:Label ID="lblOrderDate" runat="server" Text="<%$ Tokens:StringResource,account.aspx.38%>" CssClass="normal-heading black-color" />
+                                        </asp:LinkButton>
                                     </td>
                                     <td class="td-25-percent">
-                                        <span class="normal-heading black-color">
-                                            <asp:Label ID="lblPayment" runat="server" Text="<%$ Tokens:StringResource,account.aspx.39%>" />
-                                        </span>
+                                        <asp:LinkButton runat="server" OnClick="lblPayment_Click" CssClass="link-no">
+                                            <asp:Label ID="lblPayment" runat="server" Text="<%$ Tokens:StringResource,account.aspx.39%>" CssClass="normal-heading black-color" />
+                                        </asp:LinkButton>
                                     </td>
                                     <td class="td-30-percent">
-                                        <span class="normal-heading black-color">
-                                            <asp:Label ID="lblStatus" runat="server" Text="<%$ Tokens:StringResource,account.aspx.106%>" />
-                                        </span>
+                                        <asp:LinkButton runat="server" OnClick="lblStatus_Click" CssClass="link-no">
+                                            <asp:Label ID="lblStatus" runat="server" Text="<%$ Tokens:StringResource,account.aspx.106 %>" CssClass="normal-heading black-color" />
+                                        </asp:LinkButton>
                                     </td>
                             </HeaderTemplate>
                             <ItemTemplate>

@@ -358,7 +358,9 @@
                   return true;
                 }
                 if ($("#txtproductcategoryfundusedforsalesrep").val() == "" || isNaN($("#txtproductcategoryfundusedforsalesrep").val())) {
-                    return false;
+                    $("#txtproductcategoryfundusedforsalesrep").val("0.00");
+                    return true;
+                   // return false;
                 }
                 else if (round(sofentered,2) > round(spproductcategoryfund,2)) {
                     alert("You exceed available SOF");
@@ -744,7 +746,9 @@
                     return true;
                 }
                 if ($("#txtBluBuksUsed").val() == "" || isNaN($("#txtBluBuksUsed").val())) {
-                    return false;
+                    $("#txtBluBuksUsed").val(0);
+                    return true;
+                    //return false;
                 }
                 else if (round($("#txtBluBuksUsed").val(),2) > round($("#hdnBluBucktsPoints").text(),2)) {
                     alert("BLU BUKS cannot be greater than allowed limit");
