@@ -10,6 +10,10 @@
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
+    <asp:Label ID="hdnRemainingFundValue" name="hdnRemainingFundValue" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnShipmentChargesPaid" name="hdnShipmentChargesPaid" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+    <asp:Label ID="hdnShippingMethod" name="hdnShippingMethod" runat="server" ClientIDMode="Static" Style="display: none" Text="0" />
+
     <asp:Panel ID="pnlContent" runat="server">
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">
@@ -140,23 +144,52 @@
                     <asp:Label ID="lblMultiShipPrompt" runat="server" Visible="false" />
                     <h4 class="black-color margin-top-none">
                         <label id="Label1" runat="server" class="black-color margin-top-none">Select Shipping Method</label></h4>
+                    <asp:Label ID="lblshippingmethodnote" runat="server" Text="<%$Tokens:StringResource, shippingmethodnote%>" />
                     <aspdnsfc:ShippingMethodControl ID="ctrlShippingMethods" runat="server" />
 
-                    <div class="page-row row-buysafe">
+                    <div class="page-row row-buysafe hide-element">
                         <aspdnsf:BuySafeKicker ID="buySAFEKicker" WrapperClass="shippingKicker" runat="server" />
                     </div>
                 </div>
+
                 <div class="clearfix"></div>
+                <div class="col-md-12 checkout-shipping">
+                    <table id="ctl00_PageContent_ctrlShippingMethods_ctrlShippingMethods" border="0">
+                        <tbody>
+                            <tr>
+                                <td width="20px">
+                                    <input type="checkbox" id="cbBluBucks" runat="server" visible="False" autopostback="false" />
+
+                                    <input type="checkbox" id="cbSOF" runat="server" visible="False" autopostback="false" />
+                                </td>
+                                <td>
+                                    <asp:Label runat="server" ID="lblBluBucks" Text="Use your BLU Bucks™ to pay for shipping costs" Visible="False" ClientIDMode="Static"></asp:Label>
+                                    <asp:Label runat="server" ID="lblSOF" Text="Use your Sales Funds to pay for shipping costs" Visible="False" ClientIDMode="Static"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding-none" width="20px"></td>
+                                <td class="padding-none">
+                                    <asp:Label runat="server" ID="lblRemainingSOFCaption" Text="Sales Funds remaining: " Visible="False" ClientIDMode="Static"></asp:Label>
+                                    <asp:Label runat="server" ID="lblRemainingSOF" Visible="False" ClientIDMode="Static"></asp:Label>
+                                    <asp:Label runat="server" ID="lblRemainingBluBucksCaption" Text="BLU BUCKS remaining: " Visible="False" ClientIDMode="Static"></asp:Label>
+                                    <asp:Label runat="server" ID="lblRemainingBluBucks" Visible="False" ClientIDMode="Static"></asp:Label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-12">
                     <div class="checkout-buttons">
                         <asp:Button type="button" ID="btnback" class="btn btn-primary btn-block btn-success" runat="server" OnClick="btnback_Click" Text="<< Back"></asp:Button>
                     </div>
-                  
+
                     <div class="checkout-buttons pull-right pull-sm-no">
                         <asp:Button ID="btnContinueCheckout" runat="server"
                             Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
                             CssClass="btn btn-primary btn-block" Visible="false"
-                            OnClick="btnContinueCheckout_Click" />
+                            OnClick="btnContinueCheckout_Click"
+                            OnClientClick="javascript: saveShipmentChargesPaid();" />
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -217,4 +250,84 @@
         </div>
 
     </asp:Panel>
+
+    <script>
+        var previouslySelectedShippingMethodAmount = 0;
+        var availableFundValue = 0;
+        var isCheckBoxSelected = 0;
+        $(document).ready(function () {
+            debugger;
+            if ('<%=isBluBucks%>' == 'True') {
+                CalculateShippingCost(ctl00_PageContent_cbBluBucks);
+            }
+            else {
+                CalculateShippingCost(ctl00_PageContent_cbSOF);
+            }
+
+            $('[id*=ctrlShippingMethods] input').unbind().click(function (e) {
+                debugger;
+                var val = parseFloat($("#hdnRemainingFundValue").text()).toFixed(2);
+                val = parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount;
+                val = (parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2);
+                availableFundValue = (parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2);
+                $("#hdnRemainingFundValue").text((parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2));
+                if ('<%=isBluBucks%>' == 'True') {
+                    CalculateShippingCost(ctl00_PageContent_cbBluBucks);
+                }
+                else {
+                    CalculateShippingCost(ctl00_PageContent_cbSOF);
+                }
+            });
+        });
+
+        function CalculateShippingCost(checkBoxName) {
+            debugger;
+            if (checkBoxName.checked) {
+                isCheckBoxSelected = -1;
+                var lstShippingMethod = $.parseJSON($("#hdnShippingMethod").text());
+                var shippingVal = $('[id*=ctrlShippingMethods]').find('input:checked').val();
+                var shippingMethodID = shippingVal.split('|')[0];
+                for (var i = 0; i < lstShippingMethod.length; i++) {
+                    var shippingMethod = lstShippingMethod[i];
+                    if (shippingMethod.Id == shippingMethodID) {
+                        previouslySelectedShippingMethodAmount = shippingMethod.Freight;
+                        if (shippingMethod.Freight <= availableFundValue) {
+                            availableFundValue = availableFundValue - shippingMethod.Freight;
+                            $('#hdnShipmentChargesPaid').text(shippingMethod.Freight.toFixed(2));
+
+                            if ('<%=isBluBucks%>' == 'True') {
+                                $('#lblRemainingBluBucks').text(availableFundValue.toFixed(2));
+                            } else {
+                                $('#lblRemainingSOF').text(availableFundValue.toFixed(2));
+                            }
+                        } else {
+                            $('#hdnShipmentChargesPaid').text(availableFundValue);
+                            availableFundValue = availableFundValue - shippingMethod.Freight;
+                            if ('<%=isBluBucks%>' == 'True') {
+                                $('#lblRemainingBluBucks').text("0.00");
+                            } else {
+                                $('#lblRemainingSOF').text("0.00");
+                            }
+                        }
+                        $('#hdnRemainingFundValue').text(availableFundValue.toFixed(2));
+                    }
+                }
+            } else {
+                if (isCheckBoxSelected == -1) {
+                    previouslySelectedShippingMethodAmount = 0;
+                    if ('<%=isBluBucks%>' == 'True') {
+                        $('#lblRemainingBluBucks').text(availableFundValue);
+                    } else {
+                        $('#lblRemainingSOF').text(availableFundValue);
+                    }
+                }
+            }
+        }
+
+
+        function saveShipmentChargesPaid() {
+            PageMethods.SaveShipmentChargesPaid($('#hdnShipmentChargesPaid').text());
+        }
+
+    </script>
 </asp:Content>

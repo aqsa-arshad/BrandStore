@@ -5,6 +5,7 @@
 // THE ABOVE NOTICE MUST REMAIN INTACT. 
 // --------------------------------------------------------------------------------
 using System;
+using System.Globalization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -171,7 +172,7 @@ namespace AspDotNetStorefrontControls
                     //End Display fund Used Total
 
                     //literature fund used total                  
-                    if (Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$","")) > 0)
+                    if (Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$", "")) > 0)
                     {
                         Controls.Add(lblLiteratureFundsUsedTotalCaption);
                         Controls.Add(lblLiteratureFundsUsedTotal);
@@ -403,7 +404,7 @@ namespace AspDotNetStorefrontControls
 
             //Tax
             lblTaxCaption.ID = "lblTaxCaption";
-            lblTaxCaption.Text = TaxCaption+ " ";
+            lblTaxCaption.Text = TaxCaption + " ";
 
             lblTax.ID = "lblTax";
             if (DesignMode)
@@ -488,22 +489,34 @@ namespace AspDotNetStorefrontControls
                 foreach (CartItem cItem in cart.CartItems)
                 {
                     if (cItem.FundID == 2)
-                        lblSofFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        lblSofFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2).ToString();
                     else if (cItem.FundID == 3)
-                        lblDirectMailFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblDirectMailFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        lblDirectMailFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblDirectMailFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2).ToString();
                     else if (cItem.FundID == 4)
-                        lblDisplayFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblDisplayFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        lblDisplayFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblDisplayFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2).ToString();
                     else if (cItem.FundID == 5)
-                        lblLiteratureFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        lblLiteratureFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblLiteratureFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2).ToString();
                     else if (cItem.FundID == 6)
-                        lblPopFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)),2).ToString();
+                        lblPopFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblPopFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.CategoryFundUsed)), 2).ToString();
 
                     lblBluBucksFundsUsedTotal.Text = " " + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2).ToString();
                                        
                 }
                 //End
 
+                //Blu Bucks used total
+                if (Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) > 0)
+                {
+                    lblBluBucksFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2).ToString();
+                }
+                //End Blu Bucks Used Total
                
+                //Sof used total                  
+                if (Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) > 0)
+                {
+                    lblSofFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) + cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2).ToString();
+                }
+                //End Sof Used Total
                
                 //SubTotal
                 Decimal subTotalNoDiscount = cart.SubTotal(false, false, true, true, true, true);
@@ -522,9 +535,9 @@ namespace AspDotNetStorefrontControls
                 {
                     //Shipping
                     lblShippingCostCaption.Text = ShippingCaption;
-                    lblShippingCost.Text = cart.FreightVatIncRateDisplayFormat;
+                    lblShippingCost.Text = cart.FreightRateDisplayFormat;                    
                     lblInvoice.Text = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), cart.ThisCustomer.CurrencySetting);
-                    
+
 
                     string vatDisplay = string.Empty;
                     if (cart.VatEnabled)
@@ -656,8 +669,6 @@ namespace AspDotNetStorefrontControls
 
             }
         }
-
-
 
         #endregion
 
