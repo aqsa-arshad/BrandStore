@@ -530,6 +530,21 @@ namespace AspDotNetStorefront
                 BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
 
             }
+
+            //Blu Bucks used total  
+            if (BluBucksFundsUsedTotal > 0)
+            {
+                BluBucksFundsUsedTotal = Math.Round(BluBucksFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+            }
+            //End Blu Bucks Used Total
+
+            //Sof used total                  
+            if (SofFundsUsedTotal > 0)
+            {
+                SofFundsUsedTotal = Math.Round(SofFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+            }
+            //End Sof Used Total
+
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.DirectMailFunds), DirectMailFundsUsedTotal);
@@ -1089,7 +1104,7 @@ namespace AspDotNetStorefront
                         }
 
                         cart.SetItemQuantity(sRecID, quantity);
-
+                        
 
                         cart.SetItemNotes(sRecID, CommonLogic.CleanLevelOne(itemNotes));
                     }
@@ -1112,7 +1127,8 @@ namespace AspDotNetStorefront
             //String GLcode = String.IsNullOrEmpty(txtGLcode.Text) ? "" : txtGLcode.Text;
             try
             {
-                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode);
+                Decimal BluBucksPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks)).BudgetPercentageValue;
+                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode, BluBucksPercentage);
             }
             catch (Exception ex)
             {

@@ -8,12 +8,15 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using AspDotNetStorefrontCore;
 using AspDotNetStorefrontCore.ShippingCalculation;
+using Microsoft.Web.Services3.Referral;
+using Newtonsoft.Json;
 
 namespace AspDotNetStorefront
 {
@@ -22,16 +25,53 @@ namespace AspDotNetStorefront
     /// </summary>
     public partial class checkoutshipping : SkinBase
     {
+        /// <summary>
+        /// The cart
+        /// </summary>
         ShoppingCart cart = null;
+        /// <summary>
+        /// Any shipping methods found
+        /// </summary>
         bool AnyShippingMethodsFound = false;
+        /// <summary>
+        /// The shipping methods
+        /// </summary>
+        private ShippingMethodCollection ShippingMethods;
+        /// <summary>
+        /// The available fund value
+        /// </summary>
+        private decimal availableFundValue;
+        /// <summary>
+        /// The used fund value through shopping cart
+        /// </summary>
+        private decimal usedFundValueThroughShoppingCart;
+        /// <summary>
+        /// The is blu bucks
+        /// </summary>
+        public bool isBluBucks = false;
+        /// <summary>
+        /// The shipment charges paid
+        /// </summary>
+        private static String shipmentChargesPaid = string.Empty;
+        /// <summary>
+        /// The last shipping method value
+        /// </summary>
+        private decimal lastShippingMethodValue;
+        /// <summary>
+        /// The SQL
+        /// </summary>
+        String sql = string.Empty;
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init" /> event to initialize the page.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
-
-            ShippingMethodCollection shippingMethods = cart.GetShippingMethods(ThisCustomer.PrimaryShippingAddress);
+            ShippingMethods = cart.GetShippingMethods(ThisCustomer.PrimaryShippingAddress);
             //Sort the shipping methids according to display order            
-            string sql = "select Name, ShippingMethodID,DisplayOrder from ShippingMethod";
+            sql = "select Name, ShippingMethodID,DisplayOrder from ShippingMethod";
             using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
             {
                 dbconn.Open();
@@ -41,7 +81,7 @@ namespace AspDotNetStorefront
                     {
                         int DisplayOrder = Convert.ToInt32(DB.RSFieldInt(rs, "DisplayOrder"));
                         int ShippingMethodID = DB.RSFieldInt(rs, "ShippingMethodID");
-                        foreach (ShippingMethod method in shippingMethods)
+                        foreach (ShippingMethod method in ShippingMethods)
                         {
                             if (method.Id == ShippingMethodID)
                                 method.DisplayOrder = DisplayOrder;
@@ -49,14 +89,16 @@ namespace AspDotNetStorefront
                     }
                 }
             }
-            //end sorting
-            shippingMethods.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
-            if (shippingMethods.Count > 0)
+            ShippingMethods.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
+            //end sorting                  
+
+            if (ShippingMethods.Count > 0)
             {
-                ShippingMethod sm = shippingMethods.Find(x => x.Id == -1 || x.Id == -2);
-                if ((shippingMethods.Count == 1) && sm != null)
+                ShippingMethod sm = ShippingMethods.Find(x => x.Id == -1 || x.Id == -2);
+                if ((ShippingMethods.Count == 1) && sm != null)
                 {
                     Label1.Visible = false;
+                    lblshippingmethodnote.Visible = false;
                     btnContinueCheckout.Enabled = false;
                 }
                 else
@@ -69,10 +111,11 @@ namespace AspDotNetStorefront
             else
             {
                 Label1.Visible = false;
+                lblshippingmethodnote.Visible = false;
                 btnContinueCheckout.Enabled = false;
             }
-            InitializeShippingMethodDisplayFormat(shippingMethods);
-            ctrlShippingMethods.DataSource = shippingMethods;
+            InitializeShippingMethodDisplayFormat(ShippingMethods);
+            ctrlShippingMethods.DataSource = ShippingMethods;
             ctrlShippingMethods.DataBind();
 
             ctrlShoppingCart.DataSource = cart.CartItems;
@@ -84,12 +127,13 @@ namespace AspDotNetStorefront
             InitializeOrderOptionControl();
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
+
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
             {
                 pnlCBAAddressWidget.Visible = true;
                 litCBAAddressWidget.Text = new GatewayCheckoutByAmazon.CheckoutByAmazon().RenderAddressWidgetWithRedirect("CBAAddressWidgetContainer", "checkoutshipping.aspx", new Guid(ThisCustomer.CustomerGUID), 300, 200);
                 litCBAAddressWidgetInstruction.Text = "gw.checkoutbyamazon.display.4".StringResource();
-            }
+            }          
 
             base.OnInit(e);
         }
@@ -114,11 +158,20 @@ namespace AspDotNetStorefront
                 ctrlOrderOption.Visible = false;
             }
         }
+        /// <summary>
+        /// Handles the Click event of the btnback control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void btnback_Click(object sender, EventArgs e)
         {
             Response.Redirect("account.aspx?checkout=true");
         }
 
+        /// <summary>
+        /// Initializes the shipping method display format.
+        /// </summary>
+        /// <param name="shippingMethods">The shipping methods.</param>
         private void InitializeShippingMethodDisplayFormat(ShippingMethodCollection shippingMethods)
         {
             foreach (ShippingMethod shipMethod in shippingMethods)
@@ -147,6 +200,10 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Adds the vat details if applicable.
+        /// </summary>
+        /// <returns></returns>
         private string AddVatDetailsIfApplicable()
         {
             if (!AppLogic.AppConfigBool("VAT.Enabled"))
@@ -158,6 +215,11 @@ namespace AspDotNetStorefront
                 return " " + "setvatsetting.aspx.7".StringResource();
         }
 
+        /// <summary>
+        /// Adds the vat if applicable.
+        /// </summary>
+        /// <param name="freight">The freight.</param>
+        /// <returns></returns>
         private decimal AddVatIfApplicable(Decimal freight)
         {
             if (AppLogic.AppConfigBool("VAT.Enabled") && ThisCustomer.VATSettingReconciled == VATSettingEnum.ShowPricesInclusiveOfVAT)
@@ -167,6 +229,11 @@ namespace AspDotNetStorefront
             }
             return freight;
         }
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Response.CacheControl = "private";
@@ -291,6 +358,8 @@ namespace AspDotNetStorefront
 
             if (!this.IsPostBack)
             {
+                shipmentChargesPaid = string.Empty;
+
                 if (!AppLogic.AppConfigBool("AllowMultipleShippingAddressPerOrder") && CommonLogic.QueryStringCanBeDangerousContent("dontupdateid").Length == 0)
                 {
                     // force primary shipping address id to be active on all cart items (safety check):
@@ -305,6 +374,22 @@ namespace AspDotNetStorefront
                         Response.Redirect("checkoutshipping.aspx?dontupdateid=true");
                 }
                 InitializePageContent();
+                sql = String.Format("select ShipmentChargesPaid from dbo.ShoppingCart where ShoppingCartRecID={0} and CustomerID={1}", cart.CartItems.FirstOrDefault().ShoppingCartRecordID, ThisCustomer.CustomerID);
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+                {
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS(sql, dbconn))
+                    {
+                        if (rs.Read())
+                        {
+                            lastShippingMethodValue = DB.RSFieldDecimal(rs, "ShipmentChargesPaid");
+                        }
+                    }
+                }
+                if (!cart.ShippingIsFree)
+                {
+                    FundUpdate();
+                }
             }
             else
             {
@@ -318,12 +403,21 @@ namespace AspDotNetStorefront
             AppLogic.eventHandler("CheckoutShipping").CallEvent("&CheckoutShipping=true");
         }
 
-
+        /// <summary>
+        /// Handles the Change event of the ShippingCountry control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         public void ShippingCountry_Change(object sender, EventArgs e)
         {
             SetShippingStateList(ShippingCountry.SelectedValue);
         }
 
+        /// <summary>
+        /// Handles the OnClick event of the btnNewShipAddr control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         public void btnNewShipAddr_OnClick(object sender, System.EventArgs e)
         {
             Validate("shipping1");
@@ -368,6 +462,11 @@ namespace AspDotNetStorefront
 
         }
 
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the ddlChooseShippingAddr control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         public void ddlChooseShippingAddr_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             if (ddlChooseShippingAddr.SelectedValue != "0")
@@ -398,11 +497,19 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Handles the OnClick event of the lnkShowNewShipping control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         public void lnkShowNewShipping_OnClick(object sender, EventArgs e)
         {
             pnlNewShipAddr.Visible = !pnlNewShipAddr.Visible;
         }
 
+        /// <summary>
+        /// Initializes the content of the page.
+        /// </summary>
         private void InitializePageContent()
         {
             JSPopupRoutines.Text = AppLogic.GetJSPopupRoutines();
@@ -435,6 +542,7 @@ namespace AspDotNetStorefront
 
             if (cart.ShippingIsFree)
             {
+                lblshippingmethodnote.Visible = false;
                 pnlFreeShippingMsg.Visible = true;
                 String Reason = String.Empty;
                 if (cart.FreeShippingReason == Shipping.FreeShippingReasonEnum.AllDownloadItems)
@@ -555,11 +663,13 @@ namespace AspDotNetStorefront
             CartSummary.Text = cart.DisplaySummary(true, false, false, false, false);
 
             SetDebugInformation();
-
             if (AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout"))
                 ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(false);
         }
 
+        /// <summary>
+        /// Sets the debug information.
+        /// </summary>
         private void SetDebugInformation()
         {
             if ((AppLogic.AppConfigBool("RTShipping.DumpXMLOnCheckoutShippingPage") || AppLogic.AppConfigBool("RTShipping.DumpXMLOnCartPage")) && cart.ShipCalcID == Shipping.ShippingCalculationEnum.UseRealTimeRates)
@@ -604,6 +714,10 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Shippings the display.
+        /// </summary>
+        /// <param name="AnyShippingMethodsFound">if set to <c>true</c> [any shipping methods found].</param>
         private void ShippingDisplay(bool AnyShippingMethodsFound)
         {
             if (cart.CartAllowsShippingMethodSelection)
@@ -659,9 +773,36 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Processes the check out.
+        /// </summary>
         private void ProcessCheckOut()
         {
-
+            FundUpdate();
+            if (!ThisCustomer.IsAdminUser)
+            {
+                if (!string.IsNullOrEmpty(shipmentChargesPaid))
+                {
+                    if (isBluBucks)
+                    {
+                        sql =
+                            String.Format(
+                                "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
+                                Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
+                                    .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.BLUBucks);
+                        DB.ExecuteSQL(sql);
+                    }
+                    else
+                    {
+                        sql =
+                            String.Format(
+                                "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
+                                Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
+                                    .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.SOFFunds);
+                        DB.ExecuteSQL(sql);
+                    }
+                }
+            }
             String ShippingMethodIDFormField = string.Empty;
             bool hasSelected = ctrlShippingMethods.SelectedItem != null;
 
@@ -683,6 +824,7 @@ namespace AspDotNetStorefront
 
                 int ShippingMethodID = 0;
                 String ShippingMethod = String.Empty;
+                //if used fixed price rather then real time rates
                 if (cart.ShipCalcID != Shipping.ShippingCalculationEnum.UseRealTimeRates)
                 {
                     ShippingMethodID = Localization.ParseUSInt(ShippingMethodIDFormField);
@@ -705,10 +847,10 @@ namespace AspDotNetStorefront
                     ShippingMethod = string.Format(AppLogic.GetString("shoppingcart.aspx.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + " : {0}", cartFreeShippingReason);
                 }
 
-                String sql = string.Empty;
+
                 if (!cart.IsAllFreeShippingComponents() && !cart.ContainsRecurring())
                 {
-                    sql = String.Format("update dbo.ShoppingCart set ShippingMethodID={0}, ShippingMethod={1}, ShippingAddressID={4} where CustomerID={2} and CartType={3}", ShippingMethodID.ToString(), DB.SQuote(ShippingMethod), ThisCustomer.CustomerID.ToString(), ((int)CartTypeEnum.ShoppingCart).ToString(), ddlChooseShippingAddr.SelectedValue);
+                    sql = String.Format("update dbo.ShoppingCart set ShippingMethodID={0}, ShippingMethod={1}, ShippingAddressID={4}, ShipmentChargesPaid={5} where CustomerID={2} and CartType={3}", ShippingMethodID.ToString(), DB.SQuote(ShippingMethod), ThisCustomer.CustomerID.ToString(), ((int)CartTypeEnum.ShoppingCart).ToString(), ddlChooseShippingAddr.SelectedValue, shipmentChargesPaid);
                     DB.ExecuteSQL(sql);
                 }
                 else
@@ -751,6 +893,9 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Creates the ship address.
+        /// </summary>
         private void CreateShipAddress()
         {
             Address thisAddress = new Address();
@@ -790,6 +935,10 @@ namespace AspDotNetStorefront
             ShippingPhone.Text = "";
         }
 
+        /// <summary>
+        /// Sets the shipping state list.
+        /// </summary>
+        /// <param name="shippingCountry">The shipping country.</param>
         private void SetShippingStateList(string shippingCountry)
         {
             string sql = String.Empty;
@@ -821,12 +970,24 @@ namespace AspDotNetStorefront
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the btnContinueCheckout control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void btnContinueCheckout_Click(object sender, EventArgs e)
         {
             pnlErrorMsg.Visible = false;
             ProcessCheckOut();
         }
 
+        /// <summary>
+        /// Used to set the master page when using template switching or page-based templates
+        /// </summary>
+        /// <returns>
+        /// The name of the template to use.  To utilize this you must override OverrideTemplate
+        /// in a page that inherits from SkinBase where you're trying to change the master page
+        /// </returns>
         protected override string OverrideTemplate()
         {
             String MasterHome = AppLogic.HomeTemplate();
@@ -854,6 +1015,93 @@ namespace AspDotNetStorefront
             }
 
             return MasterHome;
+        }
+
+        /// <summary>
+        /// Saves the shipment charges paid.
+        /// </summary>
+        /// <param name="shipmentCharges">The shipment charges.</param>
+        [System.Web.Services.WebMethod]
+        public static void SaveShipmentChargesPaid(String shipmentCharges)
+        {
+            try
+            {
+                shipmentChargesPaid = shipmentCharges;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Update the remaining funds used for shipping.
+        /// </summary>
+        private void FundUpdate()
+        {
+            if (AnyShippingMethodsFound)
+            {
+                if (
+                    AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
+                        .AmountAvailable != 0 || (lastShippingMethodValue > 0 && ThisCustomer.CustomerLevelID == 3))
+                {
+                    isBluBucks = false;
+                    cbSOF.Visible = true;
+                    lblSOF.Visible = true;
+                    lblRemainingSOF.Visible = true;
+                    lblRemainingSOFCaption.Visible = true;
+
+                    availableFundValue =
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
+                            .AmountAvailable;
+                    usedFundValueThroughShoppingCart =
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
+                            .AmountUsed;
+                    if (lastShippingMethodValue > 0)
+                    {
+                        sql =
+                            string.Format(
+                                "update dbo.ShoppingCart set ShipmentChargesPaid={0} where CustomerID={1} and ShoppingCartRecID={2}",
+                                0, ThisCustomer.CustomerID, cart.CartItems.FirstOrDefault().ShoppingCartRecordID);
+                        DB.ExecuteSQL(sql);
+                        availableFundValue = availableFundValue + lastShippingMethodValue;
+                        usedFundValueThroughShoppingCart = usedFundValueThroughShoppingCart - lastShippingMethodValue;
+                        AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), Math.Round(usedFundValueThroughShoppingCart, 2));                       
+                    }
+                    lblRemainingSOF.Text = Math.Round(availableFundValue, 2).ToString();
+                    hdnRemainingFundValue.Text = Math.Round(availableFundValue, 2).ToString();
+                }
+                else if (
+                    AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.BLUBucks, false)
+                        .AmountAvailable != 0 || lastShippingMethodValue > 0)
+                {
+                    isBluBucks = true;
+                    cbBluBucks.Visible = true;
+                    lblBluBucks.Visible = true;
+                    lblRemainingBluBucks.Visible = true;
+                    lblRemainingBluBucksCaption.Visible = true;
+                    availableFundValue =
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.BLUBucks, false)
+                            .AmountAvailable;
+                    usedFundValueThroughShoppingCart =
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.BLUBucks, false)
+                            .AmountUsed;
+                    if (lastShippingMethodValue > 0)
+                    {
+                        sql =
+                            string.Format(
+                                "update dbo.ShoppingCart set ShipmentChargesPaid={0} where CustomerID={1} and ShoppingCartRecID={2}",
+                                0, ThisCustomer.CustomerID, cart.CartItems.FirstOrDefault().ShoppingCartRecordID);
+                        DB.ExecuteSQL(sql);
+                        availableFundValue = availableFundValue + lastShippingMethodValue;
+                        usedFundValueThroughShoppingCart = usedFundValueThroughShoppingCart - lastShippingMethodValue;
+                        AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), Math.Round(usedFundValueThroughShoppingCart, 2));
+                    }
+                    lblRemainingBluBucks.Text = Math.Round(availableFundValue, 2).ToString();
+                    hdnRemainingFundValue.Text = Math.Round(availableFundValue, 2).ToString();
+                }
+                hdnShippingMethod.Text = JsonConvert.SerializeObject(ShippingMethods);
+            }
         }
     }
 

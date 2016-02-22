@@ -806,7 +806,10 @@ namespace AspDotNetStorefrontCore
             Decimal sTotal = SubTotal(includeDiscount, false, true, true, true, false, 0, true, cic, ThisCustomer, OrderOptions);
             Decimal shTotal = ShippingTotal(includeDiscount, VATOn, cic, ThisCustomer, OrderOptions);
             Decimal tTotal = 0;
-            
+
+            if (cic != null && cic.Count > 0 && shTotal > 0)
+                shTotal = shTotal - cic.FirstOrDefault().ShipmentChargesPaid;
+
             if (IncludeTax)
                 tTotal = Prices.TaxTotal(ThisCustomer, cic, shTotal, OrderOptions);
 
@@ -829,7 +832,7 @@ namespace AspDotNetStorefrontCore
             // Shipping and Tax can never be discounted so it's added after discounts.
             orderTotal += Math.Round(shTotal, 2, MidpointRounding.AwayFromZero);
             orderTotal += Math.Round(tTotal, 2, MidpointRounding.AwayFromZero);
-
+            
             return orderTotal;
         }
         

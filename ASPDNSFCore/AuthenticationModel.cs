@@ -119,6 +119,7 @@ namespace AspDotNetStorefrontCore
                     return 0;
                 return Amount - AmountUsed; 
             }
+            set { AmountAvailable = value; }
         }
     }
 

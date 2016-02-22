@@ -61,7 +61,7 @@ namespace AspDotNetStorefrontControls
         protected override void CreateChildControls()
         {
             Controls.Clear();
-
+            
             IntializeControlsDefaultValues();
 
             /********************************/
@@ -87,7 +87,7 @@ namespace AspDotNetStorefrontControls
             //Controls.Add(AddLiteral("  </div>"));
 
             //SHIPPINGMETHODLIST
-            Controls.Add(AddLiteral("  <div class='form-group'>"));
+            Controls.Add(AddLiteral("  <div class='form-group margin-none'>"));
             if (rblShippingMethods.Items.Count > 0)
             {
                 if (rblShippingMethods.SelectedIndex == -1)

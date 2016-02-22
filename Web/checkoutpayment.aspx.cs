@@ -84,13 +84,14 @@ namespace AspDotNetStorefront
             if (ctrlPaymentMethod.PURCHASEORDERChecked)
             {
                 String PONumber = txtPO.Text.Trim();
-                ErrorMessage err1;
-                if (PONumber.Length == 0)
-                {
-                    hdnPOChecked.Text = "1";
-                    err1 = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
-                    Response.Redirect("checkoutpayment.aspx?errormsg=" + err1.MessageId);
-                }
+                hdnPOChecked.Text = "1";
+               // ErrorMessage err1;
+               // if (PONumber.Length == 0)
+              //  {
+                   
+                 //   err1 = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
+                   // Response.Redirect("checkoutpayment.aspx?errormsg=" + err1.MessageId);
+              //  }
             }
 
            
