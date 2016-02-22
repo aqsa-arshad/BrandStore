@@ -105,7 +105,7 @@
     $(function () {
         $("#EmailTextField").on("focusout", function () {
             var dest = $(this);
-            dest.val(jQuery.trim(dest.val()));
+            dest.val(jQuery.trim(dest.val().toLowerCase()));
             dest.val(dest.val().replace(/[ ]{2,}/, ' '));
         });
     });
