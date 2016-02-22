@@ -57,7 +57,7 @@
 
                 </asp:Panel>
 
-                <asp:Label ID="lbl1" runat="server" Text="<%$ Tokens:StringResource,choosepaymentmethod%>"></asp:Label>
+                <asp:Label ID="lbl1" ClientIDMode="Static" runat="server" Text="<%$ Tokens:StringResource,choosepaymentmethod%>"></asp:Label>
                 <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-view pull-left-md" Visible="true">
                     <div>
                         <aspdnsfc:PaymentMethod CssClass="payment-method" ID="ctrlPaymentMethod" runat="server"
@@ -364,6 +364,15 @@
 
             $("#divccpane1").unwrap();
             $("#divccpane2").unwrap();
+
+            //if order total is 0 then hide payment label
+            if ($('#pnlPaymentOptions').length <= 0) {
+                $("#lbl1").hide();
+            }
+            else {
+                $("#lbl1").show();
+            }
+
             //disable auto complete of po number text box field
             $("#txtPO").attr("autocomplete", "off");
 

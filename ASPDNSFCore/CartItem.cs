@@ -100,6 +100,7 @@ namespace AspDotNetStorefrontCore
         private Decimal m_BluBucksPercentageUsed;
         private String m_GLcode;
         private String m_FundName;
+        private Decimal m_ShipmentChargesPaid;
         private int m_Inventory;
 
 
@@ -217,6 +218,7 @@ namespace AspDotNetStorefrontCore
            m_GLcode = ci.GLcode;
            m_FundName = ci.FundName;
            m_Inventory = ci.Inventory;
+           m_ShipmentChargesPaid = ci.ShipmentChargesPaid;
         }
 
         #endregion
@@ -273,60 +275,132 @@ namespace AspDotNetStorefrontCore
             set { m_RecurringSubscriptionID = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the g lcode.
+        /// </summary>
+        /// <value>
+        /// The g lcode.
+        /// </value>
         public String GLcode
         {
             get { return m_GLcode; }
             set { m_GLcode = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the fund.
+        /// </summary>
+        /// <value>
+        /// The name of the fund.
+        /// </value>
         public String FundName
         {
             get { return m_FundName; }
             set { m_FundName = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the shipment charges paid.
+        /// </summary>
+        /// <value>
+        /// The shipment charges paid.
+        /// </value>
+        public Decimal ShipmentChargesPaid
+        {
+            get { return m_ShipmentChargesPaid; }
+            set { m_ShipmentChargesPaid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the product description.
+        /// </summary>
+        /// <value>
+        /// The product description.
+        /// </value>
         public String ProductDescription
         {
             get { return m_ProductDescription; }
             set { m_ProductDescription = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the blu buks used.
+        /// </summary>
+        /// <value>
+        /// The blu buks used.
+        /// </value>
         public Decimal BluBuksUsed
         {
             get { return m_BluBuksUsed; }
             set { m_BluBuksUsed = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the category fund used.
+        /// </summary>
+        /// <value>
+        /// The category fund used.
+        /// </value>
         public Decimal CategoryFundUsed
         {
             get { return m_pricewithCategoryFundUsed; }
             set { m_pricewithCategoryFundUsed = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the pricewith blu buks used.
+        /// </summary>
+        /// <value>
+        /// The pricewith blu buks used.
+        /// </value>
         public Decimal pricewithBluBuksUsed
         {
             get { return m_pricewithBluBuksUsed; }
             set { m_pricewithBluBuksUsed = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the pricewithategory fund used.
+        /// </summary>
+        /// <value>
+        /// The pricewithategory fund used.
+        /// </value>
         public Decimal pricewithategoryFundUsed
         {
             get { return m_CategoryFundUsed; }
             set { m_CategoryFundUsed = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the blu bucks percentage used.
+        /// </summary>
+        /// <value>
+        /// The blu bucks percentage used.
+        /// </value>
         public Decimal BluBucksPercentageUsed
         {
             get { return m_BluBucksPercentageUsed; }
             set { m_BluBucksPercentageUsed = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the fund identifier.
+        /// </summary>
+        /// <value>
+        /// The fund identifier.
+        /// </value>
         public int FundID
         {
             get { return m_FundID; }
             set { m_FundID = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the product category identifier.
+        /// </summary>
+        /// <value>
+        /// The product category identifier.
+        /// </value>
         public int ProductCategoryID
         {
             get { return m_ProductCategory; }

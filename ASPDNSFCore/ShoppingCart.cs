@@ -278,6 +278,14 @@ namespace AspDotNetStorefrontCore
                 return Localization.CurrencyStringForDisplayWithExchangeRate(dTotal, ThisCustomer.CurrencySetting);
         }
 
+        private decimal GetShippingTotalIncludingFunds(decimal ShippingTotal)
+        {
+            if (CartItems != null && CartItems.Count > 0 && ShippingTotal > 0)
+                return ShippingTotal - CartItems.FirstOrDefault().ShipmentChargesPaid;
+            else
+                return ShippingTotal;
+        }
+
         public decimal FreightRate
         {
             get { return ShippingTotal(true, false); }
@@ -1358,6 +1366,7 @@ namespace AspDotNetStorefrontCore
                         newItem.GLcode = DB.RSField(rs, "GLcode");
                         newItem.FundName = DB.RSField(rs, "FundName");
                         newItem.Inventory = DB.RSFieldInt(rs, "Inventory");
+                        newItem.ShipmentChargesPaid = DB.RSFieldDecimal(rs, "ShipmentChargesPaid");
                         // undocumented feature for custom job:
                         if (AppLogic.AppConfigBool("HidePriceModifiersInCart"))
                         {
@@ -2280,7 +2289,7 @@ namespace AspDotNetStorefrontCore
         /// <returns></returns>
         public Decimal ShippingTotal(bool includeDiscount, bool includeTax)
         {
-            return Prices.ShippingTotal(includeDiscount, includeTax, CartItems, ThisCustomer, OrderOptions);
+            return GetShippingTotalIncludingFunds(Prices.ShippingTotal(includeDiscount, includeTax, CartItems, ThisCustomer, OrderOptions));
         }
 
         /// <summary>
@@ -7153,7 +7162,7 @@ namespace AspDotNetStorefrontCore
         }
 
         //Added By Tayyab on 10-01-2016 to update fund used for item
-        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode)
+        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode, Decimal BluBucksPercentage)
         {
             m_CachedTotals.Clear();
             for (int i = 0; i < m_CartItems.Count; i++)
@@ -7166,6 +7175,7 @@ namespace AspDotNetStorefrontCore
                     ci.CategoryFundUsed = CategoryFundUsed;
                     ci.BluBuksUsed = BluBucksUsed;
                     ci.GLcode = GLcode;
+                    ci.BluBucksPercentageUsed = BluBucksPercentage;
                     m_CartItems[i] = ci;
                     break;
                 }
@@ -8559,7 +8569,7 @@ namespace AspDotNetStorefrontCore
                 tmpS.Append("</label>");
                 tmpS.AppendFormat(" <input maxLength=\"10\" class=\"form-control price-field\" name=\"Price_{0}_{1}\" id=\"Price_{0}_{1}\" value=\"" + Localization.CurrencyStringForGatewayWithoutExchangeRate(ProductPriceForEdit) + "\">", ProductID, VariantID);
                 tmpS.Append("<input type=\"hidden\" name=\"Price_vldt\" value=\"[req][number][blankalert=" + AppLogic.GetString("shoppingcart.cs.113", SkinID, LocaleSetting) + "][invalidalert=" + AppLogic.GetString("shoppingcart.cs.114", SkinID, LocaleSetting) + "]\">\n");
-            }            
+            }
 
             //Colors Alternative
             if (VariantStyle == VariantStyleEnum.RegularVariantsWithAttributes || VariantStyle == VariantStyleEnum.ERPWithRollupAttributes)
