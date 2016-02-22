@@ -69,6 +69,15 @@ namespace AspDotNetStorefront
         {
             ShoppingCart cart = new ShoppingCart(ThisCustomer.SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
             System.Collections.Generic.List<CustomerFund> CustomerFunds = AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, true);
+
+            Decimal BluBucksPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(FundType.BLUBucks)).BudgetPercentageValue;
+            CustomerFund BluBucksFund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.BLUBucks));
+            Decimal BluBucksAvailable = 0;
+            if (BluBucksFund != null)
+            {
+                 BluBucksAvailable = BluBucksFund.AmountAvailable;
+            }
+
             foreach (CartItem cItem in cart.CartItems.ToArrayList())
             {
                 String RecordID = cItem.ShoppingCartRecordID.ToString();
@@ -77,7 +86,7 @@ namespace AspDotNetStorefront
                 int Quantity = cItem.Quantity;
                 Decimal TotalPrice = Convert.ToDecimal(Productprice * Quantity);
 
-                Decimal BluBucksPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerLevelID, Convert.ToInt32(FundType.BLUBucks)).BudgetPercentageValue;
+                
 
                 //Apply Product Category Fund
                 CustomerFund CategoryFund = CustomerFunds.Find(x => x.FundID == FundID);
@@ -95,9 +104,9 @@ namespace AspDotNetStorefront
                         CategoryFundAmountAvailable = CategoryFundAmountAvailable - TotalPrice;
                         cItem.CategoryFundUsed = TotalPrice;
                         TotalPrice = 0;
-
+                       
                     }
-
+                    CustomerFunds.Find(x => x.FundID == FundID).AmountUsed =   CustomerFunds.Find(x => x.FundID == FundID).AmountUsed + cItem.CategoryFundUsed;
                 }
                 else
                 {
@@ -105,24 +114,25 @@ namespace AspDotNetStorefront
                     cItem.FundID = 0;
 
                 }
-                //Apply Product Category Fund
+                //End Apply Product Category Fund
 
                 //Apply BluBucks to this item based on available bucks and percentage ratio
-                CustomerFund BluBucksFund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.BLUBucks));
+                //CustomerFund BluBucksFund = CustomerFunds.Find(x => x.FundID == Convert.ToInt32(FundType.BLUBucks));
                 cItem.BluBucksPercentageUsed = BluBucksPercentage;
-                if (BluBucksFund != null)
-                {
-                    Decimal BluBucksAvailable = BluBucksFund.AmountAvailable;
+                if (BluBucksAvailable >0 )
+                {                   
                     Decimal amountTopaidbyBluBucks = Math.Round((TotalPrice * (BluBucksPercentage / 100)), 2);
 
                     if (BluBucksAvailable < amountTopaidbyBluBucks)
                     {
 
                         cItem.BluBuksUsed = BluBucksAvailable;
+                        BluBucksAvailable = 0;
                     }
                     else
                     {
                         cItem.BluBuksUsed = amountTopaidbyBluBucks;
+                        BluBucksAvailable = BluBucksAvailable - amountTopaidbyBluBucks;
                     }
 
                 }
