@@ -178,8 +178,11 @@ namespace AspDotNetStorefront
             try
             {
                 bool IsSFDCUser = false;
+                bool IsPurchaseOrder = false;
+                int MinThreshold = 0;
+
                 if (!string.IsNullOrEmpty(profile.sfid))
-                    IsSFDCUser = GetSFDCDealerUser(profile, profile.sfid);
+                    IsSFDCUser = GetSFDCDealerUser(profile, profile.sfid, ref IsPurchaseOrder, ref MinThreshold);
                 else
                     IsSFDCUser = GetSFDCInternalUser(profile, userName);
 
@@ -216,8 +219,8 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@ShippingAddressID", 0),
                                         new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@HasSubordinates", HasSubordinates(customerLevelID, profile.sfid)),
-                                        new SqlParameter("@IsPurchaseOrder", true),
-                                        new SqlParameter("@MinThreshold", 100),
+                                        new SqlParameter("@IsPurchaseOrder", IsPurchaseOrder),
+                                        new SqlParameter("@MinThreshold", MinThreshold),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -231,8 +234,8 @@ namespace AspDotNetStorefront
                                         new SqlParameter("@IsRegistered", 1), 
                                         new SqlParameter("@SFDCQueryParam", profile.sfid),
                                         new SqlParameter("@HasSubordinates", HasSubordinates(customerLevelID, profile.sfid)),
-                                        new SqlParameter("@IsPurchaseOrder", true),
-                                        new SqlParameter("@MinThreshold", 100),
+                                        new SqlParameter("@IsPurchaseOrder", IsPurchaseOrder),
+                                        new SqlParameter("@MinThreshold", MinThreshold),
                                         new SqlParameter("@IsAdmin", customerLevelID == (int)UserType.STOREADMINISTRATOR ? 1 : 0)
                                        };
                     ThisCustomer.UpdateCustomer(sqlParameter);
@@ -373,7 +376,7 @@ namespace AspDotNetStorefront
         /// </summary>
         /// <param name="profile">profile</param>
         /// <param name="sfid">sfid</param>
-        private static bool GetSFDCDealerUser(AspDotNetStorefrontCore.Profile profile, string sfid)
+        private static bool GetSFDCDealerUser(AspDotNetStorefrontCore.Profile profile, string sfid, ref bool IsPurchaseOrder, ref int MinThreshold)
         {
             bool flag = false;
             try
@@ -387,7 +390,8 @@ namespace AspDotNetStorefront
 
                     profile.firstName = contact.FirstName;
                     profile.lastName = contact.LastName;
-
+                    IsPurchaseOrder = Convert.ToBoolean(contact.Account.Brandstore_Invoicing__c);
+                    MinThreshold = Convert.ToInt32(contact.Account.Brandstore_Invoice_Minimum__c);
                     if (contact.Account.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
                             contact.Account.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
                             contact.Account.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
@@ -411,8 +415,8 @@ namespace AspDotNetStorefront
         /// <summary>
         /// Get SFDC Internal User Information by Email
         /// -- Search User in SFDC with username (Email)
-        /// ---- If User Found in SFDC: Search Budget in Employee_Budget__c in SFDC with ID
-        /// ---- If User Not Found in SFDC: Search Budget in Employee_Budget__c in SFDC with Email
+        /// ---- If User Found in SFDC: Search Budget in Brand_Store_Budget__c in SFDC with ID
+        /// ---- If User Not Found in SFDC: Search Budget in Brand_Store_Budget__c in SFDC with Email
         /// </summary>
         /// <param name="profile">profile</param>
         /// <param name="email">email</param>
@@ -793,16 +797,16 @@ namespace AspDotNetStorefront
                 QueryResult queryResult = new QueryResult();
                 if (QuerySFDC(query, ref queryResult))
                 {
-                    Employee_Budget__c updateEmployeeBudget = new Employee_Budget__c();
+                    Brand_Store_Budget__c updateEmployeeBudget = new Brand_Store_Budget__c();
 
                     foreach (CustomerFund customerFund in lstCustomerFund)
                     {
                         if (customerFund.FundID == (int)FundType.SOFFunds)
                         {
-                            Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
+                            Brand_Store_Budget__c employeeBudget = (Brand_Store_Budget__c)queryResult.records.FirstOrDefault();
                             updateEmployeeBudget.Id = employeeBudget.Id;
-                            updateEmployeeBudget.Budget__c = Convert.ToDouble(customerFund.Amount);
-                            updateEmployeeBudget.Budget__cSpecified = true;
+                            updateEmployeeBudget.Current_Balance__c = Convert.ToDouble(customerFund.Amount);
+                            updateEmployeeBudget.Current_Balance__cSpecified = true;
                         }
                     }
 
@@ -923,12 +927,12 @@ namespace AspDotNetStorefront
                 QueryResult queryResult = new QueryResult();
                 if (QuerySFDC(query, ref queryResult))
                 {
-                    Employee_Budget__c employeeBudget = (Employee_Budget__c)queryResult.records.FirstOrDefault();
+                    Brand_Store_Budget__c employeeBudget = (Brand_Store_Budget__c)queryResult.records.FirstOrDefault();
                     CustomerFund customerFund = GetCustomerFund(customerID, (int)FundType.SOFFunds, false);
                     if (customerFund.CustomerID == 0)
-                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Budget__c));
+                        AddCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Current_Balance__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Current_Balance__c));
                     else
-                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Budget__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Budget__c));
+                        UpdateCustomerFundAmount(customerID, (int)FundType.SOFFunds, Convert.ToDecimal(employeeBudget.Current_Balance__c) < 0 ? 0 : Convert.ToDecimal(employeeBudget.Current_Balance__c));
                 }
             }
             catch (Exception ex)
