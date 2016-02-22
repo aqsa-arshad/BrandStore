@@ -140,15 +140,20 @@ namespace AspDotNetStorefront
         private int GetProductFundID(int ProductID)
         {
             int FundID = 0;
-            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
+                FundID = (int)FundType.SOFFunds;
+            else
             {
-                dbconn.Open();
-                using (IDataReader rs = DB.GetRS(string.Format("select FundID from Product a with (NOLOCK) inner join (select a.ProductID, b.StoreID from Product a with (nolock) left join ProductStore b " +
-                                          "with (NOLOCK) on a.ProductID = b.ProductID) b on a.ProductID = b.ProductID where Deleted=0 and a.ProductID={0} and ({1}=0 or StoreID={2})", +
-                                          ProductID, CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowProductFiltering") == true, 1, 0), AppLogic.StoreID()), dbconn))
+                using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                 {
-
-                    FundID = DB.RSFieldInt(rs, "FundID");
+                    dbconn.Open();
+                    using (IDataReader rs = DB.GetRS(string.Format("select FundID from Product a with (NOLOCK) inner join (select a.ProductID, b.StoreID from Product a with (nolock) left join ProductStore b " +
+                                              "with (NOLOCK) on a.ProductID = b.ProductID) b on a.ProductID = b.ProductID where Deleted=0 and a.ProductID={0} and ({1}=0 or StoreID={2})", +
+                                              ProductID, CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowProductFiltering") == true, 1, 0), AppLogic.StoreID()), dbconn))
+                    {
+                        if (rs.Read())
+                            FundID = DB.RSFieldInt(rs, "FundID");
+                    }
                 }
             }
             return FundID;
