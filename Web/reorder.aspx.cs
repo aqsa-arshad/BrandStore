@@ -10,6 +10,7 @@ using System.Data;
 using System.Globalization;
 using System.Text;
 using AspDotNetStorefrontCore;
+using System.Data.SqlClient;
 
 namespace AspDotNetStorefront
 {
@@ -71,7 +72,7 @@ namespace AspDotNetStorefront
             foreach (CartItem cItem in cart.CartItems.ToArrayList())
             {
                 String RecordID = cItem.ShoppingCartRecordID.ToString();
-                int FundID = cItem.FundID;
+                int FundID = GetProductFundID(cItem.ProductID);//Get latest Fund ID of product , dont use fund id already assigned it may change
                 Decimal Productprice = cItem.Price;
                 int Quantity = cItem.Quantity;
                 Decimal TotalPrice = Convert.ToDecimal(Productprice * Quantity);
@@ -87,7 +88,7 @@ namespace AspDotNetStorefront
                     {
                         TotalPrice = TotalPrice - CategoryFundAmountAvailable;
                         cItem.CategoryFundUsed = CategoryFundAmountAvailable;
-                      
+
                     }
                     else
                     {
@@ -102,7 +103,7 @@ namespace AspDotNetStorefront
                 {
                     cItem.CategoryFundUsed = 0;
                     cItem.FundID = 0;
-                    
+
                 }
                 //Apply Product Category Fund
 
@@ -111,29 +112,49 @@ namespace AspDotNetStorefront
                 cItem.BluBucksPercentageUsed = BluBucksPercentage;
                 if (BluBucksFund != null)
                 {
-                    Decimal BluBucksAvailable=BluBucksFund.AmountAvailable;
-                    Decimal amountTopaidbyBluBucks = Math.Round((TotalPrice * (BluBucksPercentage / 100)),2);
+                    Decimal BluBucksAvailable = BluBucksFund.AmountAvailable;
+                    Decimal amountTopaidbyBluBucks = Math.Round((TotalPrice * (BluBucksPercentage / 100)), 2);
 
                     if (BluBucksAvailable < amountTopaidbyBluBucks)
                     {
-                        
+
                         cItem.BluBuksUsed = BluBucksAvailable;
                     }
                     else
                     {
                         cItem.BluBuksUsed = amountTopaidbyBluBucks;
                     }
-                    
+
                 }
                 else
                 {
                     cItem.BluBuksUsed = 0;
-                    
+
                 }
                 //End Apply BluBucks
 
                 cart.SetItemFundsUsed(cItem.ShoppingCartRecordID, cItem.CategoryFundUsed, cItem.BluBuksUsed, cItem.GLcode, BluBucksPercentage);
             }
         }
+
+        private int GetProductFundID(int ProductID)
+        {
+            int FundID = 0;
+            using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
+            {
+                dbconn.Open();
+                using (IDataReader rs = DB.GetRS(string.Format("select FundID from Product a with (NOLOCK) inner join (select a.ProductID, b.StoreID from Product a with (nolock) left join ProductStore b " +
+                                          "with (NOLOCK) on a.ProductID = b.ProductID) b on a.ProductID = b.ProductID where Deleted=0 and a.ProductID={0} and ({1}=0 or StoreID={2})", +
+                                          ProductID, CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowProductFiltering") == true, 1, 0), AppLogic.StoreID()), dbconn))
+                {
+
+                    FundID = DB.RSFieldInt(rs, "FundID");
+                }
+            }
+            return FundID;
+
+
+        }
+
     }
 }
