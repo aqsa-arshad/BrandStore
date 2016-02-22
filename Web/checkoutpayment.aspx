@@ -188,7 +188,7 @@
                                 Text="<%$ Tokens:StringResource, checkoutpo.aspx.4 %>"></asp:Label>
                             <div class="td-25-percent">
                                 <p class="item-space-right">
-                                    <asp:TextBox ID="txtPO" AutoCompleteType="Disabled" MaxLength="20" ClientIDMode="Static" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtPO" AutoCompleteType="Disabled" onpaste="return false" MaxLength="20" ClientIDMode="Static" runat="server"></asp:TextBox>
                                     <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtPO" runat="server" ErrorMessage="Special Characters are not allowed." ValidationExpression="^[0-9a-zA-Z-_\b]+$"></asp:RegularExpressionValidator>--%>
                                 </p>
                                 <div class="clearfix"></div>
@@ -401,7 +401,7 @@
 
         function EnableDisablePOOption() {
             var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
-
+          
             if (OrderTotal < parseFloat($("#hdnMinThreshHold").text())) {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").attr("Disabled", "Disabled");
             }
