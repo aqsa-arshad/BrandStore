@@ -325,24 +325,26 @@
                 var spproductcategoryfund = round($("#hdnProductFundAmountUsed").text().replace("$", ""),2);
                 spproductcategoryfund = (spproductcategoryfund);               
 
-                $("#sppriceforsalesrep").text("$" +ItemQuantity * ItemOriginalPrice);
+                $("#sppriceforsalesrep").text("$" +round(ItemQuantity * ItemOriginalPrice,2));
                  $("#spprice").text("$" +ItemQuantity * ItemOriginalPrice);
                 newpricetotal = $("#sppriceforsalesrep").text().replace("$", "");
                 var sofentered = ($("#txtproductcategoryfundusedforsalesrep").val());
 
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
                     $("#spprice").text("$" + (ItemQuantity) * (ItemOriginalPrice));
-                    var updatedprice = $("#spprice").text().replace("$", "") - $("#txtproductcategoryfundusedforsalesrep").val();
+                    var updatedprice = round($("#spprice").text().replace("$", ""),2) - round($("#txtproductcategoryfundusedforsalesrep").val(),2);
                     $("#spprice").text("$" + updatedprice.toFixed(2));
-                    $("#sppriceforsalesrep").text("$" + updatedprice.toFixed(2));
+                    $("#sppriceforsalesrep").text("$" + round(updatedprice.toFixed(2),2));
                     var ProductCategoryFundUsed = $("#txtproductcategoryfundusedforsalesrep").val();
                     var BluBucksUsed = 0;
                     return true;
                     //PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
                 }
                 else {
-                    var updatedprice = $("#spprice").text().replace("$", "")-$("#txtproductcategoryfundusedforsalesrep").val() ;//((ItemOriginalPrice * ItemQuantity) - round($("#hdnProductFundAmountUsed").val(),2));//$("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();               
-                  
+                   
+                    
+                    var updatedprice = round($("#spprice").text().replace("$", ""),2)-round($("#txtproductcategoryfundusedforsalesrep").val(),2) ;//((ItemOriginalPrice * ItemQuantity) - round($("#hdnProductFundAmountUsed").val(),2));//$("#spprice").text().replace("$", "") - $("#txtBluBuksUsed").val();               
+                   
                     $("#spprice").text("$" + round(updatedprice,2));                    
                     $("#sppriceforsalesrep").text("$" + round(updatedprice,2));
                     return false;
@@ -352,7 +354,7 @@
 
             function applySOFValidation(newpricetotal, sofentered, spproductcategoryfund) {
 
-                 if(spproductcategoryfund <=0)
+                if(spproductcategoryfund <=0)
                 {
                 $("#txtproductcategoryfundusedforsalesrep").val("0.00");
                   return true;
