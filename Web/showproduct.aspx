@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <%--End Region Open Pop Up for bucckts--%>
 
@@ -112,18 +112,18 @@
                     </div>
                     <p class="roman-black">Please indicate if this purchase uses specially allocated funds from your vice president. </p>
                     <div class="row form-group">
-                            <div class="col-xs-6 col-sm-4">
-                                <label class="roman-black">
-                                    YES:
-                                    <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" class="radio-btn-group" />
-                                </label>
-                            </div>
-                            <div class="col-xs-4 col-sm-4">
-                                <label class="roman-black">
-                                    NO:
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="roman-black">
+                                YES:
+                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioYes" value="option1" class="radio-btn-group" />
+                            </label>
+                        </div>
+                        <div class="col-xs-4 col-sm-4">
+                            <label class="roman-black">
+                                NO:
                                     <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" checked />
-                                </label>
-                            </div>
+                            </label>
+                        </div>
                     </div>
                     <p class="label-text">
                         <span class="roman-black">Total price using sales funds:</span>
@@ -961,14 +961,15 @@
 
  function ApplyValidation2(theForm) {
 
-                if ($("#Quantity_1_1").length <= 0) {
+                if ($("#Quantity_1_1").length <= 0)
+                 {
                     submitenabled(theForm);
                     return (true);
                 }
                
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
-                  //  alert("Please specify the quantity you want to add to your cart");
+                    //alert("Please specify the quantity you want to add to your cart");
                     $("#btnaddtocart").removeAttr("data-toggle", "modal");
                     $("#btnaddtocart").removeAttr("data-target", "#myModa2");
                     $("#btnaddtocart").removeAttr("data-target", "#myModal1");
@@ -976,120 +977,17 @@
                     submitenabled(theForm);
                     return (false);
 
-                }
-                if ($("#Size_1_1").length > 0) {
-                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    if (theForm.Size_1_1.selectedIndex < 1) {
-                       // alert("Please select a size.");
-                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
-                        theForm.Size_1_1.focus();
-                        submitenabled(theForm);
-                        return (false);
-                    }
-                }
-                if ($("#Color_1_1").length > 0) {
-                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    if (theForm.Color_1_1.selectedIndex < 1) {
-                       // alert("Please select a color.");
-                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
-                        theForm.Color_1_1.focus();
-                        submitenabled(theForm);
-                        return (false);
-                    }
-                }
+                }                              
                 if (inventoryArray.length <= 1) {
                     if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
-                      //  alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
+                        alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
                         theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
                         theForm.Quantity_1_1.focus();
                         $("#Quantity_1_1").trigger("focusout");                       
                         submitenabled(theForm);
                         return (false);
                     }
-                } else {
-                    //Shehriyar's Code Start                      
-                    var sel_color;
-                    if ($("#Color_1_1").length <= 0) {
-                        sel_color = "";
-                    } else {
-                        sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                        sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    }
-                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-
-                    $.ajax({
-                        type: "post",
-                        url: "showproduct.aspx/GetQuantity",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify({
-                            "color": sel_color,
-                            "size": sel_size,
-                            "lstInventories": inventoryArray
-                        }),
-                        dataType: "json",
-                        async: true,
-                        success: function (result) {
-                            if (result.d.toString() != '0') {
-                                $("#pInStock").show();
-                                $("#lblInStock").text(result.d);
-
-                                if (typeof (sel_size) == 'undefined') sel_size = '';
-                                if (typeof (sel_color) == 'undefined') sel_color = '';
-                                var j = sel_size.indexOf("[");
-                                if (j != -1) {
-                                    sel_size = Trim(sel_size.substring(0, j));
-                                }
-                                var i = sel_color.indexOf("[");
-                                if (i != -1) {
-                                    sel_color = Trim(sel_color.substring(0, i));
-                                }
-                                var sel_size_master = sel_size;
-                                var sel_color_master = sel_color;
-                                var sel_qty = theForm.Quantity_1_1.value;
-                                var sizecolorfound = 0;
-                                for (i = 0; i < board_1_1.length; i++) {
-                                    if (board_1_1[i][1] == sel_size_master && board_1_1[i][0] == sel_color_master) {
-                                        sizecolorfound = 1;
-                                        if (parseInt(sel_qty) > parseInt(board_1_1[i][2])) {
-                                            if (parseInt(board_1_1[i][2]) == 0) {
-                                                if (sel_color == '') sel_color = 'N/A';
-                                                if (sel_size == '') sel_size = 'N/A';
-                                                alert('Color: ' + sel_color + ', Size: ' + sel_size + ' is currently out of stock.\n\nPlease select another Color/Size combination.');
-                                                theForm.Quantity_1_1.value = board_1_1[i][2];
-                                                theForm.Quantity_1_1.focus();
-                                            } else {
-                                                if (sel_color == '') sel_color = 'N/A';
-                                                if (sel_size == '') sel_size = 'N/A';
-                                               // alert('Your quantity exceeds our inventory on hand. The maximum quantity that can be added for Color: ' + sel_color + ', Size: ' + sel_size + ' is ' + board_1_1[i][2] + '.\n\nPlease reduce your quantity, or select another Color/Size combination.');
-                                                theForm.Quantity_1_1.value = board_1_1[i][2];
-                                                theForm.Quantity_1_1.focus();
-                                            }
-                                            submitenabled(theForm);
-                                            return (false);
-                                        }
-                                    }
-                                }
-                                if (sizecolorfound == 0) {
-                                    if (sel_color == '') sel_color = 'N/A';
-                                    if (sel_size == '') sel_size = 'N/A';
-                                    //alert('Inventory Table Error - No Inventory Record Found For Color=[' + sel_color + '], Size=[' + sel_size + ']');
-                                    submitenabled(theForm);
-                                    return (false);
-                                }
-                            } else {
-                                $("#pOutofStock").hide();
-                            }
-                        }
-                    });
-                }
-                //End Code
+                }                
 
                 submitenabled(theForm);
                 return (true);
