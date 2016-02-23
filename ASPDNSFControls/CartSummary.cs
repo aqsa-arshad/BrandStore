@@ -482,7 +482,7 @@ namespace AspDotNetStorefrontControls
         /// </summary>
         /// <param name="cart">The shoppingcart instance</param>
         private void AssignDataSourceContentToControls(ShoppingCart cart)
-        {
+        {            
             if (DataSource != null && !cart.IsEmpty())
             {
                 //Set Total for each fund type used
@@ -505,14 +505,14 @@ namespace AspDotNetStorefrontControls
                 //End
 
                 //Blu Bucks used total
-                if (Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) > 0)
+                if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 4 || cart.ThisCustomer.CustomerLevelID == 5 || cart.ThisCustomer.CustomerLevelID == 6)                
                 {
                     lblBluBucksFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblBluBucksFundsUsedTotal.Text.Replace("$", "")) + cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2).ToString();
                 }
                 //End Blu Bucks Used Total
                
                 //Sof used total                  
-                if (Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) > 0)
+                else if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 3 || cart.ThisCustomer.CustomerLevelID == 7)
                 {
                     lblSofFundsUsedTotal.Text = " $" + Math.Round((Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) + cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2).ToString();
                 }

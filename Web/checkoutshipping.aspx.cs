@@ -1043,7 +1043,7 @@ namespace AspDotNetStorefront
             {
                 if (
                     AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
-                        .AmountAvailable != 0 || (lastShippingMethodValue > 0 && ThisCustomer.CustomerLevelID == 3))
+                        .AmountAvailable != 0 || (lastShippingMethodValue > 0 && (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)))
                 {
                     isBluBucks = false;
                     cbSOF.Visible = true;
