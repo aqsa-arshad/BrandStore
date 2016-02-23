@@ -531,20 +531,26 @@ namespace AspDotNetStorefront
                 BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
 
             }
-
-            //Blu Bucks used total  
-            if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 4 || cart.ThisCustomer.CustomerLevelID == 5 || cart.ThisCustomer.CustomerLevelID == 6)
+            if (cart != null && cart.CartItems.Count > 0)
             {
-                BluBucksFundsUsedTotal = Math.Round(BluBucksFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+                //Blu Bucks used total  
+                if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 4 ||
+                    cart.ThisCustomer.CustomerLevelID == 5 || cart.ThisCustomer.CustomerLevelID == 6)
+                {
+                    BluBucksFundsUsedTotal =
+                        Math.Round(BluBucksFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+                }
+                    //End Blu Bucks Used Total
+
+                    //Sof used total                  
+                else if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 3 ||
+                         cart.ThisCustomer.CustomerLevelID == 7)
+                {
+                    SofFundsUsedTotal =
+                        Math.Round(SofFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+                }
+                //End Sof Used Total
             }
-            //End Blu Bucks Used Total
-
-            //Sof used total                  
-            else if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 3 || cart.ThisCustomer.CustomerLevelID == 7)
-            {
-                SofFundsUsedTotal = Math.Round(SofFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
-            }            
-            //End Sof Used Total
 
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);

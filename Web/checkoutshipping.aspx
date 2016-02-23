@@ -265,7 +265,7 @@
             }
 
             $('[id*=ctrlShippingMethods] input').unbind().click(function (e) {
-                debugger;                
+                debugger;
                 availableFundValue = (parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2);
                 $("#hdnRemainingFundValue").text((parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2));
                 if ('<%=isBluBucks%>' == 'True') {
@@ -310,7 +310,7 @@
                     }
                 }
             } else {
-                if (isCheckBoxSelected == -1) {                    
+                if (isCheckBoxSelected == -1) {
                     $('#hdnShipmentChargesPaid').text(0);
                     previouslySelectedShippingMethodAmount = 0;
                     if ('<%=isBluBucks%>' == 'True') {
@@ -321,7 +321,6 @@
                 }
             }
         }
-
 
         function saveShipmentChargesPaid() {
             PageMethods.SaveShipmentChargesPaid($('#hdnShipmentChargesPaid').text());
