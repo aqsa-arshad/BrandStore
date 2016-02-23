@@ -779,27 +779,30 @@ namespace AspDotNetStorefront
         private void ProcessCheckOut()
         {
             FundUpdate();
-            if (!ThisCustomer.IsAdminUser)
+            if (cbBluBucks.Checked || cbSOF.Checked)
             {
-                if (!string.IsNullOrEmpty(shipmentChargesPaid))
+                if (!ThisCustomer.IsAdminUser)
                 {
-                    if (isBluBucks)
+                    if (!string.IsNullOrEmpty(shipmentChargesPaid))
                     {
-                        sql =
-                            String.Format(
-                                "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
-                                Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
-                                    .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.BLUBucks);
-                        DB.ExecuteSQL(sql);
-                    }
-                    else
-                    {
-                        sql =
-                            String.Format(
-                                "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
-                                Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
-                                    .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.SOFFunds);
-                        DB.ExecuteSQL(sql);
+                        if (isBluBucks)
+                        {
+                            sql =
+                                String.Format(
+                                    "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
+                                    Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
+                                        .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.BLUBucks);
+                            DB.ExecuteSQL(sql);
+                        }
+                        else
+                        {
+                            sql =
+                                String.Format(
+                                    "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
+                                    Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
+                                        .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.SOFFunds);
+                            DB.ExecuteSQL(sql);
+                        }
                     }
                 }
             }
