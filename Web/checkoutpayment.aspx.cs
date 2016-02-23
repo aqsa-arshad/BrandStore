@@ -272,7 +272,12 @@ namespace AspDotNetStorefront
             AppLogic.eventHandler("CheckoutPayment").CallEvent("&CheckoutPayment=true");
             // btnRequestEstimates_Click(null, null);
 
-
+            //if no payment required then call processpayment just to continue process
+            if(Page.IsPostBack)
+            {
+                if (NetTotal == 0 && ctrlPaymentMethod.CREDITCARDChecked == false && ctrlPaymentMethod.PURCHASEORDERChecked == false)
+                    ProcessPayment(AppLogic.ro_PMCreditCard);
+            }
         }
 
 
@@ -1653,7 +1658,7 @@ namespace AspDotNetStorefront
             //{
             //    err = new ErrorMessage(Server.HtmlEncode(AppLogic.GetString("checkoutpayment.aspx.21", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)));
             //    Response.Redirect("checkoutpayment.aspx?errormsg=" + err.MessageId);
-            //}
+            //}           
 
             if (RequireTerms && CommonLogic.FormCanBeDangerousContent("TermsAndConditionsRead") == "")
             {
