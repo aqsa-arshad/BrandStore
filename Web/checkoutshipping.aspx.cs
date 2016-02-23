@@ -787,6 +787,7 @@ namespace AspDotNetStorefront
                     {
                         if (isBluBucks)
                         {
+
                             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID,
                                 Convert.ToInt32(FundType.BLUBucks),
                                 Math.Round(
@@ -1056,7 +1057,7 @@ namespace AspDotNetStorefront
                             .AmountAvailable;
                     usedFundValueThroughShoppingCart =
                         AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.SOFFunds, false)
-                            .AmountUsed;                   
+                            .AmountUsed;
                     if (lastShippingMethodValue > 0)
                     {
                         sql =
@@ -1085,7 +1086,7 @@ namespace AspDotNetStorefront
                             .AmountAvailable;
                     usedFundValueThroughShoppingCart =
                         AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.BLUBucks, false)
-                            .AmountUsed;                    
+                            .AmountUsed;
                     if (lastShippingMethodValue > 0)
                     {
                         sql =
