@@ -794,7 +794,11 @@ namespace AspDotNetStorefront
             BillingAddressTemp.ClearCCInfo();
             BillingAddressTemp.UpdateDB();
             //End
-
+            EmailOrderReceipt(OrderNumber);
+            Response.Redirect("orderconfirmation.aspx?ordernumber=" + OrderNumber.ToString() + "&paymentmethod=" + Server.UrlEncode(PaymentMethod));
+        }
+        protected void EmailOrderReceipt(int OrderNumber)
+        {
             // email Order Receipt once order is done.
             try
             {
@@ -803,6 +807,9 @@ namespace AspDotNetStorefront
                 String lblDisplayFundsTotal = String.Empty;
                 String lblLiteratureFundsTotal = String.Empty;
                 String lblPOPFundsTotal = String.Empty;
+                String lblBluBucks = String.Empty;
+                decimal bluBucksUsed = 0;
+
                 List<decimal> lstFund = Enumerable.Repeat(0m, 7).ToList();
                 using (var conn = DB.dbConn())
                 {
@@ -825,7 +832,7 @@ namespace AspDotNetStorefront
                                     if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
                                     {
                                         lblSOFFundsTotal = "SOF Fund: ";
-                                        lblSOFFundsTotal =string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
                                     {
@@ -834,28 +841,38 @@ namespace AspDotNetStorefront
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
                                     {
-                                        lblDisplayFundsTotal="Display Funds: ";
+                                        lblDisplayFundsTotal = "Display Funds: ";
                                         lblDisplayFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
                                     {
-                                        lblLiteratureFundsTotal="Literature Funds: ";
+                                        lblLiteratureFundsTotal = "Literature Funds: ";
                                         lblLiteratureFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
                                     {
                                         lblPOPFundsTotal = "POP Funds: ";
-                                        lblPOPFundsTotal= string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        lblPOPFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                     }
                                 }
                             }
                         }
                     }
                 }
+                //get the Blu Bucks used for a perticular order number
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("select SUM(BluBucksUsed) from Orders_ShoppingCart where OrderNumber=" + OrderNumber, conn))
+                    {
+                        bluBucksUsed = Convert.ToDecimal(cmd.ExecuteScalar());
+                    }
+                }
+                lblBluBucks = Localization.CurrencyStringForDisplayWithExchangeRate(bluBucksUsed, ThisCustomer.CurrencySetting);
                 string invoiceFee = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), ThisCustomer.CurrencySetting);
                 String SubjectReceipt = String.Format(AppLogic.GetString("common.cs.2", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName", ThisCustomer.StoreID, true));
                 String PackageName = AppLogic.AppConfig("XmlPackage.OrderReceipt");
-                XmlPackage2 p = new XmlPackage2(PackageName, null, SkinID, String.Empty, "ordernumber=" + OrderNumber + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee); 
+                XmlPackage2 p = new XmlPackage2(PackageName, null, SkinID, String.Empty, "ordernumber=" + OrderNumber + "&BBCredit=" + lblBluBucks + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee);
                 String receiptBody = p.TransformString();
                 AppLogic.SendMail(SubjectReceipt, receiptBody + AppLogic.AppConfig("MailFooter"), true, AppLogic.AppConfig("ReceiptEMailFrom", ThisCustomer.StoreID, true), AppLogic.AppConfig("ReceiptEMailFromName", ThisCustomer.StoreID, true), ThisCustomer.EMail, String.Empty, String.Empty, AppLogic.MailServer());
             }
@@ -864,11 +881,8 @@ namespace AspDotNetStorefront
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
-            }
-
-
-            // end
-            Response.Redirect("orderconfirmation.aspx?ordernumber=" + OrderNumber.ToString() + "&paymentmethod=" + Server.UrlEncode(PaymentMethod));
+            }        
+        
         }
         protected override string OverrideTemplate()
         {
