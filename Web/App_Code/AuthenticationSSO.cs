@@ -326,10 +326,49 @@ namespace AspDotNetStorefront
             {
                 if (!string.IsNullOrEmpty(userType))
                 {
-                    string enumUserType = userType.Replace(" ", "").ToUpper();
-                    if (Enum.IsDefined(typeof(UserType), enumUserType))
+                    if (userType.Equals(AppLogic.GetString("BLU_UNLIMITED", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.BLUUNLIMITED.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
-                        return (int)Enum.Parse(typeof(UserType), enumUserType);
+                        return (int)UserType.BLUUNLIMITED;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("BLU_ELITE", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.BLUELITE.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.BLUELITE;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("BLU_PREMIER", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.BLUPREMIER.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.BLUPREMIER;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("BLU_AUTHORIZED", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.BLUAUTHORIZED.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.BLUAUTHORIZED;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("POTENTIAL", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.POTENTIAL.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.POTENTIAL;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("HOME_DEPOT", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.HOMEDEPOT.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.HOMEDEPOT;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("LOWES", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.LOWES.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.LOWES;
+                    }
+                    else if (userType.Equals(AppLogic.GetString("MENARDS", "en-US"), StringComparison.OrdinalIgnoreCase) || userType.Equals(UserType.MENARDS.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.MENARDS;
+                    }
+                    else if (userType.Equals(UserType.SALESREPS.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.SALESREPS;
+                    }
+                    else if (userType.Equals(UserType.INTERNAL.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (int)UserType.INTERNAL;
+                    }
+                    else
+                    {
+                        return (int)UserType.PUBLIC;
                     }
                 }
             }
@@ -392,13 +431,7 @@ namespace AspDotNetStorefront
                     profile.lastName = contact.LastName;
                     IsPurchaseOrder = Convert.ToBoolean(contact.Account.Brandstore_Invoicing__c);
                     MinThreshold = Convert.ToInt32(contact.Account.Brandstore_Invoice_Minimum__c);
-                    if (contact.Account.TrueBLUStatus__c.Equals("ELITE", StringComparison.InvariantCultureIgnoreCase) ||
-                            contact.Account.TrueBLUStatus__c.Equals("PREMIER", StringComparison.InvariantCultureIgnoreCase) ||
-                            contact.Account.TrueBLUStatus__c.Equals("AUTHORIZED", StringComparison.InvariantCultureIgnoreCase) ||
-                            contact.Account.TrueBLUStatus__c.Equals("UNLIMITED", StringComparison.InvariantCultureIgnoreCase))
-                        profile.userType = "BLU" + contact.Account.TrueBLUStatus__c;
-                    else
-                        profile.userType = contact.Account.TrueBLUStatus__c;
+                    profile.userType = contact.Account.TrueBLUStatus__c;
 
                     flag = true;
                 }

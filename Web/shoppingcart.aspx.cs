@@ -124,7 +124,8 @@ namespace AspDotNetStorefront
         int StateID = 0;
         string ZipCode = string.Empty;
 
-        protected void Page_Load(object sender, System.EventArgs e)        {
+        protected void Page_Load(object sender, System.EventArgs e)
+        {
 
             GetPercentageRatio(ThisCustomer.CustomerLevelID.ToString());
 
@@ -286,7 +287,7 @@ namespace AspDotNetStorefront
             hdnliteraturefundamount.Text = getfundamount(Convert.ToInt32(FundType.LiteratureFunds));
             hdnpopfundamount.Text = getfundamount(Convert.ToInt32(FundType.POPFunds));
             //end get all funds amount of customer          
-            hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();           
+            hdncustomerlevel.Text = ThisCustomer.CustomerLevelID.ToString();
 
 
 
@@ -397,18 +398,18 @@ namespace AspDotNetStorefront
             UpdateCart();
 
         }
-    
-        public  void  GetPercentageRatio(string CustomerLevelID)
-        {        
-            
+
+        public void GetPercentageRatio(string CustomerLevelID)
+        {
+
             hdnBudgetPercentageRation_Cat1.Text = GetRatio(CustomerLevelID, "1");
             hdnBudgetPercentageRation_Cat2.Text = GetRatio(CustomerLevelID, "2");
             hdnBudgetPercentageRation_Cat3.Text = GetRatio(CustomerLevelID, "3");
             hdnBudgetPercentageRation_Cat4.Text = GetRatio(CustomerLevelID, "4");
             hdnBudgetPercentageRation_Cat5.Text = GetRatio(CustomerLevelID, "5");
-            hdnBudgetPercentageRation_Cat6.Text = GetRatio(CustomerLevelID, "6");         
-            
-             
+            hdnBudgetPercentageRation_Cat6.Text = GetRatio(CustomerLevelID, "6");
+
+
         }
 
         public string GetRatio(string CustomerLevelID, string ProductCategoryID)
@@ -530,20 +531,26 @@ namespace AspDotNetStorefront
                 BluBucksFundsUsedTotal = Math.Round((Convert.ToDecimal(BluBucksFundsUsedTotal) + Convert.ToDecimal(cItem.pricewithBluBuksUsed)), 2);
 
             }
-
-            //Blu Bucks used total  
-            if (BluBucksFundsUsedTotal > 0)
+            if (cart != null && cart.CartItems.Count > 0)
             {
-                BluBucksFundsUsedTotal = Math.Round(BluBucksFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
-            }
-            //End Blu Bucks Used Total
+                //Blu Bucks used total  
+                if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 4 ||
+                    cart.ThisCustomer.CustomerLevelID == 5 || cart.ThisCustomer.CustomerLevelID == 6)
+                {
+                    BluBucksFundsUsedTotal =
+                        Math.Round(BluBucksFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+                }
+                    //End Blu Bucks Used Total
 
-            //Sof used total                  
-            if (SofFundsUsedTotal > 0)
-            {
-                SofFundsUsedTotal = Math.Round(SofFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+                    //Sof used total                  
+                else if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 3 ||
+                         cart.ThisCustomer.CustomerLevelID == 7)
+                {
+                    SofFundsUsedTotal =
+                        Math.Round(SofFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
+                }
+                //End Sof Used Total
             }
-            //End Sof Used Total
 
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks), BluBucksFundsUsedTotal);
             AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), SofFundsUsedTotal);
@@ -1089,7 +1096,7 @@ namespace AspDotNetStorefront
                 sRecID = ctrlShoppingCart.Items[i].ShoppingCartRecId;
                 itemNotes = ctrlShoppingCart.Items[i].ItemNotes;
 
-              
+
                 try
                 {
 
@@ -1104,7 +1111,7 @@ namespace AspDotNetStorefront
                         }
 
                         cart.SetItemQuantity(sRecID, quantity);
-                        
+
 
                         cart.SetItemNotes(sRecID, CommonLogic.CleanLevelOne(itemNotes));
                     }
