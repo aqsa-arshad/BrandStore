@@ -187,9 +187,9 @@
                     <div class="checkout-buttons pull-right pull-sm-no">
                         <asp:Button ID="btnContinueCheckout" runat="server"
                             Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
+                            OnClientClick="javascript: saveShipmentChargesPaid();" 
                             CssClass="btn btn-primary btn-block" Visible="false"
-                            OnClick="btnContinueCheckout_Click"
-                            OnClientClick="javascript: saveShipmentChargesPaid();" />
+                            OnClick="btnContinueCheckout_Click"/>
                     </div>
                 </div>
                 <div class="clearfix"></div>
