@@ -1631,59 +1631,60 @@ namespace AspDotNetStorefrontControls
                 this.Controls.Add(new LiteralControl("<div class='cc-images'>"));
                 List<String> cctypes = CardTypeDataSource.GetAcceptedCreditCardTypes(((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer);
 
-                foreach (string type in cctypes)
-                {
-                    if (type.Equals("AMEX", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_AmericanExpress.ImageUrl))
-                    {
-                        _imgCREDITCARD_AmericanExpress.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_AmericanExpress);
-                    }
-                    else if (type.Equals("DISCOVER", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Discover.ImageUrl))
-                    {
-                        _imgCREDITCARD_Discover.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_Discover);
-                    }
-                    else if (type.Equals("MasterCard", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_MasterCard.ImageUrl))
-                    {
-                        _imgCREDITCARD_MasterCard.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_MasterCard);
-                    }
-                    else if (type.Equals("VISA", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Visa.ImageUrl))
-                    {
-                        _imgCREDITCARD_Visa.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_Visa);
-                    }
-                    else if (type.Equals("Laser", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Laser.ImageUrl))
-                    {
-                        _imgCREDITCARD_Laser.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_Laser);
-                    }
-                    else if (type.Equals("Maestro", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Maestro.ImageUrl))
-                    {
-                        _imgCREDITCARD_Maestro.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_Maestro);
-                    }
-                    else if (type.Equals("Visa Debit", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaDebit.ImageUrl))
-                    {
-                        _imgCREDITCARD_VisaDebit.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_VisaDebit);
-                    }
-                    else if (type.Equals("Visa Electron", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaElectron.ImageUrl))
-                    {
-                        _imgCREDITCARD_VisaElectron.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_VisaElectron);
-                    }
-                    else if (type.Equals("JCB", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Jcb.ImageUrl))
-                    {
-                        _imgCREDITCARD_Jcb.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_Jcb);
-                    }
-                    else if (type.Equals("Diners", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Diners.ImageUrl))
-                    {
-                        _imgCREDITCARD_Diners.CssClass = "cc-image";
-                        this.Controls.Add(_imgCREDITCARD_Diners);
-                    }
-                }
+                //No Need to add immages on client request.but need to keep this code for future use.
+                //foreach (string type in cctypes)
+                //{
+                //    if (type.Equals("AMEX", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_AmericanExpress.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_AmericanExpress.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_AmericanExpress);
+                //    }
+                //    else if (type.Equals("DISCOVER", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Discover.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_Discover.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_Discover);
+                //    }
+                //    else if (type.Equals("MasterCard", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_MasterCard.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_MasterCard.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_MasterCard);
+                //    }
+                //    else if (type.Equals("VISA", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Visa.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_Visa.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_Visa);
+                //    }
+                //    else if (type.Equals("Laser", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Laser.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_Laser.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_Laser);
+                //    }
+                //    else if (type.Equals("Maestro", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Maestro.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_Maestro.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_Maestro);
+                //    }
+                //    else if (type.Equals("Visa Debit", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaDebit.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_VisaDebit.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_VisaDebit);
+                //    }
+                //    else if (type.Equals("Visa Electron", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_VisaElectron.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_VisaElectron.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_VisaElectron);
+                //    }
+                //    else if (type.Equals("JCB", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Jcb.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_Jcb.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_Jcb);
+                //    }
+                //    else if (type.Equals("Diners", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(_imgCREDITCARD_Diners.ImageUrl))
+                //    {
+                //        _imgCREDITCARD_Diners.CssClass = "cc-image";
+                //        this.Controls.Add(_imgCREDITCARD_Diners);
+                //    }
+                //}
                 this.Controls.Add(new LiteralControl("</div>"));
                 this.Controls.Add(new LiteralControl("</div>"));
                 this.Controls.Add(new LiteralControl("<div class='form-group'>"));
