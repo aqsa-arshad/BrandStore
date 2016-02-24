@@ -133,7 +133,7 @@ namespace AspDotNetStorefront
                 pnlCBAAddressWidget.Visible = true;
                 litCBAAddressWidget.Text = new GatewayCheckoutByAmazon.CheckoutByAmazon().RenderAddressWidgetWithRedirect("CBAAddressWidgetContainer", "checkoutshipping.aspx", new Guid(ThisCustomer.CustomerGUID), 300, 200);
                 litCBAAddressWidgetInstruction.Text = "gw.checkoutbyamazon.display.4".StringResource();
-            }          
+            }
 
             base.OnInit(e);
         }
@@ -779,30 +779,31 @@ namespace AspDotNetStorefront
         private void ProcessCheckOut()
         {
             FundUpdate();
-            if (!ThisCustomer.IsAdminUser)
+            if (cbBluBucks.Checked || cbSOF.Checked)
             {
-                if (!string.IsNullOrEmpty(shipmentChargesPaid))
+                if (!ThisCustomer.IsAdminUser)
                 {
-                    if (isBluBucks)
+                    if (!string.IsNullOrEmpty(shipmentChargesPaid))
                     {
-                        sql =
-                            String.Format(
-                                "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
-                                Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
-                                    .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.BLUBucks);
-                        DB.ExecuteSQL(sql);
-                    }
-                    else
-                    {
-                        sql =
-                            String.Format(
-                                "update dbo.CustomerFund set AmountUsed={0} where CustomerID={1} and FundID={2}",
-                                Math.Round(usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2)
-                                    .ToString(), ThisCustomer.CustomerID.ToString(), (int)FundType.SOFFunds);
-                        DB.ExecuteSQL(sql);
+                        if (isBluBucks)
+                        {
+
+                            AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID,
+                                Convert.ToInt32(FundType.BLUBucks),
+                                Math.Round(
+                                    usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2));
+                        }
+                        else
+                        {
+                            AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID,
+                                Convert.ToInt32(FundType.SOFFunds),
+                                Math.Round(
+                                    usedFundValueThroughShoppingCart + Convert.ToDecimal(shipmentChargesPaid), 2));
+                        }
                     }
                 }
             }
+
             String ShippingMethodIDFormField = string.Empty;
             bool hasSelected = ctrlShippingMethods.SelectedItem != null;
 
@@ -1042,7 +1043,7 @@ namespace AspDotNetStorefront
             if (AnyShippingMethodsFound)
             {
                 if (
-                    AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
+                    AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.SOFFunds, false)
                         .AmountAvailable != 0 || (lastShippingMethodValue > 0 && (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)))
                 {
                     isBluBucks = false;
@@ -1052,10 +1053,10 @@ namespace AspDotNetStorefront
                     lblRemainingSOFCaption.Visible = true;
 
                     availableFundValue =
-                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.SOFFunds, false)
                             .AmountAvailable;
                     usedFundValueThroughShoppingCart =
-                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.SOFFunds, false)
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.SOFFunds, false)
                             .AmountUsed;
                     if (lastShippingMethodValue > 0)
                     {
@@ -1066,13 +1067,13 @@ namespace AspDotNetStorefront
                         DB.ExecuteSQL(sql);
                         availableFundValue = availableFundValue + lastShippingMethodValue;
                         usedFundValueThroughShoppingCart = usedFundValueThroughShoppingCart - lastShippingMethodValue;
-                        AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), Math.Round(usedFundValueThroughShoppingCart, 2));                       
+                        AuthenticationSSO.UpdateCustomerFundAmountUsed(ThisCustomer.CustomerID, Convert.ToInt32(FundType.SOFFunds), Math.Round(usedFundValueThroughShoppingCart, 2));
                     }
                     lblRemainingSOF.Text = Math.Round(availableFundValue, 2).ToString();
                     hdnRemainingFundValue.Text = Math.Round(availableFundValue, 2).ToString();
                 }
                 else if (
-                    AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.BLUBucks, false)
+                    AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.BLUBucks, false)
                         .AmountAvailable != 0 || lastShippingMethodValue > 0)
                 {
                     isBluBucks = true;
@@ -1081,10 +1082,10 @@ namespace AspDotNetStorefront
                     lblRemainingBluBucks.Visible = true;
                     lblRemainingBluBucksCaption.Visible = true;
                     availableFundValue =
-                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.BLUBucks, false)
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.BLUBucks, false)
                             .AmountAvailable;
                     usedFundValueThroughShoppingCart =
-                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int) FundType.BLUBucks, false)
+                        AuthenticationSSO.GetCustomerFund(ThisCustomer.CustomerID, (int)FundType.BLUBucks, false)
                             .AmountUsed;
                     if (lastShippingMethodValue > 0)
                     {

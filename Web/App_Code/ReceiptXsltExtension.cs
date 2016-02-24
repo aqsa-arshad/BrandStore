@@ -54,7 +54,10 @@ public class ReceiptXsltExtension : XSLTExtensionBase
     {
         return FormatCurrencyWithoutCurrencyCode(sCurrencyValue, ThisCustomer.CurrencySetting);
     }
-
+    public virtual string WCurrencyCode(string sCurrencyValue)
+    {
+        return FormatCurrencyWithoutCurrencyCode(sCurrencyValue, ThisCustomer.CurrencySetting);
+    }
     /// <summary>
     /// Format the currency value into it's localized currency pattern
     /// </summary>
@@ -551,18 +554,56 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             bool isAPack = XmlCommon.XmlFieldBool(lineItemNode, "IsAPack");
 
             int quantity = 1;
-			int.TryParse(XmlCommon.XmlField(lineItemNode, "Quantity"), out quantity);
+            int.TryParse(XmlCommon.XmlField(lineItemNode, "Quantity"), out quantity);
 
-			decimal price = 0;
-			Decimal.TryParse(XmlCommon.XmlField(lineItemNode, "OrderedProductRegularPrice"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out price);
+            decimal price = 0;
+            Decimal.TryParse(XmlCommon.XmlField(lineItemNode, "OrderedProductRegularPrice"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out price);
 
-			decimal orderedExtendedPrice = 0;
-			Decimal.TryParse(XmlCommon.XmlField(lineItemNode, "OrderedProductPrice"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out orderedExtendedPrice);
+            decimal orderedExtendedPrice = 0;
+            Decimal.TryParse(XmlCommon.XmlField(lineItemNode, "OrderedProductPrice"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out orderedExtendedPrice);
 
-			decimal taxRate = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "TaxRate"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+            decimal taxRate = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "TaxRate"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
 
             decimal vatAmount = decimal.Zero;
             decimal extendedVatAmount = decimal.Zero;
+
+            int CategoryFundType = 0;
+            CategoryFundType = int.Parse(XmlCommon.XmlField(lineItemNode, "CategoryFundType"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+            decimal CreditPrice = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "CreditPrice"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+            decimal BLuBucksUsed = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "BluBucksUsed"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+            decimal CategoryFundsUsed = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "CategoryFundUsed"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+            String CreditFundUsedName = String.Empty;
+            decimal CreditFundUsed = decimal.Zero;
+            if (CategoryFundType == (int)FundType.BLUBucks)
+            {
+                CreditFundUsedName = "BLU™ Bucks Discount: "; 
+                CreditFundUsed = BLuBucksUsed;
+            }
+            else if (CategoryFundType == (int)FundType.SOFFunds)
+            {
+                CreditFundUsed = CategoryFundsUsed;
+                CreditFundUsedName = "Sales Funds Discount: ";
+            }
+            else if (CategoryFundType == (int)FundType.DirectMailFunds)
+            {
+                CreditFundUsed = CategoryFundsUsed;
+                CreditFundUsedName = "Direct Mail Funds Discount: ";
+            }
+            else if (CategoryFundType == (int)FundType.DisplayFunds)
+            {
+                CreditFundUsed = CategoryFundsUsed;
+                CreditFundUsedName = "Display Funds Discount: ";
+            }
+            else if (CategoryFundType == (int)FundType.LiteratureFunds)
+            {
+                CreditFundUsed = CategoryFundsUsed;
+                CreditFundUsedName = "Literature Funds Discount: ";
+            }
+            else if (CategoryFundType == (int)FundType.POPFunds)
+            {
+                CreditFundUsed = CategoryFundsUsed;
+                CreditFundUsedName = "POP Funds Discount: ";
+            }
 
             bool applyVat = AppLogic.AppConfigBool("VAT.Enabled") == true &&
                             XmlCommon.XmlFieldBool(orderInfoNode, "LevelHasNoTax") == false &&
@@ -589,10 +630,10 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             }
             // let's save these as decimal values, leave out formatting on a later call
             XmlNode vatAmountNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "VatAmount", string.Empty);
-			vatAmountNode.InnerText = XmlCommon.XmlEncode(vatAmount.ToString(CultureInfo.InvariantCulture));
+            vatAmountNode.InnerText = XmlCommon.XmlEncode(vatAmount.ToString(CultureInfo.InvariantCulture));
 
             XmlNode extVatAmountNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "ExtVatAmount", string.Empty);
-			extVatAmountNode.InnerText = XmlCommon.XmlEncode(extendedVatAmount.ToString(CultureInfo.InvariantCulture));
+            extVatAmountNode.InnerText = XmlCommon.XmlEncode(extendedVatAmount.ToString(CultureInfo.InvariantCulture));
 
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(vatAmountNode, lineItemNode.LastChild);
@@ -634,18 +675,18 @@ public class ReceiptXsltExtension : XSLTExtensionBase
 
             // let's save these as decimal values, leave out formatting on a later call
             XmlNode extRegularPriceNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "ExtendedRegularPrice", string.Empty);
-			extRegularPriceNode.InnerText = XmlCommon.XmlEncode(regularExtendedPrice.ToString(CultureInfo.InvariantCulture));
+            extRegularPriceNode.InnerText = XmlCommon.XmlEncode(regularExtendedPrice.ToString(CultureInfo.InvariantCulture));
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(extRegularPriceNode, lineItemNode.LastChild);
 
             XmlNode discountNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "DiscountAmount", string.Empty);
-			discountNode.InnerText = XmlCommon.XmlEncode(discount.ToString(CultureInfo.InvariantCulture));
+            discountNode.InnerText = XmlCommon.XmlEncode(discount.ToString(CultureInfo.InvariantCulture));
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(discountNode, lineItemNode.LastChild);
-            
+
             // price column
             XmlNode priceNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "Price", string.Empty);
-			priceNode.InnerText = XmlCommon.XmlEncode(price.ToString(CultureInfo.InvariantCulture));
+            priceNode.InnerText = XmlCommon.XmlEncode(price.ToString(CultureInfo.InvariantCulture));
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(priceNode, lineItemNode.LastChild);
 
@@ -655,14 +696,32 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             lineItemNode.InsertAfter(displayPriceNode, lineItemNode.LastChild);
 
             XmlNode displayExtPriceNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "DisplayExtPrice", string.Empty);
-			displayExtPriceNode.InnerText = XmlCommon.XmlEncode(displayExtPrice.ToString(CultureInfo.InvariantCulture));
+            displayExtPriceNode.InnerText = XmlCommon.XmlEncode(displayExtPrice.ToString(CultureInfo.InvariantCulture));
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(displayExtPriceNode, lineItemNode.LastChild);
 
-            XmlNode discountWithVATNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "DiscountWithVAT", string.Empty);
-			discountWithVATNode.InnerText = XmlCommon.XmlEncode((displayPrice - displayExtPrice).ToString(CultureInfo.InvariantCulture));
+            // Funds used
+            XmlNode displayCreditUsedNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "CreditFundUsed", string.Empty);
+            displayCreditUsedNode.InnerText = XmlCommon.XmlEncode(CreditFundUsed.ToString(CultureInfo.InvariantCulture));
             // insert these nodes on the bottom
-            lineItemNode.InsertAfter(discountWithVATNode, lineItemNode.LastChild);  
+            lineItemNode.InsertAfter(displayCreditUsedNode, lineItemNode.LastChild);
+
+            XmlNode CreditFundUsedNameNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "CreditFundUsedName", string.Empty);
+            CreditFundUsedNameNode.InnerText = XmlCommon.XmlEncode(CreditFundUsedName.ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(CreditFundUsedNameNode, lineItemNode.LastChild);
+
+            // credit price
+            XmlNode displayCreditPriceNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "CreditPrice", string.Empty);
+            displayCreditPriceNode.InnerText = XmlCommon.XmlEncode(CreditPrice.ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(displayCreditPriceNode, lineItemNode.LastChild);
+
+            
+            XmlNode discountWithVATNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "DiscountWithVAT", string.Empty);
+            discountWithVATNode.InnerText = XmlCommon.XmlEncode((displayPrice - displayExtPrice).ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(discountWithVATNode, lineItemNode.LastChild);
 
             // store the line item discounts
             allLineItemDiscounts += XmlCommon.XmlFieldNativeDecimal(lineItemNode, "DiscountAmount");
@@ -674,7 +733,7 @@ public class ReceiptXsltExtension : XSLTExtensionBase
         hasLineItemDiscounts = allLineItemDiscounts > decimal.Zero;
 
         XmlNode hasLineItemDiscountsNode = orderInfoNode.OwnerDocument.CreateNode(XmlNodeType.Element, "HasLineItemDiscounts", string.Empty);
-		hasLineItemDiscountsNode.InnerText = XmlCommon.XmlEncode(hasLineItemDiscounts.ToString(CultureInfo.InvariantCulture));
+        hasLineItemDiscountsNode.InnerText = XmlCommon.XmlEncode(hasLineItemDiscounts.ToString(CultureInfo.InvariantCulture));
         orderInfoNode.InsertAfter(hasLineItemDiscountsNode, orderInfoNode.LastChild);
     }
     #endregion
@@ -838,7 +897,7 @@ public class ReceiptXsltExtension : XSLTExtensionBase
     /// </summary>
     /// <param name="compareTo">The string to compare and match length with</param>
     /// <param name="compareWith">The string to pad</param>
-	/// <param name="padding">The padding character string</param>
+    /// <param name="padding">The padding character string</param>
     /// <returns>The padded character</returns>
     public string PadWithCompare(string compareTo, string compareWith, string padding)
     {
@@ -866,7 +925,7 @@ public class ReceiptXsltExtension : XSLTExtensionBase
     /// <param name="s2">Input parameter 2</param>
     /// <returns></returns>
     public bool StringContains(string s1, string s2)
-    {        
+    {
         return s1.IndexOf(s2, StringComparison.InvariantCultureIgnoreCase) >= 0;
     }
     #endregion
