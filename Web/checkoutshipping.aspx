@@ -158,9 +158,9 @@
                         <tbody>
                             <tr>
                                 <td width="20px">
-                                    <input type="checkbox" id="cbBluBucks" runat="server" visible="False" autopostback="false" />
+                                    <input type="checkbox" clientidmode="Static" id="cbBluBucks" runat="server" visible="False" autopostback="false" />
 
-                                    <input type="checkbox" id="cbSOF" runat="server" visible="False" autopostback="false" />
+                                    <input type="checkbox" clientidmode="Static" id="cbSOF" runat="server" visible="False" autopostback="false" />
                                 </td>
                                 <td>
                                     <asp:Label runat="server" ID="lblBluBucks" Text="Use your BLU Bucks™ to pay for shipping costs" Visible="False" ClientIDMode="Static"></asp:Label>
@@ -185,11 +185,10 @@
                     </div>
 
                     <div class="checkout-buttons pull-right pull-sm-no">
-                        <asp:Button ID="btnContinueCheckout" runat="server"
+                        <asp:Button ID="btnContinueCheckout" runat="server" 
                             Text="<%$ Tokens:StringResource,checkoutshipping.aspx.13 %>"
-                            OnClientClick="javascript: saveShipmentChargesPaid();" 
                             CssClass="btn btn-primary btn-block" Visible="false"
-                            OnClick="btnContinueCheckout_Click"/>
+                            OnClientClick="saveShipmentChargesPaid()" OnClick="btnContinueCheckout_Click"/>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -258,10 +257,10 @@
         $(document).ready(function () {
             debugger;
             if ('<%=isBluBucks%>' == 'True') {
-                CalculateShippingCost(ctl00_PageContent_cbBluBucks);
+                CalculateShippingCost('cbBluBucks');
             }
             else {
-                CalculateShippingCost(ctl00_PageContent_cbSOF);
+                CalculateShippingCost("cbSOF");
             }
 
             $('[id*=ctrlShippingMethods] input').unbind().click(function (e) {
@@ -269,17 +268,18 @@
                 availableFundValue = (parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2);
                 $("#hdnRemainingFundValue").text((parseFloat($("#hdnRemainingFundValue").text()) + previouslySelectedShippingMethodAmount).toFixed(2));
                 if ('<%=isBluBucks%>' == 'True') {
-                    CalculateShippingCost(ctl00_PageContent_cbBluBucks);
+                    CalculateShippingCost('cbBluBucks');
                 }
                 else {
-                    CalculateShippingCost(ctl00_PageContent_cbSOF);
+                    CalculateShippingCost("cbSOF");
                 }
             });
         });
 
         function CalculateShippingCost(checkBoxName) {
             debugger;
-            if (checkBoxName.checked) {
+            checkBoxName = "#" + checkBoxName;            
+            if ($(checkBoxName).is(':checked')) {
                 isCheckBoxSelected = -1;
                 var lstShippingMethod = $.parseJSON($("#hdnShippingMethod").text());
                 var shippingVal = $('[id*=ctrlShippingMethods]').find('input:checked').val();
@@ -323,7 +323,20 @@
         }
 
         function saveShipmentChargesPaid() {
-            PageMethods.SaveShipmentChargesPaid($('#hdnShipmentChargesPaid').text());
+            $.ajax({
+                type: "post",
+                url: "checkoutshipping.aspx/SaveShipmentChargesPaid",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    "shipmentCharges": $('#hdnShipmentChargesPaid').text()                    
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {                    
+                },
+                error: function (result) {                    
+                },
+            });
         }
 
     </script>

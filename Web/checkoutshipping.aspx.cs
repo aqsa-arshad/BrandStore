@@ -851,7 +851,12 @@ namespace AspDotNetStorefront
 
                 if (!cart.IsAllFreeShippingComponents() && !cart.ContainsRecurring())
                 {
-                    sql = String.Format("update dbo.ShoppingCart set ShippingMethodID={0}, ShippingMethod={1}, ShippingAddressID={4}, ShipmentChargesPaid={5} where CustomerID={2} and CartType={3}", ShippingMethodID.ToString(), DB.SQuote(ShippingMethod), ThisCustomer.CustomerID.ToString(), ((int)CartTypeEnum.ShoppingCart).ToString(), ddlChooseShippingAddr.SelectedValue, shipmentChargesPaid);
+                    sql =
+                        String.Format(
+                            "update dbo.ShoppingCart set ShippingMethodID={0}, ShippingMethod={1}, ShippingAddressID={4}, ShipmentChargesPaid={5} where CustomerID={2} and CartType={3}",
+                            ShippingMethodID.ToString(), DB.SQuote(ShippingMethod), ThisCustomer.CustomerID.ToString(),
+                            ((int) CartTypeEnum.ShoppingCart).ToString(), ddlChooseShippingAddr.SelectedValue,
+                            string.IsNullOrEmpty(shipmentChargesPaid) ? "0" : shipmentChargesPaid);
                     DB.ExecuteSQL(sql);
                 }
                 else
@@ -1022,7 +1027,7 @@ namespace AspDotNetStorefront
         /// Saves the shipment charges paid.
         /// </summary>
         /// <param name="shipmentCharges">The shipment charges.</param>
-        [System.Web.Services.WebMethod]
+        [System.Web.Services.WebMethod()]
         public static void SaveShipmentChargesPaid(String shipmentCharges)
         {
             try
