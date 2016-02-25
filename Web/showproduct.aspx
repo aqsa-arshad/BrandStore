@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <%--End Region Open Pop Up for bucckts--%>
 
@@ -112,18 +112,18 @@
                     </div>
                     <p class="roman-black">Please indicate if this purchase uses specially allocated funds from your vice president. </p>
                     <div class="row form-group">
-                            <div class="col-xs-6 col-sm-4">
-                                <label class="roman-black">
-                                    YES:
-                                    <input type="radio" runat="server"  name="optionsRadios" id="optionsRadioYes" value="option1" class="radio-btn-group" />
-                                </label>
-                            </div>
-                            <div class="col-xs-4 col-sm-4">
-                                <label class="roman-black">
-                                    NO:
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="roman-black">
+                                YES:
+                                    <input type="radio" runat="server" name="optionsRadios" id="optionsRadioYes" value="option1" class="radio-btn-group" />
+                            </label>
+                        </div>
+                        <div class="col-xs-4 col-sm-4">
+                            <label class="roman-black">
+                                NO:
                                     <input type="radio" runat="server" name="optionsRadios" id="optionsRadioNo" value="option2" class="radio-btn-group" checked />
-                                </label>
-                            </div>
+                            </label>
+                        </div>
                     </div>
                     <p class="label-text">
                         <span class="roman-black">Total price using sales funds:</span>
@@ -959,7 +959,7 @@
                 return CustomerLevelElemment.innerHTML;
             }
 
- function ApplyValidation2(theForm) {
+   function ApplyValidation2(theForm) {
 
                 if ($("#Quantity_1_1").length <= 0) {
                     submitenabled(theForm);

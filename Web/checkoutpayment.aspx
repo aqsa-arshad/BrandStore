@@ -361,10 +361,12 @@
             $("#divccpane2").unwrap();
 
             //if order total is 0 then hide payment label
-            if ($('#pnlPaymentOptions').length <= 0) {
+            if ($('#ctl00_PageContent_pnlPaymentOptions').length <= 0) {
+              
                 $("#lbl1").hide();
             }
             else {
+               
                 $("#lbl1").show();
             }
 
@@ -396,7 +398,7 @@
 
         function EnableDisablePOOption() {
             var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
-          
+            
             if (OrderTotal < parseFloat($("#hdnMinThreshHold").text())) {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").attr("Disabled", "Disabled");
             }
