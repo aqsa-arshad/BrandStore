@@ -144,13 +144,8 @@
                                     <div class="modal-body">
                                         <button type="button" id="Closebtn" class="close" data-dismiss="modal" aria-label="Close">
                                             <img src="App_Themes/Skin_3/images/close-popup.png" alt="Closs"></button>
-                                        <h4>What’s this</h4>
-                                        <p>
-                                            <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.1 %>"></asp:Label>
-                                        </p>
-                                        <p>
-                                            <asp:Label runat="server" Text="<%$ Tokens:StringResource, whatsthis.aspx.2 %>"></asp:Label>
-                                        </p>
+                                        <h4>What’s this</h4>                                     
+                                        <aspdnsf:Topic ID="whatsThisTopic" runat="server" TopicName="whats.this" />
                                     </div>
                                 </div>
                             </div>
@@ -403,9 +398,10 @@
 
         function EnableDisablePOOption() {
             var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
-            
+           
             if (OrderTotal < parseFloat($("#hdnMinThreshHold").text())) {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").attr("Disabled", "Disabled");
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbCREDITCARD").trigger("click");
             }
             else
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").removeAttr("Disabled");
