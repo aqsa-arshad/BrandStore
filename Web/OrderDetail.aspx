@@ -163,7 +163,7 @@
                                 <td class="td-30-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
                                     <span>
-                                        <asp:HyperLink ID="hlDelivery" runat="server"></asp:HyperLink>
+                                        <asp:HyperLink ID="hlDelivery" Target="_blank" runat="server"></asp:HyperLink>
                                         <asp:Label ID="lblDelivery" runat="server"></asp:Label>
                                     </span>
                                 </td>
