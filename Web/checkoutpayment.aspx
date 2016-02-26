@@ -398,9 +398,10 @@
 
         function EnableDisablePOOption() {
             var OrderTotal = $("#ctl00_PageContent_ctrlCartSummary_lblTotal").text().replace("$", "").replace(",", "");
-            
+           
             if (OrderTotal < parseFloat($("#hdnMinThreshHold").text())) {
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").attr("Disabled", "Disabled");
+                $("#ctl00_PageContent_ctrlPaymentMethod_rbCREDITCARD").trigger("click");
             }
             else
                 $("#ctl00_PageContent_ctrlPaymentMethod_rbPURCHASEORDER").removeAttr("Disabled");
