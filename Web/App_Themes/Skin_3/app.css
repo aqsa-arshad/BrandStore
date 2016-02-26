@@ -6504,6 +6504,9 @@ a:hover.mb-link {
   visibility: hidden;
   display: none;
 }
+.hide-items {
+  display: none;
+}
 a.underline-link {
   text-decoration: underline;
 }
@@ -6512,6 +6515,9 @@ a:hover.underline-link {
 }
 .btn-half {
   width: 100%;
+}
+.btn-fund {
+  height:52px;
 }
 @media screen and (min-width: 450px) {
   .btn-half {
