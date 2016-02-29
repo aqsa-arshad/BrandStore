@@ -50,7 +50,7 @@ namespace AspDotNetStorefront
 
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
-                        
+
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
             {
@@ -156,11 +156,23 @@ namespace AspDotNetStorefront
                             //Payment Methods
                             if (reader["PaymentMethod"].ToString().Equals(AppLogic.ro_PMCreditCard))
                             {
-                                lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
-                                                    (string.Concat("*********", reader["CardNumber"].ToString()));
-                                lblPMExpireDate.Text = "order.aspx.2".StringResource() + " " + reader["CardExpirationMonth"] + '/' +
-                                                       reader["CardExpirationYear"];
-                                lblPMCountry.Text = reader["BillingCountry"].ToString();
+                                decimal NetTotal = Convert.ToDecimal(reader["OrderTotal"]);
+                                if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                                {
+
+                                    lblPMCardInfo.Text = AppLogic.GetString("checkoutpayment.aspx.28", SkinID, ThisCustomer.LocaleSetting);
+                                    lblPMExpireDate.Visible = false;
+                                    lblPMCountry.Visible = false;
+                                }
+                                else
+                                {
+                                    lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
+                                                         (string.Concat("*********", reader["CardNumber"].ToString()));
+                                    lblPMExpireDate.Text = "order.aspx.2".StringResource() + " " + reader["CardExpirationMonth"] + '/' +
+                                                           reader["CardExpirationYear"];
+                                    lblPMCountry.Text = reader["BillingCountry"].ToString();
+                                }
+
                             }
                             else
                             {
@@ -169,7 +181,7 @@ namespace AspDotNetStorefront
                                 lblPMCountry.Visible = false;
                                 lblPurchasefee.Visible = true;
                                 lblPurchasefee.Text = "PurchaseOrder.aspx.1".StringResource() + ": " + string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["InvoiceFee"]));
-                            }                        
+                            }
                             //Billing Amounts
                             lblSubTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderSubtotal"]));
                             lblTax.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTax"]));
