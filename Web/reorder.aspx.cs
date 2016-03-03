@@ -59,7 +59,7 @@ namespace AspDotNetStorefront
             {
                 output.Append("<p>" + AppLogic.GetString("reorder.aspx.6", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "</p>");
                 output.Append("<p>Error: " + StatusMsg + "</p>");
-                output.Append("<p>" + String.Format(AppLogic.GetString("reorder.aspx.2", ThisCustomer.SkinID, ThisCustomer.LocaleSetting), "account.aspx", AppLogic.GetString("AppConfig.CartPrompt", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)) + "</p>");
+                output.Append("<p>" + String.Format(AppLogic.GetString("reorder.aspx.2", ThisCustomer.SkinID, ThisCustomer.LocaleSetting), "JWMyAccount.aspx", AppLogic.GetString("AppConfig.CartPrompt", ThisCustomer.SkinID, ThisCustomer.LocaleSetting)) + "</p>");
             }
 
             litOutput.Text = output.ToString();

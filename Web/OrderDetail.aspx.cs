@@ -88,8 +88,14 @@ namespace AspDotNetStorefront
                 GetOrderItemsDetail();
                 SetTrackingInfo();
                 hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";
+                
                 if (ThisCustomer.IsAdminUser)
                     btnResendInfotoFulfillmentAPI.Visible = AppLogic.AppConfig("AllowFulfillmentAPIResend").ToBool();
+                if (ThisCustomer.CustomerID != OrderCustomerID)
+                {
+                    hplPrintReceipt.Visible = false;
+                    hplReOrder.Visible = false;
+                }
             }
         }
 
