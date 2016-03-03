@@ -2053,6 +2053,26 @@ namespace AspDotNetStorefrontCore
             return tmp;
         }
 
+        public static int GetOrderCustomerLevelID(int OrderNumber)
+        {
+            int tmp = 0;
+
+            using (SqlConnection con = new SqlConnection(DB.GetDBConn()))
+            {
+                con.Open();
+                
+                using (IDataReader rs = DB.GetRS("Select CustomerLevelID from Customer where CustomerID = (Select CustomerID from Orders with (NOLOCK)  where OrderNumber=" + OrderNumber.ToString() + ")", con))
+                {
+                    if (rs.Read())
+                    {
+                        tmp = DB.RSFieldInt(rs, "CustomerLevelID");
+                    }
+                }
+            }
+
+            return tmp;
+        }
+
         public bool ContainsGiftCard()
         {
             return m_CartItems.ContainsGiftCard;

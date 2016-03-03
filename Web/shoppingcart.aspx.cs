@@ -540,11 +540,10 @@ namespace AspDotNetStorefront
                     BluBucksFundsUsedTotal =
                         Math.Round(BluBucksFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);
                 }
-                    //End Blu Bucks Used Total
+                //End Blu Bucks Used Total
 
-                    //Sof used total                  
-                else if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 3 ||
-                         cart.ThisCustomer.CustomerLevelID == 7)
+                //Sof used total                  
+                else if (cart.ThisCustomer.CustomerLevelID == 3 || cart.ThisCustomer.CustomerLevelID == 7)
                 {
                     SofFundsUsedTotal =
                         Math.Round(SofFundsUsedTotal + cart.CartItems.FirstOrDefault().ShipmentChargesPaid, 2);

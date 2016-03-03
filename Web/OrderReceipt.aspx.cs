@@ -15,6 +15,14 @@ namespace AspDotNetStorefront
     public partial class OrderReceipt : SkinBase
     {
         /// <summary>
+        /// Customer Level id of the Specific Order Number
+        /// </summary>
+        private int customerLevelId;
+        /// <summary>
+        /// Used for the shipment charges paid either through SOF or Blu Bucks
+        /// </summary>
+        private decimal shipmentChargesPaid;
+        /// <summary>
         /// Used for the total of blu bucks used
         /// </summary>
         private decimal totalBluBucks;
@@ -50,6 +58,7 @@ namespace AspDotNetStorefront
 
             OrderNumber = CommonLogic.QueryStringUSInt("ordernumber");
             int OrderCustomerID = Order.GetOrderCustomerID(OrderNumber);
+            customerLevelId = Order.GetOrderCustomerLevelID(OrderNumber);
 
             // currently viewing user must be logged in to view receipts:
             if (!ThisCustomer.IsRegistered)
@@ -187,6 +196,8 @@ namespace AspDotNetStorefront
                             lblTax.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTax"]));
                             lblShippingCost.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderShippingCosts"]));
                             lblTotalAmount.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(reader["OrderTotal"]));
+                            shipmentChargesPaid = Convert.ToDecimal(reader["ShipmentChargesPaid"].ToString());
+
                             for (var i = 2; i < 7; i++)
                             {
                                 if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
@@ -197,31 +208,31 @@ namespace AspDotNetStorefront
                                     if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
                                     {
                                         lblSOFFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                        lblSOFFundsTotal.Visible = true;
                                         lblSOFFundsTotalCaption.Visible = true;
+                                        if (shipmentChargesPaid > 0)
+                                        {
+                                            lblSOFFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i] + shipmentChargesPaid);
+                                            lblSOFFundsTotalCaption.Text = AppLogic.GetString("SOFFundsCaptionWithShipmentCharges", ThisCustomer.LocaleSetting);
+                                        }
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
                                     {
                                         lblDirectMailFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                        lblDirectMailFundsTotal.Visible = true;
                                         lblDirectMailFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
                                     {
                                         lblDisplayFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                        lblDisplayFundsTotal.Visible = true;
                                         lblDisplayFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
                                     {
                                         lblLiteratureFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                        lblLiteratureFundsTotal.Visible = true;
                                         lblLiteratureFundsTotalCaption.Visible = true;
                                     }
                                     else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
                                     {
                                         lblPOPFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                        lblPOPFundsTotal.Visible = true;
                                         lblPOPFundsTotalCaption.Visible = true;
                                     }
                                 }
@@ -336,7 +347,7 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal((e.Item.FindControl("hfCategoryFundUsed") as HiddenField).Value));
                 }
-                if (ThisCustomer.CustomerLevelID == 1 || ThisCustomer.CustomerLevelID == 8 || ThisCustomer.CustomerLevelID == 2)
+                if (customerLevelId == 8)
                 {
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
@@ -346,7 +357,7 @@ namespace AspDotNetStorefront
                     (e.Item.FindControl("lblRegularPrice") as Label).Visible = false;
                     lblCreditsUsedCaption.Visible = false;
                 }
-                if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7 || ThisCustomer.CustomerLevelID == 9 || ThisCustomer.CustomerLevelID == 10 || ThisCustomer.CustomerLevelID == 11 || ThisCustomer.CustomerLevelID == 12)
+                if (customerLevelId == 9 || customerLevelId == 10 || customerLevelId == 11 || customerLevelId == 12)
                 {
                     (e.Item.FindControl("lblBluBucksCaption") as Label).Visible = false;
                     (e.Item.FindControl("lblBluBuck") as Label).Visible = false;
@@ -360,15 +371,43 @@ namespace AspDotNetStorefront
                                             Convert.ToDecimal((e.Item.FindControl("hfBluBucks") as HiddenField).Value),
                                             2);
                         lblBluBucksTotal.Text = Math.Round(totalBluBucks, 2).ToString();
-                        lblBluBucksTotal.Visible = true;
                         lblBluBucksTotalCaption.Visible = true;
+                        if (shipmentChargesPaid > 0)
+                        {
+                            lblBluBucksTotal.Text = Math.Round((totalBluBucks + shipmentChargesPaid), 2).ToString();
+                            lblBluBucksTotalCaption.Text = AppLogic.GetString("BluBucksCaptionWithShipmentCharges", ThisCustomer.LocaleSetting);
+                        }
                     }
                 }
+
                 if (!string.IsNullOrEmpty((e.Item.FindControl("hfFundName") as HiddenField).Value))
                 {
                     (e.Item.FindControl("lblCategoryFundCredit") as Label).Visible = true;
                     (e.Item.FindControl("lblCategoryFundCreditCaption") as Label).Text =
                         (e.Item.FindControl("hfFundName") as HiddenField).Value + " Discount: ";
+                }
+
+                if (string.IsNullOrEmpty(lblBluBucksTotal.Text) && string.IsNullOrEmpty(lblSOFFundsTotal.Text))
+                {
+                    if ((customerLevelId == 3 || customerLevelId == 7) && shipmentChargesPaid > 0)
+                    {
+                        lblSOFFundsTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting),
+                            AppLogic.AppConfig("CurrencyFormat"), shipmentChargesPaid);
+                        lblSOFFundsTotalCaption.Text = AppLogic.GetString("SOFFundsCaptionWithShipmentCharges",
+                            ThisCustomer.LocaleSetting);
+                        lblCreditsUsedCaption.Visible = true;
+                        lblSOFFundsTotalCaption.Visible = true;
+                    }
+
+                    if ((customerLevelId == 4 || customerLevelId == 5 || customerLevelId == 6 || customerLevelId == 13) && shipmentChargesPaid > 0)
+                    {
+                        lblBluBucksTotal.Text = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting),
+                            AppLogic.AppConfig("CurrencyFormat"), shipmentChargesPaid);
+                        lblBluBucksTotalCaption.Text = AppLogic.GetString("BluBucksCaptionWithShipmentCharges",
+                            ThisCustomer.LocaleSetting);
+                        lblCreditsUsedCaption.Visible = true;
+                        lblBluBucksTotalCaption.Visible = true;
+                    }
                 }
             }
         }

@@ -1455,6 +1455,10 @@ namespace AspDotNetStorefrontGateways
 					+(int)cart.CartType, cart.ThisCustomer.CustomerID, CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowShoppingcartFiltering") == true, 1, 0), AppLogic.StoreID())
 					+ RecurringOrderSql;
 				DB.ExecuteSQL(sql4);
+
+                sql4 = string.Format("update Orders set ShipmentChargesPaid = (select ShipmentChargesPaid from ShoppingCart where ShoppingCartRecID = {0}) where OrderNumber={1}",cart.CartItems.FirstOrDefault().ShoppingCartRecordID,OrderNumber.ToString());
+                DB.ExecuteSQL(sql4);
+
 				if (cart.HasGiftCards)
 				{
 					GiftCard.SyncOrderNumber(OrderNumber);

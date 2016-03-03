@@ -508,24 +508,31 @@ namespace AspDotNetStorefrontControls
                     if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 4 ||
                         cart.ThisCustomer.CustomerLevelID == 5 || cart.ThisCustomer.CustomerLevelID == 6)
                     {
-                        lblBluBucksFundsUsedTotal.Text = " $" +
+                        lblBluBucksFundsUsedTotal.Text = " " +
                                                          Math.Round(
                                                              (Convert.ToDecimal(
                                                                  lblBluBucksFundsUsedTotal.Text.Replace("$", "")) +
                                                               cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2)
                                                              .ToString();
+                        if (cart.CartItems.FirstOrDefault().ShipmentChargesPaid > 0)
+                        {
+                            lblBluBucksFundsUsedTotalCaption.Text = AppLogic.GetString("BluBucksCaptionWithShipmentCharges", cart.ThisCustomer.LocaleSetting);
+                        }
                     }
                     //End Blu Bucks Used Total
 
                     //Sof used total                  
-                    else if (cart.ThisCustomer.CustomerLevelID == 13 || cart.ThisCustomer.CustomerLevelID == 3 ||
-                             cart.ThisCustomer.CustomerLevelID == 7)
+                    else if (cart.ThisCustomer.CustomerLevelID == 3 || cart.ThisCustomer.CustomerLevelID == 7)
                     {
                         lblSofFundsUsedTotal.Text = " $" +
                                                     Math.Round(
                                                         (Convert.ToDecimal(lblSofFundsUsedTotal.Text.Replace("$", "")) +
                                                          cart.CartItems.FirstOrDefault().ShipmentChargesPaid), 2)
                                                         .ToString();
+                        if (cart.CartItems.FirstOrDefault().ShipmentChargesPaid > 0)
+                        {
+                            lblSofFundsUsedTotalCaption.Text = AppLogic.GetString("SOFFundsCaptionWithShipmentCharges", cart.ThisCustomer.LocaleSetting);
+                        }
                     }
                     //End Sof Used Total
                 }

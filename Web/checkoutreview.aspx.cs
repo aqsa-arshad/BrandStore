@@ -799,6 +799,7 @@ namespace AspDotNetStorefront
         }
         protected void EmailOrderReceipt(int OrderNumber)
         {
+            decimal shipmentChargesPaid = 0m;
             // email Order Receipt once order is done.
             try
             {
@@ -820,10 +821,11 @@ namespace AspDotNetStorefront
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
-
                             IDataReader reader = cmd.ExecuteReader();
+
                             if (reader.Read())
                             {
+                                shipmentChargesPaid = Convert.ToDecimal(reader["ShipmentChargesPaid"].ToString());
                                 for (var i = 2; i < 7; i++)
                                 {
                                     if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
@@ -833,27 +835,26 @@ namespace AspDotNetStorefront
 
                                         if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
                                         {
-                                            lblSOFFundsTotal = "SOF Fund: ";
                                             lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                            if (shipmentChargesPaid > 0)
+                                            {
+                                                lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i] + shipmentChargesPaid);
+                                            }
                                         }
                                         else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
                                         {
-                                            lblDirectMailFundsTotal = "Direct Mail Funds: ";
                                             lblDirectMailFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         }
                                         else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
                                         {
-                                            lblDisplayFundsTotal = "Display Funds: ";
                                             lblDisplayFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         }
                                         else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
                                         {
-                                            lblLiteratureFundsTotal = "Literature Funds: ";
                                             lblLiteratureFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         }
                                         else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
                                         {
-                                            lblPOPFundsTotal = "POP Funds: ";
                                             lblPOPFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
                                         }
                                     }
@@ -868,13 +869,33 @@ namespace AspDotNetStorefront
                         using (var cmd = new SqlCommand("select SUM(BluBucksUsed) from Orders_ShoppingCart where OrderNumber=" + OrderNumber, conn))
                         {
                             bluBucksUsed = Convert.ToDecimal(cmd.ExecuteScalar());
+                            if (shipmentChargesPaid > 0 && bluBucksUsed > 0)
+                            {
+                                bluBucksUsed = bluBucksUsed + shipmentChargesPaid;
+                            }
                         }
                     }
-                    lblBluBucks = Localization.CurrencyStringForDisplayWithExchangeRate(bluBucksUsed, ThisCustomer.CurrencySetting);
+                    if (bluBucksUsed <= 0 && string.IsNullOrEmpty(lblSOFFundsTotal))
+                    {
+                        if ((ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7) &&
+                            shipmentChargesPaid > 0)
+                        {
+                            lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting),
+                                AppLogic.AppConfig("CurrencyFormat"), shipmentChargesPaid);                           
+                        }
+
+                        if ((ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
+                             ThisCustomer.CustomerLevelID == 6 || ThisCustomer.CustomerLevelID == 13) &&
+                            shipmentChargesPaid > 0)
+                        {
+                            bluBucksUsed =  shipmentChargesPaid;                           
+                        }
+                    }
+                    lblBluBucks = Math.Round(bluBucksUsed, 2).ToString();
                     string invoiceFee = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), ThisCustomer.CurrencySetting);
                     String SubjectReceipt = String.Format(AppLogic.GetString("common.cs.2", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName", ThisCustomer.StoreID, true));
                     String PackageName = AppLogic.AppConfig("XmlPackage.OrderReceipt");
-                    XmlPackage2 p = new XmlPackage2(PackageName, null, SkinID, String.Empty, "ordernumber=" + OrderNumber + "&BBCredit=" + lblBluBucks + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee);
+                    XmlPackage2 p = new XmlPackage2(PackageName, null, SkinID, String.Empty, "shipmentChargesPaid=" + shipmentChargesPaid + "&ordernumber=" + OrderNumber + "&BBCredit=" + lblBluBucks + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee);
                     String receiptBody = p.TransformString();
                     AppLogic.SendMail(SubjectReceipt, receiptBody + AppLogic.AppConfig("MailFooter"), true, AppLogic.AppConfig("ReceiptEMailFrom", ThisCustomer.StoreID, true), AppLogic.AppConfig("ReceiptEMailFromName", ThisCustomer.StoreID, true), ThisCustomer.EMail, String.Empty, String.Empty, AppLogic.MailServer());
                 }
