@@ -45,6 +45,10 @@ namespace AspDotNetStorefront
         private IDataReader reader2;
 
         /// <summary>
+        /// The net total
+        /// </summary>
+        decimal NetTotal = Decimal.Zero;
+        /// <summary>
         /// The m_ store loc
         /// </summary>
         protected string m_StoreLoc = AppLogic.GetStoreHTTPLocation(true);
@@ -127,19 +131,28 @@ namespace AspDotNetStorefront
 
                             if (PaymentMethod.Equals(AppLogic.ro_PMCreditCard))
                             {
-                                sPmtMethod.Append("<p>");
-                                sPmtMethod.Append("<span class='block-text'>");
-                                sPmtMethod.Append(reader["CardType"].ToString());
-                                sPmtMethod.Append(string.Concat("*********", reader["CardNumber"].ToString()));
-                                sPmtMethod.Append("<span>");
-                                sPmtMethod.Append("<span class='block-text'> Expires: ");
-                                sPmtMethod.Append( reader["CardExpirationMonth"].ToString() + '/' +
-                                                   reader["CardExpirationYear"].ToString());
-                                sPmtMethod.Append("<span>");
-                                sPmtMethod.Append("<span class='block-text'>");
-                                sPmtMethod.Append(reader["BillingCountry"].ToString());
-                                sPmtMethod.Append("<span>");
-                                sPmtMethod.Append("</p>");
+                                NetTotal = Convert.ToDecimal(reader["OrderTotal"]);
+                                if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                                {
+                                    sPmtMethod.Append("<br/>");
+                                    sPmtMethod.Append(AppLogic.GetString("checkoutpayment.aspx.28", SkinID, ThisCustomer.LocaleSetting));
+                                }
+                                else
+                                {
+                                    sPmtMethod.Append("<p>");
+                                    sPmtMethod.Append("<span class='block-text'>");
+                                    sPmtMethod.Append(reader["CardType"].ToString());
+                                    sPmtMethod.Append(string.Concat("*********", reader["CardNumber"].ToString()));
+                                    sPmtMethod.Append("<span>");
+                                    sPmtMethod.Append("<span class='block-text'> Expires: ");
+                                    sPmtMethod.Append(reader["CardExpirationMonth"].ToString() + '/' +
+                                                       reader["CardExpirationYear"].ToString());
+                                    sPmtMethod.Append("<span>");
+                                    sPmtMethod.Append("<span class='block-text'>");
+                                    sPmtMethod.Append(reader["BillingCountry"].ToString());
+                                    sPmtMethod.Append("<span>");
+                                    sPmtMethod.Append("</p>");
+                                }                               
                             }
                             else
                             {

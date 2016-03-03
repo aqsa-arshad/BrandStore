@@ -87,7 +87,7 @@ namespace AspDotNetStorefront
                 GetOrderInfo();
                 GetOrderItemsDetail();
                 SetTrackingInfo();
-                hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";               
+                hplReOrder.NavigateUrl = "javascript: ReOrder(" + OrderNumber + ");";
                 if (ThisCustomer.IsAdminUser)
                     btnResendInfotoFulfillmentAPI.Visible = AppLogic.AppConfig("AllowFulfillmentAPIResend").ToBool();
             }
@@ -343,15 +343,27 @@ namespace AspDotNetStorefront
                             //Payment Methods
                             if (reader["PaymentMethod"].ToString().Equals(AppLogic.ro_PMCreditCard))
                             {
-                                lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
+                                decimal NetTotal = Convert.ToDecimal(reader["OrderTotal"]);
+                                if (NetTotal == System.Decimal.Zero && AppLogic.AppConfigBool("SkipPaymentEntryOnZeroDollarCheckout"))
+                                {
+
+                                    lblPMCardInfo.Text = AppLogic.GetString("checkoutpayment.aspx.28", SkinID, ThisCustomer.LocaleSetting);
+                                    lblPMExpireDate.Visible = false;
+                                    lblPMCountry.Visible = false;
+                                }
+                                else
+                                {
+                                    lblPMCardInfo.Text = reader["CardType"].ToString() + ' ' +
                                                     (string.Concat("*********", reader["CardNumber"].ToString()));
-                                lblPMExpireDate.Text = "order.aspx.2".StringResource()+" " + reader["CardExpirationMonth"] + '/' +
-                                                       reader["CardExpirationYear"];
-                                lblPMCountry.Text = reader["BillingCountry"].ToString();
+                                    lblPMExpireDate.Text = "order.aspx.2".StringResource() + " " + reader["CardExpirationMonth"] + '/' +
+                                                           reader["CardExpirationYear"];
+                                    lblPMCountry.Text = reader["BillingCountry"].ToString();
+                                }
+
                             }
                             else
                             {
-                                lblPMCardInfo.Text = "order.aspx.1".StringResource()+" " + reader["PONumber"].ToString();
+                                lblPMCardInfo.Text = "order.aspx.1".StringResource() + " " + reader["PONumber"].ToString();
                                 lblPMExpireDate.Visible = false;
                                 lblPMCountry.Visible = false;
                                 lblPurchasefee.Visible = true;

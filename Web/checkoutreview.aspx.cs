@@ -67,13 +67,13 @@ namespace AspDotNetStorefront
             BillingAddress.LoadFromDB(ThisCustomer.PrimaryBillingAddressID);
             if (BillingAddress.PaymentMethodLastUsed.Equals(AppLogic.ro_PMCreditCard))
             {
-            lblInvoiceFeehdn.Text ="false";
+                lblInvoiceFeehdn.Text = "false";
             }
             else
             {
-             lblInvoiceFeehdn.Text ="true";
+                lblInvoiceFeehdn.Text = "true";
             }
-            
+
 
             Response.CacheControl = "private";
             Response.Expires = -1;
@@ -245,7 +245,7 @@ namespace AspDotNetStorefront
 
         protected void btnContinueCheckout2_Click(object sender, EventArgs e)
         {
-           // btnContinueCheckout1.Enabled = false;
+            // btnContinueCheckout1.Enabled = false;
             ContinueCheckout();
         }
 
@@ -266,21 +266,21 @@ namespace AspDotNetStorefront
             {
                 String PayPalToken = CommonLogic.QueryStringCanBeDangerousContent("token").Trim();
                 String PayerID = CommonLogic.QueryStringCanBeDangerousContent("payerid").Trim();
-                ProcessCheckout();                
+                ProcessCheckout();
             }
 
             else
             {
                 System.Web.UI.ClientScriptManager cs = this.ClientScript;
-                cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);              
-               
+                cs.RegisterClientScriptBlock(this.GetType(), "alertMessage", script, true);
+
             }
         }
 
         private void InitializePageContent()
         {
             JSPopupRoutines.Text = AppLogic.GetJSPopupRoutines();
-            
+
             String XmlPackageName = AppLogic.AppConfig("XmlPackage.CheckoutReviewPageHeader");
             if (XmlPackageName.Length != 0)
             {
@@ -323,10 +323,10 @@ namespace AspDotNetStorefront
                 XmlPackage_CheckoutReviewPageFooter.Text = "" + AppLogic.RunXmlPackage(XmlPackageName2, base.GetParser, ThisCustomer, SkinID, String.Empty, String.Empty, true, true);
             }
 
-          //  AppLogic.GetButtonDisable(btnContinueCheckout1);
+            //  AppLogic.GetButtonDisable(btnContinueCheckout1);
             AppLogic.GetButtonDisable(btnContinueCheckout2);
-          //  btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
-           // btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
+            //  btnContinueCheckout1.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout1.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout2.ClientID + "\").disabled = true;");
+            // btnContinueCheckout2.Attributes["onclick"] = string.Format("{0}{1}", btnContinueCheckout2.Attributes["onclick"], "document.getElementById(\"" + btnContinueCheckout1.ClientID + "\").disabled = true;");
 
             GatewayCheckoutByAmazon.CheckoutByAmazon checkoutByAmazon = new GatewayCheckoutByAmazon.CheckoutByAmazon();
             if (checkoutByAmazon.IsEnabled && checkoutByAmazon.IsCheckingOut)
@@ -342,8 +342,8 @@ namespace AspDotNetStorefront
                     ordercs57.Visible = false;
             }
 
-			if (AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout"))
-				ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(false);
+            if (AppLogic.AppConfigBool("PayPal.Express.UseIntegratedCheckout"))
+                ltPayPalIntegratedCheckout.Text = AspDotNetStorefrontGateways.Processors.PayPalController.GetExpressCheckoutIntegratedScript(false);
 
         }
 
@@ -392,7 +392,7 @@ namespace AspDotNetStorefront
                             sPmtMethod.Append(BillingAddress.PONumber);
                             sPmtMethod.Append("</p>");
                         }
-                        
+
 
                         // This code may be needed for next phase so i am not removing it.
 
@@ -538,9 +538,9 @@ namespace AspDotNetStorefront
         private void ProcessCheckout()
         {
             //Set GLcodes of each item to ordernotes field of cart
-            foreach(CartItem citem in cart.CartItems)
+            foreach (CartItem citem in cart.CartItems)
             {
-                cart.OrderNotes +="Product ID: " + citem.ProductID + ", GL: " + citem.GLcode + ",";
+                cart.OrderNotes += "Product ID: " + citem.ProductID + ", GL: " + citem.GLcode + ",";
             }
             cart.OrderNotes = cart.OrderNotes.Remove(cart.OrderNotes.LastIndexOf(","), 1);
             //end set gl code
@@ -561,27 +561,27 @@ namespace AspDotNetStorefront
             {
                 if (Cardinal.EnabledForCheckout(cart.Total(true), BillingAddress.CardType))
                 {
-					OrderNumber = AppLogic.GetNextOrderNumber();
-					
-					if (Cardinal.PreChargeLookupAndStoreSession(ThisCustomer, OrderNumber, cart.Total(true), 
-						BillingAddress.CardNumber, BillingAddress.CardExpirationMonth, BillingAddress.CardExpirationYear))
-					{
-						Response.Redirect("cardinalform.aspx");// this will eventually come "back" to us in cardinal_process.aspx after going through banking system pages
-					}
-					else
-					{
-						// user not enrolled or cardinal gateway returned error, so process card normally, using already created order #:
+                    OrderNumber = AppLogic.GetNextOrderNumber();
 
-						string ECIFlag = Cardinal.GetECIFlag(BillingAddress.CardType);						
+                    if (Cardinal.PreChargeLookupAndStoreSession(ThisCustomer, OrderNumber, cart.Total(true),
+                        BillingAddress.CardNumber, BillingAddress.CardExpirationMonth, BillingAddress.CardExpirationYear))
+                    {
+                        Response.Redirect("cardinalform.aspx");// this will eventually come "back" to us in cardinal_process.aspx after going through banking system pages
+                    }
+                    else
+                    {
+                        // user not enrolled or cardinal gateway returned error, so process card normally, using already created order #:
 
-						String status = Gateway.MakeOrder(String.Empty, AppLogic.TransactionMode(), cart, OrderNumber, String.Empty, ECIFlag, String.Empty, String.Empty);
-						if (status != AppLogic.ro_OK)
-						{
-							err = new ErrorMessage(Server.HtmlEncode(status));
-							Response.Redirect("checkoutpayment.aspx?TryToShowPM=" + PM + "&errormsg=" + err.MessageId);
-						}
-						DB.ExecuteSQL("update orders set CardinalLookupResult=" + DB.SQuote(ThisCustomer.ThisCustomerSession["Cardinal.LookupResult"]) + " where OrderNumber=" + OrderNumber.ToString());
-					}
+                        string ECIFlag = Cardinal.GetECIFlag(BillingAddress.CardType);
+
+                        String status = Gateway.MakeOrder(String.Empty, AppLogic.TransactionMode(), cart, OrderNumber, String.Empty, ECIFlag, String.Empty, String.Empty);
+                        if (status != AppLogic.ro_OK)
+                        {
+                            err = new ErrorMessage(Server.HtmlEncode(status));
+                            Response.Redirect("checkoutpayment.aspx?TryToShowPM=" + PM + "&errormsg=" + err.MessageId);
+                        }
+                        DB.ExecuteSQL("update orders set CardinalLookupResult=" + DB.SQuote(ThisCustomer.ThisCustomerSession["Cardinal.LookupResult"]) + " where OrderNumber=" + OrderNumber.ToString());
+                    }
                 }
                 else
                 {
@@ -616,16 +616,16 @@ namespace AspDotNetStorefront
                     }
                 }
             }
-			else if (PM.ToLower() == GatewayCheckoutByAmazon.CheckoutByAmazon.CBA_Gateway_Identifier.ToLower())
-			{
-				OrderNumber = AppLogic.GetNextOrderNumber();
-				String status = Gateway.MakeOrder(String.Empty, AppLogic.TransactionMode(), cart, OrderNumber, String.Empty, String.Empty, String.Empty, String.Empty);
-				if (status != AppLogic.ro_OK)
-				{
-					err = new ErrorMessage(Server.HtmlEncode(status));
-					Response.Redirect("shoppingcart.aspx?TryToShowPM=" + PM + "&errormsg=" + err.MessageId);
-				}
-			}
+            else if (PM.ToLower() == GatewayCheckoutByAmazon.CheckoutByAmazon.CBA_Gateway_Identifier.ToLower())
+            {
+                OrderNumber = AppLogic.GetNextOrderNumber();
+                String status = Gateway.MakeOrder(String.Empty, AppLogic.TransactionMode(), cart, OrderNumber, String.Empty, String.Empty, String.Empty, String.Empty);
+                if (status != AppLogic.ro_OK)
+                {
+                    err = new ErrorMessage(Server.HtmlEncode(status));
+                    Response.Redirect("shoppingcart.aspx?TryToShowPM=" + PM + "&errormsg=" + err.MessageId);
+                }
+            }
             else if (PM == AppLogic.ro_PMPurchaseOrder)
             {
                 // try create the order record, check for status of TX though:
@@ -802,87 +802,90 @@ namespace AspDotNetStorefront
             // email Order Receipt once order is done.
             try
             {
-                String lblSOFFundsTotal = String.Empty;
-                String lblDirectMailFundsTotal = String.Empty;
-                String lblDisplayFundsTotal = String.Empty;
-                String lblLiteratureFundsTotal = String.Empty;
-                String lblPOPFundsTotal = String.Empty;
-                String lblBluBucks = String.Empty;
-                decimal bluBucksUsed = 0;
-
-                List<decimal> lstFund = Enumerable.Repeat(0m, 7).ToList();
-                using (var conn = DB.dbConn())
+                if (AppLogic.AppConfigBool("EmaiOrderlReceipt"))
                 {
-                    conn.Open();
-                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
+                    String lblSOFFundsTotal = String.Empty;
+                    String lblDirectMailFundsTotal = String.Empty;
+                    String lblDisplayFundsTotal = String.Empty;
+                    String lblLiteratureFundsTotal = String.Empty;
+                    String lblPOPFundsTotal = String.Empty;
+                    String lblBluBucks = String.Empty;
+                    decimal bluBucksUsed = 0;
+
+                    List<decimal> lstFund = Enumerable.Repeat(0m, 7).ToList();
+                    using (var conn = DB.dbConn())
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
-
-                        IDataReader reader = cmd.ExecuteReader();
-                        if (reader.Read())
+                        conn.Open();
+                        using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
                         {
-                            for (var i = 2; i < 7; i++)
-                            {
-                                if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
-                                {
-                                    lstFund[i] =
-                                        lstFund[i] + Convert.ToDecimal(reader[i.ToString()].ToString());
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
 
-                                    if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
+                            IDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                for (var i = 2; i < 7; i++)
+                                {
+                                    if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
                                     {
-                                        lblSOFFundsTotal = "SOF Fund: ";
-                                        lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                    }
-                                    else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
-                                    {
-                                        lblDirectMailFundsTotal = "Direct Mail Funds: ";
-                                        lblDirectMailFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                    }
-                                    else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
-                                    {
-                                        lblDisplayFundsTotal = "Display Funds: ";
-                                        lblDisplayFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                    }
-                                    else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
-                                    {
-                                        lblLiteratureFundsTotal = "Literature Funds: ";
-                                        lblLiteratureFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
-                                    }
-                                    else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
-                                    {
-                                        lblPOPFundsTotal = "POP Funds: ";
-                                        lblPOPFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        lstFund[i] =
+                                            lstFund[i] + Convert.ToDecimal(reader[i.ToString()].ToString());
+
+                                        if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
+                                        {
+                                            lblSOFFundsTotal = "SOF Fund: ";
+                                            lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        }
+                                        else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
+                                        {
+                                            lblDirectMailFundsTotal = "Direct Mail Funds: ";
+                                            lblDirectMailFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        }
+                                        else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
+                                        {
+                                            lblDisplayFundsTotal = "Display Funds: ";
+                                            lblDisplayFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        }
+                                        else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
+                                        {
+                                            lblLiteratureFundsTotal = "Literature Funds: ";
+                                            lblLiteratureFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        }
+                                        else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
+                                        {
+                                            lblPOPFundsTotal = "POP Funds: ";
+                                            lblPOPFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                //get the Blu Bucks used for a perticular order number
-                using (var conn = DB.dbConn())
-                {
-                    conn.Open();
-                    using (var cmd = new SqlCommand("select SUM(BluBucksUsed) from Orders_ShoppingCart where OrderNumber=" + OrderNumber, conn))
+                    //get the Blu Bucks used for a perticular order number
+                    using (var conn = DB.dbConn())
                     {
-                        bluBucksUsed = Convert.ToDecimal(cmd.ExecuteScalar());
+                        conn.Open();
+                        using (var cmd = new SqlCommand("select SUM(BluBucksUsed) from Orders_ShoppingCart where OrderNumber=" + OrderNumber, conn))
+                        {
+                            bluBucksUsed = Convert.ToDecimal(cmd.ExecuteScalar());
+                        }
                     }
+                    lblBluBucks = Localization.CurrencyStringForDisplayWithExchangeRate(bluBucksUsed, ThisCustomer.CurrencySetting);
+                    string invoiceFee = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), ThisCustomer.CurrencySetting);
+                    String SubjectReceipt = String.Format(AppLogic.GetString("common.cs.2", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName", ThisCustomer.StoreID, true));
+                    String PackageName = AppLogic.AppConfig("XmlPackage.OrderReceipt");
+                    XmlPackage2 p = new XmlPackage2(PackageName, null, SkinID, String.Empty, "ordernumber=" + OrderNumber + "&BBCredit=" + lblBluBucks + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee);
+                    String receiptBody = p.TransformString();
+                    AppLogic.SendMail(SubjectReceipt, receiptBody + AppLogic.AppConfig("MailFooter"), true, AppLogic.AppConfig("ReceiptEMailFrom", ThisCustomer.StoreID, true), AppLogic.AppConfig("ReceiptEMailFromName", ThisCustomer.StoreID, true), ThisCustomer.EMail, String.Empty, String.Empty, AppLogic.MailServer());
                 }
-                lblBluBucks = Localization.CurrencyStringForDisplayWithExchangeRate(bluBucksUsed, ThisCustomer.CurrencySetting);
-                string invoiceFee = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), ThisCustomer.CurrencySetting);
-                String SubjectReceipt = String.Format(AppLogic.GetString("common.cs.2", SkinID, ThisCustomer.LocaleSetting), AppLogic.AppConfig("StoreName", ThisCustomer.StoreID, true));
-                String PackageName = AppLogic.AppConfig("XmlPackage.OrderReceipt");
-                XmlPackage2 p = new XmlPackage2(PackageName, null, SkinID, String.Empty, "ordernumber=" + OrderNumber + "&BBCredit=" + lblBluBucks + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee);
-                String receiptBody = p.TransformString();
-                AppLogic.SendMail(SubjectReceipt, receiptBody + AppLogic.AppConfig("MailFooter"), true, AppLogic.AppConfig("ReceiptEMailFrom", ThisCustomer.StoreID, true), AppLogic.AppConfig("ReceiptEMailFromName", ThisCustomer.StoreID, true), ThisCustomer.EMail, String.Empty, String.Empty, AppLogic.MailServer());
             }
             catch (Exception ex)
             {
                 SysLog.LogMessage(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString() + " :: " + System.Reflection.MethodBase.GetCurrentMethod().Name,
                 ex.Message + ((ex.InnerException != null && string.IsNullOrEmpty(ex.InnerException.Message)) ? " :: " + ex.InnerException.Message : ""),
                 MessageTypeEnum.GeneralException, MessageSeverityEnum.Error);
-            }        
-        
+            }
+
         }
         protected override string OverrideTemplate()
         {
