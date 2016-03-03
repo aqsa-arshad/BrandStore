@@ -19,5 +19,7 @@
         <script src="offcanvas.js"></script>
         </body>
         </html>
-   <aspdnsf:Topic ID="FooterSupport" runat="server" TopicName="Footer.Support" />
+   <aspdnsf:Topic ID="FooterSupport" runat="server" TopicName="Footer.Support" visible="false"/>
+    <aspdnsf:Topic ID="SalsRepsSupport" runat="server" TopicName="SalsRepsFooter.Support" visible="false"/>
+
 </asp:Content>

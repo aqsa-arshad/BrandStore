@@ -4730,4 +4730,14 @@ namespace AspDotNetStorefrontCore
         POPFunds = 6
     }
     #endregion
+
+    #region Public Enums for selected SOF funds
+    public enum SOFUsedType
+    {
+        GF = 1,
+        SOFF = 2,
+        CAPEX = 3,
+        NF = 4
+    }
+    #endregion
 }

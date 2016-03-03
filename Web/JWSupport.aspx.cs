@@ -22,7 +22,17 @@ namespace AspDotNetStorefront
         /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+           Customer ThisCustomer=null;
+             if (ThisCustomer == null)
+                    ThisCustomer = ((AspDotNetStorefrontPrincipal)Context.User).ThisCustomer;
+            if(ThisCustomer.CustomerLevelID==(int)UserType.SALESREPS)
+            {
+            SalsRepsSupport.Visible=true;
+            }
+            else
+            {
+                FooterSupport.Visible = true;
+            }
         }
         
         /// <summary>

@@ -143,7 +143,7 @@ namespace AspDotNetStorefront
                 }
                 //End Apply BluBucks
 
-                cart.SetItemFundsUsed(cItem.ShoppingCartRecordID, cItem.CategoryFundUsed, cItem.BluBuksUsed, cItem.GLcode, BluBucksPercentage);
+                cart.SetItemFundsUsed(cItem.ShoppingCartRecordID, cItem.CategoryFundUsed, cItem.BluBuksUsed, cItem.GLcode, BluBucksPercentage,cItem.SOFCode);
             }
         }
 

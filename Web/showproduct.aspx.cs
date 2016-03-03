@@ -29,6 +29,7 @@ namespace AspDotNetStorefront
         public static string LstInventories { get; set; }
 
         String SourceEntityInstanceName = String.Empty;
+        static String SOFCodeChoice = String.Empty;
         protected string parentCategoryID = String.Empty;
         protected string parentCategoryName = String.Empty;
 
@@ -179,7 +180,7 @@ namespace AspDotNetStorefront
                     ProductName = DB.RSFieldByLocale(rs, "Name", ThisCustomer.LocaleSetting);
                     //Get Customer Funds/Blue BuksPoint and Set BluBuks Point on popup.1 is id for BluBuks
 
-                    
+
                     int pvariantid = AppLogic.GetProductsDefaultVariantID(ProductID);
                     //Check if product already exist in shopping cart                  
                     SqlParameter[] spa = {DB.CreateSQLParameter("@CustomerID", SqlDbType.Int, 4, ThisCustomer.CustomerID, ParameterDirection.Input),
@@ -194,7 +195,7 @@ namespace AspDotNetStorefront
                     hdnCustomerID.Text = ThisCustomer.CustomerID.ToString();
 
                     //end check if product already exist in shopping cart
-                    
+
                     //Apply fund
                     decimal pvprice = AppLogic.GetVariantPrice(pvariantid);
                     hdnButtonName.Text = "AddToCartButton_" + ProductID + "_" + pvariantid;
@@ -569,17 +570,17 @@ namespace AspDotNetStorefront
                     }
                     //Get add to cart button for popup
                     using (XmlPackage2 p = new XmlPackage2("product.SimpleProductCustom.xml.config", ThisCustomer, SkinID, "", "EntityName=" + SourceEntity + "&EntityID=" + SourceEntityID.ToString() + CommonLogic.IIF(CommonLogic.ServerVariables("QUERY_STRING").IndexOf("cartrecid") != -1, "&cartrecid=" + CommonLogic.QueryStringUSInt("cartrecid").ToString(), "&showproduct=1"), String.Empty, true))
-                    {                        
-                            m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);                                               
-                            LiteralCustom.Text = m_PageOutputCustom ;                                           
+                    {
+                        m_PageOutputCustom = AppLogic.RunXmlPackage(p, base.GetParser, ThisCustomer, SkinID, true, true);
+                        LiteralCustom.Text = m_PageOutputCustom;
                     }
                 }
             }
             if (!this.IsPostBack)
             {
-                  litOutput.Text = m_PageOutput;                 
+                litOutput.Text = m_PageOutput;
 
-               
+
             }
 
             GetParentCategory();
@@ -637,7 +638,7 @@ namespace AspDotNetStorefront
 
         private void HandleKitUpdate()
         {
-            
+
             ThisCustomer.RequireCustomerRecord();
             AppLogic.ProcessKitForm(ThisCustomer, ProductID);
             if (CommonLogic.FormUSInt("CartRecID") > 0)
@@ -670,7 +671,7 @@ namespace AspDotNetStorefront
                 using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                 {
                     dbconn.Open();
-                    using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + Convert.ToInt32(PId) + " and VarientID=" + Convert.ToInt32(VId)+"and InventoryID=" + Convert.ToInt32(IId) + " and Issent=0 and Email='" + EId + "'", dbconn))
+                    using (IDataReader rs = DB.GetRS("select Email from CustomerNotification where ProductID=" + Convert.ToInt32(PId) + " and VarientID=" + Convert.ToInt32(VId) + "and InventoryID=" + Convert.ToInt32(IId) + " and Issent=0 and Email='" + EId + "'", dbconn))
                     {
                         if (rs.Read())
                         {
@@ -702,8 +703,8 @@ namespace AspDotNetStorefront
             }
             return true;
         }
-         [System.Web.Services.WebMethod()]
-        public static bool IsProductExist(string PId, string VId, string SelectedColour, string SelectedSize,String CustomerID)
+        [System.Web.Services.WebMethod()]
+        public static bool IsProductExist(string PId, string VId, string SelectedColour, string SelectedSize, String CustomerID)
         {
             bool status = false;
             if (SelectedColour.Equals("") || SelectedSize.Equals(""))
@@ -711,8 +712,8 @@ namespace AspDotNetStorefront
                 return false;
             }
             else
-            {               
-               
+            {
+
                 using (SqlConnection dbconn = new SqlConnection(DB.GetDBConn()))
                 {
                     dbconn.Open();
@@ -721,40 +722,80 @@ namespace AspDotNetStorefront
                         if (rs.Read())
                         {
                             status = true;
-                           
+
                         }
                     }
-                }               
+                }
 
             }
             return status;
+        }
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        public static void SetSOFCodeChoice(String SOFCodeValue)
+        {
+            try
+            {
+                SOFCodeChoice = SOFCodeValue;
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+
         }
 
         private void HandleAddToCart()
         {
 
-            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text) || txtBluBuksUsed.Text==".")
-                txtBluBuksUsed.Text = "0";               
+            if (String.IsNullOrEmpty(txtBluBuksUsed.Text) || String.IsNullOrWhiteSpace(txtBluBuksUsed.Text) || txtBluBuksUsed.Text == ".")
+                txtBluBuksUsed.Text = "0";
 
-            if (String.IsNullOrEmpty(txtproductcategoryfundusedforsalesrep.Text) || String.IsNullOrWhiteSpace(txtproductcategoryfundusedforsalesrep.Text)||(txtproductcategoryfundusedforsalesrep.Text=="."))
+            if (String.IsNullOrEmpty(txtproductcategoryfundusedforsalesrep.Text) || String.IsNullOrWhiteSpace(txtproductcategoryfundusedforsalesrep.Text) || (txtproductcategoryfundusedforsalesrep.Text == "."))
                 txtproductcategoryfundusedforsalesrep.Text = "0";
             // extract the input parameters from the form post
             AddToCartInfo formInput = AddToCartInfo.FromForm(ThisCustomer);
             formInput.BluBucksUsed = Convert.ToDecimal(txtBluBuksUsed.Text);
             formInput.FundID = Convert.ToInt32(hdnProductFundID.Text);
-            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)  
-            {                
-                    formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
-                    formInput.FundID = (int)FundType.SOFFunds;                    
-              
+            //GLcode holds decision parameter value
+            formInput.GLcode = SOFCodeChoice;
+            if (ThisCustomer.CustomerLevelID == 3 || ThisCustomer.CustomerLevelID == 7)
+            {
+                if (Convert.ToInt16(formInput.GLcode) == (int)SOFUsedType.NF)
+                {
+                    formInput.CategoryFundUsed = Convert.ToDecimal("0.00");
+                }
+                else if (Convert.ToInt16(formInput.GLcode) == (int)SOFUsedType.CAPEX)
+                {
+                    formInput.CategoryFundUsed = Convert.ToDecimal("0.00");
+                }
+                else
+                {
+                formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);
+                }
+                
+                formInput.FundID = (int)FundType.SOFFunds;
+
             }
             else
                 formInput.CategoryFundUsed = Convert.ToDecimal(hdnProductFundAmountUsed.Text);
 
-           
+
             formInput.BluBucksPercentageUsed = Convert.ToDecimal(hdnBudgetPercentValue.Text);
             formInput.ProductCategoryID = Convert.ToInt32(hdnProductCategoryID.Text);
-            formInput.GLcode = (optionsRadioYes.Checked ? "Yes" : "No");
+
+            if (Convert.ToInt16(formInput.GLcode) == (int)SOFUsedType.SOFF)
+            {
+                formInput.SOFCode = txtSOFCode.Text;
+            }
+            else if (Convert.ToInt16(formInput.GLcode) == (int)SOFUsedType.CAPEX)
+            {
+                formInput.SOFCode = txtCAPEX.Text;
+            }
+            else
+            {
+                formInput.SOFCode = "0";
+            }
             if (formInput != AddToCartInfo.INVALID_FORM_COMPOSITION)
             {
                 string returnUrl = SE.MakeObjectLink("Product", formInput.ProductId, String.Empty);
@@ -935,8 +976,8 @@ namespace AspDotNetStorefront
             if (!string.IsNullOrEmpty(color))
             {
                 return (from inventory in lstInventories
-                    where inventory.Color == color && inventory.Size == size
-                    select int.Parse(inventory.Quantity) > 4 ? int.Parse(inventory.Quantity) : 0).FirstOrDefault();
+                        where inventory.Color == color && inventory.Size == size
+                        select int.Parse(inventory.Quantity) > 4 ? int.Parse(inventory.Quantity) : 0).FirstOrDefault();
             }
             return
                 lstInventories.Where(inventory => inventory.Size == size)
@@ -954,7 +995,7 @@ namespace AspDotNetStorefront
                 {
                     if (rs.Read())
                     {
-                        InventoryID= DB.RSFieldInt(rs, "InventoryID").ToString();
+                        InventoryID = DB.RSFieldInt(rs, "InventoryID").ToString();
                     }
                 }
             }
@@ -966,6 +1007,6 @@ namespace AspDotNetStorefront
         {
             return LstInventories;
         }
-        
+
     }
 }

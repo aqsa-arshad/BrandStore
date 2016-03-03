@@ -1364,6 +1364,7 @@ namespace AspDotNetStorefrontCore
                         newItem.BluBucksPercentageUsed = DB.RSFieldDecimal(rs, "BluBucksPercentageUsed");
                         newItem.ProductCategoryID = DB.RSFieldInt(rs, "ProductCategoryID");
                         newItem.GLcode = DB.RSField(rs, "GLcode");
+                        newItem.SOFCode = DB.RSField(rs, "SOFCode");
                         newItem.FundName = DB.RSField(rs, "FundName");
                         newItem.Inventory = DB.RSFieldInt(rs, "Inventory");
                         newItem.ShipmentChargesPaid = DB.RSFieldDecimal(rs, "ShipmentChargesPaid");
@@ -6866,14 +6867,14 @@ namespace AspDotNetStorefrontCore
         /// <param name="GiftRegistryForCustomerID">The gift registry for CustomerID.</param>
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0, String GLcode = "0")
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0, String GLcode = "0", String SOFCode = "0")
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null, BluBuksUsed, CategoryFundUsed, FundID, BluBucksPercentageUsed, ProductCategoryID, GLcode);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, null, BluBuksUsed, CategoryFundUsed, FundID, BluBucksPercentageUsed, ProductCategoryID, GLcode , SOFCode);
         }
 
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0, String GLcode = "0")
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0, String GLcode = "0", String SOFCode = "0")
         {
-            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false, BluBuksUsed, CategoryFundUsed, FundID, BluBucksPercentageUsed, ProductCategoryID, GLcode);
+            return AddItem(ThisCustomer, ShippingAddressID, ProductID, VariantID, Quantity, ChosenColor, ChosenColorSKUModifier, ChosenSize, ChosenSizeSKUModifier, TextOption, CartType, UpdateCartObject, IsRequired, GiftRegistryForCustomerID, CustomerEnteredPrice, preferredComposition, false, BluBuksUsed, CategoryFundUsed, FundID, BluBucksPercentageUsed, ProductCategoryID, GLcode, SOFCode);
         }
 
         // NOTE: ChosenColor and ChosenSize MUST ALWAYS be passed in here in the MASTER WEBCONFIG LOCALE, If in a ML situation!
@@ -6897,7 +6898,7 @@ namespace AspDotNetStorefrontCore
         /// <param name="CustomerEnteredPrice">The customer entered price.</param>
         /// <param name="preferredComposition">The preferred composition.</param>
         /// <returns></returns>
-        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0, String GLcode = "0")
+        public int AddItem(Customer ThisCustomer, int ShippingAddressID, int ProductID, int VariantID, int Quantity, String ChosenColor, String ChosenColorSKUModifier, String ChosenSize, String ChosenSizeSKUModifier, String TextOption, CartTypeEnum CartType, bool UpdateCartObject, bool IsRequired, int GiftRegistryForCustomerID, decimal CustomerEnteredPrice, KitComposition preferredComposition, bool isAGift, Decimal BluBuksUsed = 0, Decimal CategoryFundUsed = 0, int FundID = 0, Decimal BluBucksPercentageUsed = 0, int ProductCategoryID = 0, String GLcode = "0", String SOFCode = "0")
         {
             if (null != preferredComposition)
             {
@@ -6986,9 +6987,10 @@ namespace AspDotNetStorefrontCore
                                           DB.CreateSQLParameter("@BluBuksUsed", SqlDbType.Money, 4, BluBuksUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@CategoryFundUsed", SqlDbType.Money, 4, CategoryFundUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@FundID", SqlDbType.Int, 4, FundID, ParameterDirection.Input),
-                                           DB.CreateSQLParameter("@BluBucksPercentageUsed", SqlDbType.Money, 4, BluBucksPercentageUsed, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@BluBucksPercentageUsed", SqlDbType.Money, 4, BluBucksPercentageUsed, ParameterDirection.Input),
                                           DB.CreateSQLParameter("@ProductCategoryID", SqlDbType.Int, 4, ProductCategoryID, ParameterDirection.Input),
-                                           DB.CreateSQLParameter("@GLcode", SqlDbType.NVarChar, 200, GLcode, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@GLcode", SqlDbType.NVarChar, 200, GLcode, ParameterDirection.Input),
+                                          DB.CreateSQLParameter("@SOFCode", SqlDbType.NVarChar, 200, SOFCode, ParameterDirection.Input),
                                          };
 
                         NewRecID = DB.ExecuteStoredProcInt("dbo.aspdnsf_AddItemToCart", spa, m_DBTrans);
@@ -7162,7 +7164,7 @@ namespace AspDotNetStorefrontCore
         }
 
         //Added By Tayyab on 10-01-2016 to update fund used for item
-        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode, Decimal BluBucksPercentage)
+        public void SetItemFundsUsed(int cartRecordID, Decimal CategoryFundUsed, Decimal BluBucksUsed, String GLcode, Decimal BluBucksPercentage, String SOFCode)
         {
             m_CachedTotals.Clear();
             for (int i = 0; i < m_CartItems.Count; i++)
@@ -7175,6 +7177,7 @@ namespace AspDotNetStorefrontCore
                     ci.CategoryFundUsed = CategoryFundUsed;
                     ci.BluBuksUsed = BluBucksUsed;
                     ci.GLcode = GLcode;
+                    ci.SOFCode = SOFCode;
                     ci.BluBucksPercentageUsed = BluBucksPercentage;
                     m_CartItems[i] = ci;
                     break;
@@ -7182,7 +7185,7 @@ namespace AspDotNetStorefrontCore
             }
 
 
-            String sql = "update ShoppingCart set CategoryFundUsed=" + CategoryFundUsed.ToString() + ",GLcode='" + GLcode.ToString() + "',BluBucksUsed=" + BluBucksUsed.ToString() + "  where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
+            String sql = "update ShoppingCart set CategoryFundUsed=" + CategoryFundUsed.ToString() + ",GLcode='" + GLcode.ToString() + "',SOFCode='" + SOFCode.ToString() + "',BluBucksUsed=" + BluBucksUsed.ToString() + "  where ShoppingCartRecID=" + cartRecordID.ToString() + " and CustomerID=" + m_ThisCustomer.CustomerID.ToString();
             DB.ExecuteSQL(sql, m_DBTrans);
 
 
@@ -11400,7 +11403,8 @@ namespace AspDotNetStorefrontCore
                                     addCartInfo.FundID,
                                     addCartInfo.BluBucksPercentageUsed,
                                     addCartInfo.ProductCategoryID,
-                                    addCartInfo.GLcode
+                                    addCartInfo.GLcode,
+                                    addCartInfo.SOFCode
                                     );
                 }
                 else
@@ -11425,7 +11429,8 @@ namespace AspDotNetStorefrontCore
                         addCartInfo.FundID,
                         addCartInfo.BluBucksPercentageUsed,
                         addCartInfo.ProductCategoryID,
-                        addCartInfo.GLcode
+                        addCartInfo.GLcode,
+                        addCartInfo.SOFCode
                        );
                 }
 
@@ -11839,6 +11844,15 @@ namespace AspDotNetStorefrontCore
         {
             get { return m_GLcode; }
             set { m_GLcode = value; }
+        }
+        private string m_SOFCode;
+        /// <summary>
+        /// Gets or sets the customer entered Code
+        /// </summary>
+        public string SOFCode
+        {
+            get { return m_SOFCode; }
+            set { m_SOFCode = value; }
         }
 
         private string m_chosencolor;

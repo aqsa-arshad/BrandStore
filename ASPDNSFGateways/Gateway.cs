@@ -1430,7 +1430,7 @@ namespace AspDotNetStorefrontGateways
 					+ " ChosenSizeSKUModifier,TextOption,ColorOptionPrompt,SizeOptionPrompt,TextOptionPrompt,CustomerEntersPricePrompt,"
 					+ " OrderedProductName,OrderedProductVariantName,OrderedProductSKU,OrderedProductManufacturerPartNumber,OrderedProductWeight,"
 					+ " OrderedProductPrice,CustomerEntersPrice,IsTaxable,IsShipSeparately,IsDownload,FreeShipping, IsAKit, IsAPack,"
-                    + " IsSystem, TaxClassID, TaxRate, IsGift,GTIN,CategoryFundUsed,BluBucksUsed,CategoryFundType,BluBucksPercentageUsed,ProductCategoryId,GLcode)"
+                    + " IsSystem, TaxClassID, TaxRate, IsGift,GTIN,CategoryFundUsed,BluBucksUsed,CategoryFundType,BluBucksPercentageUsed,ProductCategoryId,GLcode,SOFCode)"
 					+ String.Format(" SELECT {0},D.DistributorID,sc.CartType,sc.ShippingMethodID,sc.ShippingMethod,sc.GiftRegistryForCustomerID,sc.Notes,"
 					+ " sc.ShippingAddressID,sc.ExtensionData,ShoppingCartRecID,sc.CustomerID,sc.ProductID,sc.SubscriptionInterval,sc.SubscriptionIntervalType,"
 					+ " sc.VariantID,sc.Quantity,ChosenColor,ChosenColorSKUModifier,ChosenSize,ChosenSizeSKUModifier,TextOption,Product.ColorOptionPrompt,"
@@ -1438,7 +1438,7 @@ namespace AspDotNetStorefrontGateways
 					+ " ISNULL(Product.ManufacturerPartNumber, '') + ISNULL(pv.ManufacturerPartNumber, '')"
 					+ ",sc.ProductWeight,sc.ProductPrice,sc.CustomerEntersPrice,sc.IsTaxable,sc.IsShipSeparately,"
 					+ " sc.IsDownload,sc.FreeShipping, sc.IsAKit, sc.IsAPack, sc.IsSystem, sc.TaxClassID,"
-                    + "(isnull(cr.taxrate, 0)+isnull(sr.taxrate, 0)+isnull(zr.taxrate, 0)), IsGift, sc.GTIN,sc.CategoryFundUsed,sc.BluBucksUsed,sc.FundID,sc.BluBucksPercentageUsed,sc.ProductCategoryId,sc.GLcode", OrderNumber)
+                    + "(isnull(cr.taxrate, 0)+isnull(sr.taxrate, 0)+isnull(zr.taxrate, 0)), IsGift, sc.GTIN,sc.CategoryFundUsed,sc.BluBucksUsed,sc.FundID,sc.BluBucksPercentageUsed,sc.ProductCategoryId,sc.GLcode,sc.SOFCode", OrderNumber)
 					+ " from ((ShoppingCart sc  with (NOLOCK)  left outer join product  with (NOLOCK)  on sc.productid=product.productid)"
 					+ " left outer join productvariant  with (NOLOCK)  on sc.variantid=productvariant.variantid)"
 					+ " left outer join ProductDistributor D  with (NOLOCK)  on product.ProductID=D.ProductID"
@@ -1455,8 +1455,8 @@ namespace AspDotNetStorefrontGateways
 					+(int)cart.CartType, cart.ThisCustomer.CustomerID, CommonLogic.IIF(AppLogic.GlobalConfigBool("AllowShoppingcartFiltering") == true, 1, 0), AppLogic.StoreID())
 					+ RecurringOrderSql;
 				DB.ExecuteSQL(sql4);
-
-                sql4 = string.Format("update Orders set ShipmentChargesPaid = (select ShipmentChargesPaid from ShoppingCart where ShoppingCartRecID = {0}) where OrderNumber={1}",cart.CartItems.FirstOrDefault().ShoppingCartRecordID,OrderNumber.ToString());
+                
+                sql4 = string.Format("update Orders set ShipmentChargesPaid = (select ShipmentChargesPaid from ShoppingCart where ShoppingCartRecID = {0}) where OrderNumber={1}", cart.CartItems.FirstOrDefault().ShoppingCartRecordID, OrderNumber.ToString());
                 DB.ExecuteSQL(sql4);
 
 				if (cart.HasGiftCards)

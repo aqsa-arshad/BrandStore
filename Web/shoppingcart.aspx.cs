@@ -424,6 +424,36 @@ namespace AspDotNetStorefront
             UpdateCart();
         }
         [System.Web.Services.WebMethod(EnableSession = true)]
+        public static void SetSOFCodeAndSOFSelectedFund(String SOFChoice)
+        {
+            try
+            {
+                System.Web.HttpContext.Current.Session["SOFChoice"] = SOFChoice;
+
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        public static void SetSOFCodeValueInSession(String SOFCode)
+        {
+            try
+            {
+                System.Web.HttpContext.Current.Session["SOFCode"] = SOFCode;
+
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+        [System.Web.Services.WebMethod(EnableSession = true)]
         public static void SaveValuesInSession(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid)
         {
             try
@@ -431,7 +461,6 @@ namespace AspDotNetStorefront
                 System.Web.HttpContext.Current.Session["ProductCategoryFundUsed"] = ProductCategoryFundUsed;
                 System.Web.HttpContext.Current.Session["BluBucksUsed"] = BluBucksUsed;
                 System.Web.HttpContext.Current.Session["currentrecordid"] = currentrecordid;
-
             }
             catch (Exception ex)
             {
@@ -492,11 +521,24 @@ namespace AspDotNetStorefront
             cart = new ShoppingCart(SkinID, ThisCustomer, CartTypeEnum.ShoppingCart, 0, false);
             //cart.SetCoupon(txtGiftCard.Text.ToUpperInvariant(), true);
 
-            String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
+            // aqsa arshad code starts here  : apply no category fund for CAPEX
+            String ProductCategoryFundUsed = String.Empty;
+            if (Convert.ToInt16(GetSessionValue("SOFChoice")) == (int)SOFUsedType.NF || Convert.ToInt16(GetSessionValue("SOFChoice")) == (int)SOFUsedType.CAPEX)
+            {
+                ProductCategoryFundUsed = "0.00";
+            }
+            else
+            {
+                ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
+            }
+
+            // aqsa arshad code ends here 
+
             String BluBucksUsed = GetSessionValue("BluBucksUsed");
             String currentrecordid = GetSessionValue("currentrecordid");
-            String GLcode = (optionsRadioYes.Checked ? "Yes" : "No");
-            UpdateCurrentItemFundsUsed(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, GLcode);//Added By Tayyab on 10-01-2016
+            String GLcode = GetSessionValue("SOFChoice");
+            String SOFCode = GetSessionValue("SOFCode");
+            UpdateCurrentItemFundsUsed(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, GLcode, SOFCode);//Added By Tayyab on 10-01-2016
             UpdateCartQuantity(currentrecordid);
 
             ctrlOrderOption.UpdateChanges();
@@ -542,7 +584,7 @@ namespace AspDotNetStorefront
                 }
                 //End Blu Bucks Used Total
 
-                //Sof used total                  
+                    //Sof used total                  
                 else if (cart.ThisCustomer.CustomerLevelID == 3 || cart.ThisCustomer.CustomerLevelID == 7)
                 {
                     SofFundsUsedTotal =
@@ -1125,7 +1167,7 @@ namespace AspDotNetStorefront
 
         }
 
-        private void UpdateCurrentItemFundsUsed(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid, String GLcode)
+        private void UpdateCurrentItemFundsUsed(String ProductCategoryFundUsed, String BluBucksUsed, String currentrecordid, String GLcode, String SOFCode)
         {
             //String ProductCategoryFundUsed = GetSessionValue("ProductCategoryFundUsed");
             //String BluBucksUsed = GetSessionValue("BluBucksUsed");
@@ -1134,7 +1176,7 @@ namespace AspDotNetStorefront
             try
             {
                 Decimal BluBucksPercentage = AuthenticationSSO.GetBudgetPercentageRatio(ThisCustomer.CustomerID, Convert.ToInt32(FundType.BLUBucks)).BudgetPercentageValue;
-                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode, BluBucksPercentage);
+                cart.SetItemFundsUsed(Convert.ToInt32(currentrecordid), Convert.ToDecimal(ProductCategoryFundUsed), Convert.ToDecimal(BluBucksUsed), GLcode, BluBucksPercentage, SOFCode);
             }
             catch (Exception ex)
             {

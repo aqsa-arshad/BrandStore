@@ -99,6 +99,7 @@ namespace AspDotNetStorefrontCore
         private int m_ProductCategory;
         private Decimal m_BluBucksPercentageUsed;
         private String m_GLcode;
+        private String m_SOFCode;
         private String m_FundName;
         private Decimal m_ShipmentChargesPaid;
         private int m_Inventory;
@@ -216,6 +217,7 @@ namespace AspDotNetStorefrontCore
            m_ProductCategory=ci.ProductCategoryID;
            m_BluBucksPercentageUsed = ci.BluBucksPercentageUsed;
            m_GLcode = ci.GLcode;
+           m_SOFCode = ci.SOFCode;
            m_FundName = ci.FundName;
            m_Inventory = ci.Inventory;
            m_ShipmentChargesPaid = ci.ShipmentChargesPaid;
@@ -287,6 +289,20 @@ namespace AspDotNetStorefrontCore
             set { m_GLcode = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the SOF code.
+        /// </summary>
+        /// <value>
+        /// The SOF code
+        /// </value>
+        public String SOFCode
+        {
+            get { return m_SOFCode; }
+            set { m_SOFCode = value; }
+        }
+
+
+        
         /// <summary>
         /// Gets or sets the name of the fund.
         /// </summary>
