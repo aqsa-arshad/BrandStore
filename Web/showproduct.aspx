@@ -54,7 +54,7 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforblubucks" ClientIDMode="Static">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
@@ -94,7 +94,7 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforsof" ClientIDMode="Static">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">SPECIFY FUNDS </h4>
                     <p runat="server">
@@ -193,6 +193,18 @@
                 success: function (result) {
                 }
             });
+
+        //New CHECK ADDED ON 3-3-2016 by tayyab to clear field in cross button click
+            $("#btncancelforsof").click(function () {
+            $("#txtproductcategoryfundusedforsalesrep").val(0);
+            $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
+            });
+
+            $("#btncancelforblubucks").click(function () {
+            $("#txtBluBuksUsed").val(0);
+             $("#txtBluBuksUsed").trigger("focusout");
+            });
+        //End
              
             $("#btnGeneralFunds").click(function (e) {
                 $("#btnGeneralFunds").addClass("btn-funds");
