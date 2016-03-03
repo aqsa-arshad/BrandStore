@@ -18,7 +18,7 @@
         <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />
         <div class="content-box-03">
             <h4 class="black-color margin-top-none">Payment</h4>
-            <div id="divmainrow">
+            <div id="divmainrow" class="checkout-tablet-main">
 
                 <%-- <checkout:CheckoutSteps ID="CheckoutSteps" runat="server" />--%>
                 <%-- <h1>
@@ -58,7 +58,7 @@
                 </asp:Panel>
 
                 <asp:Label ID="lbl1" ClientIDMode="Static" runat="server" Text="<%$ Tokens:StringResource,choosepaymentmethod%>"></asp:Label>
-                <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="checkout-tablet-view pull-left-md" Visible="true">
+                <asp:Panel ID="pnlPaymentOptions" runat="server" HorizontalAlign="left" CssClass="" Visible="true">
                     <div>
                         <aspdnsfc:PaymentMethod CssClass="payment-method" ID="ctrlPaymentMethod" runat="server"
                             OnPaymentMethodChanged="ctrlPaymentMethod_OnPaymentMethodChanged"
@@ -171,18 +171,18 @@
                                 BankAccountNameReqFieldValGrp="echeck" BankNameReqFieldValGrp="echeck"
                                 BankABACodeReqFieldValGrp="echeck" BankAccountNumberReqFieldValGrp="echeck" />
                         </asp:Panel>
+                        <div id="pnlPOPane" runat="server" Visible="false" class="checkout-tablet-view pull-left-md">
+                        <asp:Panel runat="server"  CssClass="checkout-feilds"><%--Visible="false"--%>
 
-                        <asp:Panel ID="pnlPOPane" runat="server" Visible="false" CssClass="page-row">
-
-                            <p class="td-25-percent">
+                            <p>
                                 <asp:Label ID="lblPOHeader" runat="server" CssClass="block-text"
                                     Text="<%$ Tokens:StringResource, checkoutpo.aspx.3 %>"></asp:Label>
                             </p>
                             <div class="clearfix"></div>
                             <asp:Label ID="lblPO" runat="server" CssClass="block-text"
                                 Text="<%$ Tokens:StringResource, checkoutpo.aspx.4 %>"></asp:Label>
-                            <div class="td-25-percent">
-                                <p class="item-space-right">
+                            <div>
+                                <p>
                                     <asp:TextBox ID="txtPO" AutoCompleteType="Disabled" onpaste="return false" MaxLength="20" ClientIDMode="Static" runat="server"></asp:TextBox>
                                     <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtPO" runat="server" ErrorMessage="Special Characters are not allowed." ValidationExpression="^[0-9a-zA-Z-_\b]+$"></asp:RegularExpressionValidator>--%>
                                 </p>
@@ -194,7 +194,7 @@
                             </div>
 
                         </asp:Panel>
-
+                        </div>
                         <asp:Panel ID="pnlSecureNetVaultPayment" runat="server" CssClass="page-row" Visible="false">
                             <asp:Label ID="lblSecureNetMessage" Visible="false" runat="server" CssClass="error" />
                             <asp:RadioButtonList ID="rblSecureNetVaultMethods" runat="server" />

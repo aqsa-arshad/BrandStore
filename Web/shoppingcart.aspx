@@ -792,7 +792,17 @@
                 
                 if (ItemQuantity * 1 > maxInventory) {
                     alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + maxInventory + ". Please contact us if you need more information.");
-                    $(quantityfieldid).val(maxInventory);
+                       if( $(quantityfieldid).prop('type') == 'text' ) 
+                        {   
+                           
+                            $(quantityfieldid).val(maxInventory);
+                        }
+                        else
+                        {
+                           var id=quantityfieldid + " option:first-child";
+                          jQuery(id ).attr("selected", true);                           
+                        }                   
+                   
                     return false;
                 }
                

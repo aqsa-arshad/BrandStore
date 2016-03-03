@@ -612,6 +612,7 @@
                     }
                     //}
                 }
+                 ApplyValidation2(theForm);
             });
             //End
 
@@ -677,6 +678,7 @@
                 }
 
                 //End 
+                ApplyValidation2(theForm);
             });
 
             $('input').keypress(function (e) {
@@ -975,38 +977,20 @@
                     theForm.Quantity_1_1.focus();
                     submitenabled(theForm);
                     return (false);
-
                 }
-                if ($("#Size_1_1").length > 0) {
-                    var sel_size = theForm.Size_1_1[theForm.Size_1_1.selectedIndex].value;
-                    sel_size = sel_size.substring(0, sel_size.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    if (theForm.Size_1_1.selectedIndex < 1) {
-                       // alert("Please select a size.");
-                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
-                        theForm.Size_1_1.focus();
-                        submitenabled(theForm);
-                        return (false);
-                    }
-                }
-                if ($("#Color_1_1").length > 0) {
-                    var sel_color = theForm.Color_1_1[theForm.Color_1_1.selectedIndex].value;
-                    sel_color = sel_color.substring(0, sel_color.indexOf(',')).replace(new RegExp("'", 'gi'), '');
-                    if (theForm.Color_1_1.selectedIndex < 1) {
-                       // alert("Please select a color.");
-                        $("#btnaddtocart").removeAttr("data-toggle", "modal");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModa2");
-                        $("#btnaddtocart").removeAttr("data-target", "#myModal1");
-                        theForm.Color_1_1.focus();
-                        submitenabled(theForm);
-                        return (false);
-                    }
-                }
+               
                 if (inventoryArray.length <= 1) {
                     if (theForm.Quantity_1_1.value > SelectedVariantInventory_1_1) {
-                      //  alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
-                        theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
+                        alert("Your quantity exceeds stock on hand. The maximum quantity that can be added is " + SelectedVariantInventory_1_1 + ". Please contact us if you need more information.");
+                        if( $("#Quantity_1_1").prop('type') == 'text' ) 
+                        {   
+                            theForm.Quantity_1_1.value = SelectedVariantInventory_1_1;
+                        }
+                        else
+                        {
+                          jQuery("#Quantity_1_1 option:first-child").attr("selected", true);                           
+                        }
+                      
                         theForm.Quantity_1_1.focus();
                         $("#Quantity_1_1").trigger("focusout");                       
                         submitenabled(theForm);
@@ -1067,7 +1051,7 @@
                                             } else {
                                                 if (sel_color == '') sel_color = 'N/A';
                                                 if (sel_size == '') sel_size = 'N/A';
-                                               // alert('Your quantity exceeds our inventory on hand. The maximum quantity that can be added for Color: ' + sel_color + ', Size: ' + sel_size + ' is ' + board_1_1[i][2] + '.\n\nPlease reduce your quantity, or select another Color/Size combination.');
+                                                alert('Your quantity exceeds our inventory on hand. The maximum quantity that can be added for Color: ' + sel_color + ', Size: ' + sel_size + ' is ' + board_1_1[i][2] + '.\n\nPlease reduce your quantity, or select another Color/Size combination.');
                                                 theForm.Quantity_1_1.value = board_1_1[i][2];
                                                 theForm.Quantity_1_1.focus();
                                             }
