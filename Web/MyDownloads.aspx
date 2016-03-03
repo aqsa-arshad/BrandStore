@@ -45,7 +45,7 @@
                                 </td>
                                 <td class="td-25-percent">
                                     <span class="normal-heading black-color">&nbsp;</span>
-                                    <asp:HyperLink class="underline-link" ID="hlDownload" runat="server"></asp:HyperLink>
+                                    <asp:HyperLink class="underline-link" ID="hlDownload" Target="_blank" runat="server"></asp:HyperLink>
                                 </td>
                             </tr>
                         </ItemTemplate>
