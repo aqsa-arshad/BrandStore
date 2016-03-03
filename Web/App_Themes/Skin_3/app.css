@@ -6504,6 +6504,15 @@ a:hover.mb-link {
   visibility: hidden;
   display: none;
 }
+.hide-items {
+  display: none;
+}
+.btn-funds-main .btn-primary {
+    width: 47% !important;
+}
+.btn-funds {
+  background-color: #888 !important;
+}
 a.underline-link {
   text-decoration: underline;
 }

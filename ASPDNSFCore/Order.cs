@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -1154,9 +1156,99 @@ namespace AspDotNetStorefrontCore
 
             if (disallowCacheing || ReceiptEMailSentOn == DateTime.MinValue || String.IsNullOrEmpty(m_ReceiptHtml))
             {
-                String PackageName = AppLogic.AppConfig("XmlPackage.OrderReceipt");
-                string runtimeParams = string.Format("ordernumber={0}&ShowOnlineLink={1}", OrderNumber.ToString(), ShowOnlineLink);
-                String result = AppLogic.RunXmlPackage(PackageName, null, ViewingCustomer, AppLogic.GetStoreSkinID(GetOrderStoreID(OrderNumber)), String.Empty, runtimeParams, false, true);
+                var shipmentChargesPaid = 0m;
+                var customerLevelID = GetOrderCustomerLevelID(OrderNumber);
+                var lblSOFFundsTotal = String.Empty;
+                var lblDirectMailFundsTotal = String.Empty;
+                var lblDisplayFundsTotal = String.Empty;
+                var lblLiteratureFundsTotal = String.Empty;
+                var lblPOPFundsTotal = String.Empty;
+                var lblBluBucks = String.Empty;
+                decimal bluBucksUsed = 0m;
+
+                var lstFund = Enumerable.Repeat(0m, 7).ToList();
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("aspdnsf_GetOrderDetail", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ORDERNUMBER", OrderNumber);
+                        IDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            shipmentChargesPaid = Convert.ToDecimal(reader["ShipmentChargesPaid"].ToString());
+                            for (var i = 2; i < 7; i++)
+                            {
+                                if (Convert.ToDecimal(reader[i.ToString()].ToString()) != 0)
+                                {
+                                    lstFund[i] =
+                                        lstFund[i] + Convert.ToDecimal(reader[i.ToString()].ToString());
+
+                                    if (lstFund[i] != 0 && i == (int)FundType.SOFFunds)
+                                    {
+                                        lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                        if (shipmentChargesPaid > 0)
+                                        {
+                                            lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i] + shipmentChargesPaid);
+                                        }
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.DirectMailFunds)
+                                    {
+                                        lblDirectMailFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.DisplayFunds)
+                                    {
+                                        lblDisplayFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.LiteratureFunds)
+                                    {
+                                        lblLiteratureFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                    }
+                                    else if (lstFund[i] != 0 && i == (int)FundType.POPFunds)
+                                    {
+                                        lblPOPFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting), AppLogic.AppConfig("CurrencyFormat"), lstFund[i]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //get the Blu Bucks used for a perticular order number
+                using (var conn = DB.dbConn())
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("select SUM(BluBucksUsed) from Orders_ShoppingCart where OrderNumber=" + OrderNumber, conn))
+                    {
+                        bluBucksUsed = Convert.ToDecimal(cmd.ExecuteScalar());
+                        if (shipmentChargesPaid > 0 && bluBucksUsed > 0)
+                        {
+                            bluBucksUsed = bluBucksUsed + shipmentChargesPaid;
+                        }
+                    }
+                }
+                if (bluBucksUsed <= 0 && string.IsNullOrEmpty(lblSOFFundsTotal))
+                {
+                    if ((customerLevelID == (int)UserType.SALESREPS || customerLevelID == (int)UserType.INTERNAL) &&
+                        shipmentChargesPaid > 0)
+                    {
+                        lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(m_ViewInLocaleSetting),
+                            AppLogic.AppConfig("CurrencyFormat"), shipmentChargesPaid);
+                    }
+
+                    if ((customerLevelID == (int)UserType.BLUELITE || customerLevelID == (int)UserType.BLUPREMIER ||
+                     customerLevelID == (int)UserType.BLUAUTHORIZED || customerLevelID == (int)UserType.BLUUNLIMITED) &&
+                        shipmentChargesPaid > 0)
+                    {
+                        bluBucksUsed = shipmentChargesPaid;
+                    }
+                }
+                lblBluBucks = Math.Round(bluBucksUsed, 2).ToString();
+                var invoiceFee = Localization.CurrencyStringForDisplayWithExchangeRate(Convert.ToDecimal(AppLogic.AppConfig("Invoice.fee")), ViewingCustomer.CurrencySetting);
+
+                var p = new XmlPackage2(AppLogic.AppConfig("XmlPackage.OrderReceipt"), null, SkinID, String.Empty, "ShowOnlineLink" + ShowOnlineLink + "&shipmentChargesPaid=" + shipmentChargesPaid + "&ordernumber=" + OrderNumber + "&BBCredit=" + lblBluBucks + "&SOFunds=" + lblSOFFundsTotal + "&DirectMailFunds=" + lblDirectMailFundsTotal + "&DisplayFunds=" + lblDisplayFundsTotal + "&LiteratureFunds=" + lblLiteratureFundsTotal + "&POPFunds=" + lblPOPFundsTotal + "&Invoicefee=" + invoiceFee);
+                var result = p.TransformString();
                 if (!disallowCacheing && !result.Contains(new Topic("InvalidRequest", ViewingCustomer.LocaleSetting, 1).Contents))
                     SaveReceipt(result);
                 return result;
@@ -2053,6 +2145,12 @@ namespace AspDotNetStorefrontCore
             return tmp;
         }
 
+
+        /// <summary>
+        /// Gets the customer level identifier of the specific order.
+        /// </summary>
+        /// <param name="OrderNumber">The order number.</param>
+        /// <returns></returns>
         public static int GetOrderCustomerLevelID(int OrderNumber)
         {
             int tmp = 0;

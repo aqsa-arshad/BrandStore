@@ -103,25 +103,12 @@
                           <a class="underline-link" href="#"><span>About sales funds</span></a>
                     </p>
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary btn-block margin-top-none" id="btnGeneralFunds">GF</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button class="btn btn-primary btn-block margin-top-none" id="btnSOFFunds">SOF</button>
-                            </div>
-                        </div>
+                    <div class="btn-funds-main">
+                        <button class="btn btn-primary margin-top-none" id="btnGeneralFunds">GF</button>
+                        <button class="btn btn-primary margin-top-none pull-right" id="btnSOFFunds">SOF</button>
                         <div class="clearfix"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary btn-block" id="btnCapitalExpenditure">CAPEX</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button class="btn btn-primary btn-block" id="btnNoFund">NO FUNDS</button>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
+                        <button class="btn btn-primary" id="btnCapitalExpenditure">CAPEX</button>
+                       <button class="btn btn-primary pull-right" id="btnNoFund">NO FUNDS</button>
                     </div>
 
                     <p id="pGeneralFunds" class="label-text hide-items">
@@ -148,16 +135,16 @@
                         <div class="col-xs-12 padding-none hide-items" id="lblSOFunds">
                             <label class="roman-black">SOF Funds Used</label>
                         </div>
-                        <div class="col-xs-6 padding-none">
+                        <p class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" AutoCompleteType="Disabled" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-                        </div>
+                        </p>
                         <div class="clearfix"></div>
                         <div class="col-xs-12 padding-none hide-items" id="deptCode">
                             <label class="roman-black">Department Code(3-digit)</label>
                         </div>
-                        <div class="col-xs-6 padding-none hide-items" id="txtDept">
+                        <p class="col-xs-6 padding-none hide-items" id="txtDept">
                             <asp:TextBox ID="txtSOFCode" MaxLength="3" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-                        </div>
+                        </p>
                         <div class="clearfix"></div>
 
                     </div>
@@ -165,13 +152,13 @@
                         <div class="col-xs-12 padding-none">
                             <label class="roman-black">Authentication code</label>
                         </div>
-                        <div class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
-                        </div>
+                        <p class="col-xs-6 padding-none">
+                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                        </p>
                         <div class="clearfix"></div>
                     </div>
                     <div class="buttons-group trueblue-popup">
-                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary btn-block" Text="ADD TO CART" runat="server" />
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-primary btn-block margin-top-none" Text="ADD TO CART" runat="server" />
                     </div>
                 </div>
             </div>
@@ -181,6 +168,12 @@
     <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $("#btnGeneralFunds").addClass("btn-funds");
+            $("#btnSOFFunds").removeClass("btn-funds");
+            $("#btnCapitalExpenditure").removeClass("btn-funds");
+            $("#btnNoFund").removeClass("btn-funds");
+
             $("#divGeneralFunds").removeClass("hide-items");
             $("#pGeneralFunds").removeClass("hide-items");
             $("#divSOFFunds").removeClass("hide-items");
@@ -202,8 +195,19 @@
             });
              
             $("#btnGeneralFunds").click(function (e) {
+                $("#btnGeneralFunds").addClass("btn-funds");
+                $("#btnSOFFunds").removeClass("btn-funds");
+                $("#btnCapitalExpenditure").removeClass("btn-funds");
+                $("#btnNoFund").removeClass("btn-funds");
 
-                $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
+                function round(value, decimals) {
+                    if (value == "" || isNaN(value))
+                        return 0;
+
+                    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+                }
+
+                $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(), 2));
                 $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
 
                 $("#divGeneralFunds").removeClass("hide-items");
@@ -237,8 +241,19 @@
             });
             $("#btnSOFFunds").click(function (e) {
 
+                $("#btnGeneralFunds").removeClass("btn-funds");
+                $("#btnSOFFunds").addClass("btn-funds");
+                $("#btnCapitalExpenditure").removeClass("btn-funds");
+                $("#btnNoFund").removeClass("btn-funds");
 
-                $("#txtproductcategoryfundusedforsalesrep").val($("#hdnProductFundAmountUsed").text());
+                function round(value, decimals) {
+                    if (value == "" || isNaN(value))
+                        return 0;
+
+                    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+                }
+
+                $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2));
                 $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
 
                 $("#pSOFFunds").removeClass("hide-items");
@@ -270,6 +285,12 @@
                 e.preventDefault();
             });
             $("#btnCapitalExpenditure").click(function (e) {
+
+                $("#btnGeneralFunds").removeClass("btn-funds");
+                $("#btnSOFFunds").removeClass("btn-funds");
+                $("#btnCapitalExpenditure").addClass("btn-funds");
+                $("#btnNoFund").removeClass("btn-funds");
+
                 function round(value, decimals) {
                     if (value == "" || isNaN(value))
                         return 0;
@@ -306,6 +327,12 @@
                 e.preventDefault();
             });
             $("#btnNoFund").click(function (e) {
+
+                $("#btnGeneralFunds").removeClass("btn-funds");
+                $("#btnSOFFunds").removeClass("btn-funds");
+                $("#btnCapitalExpenditure").removeClass("btn-funds");
+                $("#btnNoFund").addClass("btn-funds");
+
                 function round(value, decimals) {
                     if (value == "" || isNaN(value))
                         return 0;
