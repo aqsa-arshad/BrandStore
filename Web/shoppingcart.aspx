@@ -871,18 +871,6 @@
                 else {
                     SOFCode = "0";
                 }
-                $.ajax({
-                    type: "post",
-                    url: "shoppingcart.aspx/SetSOFCodeValueInSession",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({
-                        "SOFCode": SOFCode
-                    }),
-                    dataType: "json",
-                    async: false,
-                    success: function (result) {
-                    }
-                });
                 // aqsa arshad code block ends here
 
 
@@ -920,6 +908,21 @@
                     var ProductCategoryFundUsed = $("#txtproductcategoryfundusedforsalesrep").val();
                     var BluBucksUsed = 0;
                     PageMethods.SaveValuesInSession(ProductCategoryFundUsed, BluBucksUsed, currentrecordid, onSucceed, onError);// onSucceed, onError
+
+                    // aqsa arshad code block starts here -- to save SOF Code in session.
+                    $.ajax({
+                        type: "post",
+                        url: "shoppingcart.aspx/SetSOFCodeValueInSession",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            "SOFCode": SOFCode
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                        }
+                    });
+                    // aqsa arshad code block ends here                    
                     return true;
                 }
                 else {
