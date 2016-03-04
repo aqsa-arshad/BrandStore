@@ -56,13 +56,13 @@
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforblubucks" ClientIDMode="Static">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
-                    <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
-                    <p runat="server" id="ppointscount">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
-                    <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
+                    <h4 class="text-uppercase-no">APPLY BLUï¿½ BUCKS</h4>
+                    <p runat="server" id="ppointscount">You have XXXXXX BLUï¿½ Bucks you can use to purchase items.</p>
+                    <p runat="server" id="ppercentage">You can pay for up to XX% of this item's cost with BLUï¿½ Bucks.</p>
 
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
-                            <label class="roman-black">BLU™ Bucks to be applied:</label>
+                            <label class="roman-black">BLUï¿½ Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -71,7 +71,7 @@
                     </div>
 
                     <p class="label-text">
-                        <span class="roman-black">Price using BLU™ Bucks:</span>
+                        <span class="roman-black">Price using BLUï¿½ Bucks:</span>
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00</span>
                     </p>
                     <div class="buttons-group trueblue-popup">
@@ -695,7 +695,7 @@
 
                     var btnname = "#" + $("#hdnButtonName").text();
                     var customerlevel = $("#hdncustomerlevel").text();
-                    if ((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (round($("#spprice").text().replace("$", 0), 2) > 0 && round($("#hdnBluBucktsPoints").text(), 2) > 0)) {
+                    if (((customerlevel == 13 || customerlevel == 4 || customerlevel == 5 || customerlevel == 6) && (round($("#spprice").text().replace("$", 0), 2) > 0 && round($("#hdnBluBucktsPoints").text(), 2) > 0)) || customerlevel == 13) {
 
                         var updatedprice = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value) - $("#hdnProductFundAmountUsed").text();
                         $("#spprice").text("$" + updatedprice.toFixed(2));
