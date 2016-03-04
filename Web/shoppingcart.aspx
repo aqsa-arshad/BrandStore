@@ -735,6 +735,7 @@
                 else {
                     $(".spregularprice").removeClass("hide-element");
                     $(".spfunddiscountprice").removeClass("hide-element");
+                    $(".spCode").removeClass("hide-element");
 
                 }
             }
