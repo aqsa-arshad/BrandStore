@@ -400,13 +400,13 @@
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close"></button>
-                    <h4 class="text-uppercase-no">APPLY BLU™ BUCKS</h4>
-                    <p runat="server" id="ppointscount" clientidmode="Static">You have XXXXXX BLU™ Bucks you can use to purchase items.</p>
-                    <p runat="server" id="ppercentage" clientidmode="Static">You can pay for up to XX% of this item's cost with BLU™ Bucks.</p>
+                    <h4 class="text-uppercase-no">APPLY BLU&trade; BUCKS</h4>
+                    <p runat="server" id="ppointscount" clientidmode="Static">You have XXXXXX BLU&trade; Bucks you can use to purchase items.</p>
+                    <p runat="server" id="ppercentage" clientidmode="Static">You can pay for up to XX% of this item's cost with BLU&trade; Bucks.</p>
 
                     <div class="form-group">
                         <div class="col-xs-12 padding-none">
-                            <label class="roman-black">BLU™ Bucks to be applied:</label>
+                            <label class="roman-black">BLU&trade; Bucks to be applied:</label>
                         </div>
                         <div class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtBluBuksUsed" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" MaxLength="10" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -416,7 +416,7 @@
                     </div>
 
                     <p class="label-text">
-                        <span class="roman-black">Price using BLU™ Bucks:</span>
+                        <span class="roman-black">Price using BLU&trade; Bucks:</span>
                         <span id="spprice" runat="server" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="buttons-group trueblue-popup">
