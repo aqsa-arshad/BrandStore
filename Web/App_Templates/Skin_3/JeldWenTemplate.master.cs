@@ -330,14 +330,19 @@ namespace AspDotNetStorefront
             }
             else if (currentURL.ToUpper().Contains("JWSUPPORT.ASPX"))
             {
-                if (ThisCustomer.CustomerLevelID == (int)UserType.SALESREPS)
-                {
-                    lblPageHeading.Text = "About Sales Funds";
-                }
-                else
-                {
                  lblPageHeading.Text = "Support";
-                }               
+                             
+                pnlPageHeading.Visible = true;
+                divbeforelogin.Visible = false;
+                divafterlogin.Visible = false;
+                divSideBarBeforeLogin.Visible = false;
+                divSideBarAfterLogin.Visible = false;
+                divJWsupport.Visible = true;
+            }
+            else if (currentURL.ToUpper().Contains("JWABOUTSOF.ASPX"))
+            {
+                lblPageHeading.Text = "About Sales Funds";
+
                 pnlPageHeading.Visible = true;
                 divbeforelogin.Visible = false;
                 divafterlogin.Visible = false;

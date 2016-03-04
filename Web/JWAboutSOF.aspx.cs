@@ -1,30 +1,20 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using AspDotNetStorefrontCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
-using System.Web.Security;
-using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
-using System.Web.UI.WebControls;
 using System.Web.UI;
-using AspDotNetStorefrontCore;
-using AspDotNetStorefrontCommon;
+using System.Web.UI.WebControls;
 
 namespace AspDotNetStorefront
 {
-    /// <summary>
-    /// Help/Support Static Page - code behind cs file
-    /// </summary>
-    public partial class JWSupport : SkinBase
+    public partial class JWAboutSOF : SkinBase
     {
-        /// <summary>
-        /// Page Load Event
-        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-        
+
         /// <summary>
         /// Override JeldWen Master Template
         /// </summary>
