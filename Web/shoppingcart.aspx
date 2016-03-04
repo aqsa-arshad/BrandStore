@@ -468,8 +468,9 @@
                     </p>
 
                     <p class="label-text">
-                        <span class="roman-black">Regular price:</span>
-                        <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                        <span class="roman-black">Regular price:
+                            <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                        </span>
                     </p>
                     <div class="form-group hide-items" id="divSOFFunds">
                         <div class="col-xs-12 padding-none hide-items" id="divGeneralFunds">
