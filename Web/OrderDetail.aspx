@@ -115,6 +115,7 @@
                                 <asp:HiddenField ID="hfDownloadLocation" runat="server" Value='<%# Eval("DownloadLocation") %>' />
                                 <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
                                 <asp:HiddenField ID="hfFundName" runat="server" Value='<%# Eval("FundName") %>' />
+                                 <asp:HiddenField ID="hfGLcode" runat="server" Value='<%# Eval("GLcode") %>' />
                                 <td class="td-55-percent">
                                     <div class="row">
                                         <div class="col-md-5">
@@ -156,6 +157,11 @@
                                     <span>
                                         <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" runat="server" />
                                     </span>
+
+                                     <span class="block-text">
+                                        <asp:Label ID="lblSOFCodeCaption" runat="server" /><asp:Label runat="server" ID="lblSOFCode" Visible="false" Text='<%# Eval("SOFCode") %>'/>
+                                    </span>
+
                                     <span>
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><asp:Label ID="lblCreditPrice" runat="server" />
                                     </span>

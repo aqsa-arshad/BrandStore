@@ -387,6 +387,20 @@ namespace AspDotNetStorefront
                         (e.Item.FindControl("hfFundName") as HiddenField).Value + " Discount: ";
                 }
 
+                if (!string.IsNullOrEmpty((e.Item.FindControl("hfGLcode") as HiddenField).Value))
+                {
+                    if ((e.Item.FindControl("hfGLcode") as HiddenField).Value == "2")
+                    {
+                        (e.Item.FindControl("lblSOFCode") as Label).Visible = true;
+                        (e.Item.FindControl("lblSOFCodeCaption") as Label).Text = AppLogic.GetString("sof.deptcode", Customer.Current.LocaleSetting) + " ";
+                    }
+                    else if ((e.Item.FindControl("hfGLcode") as HiddenField).Value == "3")
+                    {
+                        (e.Item.FindControl("lblSOFCode") as Label).Visible = true;
+                        (e.Item.FindControl("lblSOFCodeCaption") as Label).Text = AppLogic.GetString("sof.authenticationcode", Customer.Current.LocaleSetting) + " ";
+                    }
+                }
+
                 if (string.IsNullOrEmpty(lblBluBucksTotal.Text) && string.IsNullOrEmpty(lblSOFFundsTotal.Text))
                 {
                     if ((customerLevelId == 3 || customerLevelId == 7) && shipmentChargesPaid > 0)
