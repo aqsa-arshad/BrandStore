@@ -430,20 +430,20 @@
         </div>
     </div>
     <%--End Region Open Pop Up for bucckts--%>
-    <%-- Region Open PopUp for SOF Funds--%>
+      <%-- Region Open PopUp for SOF Funds--%>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforsof" clientidmode="Static">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
-                    <h4 class="text-uppercase-no">SPECIFY FUNDS </h4>
+                    <h4 class="text-uppercase-no">SPECIFY FUND TYPE</h4>
                     <p runat="server">
-                        Apply General Funds(GF), Sales Operation Funds(SOF) or authorized Capital Expenditure Fund Code(CAPEX) to your item.</br>
-                                     If not applicable select "NO FUNDS"</br>
-                          <a class="underline-link" href="#"><span>About sales funds</span></a>
+                        Apply General Funds(GF), Sales Operations Funds(SOF) or an authorized Capital Expenditure Funds code(CAPEX) to your item.</br>
+                                     If not applicable, select "NO FUNDS."</br>
+                          <a class="underline-link" target="_blank" href="JWAboutSOF.aspx"><span>About Sales Funds</span></a>
                     </p>
 
                     <div class="btn-funds-main">
@@ -451,20 +451,20 @@
                         <button class="btn btn-primary margin-top-none pull-right" id="btnSOFFunds">SOF</button>
                         <div class="clearfix"></div>
                         <button class="btn btn-primary" id="btnCapitalExpenditure">CAPEX</button>
-                       <button class="btn btn-primary pull-right" id="btnNoFund">NO FUNDS</button>
+                        <button class="btn btn-primary pull-right" id="btnNoFund">NO FUNDS</button>
                     </div>
 
                     <p id="pGeneralFunds" class="label-text hide-items">
-                        Enter the quantity of general funds you'd like to apply to pay for this item:
+                        Enter the ammount of General Funds you'd like to apply to the price of this Item.
                     </p>
                     <p id="pSOFFunds" class="label-text hide-items">
-                        Enter the quantity of SOF LOREUM FUND you'd like to apply to pay for this item:
+                        Enter the ammount of Sales Operations Funds(SOF) you'd like to apply to the price of this Item.
                     </p>
                     <p id="pCapitalExpenditure" class="label-text hide-items">
                         Enter a valid authentication code to mark this item as a capital expenditure.
                     </p>
                     <p id="pNoFund" class="label-text hide-items">
-                        Enter the quantity of general funds you'd like to apply to pay for this item
+                        No Sales Funds will be applied to this Item. 
                     </p>
 
                     <p class="label-text">
@@ -473,10 +473,10 @@
                     </p>
                     <div class="form-group hide-items" id="divSOFFunds">
                         <div class="col-xs-12 padding-none hide-items" id="divGeneralFunds">
-                            <label class="roman-black">General Funds Used</label>
+                            <label class="roman-black">General Funds to be applied: </label>
                         </div>
                         <div class="col-xs-12 padding-none hide-items" id="lblSOFunds">
-                            <label class="roman-black">SOF Funds Used</label>
+                            <label class="roman-black">Sales Operations Funds to be applied:</label>
                         </div>
                         <p class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" AutoCompleteType="Disabled" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -485,6 +485,9 @@
                         <div class="col-xs-12 padding-none hide-items" id="deptCode">
                             <label class="roman-black">Department Code(3-digit)</label>
                         </div>
+                        <div id="lblDeptErrorMessage" class="hide-items">
+                            <label class="error-large">Code field cannot be left blank.</label></div>
+
                         <p class="col-xs-6 padding-none hide-items" id="txtDept">
                             <asp:TextBox ID="txtSOFCode" MaxLength="3" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                         </p>
@@ -493,24 +496,26 @@
                     </div>
                     <div class="form-group hide-items" id="divCapitalExpenditure">
                         <div class="col-xs-12 padding-none">
-                            <label class="roman-black">Authentication code</label>
+                            <label class="roman-black">CAPEX Authentication code:</label>
+
                         </div>
+                        <div id="lblCAPEXErrorMessage" class="hide-items">
+                            <label class="error-large">Code field cannot be left blank.</label></div>
+
                         <p class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                         </p>
                         <div class="clearfix"></div>
                     </div>
                     <div class="buttons-group trueblue-popup">
-                         <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-block btn-primary" Text="UPDATE" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
+                        <asp:Button ID="btnaddtocartforsalesrep" ClientIDMode="Static" CssClass="btn btn-block btn-primary" Text="UPDATE" runat="server" OnClick="btnaddtocartforsalesrep_Click" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <%--End Region Open Pop Up For SOF Funds--%>
-
-    
+    <%--End Region Open Pop Up For SOF Funds--%> 
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -541,6 +546,9 @@
 
             $("#btnGeneralFunds").click(function (e) {
 
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
+
                 $("#btnGeneralFunds").addClass("btn-funds");
                 $("#btnSOFFunds").removeClass("btn-funds");
                 $("#btnCapitalExpenditure").removeClass("btn-funds");
@@ -568,6 +576,8 @@
                 $("#pCapitalExpenditure").addClass("hide-items");
                 $("#divCapitalExpenditure").addClass("hide-items");
 
+                $("#pNoFund").addClass("hide-items");
+
                 $("#hdnSelectedFundType").text("1");
                 var SOFChoice = $("#hdnSelectedFundType").text();
                 $.ajax({
@@ -586,6 +596,9 @@
                 e.preventDefault();
             });
             $("#btnSOFFunds").click(function (e) {
+
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
 
                 $("#btnGeneralFunds").removeClass("btn-funds");
                 $("#btnSOFFunds").addClass("btn-funds");
@@ -614,6 +627,8 @@
                 $("#pCapitalExpenditure").addClass("hide-items");
                 $("#divCapitalExpenditure").addClass("hide-items");
 
+                $("#pNoFund").addClass("hide-items");
+
                 $("#hdnSelectedFundType").text("2");
                 var SOFChoice = $("#hdnSelectedFundType").text();
                 $.ajax({
@@ -631,6 +646,9 @@
                 e.preventDefault();
             });
             $("#btnCapitalExpenditure").click(function (e) {
+
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
 
                 // setting price for capital expense
 
@@ -653,6 +671,8 @@
 
                 $("#pGeneralFunds").addClass("hide-items");
 
+                $("#pNoFund").addClass("hide-items");
+
                 $("#pSOFFunds").addClass("hide-items");
                 $("#divSOFFunds").addClass("hide-items");
 
@@ -674,6 +694,9 @@
             });
             $("#btnNoFund").click(function (e) {
 
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
+
                 $("#btnGeneralFunds").removeClass("btn-funds");
                 $("#btnSOFFunds").removeClass("btn-funds");
                 $("#btnCapitalExpenditure").removeClass("btn-funds");
@@ -689,6 +712,8 @@
                 $("#sppriceforsalesrep").text("$" + newpricetotal);
 
                 $("#pGeneralFunds").addClass("hide-items");
+
+                $("#pNoFund").removeClass("hide-items");
 
                 $("#pSOFFunds").addClass("hide-items");
                 $("#divSOFFunds").addClass("hide-items");
@@ -791,24 +816,28 @@
                 else if (SOFChoice == "2") {
                     var SOFCode = $("#txtSOFCode").val();
                     if (SOFCode == "") {
-                        alert("Code Field can not be empty");
+                        $("#lblErrorMessage").text("Code field cannot be left blank.");
+                        $("#lblDeptErrorMessage").removeClass("hide-items");
                         return false;
                     }
                     else if (SOFCode.length < 3) {
-                        alert("Code must be 3 digit");
+                        $("#lblErrorMessage").text("Code must of 3 digit.");
+                        $("#lblDeptErrorMessage").removeClass("hide-items");
                         return false;
                     }
                     else {
+                        $("#lblDeptErrorMessage").addClass("hide-items");
                         return true;
                     }
                 }
                 else if (SOFChoice == "3") {
                     var SOFCode = $("#txtCAPEX").val();
                     if (SOFCode == "") {
-                        alert("Code Field can not be empty");
+                        $("#lblCAPEXErrorMessage").removeClass("hide-items");
                         return false;
                     }
                     else {
+                        $("#lblCAPEXErrorMessage").addClass("hide-items");
                         return true;
 
                     }
@@ -816,9 +845,18 @@
                 else if (SOFChoice == "4") {
                     return true;
                 }
-                // aqsa arshad code block ends here
+
 
             }
+            $("#txtSOFCode").focusout(function () {
+                applySOFValidationonselectedType();
+            });
+
+            $("#txtCAPEX").focusout(function () {
+                applySOFValidationonselectedType();
+            });
+
+            // aqsa arshad code block ends here
             $("#txtproductcategoryfundusedforsalesrep").focusout(function () {
 
                 // aqsa arshad code block starts here 
@@ -906,7 +944,15 @@
 
                 }
                 else if (round(sofentered, 2) > round(spproductcategoryfund, 2)) {
-                    alert("You exceed available SOF");
+                    // aqsa arshad code starts here
+                    var SOFSelectedType = $("#hdnSelectedFundType").text();
+                    if (SOFSelectedType == "1") {
+                        alert("You exceed available General Funds");
+                    }
+                    else if (SOFSelectedType == "2") {
+                        alert("You exceed available Sales Operations Funds");
+                    }
+                    // aqsa arshad code ends here 
                     $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(), 2));
                     return false;
                 }
@@ -1049,19 +1095,34 @@
                 }
                 else if (id == "txtQuantity") {
                     regex = new RegExp("^[0-9\b]+$");
-                }
-
-                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if (regex !== "" && regex !== undefined && regex !== null) {
-                    if (regex.test(str)) {
-                        return true;
-                    }
-
-                    else {
-                        e.preventDefault();
-                        return false;
+                    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                    if (regex !== "" && regex !== undefined && regex !== null) {
+                        if (regex.test(str)) {
+                            return true;
+                        }
+                        else {
+                            e.preventDefault();
+                            return false;
+                        }
                     }
                 }
+                    // aqsa arshad code starts here
+                else if ($(this).attr('id') == "txtSOFCode") {
+                    if ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8)) {
+                        event.preventDefault();
+
+                    }
+                }
+                else if ($(this).attr('id') == "txtCAPEX") {
+                    if (!(event.which > 47 && event.which < 58) &&
+                        !(event.which > 64 && event.which < 91) &&
+                        !(event.which > 96 && event.which < 123)) {
+                        event.preventDefault();
+                    }
+                }
+                // aqsa arshad code ends here
+
+                
 
             });
 
