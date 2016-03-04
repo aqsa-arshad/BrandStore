@@ -557,9 +557,8 @@ namespace AspDotNetStorefront
                 {
                     SOFSelectedType = SOFUsedType.NF.ToString();
                 }
-                cart.OrderNotes += "Product ID: " + citem.ProductID + "," + SOFSelectedType + ",";
-            }
-            cart.OrderNotes = cart.OrderNotes.Remove(cart.OrderNotes.LastIndexOf(","), 1);
+                cart.OrderNotes += "Product ID: " + citem.ProductID + "," + SOFSelectedType + "; ";
+            }            
             //end set gl code
             Address BillingAddress = new Address();
             BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
