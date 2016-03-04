@@ -574,7 +574,7 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             decimal CategoryFundsUsed = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "CategoryFundUsed"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
             String CreditFundUsedName = String.Empty;
             decimal CreditFundUsed = decimal.Zero;
-            if (CategoryFundType == (int)FundType.BLUBucks)
+            if (BLuBucksUsed > 0)
             {
                 CreditFundUsedName = "BLU™ Bucks Discount: "; 
                 CreditFundUsed = BLuBucksUsed;
