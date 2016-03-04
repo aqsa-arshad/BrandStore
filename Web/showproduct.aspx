@@ -50,7 +50,7 @@
     <%--End Hidden Variables Region--%>
 
     <%-- Region Open Pop Up for bucckts--%>
-    <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -90,7 +90,7 @@
     <%-- Region Open PopUp for SOF Funds--%>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -1347,7 +1347,7 @@
                                 if (sizecolorfound == 0) {
                                     if (sel_color == '') sel_color = 'N/A';
                                     if (sel_size == '') sel_size = 'N/A';
-                                    //alert('Inventory Table Error - No Inventory Record Found For Color=[' + sel_color + '], Size=[' + sel_size + ']');
+                                    alert('Inventory Table Error - No Inventory Record Found For Color=[' + sel_color + '], Size=[' + sel_size + ']');
                                     submitenabled(theForm);
                                     return (false);
                                 }
