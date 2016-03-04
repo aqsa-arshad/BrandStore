@@ -1,7 +1,8 @@
-﻿<%@ Page Language="c#" Inherits="AspDotNetStorefront.JWSupport" CodeFile="JWSupport.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/jeldWenTemplate.master"%>
+﻿<%@ Page Language="c#" Inherits="AspDotNetStorefront.JWSupport" CodeFile="JWSupport.aspx.cs" MasterPageFile="~/App_Templates/Skin_3/jeldWenTemplate.master" %>
+
 <%@ Register TagPrefix="aspdnsf" TagName="Topic" Src="~/Controls/TopicControl.ascx" %>
 
-<asp:Content  runat="server" ContentPlaceHolderID="PageContent">
+<asp:Content runat="server" ContentPlaceHolderID="PageContent">
     <link href="App_Themes/Skin_3/app.css" rel="stylesheet" />
     <html lang="en">
     <head>
@@ -12,14 +13,12 @@
         <meta content="" name="author">
         <title>Support</title>
     </head>
-        <body>
+    <body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../../dist/js/bootstrap.min.js"></script>
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
         <script src="offcanvas.js"></script>
-        </body>
-        </html>
-   <aspdnsf:Topic ID="FooterSupport" runat="server" TopicName="Footer.Support" visible="false"/>
-    <aspdnsf:Topic ID="SalsRepsSupport" runat="server" TopicName="SalsRepsFooter.Support" visible="false"/>
-
+    </body>
+    </html>
+    <aspdnsf:Topic ID="FooterSupport" runat="server" TopicName="Footer.Support" />
 </asp:Content>
