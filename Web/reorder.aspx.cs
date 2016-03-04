@@ -82,6 +82,10 @@ namespace AspDotNetStorefront
             {
                 String RecordID = cItem.ShoppingCartRecordID.ToString();
                 int FundID = GetProductFundID(cItem.ProductID);//Get latest Fund ID of product , dont use fund id already assigned it may change
+               
+                if (cItem.GLcode == "3" || cItem.GLcode == "4")//For no fund and capex category fund should not be applied
+                    FundID = 0;
+
                 Decimal Productprice = cItem.Price;
                 int Quantity = cItem.Quantity;
                 Decimal TotalPrice = Convert.ToDecimal(Productprice * Quantity);
