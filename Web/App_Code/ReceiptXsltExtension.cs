@@ -574,7 +574,7 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             decimal CategoryFundsUsed = Decimal.Parse(XmlCommon.XmlField(lineItemNode, "CategoryFundUsed"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
             String CreditFundUsedName = String.Empty;
             decimal CreditFundUsed = decimal.Zero;
-            if (CategoryFundType == (int)FundType.BLUBucks)
+            if (BLuBucksUsed > 0)
             {
                 CreditFundUsedName = "BLU™ Bucks Discount: "; 
                 CreditFundUsed = BLuBucksUsed;
@@ -604,6 +604,25 @@ public class ReceiptXsltExtension : XSLTExtensionBase
                 CreditFundUsed = CategoryFundsUsed;
                 CreditFundUsedName = "POP Funds Discount: ";
             }
+
+            // [START] - Show SOFType with each product
+            string SOFType = string.Empty;
+            string SOFCodeName = string.Empty;
+            string SOFCode = string.Empty;
+
+            SOFType = XmlCommon.XmlField(lineItemNode, "GLcode");
+
+            if (SOFType == "2")
+            {
+                SOFCodeName = "Department Code: ";
+            }
+            if (SOFType == "3")
+            {
+                SOFCodeName = "CAPEX Authorization Code: ";
+            }
+            SOFCode = XmlCommon.XmlField(lineItemNode, "SOFCode");
+
+            // [END] - Show SOFType with each product
 
             bool applyVat = AppLogic.AppConfigBool("VAT.Enabled") == true &&
                             XmlCommon.XmlFieldBool(orderInfoNode, "LevelHasNoTax") == false &&
@@ -710,6 +729,27 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             CreditFundUsedNameNode.InnerText = XmlCommon.XmlEncode(CreditFundUsedName.ToString(CultureInfo.InvariantCulture));
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(CreditFundUsedNameNode, lineItemNode.LastChild);
+
+            // Authentication code
+
+            XmlNode SOFCodeNameNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "SOFCodeName", string.Empty);
+            SOFCodeNameNode.InnerText = XmlCommon.XmlEncode(SOFCodeName.ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(SOFCodeNameNode, lineItemNode.LastChild);
+
+            XmlNode SOFCodeNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "SOFCode", string.Empty);
+            SOFCodeNode.InnerText = XmlCommon.XmlEncode(SOFCode.ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(SOFCodeNode, lineItemNode.LastChild);
+
+            XmlNode SOFTypeNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "SOFType", string.Empty);
+            SOFTypeNode.InnerText = XmlCommon.XmlEncode(SOFType.ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(SOFTypeNode, lineItemNode.LastChild);
+
+
+            
+
 
             // credit price
             XmlNode displayCreditPriceNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "CreditPrice", string.Empty);

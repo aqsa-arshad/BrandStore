@@ -54,7 +54,7 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforblubucks" ClientIDMode="Static">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforblubucks" clientidmode="Static">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">APPLY BLU� BUCKS</h4>
                     <p runat="server" id="ppointscount">You have XXXXXX BLU� Bucks you can use to purchase items.</p>
@@ -94,13 +94,13 @@
         <div class="modal-dialog modal-checkout" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforsof" ClientIDMode="Static">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btncancelforsof" clientidmode="Static">
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
-                    <h4 class="text-uppercase-no">SPECIFY FUNDS </h4>
+                    <h4 class="text-uppercase-no">SPECIFY FUND TYPE</h4>
                     <p runat="server">
-                        Apply General Funds(GF), Sales Operation Funds(SOF) or authorized Capital Expenditure Fund Code(CAPEX) to your item.</br>
-                                     If not applicable select "NO FUNDS"</br>
-                          <a class="underline-link" href="#"><span>About sales funds</span></a>
+                        Apply General Funds(GF), Sales Operations Funds(SOF) or an authorized Capital Expenditure Funds code(CAPEX) to your item.</br>
+                                     If not applicable, select "NO FUNDS."</br>
+                          <a class="underline-link" target="_blank" href="JWAboutSOF.aspx"><span>About Sales Funds</span></a>
                     </p>
 
                     <div class="btn-funds-main">
@@ -108,20 +108,20 @@
                         <button class="btn btn-primary margin-top-none pull-right" id="btnSOFFunds">SOF</button>
                         <div class="clearfix"></div>
                         <button class="btn btn-primary" id="btnCapitalExpenditure">CAPEX</button>
-                       <button class="btn btn-primary pull-right" id="btnNoFund">NO FUNDS</button>
+                        <button class="btn btn-primary pull-right" id="btnNoFund">NO FUNDS</button>
                     </div>
 
                     <p id="pGeneralFunds" class="label-text hide-items">
-                        Enter the quantity of general funds you'd like to apply to pay for this item:
+                        Enter the ammount of General Funds you'd like to apply to the price of this Item.
                     </p>
                     <p id="pSOFFunds" class="label-text hide-items">
-                        Enter the quantity of SOF LOREUM FUND you'd like to apply to pay for this item:
+                        Enter the ammount of Sales Operations Funds(SOF) you'd like to apply to the price of this Item.
                     </p>
                     <p id="pCapitalExpenditure" class="label-text hide-items">
                         Enter a valid authentication code to mark this item as a capital expenditure.
                     </p>
                     <p id="pNoFund" class="label-text hide-items">
-                        Enter the quantity of general funds you'd like to apply to pay for this item
+                        No Sales Funds will be applied to this Item. 
                     </p>
 
                     <p class="label-text">
@@ -130,10 +130,10 @@
                     </p>
                     <div class="form-group hide-items" id="divSOFFunds">
                         <div class="col-xs-12 padding-none hide-items" id="divGeneralFunds">
-                            <label class="roman-black">General Funds Used</label>
+                            <label class="roman-black">General Funds to be applied: </label>
                         </div>
                         <div class="col-xs-12 padding-none hide-items" id="lblSOFunds">
-                            <label class="roman-black">SOF Funds Used</label>
+                            <label class="roman-black">Sales Operations Funds to be applied:</label>
                         </div>
                         <p class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtproductcategoryfundusedforsalesrep" onpaste="return false" AutoCompleteType="Disabled" MaxLength="7" ClientIDMode="Static" placeholder="0.00" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -142,6 +142,9 @@
                         <div class="col-xs-12 padding-none hide-items" id="deptCode">
                             <label class="roman-black">Department Code(3-digit)</label>
                         </div>
+                        <div id="lblDeptErrorMessage" class="hide-items">
+                            <label class="error-large" id="lblErrorMessage">Code field cannot be left blank.</label></div>
+
                         <p class="col-xs-6 padding-none hide-items" id="txtDept">
                             <asp:TextBox ID="txtSOFCode" MaxLength="3" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                         </p>
@@ -150,10 +153,14 @@
                     </div>
                     <div class="form-group hide-items" id="divCapitalExpenditure">
                         <div class="col-xs-12 padding-none">
-                            <label class="roman-black">Authentication code</label>
+                            <label class="roman-black">CAPEX Authentication code:</label>
+
                         </div>
+                        <div id="lblCAPEXErrorMessage" class="hide-items">
+                            <label class="error-large">Code field cannot be left blank.</label></div>
+
                         <p class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                         </p>
                         <div class="clearfix"></div>
                     </div>
@@ -194,19 +201,23 @@
                 }
             });
 
-        //New CHECK ADDED ON 3-3-2016 by tayyab to clear field in cross button click
+            //New CHECK ADDED ON 3-3-2016 by tayyab to clear field in cross button click
             $("#btncancelforsof").click(function () {
-            $("#txtproductcategoryfundusedforsalesrep").val(0);
-            $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
+                $("#txtproductcategoryfundusedforsalesrep").val(0);
+                $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
             });
 
             $("#btncancelforblubucks").click(function () {
-            $("#txtBluBuksUsed").val(0);
-             $("#txtBluBuksUsed").trigger("focusout");
+                $("#txtBluBuksUsed").val(0);
+                $("#txtBluBuksUsed").trigger("focusout");
             });
-        //End
-             
+            //End
+
             $("#btnGeneralFunds").click(function (e) {
+
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
+
                 $("#btnGeneralFunds").addClass("btn-funds");
                 $("#btnSOFFunds").removeClass("btn-funds");
                 $("#btnCapitalExpenditure").removeClass("btn-funds");
@@ -234,6 +245,8 @@
                 $("#pCapitalExpenditure").addClass("hide-items");
                 $("#divCapitalExpenditure").addClass("hide-items");
 
+                $("#pNoFund").addClass("hide-items");
+
                 $("#hdnSelectedFundType").text("1");
                 var SOFCode = $("#hdnSelectedFundType").text();
                 $.ajax({
@@ -253,6 +266,9 @@
             });
             $("#btnSOFFunds").click(function (e) {
 
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
+
                 $("#btnGeneralFunds").removeClass("btn-funds");
                 $("#btnSOFFunds").addClass("btn-funds");
                 $("#btnCapitalExpenditure").removeClass("btn-funds");
@@ -265,7 +281,7 @@
                     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
                 }
 
-                $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(),2));
+                $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(), 2));
                 $("#txtproductcategoryfundusedforsalesrep").trigger("focusout");
 
                 $("#pSOFFunds").removeClass("hide-items");
@@ -279,6 +295,8 @@
 
                 $("#pCapitalExpenditure").addClass("hide-items");
                 $("#divCapitalExpenditure").addClass("hide-items");
+
+                $("#pNoFund").addClass("hide-items");
 
                 $("#hdnSelectedFundType").text("2");
                 var SOFCode = $("#hdnSelectedFundType").text();
@@ -297,6 +315,9 @@
                 e.preventDefault();
             });
             $("#btnCapitalExpenditure").click(function (e) {
+
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
 
                 $("#btnGeneralFunds").removeClass("btn-funds");
                 $("#btnSOFFunds").removeClass("btn-funds");
@@ -322,6 +343,8 @@
                 $("#pSOFFunds").addClass("hide-items");
                 $("#divSOFFunds").addClass("hide-items");
 
+                $("#pNoFund").addClass("hide-items");
+
                 $("#hdnSelectedFundType").text("3");
                 var SOFCode = $("#hdnSelectedFundType").text();
                 $.ajax({
@@ -340,6 +363,9 @@
             });
             $("#btnNoFund").click(function (e) {
 
+                $("#lblDeptErrorMessage").addClass("hide-items");
+                $("#lblCAPEXErrorMessage").addClass("hide-items");
+
                 $("#btnGeneralFunds").removeClass("btn-funds");
                 $("#btnSOFFunds").removeClass("btn-funds");
                 $("#btnCapitalExpenditure").removeClass("btn-funds");
@@ -354,6 +380,8 @@
                 var ItemOriginalPrice = $("#hdnproductactualprice").text();
                 var ItemQuantity = theForm.Quantity_1_1.value;
                 $("#sppriceforsalesrep").text("$" + round(ItemQuantity * ItemOriginalPrice, 2));
+
+                $("#pNoFund").removeClass("hide-items");
 
                 $("#pGeneralFunds").addClass("hide-items");
 
@@ -535,8 +563,7 @@
                 if (customerlevel == 3 || customerlevel == 7) {
                     // aqsa arshad code block starts here : display price without applying fund 
                     var SOFChoice = $("#hdnSelectedFundType").text();
-                    if (SOFChoice=="3" || SOFChoice == "4")
-                    {
+                    if (SOFChoice == "3" || SOFChoice == "4") {
                         var PriceWithoutFund = ($("#hdnproductactualprice").text() * theForm.Quantity_1_1.value);
                         $("#sppriceforsalesrep").text("$" + round(PriceWithoutFund.toFixed(2), 2));
                     }
@@ -613,25 +640,29 @@
                 }
                 else if (SOFChoice == "2") {
                     var SOFCode = $("#txtSOFCode").val();
-                    if (SOFCode == "") {
-                        alert("Code Field can not be empty");
+                    if (SOFCode == "") {                      
+                        $("#lblErrorMessage").text("Code field cannot be left blank.");
+                        $("#lblDeptErrorMessage").removeClass("hide-items");
                         return false;
                     }
-                    else if (SOFCode.length<3) {
-                        alert("Code must be 3 digit");
+                    else if (SOFCode.length < 3) {                        
+                        $("#lblErrorMessage").text("Code must of 3 digit.");
+                        $("#lblDeptErrorMessage").removeClass("hide-items");
                         return false;
                     }
                     else {
+                        $("#lblDeptErrorMessage").addClass("hide-items");
                         return true;
                     }
                 }
                 else if (SOFChoice == "3") {
                     var SOFCode = $("#txtCAPEX").val();
                     if (SOFCode == "") {
-                        alert("Code Field can not be empty");
+                        $("#lblCAPEXErrorMessage").removeClass("hide-items");
                         return false;
                     }
                     else {
+                        $("#lblCAPEXErrorMessage").addClass("hide-items");
                         return true;
 
                     }
@@ -639,9 +670,18 @@
                 else if (SOFChoice == "4") {
                     return true;
                 }
-                // aqsa arshad code block ends here
+
 
             }
+            $("#txtSOFCode").focusout(function () {
+                applySOFValidationonselectedType();
+            });
+
+            $("#txtCAPEX").focusout(function () {
+                applySOFValidationonselectedType();
+            });
+
+            // aqsa arshad code block ends here
             function applySOFValidation(newpricetotal, sofentered, spproductcategoryfund) {
 
                 if (spproductcategoryfund <= 0) {
@@ -654,7 +694,16 @@
                     // return false;
                 }
                 else if (round(sofentered, 2) > round(spproductcategoryfund, 2)) {
-                    alert("You exceed available SOF");
+                    // aqsa arshad code starts here
+                    var SOFSelectedType = $("#hdnSelectedFundType").text();
+                    if (SOFSelectedType == "1") {
+                        alert("You exceed available General Funds");
+                    }
+                    else if (SOFSelectedType == "2") {
+                        alert("You exceed available Sales Operations Funds");
+                    }
+                    // aqsa arshad code ends here 
+
                     $("#txtproductcategoryfundusedforsalesrep").val(round($("#hdnProductFundAmountUsed").text(), 2));
                     return false;
                 }
@@ -971,7 +1020,7 @@
             });
 
             $('input').keypress(function (e) {
-
+                debugger;
                 var regex;
                 if ($(this).attr('id') == "txtBluBuksUsed" || $(this).attr('id') == "txtproductcategoryfundusedforsalesrep") {
                     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
@@ -999,7 +1048,21 @@
                         }
                     }
 
+                } // aqsa arshad code starts here
+                else if ($(this).attr('id') == "txtSOFCode") {
+                    if ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8)) {
+                        event.preventDefault();
+
+                    }
                 }
+                else if ($(this).attr('id') == "txtCAPEX") {
+                    if (!(event.which > 47 && event.which < 58) &&
+                        !(event.which > 64 && event.which < 91) &&
+                        !(event.which > 96 && event.which < 123)) {
+                        event.preventDefault();
+                    }
+                }
+                // aqsa arshad code ends here
 
             });
 
