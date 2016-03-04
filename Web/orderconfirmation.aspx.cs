@@ -593,12 +593,12 @@ namespace AspDotNetStorefront
                     if((e.Item.FindControl("hfGLcode") as HiddenField).Value == "2")
                     {
                         (e.Item.FindControl("lblSOFCode") as Label).Visible = true;
-                        (e.Item.FindControl("lblSOFCodeCaption") as Label).Text = "Department Code: ";
+                        (e.Item.FindControl("lblSOFCodeCaption") as Label).Text = AppLogic.GetString("sof.deptcode", Customer.Current.LocaleSetting) + " ";
                     }
                     else if((e.Item.FindControl("hfGLcode") as HiddenField).Value == "3")
                     {
-                        (e.Item.FindControl("lblSOFCode") as Label).Visible = true;                       
-                        (e.Item.FindControl("lblSOFCodeCaption") as Label).Text = "Authentication Code: ";
+                        (e.Item.FindControl("lblSOFCode") as Label).Visible = true;
+                        (e.Item.FindControl("lblSOFCodeCaption") as Label).Text = AppLogic.GetString("sof.authenticationcode", Customer.Current.LocaleSetting) + " ";
                     }
                 }
 

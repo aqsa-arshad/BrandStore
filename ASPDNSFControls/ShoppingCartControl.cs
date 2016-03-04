@@ -1243,10 +1243,10 @@ namespace AspDotNetStorefrontControls
 
                         String Code="";
                         if(cItem.GLcode=="2")
-                            Code=Code+"Department Code: " + cItem.SOFCode;
+                            Code=Code+ AppLogic.GetString("sof.deptcode", Customer.Current.LocaleSetting)+ " " + cItem.SOFCode;
                         else if(cItem.GLcode=="3")
-                            Code = Code + "Authentication Code: " + cItem.SOFCode;
-
+                            Code = Code + AppLogic.GetString("sof.authenticationcode", Customer.Current.LocaleSetting) + " " + cItem.SOFCode;
+                       
 
                         String CreditPrice = lblSubTotal.Text;
                         System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
