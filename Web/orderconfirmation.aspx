@@ -54,6 +54,9 @@
                                 <asp:HiddenField ID="hfImageFileNameOverride" runat="server" Value='<%# Eval("ImageFileNameOverride") %>' />
                                 <asp:HiddenField ID="hfRegularPrice" runat="server" Value='<%# Eval("RegularPrice") %>' />
                                 <asp:HiddenField ID="hfFundName" runat="server" Value='<%# Eval("FundName") %>' />
+
+                                <asp:HiddenField ID="hfGLcode" runat="server" Value='<%# Eval("GLcode") %>' />
+
                                 <td class="td-40-percent">
                                     <div class="row tablet-view">
                                         <div class="col-md-4">
@@ -87,6 +90,11 @@
                                     <span>
                                         <asp:Label ID="lblCategoryFundCreditCaption" runat="server" /><asp:Label ID="lblCategoryFundCredit" Visible="False" runat="server" />
                                     </span>
+
+                                    <span class="block-text">
+                                        <asp:Label ID="lblSOFCodeCaption" runat="server" /><asp:Label runat="server" ID="lblSOFCode" Visible="false" Text='<%# Eval("SOFCode") %>'/>
+                                    </span>
+
                                     <span>
                                         <asp:Label ID="lblCreditPriceCaption" runat="server" Text='<%$ Tokens:StringResource, CreditPriceCaption %>' /><asp:Label ID="lblCreditPrice" runat="server" />
                                     </span>
@@ -175,11 +183,12 @@
                 </span>
                 <p class="label-text">
                     <span class="block-text">
-                        <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text='<%$ Tokens:StringResource, BluBucksCaption %>' runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal"/>
+                        <asp:Label ID="lblBluBucksTotalCaption" Visible="False" Text='<%$ Tokens:StringResource, BluBucksCaption %>' runat="server" /><asp:Label runat="server" ID="lblBluBucksTotal" />
                     </span>
                     <span class="block-text">
                         <asp:Label ID="lblSOFFundsTotalCaption" Text='<%$ Tokens:StringResource, SOFFundsCaption %>' Visible="False" runat="server" /><asp:Label runat="server" ID="lblSOFFundsTotal" />
                     </span>
+
                     <span class="block-text">
                         <asp:Label ID="lblDirectMailFundsTotalCaption" Visible="False" Text="Direct Mail Funds: " runat="server" /><asp:Label runat="server" ID="lblDirectMailFundsTotal" />
                     </span>

@@ -1241,6 +1241,13 @@ namespace AspDotNetStorefrontControls
                         else
                             cItem.FundName = cItem.FundName + " used: ";
 
+                        String Code="";
+                        if(cItem.GLcode=="2")
+                            Code=Code+ AppLogic.GetString("sof.deptcode", Customer.Current.LocaleSetting)+ " " + cItem.SOFCode;
+                        else if(cItem.GLcode=="3")
+                            Code = Code + AppLogic.GetString("sof.authenticationcode", Customer.Current.LocaleSetting) + " " + cItem.SOFCode;
+                       
+
                         String CreditPrice = lblSubTotal.Text;
                         System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
                         Controls.Add(new LiteralControl("<span class='normal-heading black-color' id='ctl00_PageContent_ctrlShoppingCart_lblSubtotalHeader'>Payment</span>"));
@@ -1249,6 +1256,10 @@ namespace AspDotNetStorefrontControls
                         lblSubTotal.Text = "<span id='" + "spregularprice_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spregularprice'><b>Regular Price: </b>" + string.Format(System.Globalization.CultureInfo.GetCultureInfo("en-US"), AppLogic.AppConfig("CurrencyFormat"), RegularPrices) + "</span>";
                         if (Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", "")) > 0)
                             lblSubTotal.Text += "<span id='" + "spfunddiscountprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spfunddiscountprice'>" + cItem.FundName + string.Format(System.Globalization.CultureInfo.GetCultureInfo("en-US"), AppLogic.AppConfig("CurrencyFormat"), Convert.ToDecimal(lblpricewithCategoryFundUsed.Text.Replace("$", ""))) + "</span>";
+                        
+                        if (Code.ToString()!="")
+                            lblSubTotal.Text += "<span id='" + "spCode_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spCode'>" + Code  + "</span>";
+                       
                         if (Convert.ToDecimal(lblpricewithBluBucksUsed.Text.Replace("$", "")) > 0)
                             lblSubTotal.Text += "<span id='" + "spblubucksprice1_" + cItem.ShoppingCartRecordID.ToString() + "' class='hide-element spblubucksprice'>BLU Bucks used: " + Convert.ToDecimal(lblpricewithBluBucksUsed.Text).ToString().Replace("$", "") + "" + "</span>";
                         lblSubTotal.Text += "<span id='" + "spcreditprice_" + cItem.ShoppingCartRecordID.ToString() + "' ><b>Your Price: </b>" + string.Format(System.Globalization.CultureInfo.GetCultureInfo("en-US"), AppLogic.AppConfig("CurrencyFormat"), CreditPrice) + "</span>";

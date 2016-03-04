@@ -738,7 +738,7 @@
                 else {
                     $("#palreadyexist").addClass("hide-element");
                 }
-
+                    ApplyValidation2(theForm);//This line is added just to avoid double alert in case of admin and public user
                 if (ApplyValidation(theForm)) {
 
 
@@ -784,6 +784,7 @@
                         $("#btnaddtocart").removeAttr("data-toggle", "modal");
                         $("#btnaddtocart").removeAttr("data-target", "#myModa2");
                         $("#btnaddtocart").removeAttr("data-target", "#myModal1");
+                       
                         $(btnname).trigger("click");
                     }
                 }

@@ -9277,13 +9277,15 @@ namespace AspDotNetStorefrontCore
                     tmpS.Append("			{\n");
                     tmpS.Append("               if(sel_color == '') sel_color = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
                     tmpS.Append("               if(sel_size == '') sel_size = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
-                    tmpS.Append("				alert('" + String.Format(AppLogic.GetString("common.cs.75", SkinID, LocaleSetting), ColorOptionPrompt, SizeOptionPrompt, ColorOptionPrompt, SizeOptionPrompt).Replace(@"\\n", @"\n") + "');\n");
+                    //to do:this line was commented just to reuse it in future
+                   // tmpS.Append("				alert('" + String.Format(AppLogic.GetString("common.cs.75", SkinID, LocaleSetting), ColorOptionPrompt, SizeOptionPrompt, ColorOptionPrompt, SizeOptionPrompt).Replace(@"\\n", @"\n") + "');\n");
                     tmpS.Append("			}\n");
                     tmpS.Append("			else\n");
                     tmpS.Append("			{\n");
                     tmpS.Append("               if(sel_color == '') sel_color = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
                     tmpS.Append("               if(sel_size == '') sel_size = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
-                    tmpS.Append("				alert('" + String.Format(AppLogic.GetString("common.cs.76", SkinID, LocaleSetting), ColorOptionPrompt, SizeOptionPrompt, ColorOptionPrompt, SizeOptionPrompt).Replace(@"\\n", @"\n").Replace("board", "board" + boardSuffix) + "');\n");
+                    //to do:this line was commented just to reuse it in future
+                    //tmpS.Append("				alert('" + String.Format(AppLogic.GetString("common.cs.76", SkinID, LocaleSetting), ColorOptionPrompt, SizeOptionPrompt, ColorOptionPrompt, SizeOptionPrompt).Replace(@"\\n", @"\n").Replace("board", "board" + boardSuffix) + "');\n");
                     tmpS.Append("			}\n");
                     tmpS.Append("			submitenabled(theForm);\n");
                     tmpS.Append("			return (false);\n");
@@ -9294,7 +9296,8 @@ namespace AspDotNetStorefrontCore
                     tmpS.Append("{\n");
                     tmpS.Append("   if(sel_color == '') sel_color = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
                     tmpS.Append("   if(sel_size == '') sel_size = '" + AppLogic.GetString("order.cs.16", ThisCustomer.SkinID, ThisCustomer.LocaleSetting) + "';\n");
-                    tmpS.Append("	alert('" + AppLogic.GetString("shoppingcart.cs.115", ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("'", "").Replace("{0}", "[' + sel_color + ']").Replace("{1}", "[' + sel_size + ']") + "');\n");
+                    //to do:this line was commented just to reuse it in future
+                    // tmpS.Append("	alert('" + AppLogic.GetString("shoppingcart.cs.115", ThisCustomer.SkinID, ThisCustomer.LocaleSetting).Replace("'", "").Replace("{0}", "[' + sel_color + ']").Replace("{1}", "[' + sel_size + ']") + "');\n");
                     tmpS.Append("	submitenabled(theForm);\n");
                     tmpS.Append("	return (false);\n");
                     tmpS.Append("}\n");
