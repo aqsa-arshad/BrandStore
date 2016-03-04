@@ -540,7 +540,24 @@ namespace AspDotNetStorefront
             //Set GLcodes of each item to ordernotes field of cart
             foreach (CartItem citem in cart.CartItems)
             {
-                cart.OrderNotes += "Product ID: " + citem.ProductID + ", GL: " + citem.GLcode + ",";
+                String SOFSelectedType = String.Empty;
+                if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.GF)
+                {
+                    SOFSelectedType = SOFUsedType.GF.ToString();
+                }
+                else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.SOFF)
+                {
+                    SOFSelectedType = SOFUsedType.SOFF.ToString()+ ", Department Code: "+citem.SOFCode;
+                }
+                else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.CAPEX)
+                {
+                    SOFSelectedType = SOFUsedType.CAPEX.ToString() + ", Authentication Code: " + citem.SOFCode;
+                }
+                else 
+                {
+                    SOFSelectedType = SOFUsedType.NF.ToString();
+                }
+                cart.OrderNotes += "Product ID: " + citem.ProductID + "," + SOFSelectedType + ",";
             }
             cart.OrderNotes = cart.OrderNotes.Remove(cart.OrderNotes.LastIndexOf(","), 1);
             //end set gl code
