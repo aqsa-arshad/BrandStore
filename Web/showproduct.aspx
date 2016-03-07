@@ -609,7 +609,7 @@
                 var ItemQuantity = theForm.Quantity_1_1.value;
                 var newpricetotal = (ItemOriginalPrice * ItemQuantity);
 
-                var spproductcategoryfund = round($("#hdnProductFundAmountUsed").text().replace("$", ""), 2);
+                var spproductcategoryfund = round($("#hdnProductFundAmount").text().replace("$", ""), 2);
                 spproductcategoryfund = (spproductcategoryfund);
 
                 $("#sppriceforsalesrep").text("$" + round(ItemQuantity * ItemOriginalPrice, 2));
@@ -704,6 +704,9 @@
                         alert("You exceed available General Funds");
                     }
                     else if (SOFSelectedType == "2") {
+                        alert("You exceed available Sales Operations Funds");
+                    }
+                    else if (SOFSelectedType == "3") {
                         alert("You exceed available Sales Operations Funds");
                     }
                     // aqsa arshad code ends here 

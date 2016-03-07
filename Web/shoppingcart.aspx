@@ -909,7 +909,6 @@
 
                 newpricetotal = $("#spprice").text().replace("$", "");
                 var sofentered = round($("#txtproductcategoryfundusedforsalesrep").val(), 2);
-
                 if (applySOFValidation(newpricetotal, sofentered, spproductcategoryfund)) {
                     $("#spprice").text("$" + ItemQuantity * ItemOriginalPrice);
                     var updatedprice = round($("#spprice").text().replace("$", ""), 2) - round($("#txtproductcategoryfundusedforsalesrep").val(), 2);
@@ -963,6 +962,9 @@
                         alert("You exceed available General Funds");
                     }
                     else if (SOFSelectedType == "2") {
+                        alert("You exceed available Sales Operations Funds");
+                    }
+                    else if (SOFSelectedType == "3") {
                         alert("You exceed available Sales Operations Funds");
                     }
                     // aqsa arshad code ends here 
