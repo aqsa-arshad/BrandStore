@@ -430,7 +430,7 @@
         </div>
     </div>
     <%--End Region Open Pop Up for bucckts--%>
-      <%-- Region Open PopUp for SOF Funds--%>
+    <%-- Region Open PopUp for SOF Funds--%>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
@@ -468,9 +468,12 @@
                     </p>
 
                     <p class="label-text">
-                        <span class="roman-black">Regular price:
-                            <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                        <span class="roman-black">Regular price: <span id="lblRegularPrice" clientidmode="Static" runat="server" />
                         </span>
+                        <span id="sppriceforsalesrep" runat="server" class="hide-element" clientidmode="Static">$0,000.00 </span>
+                        <%--<span class="roman-black">Regular price:
+                            <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                        </span>--%>
                     </p>
                     <div class="form-group hide-items" id="divSOFFunds">
                         <div class="col-xs-12 padding-none hide-items" id="divGeneralFunds">
@@ -487,7 +490,8 @@
                             <label class="roman-black">Department Code(3-digit)</label>
                         </div>
                         <div id="lblDeptErrorMessage" class="hide-items">
-                            <label class="error-large">Code field cannot be left blank.</label></div>
+                            <label class="error-large">Code field cannot be left blank.</label>
+                        </div>
 
                         <p class="col-xs-6 padding-none hide-items" id="txtDept">
                             <asp:TextBox ID="txtSOFCode" MaxLength="3" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -501,7 +505,8 @@
 
                         </div>
                         <div id="lblCAPEXErrorMessage" class="hide-items">
-                            <label class="error-large">Code field cannot be left blank.</label></div>
+                            <label class="error-large">Code field cannot be left blank.</label>
+                        </div>
 
                         <p class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -516,7 +521,7 @@
         </div>
     </div>
 
-    <%--End Region Open Pop Up For SOF Funds--%> 
+    <%--End Region Open Pop Up For SOF Funds--%>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -1130,7 +1135,7 @@
                 }
                 // aqsa arshad code ends here
 
-                
+
 
             });
 
@@ -1145,7 +1150,6 @@
             });
 
             $(".lnkUpdateItem").click(function () {
-
                 var id = $(this).attr("id");
                 var toreplace = id.substr(0, id.lastIndexOf("_") + 1);
                 $("#hdntoreplace").text(toreplace);
@@ -1156,7 +1160,8 @@
                 var Itemquantityfromcart = $("#spItemQuantity_" + currentrecordid).text();
                 var quantityfieldid = "#" + toreplace + "txtQuantity";
                 var ItemQuantity = $(quantityfieldid).val().replace("$", "");
-                var newpricetotal = (ItemOriginalPrice * ItemQuantity) //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");
+                var newpricetotal = (ItemOriginalPrice * ItemQuantity); //- $("#spregularprice_" + currentrecordid).text().replace("$", "").replace("Regular Price: ", "");               
+
                 var ProductCategoryID = $("#spItemProductCategoryId_" + currentrecordid).text().replace("$", "");
                 var fuundcheckdecision = $("#spfundcheck_" + currentrecordid).text().replace("$", "");
                 var fundCode = $("#spSOFCode_" + currentrecordid).text();
@@ -1231,6 +1236,8 @@
                     }
                 }
                 else if ((customerlevel == 3 || customerlevel == 7)) {
+
+                    $("#lblRegularPrice").text("$" + round(ItemOriginalPrice * ItemQuantity, 2));
 
                     if (round($("#hdnProductFundAmountUsed").text(), 2) > 0) {
 
