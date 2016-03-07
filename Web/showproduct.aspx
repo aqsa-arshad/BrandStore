@@ -125,8 +125,9 @@
                     </p>
 
                     <p class="label-text">
-                        <span class="roman-black">Regular price:</span>
-                        <span id="sppriceforsalesrep" runat="server" clientidmode="Static">$0,000.00 </span>
+                        <span class="roman-black">Regular price: <span id="lblRegularPrice" clientidmode="Static" runat="server" />
+                        </span>
+                        <span id="sppriceforsalesrep" runat="server" class="hide-element" clientidmode="Static">$0,000.00 </span>
                     </p>
                     <div class="form-group hide-items" id="divSOFFunds">
                         <div class="col-xs-12 padding-none hide-items" id="divGeneralFunds">
@@ -143,7 +144,8 @@
                             <label class="roman-black">Department Code(3-digit)</label>
                         </div>
                         <div id="lblDeptErrorMessage" class="hide-items">
-                            <label class="error-large" id="lblErrorMessage">Code field cannot be left blank.</label></div>
+                            <label class="error-large" id="lblErrorMessage">Code field cannot be left blank.</label>
+                        </div>
 
                         <p class="col-xs-6 padding-none hide-items" id="txtDept">
                             <asp:TextBox ID="txtSOFCode" MaxLength="3" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" placeholder="000" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -157,7 +159,8 @@
 
                         </div>
                         <div id="lblCAPEXErrorMessage" class="hide-items">
-                            <label class="error-large">Code field cannot be left blank.</label></div>
+                            <label class="error-large">Code field cannot be left blank.</label>
+                        </div>
 
                         <p class="col-xs-6 padding-none">
                             <asp:TextBox ID="txtCAPEX" MaxLength="15" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
@@ -214,7 +217,6 @@
             //End
 
             $("#btnGeneralFunds").click(function (e) {
-
                 $("#lblDeptErrorMessage").addClass("hide-items");
                 $("#lblCAPEXErrorMessage").addClass("hide-items");
 
@@ -265,7 +267,6 @@
                 e.preventDefault();
             });
             $("#btnSOFFunds").click(function (e) {
-
                 $("#lblDeptErrorMessage").addClass("hide-items");
                 $("#lblCAPEXErrorMessage").addClass("hide-items");
 
@@ -636,7 +637,7 @@
                 }
             });
             function applySOFValidationonselectedType() {
-                // aqsa arshad code block starts here 
+                // aqsa arshad code block starts here                 
                 var SOFCode = "0";
                 var SOFChoice = $("#hdnSelectedFundType").text();
                 if (SOFChoice == "1") {
@@ -644,12 +645,12 @@
                 }
                 else if (SOFChoice == "2") {
                     var SOFCode = $("#txtSOFCode").val();
-                    if (SOFCode == "") {                      
+                    if (SOFCode == "") {
                         $("#lblErrorMessage").text("Code field cannot be left blank.");
                         $("#lblDeptErrorMessage").removeClass("hide-items");
                         return false;
                     }
-                    else if (SOFCode.length < 3) {                        
+                    else if (SOFCode.length < 3) {
                         $("#lblErrorMessage").text("Code must of 3 digit.");
                         $("#lblDeptErrorMessage").removeClass("hide-items");
                         return false;
@@ -687,7 +688,6 @@
 
             // aqsa arshad code block ends here
             function applySOFValidation(newpricetotal, sofentered, spproductcategoryfund) {
-
                 if (spproductcategoryfund <= 0) {
                     $("#txtproductcategoryfundusedforsalesrep").val("0.00");
                     return true;
@@ -745,7 +745,7 @@
                 else {
                     $("#palreadyexist").addClass("hide-element");
                 }
-                    ApplyValidation2(theForm);//This line is added just to avoid double alert in case of admin and public user
+                ApplyValidation2(theForm);//This line is added just to avoid double alert in case of admin and public user
                 if (ApplyValidation(theForm)) {
 
 
@@ -791,7 +791,7 @@
                         $("#btnaddtocart").removeAttr("data-toggle", "modal");
                         $("#btnaddtocart").removeAttr("data-target", "#myModa2");
                         $("#btnaddtocart").removeAttr("data-target", "#myModal1");
-                       
+
                         $(btnname).trigger("click");
                     }
                 }
@@ -1322,6 +1322,10 @@
                     submitenabled(theForm);
                     return (true);
                 }
+
+                var ItemOriginalPrice = $("#hdnproductactualprice").text();
+                var ItemQuantity = theForm.Quantity_1_1.value;
+                $("#lblRegularPrice").text("$" + round(ItemQuantity * ItemOriginalPrice, 2));
 
                 submitonce(theForm);
                 if ((theForm.Quantity_1_1.value * 1) < 1) {
