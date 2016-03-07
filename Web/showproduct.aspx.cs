@@ -29,7 +29,7 @@ namespace AspDotNetStorefront
         public static string LstInventories { get; set; }
 
         String SourceEntityInstanceName = String.Empty;
-        static String SOFCodeChoice = String.Empty;
+        static String SOFCodeChoice ="1";
         protected string parentCategoryID = String.Empty;
         protected string parentCategoryName = String.Empty;
 

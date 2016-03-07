@@ -576,7 +576,7 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             decimal CreditFundUsed = decimal.Zero;
             if (BLuBucksUsed > 0)
             {
-                CreditFundUsedName = "BLU™ Bucks Discount: "; 
+                CreditFundUsedName = "BLU™ Bucks: "; 
                 CreditFundUsed = BLuBucksUsed;
             }
             else if (CategoryFundType == (int)FundType.SOFFunds)

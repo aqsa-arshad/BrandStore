@@ -21,6 +21,10 @@ public partial class controls_UserInfoAfterLogin : System.Web.UI.UserControl
         {
             ThisCustomer = (Page as AspDotNetStorefront.SkinBase).ThisCustomer;
         }
+        if (ThisCustomer.CustomerLevelID == (int)UserType.SALESREPS || ThisCustomer.CustomerLevelID == (int)UserType.INTERNAL)
+        {
+        pAboutSalesFunds.Visible=true;
+        }
         WelcomeHeading = " Hi," + " " + ThisCustomer.FirstName.Trim() + " " + ThisCustomer.LastName.Trim();
         WelcomeHeadingAfterUserLogin.InnerText = WelcomeHeading;
         getCustomerfund();
