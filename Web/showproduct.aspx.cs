@@ -765,10 +765,6 @@ namespace AspDotNetStorefront
                 {
                     formInput.CategoryFundUsed = Convert.ToDecimal("0.00");
                 }
-                else if (Convert.ToInt16(formInput.GLcode) == (int)SOFUsedType.CAPEX)
-                {
-                    formInput.CategoryFundUsed = Convert.ToDecimal("0.00");
-                }
                 else
                 {
                 formInput.CategoryFundUsed = Convert.ToDecimal(txtproductcategoryfundusedforsalesrep.Text);

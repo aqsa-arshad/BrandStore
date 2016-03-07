@@ -98,7 +98,7 @@
                         <img src="App_Themes/Skin_3/images/close-popup.png" alt="Close" /></button>
                     <h4 class="text-uppercase-no">SPECIFY FUND TYPE</h4>
                     <p runat="server">
-                        Apply General Funds(GF), Sales Operations Funds(SOF) or an authorized Capital Expenditure Funds code(CAPEX) to your item.</br>
+                        Apply General Funds (GF), Sales Operations Funds (SOF) or an authorized Capital Expenditure Funds code (CAPEX) to your item.</br>
                                      If not applicable, select "NO FUNDS."</br>
                           <a class="underline-link" target="_blank" href="JWAboutSOF.aspx"><span>About Sales Funds</span></a>
                     </p>
@@ -341,7 +341,11 @@
                 $("#pGeneralFunds").addClass("hide-items");
 
                 $("#pSOFFunds").addClass("hide-items");
-                $("#divSOFFunds").addClass("hide-items");
+                $("#divSOFFunds").removeClass("hide-items");
+                $("#lblSOFunds").removeClass("hide-items");
+                $("#deptCode").addClass("hide-items");
+                $("#txtDept").addClass("hide-items");
+                $("#divGeneralFunds").addClass("hide-items");
 
                 $("#pNoFund").addClass("hide-items");
 

@@ -523,7 +523,7 @@ namespace AspDotNetStorefront
 
             // aqsa arshad code starts here  : apply no category fund for CAPEX
             String ProductCategoryFundUsed = String.Empty;
-            if (Convert.ToInt16(GetSessionValue("SOFChoice")) == (int)SOFUsedType.NF || Convert.ToInt16(GetSessionValue("SOFChoice")) == (int)SOFUsedType.CAPEX)
+            if (Convert.ToInt16(GetSessionValue("SOFChoice")) == (int)SOFUsedType.NF)
             {
                 ProductCategoryFundUsed = "0.00";
             }
