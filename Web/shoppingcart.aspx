@@ -504,7 +504,7 @@
                             <label class="error-large">Code field cannot be left blank.</label></div>
 
                         <p class="col-xs-6 padding-none">
-                            <asp:TextBox ID="txtCAPEX" MaxLength="10" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtCAPEX" MaxLength="15" onpaste="return false" AutoCompleteType="Disabled" ClientIDMode="Static" class="form-control" EnableViewState="false" runat="server"></asp:TextBox>
                         </p>
                         <div class="clearfix"></div>
                     </div>
@@ -1124,9 +1124,7 @@
                     }
                 }
                 else if ($(this).attr('id') == "txtCAPEX") {
-                    if (!(event.which > 47 && event.which < 58) &&
-                        !(event.which > 64 && event.which < 91) &&
-                        !(event.which > 96 && event.which < 123)) {
+                    if (event.which == 32) {
                         event.preventDefault();
                     }
                 }
