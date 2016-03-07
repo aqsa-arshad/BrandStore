@@ -742,6 +742,14 @@ public class ReceiptXsltExtension : XSLTExtensionBase
             // insert these nodes on the bottom
             lineItemNode.InsertAfter(SOFCodeNode, lineItemNode.LastChild);
 
+            XmlNode SOFTypeNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "SOFType", string.Empty);
+            SOFTypeNode.InnerText = XmlCommon.XmlEncode(SOFType.ToString(CultureInfo.InvariantCulture));
+            // insert these nodes on the bottom
+            lineItemNode.InsertAfter(SOFTypeNode, lineItemNode.LastChild);
+
+
+            
+
 
             // credit price
             XmlNode displayCreditPriceNode = lineItemNode.OwnerDocument.CreateNode(XmlNodeType.Element, "CreditPrice", string.Empty);

@@ -538,27 +538,39 @@ namespace AspDotNetStorefront
         private void ProcessCheckout()
         {
             //Set GLcodes of each item to ordernotes field of cart
+
             foreach (CartItem citem in cart.CartItems)
             {
-                String SOFSelectedType = String.Empty;
-                if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.GF)
+                var SOFSelectedType = String.Empty;
+                if (cart.ThisCustomer.CustomerLevelID == (int)UserType.INTERNAL || cart.ThisCustomer.CustomerLevelID == (int)UserType.SALESREPS)
                 {
-                    SOFSelectedType = SOFUsedType.GF.ToString();
+                    if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.GF)
+                    {
+                        SOFSelectedType = SOFUsedType.GF.ToString();
+                    }
+                    else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.SOFF)
+                    {
+                        SOFSelectedType = SOFUsedType.SOFF.ToString() + ", Department Code: " + citem.SOFCode;
+                    }
+                    else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.CAPEX)
+                    {
+                        SOFSelectedType = SOFUsedType.CAPEX.ToString() + ", Authentication Code: " + citem.SOFCode;
+                    }
+                    else
+                    {
+                        SOFSelectedType = SOFUsedType.NF.ToString();
+                    }
                 }
-                else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.SOFF)
+                if (string.IsNullOrEmpty(SOFSelectedType))
                 {
-                    SOFSelectedType = SOFUsedType.SOFF.ToString()+ ", Department Code: "+citem.SOFCode;
+                    cart.OrderNotes += "Product ID: " + citem.ProductID + "; ";
                 }
-                else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.CAPEX)
+                else
                 {
-                    SOFSelectedType = SOFUsedType.CAPEX.ToString() + ", Authentication Code: " + citem.SOFCode;
+                    cart.OrderNotes += "Product ID: " + citem.ProductID + "," + SOFSelectedType + "; ";
                 }
-                else 
-                {
-                    SOFSelectedType = SOFUsedType.NF.ToString();
-                }
-                cart.OrderNotes += "Product ID: " + citem.ProductID + "," + SOFSelectedType + "; ";
-            }            
+            }
+
             //end set gl code
             Address BillingAddress = new Address();
             BillingAddress.LoadByCustomer(ThisCustomer.CustomerID, ThisCustomer.PrimaryBillingAddressID, AddressTypes.Billing);
@@ -897,14 +909,14 @@ namespace AspDotNetStorefront
                             shipmentChargesPaid > 0)
                         {
                             lblSOFFundsTotal = string.Format(CultureInfo.GetCultureInfo(ThisCustomer.LocaleSetting),
-                                AppLogic.AppConfig("CurrencyFormat"), shipmentChargesPaid);                           
+                                AppLogic.AppConfig("CurrencyFormat"), shipmentChargesPaid);
                         }
 
                         if ((ThisCustomer.CustomerLevelID == 4 || ThisCustomer.CustomerLevelID == 5 ||
                              ThisCustomer.CustomerLevelID == 6 || ThisCustomer.CustomerLevelID == 13) &&
                             shipmentChargesPaid > 0)
                         {
-                            bluBucksUsed =  shipmentChargesPaid;                           
+                            bluBucksUsed = shipmentChargesPaid;
                         }
                     }
                     lblBluBucks = Math.Round(bluBucksUsed, 2).ToString();
