@@ -550,7 +550,7 @@ namespace AspDotNetStorefront
                     }
                     else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.SOFF)
                     {
-                        SOFSelectedType = "SOF" + ", Department Code: " + citem.SOFCode;
+                        SOFSelectedType = "SOF " + ", Department Code: " + citem.SOFCode;
                     }
                     else if (Convert.ToInt16(citem.GLcode) == (int)SOFUsedType.CAPEX)
                     {
